@@ -24,12 +24,12 @@ const measureBoundingBoxOfPath2 = (geometry) => {
 
   if(mat4.isOnlyTransformScale(transforms)){
     points = geometry.points
+    boundingBox = cache.get(points)
   }else{
     transforms = null
     points = path2.toPoints(geometry)
   }
 
-  boundingBox = cache.get(points)
 
   if (!boundingBox) {
     let minpoint
@@ -66,13 +66,19 @@ const measureBoundingBoxOfGeom2 = (geometry) => {
   let boundingBox = cache.get(geometry)
   if (boundingBox) return boundingBox
 
-  const points = geometry.points
+  let points = geometry.points
   const transforms = geometry.transforms
   let minpoint, maxpoint
   const cacheKey = points || geometry.sides
 
-  // check cache for identity boundingBox
-  boundingBox = cache.get(cacheKey)
+  if(mat4.isOnlyTransformScale(transforms)){
+    points = geometry.points
+    // check cache for identity boundingBox
+    boundingBox = cache.get(cacheKey)
+  }else{
+    transforms = null
+    points = geom2.toPoints(geometry)
+  }
 
   if (!boundingBox) {
     if (points) {
@@ -108,7 +114,7 @@ const measureBoundingBoxOfGeom2 = (geometry) => {
     cache.set(cacheKey, boundingBox)
   }
 
-  if (!mat4.isIdentity(transforms)) {
+  if (transforms && !mat4.isIdentity(transforms)) {
     boundingBox = [vec3.transform(boundingBox[0], boundingBox[0], transforms), vec3.transform(boundingBox[1], boundingBox[1], transforms)]
   }
 
@@ -125,27 +131,41 @@ const measureBoundingBoxOfGeom3 = (geometry) => {
   let boundingBox = cache.get(geometry)
   if (boundingBox) return boundingBox
 
-  const polygons = geom3.toPolygons(geometry)
+  let transforms = geometry.transforms
+  let polygons
 
-  let minpoint = vec3.create()
-  if (polygons.length > 0) {
-    const points = poly3.toPoints(polygons[0])
-    vec3.copy(minpoint, points[0])
-  }
-  let maxpoint = vec3.clone(minpoint)
+  if(mat4.isOnlyTransformScale(transforms)){
+    polygons = geometry.polygons
+    boundingBox = cache.get(polygons)
+  }else{
+    transforms = null
+    polygons = geom3.toPolygons(geometry)
+  }  
 
-  polygons.forEach((polygon) => {
-    poly3.toPoints(polygon).forEach((point) => {
-      vec3.min(minpoint, minpoint, point)
-      vec3.max(maxpoint, maxpoint, point)
+  if(!boundingBox){
+
+    let minpoint = vec3.create()
+    if (polygons.length > 0) {
+      const points = poly3.toPoints(polygons[0])
+      vec3.copy(minpoint, points[0])
+    }
+    let maxpoint = vec3.clone(minpoint)
+
+    polygons.forEach((polygon) => {
+      poly3.toPoints(polygon).forEach((point) => {
+        vec3.min(minpoint, minpoint, point)
+        vec3.max(maxpoint, maxpoint, point)
+      })
     })
-  })
 
-  minpoint = [minpoint[0], minpoint[1], minpoint[2]]
-  maxpoint = [maxpoint[0], maxpoint[1], maxpoint[2]]
+    boundingBox = [[minpoint[0], minpoint[1], minpoint[2]], [maxpoint[0], maxpoint[1], maxpoint[2]]]
+    // cache identity boundingBox
+    cache.set(polygons, boundingBox)
+  }
 
-  boundingBox = [minpoint, maxpoint]
-
+  if (transforms && !mat4.isIdentity(transforms)) {
+    boundingBox = [vec3.transform(boundingBox[0], boundingBox[0], transforms), vec3.transform(boundingBox[1], boundingBox[1], transforms)]
+  }
   cache.set(geometry, boundingBox)
 
   return boundingBox
