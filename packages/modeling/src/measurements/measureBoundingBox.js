@@ -8,9 +8,6 @@ const geom3 = require('../geometries/geom3')
 const path2 = require('../geometries/path2')
 const poly3 = require('../geometries/poly3')
 
-// create a cached bounding box that will not be copied when object is transformed
-const setBoundingBox = (geometry, value) => Object.defineProperty(geometry, 'boundingBox', { value, enumerable: false, writable: false })
-
 /*
  * Measure the min and max bounds of the given (path2) geometry.
  * @return {Array[]} the min and max bounds for the geometry
@@ -35,7 +32,7 @@ const measureBoundingBoxOfPath2 = (geometry) => {
   minpoint = [minpoint[0], minpoint[1], 0]
   maxpoint = [maxpoint[0], maxpoint[1], 0]
 
-  setBoundingBox(geometry, [minpoint, maxpoint])
+  geometry.boundingBox = [minpoint, maxpoint]
   return geometry.boundingBox
 }
 
@@ -64,7 +61,7 @@ const measureBoundingBoxOfGeom2 = (geometry) => {
   minpoint = [minpoint[0], minpoint[1], 0]
   maxpoint = [maxpoint[0], maxpoint[1], 0]
 
-  setBoundingBox(geometry, [minpoint, maxpoint])
+  geometry.boundingBox = [minpoint, maxpoint]
   return geometry.boundingBox
 }
 
@@ -94,7 +91,7 @@ const measureBoundingBoxOfGeom3 = (geometry) => {
   minpoint = [minpoint[0], minpoint[1], minpoint[2]]
   maxpoint = [maxpoint[0], maxpoint[1], maxpoint[2]]
 
-  setBoundingBox(geometry, [minpoint, maxpoint])
+  geometry.boundingBox = [minpoint, maxpoint]
   return geometry.boundingBox
 }
 
