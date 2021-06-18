@@ -35,6 +35,5 @@ module.exports = {
   squaredLength: require('./squaredLength'),
   subtract: require('./subtract'),
   toString: require('./toString'),
-  transform: require('./transform'),
-  unit: require('./unit')
+  transform: require('./transform')
 }

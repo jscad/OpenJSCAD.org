@@ -32,9 +32,9 @@ const ellipsoid = (options) => {
   if (!radius.every((n) => n > 0)) throw new Error('radius values must be greater than zero')
   if (!isGTE(segments, 4)) throw new Error('segments must be four or more')
 
-  const xvector = vec3.scale(vec3.create(), vec3.unit(vec3.create(), axes[0]), radius[0])
-  const yvector = vec3.scale(vec3.create(), vec3.unit(vec3.create(), axes[1]), radius[1])
-  const zvector = vec3.scale(vec3.create(), vec3.unit(vec3.create(), axes[2]), radius[2])
+  const xvector = vec3.scale(vec3.create(), vec3.normalize(vec3.create(), axes[0]), radius[0])
+  const yvector = vec3.scale(vec3.create(), vec3.normalize(vec3.create(), axes[1]), radius[1])
+  const zvector = vec3.scale(vec3.create(), vec3.normalize(vec3.create(), axes[2]), radius[2])
 
   const qsegments = Math.round(segments / 4)
   let prevcylinderpoint
