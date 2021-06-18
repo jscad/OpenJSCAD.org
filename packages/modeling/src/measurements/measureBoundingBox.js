@@ -19,8 +19,15 @@ const measureBoundingBoxOfPath2 = (geometry) => {
   let boundingBox = cache.get(geometry)
   if (boundingBox) return boundingBox
 
-  const points = geometry.points
-  const transforms = geometry.transforms
+  let transforms = geometry.transforms
+  let points
+
+  if(mat4.isOnlyTransformScale(transforms)){
+    points = geometry.points
+  }else{
+    transforms = null
+    points = path2.toPoints(geometry)
+  }
 
   boundingBox = cache.get(points)
 
@@ -42,7 +49,7 @@ const measureBoundingBoxOfPath2 = (geometry) => {
     cache.set(points, boundingBox)
   }
 
-  if (!mat4.isIdentity(transforms)) {
+  if (transforms && !mat4.isIdentity(transforms)) {
     boundingBox = [vec3.transform(boundingBox[0], boundingBox[0], transforms), vec3.transform(boundingBox[1], boundingBox[1], transforms)]
   }
 
