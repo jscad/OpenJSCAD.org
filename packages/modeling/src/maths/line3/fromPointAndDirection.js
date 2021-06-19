@@ -15,7 +15,7 @@ const vec3 = require('../vec3')
  * @alias module:modeling/maths/line3.fromPointAndDirection
  */
 const fromPointAndDirection = (out, point, direction) => {
-  const unit = vec3.unit(vec3.create(), direction)
+  const unit = vec3.normalize(vec3.create(), direction)
 
   vec3.copy(out[0], point)
   vec3.copy(out[1], unit)

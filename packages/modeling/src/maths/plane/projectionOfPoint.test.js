@@ -9,7 +9,7 @@ test('plane: projectionOfPoint() should return correct values', (t) => {
 
   const plane1 = fromNormalAndPoint(temp, [0, 0, 0], [0, 0, 0])
   const point1 = projectionOfPoint(plane1, [0, 0, 0])
-  t.deepEqual(point1, [NaN, NaN, NaN])
+  t.deepEqual(point1, [0, 0, 0])
 
   // axis aligned planes
   const plane2 = fromNormalAndPoint(temp, [0, 0, 1], [0, 0, 0])

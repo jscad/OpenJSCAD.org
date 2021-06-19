@@ -8,10 +8,10 @@ const fromPointAxisNormal = require('./fromPointAxisNormal')
  * @returns {connector} a new connector
  */
 const normalize = (connector) => {
-  const newaxis = vec3.unit(connector.axis)
+  const newaxis = vec3.normalize(connector.axis)
 
   // make the normal vector truly normal
-  const newnormal = vec3.unit(vec3.cross(connector.normal, connector.axis))
+  const newnormal = vec3.normalize(vec3.cross(connector.normal, connector.axis))
   vec3.cross(newnormal, newaxis, newnormal)
 
   return fromPointAxisNormal(connector.point, newaxis, newnormal)
