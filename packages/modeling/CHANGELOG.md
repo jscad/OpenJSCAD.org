@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.4.0...@jscad/modeling@2.5.0) (2021-06-20)
+
+
+### Features
+
+* **modeling:** added mat4.isIdentity() ([c22b7cc](https://github.com/jscad/OpenJSCAD.org/commit/c22b7ccfb64f2769381162f0d442ea0ecff5e8d1))
+
+
+
+
+
 # [2.4.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.3.0...@jscad/modeling@2.4.0) (2021-06-11)
 
 
