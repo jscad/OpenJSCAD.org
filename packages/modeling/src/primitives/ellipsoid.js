@@ -26,7 +26,7 @@ const ellipsoid = (options) => {
     segments: 32,
     axes: [[1, 0, 0], [0, -1, 0], [0, 0, 1]]
   }
-  const noAxes = !options.axes
+  const noAxes = !options || !options.axes
   const { center, radius, segments, axes } = Object.assign({}, defaults, options)
 
   if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
@@ -92,14 +92,14 @@ const ellipsoid = (options) => {
   const geom = geom3.create(polygons)
 
   // if default axes are used, bounding box is trivial to calculate
-  if(noAxes){
-    let boundingBox = [
-      radius.map(p=>-p),
-      radius.map(p=>p),
+  if (noAxes) {
+    const boundingBox = [
+      radius.map((p) => -p),
+      radius.map((p) => p)
     ]
     measureBoundingBox.setCache(geom, boundingBox)
   }
-  
+
   return geom
 }
 

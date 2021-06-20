@@ -20,17 +20,18 @@ const sphere = (options) => {
   const defaults = {
     center: [0, 0, 0],
     radius: 1,
-    segments: 32,
+    segments: 32
   }
-  
+
   // NOTE default for axes is ommited intentionally, to allow ellipsoid to recognize when default is used
-  let { center, radius, segments, axes } = Object.assign({}, defaults, options)
+  options = Object.assign({}, defaults, options)
+  const { radius } = options
 
   if (!isGT(radius, 0)) throw new Error('radius must be greater than zero')
 
-  radius = [radius, radius, radius]
+  options.radius = [radius, radius, radius]
 
-  return ellipsoid({ center, radius, segments, axes })
+  return ellipsoid(options)
 }
 
 module.exports = sphere
