@@ -2,6 +2,7 @@ const vec3 = require('../maths/vec3')
 
 const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
+const measureBoundingBox = require('../measurements/measureBoundingBox')
 
 const { isGTE, isNumberArray } = require('./commonChecks')
 
@@ -25,6 +26,7 @@ const ellipsoid = (options) => {
     segments: 32,
     axes: [[1, 0, 0], [0, -1, 0], [0, 0, 1]]
   }
+  const noAxes = !options.axes
   const { center, radius, segments, axes } = Object.assign({}, defaults, options)
 
   if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
@@ -87,7 +89,18 @@ const ellipsoid = (options) => {
     }
     prevcylinderpoint = cylinderpoint
   }
-  return geom3.create(polygons)
+  const geom = geom3.create(polygons)
+
+  // if default axes are used, bounding box is trivial to calculate
+  if(noAxes){
+    let boundingBox = [
+      radius.map(p=>-p),
+      radius.map(p=>p),
+    ]
+    measureBoundingBox.setCache(geom, boundingBox)
+  }
+  
+  return geom
 }
 
 module.exports = ellipsoid

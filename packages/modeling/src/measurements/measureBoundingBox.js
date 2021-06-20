@@ -49,9 +49,7 @@ const measureBoundingBoxOfPath2 = (geometry) => {
     cache.set(points, boundingBox)
   }
 
-  if (transforms && !mat4.isIdentity(transforms)) {
-    boundingBox = [vec3.transform(boundingBox[0], boundingBox[0], transforms), vec3.transform(boundingBox[1], boundingBox[1], transforms)]
-  }
+  boundingBox = transformBoundingBox(boundingBox, transforms)
 
   cache.set(geometry, boundingBox)
 
@@ -114,9 +112,7 @@ const measureBoundingBoxOfGeom2 = (geometry) => {
     cache.set(cacheKey, boundingBox)
   }
 
-  if (transforms && !mat4.isIdentity(transforms)) {
-    boundingBox = [vec3.transform(boundingBox[0], boundingBox[0], transforms), vec3.transform(boundingBox[1], boundingBox[1], transforms)]
-  }
+  boundingBox = transformBoundingBox(boundingBox, transforms)
 
   cache.set(geometry, boundingBox)
 
@@ -163,12 +159,18 @@ const measureBoundingBoxOfGeom3 = (geometry) => {
     cache.set(polygons, boundingBox)
   }
 
-  if (transforms && !mat4.isIdentity(transforms)) {
-    boundingBox = [vec3.transform(boundingBox[0], boundingBox[0], transforms), vec3.transform(boundingBox[1], boundingBox[1], transforms)]
-  }
+  boundingBox = transformBoundingBox(boundingBox, transforms)
+  
   cache.set(geometry, boundingBox)
 
   return boundingBox
+}
+
+const transformBoundingBox = (boundingBox, transforms)=>{
+  if (transforms && !mat4.isIdentity(transforms)) {
+    return [vec3.transform(vec3.create(), boundingBox[0], transforms), vec3.transform(vec3.create(), boundingBox[1], transforms)]
+  }
+  return boundingBox  
 }
 
 /**
@@ -192,5 +194,16 @@ const measureBoundingBox = (...geometries) => {
   })
   return results.length === 1 ? results[0] : results
 }
+
+/**
+ * Shortcut for geometries that are complex but have a fast way to calculate bounding box.
+ * Ellipsoid, or cylinder can provide boundingBox that pre-calculated based on parameters without traversing points.
+ * 
+ * Another option is to calculate boundingBox durint toPoints (so the boundingBox could be calculated during transform)
+ * 
+ * NOTE: It seems that measureBoundingBox is used all over the place, and it would be wise to allow
+ * shortcuts for calculating it, as default implementation goes through all points in geometry which is bound to be slow.
+*/
+measureBoundingBox.setCache = (geometry, boundingBox)=>cache.set(geometry, boundingBox)
 
 module.exports = measureBoundingBox

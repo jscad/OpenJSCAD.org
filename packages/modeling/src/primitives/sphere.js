@@ -21,8 +21,9 @@ const sphere = (options) => {
     center: [0, 0, 0],
     radius: 1,
     segments: 32,
-    axes: [[1, 0, 0], [0, -1, 0], [0, 0, 1]]
   }
+  
+  // NOTE default for axes is ommited intentionally, to allow ellipsoid to recognize when default is used
   let { center, radius, segments, axes } = Object.assign({}, defaults, options)
 
   if (!isGT(radius, 0)) throw new Error('radius must be greater than zero')
