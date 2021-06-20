@@ -93,7 +93,7 @@ const ellipsoid = (options) => {
 
   // if default axes are used, bounding box is trivial to calculate
   if (noAxes) {
-    // we just use the radiuses to easily calculate the corners fo bounding box
+    // we just use the radiuses to easily calculate the corners for bounding box
     // and we also account for when center points are != 0
     const boundingBox = [
       radius.map((p,i) => -p + center[i] ),
