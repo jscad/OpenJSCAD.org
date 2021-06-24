@@ -501,7 +501,7 @@ const actions = ({ sources }) => {
     .skipRepeatsWith(reducers.isDesignTheSame)
     .filter(reducers.isDesignValid)
     .map(reducers.requestGeometryRecompute)
-    .map((payload) => Object.assign({}, payload, { sink: 'geometryWorker', cmd: 'generate' }))
+    .map((payload) => Object.assign({serialize:false}, payload, { sink: 'geometryWorker', cmd: 'generate' }))
     .multicast()
 
   // every time we send out a request to recompute geometry, we initiate a timeout
