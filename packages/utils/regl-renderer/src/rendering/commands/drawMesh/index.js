@@ -42,11 +42,13 @@ const drawMesh = (regl, params = { extras: {} }) => {
       vColorToggler: (context, props) => (props && props.useVertexColors && props.useVertexColors === true) ? 1.0 : 0.0,
       // experimental
       unormal: (context, props) => {
-        const model = mat4.create()
-        const modelViewMatrix = mat4.multiply(mat4.create(), model, props.camera.view)
-        const normalMatrix = mat4.create()
-        mat4.invert(normalMatrix, modelViewMatrix)
+        const model = geometry.transforms || mat4.create()
+        const isMirror = mat4.determinant(model) < 0
+        const modelViewMatrix = mat4.invert(mat4.create(), props.camera.view)
+        const normalMatrix = mat4.invert(mat4.create(), model)
+        mat4.transpose(modelViewMatrix, modelViewMatrix)
         mat4.transpose(normalMatrix, normalMatrix)
+        mat4.multiply(normalMatrix, modelViewMatrix, normalMatrix)
         return normalMatrix
       }
     },
