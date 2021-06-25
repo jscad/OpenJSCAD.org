@@ -43,7 +43,6 @@ const drawMesh = (regl, params = { extras: {} }) => {
       // experimental
       unormal: (context, props) => {
         const model = geometry.transforms || mat4.create()
-        const isMirror = mat4.determinant(model) < 0
         const modelViewMatrix = mat4.invert(mat4.create(), props.camera.view)
         const normalMatrix = mat4.invert(mat4.create(), model)
         mat4.multiply(normalMatrix, normalMatrix, modelViewMatrix)
