@@ -5,7 +5,7 @@ const { meshColor } = require('../../renderDefaults')
 const drawMesh = (regl, params = { extras: {} }) => {
   const defaults = {
     useVertexColors: true,
-    dynamicCulling: false,
+    dynamicCulling: true,
     geometry: undefined,
     color: meshColor
   }
@@ -20,8 +20,7 @@ const drawMesh = (regl, params = { extras: {} }) => {
   const hasVertexColors = !!(useVertexColors && geometry.colors && geometry.colors.length > 0)
   const cullFace = dynamicCulling
     ? (context, props) => {
-        const isOdd = ([props.model[0], props.model[5], props.model[10]].filter((x) => x < 0).length) & 1 // count the number of negative components & deterine if that is odd or even
-        return isOdd ? 'front' : 'back'
+        return geometry.flip ? 'front' : 'back'
       }
     : 'back'
 
