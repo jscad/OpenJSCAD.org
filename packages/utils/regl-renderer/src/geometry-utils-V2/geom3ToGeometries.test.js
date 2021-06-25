@@ -43,6 +43,7 @@ test('geom3ToGeometries (solid with polygons)', (t) => {
       [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4],
       [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4]
     ],
+    flip: false,
     isTransparent: true,
     transforms: defaultTransforms,
     indices: [
