@@ -58,7 +58,7 @@ void main () {
 
   vec3 ambient = ambientLightAmount * endColor.rgb ; //ambientAo * 
 
-  float diffuseWeight = dot(surfaceNormal, lightDirection);
+  float diffuseWeight = dot(surfaceNormal, lightDirection * surfaceNormal);
   vec3 diffuse = diffuseLightAmount * endColor.rgb * clamp(diffuseWeight , 0.0, 1.0 );
 
   //specular

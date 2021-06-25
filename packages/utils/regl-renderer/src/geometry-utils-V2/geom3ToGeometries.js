@@ -3,9 +3,6 @@ const mat4 = require('gl-mat4')
 
 const maxIndex = 65535
 
-const normalCopy  = v=>[v[0],v[1],v[2]]
-const reverseCopy = v=>[v[2],v[1],v[0]]
-
 /*
  * Convert the given solid into one or more geometries for rendering.
  * @param {Object} options - options for conversion
@@ -25,9 +22,6 @@ const geom3ToGeometries = (options, solid) => {
   const transforms = solid.transforms ? mat4.clone(solid.transforms) : mat4.create()
 
   const geometries = []
-
-  // if this matrix reverses order of vertices, we must reorder them for shader
-  const vectorCopy = mat4.determinant(transforms) < 0 ? reverseCopy : normalCopy;
 
   let setstart = 0
   while (setstart < polygons.length) {
@@ -58,7 +52,7 @@ const geom3ToGeometries = (options, solid) => {
       for (let j = 0; j < vertices.length; j++) {
         const vertex = vertices[j]
 
-        const position = vectorCopy(vertex)
+        const position = [vertex[0], vertex[1], vertex[2]]
         positions.push(position)
         normals.push(normal)
         colors.push(faceColor)
