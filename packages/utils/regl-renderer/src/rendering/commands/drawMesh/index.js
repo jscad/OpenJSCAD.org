@@ -26,6 +26,7 @@ const drawMesh = (regl, params = { extras: {} }) => {
 
   const vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
   let frag = hasVertexColors ? require('./vColorShaders').frag : require('./meshShaders').frag
+  const modelMatrixInv = mat4.invert(mat4.create(), geometry.transforms || mat4.create())
 
   // console.log('type', geometry.type, 'color', color, hasVertexColors)
 
@@ -41,13 +42,11 @@ const drawMesh = (regl, params = { extras: {} }) => {
       vColorToggler: (context, props) => (props && props.useVertexColors && props.useVertexColors === true) ? 1.0 : 0.0,
       // experimental
       unormal: (context, props) => {
-        const model = geometry.transforms || mat4.create()
         const modelViewMatrix = mat4.invert(mat4.create(), props.camera.view)
-        const normalMatrix = mat4.invert(mat4.create(), model)
-        mat4.multiply(normalMatrix, normalMatrix, modelViewMatrix)
-        mat4.transpose(normalMatrix, normalMatrix)
-        return normalMatrix
-      }
+        mat4.multiply(modelViewMatrix, modelMatrixInv, modelViewMatrix)
+        mat4.transpose(modelViewMatrix, modelViewMatrix)
+        return modelViewMatrix
+      },
     },
     attributes: {
       position: regl.buffer({ usage: 'static', type: 'float', data: geometry.positions }),
