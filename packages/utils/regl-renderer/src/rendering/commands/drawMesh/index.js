@@ -9,7 +9,7 @@ const drawMesh = (regl, params = { extras: {} }) => {
     geometry: undefined,
     color: meshColor
   }
-  let { geometry, dynamicCulling, useVertexColors, color } = Object.assign({}, defaults, params)
+  const { geometry, dynamicCulling, useVertexColors, color } = Object.assign({}, defaults, params)
 
   // let ambientOcclusion = vao(geometry.indices, geometry.positions, 64, 64)
   const ambientOcclusion = regl.buffer([])
@@ -19,13 +19,11 @@ const drawMesh = (regl, params = { extras: {} }) => {
   const hasNormals = !!(geometry.normals && geometry.normals.length > 0)
   const hasVertexColors = !!(useVertexColors && geometry.colors && geometry.colors.length > 0)
   const cullFace = dynamicCulling
-    ? (context, props) => {
-        return geometry.flip ? 'front' : 'back'
-      }
+    ? (context, props) => geometry.flip ? 'front' : 'back'
     : 'back'
 
   const vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
-  let frag = hasVertexColors ? require('./vColorShaders').frag : require('./meshShaders').frag
+  const frag = hasVertexColors ? require('./vColorShaders').frag : require('./meshShaders').frag
   const modelMatrixInv = mat4.invert(mat4.create(), geometry.transforms || mat4.create())
 
   // console.log('type', geometry.type, 'color', color, hasVertexColors)
@@ -46,7 +44,7 @@ const drawMesh = (regl, params = { extras: {} }) => {
         mat4.multiply(modelViewMatrix, modelMatrixInv, modelViewMatrix)
         mat4.transpose(modelViewMatrix, modelViewMatrix)
         return modelViewMatrix
-      },
+      }
     },
     attributes: {
       position: regl.buffer({ usage: 'static', type: 'float', data: geometry.positions }),
