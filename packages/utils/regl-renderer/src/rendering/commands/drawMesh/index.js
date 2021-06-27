@@ -36,7 +36,7 @@ const drawMesh = (regl, params = { extras: {} }) => {
     uniforms: {
       model: (context, props) => props.model || geometry.transforms || mat4.create(),
       ucolor: (context, props) => (props && props.color) ? props.color : color,
-      // semi hack, woraround to enable/disable vertex colors!!!
+      // semi hack, woraround to enable/disable vertex colors !!!
       vColorToggler: (context, props) => (props && props.useVertexColors && props.useVertexColors === true) ? 1.0 : 0.0,
       // experimental
       unormal: (context, props) => {
