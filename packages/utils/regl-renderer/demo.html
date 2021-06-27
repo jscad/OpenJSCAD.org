@@ -154,15 +154,10 @@ let lastY = 0
 
 const rotateSpeed = 0.002
 let rotateDelta = [0, 0]
-
-const enterHandler = (ev) => {
-  lastX = ev.pageX
-  lastY = ev.pageY
-
-  ev.preventDefault()
-}
+let pointerDown = false
 
 const moveHandler = (ev) => {
+  if(!pointerDown) return
   rotateDelta[0] += ev.pageX - lastX
   rotateDelta[1] += lastY - ev.pageY
 
@@ -171,9 +166,21 @@ const moveHandler = (ev) => {
 
   ev.preventDefault()
 }
+const downHandler = (ev) => {
+  pointerDown = true
+  lastX = ev.pageX
+  lastY = ev.pageY
+  containerElement.setPointerCapture(ev.pointerId)
+}
 
-containerElement.onpointerenter = enterHandler
+const upHandler = (ev) => {
+  pointerDown = false
+  containerElement.releasePointerCapture(ev.pointerId)
+}
+
 containerElement.onpointermove = moveHandler
+containerElement.onpointerdown = downHandler
+containerElement.onpointerup = upHandler
 
   </script>
 </body>
