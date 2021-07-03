@@ -25,17 +25,7 @@ const state = {}
 
 function require(url){
     url = require.alias[url] || url
-    if (url.toLowerCase().substr(-4) =='.obj'){
-      var obj = require.cache[url]
-      if(!obj){
-        let objModule = requireModule('./jscad/obj.deserializer.js')
-        let str = requireFile(url)
-        obj = objModule.exports.deserialize({output:'geometry'},str)
-        require.cache[url] = obj
-      }
-      return obj
-    }
-    if (url.toLowerCase().substr(0,4) != 'http' && url.toLowerCase().substr(-3)!=='.js') url+='.js'; // to allow loading without js suffix;
+    if(url[0] != '/' && url.substr(0,2) != './' && url.substr(0,4) != 'http') url = 'https://unpkg.com/'+url
     var exports=require.cache[url]; //get from cache
     if (!exports) { //not cached
       let module = requireModule(url)
@@ -270,19 +260,13 @@ const handlers = {
     runMain(params)
   },
   resize,
-  init: ({canvas, initScript, baseURI, alias=[]})=>{
+  init: ({canvas, baseURI, alias=[]})=>{
     if(!baseURI && typeof document != 'undefined' && document.baseURI){
       baseURI = document.baseURI
     }
     
     if(baseURI) workerBaseURI = baseURI.toString()
     
-    if(initScript) eval(initScript)
-      alias = [ // defaults
-        ['https://unpkg.com/@jscad/modeling','@jscad/modeling'],
-        ['https://unpkg.com/@jscad/regl-renderer','@jscad/regl-renderer'],
-        ...alias
-      ]
     alias.forEach(arr=>{
       let [orig, ...aliases] = arr
       aliases.forEach(a=>{  
