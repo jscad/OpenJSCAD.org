@@ -94,7 +94,7 @@ function createContext (canvas, contextAttributes) {
   )
 }
 
-const startRenderer = (canvas)=>{
+const startRenderer = (canvas, cameraPosition, cameraTarget, axis={}, grid={})=>{
   const { prepareRender, drawCommands, cameras, controls } = require('@jscad/regl-renderer')
   // ********************
   // Renderer configuration and initiation.
@@ -106,7 +106,8 @@ const startRenderer = (canvas)=>{
   state.canvas = canvas
   // prepare the camera
   state.camera = Object.assign({}, perspectiveCamera.defaults)
-  state.camera.position = [150, -180, 233]
+  state.camera.position = cameraPosition || [150, -180, 233]
+  if(cameraTarget) state.camera.target   = cameraTarget
 
   resize({ width:canvas.width, height:canvas.height })
 
@@ -123,22 +124,22 @@ const startRenderer = (canvas)=>{
   gridOptions = {
     visuals: {
       drawCmd: 'drawGrid',
-      show: true,
-      color: [0, 0, 0, 1],
-      subColor: [0, 0, 1, 0.5],
+      show: grid.show || grid.show === undefined ,
+      color: grid.color || [0, 0, 0, 1],
+      subColor: grid.subColor || [0, 0, 1, 0.5],
       fadeOut: false,
       transparent: true
     },
-    size: [200, 200],
-    ticks: [10, 1]
+    size: grid.size || [200, 200],
+    ticks: grid.ticks || [10, 1]
   }
 
   axisOptions = {
     visuals: {
       drawCmd: 'drawAxis',
-      show: true
+      show: axis.show || axis.show === undefined 
     },
-    size: 100,
+    size: axis.size || 100,
   }
 
   // assemble the options for rendering
@@ -254,6 +255,10 @@ const handlers = {
     if(!initialized){ console.log('worker not initialized'); return}    
     let script_module = requireModule(url,script)
     main = script_module.exports.main
+    let gp = script_module.exports.getParameterDefinitions
+    if(gp){
+      sendCmd({action:'parameterDefinitions', data:gp()})
+    }
     runMain(params)
   },
   updateParams: ({params={}})=>{
@@ -279,6 +284,10 @@ const handlers = {
   },
 }
  
+function sendCmd(cmd,trans){
+  self.postMessage(cmd, trans)
+}
+
 function receiveCmd(cmd){
   const fn = handlers[cmd.action];
   if (!fn) {
@@ -366,6 +375,7 @@ function resize({width,height}){
 if(document.location.toString().indexOf('no_worker') == -1){
   var blob = new Blob([workerScript],{type: 'text/javascript'});
   window.worker = new Worker(window.URL.createObjectURL(blob));
+  // window.worker.onmessage = (m)=>{console.log('onmessage',m)}
 }else{
   eval(workerScript)
 }
@@ -381,8 +391,9 @@ function sendCmd(cmd, ...rest){
 }
 
 return {
-  init:({canvas, alias=[], baseURI})=>{
+  init:({canvas, alias=[], baseURI, onmessage})=>{
     init({canvas, alias, baseURI: document.baseURI})
+    if(window.worker) window.worker.onmessage = onmessage
   },
   resize,
   updateParams:({params={}})=>sendCmd({ action:'updateParams', params}),
