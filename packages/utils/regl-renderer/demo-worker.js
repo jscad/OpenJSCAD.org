@@ -210,8 +210,8 @@ const updateAndRender = (timestamp) => {
   let time = Date.now()
   renderer(renderOptions)
   if(updateRender){
-    console.log('first render', Date.now()-time);
-    updateRender = false;
+    console.log(updateRender, ' first render', Date.now()-time);
+    updateRender = '';
   }
 }
 
@@ -227,11 +227,10 @@ function runMain(params={}){
   const { entitiesFromSolids } = require('@jscad/regl-renderer')
   let time = Date.now()
   let solids = main(params)
-  console.log('generate solids', Date.now()-time)
+  let solidsTime = Date.now() - time
   time = Date.now()
   entities = entitiesFromSolids({}, solids)
-  console.log('convert to entities', Date.now()-time)
-  updateRender = true
+  updateRender = \`generate solids \${solidsTime}ms convert to entities \${Date.now()-time} ms\`
   updateView()  
 }
 
