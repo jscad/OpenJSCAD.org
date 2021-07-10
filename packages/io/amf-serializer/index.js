@@ -21,6 +21,13 @@ TBD
 
 /**
  * Serializer of JSCAD geometries to AMF elements.
+ *
+ * The serialization of the following geometries are possible.
+ * - serialization of 3D geometry (geom3) to AMF object (a unique mesh containing both vertices and volumes)
+ *
+ * Colors are added to volumes when found on the 3D geometry.
+ * Colors are added to triangles when found on individual polygons.
+ *
  * @module io/amf-serializer
  * @example
  * const { serializer, mimeType } = require('@jscad/amf-serializer')
@@ -37,7 +44,7 @@ const mimeType = 'application/amf+xml'
 /**
  * Serialize the give objects to AMF elements.
  * @param {Object} options - options for serialization
- * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer 
+ * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
  * @param {...Object} objects - objects to serialize as AMF
  * @returns {Array} serialized contents with one AMF structure (XML string)
@@ -62,7 +69,7 @@ const serialize = (options, ...objects) => {
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to AMF')
 
   // covert to triangles
-  objects3d = toArray(modifiers.generalize({snap: true, triangulate: true}, objects3d))
+  objects3d = toArray(modifiers.generalize({ snap: true, triangulate: true }, objects3d))
 
   options.statusCallback && options.statusCallback({ progress: 0 })
 
@@ -88,13 +95,10 @@ ${stringify(body, 2)}`
 const translateObjects = (objects, options) => {
   const contents = []
   objects.forEach((object, i) => {
-    if (geometries.geom3.isA(object)) {
-      const polygons = geometries.geom3.toPolygons(object)
-      if (polygons.length > 0) {
-        // TODO object = ensureManifoldness(object)
-        options.id = i
-        contents.push(convertToObject(object, options))
-      }
+    const polygons = geometries.geom3.toPolygons(object)
+    if (polygons.length > 0) {
+      options.id = i
+      contents.push(convertToObject(object, options))
     }
   })
   return contents
@@ -144,32 +148,31 @@ const convertToCoordinates = (vertex, options) => {
  */
 
 const convertToVolumes = (object, options) => {
-  let n = 0
   const objectcolor = convertColor(object.color)
   const polygons = geometries.geom3.toPolygons(object)
 
   const contents = []
+
+  let volume = ['volume', {}]
+
+  // add color specification if available
+  if (objectcolor) {
+    volume.push(objectcolor)
+  }
+
+  let vcount = 0
   polygons.forEach((polygon) => {
     if (polygon.vertices.length < 3) {
       return
     }
 
-    let volume = ['volume', {}]
-    const polycolor = convertToColor(polygon, options)
-    const triangles = convertToTriangles(polygon, n)
+    const triangles = convertToTriangles(polygon, vcount, options)
 
-    if (polycolor) {
-      volume.push(polycolor)
-    } else
-    if (objectcolor) {
-      volume.push(objectcolor)
-    }
     volume = volume.concat(triangles)
 
-    contents.push(volume)
-
-    n += polygon.vertices.length
+    vcount += polygon.vertices.length
   })
+  contents.push(volume)
   return contents
 }
 
@@ -186,13 +189,17 @@ const convertToColor = (polygon, options) => {
   return convertColor(color)
 }
 
-const convertToTriangles = (polygon, index) => {
-  const contents = []
+const convertToTriangles = (polygon, index, options) => {
+  const polycolor = convertToColor(polygon, options)
 
   // making sure they are all triangles (triangular polygons)
+  const contents = []
   for (let i = 0; i < polygon.vertices.length - 2; i++) {
-    const triangle = ['triangle', {}, ['v1', {}, index], ['v2', {}, (index + i + 1)], ['v3', {}, (index + i + 2)]]
-    contents.push(triangle)
+    if (polycolor) {
+      contents.push(['triangle', {}, polycolor, ['v1', {}, index], ['v2', {}, (index + i + 1)], ['v3', {}, (index + i + 2)]])
+    } else {
+      contents.push(['triangle', {}, ['v1', {}, index], ['v2', {}, (index + i + 1)], ['v3', {}, (index + i + 2)]])
+    }
   }
   return contents
 }

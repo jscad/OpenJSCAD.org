@@ -1,3 +1,4 @@
+export { default as aboutEqualNormals } from './aboutEqualNormals'
 export { default as area } from './area'
 export { default as clamp } from './clamp'
 export { default as interpolateBetween2DPointsForY } from './interpolateBetween2DPointsForY'

@@ -8,12 +8,15 @@ const geom3 = require('../geometries/geom3')
 const path2 = require('../geometries/path2')
 const poly3 = require('../geometries/poly3')
 
+const cache = new WeakMap()
+
 /*
  * Measure the min and max bounds of the given (path2) geometry.
  * @return {Array[]} the min and max bounds for the geometry
  */
 const measureBoundingBoxOfPath2 = (geometry) => {
-  if (geometry.boundingBox) return geometry.boundingBox
+  let boundingBox = cache.get(geometry)
+  if (boundingBox) return boundingBox
 
   const points = path2.toPoints(geometry)
 
@@ -32,8 +35,11 @@ const measureBoundingBoxOfPath2 = (geometry) => {
   minpoint = [minpoint[0], minpoint[1], 0]
   maxpoint = [maxpoint[0], maxpoint[1], 0]
 
-  geometry.boundingBox = [minpoint, maxpoint]
-  return geometry.boundingBox
+  boundingBox = [minpoint, maxpoint]
+
+  cache.set(geometry, boundingBox)
+
+  return boundingBox
 }
 
 /*
@@ -41,7 +47,8 @@ const measureBoundingBoxOfPath2 = (geometry) => {
  * @return {Array[]} the min and max bounds for the geometry
  */
 const measureBoundingBoxOfGeom2 = (geometry) => {
-  if (geometry.boundingBox) return geometry.boundingBox
+  let boundingBox = cache.get(geometry)
+  if (boundingBox) return boundingBox
 
   const points = geom2.toPoints(geometry)
 
@@ -61,8 +68,11 @@ const measureBoundingBoxOfGeom2 = (geometry) => {
   minpoint = [minpoint[0], minpoint[1], 0]
   maxpoint = [maxpoint[0], maxpoint[1], 0]
 
-  geometry.boundingBox = [minpoint, maxpoint]
-  return geometry.boundingBox
+  boundingBox = [minpoint, maxpoint]
+
+  cache.set(geometry, boundingBox)
+
+  return boundingBox
 }
 
 /*
@@ -70,14 +80,15 @@ const measureBoundingBoxOfGeom2 = (geometry) => {
  * @return {Array[]} the min and max bounds for the geometry
  */
 const measureBoundingBoxOfGeom3 = (geometry) => {
-  if (geometry.boundingBox) return geometry.boundingBox
+  let boundingBox = cache.get(geometry)
+  if (boundingBox) return boundingBox
 
   const polygons = geom3.toPolygons(geometry)
 
   let minpoint = vec3.create()
   if (polygons.length > 0) {
     const points = poly3.toPoints(polygons[0])
-    vec3.clone(minpoint, points[0])
+    vec3.copy(minpoint, points[0])
   }
   let maxpoint = vec3.clone(minpoint)
 
@@ -91,8 +102,11 @@ const measureBoundingBoxOfGeom3 = (geometry) => {
   minpoint = [minpoint[0], minpoint[1], minpoint[2]]
   maxpoint = [maxpoint[0], maxpoint[1], maxpoint[2]]
 
-  geometry.boundingBox = [minpoint, maxpoint]
-  return geometry.boundingBox
+  boundingBox = [minpoint, maxpoint]
+
+  cache.set(geometry, boundingBox)
+
+  return boundingBox
 }
 
 /**

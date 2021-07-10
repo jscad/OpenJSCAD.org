@@ -1,4 +1,3 @@
-const create = require('./create')
 const identity = require('./identity')
 
 const { EPSILON } = require('./constants')
@@ -7,31 +6,18 @@ const { EPSILON } = require('./constants')
  * Creates a matrix from a given angle around a given axis
  * This is equivalent to (but much faster than):
  *
- *     mat4.identity(dest);
- *     mat4.rotate(dest, dest, rad, axis);
+ *     mat4.identity(dest)
+ *     mat4.rotate(dest, dest, rad, axis)
  *
- * @param {mat4} [out] - mat4 receiving operation result
- * @param {Number} rad - the angle to rotate the matrix by
- * @param {vec3} axis - the axis of which to rotate around
- * @returns {mat4} a new matrix
+ * @param {mat4} out - receiving matrix
+ * @param {Number} rad - angle to rotate the matrix by
+ * @param {vec3} axis - axis of which to rotate around
+ * @returns {mat4} out
  * @alias module:modeling/maths/mat4.fromRotation
  * @example
- * let matrix = fromRotation(Math.PI / 2, [0, 0, 3])
+ * let matrix = fromRotation(create(), Math.PI / 2, [0, 0, 3])
  */
-const fromRotation = (...params) => {
-  let out
-  let rad
-  let axis
-
-  if (params.length === 2) {
-    out = create()
-    rad = params[0]
-    axis = params[1]
-  } else {
-    out = params[0]
-    rad = params[1]
-    axis = params[2]
-  }
+const fromRotation = (out, rad, axis) => {
   let [x, y, z] = axis
   let len = Math.sqrt(x * x + y * y + z * z)
 

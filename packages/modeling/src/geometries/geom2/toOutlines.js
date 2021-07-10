@@ -60,6 +60,7 @@ const toOutlines = (geometry) => {
 
     const connectedVertexPoints = []
     const startvertex = startside[0]
+    const v0 = vec2.create()
     while (true) {
       connectedVertexPoints.push(startside[0])
       const nextvertex = startside[1]
@@ -74,10 +75,10 @@ const toOutlines = (geometry) => {
       } else {
         // more than one side starting at the same vertex
         let bestangle
-        const startangle = vec2.angleDegrees(vec2.subtract(startside[1], startside[0]))
+        const startangle = vec2.angleDegrees(vec2.subtract(v0, startside[1], startside[0]))
         for (let sideindex = 0; sideindex < nextpossiblesides.length; sideindex++) {
           const nextpossibleside = nextpossiblesides[sideindex]
-          const nextangle = vec2.angleDegrees(vec2.subtract(nextpossibleside[1], nextpossibleside[0]))
+          const nextangle = vec2.angleDegrees(vec2.subtract(v0, nextpossibleside[1], nextpossibleside[0]))
           let angledif = nextangle - startangle
           if (angledif < -180) angledif += 360
           if (angledif >= 180) angledif -= 360

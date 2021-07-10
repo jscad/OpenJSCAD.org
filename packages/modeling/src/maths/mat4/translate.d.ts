@@ -3,5 +3,4 @@ import Vec3 from '../vec3/type'
 
 export default translate
 
-declare function translate(offsets: Vec3, matrix: Mat4): Mat4
-declare function translate(out: Mat4, offsets: Vec3, matrix: Mat4): Mat4
+declare function translate(out: Mat4, matrix: Mat4, offsets: Vec3): Mat4

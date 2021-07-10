@@ -42,25 +42,25 @@ const roundedRectangle = (options) => {
   const cornersegments = Math.floor(segments / 4)
 
   // create sets of points that define the corners
-  const corner0 = vec2.add(center, [size[0] - roundRadius, size[1] - roundRadius])
-  const corner1 = vec2.add(center, [roundRadius - size[0], size[1] - roundRadius])
-  const corner2 = vec2.add(center, [roundRadius - size[0], roundRadius - size[1]])
-  const corner3 = vec2.add(center, [size[0] - roundRadius, roundRadius - size[1]])
+  const corner0 = vec2.add(vec2.create(), center, [size[0] - roundRadius, size[1] - roundRadius])
+  const corner1 = vec2.add(vec2.create(), center, [roundRadius - size[0], size[1] - roundRadius])
+  const corner2 = vec2.add(vec2.create(), center, [roundRadius - size[0], roundRadius - size[1]])
+  const corner3 = vec2.add(vec2.create(), center, [size[0] - roundRadius, roundRadius - size[1]])
   const corner0Points = []
   const corner1Points = []
   const corner2Points = []
   const corner3Points = []
   for (let i = 0; i <= cornersegments; i++) {
     const radians = Math.PI / 2 * i / cornersegments
-    const point = vec2.fromAngleRadians(radians)
-    vec2.scale(point, roundRadius, point)
-    corner0Points.push(vec2.add(corner0, point))
-    vec2.rotate(point, Math.PI / 2, point)
-    corner1Points.push(vec2.add(corner1, point))
-    vec2.rotate(point, Math.PI / 2, point)
-    corner2Points.push(vec2.add(corner2, point))
-    vec2.rotate(point, Math.PI / 2, point)
-    corner3Points.push(vec2.add(corner3, point))
+    const point = vec2.fromAngleRadians(vec2.create(), radians)
+    vec2.scale(point, point, roundRadius)
+    corner0Points.push(vec2.add(vec2.create(), corner0, point))
+    vec2.rotate(point, point, vec2.create(), Math.PI / 2)
+    corner1Points.push(vec2.add(vec2.create(), corner1, point))
+    vec2.rotate(point, point, vec2.create(), Math.PI / 2)
+    corner2Points.push(vec2.add(vec2.create(), corner2, point))
+    vec2.rotate(point, point, vec2.create(), Math.PI / 2)
+    corner3Points.push(vec2.add(vec2.create(), corner3, point))
   }
 
   return geom2.fromPoints(corner0Points.concat(corner1Points, corner2Points, corner3Points))

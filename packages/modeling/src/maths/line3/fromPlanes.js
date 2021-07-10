@@ -6,21 +6,22 @@ const { EPS } = require('../constants')
 const fromPointAndDirection = require('./fromPointAndDirection')
 
 /**
- * Create a line in 3D space from the intersection of the given planes.
+ * Create a line the intersection of the given planes.
  *
- * @param {plane} a - the first plane of reference
- * @param {plane} b - the second plane of reference
- * @returns {line3} a new unbounded line
+ * @param {line3} out - receiving line
+ * @param {plane} plane1 - first plane of reference
+ * @param {plane} plane2 - second plane of reference
+ * @returns {line3} out
  * @alias module:modeling/maths/line3.fromPlanes
  */
-const fromPlanes = (plane1, plane2) => {
-  let direction = vec3.cross(plane1, plane2)
+const fromPlanes = (out, plane1, plane2) => {
+  let direction = vec3.cross(vec3.create(), plane1, plane2)
   let length = vec3.length(direction)
   if (length < EPS) {
     throw new Error('parallel planes do not intersect')
   }
   length = (1.0 / length)
-  direction = vec3.scale(length, direction)
+  direction = vec3.scale(direction, direction, length)
 
   const absx = Math.abs(direction[0])
   const absy = Math.abs(direction[1])
@@ -40,7 +41,7 @@ const fromPlanes = (plane1, plane2) => {
     r = solve2Linear(plane1[0], plane1[1], plane2[0], plane2[1], plane1[3], plane2[3])
     origin = vec3.fromValues(r[0], r[1], 0)
   }
-  return fromPointAndDirection(origin, direction)
+  return fromPointAndDirection(out, origin, direction)
 }
 
 module.exports = fromPlanes

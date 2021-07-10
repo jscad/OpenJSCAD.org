@@ -19,7 +19,7 @@ const create = (sides) => {
   }
   return {
     sides: sides,
-    transforms: mat4.identity()
+    transforms: mat4.create()
   }
 }
 

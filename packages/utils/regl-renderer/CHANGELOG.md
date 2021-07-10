@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.2.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.1.3...@jscad/regl-renderer@2.2.0) (2021-06-20)
+
+
+### Features
+
+* **regl-renderer:** added new command drawLines, and adjusted demos ([#863](https://github.com/jscad/OpenJSCAD.org/issues/863)) ([02b5247](https://github.com/jscad/OpenJSCAD.org/commit/02b524775165f743b1f0bcecce92a0f7784bb89b))
+
+
+
+
+
+## [2.1.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.1.2...@jscad/regl-renderer@2.1.3) (2021-06-11)
+
+**Note:** Version bump only for package @jscad/regl-renderer
+
+
+
+
+
+## [2.1.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.1.1...@jscad/regl-renderer@2.1.2) (2021-06-01)
+
+**Note:** Version bump only for package @jscad/regl-renderer
+
+
+
+
+
 ## [2.1.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.1.0...@jscad/regl-renderer@2.1.1) (2021-05-16)
 
 

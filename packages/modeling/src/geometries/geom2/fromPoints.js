@@ -26,7 +26,7 @@ const fromPoints = (points) => {
   let prevpoint = points[length - 1]
   for (let i = 0; i < length; i++) {
     const point = points[i]
-    sides.push([vec2.fromArray(prevpoint), vec2.fromArray(point)])
+    sides.push([vec2.clone(prevpoint), vec2.clone(point)])
     prevpoint = point
   }
   return create(sides)

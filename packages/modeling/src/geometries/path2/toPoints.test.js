@@ -9,9 +9,5 @@ test('toPoints: An empty path produces an empty point array', (t) => {
 })
 
 test('toPoints: An non-empty open path produces a matching point array', (t) => {
-  t.deepEqual(toPoints(fromPoints({}, [[1, 1, 0]])), [vec2.fromValues(1, 1)])
-})
-
-test('toPoints: An non-empty closed path produces a matching point array', (t) => {
-  t.deepEqual(toPoints(fromPoints({}, [[1, 1, 0]])), [vec2.fromValues(1, 1)])
+  t.deepEqual(toPoints(fromPoints({}, [[1, 1]])), [vec2.fromValues(1, 1)])
 })

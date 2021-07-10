@@ -3,4 +3,4 @@ import Vec2 from '../vec2/type'
 
 export default closestPoint
 
-declare function closestPoint(point: Vec2, line: Line2): Vec2
+declare function closestPoint(line: Line2, point: Vec2): Vec2

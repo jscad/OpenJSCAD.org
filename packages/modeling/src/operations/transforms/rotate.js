@@ -30,7 +30,7 @@ const rotate = (angles, ...objects) => {
   const pitch = angles[1]
   const roll = angles[0]
 
-  const matrix = mat4.fromTaitBryanRotation(yaw, pitch, roll)
+  const matrix = mat4.fromTaitBryanRotation(mat4.create(), yaw, pitch, roll)
 
   const results = objects.map((object) => {
     if (path2.isA(object)) return path2.transform(matrix, object)

@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-deserializer@2.3.1...@jscad/dxf-deserializer@2.3.2) (2021-06-20)
+
+**Note:** Version bump only for package @jscad/dxf-deserializer
+
+
+
+
+
+## [2.3.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-deserializer@2.3.0...@jscad/dxf-deserializer@2.3.1) (2021-06-11)
+
+
+### Bug Fixes
+
+* **dxf-deserializer:** corrected conversion of color values found on entities ([6c974aa](https://github.com/jscad/OpenJSCAD.org/commit/6c974aa54d736a29045d2ffbe24488b064680a5b))
+
+
+
+
+
+# [2.3.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-deserializer@2.2.0...@jscad/dxf-deserializer@2.3.0) (2021-06-01)
+
+
+### Features
+
+* **modeling:** rework math objects to conform with gl-matrix ([#804](https://github.com/jscad/OpenJSCAD.org/issues/804)) ([2e52f10](https://github.com/jscad/OpenJSCAD.org/commit/2e52f104e569f2bb7dd9e1be3d238f471f4d3dfa))
+
+
+
+
+
 # [2.2.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-deserializer@2.0.0-alpha.0...@jscad/dxf-deserializer@2.2.0) (2021-04-20)
 
 

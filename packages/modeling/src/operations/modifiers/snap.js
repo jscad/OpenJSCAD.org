@@ -13,7 +13,7 @@ const snapPolygons = require('./snapPolygons')
 const snapPath2 = (geometry) => {
   const epsilon = measureEpsilon(geometry)
   const points = path2.toPoints(geometry)
-  const newpoints = points.map((point) => vec2.snap(vec2.create(), epsilon, point))
+  const newpoints = points.map((point) => vec2.snap(vec2.create(), point, epsilon))
   // snap can produce duplicate points, remove those
   return path2.create(newpoints)
 }
@@ -21,7 +21,7 @@ const snapPath2 = (geometry) => {
 const snapGeom2 = (geometry) => {
   const epsilon = measureEpsilon(geometry)
   const sides = geom2.toSides(geometry)
-  let newsides = sides.map((side) => [vec2.snap(vec2.create(), epsilon, side[0]), vec2.snap(vec2.create(), epsilon, side[1])])
+  let newsides = sides.map((side) => [vec2.snap(vec2.create(), side[0], epsilon), vec2.snap(vec2.create(), side[1], epsilon)])
   // snap can produce sides with zero (0) length, remove those
   newsides = newsides.filter((side) => !vec2.equals(side[0], side[1]))
   return geom2.create(newsides)

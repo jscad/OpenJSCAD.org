@@ -55,7 +55,7 @@ const ellipse = (options) => {
 
   segments = Math.floor(segments * (rotation / (Math.PI * 2)))
 
-  const centerv = vec2.fromArray(center)
+  const centerv = vec2.clone(center)
   const step = rotation / segments // radians per segment
 
   const points = []

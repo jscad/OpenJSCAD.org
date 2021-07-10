@@ -1,5 +1,6 @@
 export { default as clone } from './clone'
 export { default as closestPoint } from './closestPoint'
+export { default as copy } from './copy'
 export { default as create } from './create'
 export { default as direction } from './direction'
 export { default as distanceToPoint } from './distanceToPoint'

@@ -12,9 +12,9 @@ const create = require('./create')
  */
 const fromPointAxisNormal = (point, axis, normal) => {
   const connector = create()
-  connector.point = vec3.fromArray(point)
-  connector.axis = vec3.unit(axis)
-  connector.normal = vec3.unit(normal)
+  connector.point = vec3.clone(point)
+  connector.axis = vec3.normalize(vec3.create(), axis)
+  connector.normal = vec3.normalize(vec3.create(), normal)
   return connector
 }
 

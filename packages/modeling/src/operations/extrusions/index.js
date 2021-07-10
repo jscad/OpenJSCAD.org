@@ -10,5 +10,6 @@ module.exports = {
   extrudeLinear: require('./extrudeLinear'),
   extrudeRectangular: require('./extrudeRectangular'),
   extrudeRotate: require('./extrudeRotate'),
+  project: require('./project'),
   slice: require('./slice')
 }

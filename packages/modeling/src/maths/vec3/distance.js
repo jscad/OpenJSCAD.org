@@ -1,8 +1,8 @@
 /**
- * Calculates the euclidian distance between the given vectors.
+ * Calculates the Euclidian distance between the given vectors.
  *
- * @param {vec3} a - the first operand
- * @param {vec3} b - the second operand
+ * @param {vec3} a - first operand
+ * @param {vec3} b - second operand
  * @returns {Number} distance
  * @alias module:modeling/maths/vec3.distance
  */

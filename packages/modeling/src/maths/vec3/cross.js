@@ -1,27 +1,13 @@
-const create = require('./create')
-
 /**
- * Computes the cross product of the given vectors.
+ * Computes the cross product of the given vectors (AxB).
  *
- * @param {vec3} [out] - the receiving vector
- * @param {vec3} a - the first operand
- * @param {vec3} b - the second operand
- * @returns {vec3} a new vector
+ * @param {vec3} out - receiving vector
+ * @param {vec3} a - first operand
+ * @param {vec3} b - second operand
+ * @returns {vec3} out
  * @alias module:modeling/maths/vec3.cross
  */
-const cross = (...params) => {
-  let out
-  let a
-  let b
-  if (params.length === 2) {
-    out = create()
-    a = params[0]
-    b = params[1]
-  } else {
-    out = params[0]
-    a = params[1]
-    b = params[2]
-  }
+const cross = (out, a, b) => {
   const ax = a[0]
   const ay = a[1]
   const az = a[2]

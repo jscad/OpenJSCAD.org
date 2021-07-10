@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.3.4...@jscad/core@2.3.5) (2021-06-20)
+
+**Note:** Version bump only for package @jscad/core
+
+
+
+
+
+## [2.3.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.3.3...@jscad/core@2.3.4) (2021-06-11)
+
+
+### Performance Improvements
+
+* **web:** removed JSON serialization of solids between worker and main threads ([#853](https://github.com/jscad/OpenJSCAD.org/issues/853)) ([a3334a6](https://github.com/jscad/OpenJSCAD.org/commit/a3334a6d8a30c69ebf5c0d2b7d08cb43b34d5197))
+
+
+
+
+
+## [2.3.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.3.2...@jscad/core@2.3.3) (2021-06-01)
+
+**Note:** Version bump only for package @jscad/core
+
+
+
+
+
 ## [2.3.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.3.1...@jscad/core@2.3.2) (2021-05-16)
 
 **Note:** Version bump only for package @jscad/core

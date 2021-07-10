@@ -11,7 +11,7 @@ const create = require('./create')
  * @alias module:modeling/geometries/poly3.transform
  */
 const transform = (matrix, poly3) => {
-  const vertices = poly3.vertices.map((vertex) => vec3.transform(matrix, vertex))
+  const vertices = poly3.vertices.map((vertex) => vec3.transform(vec3.create(), vertex, matrix))
   if (mat4.isMirroring(matrix)) {
     // reverse the order to preserve the orientation
     vertices.reverse()

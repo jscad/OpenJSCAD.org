@@ -5,8 +5,10 @@
  */
 module.exports = {
   clone: require('./clone'),
+  copy: require('./copy'),
   create: require('./create'),
   dot: require('./dot'),
+  equals: require('./equals'),
   fromScalar: require('./fromScalar'),
   fromValues: require('./fromValues'),
   toString: require('./toString'),

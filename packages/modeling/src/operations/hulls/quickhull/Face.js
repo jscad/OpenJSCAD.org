@@ -1,5 +1,5 @@
 const add = require('../../../maths/vec3/add')
-const clone = require('../../../maths/vec3/clone')
+const copy = require('../../../maths/vec3/copy')
 const cross = require('../../../maths/vec3/cross')
 const dot = require('../../../maths/vec3/dot')
 const length = require('../../../maths/vec3/length')
@@ -60,7 +60,7 @@ class Face {
     this.nVertices = 2
     this.normal = [0, 0, 0]
     while (e2 !== e0) {
-      clone(v1, v2)
+      copy(v1, v2)
       subtract(v2, e2.head().point, e0.head().point)
       add(this.normal, this.normal, cross(t, v1, v2))
       e2 = e2.next
@@ -70,7 +70,7 @@ class Face {
     // normalize the vector, since we've already calculated the area
     // it's cheaper to scale the vector using this quantity instead of
     // doing the same operation again
-    this.normal = scale(this.normal, 1 / this.area, this.normal) // TODO review scale parameters
+    this.normal = scale(this.normal, this.normal, 1 / this.area)
   }
 
   computeNormalMinArea (minArea) {
@@ -96,11 +96,11 @@ class Face {
       const maxVector = subtract([], p2, p1)
       const maxLength = Math.sqrt(maxSquaredLength)
       // maxVector is normalized after this operation
-      scale(maxVector, 1 / maxLength, maxVector) // TODO review scale parameters
+      scale(maxVector, maxVector, 1 / maxLength)
       // compute the projection of maxVector over this face normal
       const maxProjection = dot(this.normal, maxVector)
       // subtract the quantity maxEdge adds on the normal
-      scale(maxVector, -maxProjection, maxVector) // TODO review scale parameters
+      scale(maxVector, maxVector, -maxProjection)
       add(this.normal, this.normal, maxVector)
       // renormalize `this.normal`
       normalize(this.normal, this.normal)
@@ -114,7 +114,7 @@ class Face {
       add(this.centroid, this.centroid, edge.head().point)
       edge = edge.next
     } while (edge !== this.edge)
-    scale(this.centroid, 1 / this.nVertices, this.centroid)
+    scale(this.centroid, this.centroid, 1 / this.nVertices)
   }
 
   computeNormalAndCentroid (minArea) {

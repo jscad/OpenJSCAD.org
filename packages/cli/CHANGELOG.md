@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.2.4...@jscad/cli@2.2.5) (2021-06-20)
+
+**Note:** Version bump only for package @jscad/cli
+
+
+
+
+
+## [2.2.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.2.3...@jscad/cli@2.2.4) (2021-06-11)
+
+
+### Bug Fixes
+
+* **cli:** corrected assembly of options for serialization and deserialization ([8445254](https://github.com/jscad/OpenJSCAD.org/commit/8445254824a81ffd7e65ba5ab20d38cf4dcc1708))
+
+
+
+
+
+## [2.2.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.2.2...@jscad/cli@2.2.3) (2021-06-01)
+
+**Note:** Version bump only for package @jscad/cli
+
+
+
+
+
 ## [2.2.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.2.1...@jscad/cli@2.2.2) (2021-05-16)
 
 **Note:** Version bump only for package @jscad/cli

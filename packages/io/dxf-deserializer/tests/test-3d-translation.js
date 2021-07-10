@@ -1,5 +1,7 @@
 const test = require('ava')
 
+const countOf = require('../../test/helpers/countOf')
+
 const { deserialize } = require('../index')
 
 //
@@ -214,11 +216,12 @@ SEQEND
 0
 ENDSEC`
   const src3 = deserialize({ filename: 'dxf3-test', output: 'script' }, dxf3)
-  const ss3 = src3.split('\n')
-  t.is(ss3.length, 28)
-  t.true(src3.indexOf('geom3.create') > 0)
+  t.is(countOf('main', src3), 2)
+  t.is(countOf('createPolygon', src3), 11)
+  t.is(countOf('geom3.create', src3), 1)
+  t.is(countOf('color', src3), 6)
 
-  // DXF 3D POLYLINE with faces, translates to script with CSG
+  // DXF 3D POLYLINE with faces, translates to script with 3D geometry
 })
 
 test('ASCII DXF 3D FACE Entities translated to JSCAD Scripts', (t) => {
@@ -290,8 +293,7 @@ ENTITIES
 ENDSEC`
   // expect a script which calls createPolygon for each 3DFACE, and creates a new 3D geometry
   const src1 = deserialize({ filename: 'dxf1-test', output: 'script' }, dxf1)
-  const ss1 = src1.split('\n')
-  t.is(ss1.length, 24)
-  t.true(src1.indexOf('createPolygon(') > 0)
-  t.true(src1.indexOf('geom3.create(') > 0)
+  t.is(countOf('main', src1), 2)
+  t.is(countOf('createPolygon', src1), 3)
+  t.is(countOf('geom3.create', src1), 1)
 })

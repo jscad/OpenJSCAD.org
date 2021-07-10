@@ -235,11 +235,12 @@ const insertTjunctions = (polygons) => {
                 const startpos = startvertex
                 const endpos = endvertex
                 const checkpos = matchingsidestartvertex
-                const direction = vec3.subtract(checkpos, startpos)
+                const direction = vec3.subtract(vec3.create(), checkpos, startpos)
                 // Now we need to check if endpos is on the line startpos-checkpos:
-                const t = vec3.dot(vec3.subtract(endpos, startpos), direction) / vec3.dot(direction, direction)
+                const t = vec3.dot(vec3.subtract(vec3.create(), endpos, startpos), direction) / vec3.dot(direction, direction)
                 if ((t > 0) && (t < 1)) {
-                  const closestpoint = vec3.add(startpos, vec3.scale(t, direction))
+                  const closestpoint = vec3.scale(vec3.create(), direction, t)
+                  vec3.add(closestpoint, closestpoint, startpos)
                   const distancesquared = vec3.squaredDistance(closestpoint, endpos)
                   if (distancesquared < (constants.EPS * constants.EPS)) {
                     // Yes it's a t-junction! We need to split matchingside in two:

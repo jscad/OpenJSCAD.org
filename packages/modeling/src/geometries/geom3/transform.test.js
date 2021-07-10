@@ -9,7 +9,7 @@ const { comparePolygons, compareVectors } = require('../../../test/helpers/')
 test('transform: Adjusts the transforms of a populated geom3', (t) => {
   const points = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]
   const rotation = 90 * 0.017453292519943295
-  const rotate90 = mat4.fromZRotation(rotation)
+  const rotate90 = mat4.fromZRotation(mat4.create(), rotation)
 
   // continue with typical user scenario, several itterations of transforms and access
 
@@ -29,7 +29,7 @@ test('transform: Adjusts the transforms of a populated geom3', (t) => {
 
   // expect lazy transform, i.e. only the transforms change
   expected.transforms = [6.123234262925839e-17, 1, 0, 0, -1, 6.123234262925839e-17, 0, 0, 0, 0, 1, 0, 5, 10, 15, 1]
-  another = transform(mat4.fromTranslation([5, 10, 15]), another)
+  another = transform(mat4.fromTranslation(mat4.create(), [5, 10, 15]), another)
   t.true(comparePolygons(another.polygons[0], expected.polygons[0]))
   t.true(compareVectors(another.transforms, expected.transforms))
 
@@ -37,14 +37,14 @@ test('transform: Adjusts the transforms of a populated geom3', (t) => {
   expected.polygons = [
     { vertices: [[5, 10, 15], [5, 11, 15], [5, 11, 16]] }
   ]
-  expected.transforms = mat4.identity()
+  expected.transforms = mat4.create()
   toPolygons(another)
   t.true(comparePolygons(another.polygons[0], expected.polygons[0]))
   t.true(compareVectors(another.transforms, expected.transforms))
 
   // expect lazy transform, i.e. only the transforms change
   expected.transforms = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 10, 15, 1]
-  another = transform(mat4.fromTranslation([5, 10, 15]), another)
+  another = transform(mat4.fromTranslation(mat4.create(), [5, 10, 15]), another)
   t.true(comparePolygons(another.polygons[0], expected.polygons[0]))
   t.true(compareVectors(another.transforms, expected.transforms))
 })

@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.3.3...@jscad/web@2.4.0) (2021-06-20)
+
+
+### Features
+
+* **regl-renderer:** added new command drawLines, and adjusted demos ([#863](https://github.com/jscad/OpenJSCAD.org/issues/863)) ([02b5247](https://github.com/jscad/OpenJSCAD.org/commit/02b524775165f743b1f0bcecce92a0f7784bb89b))
+
+
+
+
+
+## [2.3.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.3.2...@jscad/web@2.3.3) (2021-06-11)
+
+
+### Bug Fixes
+
+* **web:** fix render onresize ([#854](https://github.com/jscad/OpenJSCAD.org/issues/854)) ([c57f6a0](https://github.com/jscad/OpenJSCAD.org/commit/c57f6a0a0391443abe3572b8d2d63851dd441036))
+
+
+### Performance Improvements
+
+* **web:** removed JSON serialization of solids between worker and main threads ([#853](https://github.com/jscad/OpenJSCAD.org/issues/853)) ([a3334a6](https://github.com/jscad/OpenJSCAD.org/commit/a3334a6d8a30c69ebf5c0d2b7d08cb43b34d5197))
+
+
+
+
+
+## [2.3.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.3.1...@jscad/web@2.3.2) (2021-06-01)
+
+**Note:** Version bump only for package @jscad/web
+
+
+
+
+
 ## [2.3.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.3.0...@jscad/web@2.3.1) (2021-05-16)
 
 

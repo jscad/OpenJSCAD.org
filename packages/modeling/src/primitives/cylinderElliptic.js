@@ -65,22 +65,28 @@ const cylinderElliptic = (options) => {
 
   const start = vec3.fromValues(0, 0, -(height / 2))
   const end = vec3.fromValues(0, 0, height / 2)
-  const ray = vec3.subtract(end, start)
+  const ray = vec3.subtract(vec3.create(), end, start)
 
-  const axisZ = vec3.unit(ray)
-  const axisX = vec3.unit(vec3.orthogonal(axisZ))
-  const axisY = vec3.unit(vec3.cross(axisZ, axisX))
+  const axisX = vec3.fromValues(1, 0, 0)
+  const axisY = vec3.fromValues(0, 1, 0)
 
+  const v1 = vec3.create()
+  const v2 = vec3.create()
+  const v3 = vec3.create()
   const point = (stack, slice, radius) => {
     const angle = slice * rotation + startAngle
-    const out = vec3.add(vec3.scale(radius[0] * Math.cos(angle), axisX), vec3.scale(radius[1] * Math.sin(angle), axisY))
-    const pos = vec3.add(vec3.add(vec3.scale(stack, ray), start), out)
-    return pos
+    vec3.scale(v1, axisX, radius[0] * Math.cos(angle))
+    vec3.scale(v2, axisY, radius[1] * Math.sin(angle))
+    vec3.add(v1, v1, v2)
+
+    vec3.scale(v3, ray, stack)
+    vec3.add(v3, v3, start)
+    return vec3.add(vec3.create(), v1, v3)
   }
 
   // adjust the points to center
   const fromPoints = (...points) => {
-    const newpoints = points.map((point) => vec3.add(point, center))
+    const newpoints = points.map((point) => vec3.add(vec3.create(), point, center))
     return poly3.fromPoints(newpoints)
   }
 

@@ -14,7 +14,7 @@ const extrudePolygon = (offsetvector, polygon1) => {
 
   const newpolygons = [polygon1]
 
-  const polygon2 = poly3.transform(mat4.fromTranslation(offsetvector), polygon1)
+  const polygon2 = poly3.transform(mat4.fromTranslation(mat4.create(), offsetvector), polygon1)
   const numvertices = polygon1.vertices.length
   for (let i = 0; i < numvertices; i++) {
     const sidefacepoints = []

@@ -107,7 +107,6 @@ const createObject = (obj, index, data, options) => {
   }
 
   const addMesh = (mesh, midx) => {
-    // console.log(mesh.type);
     if (mesh.type === 'mesh') {
       mesh.objects.forEach(addPart)
     }
@@ -116,10 +115,12 @@ const createObject = (obj, index, data, options) => {
   // const output =
   if (options.instantiate === true) {
     const scale = options.amf.scale
-    const vertex = scale !== 1.0 ? ([x, y, z]) => maths.vec3.fromValues(x * scale, y * scale, z * scale)
-      : (v) => maths.vec3.fromArray(v)
+    const vertex = scale !== 1.0
+      ? ([x, y, z]) => maths.vec3.fromValues(x * scale, y * scale, z * scale)
+      : (v) => maths.vec3.clone(v)
 
     obj.objects.forEach(addMesh)
+    const ocolor = getColor(obj.objects)
 
     const fcount = faces.length
     const vcount = vertices.length
@@ -138,13 +139,18 @@ const createObject = (obj, index, data, options) => {
       if (pcolor) polygon.color = pcolor
       polygons.push(polygon)
     }
-    return geometries.geom3.create(polygons)
+    let shape = geometries.geom3.create(polygons)
+    if (ocolor) {
+      shape = shape.color = ocolor
+    }
+    return shape
   }
 
   let code = ''
   if (obj.objects.length > 0) {
     // build a list of faces and vertices
     obj.objects.forEach(addMesh)
+    const ocolor = getColor(obj.objects)
 
     const fcount = faces.length
     const vcount = vertices.length
@@ -180,6 +186,9 @@ const createObject${obj.id} = () => {
     const scale = options.scale ? options.scale : 1.0
     if (scale !== 1.0) {
       code += `  shape = transforms.scale([${scale},${scale},${scale}], shape)\n`
+    }
+    if (ocolor) {
+      code += `  shape = colors.colorize([${ocolor}], shape)\n`
     }
 
     code += '  return shape\n}\n'

@@ -1,12 +1,17 @@
-const fromValues = require('./fromValues')
-
 /**
  * Creates a vector from a single scalar value.
  * All components of the resulting vector have the given value.
- * @param {Float} scalar
- * @returns {Vec3} a new vector
+ *
+ * @param {vec3} out - receiving vector
+ * @param {Number} scalar
+ * @returns {Vec3} out
  * @alias module:modeling/maths/vec3.fromScalar
  */
-const fromScalar = (scalar) => fromValues(scalar, scalar, scalar)
+const fromScalar = (out, scalar) => {
+  out[0] = scalar
+  out[1] = scalar
+  out[2] = scalar
+  return out
+}
 
 module.exports = fromScalar

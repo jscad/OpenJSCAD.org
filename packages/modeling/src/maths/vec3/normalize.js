@@ -1,26 +1,15 @@
-const create = require('./create')
-
 /**
  * Normalize the given vector.
  *
- * @param {vec3} [out] - the receiving vector
+ * @param {vec3} out - receiving vector
  * @param {vec3} vector - vector to normalize
- * @returns {vec3} a new (unit) vector
+ * @returns {vec3} out
  * @alias module:modeling/maths/vec3.normalize
  */
-const normalize = (...params) => {
-  let a
-  let out
-  if (params.length === 1) {
-    a = params[0]
-    out = create()
-  } else {
-    out = params[0]
-    a = params[1]
-  }
-  const x = a[0]
-  const y = a[1]
-  const z = a[2]
+const normalize = (out, vector) => {
+  const x = vector[0]
+  const y = vector[1]
+  const z = vector[2]
   let len = x * x + y * y + z * z
   if (len > 0) {
     len = 1 / Math.sqrt(len)

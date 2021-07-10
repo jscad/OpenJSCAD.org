@@ -33,9 +33,9 @@ const main = () => {
       numberOfSlices: 32,
       callback: (progress, count, base) => {
         const scaleFactor = 1 + (0.03 * Math.cos(3 * Math.PI * progress))
-        const scaleMatrix = mat4.fromScaling([scaleFactor, 2 - scaleFactor, 1])
-        const transformMatrix = mat4.fromTranslation([0, 0, progress * height])
-        return slice.transform(mat4.multiply(scaleMatrix, transformMatrix), base)
+        const scaleMatrix = mat4.fromScaling(mat4.create(), [scaleFactor, 2 - scaleFactor, 1])
+        const transformMatrix = mat4.fromTranslation(mat4.create(), [0, 0, progress * height])
+        return slice.transform(mat4.multiply(mat4.create(), scaleMatrix, transformMatrix), base)
       }
     }, squareWithHole)
   }
@@ -51,7 +51,7 @@ const main = () => {
         callback: (progress, count, base) => {
           const newPolygon = circle({ radius: 2 + (5 * progress), segments: 4 + (count * count) })
           let newSlice = slice.fromSides(geom2.toSides(newPolygon))
-          newSlice = slice.transform(mat4.fromTranslation([0, 0, progress * height]), newSlice)
+          newSlice = slice.transform(mat4.fromTranslation(mat4.create(), [0, 0, progress * height]), newSlice)
           return newSlice
         }
       }, base

@@ -30,10 +30,10 @@ const rectangle = (options) => {
   const pswap = [point[0], -point[1]]
 
   const points = [
-    vec2.subtract(center, point),
-    vec2.add(center, pswap),
-    vec2.add(center, point),
-    vec2.subtract(center, pswap)
+    vec2.subtract(vec2.create(), center, point),
+    vec2.add(vec2.create(), center, pswap),
+    vec2.add(vec2.create(), center, point),
+    vec2.subtract(vec2.create(), center, pswap)
   ]
   return geom2.fromPoints(points)
 }

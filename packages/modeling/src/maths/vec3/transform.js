@@ -1,27 +1,13 @@
-const create = require('./create')
-
 /**
  * Transforms the given vector using the given matrix.
- * @param {vec3} [out] - the receiving vector
- * @param {mat4} matrix - the transform matrix
- * @param {vec3} vector - the vector to transform
- * @returns {vec3} a new vector
+ *
+ * @param {vec3} out - receiving vector
+ * @param {vec3} vector - vector to transform
+ * @param {mat4} matrix - transform matrix
+ * @returns {vec3} out
  * @alias module:modeling/maths/vec3.transform
  */
-const transform = (...params) => {
-  let out
-  let vector
-  let matrix
-  if (params.length === 2) {
-    out = create()
-    matrix = params[0]
-    vector = params[1]
-  } else {
-    out = params[0]
-    matrix = params[1]
-    vector = params[2]
-  }
-
+const transform = (out, vector, matrix) => {
   const x = vector[0]
   const y = vector[1]
   const z = vector[2]

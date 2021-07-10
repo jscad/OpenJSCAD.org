@@ -9,10 +9,10 @@ const poly3 = require('../../geometries/poly3')
  */
 const to3DWall = (z0, z1, side) => {
   const points = [
-    vec3.fromVec2(side[0], z0),
-    vec3.fromVec2(side[1], z0),
-    vec3.fromVec2(side[1], z1),
-    vec3.fromVec2(side[0], z1)
+    vec3.fromVec2(vec3.create(), side[0], z0),
+    vec3.fromVec2(vec3.create(), side[1], z0),
+    vec3.fromVec2(vec3.create(), side[1], z1),
+    vec3.fromVec2(vec3.create(), side[0], z1)
   ]
   return poly3.fromPoints(points)
 }

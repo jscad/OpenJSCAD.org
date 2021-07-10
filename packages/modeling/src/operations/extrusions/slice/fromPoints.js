@@ -25,7 +25,7 @@ const fromPoints = (points) => {
   const edges = []
   let prevpoint = points[points.length - 1]
   points.forEach((point) => {
-    if (point.length === 2) edges.push([vec3.fromVec2(prevpoint), vec3.fromVec2(point)])
+    if (point.length === 2) edges.push([vec3.fromVec2(vec3.create(), prevpoint), vec3.fromVec2(vec3.create(), point)])
     if (point.length === 3) edges.push([prevpoint, point])
     prevpoint = point
   })

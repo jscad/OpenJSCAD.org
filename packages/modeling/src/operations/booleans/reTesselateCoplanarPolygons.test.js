@@ -7,12 +7,12 @@ const { poly3 } = require('../../geometries')
 const reTesselateCoplanarPolygons = require('./reTesselateCoplanarPolygons')
 
 const translatePoly3 = (offsets, polygon) => {
-  const matrix = mat4.fromTranslation(offsets)
+  const matrix = mat4.fromTranslation(mat4.create(), offsets)
   return poly3.transform(matrix, polygon)
 }
 
 const rotatePoly3 = (angles, polygon) => {
-  const matrix = mat4.fromTaitBryanRotation((angles[0] * 0.017453292519943295), (angles[1] * 0.017453292519943295), (angles[2] * 0.017453292519943295))
+  const matrix = mat4.fromTaitBryanRotation(mat4.create(), (angles[0] * 0.017453292519943295), (angles[1] * 0.017453292519943295), (angles[2] * 0.017453292519943295))
   return poly3.transform(matrix, polygon)
 }
 

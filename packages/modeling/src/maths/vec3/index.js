@@ -7,15 +7,14 @@ module.exports = {
   abs: require('./abs'),
   add: require('./add'),
   angle: require('./angle'),
-  canonicalize: require('./canonicalize'),
   clone: require('./clone'),
+  copy: require('./copy'),
   create: require('./create'),
   cross: require('./cross'),
   distance: require('./distance'),
   divide: require('./divide'),
   dot: require('./dot'),
   equals: require('./equals'),
-  fromArray: require('./fromArray'),
   fromScalar: require('./fromScalar'),
   fromValues: require('./fromValues'),
   fromVec2: require('./fromVec2'),
@@ -36,6 +35,5 @@ module.exports = {
   squaredLength: require('./squaredLength'),
   subtract: require('./subtract'),
   toString: require('./toString'),
-  transform: require('./transform'),
-  unit: require('./unit')
+  transform: require('./transform')
 }

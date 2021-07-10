@@ -1,19 +1,11 @@
-const create = require('./create')
-
 /**
- * Set a matrix to the identity matrix.
+ * Set a matrix to the identity transform.
  *
- * @param {mat4} [out] - the receiving matrix
- * @returns {mat4} a new matrix
+ * @param {mat4} out - receiving matrix
+ * @returns {mat4} out
  * @alias module:modeling/maths/mat4.identity
  */
-const identity = (...params) => {
-  let out
-  if (params.length === 1) {
-    out = params[0]
-  } else {
-    out = create()
-  }
+const identity = (out) => {
   out[0] = 1
   out[1] = 0
   out[2] = 0

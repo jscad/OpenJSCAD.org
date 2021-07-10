@@ -1,6 +1,6 @@
 {
   "name": "@jscad/svg-serializer",
-  "version": "2.2.0",
+  "version": "2.2.3",
   "description": "SVG Serializer for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
@@ -31,7 +31,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/modeling": "2.2.0",
+    "@jscad/modeling": "2.5.0",
     "onml": "1.2.0"
   },
   "devDependencies": {

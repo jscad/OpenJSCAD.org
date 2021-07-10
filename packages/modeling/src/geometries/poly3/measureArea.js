@@ -18,9 +18,9 @@ const measureArea = (poly3) => {
   const a = vertices[0]
   const b = vertices[1]
   const c = vertices[2]
-  const ba = vec3.subtract(b, a)
-  const ca = vec3.subtract(c, a)
-  const normal = vec3.cross(ba, ca)
+  const ba = vec3.subtract(vec3.create(), b, a)
+  const ca = vec3.subtract(vec3.create(), c, a)
+  const normal = vec3.cross(ba, ba, ca)
 
   // determin direction of projection
   const ax = Math.abs(normal[0])

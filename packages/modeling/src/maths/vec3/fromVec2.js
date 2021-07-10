@@ -1,11 +1,17 @@
-const fromValues = require('./fromValues')
-
 /**
  * Create a new vector by extending a 2D vector with a Z value.
- * @param {Array} vector - the vector of values
+ *
+ * @param {vec3} out - receiving vector
+ * @param {Array} vector - 2D vector of values
  * @param {Number} [z=0] - Z value
+ * @returns {vec3} out
  * @alias module:modeling/maths/vec3.fromVec2
  */
-const fromVector2 = (vec2, z = 0) => fromValues(vec2[0], vec2[1], z)
+const fromVector2 = (out, vec2, z = 0) => {
+  out[0] = vec2[0]
+  out[1] = vec2[1]
+  out[2] = z
+  return out
+}
 
 module.exports = fromVector2

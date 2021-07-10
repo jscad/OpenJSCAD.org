@@ -48,12 +48,13 @@ const arc = (options) => {
 
   const minangle = Math.acos(((radius * radius) + (radius * radius) - (EPS * EPS)) / (2 * radius * radius))
 
-  const centerv = vec2.fromArray(center)
+  const centerv = vec2.clone(center)
   let point
   const pointArray = []
   if (rotation < minangle) {
     // there is no rotation, just a single point
-    point = vec2.scale(radius, vec2.fromAngleRadians(startAngle))
+    point = vec2.fromAngleRadians(vec2.create(), startAngle)
+    vec2.scale(point, point, radius)
     vec2.add(point, point, centerv)
     pointArray.push(point)
   } else {
@@ -71,7 +72,8 @@ const arc = (options) => {
         if (step > numsteps) step = numsteps
       }
       const angle = startAngle + (step * (rotation / numsteps))
-      point = vec2.scale(radius, vec2.fromAngleRadians(angle))
+      point = vec2.fromAngleRadians(vec2.create(), angle)
+      vec2.scale(point, point, radius)
       vec2.add(point, point, centerv)
       pointArray.push(point)
     }

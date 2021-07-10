@@ -58,6 +58,8 @@ const viewer = (state, i18n) => {
     render = prepareRender(viewerOptions)
     const gestures = pointerGestures(el)
 
+    window.addEventListener('resize', (evt) => { updateView = true })
+
     // rotate & pan
     gestures.drags
       .forEach((data) => {
@@ -199,8 +201,9 @@ const setup = (element) => {
     camera,
     drawCommands: {
       // draw commands bootstrap themselves the first time they are run
-      drawGrid: drawCommands.drawGrid,
       drawAxis: drawCommands.drawAxis,
+      drawGrid: drawCommands.drawGrid,
+      drawLines: drawCommands.drawLines,
       drawMesh: drawCommands.drawMesh
     },
     // data

@@ -1,31 +1,19 @@
 const vec3 = require('../vec3')
 
-const clone = require('./clone')
-const create = require('./create')
 const fromPointAndDirection = require('./fromPointAndDirection')
 
 /**
- * Create a new line in the opposite direction as the given.
+ * Create a line in the opposite direction as the given.
  *
- * @param {line3} [out] - receiving line
- * @param {line3} line - the line to reverse
- * @returns {line3} a new unbounded line
+ * @param {line3} out - receiving line
+ * @param {line3} line - line to reverse
+ * @returns {line3} out
  * @alias module:modeling/maths/line3.reverse
  */
-const reverse = (...params) => {
-  let out
-  let line
-  if (params.length === 1) {
-    out = create()
-    line = params[0]
-  } else {
-    out = params[0]
-    line = params[1]
-  }
-
+const reverse = (out, line) => {
   const point = vec3.clone(line[0])
-  const direction = vec3.negate(line[1])
-  return clone(out, fromPointAndDirection(point, direction))
+  const direction = vec3.negate(vec3.create(), line[1])
+  return fromPointAndDirection(out, point, direction)
 }
 
 module.exports = reverse

@@ -5,6 +5,8 @@ const geom3 = require('../geometries/geom3')
 const path2 = require('../geometries/path2')
 const poly3 = require('../geometries/poly3')
 
+const cache = new WeakMap()
+
 /*
  * Measure the area of the given geometry.
  * NOTE: paths are infinitely narrow and do not have an area
@@ -23,12 +25,16 @@ const measureAreaOfPath2 = () => 0
  * @returns {Number} area of the geometry
  */
 const measureAreaOfGeom2 = (geometry) => {
-  if (geometry.area) return geometry.area
+  let area = cache.get(geometry)
+  if (area) return area
 
   const sides = geom2.toSides(geometry)
-  const area = sides.reduce((area, side) => area + (side[0][0] * side[1][1] - side[0][1] * side[1][0]), 0)
-  geometry.area = area * 0.5
-  return geometry.area
+  area = sides.reduce((area, side) => area + (side[0][0] * side[1][1] - side[0][1] * side[1][0]), 0)
+  area *= 0.5
+
+  cache.set(geometry, area)
+
+  return area
 }
 
 /*
@@ -38,11 +44,15 @@ const measureAreaOfGeom2 = (geometry) => {
  * @returns {Number} area of the geometry
  */
 const measureAreaOfGeom3 = (geometry) => {
-  if (geometry.area) return geometry.area
+  let area = cache.get(geometry)
+  if (area) return area
 
   const polygons = geom3.toPolygons(geometry)
-  geometry.area = polygons.reduce((area, polygon) => area + poly3.measureArea(polygon), 0)
-  return geometry.area
+  area = polygons.reduce((area, polygon) => area + poly3.measureArea(polygon), 0)
+
+  cache.set(geometry, area)
+
+  return area
 }
 
 /**

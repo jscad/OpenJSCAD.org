@@ -1,10 +1,10 @@
 const vec3 = require('../vec3')
 
 /**
- * Compare the given 3D lines for equality.
+ * Compare the given lines for equality.
  *
- * @param {line3} a - the first line to compare
- * @param {line3} b - the second line to compare
+ * @param {line3} a - first line to compare
+ * @param {line3} b - second line to compare
  * @return {Boolean} true if lines are equal
  * @alias module:modeling/maths/line3.equals
  */

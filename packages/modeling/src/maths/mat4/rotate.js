@@ -1,39 +1,22 @@
-const create = require('./create')
-const clone = require('./clone')
+const copy = require('./copy')
 
 /**
  * Rotates a matrix by the given angle about the given axis.
  *
- * @param {mat4} [out] - the receiving matrix
- * @param {Number} rad - the angle to rotate the matrix by
- * @param {vec3} axis - the axis to rotate around
- * @param {mat4} matrix - the matrix to rotate
- * @returns {mat4} a new matrix
+ * @param {mat4} out - receiving matrix
+ * @param {mat4} matrix - matrix to rotate
+ * @param {Number} radians - angle to rotate the matrix by
+ * @param {vec3} axis - axis to rotate around
+ * @returns {mat4} out
  * @alias module:modeling/maths/mat4.rotate
  */
-const rotate = (...params) => {
-  let out
-  let matrix
-  let rad
-  let axis
-  if (params.length === 3) {
-    out = create()
-    rad = params[0]
-    axis = params[1]
-    matrix = params[2]
-  } else {
-    out = params[0]
-    rad = params[1]
-    axis = params[2]
-    matrix = params[3]
-  }
-
+const rotate = (out, matrix, radians, axis) => {
   let [x, y, z] = axis
   let len = Math.sqrt(x * x + y * y + z * z)
 
   if (Math.abs(len) < 0.000001) {
     // axis is 0,0,0 or almost
-    return clone(out, matrix)
+    return copy(out, matrix)
   }
 
   len = 1 / len
@@ -41,8 +24,8 @@ const rotate = (...params) => {
   y *= len
   z *= len
 
-  const s = Math.sin(rad)
-  const c = Math.cos(rad)
+  const s = Math.sin(radians)
+  const c = Math.cos(radians)
   const t = 1 - c
 
   const a00 = matrix[0]
