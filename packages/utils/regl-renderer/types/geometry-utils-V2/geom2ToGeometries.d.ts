@@ -1,10 +1,4 @@
+import { Geom2, Geometry } from '@jscad/modeling/src/geometries/types'
+
 export = geom2ToGeometries;
-declare function geom2ToGeometries(options: any, solid: any): {
-    type: string;
-    positions: any[][];
-    normals: number[][];
-    indices: number[];
-    transforms: any;
-    color: any;
-    isTransparent: boolean;
-}[];
+declare function geom2ToGeometries(options: any, solid: Geom2): Geometry[];

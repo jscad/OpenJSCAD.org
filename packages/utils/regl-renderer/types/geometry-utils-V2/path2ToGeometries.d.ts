@@ -1,10 +1,4 @@
+import { Geometry, Path2 } from '@jscad/modeling/src/geometries/types'
+
 export = path2ToGeometries;
-declare function path2ToGeometries(options: any, solid: any): {
-    type: string;
-    positions: any[][];
-    normals: number[][];
-    indices: number[];
-    transforms: any;
-    color: any;
-    isTransparent: boolean;
-}[];
+declare function path2ToGeometries(options: any, solid: Path2): Geometry[];

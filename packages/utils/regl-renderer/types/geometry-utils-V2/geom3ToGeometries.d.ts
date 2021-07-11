@@ -1,10 +1,4 @@
+import { Geom3, Geometry } from '@jscad/modeling/src/geometries/types'
+
 export = geom3ToGeometries;
-declare function geom3ToGeometries(options: any, solid: any): {
-    type: string;
-    positions: any[][];
-    normals: any[];
-    indices: number[][];
-    colors: any[][];
-    transforms: any;
-    isTransparent: boolean;
-}[];
+declare function geom3ToGeometries(options: any, solid: Geom3): Geometry[];
