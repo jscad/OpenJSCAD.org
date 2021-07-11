@@ -31,10 +31,11 @@ export namespace controlsState {
   const phiDelta: number
   const scale: number
 }
+export const defaults: any;
 export function update({ controls, camera }: {
   controls: typeof controlsState;
   camera: typeof import('../cameras/orthographicCamera').cameraState | typeof import('../cameras/perspectiveCamera').cameraState;
-}, output: any): {
+}, output?: any): {
   controls: {
     thetaDelta: number;
     phiDelta: number;

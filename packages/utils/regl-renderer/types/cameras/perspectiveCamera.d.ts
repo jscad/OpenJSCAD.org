@@ -13,5 +13,7 @@ export namespace cameraState {
   const viewport: number[]
   const projectionType: string
 }
-export function setProjection(output: typeof cameraState, camera: typeof cameraState, input: { width: number; height: number }): typeof cameraState;
-export function update(output: typeof cameraState, camera: typeof cameraState): typeof cameraState;
+export const cameraProps: {};
+export const defaults: any;
+export function setProjection(output: typeof cameraState | null, camera: typeof cameraState, input: { width: number; height: number }): typeof cameraState;
+export function update(output: typeof cameraState, camera?: typeof cameraState): typeof cameraState;

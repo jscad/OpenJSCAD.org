@@ -14,4 +14,5 @@ export namespace cameraState {
   const zoom: number
   const projectionType: string
 }
+export const cameraProps: {};
 export function setProjection(camera: typeof cameraState, input: { width: number; height: number }): typeof cameraState;
