@@ -1,2 +1,2 @@
 export = boundingBox;
-declare function boundingBox(positions: any): any[][];
+declare function boundingBox(positions: number[][]): number[][];

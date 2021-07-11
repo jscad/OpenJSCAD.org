@@ -1,2 +1,2 @@
 export = boundingSphere;
-declare function boundingSphere(center: any, positions: any): number;
+declare function boundingSphere(center: number[], positions: number[][]): number;

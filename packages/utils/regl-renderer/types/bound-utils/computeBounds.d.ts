@@ -1,8 +1,10 @@
+import { Geometry } from '@jscad/modeling/src/geometries/types'
+
 export = computeBounds;
-declare function computeBounds(...geometries: any[]): {
-    dia: any;
-    center: any[];
-    min: any[];
-    max: any[];
-    size: any[];
+declare function computeBounds(...geometries: Geometry[]): {
+    dia: number;
+    center: number[];
+    min: number[];
+    max: number[];
+    size: number[];
 };
