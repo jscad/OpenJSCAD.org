@@ -1,4 +1,4 @@
+import { DefaultContext, DrawCommand, Regl } from 'regl'
+
 export = drawMesh;
-declare function drawMesh(regl: any, params?: {
-    extras: {};
-}): any;
+declare function drawMesh(regl: Regl, params?: { extras: {} }): DrawCommand<DefaultContext, {}>;

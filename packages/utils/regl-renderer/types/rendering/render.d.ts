@@ -1,2 +1,4 @@
+import { InitializationOptions } from 'regl'
+
 export = prepareRender;
-declare function prepareRender(params: any): (data: any) => void;
+declare function prepareRender(params: {  glOptions: InitializationOptions}): (data: any) => void;
