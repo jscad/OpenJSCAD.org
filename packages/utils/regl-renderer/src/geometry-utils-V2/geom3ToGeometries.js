@@ -77,7 +77,6 @@ const geom3ToGeometries = (options, solid) => {
       indices,
       colors,
       transforms,
-      flip: mat4.determinant(transforms) < 0,
       isTransparent
     }
     geometries.push(geometry)

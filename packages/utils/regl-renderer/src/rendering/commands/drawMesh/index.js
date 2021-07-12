@@ -18,13 +18,15 @@ const drawMesh = (regl, params = { extras: {} }) => {
   const hasIndices = !!(geometry.indices && geometry.indices.length > 0)
   const hasNormals = !!(geometry.normals && geometry.normals.length > 0)
   const hasVertexColors = !!(useVertexColors && geometry.colors && geometry.colors.length > 0)
+  const transforms = geometry.transforms || mat4.create()
+  const flip = mat4.determinant(transforms) < 0
   const cullFace = dynamicCulling
-    ? (context, props) => geometry.flip ? 'front' : 'back'
+    ? (flip ? 'front' : 'back')
     : 'back'
 
   const vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
   const frag = hasVertexColors ? require('./vColorShaders').frag : require('./meshShaders').frag
-  const modelMatrixInv = mat4.invert(mat4.create(), geometry.transforms || mat4.create())
+  const modelMatrixInv = mat4.invert(mat4.create(), transforms)
 
   // console.log('type', geometry.type, 'color', color, hasVertexColors)
 
@@ -34,7 +36,7 @@ const drawMesh = (regl, params = { extras: {} }) => {
     frag,
 
     uniforms: {
-      model: (context, props) => props.model || geometry.transforms || mat4.create(),
+      model: (context, props) => transforms ,
       ucolor: (context, props) => (props && props.color) ? props.color : color,
       // semi hack, woraround to enable/disable vertex colors !!!
       vColorToggler: (context, props) => (props && props.useVertexColors && props.useVertexColors === true) ? 1.0 : 0.0,
