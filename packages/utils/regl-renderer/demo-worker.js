@@ -369,7 +369,6 @@ function resize({width,height}){
   sendCmd({ action:'resize', width: canvas.offsetWidth, height: canvas.offsetHeight})
 }
 
-console.log(workerScript.toString());
 if(document.location.toString().indexOf('no_worker') == -1){
   let blob = new Blob(['(',workerScript.toString(),'())'],{type: 'text/javascript'});
   window.worker = new Worker(window.URL.createObjectURL(blob));
