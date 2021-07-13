@@ -93,7 +93,7 @@ function workerScript(){
     )
   }
 
-  const startRenderer = (canvas, cameraPosition, cameraTarget, axis={}, grid={})=>{
+  const startRenderer = ({canvas, cameraPosition, cameraTarget, axis={}, grid={}})=>{
     const { prepareRender, drawCommands, cameras, controls } = require('@jscad/regl-renderer')
     // ********************
     // Renderer configuration and initiation.
@@ -105,7 +105,7 @@ function workerScript(){
     state.canvas = canvas
     // prepare the camera
     state.camera = Object.assign({}, perspectiveCamera.defaults)
-    state.camera.position = cameraPosition || [150, -180, 233]
+    if(cameraPosition) state.camera.position =  cameraPosition
     if(cameraTarget) state.camera.target   = cameraTarget
 
     resize({ width:canvas.width, height:canvas.height })
@@ -263,13 +263,14 @@ function workerScript(){
       runMain(params)
     },
     resize,
-    init: ({canvas, baseURI, alias=[]})=>{
+    init: (params)=>{
+      let {baseURI, alias=[]} = params
       if(!baseURI && typeof document != 'undefined' && document.baseURI){
         baseURI = document.baseURI
       }
       
       if(baseURI) workerBaseURI = baseURI.toString()
-      
+
       alias.forEach(arr=>{
         let [orig, ...aliases] = arr
         aliases.forEach(a=>{  
@@ -277,7 +278,7 @@ function workerScript(){
           if(a.toLowerCase().substr(-3)!=='.js') require.alias[a+'.js'] = orig
         })
       })
-      startRenderer(canvas)
+      startRenderer(params)
       initialized = true
     },
   }
@@ -303,8 +304,11 @@ function workerScript(){
 
 }
 
-const init = ({canvas, alias, baseURI})=>{
-  canvas.width = canvas.clientWidth
+const init = (params)=>{
+  let { canvas, baseURI=document.location.toString() } = params
+  console.log('canvas',canvas);
+
+  canvas.width  = canvas.clientWidth
   canvas.height = canvas.clientHeight
 
   // convert HTML events (mouse movement) to viewer changes
@@ -356,10 +360,12 @@ const init = ({canvas, alias, baseURI})=>{
   canvas.onpointerup = upHandler
   canvas.onwheel = wheelHandler
 
-  sendCmd({action:'init', canvas:offscreen, 
-    width:canvas.width, height:canvas.height,
-    alias,
-    baseURI,
+  sendCmd({...params, 
+    action:'init', 
+    canvas:offscreen, 
+    width: canvas.width, 
+    height:canvas.height,
+    baseURI
   },[offscreen])
 }
 
@@ -388,8 +394,8 @@ function sendCmd(cmd, ...rest){
 }
 
 return {
-  init:({canvas, alias=[], baseURI, onmessage})=>{
-    init({canvas, alias, baseURI: document.baseURI})
+  init:(params)=>{
+    init(params)
     if(window.worker) window.worker.onmessage = onmessage
   },
   resize,
