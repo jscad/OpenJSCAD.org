@@ -110,28 +110,24 @@ class Node {
       }
       const frontnodes = []
       const backnodes = []
-      let frontnodesCount = 0
-      let backnodesCount = 0
-      let n = polygontreenodes.length
+      const n = polygontreenodes.length
       for (let i = 0; i < n; ++i) {
         polygontreenodes[i].splitByPlane(node.plane, node.polygontreenodes, backnodes, frontnodes, backnodes)
-        if(backnodes[backnodes.length-1] === polygontreenodes[i]) backnodesCount++
-        if(frontnodes[frontnodes.length-1] === polygontreenodes[i]) frontnodesCount++
       }
 
       if (frontnodes.length > 0) {
         if (!node.front) node.front = new Node(node)
-        let nextIndex = n === frontnodes.length && backnodes.length === 0 ? index + 1 : 0
+        const nextIndex = n === frontnodes.length && backnodes.length === 0 ? index + 1 : 0
 
-        if(nextIndex < frontnodes.length) stack.push({ node: node.front, polygontreenodes: frontnodes, nextIndex})
-          else node.front.polygontreenodes = frontnodes // unable to split by any of the current nodes
+        if (nextIndex < frontnodes.length) stack.push({ node: node.front, polygontreenodes: frontnodes, nextIndex })
+        else node.front.polygontreenodes = frontnodes // unable to split by any of the current nodes
       }
       if (backnodes.length > 0) {
         if (!node.back) node.back = new Node(node)
-        let nextIndex = n === backnodes.length && frontnodes.length === 0  ? index + 1 : 0
-        
-        if(nextIndex < backnodes.length) stack.push({ node: node.back, polygontreenodes: backnodes, nextIndex})
-          else node.back.polygontreenodes = backnodes // unable to split by any of the current nodes
+        const nextIndex = n === backnodes.length && frontnodes.length === 0 ? index + 1 : 0
+
+        if (nextIndex < backnodes.length) stack.push({ node: node.back, polygontreenodes: backnodes, nextIndex })
+        else node.back.polygontreenodes = backnodes // unable to split by any of the current nodes
       }
 
       current = stack.pop()
