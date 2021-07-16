@@ -38,12 +38,14 @@ const retessellate = (geometry) => {
   const polygons = geom3.toPolygons(geometry)
   const polygonsPerPlane = [] // elements: [plane, [poly3...]]
   polygons.forEach((polygon) => {
-    const mapping = polygonsPerPlane.find((element) => coplanar(element[0], poly3.plane(polygon)))
-    if (mapping) {
-      const polygons = mapping[1]
-      polygons.push(polygon)
-    } else {
-      polygonsPerPlane.push([poly3.plane(polygon), [polygon]])
+    if(polygon.vertices.length){    
+      const mapping = polygonsPerPlane.find((element) => coplanar(element[0], poly3.plane(polygon)))
+      if (mapping) {
+        const polygons = mapping[1]
+        polygons.push(polygon)
+      } else {
+        polygonsPerPlane.push([poly3.plane(polygon), [polygon]])
+      }
     }
   })
 
