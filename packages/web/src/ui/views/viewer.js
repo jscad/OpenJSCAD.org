@@ -191,13 +191,29 @@ const viewer = (state, i18n) => {
   return el
 }
 
+const createContext = (canvas, contextAttributes) => {
+  const get = (name) => {
+    try {
+      return canvas.getContext(name, contextAttributes)
+    } catch (e) {
+      return null
+    }
+  }
+  return (
+    get('webgl2') ||
+    get('webgl') ||
+    get('experimental-webgl') ||
+    get('webgl-experimental')
+  )
+}
+
 const setup = (element) => {
   // prepare the camera
   const camera = Object.assign({}, perspectiveCamera.defaults)
   camera.position = [150, -180, 233]
 
   const viewerOptions = {
-    glOptions: { canvas: element },
+    glOptions: { gl: createContext(element) },
     camera,
     drawCommands: {
       // draw commands bootstrap themselves the first time they are run
