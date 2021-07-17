@@ -87,6 +87,7 @@ function workerScript(){
       }
     }
     return (
+      get('webgl2') ||
       get('webgl') ||
       get('experimental-webgl') ||
       get('webgl-experimental')
@@ -163,9 +164,12 @@ function workerScript(){
   }
 
   let renderTimer
+  const tmFunc = typeof requestAnimationFrame === 'undefined' ? setTimeout : requestAnimationFrame
+  console.log('tmFunc',tmFunc, typeof requestAnimationFrame)
+
   function updateView(delay=8){
     if(renderTimer) return
-    renderTimer = setTimeout(updateAndRender,delay)
+    renderTimer = tmFunc(updateAndRender,delay)
   }
 
   const doRotatePanZoom = () => {
