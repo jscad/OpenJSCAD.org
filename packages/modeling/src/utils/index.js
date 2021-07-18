@@ -8,6 +8,7 @@ module.exports = {
   areAllShapesTheSameType: require('./areAllShapesTheSameType'),
   degToRad: require('./degToRad'),
   flatten: require('./flatten'),
+  clone: require('./clone'),
   fnNumberSort: require('./fnNumberSort'),
   insertSorted: require('./insertSorted'),
   radiusToSegments: require('./radiusToSegments'),
