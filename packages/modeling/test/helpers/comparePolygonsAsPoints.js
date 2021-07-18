@@ -1,9 +1,12 @@
 const compareVectors = require('./compareVectors')
 
-const comparePolygons = (poly1, poly2) => {
+const comparePolygons = (poly1, poly2, index) => {
   if (poly1.length === poly2.length) {
-    return poly1.reduce((valid, point, index) => valid && compareVectors(poly1[index], poly2[index]), true)
+    let result = poly1.reduce((valid, point, index) => valid && compareVectors(poly1[index], poly2[index]), true)
+    if(!result) console.log('compare failed for poly#'+index,'\n', poly1,'\n',poly2)
+      return result
   }
+  console.log('size failed for poly#'+index, poly1.length,poly2.length)
   return false
 }
 
@@ -15,7 +18,7 @@ const comparePolygons = (poly1, poly2) => {
  */
 const comparePolygonsAsPoints = (list1, list2) => {
   if (list1.length === list2.length) {
-    return list1.reduce((valid, polygon, index) => valid && comparePolygons(list1[index], list2[index]), true)
+    return list1.reduce((valid, polygon, index) => valid && comparePolygons(list1[index], list2[index], index), true)
   }
   return false
 }
