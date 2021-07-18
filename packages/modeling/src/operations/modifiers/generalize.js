@@ -1,5 +1,5 @@
 const flatten = require('../../utils/flatten')
-
+const mat4 = require('../../maths/mat4')
 const measureEpsilon = require('../../measurements/measureEpsilon')
 
 const geom2 = require('../../geometries/geom2')
@@ -15,16 +15,11 @@ const repairTjunctions = require('./repairTjunctions')
 
 /*
  */
-const generalizePath2 = (options, geometry) => {
-  return geometry
-}
-
+const generalizePath2 = (options, geometry) => geometry
 
 /*
  */
-const generalizeGeom2 = (options, geometry) => {
-  return geometry
-}
+const generalizeGeom2 = (options, geometry) => geometry
 
 /*
  */
@@ -64,9 +59,10 @@ const generalizeGeom3 = (options, geometry) => {
     // TODO fill holes
   }
 
+  // toPolygons called above will convert old polygons (apply transform and return the new polygons array)
+  // we must reset transforms to identity, otherwise the transform will be applied again in some other operation
   // FIXME replace with geom3.cloneShallow() when available
-  const clone = Object.assign({}, geometry)
-  clone.polygons = polygons
+  const clone = Object.assign({}, geometry, { polygons, transforms: mat4.create() })
 
   return clone
 }

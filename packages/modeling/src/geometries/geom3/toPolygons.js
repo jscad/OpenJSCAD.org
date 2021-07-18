@@ -1,5 +1,7 @@
 const applyTransforms = require('./applyTransforms')
 
+const cache = new WeakMap()
+
 /**
  * Produces an array of polygons from the given geometry, after applying transforms.
  * The returned array should not be modified as the polygons are shared with the geometry.
@@ -10,6 +12,13 @@ const applyTransforms = require('./applyTransforms')
  * @example
  * let sharedpolygons = toPolygons(geometry)
  */
-const toPolygons = (geometry) => applyTransforms(geometry).polygons
+const toPolygons = (geometry) => {
+  let polygons = cache.get(geometry)
+  if (polygons) return polygons
+
+  polygons = applyTransforms(geometry).polygons
+  cache.set(geometry, polygons)
+  return polygons
+}
 
 module.exports = toPolygons

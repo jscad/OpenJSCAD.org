@@ -1,7 +1,5 @@
 const mat4 = require('../../maths/mat4')
 
-const create = require('./create')
-
 /**
  * Transform the given geometry using the given matrix.
  * This is a lazy transform of the sides, as this function only adjusts the transforms.
@@ -15,9 +13,9 @@ const create = require('./create')
  * let newgeometry = transform(fromZRotation(degToRad(90)), geometry)
  */
 const transform = (matrix, geometry) => {
-  const newgeometry = create(geometry.sides) // reuse the sides
+  const newgeometry = Object.assign({}, geometry)
 
-  mat4.multiply(newgeometry.transforms, matrix, geometry.transforms)
+  newgeometry.transforms = mat4.multiply(mat4.create(), matrix, geometry.transforms)
   return newgeometry
 }
 
