@@ -25,12 +25,13 @@
   "publishConfig": {
     "access": "public"
   },
+  "types": "types",
   "dependencies": {
     "@jscad/array-utils": "2.1.0",
     "camera-unproject": "1.0.1",
     "gl-mat4": "1.2.0",
     "gl-vec3": "1.1.3",
-    "regl": "1.6.1"
+    "regl": "2.1.0"
   },
   "devDependencies": {
     "@jscad/img-utils": "2.0.1",
@@ -39,6 +40,7 @@
     "browserify": "16.5.1",
     "budo": "11.6.4",
     "nyc": "15.1.0",
+    "typescript": "^4.0.0",
     "uglifyify": "5.0.2"
   }
 }
