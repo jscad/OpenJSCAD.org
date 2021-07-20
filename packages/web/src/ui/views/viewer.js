@@ -53,6 +53,7 @@ const viewer = (state, i18n) => {
 
   if (!render) {
     const options = setup(el)
+    if (options.error) return html`<b style="color:red; background:white; position:fixed; z-index:10; top:50%">${options.error}</b>`
     viewerOptions = options.viewerOptions
     camera = options.camera
     render = prepareRender(viewerOptions)
@@ -192,9 +193,9 @@ const viewer = (state, i18n) => {
 }
 
 const createContext = (canvas, contextAttributes) => {
-  const get = (name) => {
+  const get = (type) => {
     try {
-      return canvas.getContext(name, contextAttributes)
+      return { gl: canvas.getContext(type, contextAttributes), type }
     } catch (e) {
       return null
     }
@@ -209,11 +210,14 @@ const createContext = (canvas, contextAttributes) => {
 
 const setup = (element) => {
   // prepare the camera
+  let error
   const camera = Object.assign({}, perspectiveCamera.defaults)
   camera.position = [150, -180, 233]
 
+  const { gl, type } = createContext(element)
+
   const viewerOptions = {
-    glOptions: { gl: createContext(element) },
+    glOptions: { gl },
     camera,
     drawCommands: {
       // draw commands bootstrap themselves the first time they are run
@@ -225,7 +229,14 @@ const setup = (element) => {
     // data
     entities: []
   }
-  return { viewerOptions, camera }
+  if (type === 'webgl') {
+    if (!gl.getExtension('OES_element_index_uint')) {
+      error = 'Your browser uses an old version of WebGL without OES_element_index_uint. Please upgrade your browser to use this application'
+    }
+
+    viewerOptions.glOptions.optionalExtensions = ['oes_element_index_uint']
+  }
+  return { viewerOptions, camera, error }
 }
 
 const resize = (viewerElement) => {
