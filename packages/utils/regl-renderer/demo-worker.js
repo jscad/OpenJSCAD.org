@@ -79,9 +79,9 @@ function workerScript(){
   let entities = []
 
   function createContext (canvas, contextAttributes) {
-    function get (name) {
+    function get (type) {
       try {
-        return canvas.getContext(name, contextAttributes)
+        return {gl:canvas.getContext(type, contextAttributes), type}
       } catch (e) {
         return null
       }
@@ -114,10 +114,13 @@ function workerScript(){
     // prepare the controls
     state.controls = orbitControls.defaults
 
-    const gl = createContext(canvas)
+    const {gl, type} = createContext(canvas)
     // prepare the renderer
     const setupOptions = {
-      glOptions: { gl },
+      glOptions: {gl}
+    }
+    if(type == 'webgl'){
+        setupOptions.glOptions.optionalExtensions = ['oes_element_index_uint']      
     }
     renderer = prepareRender(setupOptions)
 
@@ -168,7 +171,7 @@ function workerScript(){
   console.log('tmFunc',tmFunc, typeof requestAnimationFrame)
 
   function updateView(delay=8){
-    if(renderTimer) return
+    if(renderTimer || !renderer) return
     renderTimer = tmFunc(updateAndRender,delay)
   }
 
@@ -282,7 +285,7 @@ function workerScript(){
           if(a.toLowerCase().substr(-3)!=='.js') require.alias[a+'.js'] = orig
         })
       })
-      startRenderer(params)
+      if(params.canvas) startRenderer(params)
       initialized = true
     },
   }
@@ -310,10 +313,6 @@ function workerScript(){
 
 const init = (params)=>{
   let { canvas, baseURI=document.location.toString() } = params
-  console.log('canvas',canvas);
-
-  canvas.width  = canvas.clientWidth
-  canvas.height = canvas.clientHeight
 
   // convert HTML events (mouse movement) to viewer changes
   let lastX = 0
@@ -356,21 +355,30 @@ const init = (params)=>{
     ev.preventDefault()
   }
 
-  let jscad_script = document.getElementById('jscad_script')
-  const offscreen = canvas.transferControlToOffscreen();
-
-  canvas.onpointermove = moveHandler
-  canvas.onpointerdown = downHandler
-  canvas.onpointerup = upHandler
-  canvas.onwheel = wheelHandler
-
-  sendCmd({...params, 
+  const cmdParams = {...params, 
     action:'init', 
-    canvas:offscreen, 
-    width: canvas.width, 
-    height:canvas.height,
     baseURI
-  },[offscreen])
+  }
+  const cmdTransfer = []
+  let jscad_script = document.getElementById('jscad_script')
+  
+  if(canvas){  
+    canvas.width  = canvas.clientWidth
+    canvas.height = canvas.clientHeight
+
+    const offscreen = canvas.transferControlToOffscreen();
+    cmdParams.canvas = offscreen
+    cmdParams.width  = canvas.width
+    cmdParams.height = canvas.height
+    cmdTransfer.push(offscreen)
+
+    canvas.onpointermove = moveHandler
+    canvas.onpointerdown = downHandler
+    canvas.onpointerup = upHandler
+    canvas.onwheel = wheelHandler
+  }
+
+  sendCmd(cmdParams,cmdTransfer)
 }
 
 window.addEventListener('resize',resize)
