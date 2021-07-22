@@ -39,7 +39,7 @@ const shapesMapJscad = require('./shapesMapJscad')
  * @param {integer} [options.segments] - number of segments for rounded shapes
  * @param {string} [options.target] - target 2D geometry; geom2 or path2
  * @param {string} [options.version='0.0.0'] - version number to add to the metadata
- * @param {string} input - SVG data
+ * @param {string} [options.pathSelfClosed='error'] - [error||trim||split] if path self-closes with one of commands without stop command right after * @param {string} input - SVG data
  * @return {string|[object]} either a string (script) or a set of objects (geometry)
  * @alias module:io/svg-deserializer.deserialize
  */
@@ -144,7 +144,7 @@ let svgUnitsPmm = [1, 1]
  * Convert the given group (of objects) into geometries
  */
 const objectify = (options, group) => {
-  const { target, segments } = options
+  const { target, segments, pathSelfClosed } = options
   const level = svgGroups.length
   // add this group to the heiarchy
   svgGroups.push(group)
@@ -164,7 +164,8 @@ const objectify = (options, group) => {
     level,
     target,
     svgGroups,
-    segments
+    segments,
+    pathSelfClosed
   }
   // apply base level attributes to all shapes
   for (i = 0; i < group.objects.length; i++) {

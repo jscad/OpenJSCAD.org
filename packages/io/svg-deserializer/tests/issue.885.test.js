@@ -13,5 +13,11 @@ test('deserialize issue 885', (t) => {
 
   t.throws(() => {
     deserializer.deserialize({ output: 'geometry' }, svg)
-  }, { instanceOf: Error }, 'Malformed svg path at 2:445. Path closed itself with command #29: Q2.12 -3.54 1.84 -3.17')
+  }, { instanceOf: Error }, 'Malformed svg path at 2:445. Path closed itself with command #29: "Q2.12 -3.54 1.84 -3.17". to avoid this error use pathSelfClosed:\'split\' or pathSelfClosed:\'trim\' option')
+
+  let shapes = deserializer.deserialize({ output: 'geometry', pathSelfClosed: 'split' }, svg)
+  t.is(shapes.length, 2)
+
+  shapes = deserializer.deserialize({ output: 'geometry', pathSelfClosed: 'trim' }, svg)
+  t.is(shapes.length, 1)
 })
