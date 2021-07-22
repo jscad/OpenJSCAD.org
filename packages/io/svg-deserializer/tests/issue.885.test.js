@@ -13,5 +13,5 @@ test('deserialize issue 885', (t) => {
 
   t.throws(() => {
     deserializer.deserialize({ output: 'geometry' }, svg)
-  }, { instanceOf: Error }, 'Malformed svg path at 2:445. Path closed itself with command #29: Q')
+  }, { instanceOf: Error }, 'Malformed svg path at 2:445. Path closed itself with command #29: Q2.12 -3.54 1.84 -3.17')
 })
