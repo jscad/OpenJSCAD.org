@@ -11,9 +11,9 @@ const toPoints = require('./toPoints')
  * let newpath = appendPoints([[3, 4], [4, 5]], oldpath)
  */
 const appendPoints = (points, geometry) => {
-  // if (geometry.isClosed) {
-  //   throw new Error('cannot append points to a closed path')
-  // }
+  if (geometry.isClosed) {
+    throw new Error('cannot append points to a closed path')
+  }
 
   let newpoints = toPoints(geometry)
   newpoints = newpoints.concat(points)
