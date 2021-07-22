@@ -404,7 +404,9 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
         console.log('Warning: Unknow PATH command [' + co.c + ']')
         break
     }
-    // console.log('postion: ['+cx+','+cy+'] after '+co.c);
+    if(pc !== true && paths[pathName] && paths[pathName].isClosed){
+      throw new Error(`Malformed svg path at ${obj.position[0]}:${co.pos}. Path closed itself with command #${j}: '+co.c+co.p.join(' ')`)
+    } 
   }
   return paths
 }

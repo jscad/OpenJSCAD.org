@@ -318,6 +318,7 @@ const svgPath = function (element) {
 
     let i = 0
     const l = element.D.length
+    const offset = element.position[1] - l - 2
     while (i < l) {
       const c = element.D[i]
       switch (c) {
@@ -379,7 +380,7 @@ const svgPath = function (element) {
             }
             obj.commands.push(co)
           }
-          co = { c: c, p: [] }
+          co = { c: c, p: [], pos:i+offset }
           break
         // white space
         case ',':
