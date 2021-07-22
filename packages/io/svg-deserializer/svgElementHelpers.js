@@ -51,7 +51,7 @@ const svgTransforms = function (cag, element) {
   }
   if (list !== null) {
     cag.transforms = []
-    const exp = new RegExp('\\w+\\(.+\\)', 'i')
+    const exp = /\w+\(.+\)/i
     let v = exp.exec(list)
     while (v !== null) {
       const s = exp.lastIndex
@@ -108,7 +108,7 @@ const svgSvg = function (element, { customPxPmm }) {
   if ('HEIGHT' in element) { obj.height = element.HEIGHT }
   if ('VIEWBOX' in element) {
     const list = element.VIEWBOX.trim()
-    const exp = new RegExp('([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)', 'i')
+    const exp = /([\d.-]+)[\s,]+([\d.-]+)[\s,]+([\d.-]+)[\s,]+([\d.-]+)/i
     const v = exp.exec(list)
     if (v !== null) {
       obj.viewX = parseFloat(v[1])
@@ -190,7 +190,7 @@ const svgLine = function (element) {
 
 const svgListOfPoints = function (list) {
   const points = []
-  const exp = new RegExp('([\\d\\-\\+\\.]+)[\\s,]+([\\d\\-\\+\\.]+)[\\s,]*', 'i')
+  const exp = /([\d\-+.]+)[\s,]+([\d\-+.]+)[\s,]*/i
   list = list.trim()
   let v = exp.exec(list)
   while (v !== null) {
@@ -380,7 +380,7 @@ const svgPath = function (element) {
             }
             obj.commands.push(co)
           }
-          co = { c: c, p: [], pos:i+offset }
+          co = { c: c, p: [], pos: i + offset }
           break
         // white space
         case ',':
