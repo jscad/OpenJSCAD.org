@@ -16,6 +16,7 @@ module.exports = {
   fromPoints: require('./fromPoints'),
   fromCompactBinary: require('./fromCompactBinary'),
   isA: require('./isA'),
+  isCCW: require('./isCCW'),
   reverse: require('./reverse'),
   toPoints: require('./toPoints'),
   toString: require('./toString'),
