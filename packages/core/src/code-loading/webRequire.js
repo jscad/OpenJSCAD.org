@@ -4,6 +4,7 @@ const path = require('path')
 const posix = path.posix ? path.posix : path
 
 const getFileExtensionFromString = require('../utils/getFileExtensionFromString')
+const {combineParameterDefinitions, getParameterDefinitionsFromSource} = require('../parameters/getParameterDefinitionsFromSource')
 
 /* find matching path in inputs
  * @param  {} path
@@ -110,6 +111,13 @@ const makeWebRequire = (filesAndFolders, options) => {
           _compile: (content, fileName) => {
             const moduleMakerFunction = new Function('require', 'module', content)
             moduleMakerFunction(_require.bind(null, entry.fullPath), matchingModule)
+
+            const paramDefFromSource = getParameterDefinitionsFromSource(content)
+            const originalFunc = matchingModule.exports.getParameterDefinitions
+            // replace getParameterDefinitions in the module, with version taht adds parsed definitions
+            matchingModule.exports.getParameterDefinitions = ()=>{
+              return combineParameterDefinitions(paramDefFromSource, originalFunc ? originalFunc() || [] : [])
+            }
             // add to core to resolve later references
             // FIXME coreModules[entry.fullPath] = matchingModule.exports
           }
