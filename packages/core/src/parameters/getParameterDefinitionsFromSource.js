@@ -83,8 +83,7 @@ const parseComment = function (comment, line, paramName) {
   const idx = comment.indexOf('{')
   if (idx !== -1) {
     try {
-      // eslint-disable-next-line no-eval
-      ret.options = eval('(' + comment.substring(idx) + ')')
+      ret.options = Function('return ' + comment.substring(idx)).call()
     } catch (e) {
       throw new EvalError(`${e.message}, parameter:${paramName}, line:${line}: ${comment.substring(idx)}`, 'code', line)
     }
@@ -120,8 +119,7 @@ const parseDef = function (code, line) {
       ret.initial = parseFloat(initial)
     } else {
       try {
-        // eslint-disable-next-line no-eval
-        ret.initial = eval(initial)
+        ret.initial = Function('return ' + initial).bind({}).call()
       } catch (e) {
         throw new EvalError('Error in initial value definition for"' + code + '".' + e.message, 'code', line)
       }
