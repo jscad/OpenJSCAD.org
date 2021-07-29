@@ -1,4 +1,3 @@
-'use strict'
 
 const getParameterDefinitionsFromSource = function (script) {
   let lines = script.split('\n').map((l) => l.trim())
@@ -130,7 +129,6 @@ const parseDef = function (code, line) {
 }
 
 const combineParameterDefinitions = function (paramDefFromSource, extraDef) {
-  console.log('combineParameterDefinitions', paramDefFromSource, extraDef)
   const def = [...paramDefFromSource]
   if (extraDef) {
     extraDef.forEach((param) => {
