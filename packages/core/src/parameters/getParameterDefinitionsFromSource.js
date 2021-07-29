@@ -1,5 +1,5 @@
 
-const getParameterDefinitionsFromSource = function (script) {
+const getParameterDefinitionsFromSource = (script) => {
   let lines = script.split('\n').map((l) => l.trim())
 
   lines = lines.map((l, i) => ({ code: l, line: i + 1, group: l[0] === '/' && !lines[i + 1] })).filter((l) => l.code)
@@ -51,7 +51,7 @@ const getParameterDefinitionsFromSource = function (script) {
   return defs
 }
 
-const parseOne = function (comment, code, line1, line2) {
+const parseOne = (comment, code, line1, line2) => {
   let def = parseDef(code, line2)
   const { caption, options } = parseComment(comment, line1, def.name)
   def.caption = caption || def.name
@@ -71,7 +71,7 @@ const parseOne = function (comment, code, line1, line2) {
   return def
 }
 
-const parseComment = function (comment, line, paramName) {
+const parseComment = (comment, line, paramName) => {
   const prefix = comment.substring(0, 2)
   if (prefix === '//') comment = comment.substring(2)
   if (prefix === '/*') comment = comment.substring(2, comment.length - 2)
@@ -94,7 +94,7 @@ const parseComment = function (comment, line, paramName) {
   return ret
 }
 
-const parseDef = function (code, line) {
+const parseDef = (code, line) => {
   if (code[code.length - 1] === ',') code = code.substring(0, code.length - 1).trim()
   let idx = code.indexOf('=')
 
@@ -128,7 +128,7 @@ const parseDef = function (code, line) {
   }
 }
 
-const combineParameterDefinitions = function (paramDefFromSource, extraDef) {
+const combineParameterDefinitions = (paramDefFromSource, extraDef) => {
   const def = [...paramDefFromSource]
   if (extraDef) {
     extraDef.forEach((param) => {
