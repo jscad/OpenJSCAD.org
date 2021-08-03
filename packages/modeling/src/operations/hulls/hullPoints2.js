@@ -72,7 +72,7 @@ const compute = (points) => {
   let tmp
   let M = 2
   for (let i = 3; i <= points.length; i++) {
-    while (ccw(stack[M - 1], stack[M], stack[i]) < 1e-5) {
+    while (M > 1 && ccw(stack[M - 1], stack[M], stack[i]) < 1e-5) {
       M--
     }
     M++
