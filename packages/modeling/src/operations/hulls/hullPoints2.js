@@ -22,6 +22,7 @@ const compute = (points) => {
   if (points.length < 3) {
     return points
   }
+  console.log('points',points);
 
   // Find the lowest point
   let min = 0
@@ -72,7 +73,7 @@ const compute = (points) => {
   let tmp
   let M = 2
   for (let i = 3; i <= points.length; i++) {
-    while (M > 1 && ccw(stack[M - 1], stack[M], stack[i]) < 1e-5) {
+    while (ccw(stack[M - 1], stack[M], stack[i]) < Number.EPSILON) {
       M--
     }
     M++
