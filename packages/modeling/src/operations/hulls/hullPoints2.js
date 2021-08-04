@@ -22,7 +22,6 @@ const compute = (points) => {
   if (points.length < 3) {
     return points
   }
-  console.log('points',points);
 
   // Find the lowest point
   let min = 0
