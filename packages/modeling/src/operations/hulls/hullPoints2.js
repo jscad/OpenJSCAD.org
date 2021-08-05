@@ -67,6 +67,7 @@ const compute = (points) => {
   stack[0] = stack[points.length]
   stack[1] = min
 
+  // clockwise < 0, colinear = 0, counter clockwise > 0
   const ccw = (i1, i2, i3) => (points[i2][0] - points[i1][0]) * (points[i3][1] - points[i1][1]) - (points[i2][1] - points[i1][1]) * (points[i3][0] - points[i1][0])
 
   let tmp
