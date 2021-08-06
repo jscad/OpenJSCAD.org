@@ -89,7 +89,10 @@ class Node {
   }
 
   addPolygonTreeNodes (newpolygontreenodes) {
-    let current = { node: this, polygontreenodes: newpolygontreenodes }
+    let current = { node: this, polygontreenodes: newpolygontreenodes.filter(p=>p.polygon.vertices.length) }
+        current.polygontreenodes.forEach((p,i)=>{
+          if(!p.polygon.vertices.length) debugger
+        })    
     const stack = []
     do {
       const node = current.node
@@ -109,18 +112,34 @@ class Node {
       }
       const frontnodes = []
       const backnodes = []
-
-      for (let i = 0, n = polygontreenodes.length; i < n; ++i) {
+      const n = polygontreenodes.length
+      for (let i = 0; i < n; ++i) {
         polygontreenodes[i].splitByPlane(node.plane, node.polygontreenodes, backnodes, frontnodes, backnodes)
       }
 
+        frontnodes.forEach((p,i)=>{
+          if(!p.polygon.vertices.length) debugger
+        })
+        backnodes.forEach((p,i)=>{
+          if(!p.polygon.vertices.length) debugger
+        })
+
       if (frontnodes.length > 0) {
         if (!node.front) node.front = new Node(node)
-        stack.push({ node: node.front, polygontreenodes: frontnodes })
+
+        // unable to split by any of the current nodes
+        const stopCondition = n === frontnodes.length && backnodes.length === 0
+        if(stopCondition) node.front.polygontreenodes = frontnodes 
+        else stack.push({ node: node.front, polygontreenodes: frontnodes })
       }
       if (backnodes.length > 0) {
         if (!node.back) node.back = new Node(node)
-        stack.push({ node: node.back, polygontreenodes: backnodes })
+
+        // unable to split by any of the current nodes
+        const stopCondition = n === backnodes.length && frontnodes.length === 0
+
+        if(stopCondition) node.back.polygontreenodes = backnodes 
+        else stack.push({ node: node.back, polygontreenodes: backnodes })
       }
 
       current = stack.pop()
