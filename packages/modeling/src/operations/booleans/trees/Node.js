@@ -89,7 +89,7 @@ class Node {
   }
 
   addPolygonTreeNodes (newpolygontreenodes) {
-    let current = { node: this, polygontreenodes: newpolygontreenodes }    
+    let current = { node: this, polygontreenodes: newpolygontreenodes }
     const stack = []
     do {
       const node = current.node
@@ -119,7 +119,7 @@ class Node {
 
         // unable to split by any of the current nodes
         const stopCondition = n === frontnodes.length && backnodes.length === 0
-        if(stopCondition) node.front.polygontreenodes = frontnodes 
+        if (stopCondition) node.front.polygontreenodes = frontnodes
         else stack.push({ node: node.front, polygontreenodes: frontnodes })
       }
       if (backnodes.length > 0) {
@@ -128,7 +128,7 @@ class Node {
         // unable to split by any of the current nodes
         const stopCondition = n === backnodes.length && frontnodes.length === 0
 
-        if(stopCondition) node.back.polygontreenodes = backnodes 
+        if (stopCondition) node.back.polygontreenodes = backnodes
         else stack.push({ node: node.back, polygontreenodes: backnodes })
       }
 
