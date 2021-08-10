@@ -89,10 +89,7 @@ class Node {
   }
 
   addPolygonTreeNodes (newpolygontreenodes) {
-    let current = { node: this, polygontreenodes: newpolygontreenodes.filter(p=>p.polygon.vertices.length) }
-        current.polygontreenodes.forEach((p,i)=>{
-          if(!p.polygon.vertices.length) debugger
-        })    
+    let current = { node: this, polygontreenodes: newpolygontreenodes }    
     const stack = []
     do {
       const node = current.node
@@ -116,13 +113,6 @@ class Node {
       for (let i = 0; i < n; ++i) {
         polygontreenodes[i].splitByPlane(node.plane, node.polygontreenodes, backnodes, frontnodes, backnodes)
       }
-
-        frontnodes.forEach((p,i)=>{
-          if(!p.polygon.vertices.length) debugger
-        })
-        backnodes.forEach((p,i)=>{
-          if(!p.polygon.vertices.length) debugger
-        })
 
       if (frontnodes.length > 0) {
         if (!node.front) node.front = new Node(node)
