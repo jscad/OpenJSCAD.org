@@ -31,7 +31,7 @@ test('measureCenterOfMass (single objects)', (t) => {
   const ocenter = measureCenterOfMass(o)
   const xcenter = measureCenterOfMass(x)
 
-  t.deepEqual(lcenter, [12.5, 12.5, 0])
+  t.deepEqual(lcenter, [0, 0, 0])
   t.deepEqual(rcenter, [5, 5, 0])
   t.deepEqual(ccenter, [-15, -5, -10])
 
@@ -46,13 +46,13 @@ test('measureCenterOfMass (single objects)', (t) => {
 
 test('measureCenterOfMass (multiple objects)', (t) => {
   const aline = line([[10, 10], [15, 15]])
-  const arect = rectangle({ size: [10, 20] })
+  const arect = rectangle({ size: [10, 20], center: [10, -10] })
   const asphere = ellipsoid({ radius: [5, 10, 15], center: [5, -5, 50] })
   const o = {}
 
   let allcenters = measureCenterOfMass(aline, arect, asphere, o)
-  t.deepEqual(allcenters, [[12.5, 12.5, 0], [0, 0, 0], [4.99999999999999, -5.000000000000007, 49.99999999999992], [0, 0, 0]])
+  t.deepEqual(allcenters, [[0, 0, 0], [10, -10, 0], [4.99999999999999, -5.000000000000007, 49.99999999999992], [0, 0, 0]])
 
   allcenters = measureCenterOfMass(aline, arect, asphere, o)
-  t.deepEqual(allcenters, [[12.5, 12.5, 0], [0, 0, 0], [4.99999999999999, -5.000000000000007, 49.99999999999992], [0, 0, 0]])
+  t.deepEqual(allcenters, [[0, 0, 0], [10, -10, 0], [4.99999999999999, -5.000000000000007, 49.99999999999992], [0, 0, 0]])
 })
