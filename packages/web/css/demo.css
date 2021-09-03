@@ -195,9 +195,10 @@ span#paramsControls {
 #status{
   position: absolute;
   color: red;
-  top: 50px;
-  left: 50%;
-  width: 200px;
+  top: 60px;
+  left: 0;
+  width: 33%;
+  padding:  20px;
   z-index: 1;
 }
 
