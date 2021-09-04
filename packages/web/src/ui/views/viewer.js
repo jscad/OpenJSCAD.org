@@ -195,7 +195,9 @@ const viewer = (state, i18n) => {
 const createContext = (canvas, contextAttributes) => {
   const get = (type) => {
     try {
-      return { gl: canvas.getContext(type, contextAttributes), type }
+      // NOTE: older browsers may return null from getContext()
+      const context = canvas.getContext(type)
+      return context ? { gl: context, type } : null
     } catch (e) {
       return null
     }
