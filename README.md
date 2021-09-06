@@ -45,7 +45,7 @@ There are different 'flavors' of JSCAD that you can use based on your needs
 
 ### Immediate Use (no installation)
 
-Go to *[OpenJSCAD.org](http://www.openjscad.xyz)* (Tested browsers include Chrome, Firefox, Opera, Safari)
+Go to *[OpenJSCAD.xyz](http://www.openjscad.xyz)* (Tested browsers include Chrome, Firefox, Opera, Safari)
 
 ### Use within a Web Site (pre built files, from GitHub)
 
@@ -87,7 +87,7 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://openjscad.xyz/forum.html). You might find the answer in the [JSCAD.org User Guide](https://www.openjscad.xyz/guide.html).
+* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://openjscad.xyz/forum.html). You might find the answer in the [JSCAD User Guide](https://www.openjscad.xyz/guide.html).
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://openjscad.xyz/forum.html) and start contributing changes.
 
