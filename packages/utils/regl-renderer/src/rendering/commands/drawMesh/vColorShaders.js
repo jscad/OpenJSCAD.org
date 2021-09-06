@@ -65,7 +65,7 @@ void main () {
   
   vec4 specularColor = vec4(lightColor);
   vec3 eyeDirection = normalize(surfacePosition.xyz);
-  vec3 reflectionDirection = reflect(-lightDirection, surfaceNormal);
+  vec3 reflectionDirection = reflect(-lightDirection, -surfaceNormal);
   float specularLightWeight = pow(max(dot(reflectionDirection, eyeDirection), 0.0), uMaterialShininess);
   vec3 specular = specularColor.rgb * specularLightWeight * specularLightAmount;
 
