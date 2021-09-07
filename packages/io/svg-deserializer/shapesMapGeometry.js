@@ -4,7 +4,7 @@ const { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect } = requ
 // const { cssPxUnit } = require('./constants')
 
 const shapesMapGeometry = (obj, objectify, params) => {
-  const { svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, target, segments, pathSelfClosed='error' } = params
+  const { svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, target, segments, pathSelfClosed } = params
 
   const types = {
     group: (obj) => objectify({ target, segments }, obj),
@@ -152,8 +152,8 @@ const shapesMapGeometry = (obj, objectify, params) => {
 
 module.exports = shapesMapGeometry
 
-const appendPoints = (points, geometry) =>{
-  if(geometry) return geometries.path2.appendPoints(points, geometry)
+const appendPoints = (points, geometry) => {
+  if (geometry) return geometries.path2.appendPoints(points, geometry)
   return geometries.path2.fromPoints({ }, points)
 }
 
@@ -183,13 +183,13 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
   let qx = 0 // 2nd control point from previous Q command
   let qy = 0 // 2nd control point from previous Q command
 
-  const newPath = ()=>{
+  const newPath = () => {
     pi++
     pathName = on + pi
     pc = false
   }
-  const ensurePath = ()=>{
-    if(!paths[pathName]) paths[pathName] = geometries.path2.fromPoints({},[])
+  const ensurePath = () => {
+    if (!paths[pathName]) paths[pathName] = geometries.path2.fromPoints({}, [])
   }
   for (let j = 0; j < obj.commands.length; j++) {
     const co = obj.commands[j]
@@ -302,7 +302,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           qy = cy + parseFloat(pts[i++])
           cx = cx + parseFloat(pts[i++])
           cy = cy + parseFloat(pts[i++])
-          ensurePath()          
+          ensurePath()
           paths[pathName] = geometries.path2.appendBezier({ segments, controlPoints: [[svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]] }, paths[pathName])
           const rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
@@ -423,21 +423,21 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
         break
     }
 
-    const isCloseCmd = (cmd)=> cmd === 'z' || cmd === 'Z'
+    const isCloseCmd = (cmd) => cmd === 'z' || cmd === 'Z'
 
     if (pc !== true && paths[pathName] && paths[pathName].isClosed) {
       let coNext = obj.commands[j + 1]
 
       if (!coNext || !isCloseCmd(coNext.c)) {
-        if(pathSelfClosed === 'trim'){
-          while(coNext && !isCloseCmd(coNext.c)){
+        if (pathSelfClosed === 'trim') {
+          while (coNext && !isCloseCmd(coNext.c)) {
             j++
             coNext = obj.commands[j + 1]
           }
-        }else if(pathSelfClosed === 'split'){
+        } else if (pathSelfClosed === 'split') {
           newPath()
-        }else{
-          throw new Error(`Malformed svg path at ${obj.position[0]}:${co.pos}. Path closed itself with command #${j} ${co.c}${pts.join(' ')}`) 
+        } else {
+          throw new Error(`Malformed svg path at ${obj.position[0]}:${co.pos}. Path closed itself with command #${j} ${co.c}${pts.join(' ')}`)
         }
       }
     }

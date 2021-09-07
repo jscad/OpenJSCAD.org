@@ -41,6 +41,8 @@ const svgPresentation = function (obj, element) {
   if ('STROKE-OPACITY' in element) { obj.strokeOpacity = element['STROKE-OPACITY'] }
 }
 
+const svgTransformsRegExp = /\w+\(.+\)/i
+
 const svgTransforms = function (cag, element) {
   let list = null
   if ('TRANSFORM' in element) {
@@ -51,10 +53,9 @@ const svgTransforms = function (cag, element) {
   }
   if (list !== null) {
     cag.transforms = []
-    const exp = /\w+\(.+\)/i
-    let v = exp.exec(list)
+    let v = svgTransformsRegExp.exec(list)
     while (v !== null) {
-      const s = exp.lastIndex
+      const s = svgTransformsRegExp.lastIndex
       const e = list.indexOf(')') + 1
       let t = list.slice(s, e) // the transform
       t = t.trim()
@@ -87,10 +88,12 @@ const svgTransforms = function (cag, element) {
       }
       // shorten the list and continue
       list = list.slice(e, list.length)
-      v = exp.exec(list)
+      v = svgTransformsRegExp.exec(list)
     }
   }
 }
+
+const viewBoxRegExp = /([\d.-]+)[\s,]+([\d.-]+)[\s,]+([\d.-]+)[\s,]+([\d.-]+)/i
 
 const svgSvg = function (element, { customPxPmm }) {
   // default SVG with no viewport
@@ -108,8 +111,7 @@ const svgSvg = function (element, { customPxPmm }) {
   if ('HEIGHT' in element) { obj.height = element.HEIGHT }
   if ('VIEWBOX' in element) {
     const list = element.VIEWBOX.trim()
-    const exp = /([\d.-]+)[\s,]+([\d.-]+)[\s,]+([\d.-]+)[\s,]+([\d.-]+)/i
-    const v = exp.exec(list)
+    const v = viewBoxRegExp.exec(list)
     if (v !== null) {
       obj.viewX = parseFloat(v[1])
       obj.viewY = parseFloat(v[2])
