@@ -65,10 +65,14 @@
 
   "Documentation":"ドキュメント",
   "User Guide":"ユーザー ガイド",
+  "API Reference":"API リファレンス",
+  "Open Issues":"オープン問題",
+
   "Forums":"フォーラム",
   "User Group":"ユーザー グループ",
+  "Discord Community":"ディスコード　コミュニティ",
   "Announcements":"アヌーセメント",
-  "Recent Updates":"最近のアップデート",
+
   "Examples":"設計例",
 
   "always":"いつも"
