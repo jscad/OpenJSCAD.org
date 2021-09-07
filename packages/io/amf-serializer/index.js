@@ -20,7 +20,7 @@ TBD
 */
 
 /**
- * Serializer of JSCAD geometries to AMF elements.
+ * Serializer of JSCAD geometries to AMF source data (XML)
  *
  * The serialization of the following geometries are possible.
  * - serialization of 3D geometry (geom3) to AMF object (a unique mesh containing both vertices and volumes)
@@ -42,12 +42,12 @@ const { flatten, toArray } = require('@jscad/array-utils')
 const mimeType = 'application/amf+xml'
 
 /**
- * Serialize the give objects to AMF elements.
+ * Serialize the give objects (geometry) to AMF source data (XML).
  * @param {Object} options - options for serialization
  * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
- * @param {...Object} objects - objects to serialize as AMF
- * @returns {Array} serialized contents with one AMF structure (XML string)
+ * @param {...Object} objects - objects to serialize into AMF source data
+ * @returns {Array} serialized contents, AMF source data(XML)
  * @alias module:io/amf-serializer.serialize
  * @example
  * const geometry = primitives.cube()
