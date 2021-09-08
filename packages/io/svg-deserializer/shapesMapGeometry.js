@@ -337,6 +337,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
         while (pts.length >= i + 2) {
           cx = parseFloat(pts[i++])
           cy = parseFloat(pts[i++])
+          ensurePath()
           paths[pathName] = geometries.path2.appendBezier({ segments, controlPoints: [[svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(qx, svgUnitsPmm), svg2cagY(qy, svgUnitsPmm)], [svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]] }, paths[pathName])
           const rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
