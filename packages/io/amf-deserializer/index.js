@@ -15,7 +15,7 @@ All code released under MIT license
 // //////////////////////////////////////////
 
 /**
- * Deserializer of AMF data to JSCAD geometries.
+ * Deserializer of AMF source data (XML) to JSCAD geometries.
  * @module io/amf-deserializer
  * @example
  * const { deserializer, extension } = require('@jscad/amf-serializer')
@@ -26,9 +26,9 @@ const translate = require('./translate')
 const instantiate = require('./deserialize')
 
 /**
- * Deserialize the given AMF source (xml) into either a script or an array of geometry
+ * Deserialize the given AMF source (XML) into either a script or an array of geometry
  * @see {@link https://en.wikipedia.org/wiki/Additive_manufacturing_file_format|AMF File Format}
- * @see README for supported conversions.
+ * @see README for supported conversions
  * @param {Object} options - options used during deserializing
  * @param {String} [options.filename='amf'] - filename of original AMF source
  * @param {String} [options.output='script'] - either 'script' or 'geometry' to set desired output
