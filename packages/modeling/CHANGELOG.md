@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.5.0...@jscad/modeling@2.5.1) (2021-09-09)
+
+
+### Bug Fixes
+
+* **modeling:** corrected CCW determination in 2D hulls ([#897](https://github.com/jscad/OpenJSCAD.org/issues/897)) ([23fe2ac](https://github.com/jscad/OpenJSCAD.org/commit/23fe2ac98fb62ebf6a9bf5a3055e644ffb0e432f)), closes [#114](https://github.com/jscad/OpenJSCAD.org/issues/114)
+* **web:** added open issues and discord community to help ([4ea1196](https://github.com/jscad/OpenJSCAD.org/commit/4ea11966af4b3ecbb5c1a3d53b7ac90c4cd349b1))
+
+
+
+
+
 # [2.5.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.4.0...@jscad/modeling@2.5.0) (2021-06-20)
 
 
