@@ -21,7 +21,7 @@ All code released under MIT license
  * const { deserializer, extension } = require('@jscad/amf-serializer')
  */
 
-const version = require('./package.json').version
+const version = require('../package.json').version
 const translate = require('./translate')
 const instantiate = require('./deserialize')
 
