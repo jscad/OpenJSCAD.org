@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.2.4...@jscad/svg-deserializer@2.3.0) (2021-09-09)
+
+
+### Features
+
+* **svg-deserializer:** added pathSelfClosed option to control construction of overlapping paths ([043f59d](https://github.com/jscad/OpenJSCAD.org/commit/043f59d928fcf397b0bb23e744e35d7eda5be626))
+
+
+
+
+
 ## [2.2.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.2.3...@jscad/svg-deserializer@2.2.4) (2021-06-20)
 
 **Note:** Version bump only for package @jscad/svg-deserializer

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.2.0...@jscad/regl-renderer@2.3.0) (2021-09-09)
+
+
+### Features
+
+* **regl-renderer:** typescript definitions and generator. ([#801](https://github.com/jscad/OpenJSCAD.org/issues/801)) ([1616876](https://github.com/jscad/OpenJSCAD.org/commit/16168761c53bbb6ffb604aa69c9c80dcc13eaad3))
+
+
+
+
+
 # [2.2.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.1.3...@jscad/regl-renderer@2.2.0) (2021-06-20)
 
 
