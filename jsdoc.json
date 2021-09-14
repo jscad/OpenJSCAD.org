@@ -32,7 +32,7 @@
       "packages/modeling/src/utils",
 
       "packages/io/io-utils",
-      "packages/io/amf-deserializer",
+      "packages/io/amf-deserializer/src",
       "packages/io/amf-serializer"
     ],
     "includePattern": ".+\\.js(doc|x)?$",
