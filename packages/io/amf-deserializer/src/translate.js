@@ -40,7 +40,7 @@ const translate = (options, src) => {
 // convert the internal repreentation into JSCAD code
 //
 const codify = (amf, data) => {
-  if (amf.type !== 'amf' || (!amf.objects)) throw new Error('AMF malformed')
+  if (amf.type !== 'amf' || (!amf.objects)) throw new Error('AMF parsing failed, malformed')
 
   let code = ''
 
@@ -60,7 +60,7 @@ const codify = (amf, data) => {
       case 'material':
         break
       default:
-        console.log('Warning: unknown definition: ' + object.type)
+        console.log('WARNING: unknown object type: ' + object.type)
         break
     }
   }
