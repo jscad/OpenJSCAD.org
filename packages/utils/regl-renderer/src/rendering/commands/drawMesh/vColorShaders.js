@@ -15,7 +15,7 @@ varying vec4 _worldSpacePosition;
 varying vec4 vColor;
 
 void main() {
-  surfacePosition = position;
+  surfacePosition = (unormal * vec4(position, 1.0)).xyz;
   surfaceNormal = (unormal * vec4(normal, 1.0)).xyz; //vec4 transformedNormal = uNormalMatrix * vec4(aVertexNormal, 1.0);
   vec4 worldSpacePosition = model * vec4(position, 1);
   _worldSpacePosition = worldSpacePosition;
@@ -65,7 +65,7 @@ void main () {
   
   vec4 specularColor = vec4(lightColor);
   vec3 eyeDirection = normalize(surfacePosition.xyz);
-  vec3 reflectionDirection = reflect(-lightDirection, surfaceNormal);
+  vec3 reflectionDirection = reflect(-lightDirection, -surfaceNormal);
   float specularLightWeight = pow(max(dot(reflectionDirection, eyeDirection), 0.0), uMaterialShininess);
   vec3 specular = specularColor.rgb * specularLightWeight * specularLightAmount;
 
