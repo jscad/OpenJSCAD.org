@@ -163,3 +163,39 @@ test('param choice', (t) => {
     { name: 'rounded', type: 'choice', caption: 'Rounded edges', values: [0, 1], captions: ['No', 'Yes (slow!)'], initial: 0 }
   )
 })
+
+const sampleParamsWithHints = [
+  { name: 'width', caption: 'Width', type: 'int', initial: 145, hint: 'Width of the complete model\nIncluding other stuff' },
+  { name: 'height', caption: 'height', type: 'int', initial: 100, hint: 'Height of the complete model' },
+
+  { name: 'group1', caption: '> Wall thickness', type: 'group', hint: 'Extra description of the group so group name can stay short' },
+  { name: 'thickOut', caption: 'Vertical outside', type: 'number', initial: 0.8 }
+]
+
+const sampleScriptHints = `function main({// @jscad-params
+  width=145,    // Width 
+                // Width of the complete model
+                // Including other stuff  
+
+  height=100,   // height
+                // Height of the complete model
+
+// > Wall thickness :group1
+// Extra description of the group so group name can stay short
+  thickOut=0.8,    // Vertical outside
+})`
+
+const inputTestHints = `const jscad = require('@jscad...');
+
+var x = 1
+
+${sampleScriptHints}
+  var a = 1
+
+  return circle()
+}
+`
+
+test('extra hints', (t) => {
+  t.deepEqual(getParameterDefinitionsFromSource(inputTestHints), sampleParamsWithHints)
+})

@@ -1,10 +1,24 @@
 
+const countSpaces = (l) => {
+  let count = 0
+  for (let i = 0; i < l.length; i++) {
+    if (l[i] === ' ') count++
+    else if (l[i] === '\t') count += 2
+    else break
+  }
+  return count
+}
+
 const getParameterDefinitionsFromSource = (script) => {
-  let lines = script.split('\n').map((l) => l.trim())
+  const lines = []
+  script.split('\n').forEach((l, i) => {
+    const trim = l.trim()
+    if (trim) {
+      lines.push({ code: trim, line: l, lineNum: i + 1, indent: countSpaces(l) })
+    }
+  })
 
-  lines = lines.map((l, i) => ({ code: l, line: i + 1, group: l[0] === '/' && !lines[i + 1] })).filter((l) => l.code)
-
-  let i = 0; let line; let lineNum
+  let i = 0; let lineNum; let code; let prev; let prevIndent
   while (i < lines.length) {
     line = lines[i].code.trim()
     i++
@@ -15,14 +29,26 @@ const getParameterDefinitionsFromSource = (script) => {
   const defs = []
 
   while (i < lines.length) {
-    line = lines[i].code
-    lineNum = lines[i].line
-    if (line[0] === '}') break
+    code = lines[i].code
+    lineNum = lines[i].lineNum
+    if (code[0] === '}') break
 
-    if (line[0] === '/') {
+    const isGroup = code[0] === '/'
+    if (isGroup && prev) {
+      const isHint = prev.type === 'group' || prevIndent + prev.name.length <= lines[i].indent
+      if (isHint) {
+        prev.hint = prev.hint ? prev.hint + '\n' : ''
+        prev.hint += extractTextFromComment(code)
+        i++
+        continue
+      }
+    }
+
+    prevIndent = lines[i].indent
+    if (isGroup) {
       // group
       let name = '_group_' + (groupIndex++)
-      const def = parseComment(line, lineNum, name)
+      const def = parseComment(code, lineNum, name)
       let caption = def.caption
 
       const idx = caption.lastIndexOf(':')
@@ -30,17 +56,17 @@ const getParameterDefinitionsFromSource = (script) => {
         name = caption.substring(idx + 1).trim()
         caption = caption.substring(0, idx).trim()
       }
-      defs.push({ name, type: 'group', caption, ...def.options })
+      defs.push(prev = { name, type: 'group', caption, ...def.options })
     } else {
-      const idx = line.indexOf('/')
+      const idx = code.indexOf('/')
       if (idx === -1) {
-        const def = parseDef(line, lineNum)
+        const def = parseDef(code, lineNum)
         def.caption = def.name
-        defs.push(def)
+        defs.push(prev = def)
       } else {
-        defs.push(parseOne(
-          line.substring(idx).trim(),
-          line.substring(0, idx).trim(),
+        defs.push(prev = parseOne(
+          code.substring(idx).trim(),
+          code.substring(0, idx).trim(),
           lineNum, lineNum
         ))
       }
@@ -71,17 +97,22 @@ const parseOne = (comment, code, line1, line2) => {
   return def
 }
 
-const parseComment = (comment, line, paramName) => {
-  const prefix = comment.substring(0, 2)
-  if (prefix === '//') comment = comment.substring(2)
-  if (prefix === '/*') comment = comment.substring(2, comment.length - 2)
+const extractTextFromComment = (c) => {
+  const prefix = c.substring(0, 2)
+  if (prefix === '//') c = c.substring(2)
+  if (prefix === '/*') c = c.substring(2, c.length - 2)
 
-  comment = comment.trim()
+  return c.trim()
+}
+
+const parseComment = (comment, line, paramName) => {
+  comment = extractTextFromComment(comment)
 
   const ret = {}
   const idx = comment.indexOf('{')
   if (idx !== -1) {
     try {
+      // eslint-disable-next-line
       ret.options = Function('return ' + comment.substring(idx)).call()
     } catch (e) {
       throw new EvalError(`${e.message}, parameter:${paramName}, line:${line}: ${comment.substring(idx)}`, 'code', line)
@@ -118,6 +149,7 @@ const parseDef = (code, line) => {
       ret.initial = parseFloat(initial)
     } else {
       try {
+        // eslint-disable-next-line
         ret.initial = Function('return ' + initial).bind({}).call()
       } catch (e) {
         throw new EvalError('Error in initial value definition for"' + code + '".' + e.message, 'code', line)
