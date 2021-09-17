@@ -168,7 +168,7 @@ const sampleParamsWithHints = [
   { name: 'width', caption: 'Width', type: 'int', initial: 145, hint: 'Width of the complete model\nIncluding other stuff' },
   { name: 'height', caption: 'height', type: 'int', initial: 100, hint: 'Height of the complete model' },
 
-  { name: '_group_1', caption: 'Wall thickness :group1', type: 'group', hint: 'Extra description of the group so group name can stay short', initial:'closed' },
+  { name: '_group_1', caption: 'Wall thickness :group1', type: 'group', hint: 'Extra description of the group so group name can stay short', initial: 'closed' },
   { name: 'thickOut', caption: 'Vertical outside', type: 'number', initial: 0.8 }
 ]
 

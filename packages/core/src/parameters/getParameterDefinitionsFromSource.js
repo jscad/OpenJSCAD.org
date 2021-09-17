@@ -11,6 +11,7 @@ const countSpaces = (l) => {
 
 const getParameterDefinitionsFromSource = (script) => {
   const lines = []
+  let line
   script.split('\n').forEach((l, i) => {
     const trim = l.trim()
     if (trim) {
@@ -47,12 +48,12 @@ const getParameterDefinitionsFromSource = (script) => {
     prevIndent = lines[i].indent
     if (isGroup) {
       // group
-      let name = '_group_' + (groupIndex++)
+      const name = '_group_' + (groupIndex++)
       const def = parseComment(code, lineNum, name)
       let caption = def.caption
-      if(caption[0] === '>') {
+      if (caption[0] === '>') {
         caption = caption.substring(1).trim()
-        if(!def.options) def.options = {}
+        if (!def.options) def.options = {}
         def.options.initial = 'closed'
       }
 
