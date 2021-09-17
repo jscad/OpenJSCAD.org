@@ -51,11 +51,6 @@ const getParameterDefinitionsFromSource = (script) => {
       const def = parseComment(code, lineNum, name)
       let caption = def.caption
 
-      const idx = caption.lastIndexOf(':')
-      if (idx !== -1) {
-        name = caption.substring(idx + 1).trim()
-        caption = caption.substring(0, idx).trim()
-      }
       defs.push(prev = { name, type: 'group', caption, ...def.options })
     } else {
       const idx = code.indexOf('/')
