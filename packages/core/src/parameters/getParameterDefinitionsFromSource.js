@@ -50,6 +50,11 @@ const getParameterDefinitionsFromSource = (script) => {
       let name = '_group_' + (groupIndex++)
       const def = parseComment(code, lineNum, name)
       let caption = def.caption
+      if(caption[0] === '>') {
+        caption = caption.substring(1).trim()
+        if(!def.options) def.options = {}
+        def.options.initial = 'closed'
+      }
 
       defs.push(prev = { name, type: 'group', caption, ...def.options })
     } else {

@@ -21,7 +21,7 @@ const sampleScript = `function main({// @jscad-params
   division=4,// Number of rows (== columns)
   bottomPieceHeight=20,// Water space(mm)
 
-/* Wall thickness :group1 */
+/* Wall thickness {name:'group1'} */
   thickOut=0.8, //Vertical outside
   
   thickIn=0.8,// Vertical inside
@@ -34,7 +34,7 @@ const sampleScript2 = `function main({// @jscad-params
   division=4,           // Number of rows (== columns)
   bottomPieceHeight=20, // Water space(mm)
 
-// Wall thickness :group1
+// Wall thickness {name:'group1'}
   thickOut=0.8,    // Vertical outside
   thickIn=0.8,     // Vertical inside
   thickBottom=0.8, // Bottom
@@ -168,7 +168,7 @@ const sampleParamsWithHints = [
   { name: 'width', caption: 'Width', type: 'int', initial: 145, hint: 'Width of the complete model\nIncluding other stuff' },
   { name: 'height', caption: 'height', type: 'int', initial: 100, hint: 'Height of the complete model' },
 
-  { name: 'group1', caption: '> Wall thickness', type: 'group', hint: 'Extra description of the group so group name can stay short' },
+  { name: '_group_1', caption: 'Wall thickness :group1', type: 'group', hint: 'Extra description of the group so group name can stay short', initial:'closed' },
   { name: 'thickOut', caption: 'Vertical outside', type: 'number', initial: 0.8 }
 ]
 
