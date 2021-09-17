@@ -62,7 +62,7 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
   registerAllExtensions(fakeFs, webRequire)
 
   // find the root module
-  let rootModule = webRequire(filesAndFolders[0].fullPath)
+  let rootModule = webRequire(filesAndFolders[0].fullPath, true)
 
   // console.log('***** rootModule',rootModule)
 

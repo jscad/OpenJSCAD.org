@@ -77,7 +77,7 @@ const makeWebRequire = (filesAndFolders, options) => {
    * The logic is based on the original NODE require() function.
    * @see https://nodejs.org/dist/latest-v12.x/docs/api/modules.html#modules_all_together
    */
-  const _require = (currentPath, requirePath) => {
+  const _require = (currentPath, requirePath, isMain) => {
     // console.log('***** require: cur:', currentPath, ' req:', requirePath)
 
     // core modules
@@ -112,7 +112,7 @@ const makeWebRequire = (filesAndFolders, options) => {
             const moduleMakerFunction = new Function('require', 'module', content)
             moduleMakerFunction(_require.bind(null, entry.fullPath), matchingModule)
 
-            const paramDefFromSource = getParameterDefinitionsFromSource(content)
+            const paramDefFromSource = isMain ? getParameterDefinitionsFromSource(content, fileName) : []
             const originalFunc = matchingModule.exports.getParameterDefinitions
             // replace getParameterDefinitions in the module, with version taht adds parsed definitions
             matchingModule.exports.getParameterDefinitions = () => combineParameterDefinitions(paramDefFromSource, originalFunc ? originalFunc() || [] : [])
