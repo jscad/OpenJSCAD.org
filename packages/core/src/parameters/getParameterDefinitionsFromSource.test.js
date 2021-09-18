@@ -148,6 +148,14 @@ test('param slider', (t) => {
   )
 })
 
+test('param slider2', (t) => {
+  testBothDir(t,
+    '// How many? {type:"slider", min:2, max:10, step:2}',
+    'count',
+    { name: 'count', type: 'slider', min: 2, max: 10, step: 2, caption: 'How many?' }
+  )
+})
+
 test('param url', (t) => {
   testBothDir(t,
     '// Web page URL? {type:"url"}',

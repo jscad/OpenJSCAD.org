@@ -11,7 +11,6 @@ const countSpaces = (l) => {
 
 const getParameterDefinitionsFromSource = (script) => {
   const lines = []
-  let line
   script.split('\n').forEach((l, i) => {
     const trim = l.trim()
     if (trim) {
@@ -21,9 +20,9 @@ const getParameterDefinitionsFromSource = (script) => {
 
   let i = 0; let lineNum; let code; let prev; let prevIndent
   while (i < lines.length) {
-    line = lines[i].code.trim()
+    code = lines[i].code
     i++
-    if (line.length > 12 && line.indexOf('@jscad-params') !== -1) break
+    if (code.length > 12 && code.indexOf('@jscad-params') !== -1) break
   }
 
   let groupIndex = 1
@@ -153,7 +152,7 @@ const parseDef = (code, line) => {
         // eslint-disable-next-line
         ret.initial = Function('return ' + initial).bind({}).call()
       } catch (e) {
-        throw new EvalError('Error in initial value definition for"' + code + '".' + e.message, 'code', line)
+        throw new EvalError(`Error in the initial value definition for ${code}  ${e.message}, line:${line}`, 'code', line)
       }
     }
 
