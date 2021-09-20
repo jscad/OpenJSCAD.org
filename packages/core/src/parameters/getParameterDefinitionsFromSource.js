@@ -1,3 +1,4 @@
+const JSON5 = require('json5')
 
 const countSpaces = (l) => {
   let count = 0
@@ -112,8 +113,7 @@ const parseComment = (comment, line, paramName) => {
   const idx = comment.indexOf('{')
   if (idx !== -1) {
     try {
-      // eslint-disable-next-line
-      ret.options = Function('return ' + comment.substring(idx)).call()
+      ret.options = JSON5.parse(comment.substring(idx))
     } catch (e) {
       throw new EvalError(`${e.message}, parameter:${paramName}, line:${line}: ${comment.substring(idx)}`, 'code', line)
     }
@@ -149,8 +149,7 @@ const parseDef = (code, line) => {
       ret.initial = parseFloat(initial)
     } else {
       try {
-        // eslint-disable-next-line
-        ret.initial = Function('return ' + initial).bind({}).call()
+        ret.initial = JSON5.parse(initial)
       } catch (e) {
         throw new EvalError(`Error in the initial value definition for ${code}  ${e.message}, line:${line}`, 'code', line)
       }
