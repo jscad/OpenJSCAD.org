@@ -26,7 +26,7 @@ const concat = (...paths) => {
   let newpoints = []
   paths.forEach((path) => {
     const tmp = toPoints(path)
-    if (newpoints.length > 0 && equals(tmp[0], newpoints[newpoints.length - 1])) tmp.shift()
+    if (newpoints.length > 0 && tmp.length > 0 && equals(tmp[0], newpoints[newpoints.length - 1])) tmp.shift()
     newpoints = newpoints.concat(tmp)
   })
   return fromPoints({ closed: isClosed }, newpoints)
