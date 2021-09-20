@@ -90,7 +90,7 @@ const parseOne = (comment, code, line1, line2) => {
         def.min = 0
       }
       if (def.max === undefined) {
-        def.max = def.initial * 2 || 100
+        def.max = 100
       }
     }
   }
