@@ -1,6 +1,6 @@
 const fromPoints = require('./fromPoints')
 const toPoints = require('./toPoints')
-const equals = require('../../maths/vec2/equals')
+const { equals } = require('../../maths/vec2')
 /**
  * Concatenate the given paths.
  * If both contain the same point at the junction, merge it into one.
