@@ -1,5 +1,13 @@
 const JSON5 = require('json5')
 
+/* Count leading spaces in a line.
+This helps provide more descriptive comments after the parameter.
+
+When comment is foundm the number of spaces can be compared with previous parameter definition.
+When comment line is indented more than parameter(incl. parameter name) 
+it is considered as description of previous parameter and not a group definition.
+
+*/
 const countSpaces = (l) => {
   let count = 0
   for (let i = 0; i < l.length; i++) {
