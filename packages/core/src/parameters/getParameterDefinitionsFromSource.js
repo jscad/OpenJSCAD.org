@@ -108,10 +108,11 @@ const parseOne = (comment, code, line1, line2) => {
 
 const extractTextFromComment = (c) => {
   const prefix = c.substring(0, 2)
-  if (prefix === '//') c = c.substring(2)
-  if (prefix === '/*') c = c.substring(2, c.length - 2)
+  // after cutting-out the comment marker, there could be more spaces to trim
+  if (prefix === '//') c = c.substring(2).trim()
+  if (prefix === '/*') c = c.substring(2, c.length - 2).trim()
 
-  return c.trim()
+  return c
 }
 
 const parseComment = (comment, line, paramName) => {
