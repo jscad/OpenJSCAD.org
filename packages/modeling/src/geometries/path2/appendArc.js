@@ -121,7 +121,7 @@ const appendArc = (options, geometry) => {
     // Ok, we have the center point and angle range (from theta1, deltatheta radians) so we can create the ellipse
     let numsteps = Math.ceil(Math.abs(deltatheta) / (2 * Math.PI) * segments) + 1
     if (numsteps < 1) numsteps = 1
-    for (let step = 1; step <= numsteps; step++) {
+    for (let step = 1; step < numsteps; step++) {
       const theta = theta1 + step / numsteps * deltatheta
       const costheta = Math.cos(theta)
       const sintheta = Math.sin(theta)
@@ -130,6 +130,8 @@ const appendArc = (options, geometry) => {
       vec2.add(point, point, center)
       newpoints.push(point)
     }
+    // ensure end point is precisely what user gave as parameter
+    if (numsteps) newpoints.push(options.endpoint)
   }
   newpoints = points.concat(newpoints)
   const result = fromPoints({}, newpoints)
