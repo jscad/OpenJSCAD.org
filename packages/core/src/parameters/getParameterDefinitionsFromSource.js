@@ -47,7 +47,7 @@ const getParameterDefinitionsFromSource = (script) => {
       const isHint = prev.type === 'group' || prevIndent + prev.name.length <= lines[i].indent
       if (isHint) {
         prev.hint = prev.hint ? prev.hint + '\n' : ''
-        prev.hint += extractTextFromComment(code)
+        prev.hint += extractTextFromComment(code, lineNum)
         i++
         continue
       }
@@ -114,17 +114,20 @@ const parseOne = (comment, code, line1, line2) => {
   return def
 }
 
-const extractTextFromComment = (c) => {
+const extractTextFromComment = (c, lineNum) => {
   const prefix = c.substring(0, 2)
   // after cutting-out the comment marker, there could be more spaces to trim
   if (prefix === '//') c = c.substring(2).trim()
-  if (prefix === '/*') c = c.substring(2, c.length - 2).trim()
+  if (prefix === '/*') {
+    if (c.substring(c.length - 2) !== '*/') throw new EvalError(`Multi-line comments not supported in parsed parameter definitions, line:${lineNum}`, 'code', lineNum)
+    c = c.substring(2, c.length - 2).trim()
+  }
 
   return c
 }
 
-const parseComment = (comment, line, paramName) => {
-  comment = extractTextFromComment(comment)
+const parseComment = (comment, lineNum, paramName) => {
+  comment = extractTextFromComment(comment, lineNum)
 
   const ret = {}
   const idx = comment.indexOf('{')
@@ -132,7 +135,7 @@ const parseComment = (comment, line, paramName) => {
     try {
       ret.options = JSON5.parse(comment.substring(idx))
     } catch (e) {
-      throw new EvalError(`${e.message}, parameter:${paramName}, line:${line}: ${comment.substring(idx)}`, 'code', line)
+      throw new EvalError(`${e.message}, parameter:${paramName}, line:${lineNum}: ${comment.substring(idx)}`, 'code', lineNum)
     }
     comment = comment.substring(0, idx).trim()
   }

@@ -214,3 +214,15 @@ test('last param brackets', (t) => {
   t.deepEqual(getParameterDefinitionsFromSource(`function main({//@jscad-params
   width=14})`), sampleParams2)
 })
+
+test('multiline error', (t) => {
+  t.throws(() => getParameterDefinitionsFromSource(`function main({//@jscad-params
+  /*
+  width=14})`), { instanceOf: EvalError, message: 'Multi-line comments not supported in parsed parameter definitions, line:2' })
+})
+
+test('single line /* ...*/ ok', (t) => {
+  t.deepEqual(getParameterDefinitionsFromSource(`function main({//@jscad-params
+  /* group */
+  width=14})`), [{type:'group', caption:'group', name:'_group_1'},...sampleParams2])
+})
