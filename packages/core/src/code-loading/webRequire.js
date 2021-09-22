@@ -112,7 +112,7 @@ const makeWebRequire = (filesAndFolders, options) => {
             const moduleMakerFunction = new Function('require', 'module', content)
             moduleMakerFunction(_require.bind(null, entry.fullPath), matchingModule)
 
-            const paramDefFromSource = getParameterDefinitionsFromSource(content, fileName)
+            const paramDefFromSource = content.includes('@jscad-params') ? getParameterDefinitionsFromSource(content, fileName) : []
             const originalFunc = matchingModule.exports.getParameterDefinitions
             // replace getParameterDefinitions in the module, with version taht adds parsed definitions
             matchingModule.exports.getParameterDefinitions = () => combineParameterDefinitions(paramDefFromSource, originalFunc ? originalFunc() || [] : [])
