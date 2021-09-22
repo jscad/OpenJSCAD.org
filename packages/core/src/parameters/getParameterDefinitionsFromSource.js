@@ -4,7 +4,7 @@ const JSON5 = require('json5')
 This helps provide more descriptive comments after the parameter.
 
 When comment is foundm the number of spaces can be compared with previous parameter definition.
-When comment line is indented more than parameter(incl. parameter name) 
+When comment line is indented more than parameter(incl. parameter name)
 it is considered as description of previous parameter and not a group definition.
 
 */
@@ -69,9 +69,17 @@ const getParameterDefinitionsFromSource = (script) => {
     } else {
       const idx = code.indexOf('/')
       if (idx === -1) {
+        // also handle case when closing bracket is in same line as last parameter
+        //   width=11}
+        // it is not an exhaustive check but covers aditional case to simplify it for users
+        const bracketIdx = code.indexOf('}')
+        if (bracketIdx !== -1) code = code.substring(0, bracketIdx)
+
         const def = parseDef(code, lineNum)
         def.caption = def.name
         defs.push(prev = def)
+
+        if (bracketIdx !== -1) break
       } else {
         defs.push(prev = parseOne(
           code.substring(idx).trim(),

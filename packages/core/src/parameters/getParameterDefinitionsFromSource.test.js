@@ -207,3 +207,10 @@ ${sampleScriptHints}
 test('extra hints', (t) => {
   t.deepEqual(getParameterDefinitionsFromSource(inputTestHints), sampleParamsWithHints)
 })
+
+const sampleParams2 = [{ name: 'width', caption: 'width', type: 'int', initial: 14 }]
+
+test('last param brackets', (t) => {
+  t.deepEqual(getParameterDefinitionsFromSource(`function main({//@jscad-params
+  width=14})`), sampleParams2)
+})
