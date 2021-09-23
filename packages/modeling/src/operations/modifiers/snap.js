@@ -39,6 +39,7 @@ const snapGeom3 = (geometry) => {
  * @see measurements.measureEpsilon()
  * @param {...Object} geometries - the geometries to snap
  * @return {Object|Array} the snapped geometry, or a list of snapped geometries
+ * @alias module:modeling/modifiers.snap
  */
 const snap = (...geometries) => {
   geometries = flatten(geometries)

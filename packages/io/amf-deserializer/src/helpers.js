@@ -31,7 +31,7 @@ const amfZ = (element) => ({ type: 'z', value: '0' })
 const amfVolume = (element) => {
   const obj = { type: 'volume' }
 
-  if ('MATERIALID' in element) { obj.materialid = element.MATERIALID }
+  if (element.materialid) { obj.materialid = element.materialid }
 
   obj.objects = []
   return obj
@@ -63,8 +63,8 @@ const amfEdge = (element) => {
 const amfMetadata = (element) => {
   const obj = { type: 'metadata' }
 
-  if ('TYPE' in element) { obj.mtype = element.TYPE }
-  if ('ID' in element) { obj.id = element.ID }
+  if (element.type) { obj.mtype = element.type }
+  if (element.id) { obj.id = element.id }
 
   return obj
 }
@@ -72,7 +72,7 @@ const amfMetadata = (element) => {
 const amfMaterial = (element) => {
   const obj = { type: 'material' }
 
-  if ('ID' in element) { obj.id = element.ID }
+  if (element.id) { obj.id = element.id }
 
   obj.objects = []
   return obj
@@ -93,9 +93,9 @@ const amfA = (element) => ({ type: 'a', value: '1' })
 const amfMap = (element) => {
   const obj = { type: 'map' }
 
-  if ('GTEXID' in element) { obj.gtexid = element.GTEXID }
-  if ('BTEXID' in element) { obj.btexid = element.BTEXID }
-  if ('RTEXID' in element) { obj.rtexid = element.RTEXID }
+  if (element.gtexid) { obj.gtexid = element.gtexid }
+  if (element.btexid) { obj.btexid = element.btexid }
+  if (element.rtexid) { obj.rtexid = element.rtexid }
 
   obj.objects = []
   return obj
