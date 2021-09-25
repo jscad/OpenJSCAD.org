@@ -1,9 +1,9 @@
 const test = require('ava')
 
 const { geom3, poly3 } = require('../../geometries')
-const { expand } = require('./index')
+const expandGeom3 = require('./expandGeom3')
 
-test('expand survives bug 876', async (t) => {
+test('expandGeom3: expand completes properly, issue 876', async (t) => {
   setTimeout(() => t.fail(), 1000)
   const polies = [
     poly3.fromPoints([[-19.61, -0.7999999999999986, 11.855], [-19.61, -0.8000000000000015, -11.855], [-19.61, -2.7500000000000018, -11.855], [-19.61, -2.7499999999999982, 11.855]]),
@@ -25,7 +25,7 @@ test('expand survives bug 876', async (t) => {
   const sub = geom3.create(polies)
 
   return new Promise((resolve, reject) => {
-    expand({ delta: 1.3, corners: 'round', segments: 12 }, sub)
+    expandGeom3({ delta: 1.3, corners: 'round', segments: 12 }, sub)
     t.pass()
     resolve()
   })
