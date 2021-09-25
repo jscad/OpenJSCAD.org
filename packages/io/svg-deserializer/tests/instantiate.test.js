@@ -248,10 +248,10 @@ test('deserialize : instantiate svg (path: arc) to objects', (t) => {
   t.is(observed.length, 2)
   shape = observed[0]
   t.is(shape.points.length, 15) // segments double on a 3/4 circle
-  t.deepEqual(measurements.measureBoundingBox(shape), [[64.91110599999999, -77.611103, 0], [90.21850570104527, -52.30370029895471, 0]])
+  t.deepEqual(measurements.measureBoundingBox(shape), [[64.91110599999999, -77.611105, 0], [90.21850570104527, -52.30370029895471, 0]])
   shape = observed[1]
   t.is(shape.points.length, 15) // segments double on a 3/4 circle
-  t.deepEqual(measurements.measureBoundingBox(shape), [[50.79999599999999, -136.03302387090216, 0], [72.27222493929787, -110.6793647936299, 0]])
+  t.deepEqual(measurements.measureBoundingBox(shape), [[50.799996, -136.03302387090216, 0], [72.27222493929787, -110.6793647936299, 0]])
 })
 
 // ################################
@@ -434,16 +434,16 @@ test('deserialize : instantiate shape with a hole to objects', (t) => {
   let observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 2)
   let shape = observed[0]
-  t.is(shape.sides.length, 39)
+  t.is(shape.sides.length, 38)
   shape = observed[1]
-  t.is(shape.sides.length, 39)
+  t.is(shape.sides.length, 38)
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 2)
   shape = observed[0]
-  t.is(shape.points.length, 39)
+  t.is(shape.points.length, 38)
   shape = observed[1]
-  t.is(shape.points.length, 39)
+  t.is(shape.points.length, 38)
 })
 
 // ################################
@@ -458,12 +458,12 @@ test('deserialize : instantiate shape with a nested hole to objects', (t) => {
   let observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 4)
   let shape = observed[0]
-  t.is(shape.sides.length, 39)
+  t.is(shape.sides.length, 38)
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 4)
   shape = observed[0]
-  t.is(shape.points.length, 39)
+  t.is(shape.points.length, 38)
 })
 
 // ################################
