@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.4.0...@jscad/web@2.4.1) (2021-09-09)
+
+
+### Bug Fixes
+
+* **web:** added open issues and discord community to help ([4ea1196](https://github.com/jscad/OpenJSCAD.org/commit/4ea11966af4b3ecbb5c1a3d53b7ac90c4cd349b1))
+* **web:** adjusted layout of status messages [#884](https://github.com/jscad/OpenJSCAD.org/issues/884) ([#887](https://github.com/jscad/OpenJSCAD.org/issues/887)) ([aa2836b](https://github.com/jscad/OpenJSCAD.org/commit/aa2836b2b8d5799a8a9d53f9712f04f695e4b9c4))
+* **web:** enhanced createContext() for older browsers ([#902](https://github.com/jscad/OpenJSCAD.org/issues/902)) ([8d011db](https://github.com/jscad/OpenJSCAD.org/commit/8d011db13599821c10294e214139c4593b0bc428))
+
+
+### Performance Improvements
+
+* **regl-renderer:** use webgl2 as default context or enable OES_element_index_uint extension ([#878](https://github.com/jscad/OpenJSCAD.org/issues/878)) ([a6c92f9](https://github.com/jscad/OpenJSCAD.org/commit/a6c92f9954d1f1caa6c279d66d313eba8d7c4f9c))
+
+
+
+
+
 # [2.4.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.3.3...@jscad/web@2.4.0) (2021-06-20)
 
 

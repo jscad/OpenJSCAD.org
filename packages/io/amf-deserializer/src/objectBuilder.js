@@ -88,7 +88,6 @@ const createObject = (obj, index, data, options) => {
   let tricolor = null // for found colors
 
   const addPart = (part, pidx) => {
-    // console.log(part.type);
     switch (part.type) {
       case 'vertices':
         part.objects.forEach(addVertex)

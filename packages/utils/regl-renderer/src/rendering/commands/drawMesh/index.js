@@ -5,11 +5,11 @@ const { meshColor } = require('../../renderDefaults')
 const drawMesh = (regl, params = { extras: {} }) => {
   const defaults = {
     useVertexColors: true,
-    dynamicCulling: false,
+    dynamicCulling: true,
     geometry: undefined,
     color: meshColor
   }
-  let { geometry, dynamicCulling, useVertexColors, color } = Object.assign({}, defaults, params)
+  const { geometry, dynamicCulling, useVertexColors, color } = Object.assign({}, defaults, params)
 
   // let ambientOcclusion = vao(geometry.indices, geometry.positions, 64, 64)
   const ambientOcclusion = regl.buffer([])
@@ -18,15 +18,15 @@ const drawMesh = (regl, params = { extras: {} }) => {
   const hasIndices = !!(geometry.indices && geometry.indices.length > 0)
   const hasNormals = !!(geometry.normals && geometry.normals.length > 0)
   const hasVertexColors = !!(useVertexColors && geometry.colors && geometry.colors.length > 0)
+  const transforms = geometry.transforms || mat4.create()
+  const flip = mat4.determinant(transforms) < 0
   const cullFace = dynamicCulling
-    ? (context, props) => {
-        const isOdd = ([props.model[0], props.model[5], props.model[10]].filter((x) => x < 0).length) & 1 // count the number of negative components & deterine if that is odd or even
-        return isOdd ? 'front' : 'back'
-      }
+    ? (flip ? 'front' : 'back')
     : 'back'
 
   const vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
-  let frag = hasVertexColors ? require('./vColorShaders').frag : require('./meshShaders').frag
+  const frag = hasVertexColors ? require('./vColorShaders').frag : require('./meshShaders').frag
+  const modelMatrixInv = mat4.invert(mat4.create(), transforms)
 
   // console.log('type', geometry.type, 'color', color, hasVertexColors)
 
@@ -36,18 +36,16 @@ const drawMesh = (regl, params = { extras: {} }) => {
     frag,
 
     uniforms: {
-      model: (context, props) => props.model || geometry.transforms || mat4.create(),
+      model: (context, props) => transforms ,
       ucolor: (context, props) => (props && props.color) ? props.color : color,
-      // semi hack, woraround to enable/disable vertex colors!!!
+      // semi hack, woraround to enable/disable vertex colors !!!
       vColorToggler: (context, props) => (props && props.useVertexColors && props.useVertexColors === true) ? 1.0 : 0.0,
       // experimental
       unormal: (context, props) => {
-        const model = mat4.create()
-        const modelViewMatrix = mat4.multiply(mat4.create(), model, props.camera.view)
-        const normalMatrix = mat4.create()
-        mat4.invert(normalMatrix, modelViewMatrix)
-        mat4.transpose(normalMatrix, normalMatrix)
-        return normalMatrix
+        const modelViewMatrix = mat4.invert(mat4.create(), props.camera.view)
+        mat4.multiply(modelViewMatrix, modelMatrixInv, modelViewMatrix)
+        mat4.transpose(modelViewMatrix, modelViewMatrix)
+        return modelViewMatrix
       }
     },
     attributes: {

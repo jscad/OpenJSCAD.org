@@ -41,6 +41,8 @@ const svgPresentation = function (obj, element) {
   if ('STROKE-OPACITY' in element) { obj.strokeOpacity = element['STROKE-OPACITY'] }
 }
 
+const svgTransformsRegExp = /\w+\(.+\)/i
+
 const svgTransforms = function (cag, element) {
   let list = null
   if ('TRANSFORM' in element) {
@@ -51,10 +53,9 @@ const svgTransforms = function (cag, element) {
   }
   if (list !== null) {
     cag.transforms = []
-    const exp = new RegExp('\\w+\\(.+\\)', 'i')
-    let v = exp.exec(list)
+    let v = svgTransformsRegExp.exec(list)
     while (v !== null) {
-      const s = exp.lastIndex
+      const s = svgTransformsRegExp.lastIndex
       const e = list.indexOf(')') + 1
       let t = list.slice(s, e) // the transform
       t = t.trim()
@@ -87,10 +88,12 @@ const svgTransforms = function (cag, element) {
       }
       // shorten the list and continue
       list = list.slice(e, list.length)
-      v = exp.exec(list)
+      v = svgTransformsRegExp.exec(list)
     }
   }
 }
+
+const viewBoxRegExp = /([\d.-]+)[\s,]+([\d.-]+)[\s,]+([\d.-]+)[\s,]+([\d.-]+)/i
 
 const svgSvg = function (element, { customPxPmm }) {
   // default SVG with no viewport
@@ -108,8 +111,7 @@ const svgSvg = function (element, { customPxPmm }) {
   if ('HEIGHT' in element) { obj.height = element.HEIGHT }
   if ('VIEWBOX' in element) {
     const list = element.VIEWBOX.trim()
-    const exp = new RegExp('([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)[\\s,]+([\\d\\.\\-]+)', 'i')
-    const v = exp.exec(list)
+    const v = viewBoxRegExp.exec(list)
     if (v !== null) {
       obj.viewX = parseFloat(v[1])
       obj.viewY = parseFloat(v[2])
@@ -190,7 +192,7 @@ const svgLine = function (element) {
 
 const svgListOfPoints = function (list) {
   const points = []
-  const exp = new RegExp('([\\d\\-\\+\\.]+)[\\s,]+([\\d\\-\\+\\.]+)[\\s,]*', 'i')
+  const exp = /([\d\-+.]+)[\s,]+([\d\-+.]+)[\s,]*/i
   list = list.trim()
   let v = exp.exec(list)
   while (v !== null) {
@@ -318,6 +320,7 @@ const svgPath = function (element) {
 
     let i = 0
     const l = element.D.length
+    const offset = element.position[1] - l - 2
     while (i < l) {
       const c = element.D[i]
       switch (c) {
@@ -379,7 +382,7 @@ const svgPath = function (element) {
             }
             obj.commands.push(co)
           }
-          co = { c: c, p: [] }
+          co = { c: c, p: [], pos: i + offset }
           break
         // white space
         case ',':

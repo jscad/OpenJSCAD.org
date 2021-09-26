@@ -14,7 +14,7 @@ const instantiate = (options, src) => {
   // parse the AMF data
   const { amfObj, amfMaterials, amfTextures, amfConstels } = parse(src, pxPmm)
   if (!amfObj) {
-    throw new Error('AMF parsing failed, no valid amf data retrieved')
+    throw new Error('AMF parsing failed, no valid AMF data retrieved')
   }
 
   return objectify(amfObj, { amfMaterials, amfTextures, amfConstels })

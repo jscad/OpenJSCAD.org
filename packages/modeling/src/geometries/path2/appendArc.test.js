@@ -68,3 +68,19 @@ test('appendArc: appending to a path produces a new path', (t) => {
   pts = toPoints(obs)
   t.is(pts.length, 2)
 })
+
+test('appendArc: appending to a path produces exact endpoint', (t) => {
+  let p1 = fromPoints({}, [[18, 1.8], [1, 3]])
+  const endpoint = [1, -3]
+
+  p1 = appendArc({
+    endpoint,
+    radius: [4, 4],
+    segments: 36,
+    large: true
+  }, p1)
+
+  const pts = toPoints(p1)
+
+  t.deepEqual(pts[pts.length - 1], endpoint)
+})

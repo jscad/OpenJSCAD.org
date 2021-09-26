@@ -18,7 +18,8 @@
  */
 
 /**
- * Creates an object representing a bezier easing curve. Can have both an arbitrary number of control points, and an arbitrary number of dimensions.
+ * Creates an object representing a bezier easing curve.
+ * Curves can have both an arbitrary number of control points, and an arbitrary number of dimensions.
  *
  * @example
  * const b = bezier.create([0,10]) // a linear progression from 0 to 10
