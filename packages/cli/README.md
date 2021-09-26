@@ -49,7 +49,7 @@ jscad
 If a general installation is not possible or desired, then installation as part of a project is possible.
 ```
 cd myproject
-npm install -D @jscad/cli@alpha
+npm install -D @jscad/cli
 ```
 
 This will add the CLI package as a development dependency. The CLI can be invoked using
@@ -85,8 +85,8 @@ Also, design projects (directories) can be used as the input to the CLI.
 ```jscad myproject/ -o ./test.stl               # -- convert the project mydesign to test.stl```
 
 > Note: The CLI will search for the design entry point just like NPM.
-> - if there is a package.json file in the project, then try to use the 'main' property
-> - if not, then try to look for 'index.js'
+> - if there is a package.json file in the project, then try to load the 'main' property
+> - if not, then try to load from 'index.js'
 
 ### Using the CLI with the JSCAD Examples
 
@@ -98,8 +98,8 @@ npm init
 ```
 Then add both the examples and the CLI to the project.
 ```
-npm install @jscad/examples@alpha
-npm install @jscad/cli@alpha
+npm install @jscad/examples
+npm install @jscad/cli
 ```
 And finally, make the examples local to the project.
 ```

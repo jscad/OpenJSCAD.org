@@ -5,7 +5,7 @@ const test = require('ava')
 
 const countOf = require('../../test/helpers/countOf')
 
-const deserializer = require('../index.js')
+const deserializer = require('../src/index.js')
 
 const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
 

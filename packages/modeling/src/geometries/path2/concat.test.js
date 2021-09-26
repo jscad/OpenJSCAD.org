@@ -6,6 +6,10 @@ test('concat: No paths produces an empty open path', (t) => {
   t.true(equals(concat(), fromPoints({ closed: false }, [])))
 })
 
+test('concat: empty paths produces an empty open path', (t) => {
+  t.true(equals(concat(fromPoints({}, []), fromPoints({}, [])), fromPoints({ closed: false }, [])))
+})
+
 test('concat: Two open paths produces a open path', (t) => {
   t.true(equals(concat(fromPoints({ closed: false }, [[0, 0]]),
     fromPoints({ closed: false }, [[1, 1]])),
