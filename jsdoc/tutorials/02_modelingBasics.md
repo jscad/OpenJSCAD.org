@@ -38,9 +38,8 @@ Another valuable way of building shapes is to start with 2D shapes.  These can b
 specifying points, starting with basic primitive 2D shapes, or importing SVG files.  The 2D 
 shapes can then be extruded to produce a wide variety of different geometries.
 ```javascript
-const jscad = require('@jscad/modeling')
-const {polygon } = jscad.primitives
-const { extrudeLinear } = jscad.extrusions
+const { polygon } = require('@jscad/modeling').primitives
+const { extrudeLinear } = require('@jscad/modeling').extrusions
 
 function main () {
     const poly = polygon({ points: [[-1, -1], [3, -1], [3.5, 2], [2, 1], [1, 2], [0, 1], [-1, 2]] })

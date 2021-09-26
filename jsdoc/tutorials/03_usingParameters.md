@@ -3,8 +3,8 @@ your designs, so that they can easily adapt to different situations.
 
 ## ParametricBox.js
 ```javascript
-const jscad = require('@jscad/modeling')
-const { booleans, primitives } = jscad
+const { cuboid, roundedCuboid } = require('@jscad/modeling').primitives
+const { subtract } = require('@jscad/modeling').booleans
 
 const getParameterDefinitions = () => {
   return [
@@ -17,14 +17,14 @@ const getParameterDefinitions = () => {
 }
 
 const main = (params) => {
-	return booleans.subtract(
+	return subtract(
 		outerBox(params),
 		innerBox(params)
 	);
 }
 
 const outerBox = (params) => {
-	return primitives.cuboid({
+	return cuboid({
 		size: [params.outerWidth, params.outerDepth, params.outerHeight],
 		center: [0, 0, params.outerHeight / 2]
 	});
@@ -38,7 +38,7 @@ const innerBox = (params) => {
 	];
 	const center = [0, 0, (size[2] / 2) + params.wallThickness];
 
-	return primitives.roundedCuboid({ size, center, roundRadius: params.cornerRadius, segments: 32 });
+	return roundedCuboid({ size, center, roundRadius: params.cornerRadius, segments: 32 });
 }
 
 module.exports = { main, getParameterDefinitions }
