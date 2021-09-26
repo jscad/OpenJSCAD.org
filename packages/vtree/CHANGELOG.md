@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/vtree@2.0.6...@jscad/vtree@2.0.7) (2021-09-09)
+
+**Note:** Version bump only for package @jscad/vtree
+
+
+
+
+
 ## [2.0.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/vtree@2.0.5...@jscad/vtree@2.0.6) (2021-06-20)
 
 **Note:** Version bump only for package @jscad/vtree

@@ -8,7 +8,7 @@ touching the code. This makes it an excellent option for 3D printing application
 There are three options for using JSCAD.  It can be run in a browser, in a 
 stand-alone application, or as a command-line tool. Most users start with the 
 in-browser application, which can be found at [https://openjscad.xyz/](https://openjscad.xyz/). To explore 
-the other options, you can get started by visiting the source code in [GitHub](https://github.com/jscad/OpenJSCAD.org/tree/V2), and 
+the other options, you can get started by visiting the source code in [GitHub](https://github.com/jscad/OpenJSCAD.org/), and 
 checking out the code.
 
 In all usage options, you start with a javascript text file that programmatically
