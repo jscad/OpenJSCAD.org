@@ -7,10 +7,10 @@ Check out the Tutorials section for tips on getting started, and best practises.
 ## Table of Contents
 
 - [Usage](#usage)
-- [Contributing](#contributing)
+- [Documentation](#documentation)
 - [Community](#community)
+- [Contributing](#contributing)
 - [License](#license)
-- [See also](#see-also)
 
 ## Usage
 
@@ -21,10 +21,16 @@ There are different 'flavors' of JSCAD that you can use based on your needs
   * Desktop app : pre-pre-alpha work in progress can be found  at ./packages/desktop
   * For custom mix and match of packages, all the packages are available [on NPM](https://www.npmjs.com/search?q=%40jscad) under the '@jscad' name
 
+## Documentation
+
+* [JSCAD User Guide](https://www.openjscad.xyz/guide.html)
+* [API Reference](https://www.openjscad.xyz/docs)
+* [Open Issues](https://www.openjscad.xyz/issues.html)
+
 ## Community
 
-See for more details
 * [JSCAD User Group](https://openjscad.xyz/forum.html)
+* [Discord Community](https://openjscad.xyz/discord.html)
 
 ## Contributing
 
@@ -43,7 +49,6 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 A BIG THANKS to all the people who have already contributed to the JSCAD project!
 <a href="graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" /></a>
-
 
 ## License
 

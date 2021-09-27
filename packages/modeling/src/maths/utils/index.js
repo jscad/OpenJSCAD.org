@@ -1,3 +1,9 @@
+/**
+ * Utility functions for maths.
+ * @module modeling/maths/utils
+ * @example
+ * const { area, solve2Linear } = require('@jscad/maths').utils
+ */
 module.exports = {
   aboutEqualNormals: require('./aboutEqualNormals'),
   area: require('./area'),

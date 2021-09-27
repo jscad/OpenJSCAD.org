@@ -16,6 +16,7 @@
       "packages/modeling/src/maths/line3",
       "packages/modeling/src/maths/mat4",
       "packages/modeling/src/maths/plane",
+      "packages/modeling/src/maths/utils",
       "packages/modeling/src/maths/vec2",
       "packages/modeling/src/maths/vec3",
       "packages/modeling/src/maths/vec4",
@@ -84,19 +85,13 @@
     "removeQuotes": ["none"],
     "scripts": ["jscad-docs.css", "jscad-docs.js"],
     "menu": {
-      "openjscad.org (v1)": {
-        "href":"https://openjscad.org",
-        "target":"_blank",
-        "class":"menu-item",
-        "id":"website_link"
-      },
-      "JSCad User Group": {
-        "href":"https://openjscad.nodebb.com/",
+      "JSCAD User Group": {
+        "href":"https://openjscad.xyz/forum.html",
         "target":"_blank",
         "class":"menu-item",
         "id":"forum_link"
       },
-      "JSCad Github": {
+      "JSCAD Github": {
         "href":"https://github.com/jscad/OpenJSCAD.org",
         "target":"_blank",
         "class":"menu-item",
