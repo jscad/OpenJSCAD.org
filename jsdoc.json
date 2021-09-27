@@ -33,7 +33,8 @@
 
       "packages/io/io-utils",
       "packages/io/amf-deserializer/src",
-      "packages/io/amf-serializer"
+      "packages/io/amf-serializer",
+      "packages/io/svg-deserializer/src"
     ],
     "includePattern": ".+\\.js(doc|x)?$",
     "excludePattern": ".+test.js$"

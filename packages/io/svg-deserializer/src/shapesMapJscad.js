@@ -1,7 +1,6 @@
 const { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect } = require('./helpers')
-// const { cssPxUnit } = require('./constants')
 
-const shapesMap = function (obj, codify, params) {
+const shapesMap = (obj, codify, params) => {
   const { level, indent, on, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, target, segments } = params
 
   const types = {
