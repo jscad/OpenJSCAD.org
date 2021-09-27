@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.3.0...@jscad/svg-deserializer@2.4.0) (2021-09-27)
+
+
+### Bug Fixes
+
+* **modeling:** corrected concat to ignore duplicate points ([#913](https://github.com/jscad/OpenJSCAD.org/issues/913))corrected appendArc to maintain last point ([3eea3ef](https://github.com/jscad/OpenJSCAD.org/commit/3eea3efed3b3d4bacb49c1ee4691bfc159b08261))
+
+
+### Features
+
+* **svg-deserializer:** reworked to use saxes library, and standard module layout ([56f5725](https://github.com/jscad/OpenJSCAD.org/commit/56f572518c85d767ac680aa2da1af46c4847e63c))
+
+
+
+
+
 # [2.3.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.2.4...@jscad/svg-deserializer@2.3.0) (2021-09-09)
 
 

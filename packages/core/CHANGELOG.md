@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.3.6...@jscad/core@2.3.7) (2021-09-27)
+
+
+### Reverts
+
+* param parsing only for main script ([7193138](https://github.com/jscad/OpenJSCAD.org/commit/71931380be8442b8cc0f4d605eab5201543cfd7d))
+
+
+
+
+
 ## [2.3.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.3.5...@jscad/core@2.3.6) (2021-09-09)
 
 **Note:** Version bump only for package @jscad/core

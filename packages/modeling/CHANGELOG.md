@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.5.1...@jscad/modeling@2.5.2) (2021-09-27)
+
+
+### Bug Fixes
+
+* **modeling:** added exit condition to Node to prevent infinite loops in boolean ops ([#898](https://github.com/jscad/OpenJSCAD.org/issues/898)) ([bf4d6d4](https://github.com/jscad/OpenJSCAD.org/commit/bf4d6d48900aa7e35d00c12cd8d2f15051424956))
+* **modeling:** corrected concat to ignore duplicate points ([#913](https://github.com/jscad/OpenJSCAD.org/issues/913))corrected appendArc to maintain last point ([3eea3ef](https://github.com/jscad/OpenJSCAD.org/commit/3eea3efed3b3d4bacb49c1ee4691bfc159b08261))
+
+
+
+
+
 ## [2.5.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.5.0...@jscad/modeling@2.5.1) (2021-09-09)
 
 
