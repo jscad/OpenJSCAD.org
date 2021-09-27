@@ -56,7 +56,8 @@ let aTorus = jscad.primitives.torus()
 ## Adding Methods
 Clean, readable code is one of the most important aspects of a useful design. In that respect, it can often be useful to break your code into simple methods that do part of the work for your design:
 ```javascript
-const { cylinder } = require('@jscad/modeling').primitives
+const jscad = require('@jscad/modeling')
+const { cylinder } = jscad.primitives
 
 const hex = (radius, height) => {
     return cylinder({radius, height, segments: 6})
@@ -71,7 +72,8 @@ module.exports = { main }
 ## Re-usable Designs
 A valuable practise when creating models is to store all but the most trivial values as parameters in the code, rather than using the numerical values directly.  This can be done by storing them in constants in your file...
 ```javascript
-const { cylinder } = require('@jscad/modeling').primitives
+const jscad = require('@jscad/modeling')
+const { cylinder } = jscad.primitives
 
 const options = {
     height: 5.1,
@@ -87,7 +89,8 @@ module.exports = { main }
  
 ... or, even better, to include runtime parameters in your design.  This is done using the getParameterDefinitions method:
 ```javascript
-const { cylinder } = require('@jscad/modeling').primitives
+const jscad = require('@jscad/modeling')
+const { cylinder } = jscad.primitives
 
 // Declare a function named "getParameterDefinitions". It will return an array of parameter definitions.
 const getParameterDefinitions = () => {

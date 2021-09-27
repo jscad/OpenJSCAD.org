@@ -3,8 +3,9 @@ your designs, so that they can easily adapt to different situations.
 
 ## ParametricBox.js
 ```javascript
-const { cuboid, roundedCuboid } = require('@jscad/modeling').primitives
-const { subtract } = require('@jscad/modeling').booleans
+const jscad = require('@jscad/modeling')
+const { cuboid, roundedCuboid } = jscad.primitives
+const { subtract } = jscad.booleans
 
 const getParameterDefinitions = () => {
   return [

@@ -21,7 +21,8 @@ contain your design. Your project can also contain:
 ```
 ## hexcap/index.js
 ```javascript
-const { cylinder } = require('@jscad/modeling').primitives
+const jscad = require('@jscad/modeling')
+const { cylinder } = jscad.primitives
 
 const utils = require('./lib/utils.js')
 
