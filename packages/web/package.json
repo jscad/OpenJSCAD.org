@@ -47,7 +47,6 @@
     "es2015-i18n-tag": "1.6.1",
     "file-saver": "2.0.2",
     "is-electron": "2.2.0",
-    "json5": "^2.2.0",
     "morphdom": "2.6.1",
     "most": "1.8.0",
     "most-proxy": "3.3.0",
