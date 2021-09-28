@@ -22,7 +22,7 @@ test('vec2: rotate() called with three paramerters should update a vec2 with cor
   t.true(compareVectors(ret3, [2, -1], 1e-15))
 
   const obs4 = fromValues(0, 0)
-  const ret4 = rotate(obs4, [-1, 2], [0, 0], -radians)
-  t.true(compareVectors(obs4, [2, 1], 1e-15))
-  t.true(compareVectors(ret4, [2, 1], 1e-15))
+  const ret4 = rotate(obs4, [-1, 2], [-3, -3], -radians)
+  t.true(compareVectors(obs4, [2, -5], 1e-15))
+  t.true(compareVectors(ret4, [2, -5], 1e-15))
 })
