@@ -10,7 +10,7 @@
  */
 const rotate = (out, vector, origin, radians) => {
   const x = vector[0] - origin[0]
-  const y = vector[1] - origin[0]
+  const y = vector[1] - origin[1]
   const c = Math.cos(radians)
   const s = Math.sin(radians)
 
