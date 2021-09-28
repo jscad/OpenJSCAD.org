@@ -1,12 +1,13 @@
 const test = require('ava')
 
-const deserializer = require('../index.js')
+const deserializer = require('../src/index.js')
+
 const { measurements } = require('@jscad/modeling')
 
 // deserializer
 
 test('deserialize : instantiate svg (rect) to objects', (t) => {
-  const sourceSvg = `<svg PXPMM="10" width="500" height="500">
+  const sourceSvg = `<svg pxpmm="10" width="500" height="500">
   <rect x="80" y="60" width="250" height="250" color="red"/>
   <rect x="140" y="120" width="250" height="250" rx="40" color="rgb(0,255,0)"/>
   <rect x="140" y="120" width="250" height="250" ry="40" color="blue"/>
@@ -149,7 +150,7 @@ test('deserialize : instantiate svg (line) to objects', (t) => {
   t.is(shape.points.length, 2)
 
   // test getting stroke width from group
-  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120"">
+  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120">
   <g stroke-width="2">
     <line x1="20" y1="100" x2="100" y2="20" stroke="black"/>
   </g>
@@ -180,7 +181,7 @@ test('deserialize : instantiate svg (path: simple) to objects', (t) => {
   t.is(shape.points.length, 3)
 
   // test getting stroke width from group
-  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120"">
+  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120">
   <g stroke-width="2">
     <path d="M150 0 L75 200 L225 200 Z" />
   </g>
@@ -210,7 +211,7 @@ test('deserialize : instantiate svg (path: simple) to objects', (t) => {
   shape = observed[0]
   t.is(shape.points.length, 3)
 
-  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120"">
+  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120">
   <path d="M 240.00000 56.00000 H 270.00000 V 86.00000 H 300.00000 V 116.00000 H 330.00000 V 146.00000 H 240.00000 V 56.00000 Z"/>
 </svg>`
 
@@ -360,8 +361,7 @@ test('deserialize : instantiate svg (path: with bezier) to objects', (t) => {
 // ################################
 
 test('deserialize : instantiate svg produced by inkscape to objects', (t) => {
-  const sourceSvg = `
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+  const sourceSvg = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"

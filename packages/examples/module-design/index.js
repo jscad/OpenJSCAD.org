@@ -1,6 +1,6 @@
 /**
  * Modular Project Design Example
- * @category Other
+ * @category Projects
  * @skillLevel 1
  * @description Demonstrating the structure of a multi-file project
  * @tags measurements, bounds, boundingbox
@@ -23,10 +23,10 @@ const getParameterDefinitions = () => {
   return globalParams
 }
 
-const main = params => {
+const main = (params) => {
   console.log(params)
   let results = []
-  results = params.showPlate ? results.concat(mountPlate.create(params.length)) : results
+  results = params.showPlate ? results.concat(mountPlate.create(params.plateLength)) : results
   results = params.showSphere ? results.concat(sphereShape(3)) : results
 
   return results

@@ -12,7 +12,7 @@ const { cuboid } = require('@jscad/modeling').primitives
 const getParameterDefinitions = () => {
   return [
     { name: 'plate-group', type: 'group', initial: 'open', caption: 'Mounting Plate' },
-    { name: 'plateLength', type: 'float', initial: 25, caption: 'length', min: 50, max: 200 }
+    { name: 'plateLength', type: 'float', initial: 25, caption: 'length', min: 25, max: 200 }
   ]
 }
 
