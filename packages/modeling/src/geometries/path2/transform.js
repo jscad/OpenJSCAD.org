@@ -17,6 +17,9 @@ const create = require('./create')
 const transform = (matrix, geometry) => {
   const newgeometry = create(geometry.points) // reuse the points
   newgeometry.isClosed = geometry.isClosed
+  if (geometry.color) {
+    newgeometry.color = geometry.color
+  }
 
   mat4.multiply(newgeometry.transforms, matrix, geometry.transforms)
   return newgeometry

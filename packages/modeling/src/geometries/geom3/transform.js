@@ -17,6 +17,9 @@ const create = require('./create')
 const transform = (matrix, geometry) => {
   const newgeometry = create(geometry.polygons) // reuse the polygons
   newgeometry.isRetesselated = geometry.isRetesselated
+  if (geometry.color) {
+    newgeometry.color = geometry.color
+  }
 
   mat4.multiply(newgeometry.transforms, matrix, geometry.transforms)
   return newgeometry
