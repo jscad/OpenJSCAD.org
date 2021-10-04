@@ -20,6 +20,9 @@ const extrudeFromSlices = require('./extrudeFromSlices')
  * @param {geom2} geometry - the geometry to extrude
  * @returns {geom3} the extruded geometry
  * @alias module:modeling/extrusions.extrudeRotate
+ *
+ * @example
+ * const myshape = extrudeRotate({segments: 8, angle: Math.PI}, circle({size: 3, center: [4, 0]}))
  */
 const extrudeRotate = (options, geometry) => {
   const defaults = {

@@ -10,12 +10,12 @@ have been very kindly sponsored by [Copenhagen Fabrication / Stykka](https://www
 All code released under MIT license
 */
 
-const sax = require('sax')
+const saxes = require('saxes')
 
 const { colors, transforms } = require('@jscad/modeling')
 const { toArray } = require('@jscad/array-utils')
 
-const version = require('./package.json').version
+const version = require('../package.json').version
 
 const { cagLengthX, cagLengthY, svgColorForTarget } = require('./helpers')
 const { svgSvg, svgRect, svgCircle, svgGroup, svgLine, svgPath, svgEllipse, svgPolygon, svgPolyline, svgUse } = require('./svgElementHelpers')
@@ -23,25 +23,26 @@ const shapesMapGeometry = require('./shapesMapGeometry')
 const shapesMapJscad = require('./shapesMapJscad')
 
 /**
- * Deserializer of STL data to JSCAD geometries.
- * @module io/stl-deserializer
+ * Deserializer of SVG source data to JSCAD geometries.
+ * @module io/svg-deserializer
  * @example
- * const { deserializer, extension } = require('@jscad/stl-deserializer')
+ * const { deserializer, extension } = require('@jscad/svg-deserializer')
  */
 
 /**
- * Parse the given SVG data and return either a JSCAD script or a set of geometries
+ * Deserialize the given SVG source into either a script or an array of geometries
+ * @see {@link https://www.w3.org/TR/SVG/intro.html|SVG Specification}
  * @param {Object} options - options used during deserializing, REQUIRED
  * @param {boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script
  * @param {string} [options.filename='svg'] - filename of original SVG source
  * @param {string} [options.output='script'] - either 'script' or 'geometry' to set desired output
  * @param {float} [options.pxPmm] - custom pixels per mm unit
  * @param {integer} [options.segments] - number of segments for rounded shapes
- * @param {string} [options.target] - target 2D geometry; geom2 or path2
+ * @param {string} [options.target] - target 2D geometry; 'geom2' or 'path2'
  * @param {string} [options.version='0.0.0'] - version number to add to the metadata
  * @param {string} [options.pathSelfClosed='error'] - [error||trim||split] if path self-closes with one of commands without stop command right after
- * @param {string} input - SVG data
- * @return {string|[object]} either a string (script) or a set of objects (geometry)
+ * @param {string} input - SVG source data
+ * @returns {(Array|String)} either an array of objects (geometry) or a string (script)
  * @alias module:io/svg-deserializer.deserialize
  */
 const deserialize = (options, input) => {
@@ -59,10 +60,10 @@ const deserialize = (options, input) => {
   return options.output === 'script' ? translate(input, options) : instantiate(input, options)
 }
 
-/**
+/*
  * Parse the given SVG source and return a set of geometries.
- * @param  {string} src svg data as text
- * @param  {object} options options (optional) anonymous object with:
+ * @param  {string} src - svg data as text
+ * @param  {object} options - options (optional) anonymous object with:
  *  pxPmm {number} pixels per milimeter for calcuations
  *  version: {string} version number to add to the metadata
  *  addMetadata: {boolean} flag to enable/disable injection of metadata (producer, date, source)
@@ -77,7 +78,7 @@ const instantiate = (src, options) => {
   // parse the SVG source
   createSvgParser(src, pxPmm)
   if (!svgObj) {
-    throw new Error('SVG parsing failed, no valid svg data retrieved')
+    throw new Error('SVG parsing failed, no valid SVG data retrieved')
   }
 
   options && options.statusCallback && options.statusCallback({ progress: 50 })
@@ -88,7 +89,7 @@ const instantiate = (src, options) => {
   return result
 }
 
-/**
+/*
  * Parse the given SVG source and return a JSCAD script
  * @param  {string} src svg data as text
  * @param  {object} options options (optional) anonymous object with:
@@ -106,7 +107,7 @@ const translate = (src, options) => {
   // parse the SVG source
   createSvgParser(src, pxPmm)
   if (!svgObj) {
-    throw new Error('SVG parsing failed, no valid svg data retrieved')
+    throw new Error('SVG parsing failed, no valid SVG data retrieved')
   }
 
   // convert the internal objects to JSCAD code
@@ -325,14 +326,17 @@ const codify = (options, group) => {
 
 const createSvgParser = (src, pxPmm) => {
   // create a parser for the XML
-  const parser = sax.parser(false, { trim: true, lowercase: false, position: true })
+  const parser = new saxes.SaxesParser()
   if (pxPmm !== undefined && pxPmm > parser.pxPmm) {
     parser.pxPmm = pxPmm
   }
   // extend the parser with functions
-  parser.onerror = (e) => console.log('error: line ' + e.line + ', column ' + e.column + ', bad character [' + e.c + ']')
+  parser.on('error', (e) => {
+    console.log(`ERROR: SVG file, line ${parser.line}, column ${parser.column}`)
+    console.log(e)
+  })
 
-  parser.onopentag = function (node) {
+  parser.on('opentag', (node) => {
     const objMap = {
       SVG: svgSvg,
       G: svgGroup,
@@ -348,10 +352,12 @@ const createSvgParser = (src, pxPmm) => {
       DESC: () => undefined, // ignored by design
       TITLE: () => undefined, // ignored by design
       STYLE: () => undefined, // ignored by design
-      undefined: () => console.log('Warning: Unsupported SVG element: ' + node.name)
+      undefined: () => console.log('WARNING: unsupported SVG element: ' + node.name)
     }
     node.attributes.position = [parser.line + 1, parser.column + 1]
-    const obj = objMap[node.name] ? objMap[node.name](node.attributes, { svgObjects, customPxPmm: pxPmm }) : undefined
+
+    const elementName = node.name.toUpperCase()
+    const obj = objMap[elementName] ? objMap[elementName](node.attributes, { svgObjects, customPxPmm: pxPmm }) : undefined
 
     // case 'SYMBOL':
     // this is just like an embedded SVG but does NOT render directly, only named
@@ -399,9 +405,9 @@ const createSvgParser = (src, pxPmm) => {
         }
       }
     }
-  }
+  })
 
-  parser.onclosetag = function (node) {
+  parser.on('closetag', (node) => {
     const popGroup = () => {
       if (svgInDefs === true) {
         return svgDefs.pop()
@@ -417,19 +423,19 @@ const createSvgParser = (src, pxPmm) => {
       G: popGroup,
       undefined: () => {}
     }
-    const obj = objMap[node] ? objMap[node]() : undefined
+    const elementName = node.name.toUpperCase()
+    const obj = objMap[elementName] ? objMap[elementName]() : undefined
 
     // check for completeness
     if (svgGroups.length === 0) {
       svgObj = obj
     }
-  }
+  })
 
-  // parser.onattribute = function (attr) {};
-  // parser.ontext = function (t) {};
+  parser.on('end', () => {
+    // console.log('SVG parsing completed')
+  })
 
-  parser.onend = function () {
-  }
   // start the parser
   parser.write(src).close()
   return parser

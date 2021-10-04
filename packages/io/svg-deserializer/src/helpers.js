@@ -124,8 +124,8 @@ const cagColor = (value) => {
 }
 
 const cssStyle = (element, name) => {
-  if ('STYLE' in element) {
-    const list = element.STYLE + ';'
+  if ('style' in element) {
+    const list = element.style + ';'
     const pat = name + '\\s*:\\s*(\\S+);'
     const exp = new RegExp(pat, 'i')
     let v = exp.exec(list)

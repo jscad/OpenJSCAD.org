@@ -13,4 +13,4 @@ export { default as toString } from './toString'
 export { default as transform } from './transform'
 
 export { default as Plane } from './type'
-export as namespace Plane
+export as namespace plane

@@ -39,7 +39,7 @@ specifying points, starting with basic primitive 2D shapes, or importing SVG fil
 shapes can then be extruded to produce a wide variety of different geometries.
 ```javascript
 const jscad = require('@jscad/modeling')
-const {polygon } = jscad.primitives
+const { polygon } = jscad.primitives
 const { extrudeLinear } = jscad.extrusions
 
 function main () {

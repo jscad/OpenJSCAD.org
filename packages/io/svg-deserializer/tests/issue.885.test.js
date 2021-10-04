@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const deserializer = require('../index.js')
+const deserializer = require('../src/index.js')
 
 // deserializer
 

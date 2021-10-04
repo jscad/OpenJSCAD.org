@@ -2,13 +2,12 @@ const test = require('ava')
 
 const countOf = require('../../test/helpers/countOf')
 
-const deserializer = require('../index.js')
+const deserializer = require('../src/index.js')
 
 // deserializer
 
 test('deserialize : translate svg produced by inkscape to script', (t) => {
-  const sourceSvg = `
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+  const sourceSvg = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
