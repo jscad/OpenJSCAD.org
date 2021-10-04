@@ -15,10 +15,8 @@ const create = require('./create')
  * let newgeometry = transform(fromZRotation(degToRad(90)), geometry)
  */
 const transform = (matrix, geometry) => {
-  const newgeometry = create(geometry.sides) // reuse the sides
-
-  mat4.multiply(newgeometry.transforms, matrix, geometry.transforms)
-  return newgeometry
+  const transforms = mat4.multiply(mat4.create(), matrix, geometry.transforms)
+  return Object.assign({}, geometry, { transforms })
 }
 
 module.exports = transform

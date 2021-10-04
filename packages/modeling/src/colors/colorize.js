@@ -52,10 +52,10 @@ const colorize = (color, ...objects) => {
   if (objects.length === 0) throw new Error('wrong number of arguments')
 
   const results = objects.map((object) => {
-    if (geom2.isA(object)) return colorGeom2(color, object)
-    if (geom3.isA(object)) return colorGeom3(color, object)
-    if (path2.isA(object)) return colorPath2(color, object)
-    if (poly3.isA(object)) return colorPoly3(color, object)
+    // if (geom2.isA(object)) return colorGeom2(color, object)
+    // if (geom3.isA(object)) return colorGeom3(color, object)
+    // if (path2.isA(object)) return colorPath2(color, object)
+    // if (poly3.isA(object)) return colorPoly3(color, object)
 
     object.color = color
     return object
