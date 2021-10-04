@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.5.2...@jscad/modeling@2.5.3) (2021-10-04)
+
+
+### Bug Fixes
+
+* **modeling:** corrected vec2.rotate, and enhanced test cases ([#918](https://github.com/jscad/OpenJSCAD.org/issues/918)) ([e2bea2d](https://github.com/jscad/OpenJSCAD.org/commit/e2bea2d033462a70eac15bb2b7d4f8674216a7bf))
+
+
+
+
+
 ## [2.5.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.5.1...@jscad/modeling@2.5.2) (2021-09-27)
 
 
