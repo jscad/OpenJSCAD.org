@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.4.2...@jscad/web@2.4.3) (2021-10-04)
+
+
+### Bug Fixes
+
+* **core:** fix missing json5 dependency ([#919](https://github.com/jscad/OpenJSCAD.org/issues/919)) ([40d1cb1](https://github.com/jscad/OpenJSCAD.org/commit/40d1cb131be4a4c4417584381e711a0bc9f23657))
+
+
+
+
+
+## [2.4.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.4.1...@jscad/web@2.4.2) (2021-09-27)
+
+**Note:** Version bump only for package @jscad/web
+
+
+
+
+
 ## [2.4.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.4.0...@jscad/web@2.4.1) (2021-09-09)
 
 

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-serializer@2.2.6...@jscad/x3d-serializer@2.2.7) (2021-10-04)
+
+**Note:** Version bump only for package @jscad/x3d-serializer
+
+
+
+
+
+## [2.2.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-serializer@2.2.5...@jscad/x3d-serializer@2.2.6) (2021-09-27)
+
+**Note:** Version bump only for package @jscad/x3d-serializer
+
+
+
+
+
 ## [2.2.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-serializer@2.2.4...@jscad/x3d-serializer@2.2.5) (2021-09-09)
 
 **Note:** Version bump only for package @jscad/x3d-serializer

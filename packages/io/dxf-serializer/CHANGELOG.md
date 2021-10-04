@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.8...@jscad/dxf-serializer@2.0.9) (2021-10-04)
+
+
+### Bug Fixes
+
+* **dxf-serializer:** corrected selection of color palettes ([#925](https://github.com/jscad/OpenJSCAD.org/issues/925)) ([e73dab4](https://github.com/jscad/OpenJSCAD.org/commit/e73dab4116bd61fb46d0d44e5f4d39f68182cbdc))
+
+
+
+
+
+## [2.0.8](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.7...@jscad/dxf-serializer@2.0.8) (2021-09-27)
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+
+
+
+
 ## [2.0.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.0.6...@jscad/dxf-serializer@2.0.7) (2021-09-09)
 
 **Note:** Version bump only for package @jscad/dxf-serializer

@@ -1,52 +1,52 @@
 const { cagColor, cssStyle, css2cag } = require('./helpers')
 const { pxPmm } = require('./constants')
 
-const svgCore = function (obj, element) {
-  if ('ID' in element) { obj.id = element.ID }
+const svgCore = (obj, element) => {
+  if ('id' in element) { obj.id = element.id }
   if ('position' in element) { obj.position = element.position }
 }
 
-const svgPresentation = function (obj, element) {
+const svgPresentation = (obj, element) => {
   // presentation attributes for all
-  if ('DISPLAY' in element) { obj.visible = element.DISPLAY }
+  if ('display' in element) { obj.visible = element.display }
   // presentation attributes for solids
-  if ('COLOR' in element) { obj.fill = cagColor(element.COLOR); obj.stroke = obj.fill }
-  if ('OPACITY' in element) { obj.opacity = element.OPACITY }
-  if ('FILL' in element) {
-    obj.fill = cagColor(element.FILL)
+  if ('color' in element) { obj.fill = cagColor(element.color); obj.stroke = obj.fill }
+  if ('opacity' in element) { obj.opacity = element.opacity }
+  if ('fill' in element) {
+    obj.fill = cagColor(element.fill)
   } else {
     const s = cssStyle(element, 'fill')
     if (s) {
       obj.fill = cagColor(s)
     }
   }
-  if ('FILL-OPACITY' in element) { obj.opacity = element['FILL-OPACITY'] }
+  if ('fill-opacity' in element) { obj.opacity = element['fill-opacity'] }
   // presentation attributes for lines
-  if ('STROKE-WIDTH' in element) {
-    obj.strokeWidth = element['STROKE-WIDTH']
+  if ('stroke-width' in element) {
+    obj.strokeWidth = element['stroke-width']
   } else {
     const sw = cssStyle(element, 'stroke-width')
     if (sw) {
       obj.strokeWidth = sw
     }
   }
-  if ('STROKE' in element) {
-    obj.stroke = cagColor(element.STROKE)
+  if ('stroke' in element) {
+    obj.stroke = cagColor(element.stroke)
   } else {
     const s = cssStyle(element, 'stroke')
     if (s) {
       obj.stroke = cagColor(s)
     }
   }
-  if ('STROKE-OPACITY' in element) { obj.strokeOpacity = element['STROKE-OPACITY'] }
+  if ('stroke-opacity' in element) { obj.strokeOpacity = element['stroke-opacity'] }
 }
 
 const svgTransformsRegExp = /\w+\(.+\)/i
 
-const svgTransforms = function (cag, element) {
+const svgTransforms = (cag, element) => {
   let list = null
-  if ('TRANSFORM' in element) {
-    list = element.TRANSFORM
+  if ('transform' in element) {
+    list = element.transform
   } else {
     const s = cssStyle(element, 'transform')
     if (s) { list = s }
@@ -95,22 +95,22 @@ const svgTransforms = function (cag, element) {
 
 const viewBoxRegExp = /([\d.-]+)[\s,]+([\d.-]+)[\s,]+([\d.-]+)[\s,]+([\d.-]+)/i
 
-const svgSvg = function (element, { customPxPmm }) {
+const svgSvg = (element, { customPxPmm }) => {
   // default SVG with no viewport
   const obj = { type: 'svg', x: 0, y: 0, width: '100%', height: '100%', strokeWidth: '1' }
 
   // default units per mm
   obj.unitsPmm = [pxPmm, pxPmm]
 
-  if ('PXPMM' in element) {
+  if ('pxpmm' in element) {
     // WOW! a supplied value for pixels per milimeter!!!
-    obj.pxPmm = element.PXPMM
+    obj.pxPmm = element.pxpmm
     obj.unitsPmm = [obj.pxPmm, obj.pxPmm]
   }
-  if ('WIDTH' in element) { obj.width = element.WIDTH }
-  if ('HEIGHT' in element) { obj.height = element.HEIGHT }
-  if ('VIEWBOX' in element) {
-    const list = element.VIEWBOX.trim()
+  if ('width' in element) { obj.width = element.width }
+  if ('height' in element) { obj.height = element.height }
+  if ('viewBox' in element) {
+    const list = element.viewBox.trim()
     const v = viewBoxRegExp.exec(list)
     if (v !== null) {
       obj.viewX = parseFloat(v[1])
@@ -160,12 +160,12 @@ const svgSvg = function (element, { customPxPmm }) {
   return obj
 }
 
-const svgEllipse = function (element) {
+const svgEllipse = (element) => {
   const obj = { type: 'ellipse', cx: '0', cy: '0', rx: '0', ry: '0' }
-  if ('CX' in element) { obj.cx = element.CX }
-  if ('CY' in element) { obj.cy = element.CY }
-  if ('RX' in element) { obj.rx = element.RX }
-  if ('RY' in element) { obj.ry = element.RY }
+  if ('cx' in element) { obj.cx = element.cx }
+  if ('cy' in element) { obj.cy = element.cy }
+  if ('rx' in element) { obj.rx = element.rx }
+  if ('ry' in element) { obj.ry = element.ry }
   // transforms
   svgTransforms(obj, element)
   // core attributes
@@ -175,12 +175,12 @@ const svgEllipse = function (element) {
   return obj
 }
 
-const svgLine = function (element) {
+const svgLine = (element) => {
   const obj = { type: 'line', x1: '0', y1: '0', x2: '0', y2: '0' }
-  if ('X1' in element) { obj.x1 = element.X1 }
-  if ('Y1' in element) { obj.y1 = element.Y1 }
-  if ('X2' in element) { obj.x2 = element.X2 }
-  if ('Y2' in element) { obj.y2 = element.Y2 }
+  if ('x1' in element) { obj.x1 = element.x1 }
+  if ('y1' in element) { obj.y1 = element.y1 }
+  if ('x2' in element) { obj.x2 = element.x2 }
+  if ('y2' in element) { obj.y2 = element.y2 }
   // transforms
   svgTransforms(obj, element)
   // core attributes
@@ -190,7 +190,7 @@ const svgLine = function (element) {
   return obj
 }
 
-const svgListOfPoints = function (list) {
+const svgListOfPoints = (list) => {
   const points = []
   const exp = /([\d\-+.]+)[\s,]+([\d\-+.]+)[\s,]*/i
   list = list.trim()
@@ -206,7 +206,7 @@ const svgListOfPoints = function (list) {
   return points
 }
 
-const svgPolyline = function (element) {
+const svgPolyline = (element) => {
   const obj = { type: 'polyline' }
   // transforms
   svgTransforms(obj, element)
@@ -215,13 +215,13 @@ const svgPolyline = function (element) {
   // presentation attributes
   svgPresentation(obj, element)
 
-  if ('POINTS' in element) {
-    obj.points = svgListOfPoints(element.POINTS)
+  if ('points' in element) {
+    obj.points = svgListOfPoints(element.points)
   }
   return obj
 }
 
-const svgPolygon = function (element) {
+const svgPolygon = (element) => {
   const obj = { type: 'polygon' }
   // transforms
   svgTransforms(obj, element)
@@ -230,30 +230,30 @@ const svgPolygon = function (element) {
   // presentation attributes
   svgPresentation(obj, element)
 
-  if ('POINTS' in element) {
-    obj.points = svgListOfPoints(element.POINTS)
+  if ('points' in element) {
+    obj.points = svgListOfPoints(element.points)
   }
   return obj
 }
 
-const svgRect = function (element) {
+const svgRect = (element) => {
   const obj = { type: 'rect', x: '0', y: '0', rx: '0', ry: '0', width: '0', height: '0' }
 
-  if ('X' in element) { obj.x = element.X }
-  if ('Y' in element) { obj.y = element.Y }
-  if ('RX' in element) {
-    obj.rx = element.RX
-    if (!('RY' in element)) { obj.ry = obj.rx } // by SVG specification
+  if ('x' in element) { obj.x = element.x }
+  if ('y' in element) { obj.y = element.y }
+  if ('rx' in element) {
+    obj.rx = element.rx
+    if (!('ry' in element)) { obj.ry = obj.rx } // by SVG specification
   }
-  if ('RY' in element) {
-    obj.ry = element.RY
-    if (!('RX' in element)) { obj.rx = obj.ry } // by SVG specification
+  if ('ry' in element) {
+    obj.ry = element.ry
+    if (!('rx' in element)) { obj.rx = obj.ry } // by SVG specification
   }
   if (obj.rx !== obj.ry) {
-    console.log('Warning: Unsupported RECT with RX and RY radius')
+    console.log('Warning: Unsupported RECT with rx and ry radius')
   }
-  if ('WIDTH' in element) { obj.width = element.WIDTH }
-  if ('HEIGHT' in element) { obj.height = element.HEIGHT }
+  if ('width' in element) { obj.width = element.width }
+  if ('height' in element) { obj.height = element.height }
   // transforms
   svgTransforms(obj, element)
   // core attributes
@@ -263,12 +263,12 @@ const svgRect = function (element) {
   return obj
 }
 
-const svgCircle = function (element) {
+const svgCircle = (element) => {
   const obj = { type: 'circle', x: '0', y: '0', radius: '0' }
 
-  if ('CX' in element) { obj.x = element.CX }
-  if ('CY' in element) { obj.y = element.CY }
-  if ('R' in element) { obj.radius = element.R }
+  if ('cx' in element) { obj.x = element.cx }
+  if ('cy' in element) { obj.y = element.cy }
+  if ('r' in element) { obj.radius = element.r }
   // transforms
   svgTransforms(obj, element)
   // core attributes
@@ -278,7 +278,7 @@ const svgCircle = function (element) {
   return obj
 }
 
-const svgGroup = function (element) {
+const svgGroup = (element) => {
   const obj = { type: 'group' }
   // transforms
   svgTransforms(obj, element)
@@ -287,11 +287,11 @@ const svgGroup = function (element) {
   // presentation attributes
   svgPresentation(obj, element)
 
-  if ('X' in element || 'Y' in element) {
+  if ('x' in element || 'y' in element) {
     let x = '0'
     let y = '0'
-    if ('X' in element) x = element.X
-    if ('Y' in element) y = element.Y
+    if ('x' in element) x = element.x
+    if ('y' in element) y = element.y
     if (!('transforms' in obj)) obj.transforms = []
     const o = { translate: [x, y] }
     obj.transforms.push(o)
@@ -304,7 +304,7 @@ const svgGroup = function (element) {
 //
 // Convert the PATH element into object representation
 //
-const svgPath = function (element) {
+const svgPath = (element) => {
   const obj = { type: 'path' }
   // transforms
   svgTransforms(obj, element)
@@ -314,15 +314,15 @@ const svgPath = function (element) {
   svgPresentation(obj, element)
 
   obj.commands = []
-  if ('D' in element) {
+  if ('d' in element) {
     let co = null // current command
     let bf = ''
 
     let i = 0
-    const l = element.D.length
+    const l = element.d.length
     const offset = element.position[1] - l - 2
     while (i < l) {
-      const c = element.D[i]
+      const c = element.d[i]
       switch (c) {
       // numbers
       // FIXME support E notation numbers
@@ -411,11 +411,11 @@ const svgPath = function (element) {
 }
 
 // generate GROUP with attributes from USE element
-// - expect X,Y,HEIGHT,WIDTH,XLINK:HREF
-// - append translate(x,y) if X,Y available
+// - expect x,y,height,width,XLINK:HREF
+// - append translate(x,y) if x,y available
 // deep clone the referenced OBJECT and add to group
 // - clone using JSON.parse(JSON.stringify(obj))
-const svgUse = function (element, { svgObjects }) {
+const svgUse = (element, { svgObjects }) => {
   const obj = { type: 'group' }
   // transforms
   svgTransforms(obj, element)
@@ -424,20 +424,20 @@ const svgUse = function (element, { svgObjects }) {
   // presentation attributes
   svgPresentation(obj, element)
 
-  if ('X' in element || 'Y' in element) {
+  if ('x' in element || 'y' in element) {
     let x = '0'
     let y = '0'
-    if ('X' in element) x = element.X
-    if ('Y' in element) y = element.Y
+    if ('x' in element) x = element.x
+    if ('y' in element) y = element.y
     if (!('transforms' in obj)) obj.transforms = []
     const o = { translate: [x, y] }
     obj.transforms.push(o)
   }
 
   obj.objects = []
-  if ('XLINK:HREF' in element) {
+  if ('xlink:href' in element) {
   // lookup the named object
-    let ref = element['XLINK:HREF']
+    let ref = element['xlink:href']
     if (ref[0] === '#') { ref = ref.slice(1, ref.length) }
     if (svgObjects[ref] !== undefined) {
       ref = svgObjects[ref]

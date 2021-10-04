@@ -2,14 +2,14 @@ const test = require('ava')
 
 const countOf = require('../../test/helpers/countOf')
 
-const deserializer = require('../index.js')
+const deserializer = require('../src/index.js')
 
 // deserializer
 
 // ################################
 
 test('deserialize : translate svg (rect) to script', (t) => {
-  const sourceSvg = `<svg PXPMM="10" width="500" height="500">
+  const sourceSvg = `<svg pxpmm="10" width="500" height="500">
   <rect x="80" y="60" width="250" height="250" color="red"/>
   <rect x="140" y="120" width="250" height="250" rx="40" color="rgb(0,255,0)"/>
   <rect x="140" y="120" width="250" height="250" ry="40" color="blue"/>
@@ -88,7 +88,7 @@ test('deserialize : translate svg (line) to script', (t) => {
   // TODO
 
   // test getting stroke width from group
-  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120"">
+  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120">
   <g stroke-width="2">
     <line x1="20" y1="100" x2="100" y2="20" stroke="black"/>
   </g>
@@ -133,7 +133,7 @@ test('deserialize : translate svg (polyline) to script', (t) => {
   // FIXME t.is(countOf('path2.fromPoints', obs), 1)
 
   // test getting stroke width from group
-  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120"">
+  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120">
   <g stroke-width="2">
     <polyline fill="none" stroke="black" points="20,100 40,60 70,80 100,20"/>
   </g>
@@ -168,7 +168,7 @@ test('deserialize : translate svg (path: simple) to script', (t) => {
   t.is(countOf('geom2.fromPoints', obs), 1)
 
   // test getting stroke width from group
-  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120"">
+  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120">
   <g stroke-width="2">
     <path d="M150 0 L75 200 L225 200 Z" />
   </g>
@@ -190,7 +190,7 @@ test('deserialize : translate svg (path: simple) to script', (t) => {
   t.is(countOf('path2.close', obs), 1)
   t.is(countOf('geom2.fromPoints', obs), 0)
 
-  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120"">
+  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120">
   <path fill="#ff8000" d="m 240.00000 190.00000 h 30.00000 v 30.00000 h 30.00000 v 30.00000 h 30.00000 v 30.00000 h -90.00000 v -90.00000 z"/>
 </svg>`
 
@@ -202,7 +202,7 @@ test('deserialize : translate svg (path: simple) to script', (t) => {
   t.is(countOf('geom2.fromPoints', obs), 1)
   t.is(countOf('colors.colorize', obs), 1) // fill
 
-  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120"">
+  sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120">
   <path d="M 240.00000 56.00000 H 270.00000 V 86.00000 H 300.00000 V 116.00000 H 330.00000 V 146.00000 H 240.00000 V 56.00000 Z"/>
 </svg>`
 
