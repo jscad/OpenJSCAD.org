@@ -14,10 +14,10 @@ All code released under MIT license
 // //////////////////////////////////////////
 
 /**
- * Deserializer of X3D data to JSCAD geometries.
+ * Deserializer of X3D source data (XML) to JSCAD geometries.
  * @module io/x3d-deserializer
  * @example
- * const { deserializer, extension } = require('@jscad/x3d-serializer')
+ * const { deserializer, extension } = require('@jscad/x3d-deserializer')
  */
 
 const version = require('../package.json').version
