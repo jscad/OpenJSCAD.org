@@ -16,7 +16,7 @@ const extrudeRectangularGeom2 = require('./extrudeRectangularGeom2')
  * @return {Object|Array} the extruded object, or a list of extruded objects
  * @alias module:modeling/extrusions.extrudeRectangular
  *
- * @example:
+ * @example
  * let mywalls = extrudeRectangular({offset: [0,0,10]}, square())
  */
 const extrudeRectangular = (options, ...objects) => {
