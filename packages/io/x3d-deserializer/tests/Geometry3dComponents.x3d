@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Immersive' version='3.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
+  <head>
+    <component level='2' name='Geometry2D'/>
+    <unit category='length' conversionFactor='0.001' name='millimeters'/>
+    <meta content='Geometry2dComponentExamples.x3d' name='title'/>
+  </head>
+  <Scene>
+
+    <!-- ==================== -->
+    <Transform translation='-2.4 0.2 1.0' rotation='0.0 0.707 0.707 0.9'>
+      <Shape>
+        <Box/>
+        <Appearance>
+          <Material diffuseColor='0.0 0.0 1.0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform rotation='1 0 0 5.27' translation='-6 0 0'>
+      <Shape>
+        <Cone bottomRadius='3.0' topRaidus='1.0' height='3.0' subdivision='8'/>
+      </Shape>
+    </Transform>
+
+    <Transform>
+      <Shape>
+        <Appearance>
+          <Material ambientIntensity='0.3' diffuseColor='0.3 0.3 0.5' shininess='0.10' specularColor='0.7'/>
+        </Appearance>
+        <Cylinder height='7' radius='1' subdivision='8'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='3.0 0.0 1.0'>
+      <Shape>
+        <Sphere radius='2.3'/>
+        <Appearance>
+          <Material diffuseColor='1.0 0.0 0.0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform translation='8.0 0.0 0.0'>
+      <Shape>
+        <Extrusion ccw='false' crossSection='0.4 0.0 0.0026528 0.0979112 -0.4 0.0 -0.0103739 -0.0801211 0.4 0.0' orientation='0.0 -1.0 0.0 0.349065 0.0 -1.0 0.0 0.261799 0.0 -1.0 0.0 0.174532 0.0 0.0 1.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0872659 0.0 1.0 0.0 0.174532 0.0 1.0 0.0 0.261799' scale='0.907089 0.2 0.907088 0.6 0.751411 0.6 0.206542 0.4 0.459517 0.8 0.167623 0.4 0.751412 0.6 0.926548 0.6 0.907089 0.2' solid='false' spine='0.0 -1.6 0.0 0.0 -1.44152 0.0 0.0 -1.24754 0.0 0.0 -0.229174 0.0 0.0 -0.0109524 0.0 0.0 0.183023 0.0 0.0 1.17715 0.0 0.0 1.37112 0.0 0.0 1.6 0.0'/>
+      </Shape>
+    </Transform>
+
+  </Scene>
+</X3D>
