@@ -29,7 +29,7 @@ const rebuildSolids = (data, callback) => {
   const defaults = {
     mainPath: '',
     vtreeMode: false,
-    serialize: true,
+    serialize: false,
     lookup: null,
     lookupCounts: null,
     parameterValues: {}
