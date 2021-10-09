@@ -15,11 +15,8 @@ const create = require('./create')
  * let newpath = transform(fromZRotation(Math.PI / 4), path)
  */
 const transform = (matrix, geometry) => {
-  const newgeometry = create(geometry.points) // reuse the points
-  newgeometry.isClosed = geometry.isClosed
-
-  mat4.multiply(newgeometry.transforms, matrix, geometry.transforms)
-  return newgeometry
+  const transforms = mat4.multiply(mat4.create(), matrix, geometry.transforms)
+  return Object.assign({}, geometry, { transforms })
 }
 
 module.exports = transform
