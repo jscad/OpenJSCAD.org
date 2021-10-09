@@ -43,23 +43,15 @@ test('color (rgba on geometry)', (t) => {
   const obs = colorize([1, 1, 0.5, 0.8], obj0, obj1, obj2, obj3)
   t.is(obs.length, 4)
 
-  let exp = geom2.clone(obj0)
-  exp.color = [1, 1, 0.5, 0.8]
-  t.not(obj0, obs[0])
-  t.deepEqual(obs[0], exp)
+  t.is(obj0, obs[0])
+  t.deepEqual(obs[0].color, [1, 1, 0.5, 0.8])
 
-  exp = geom3.clone(obj1)
-  exp.color = [1, 1, 0.5, 0.8]
-  t.not(obj1, obs[1])
-  t.deepEqual(obs[1], exp)
+  t.is(obj1, obs[1])
+  t.deepEqual(obs[1].color, [1, 1, 0.5, 0.8])
 
-  exp = path2.clone(obj2)
-  exp.color = [1, 1, 0.5, 0.8]
-  t.not(obj2, obs[2])
-  t.deepEqual(obs[2], exp)
+  t.is(obj2, obs[2])
+  t.deepEqual(obs[2].color, [1, 1, 0.5, 0.8])
 
-  exp = poly3.clone(obj3)
-  exp.color = [1, 1, 0.5, 0.8]
-  t.not(obj3, obs[3])
-  t.deepEqual(obs[3], exp)
+  t.is(obj3, obs[3])
+  t.deepEqual(obs[3].color, [1, 1, 0.5, 0.8])
 })
