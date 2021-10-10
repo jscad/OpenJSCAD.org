@@ -16,7 +16,7 @@ varying vec4 vColor;
 
 void main() {
   surfacePosition = (unormal * vec4(position, 1.0)).xyz;
-  surfaceNormal = (unormal * vec4(normal, 1.0)).xyz; //vec4 transformedNormal = uNormalMatrix * vec4(aVertexNormal, 1.0);
+  surfaceNormal = normalize((unormal * vec4(normal, 1.0)).xyz); //vec4 transformedNormal = uNormalMatrix * vec4(aVertexNormal, 1.0);
   vec4 worldSpacePosition = model * vec4(position, 1);
   _worldSpacePosition = worldSpacePosition;
   //gl_Position = projection * view * worldSpacePosition;
