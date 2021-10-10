@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Immersive' version='3.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'>
+  <head>
+    <unit category='length' conversionFactor='0.001' name='millimeters'/>
+    <meta content='Geometry2dComponentExamples.x3d' name='title'/>
+  </head>
+  <Scene>
+    <!-- ==================== -->
+    <WorldInfo title='Geometry2dComponentExamples.x3d'/>
+    <Background groundColor='0.3 0.3 0.3' skyColor='0.3 0.3 0.3'/>
+    <Viewpoint description='Geometry2D Component Examples' position='0 0 12'/>
+    <!-- ==================== -->
+    <!-- Top row -->
+    <Transform translation='-6 2 0'>
+      <TouchSensor description='ArcClose2D'/>
+      <Shape>
+        <ArcClose2D closureType='PIE' endAngle='3.0' startAngle='0.7'/>
+        <!-- default radius='1' -->
+        <Appearance>
+          <Material diffuseColor='0 0 1' emissiveColor='0 0 1'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='-2 2 0'>
+      <TouchSensor description='Arc2D'/>
+      <Shape>
+        <Arc2D/>
+        <!-- default radius='1' startAngle='0' -->
+        <Appearance>
+          <Material emissiveColor='1 1 0'/>
+        </Appearance>
+      </Shape>
+      <Transform DEF='TransparentBackdropForTouchSensor' translation='0 0 -0.5'>
+        <Shape>
+          <Rectangle2D/>
+          <!-- default -->
+          <Appearance>
+            <Material diffuseColor='1 0 0' transparency='1'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <Transform translation='2 2 0'>
+      <TouchSensor description='Circle2D'/>
+      <Shape>
+        <Circle2D/>
+        <!-- default radius='1' -->
+        <Appearance>
+          <Material emissiveColor='1 0 0'/>
+        </Appearance>
+      </Shape>
+      <Transform USE='TransparentBackdropForTouchSensor'/>
+    </Transform>
+    <Transform translation='6 2 0'>
+      <TouchSensor description='Disk2D'/>
+      <Shape>
+        <Disk2D innerRadius='0.5'/>
+        <!-- default outerRadius='1' -->
+        <Appearance>
+          <Material diffuseColor='0.5 1 1'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- ==================== -->
+    <!-- Bottom row -->
+    <Transform translation='-6 -2 0'>
+      <TouchSensor description='Rectangle2D'/>
+      <Shape>
+        <Rectangle2D size='1 2'/>
+        <Appearance>
+          <Material diffuseColor='1 0 0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='-2 -2 0'>
+      <TouchSensor description='Polyline2D'/>
+      <Shape>
+        <Polyline2D lineSegments='-1 0 -0.5 1 0 0 0.5 1 1 0'/>
+        <Appearance>
+          <Material diffuseColor='0 0 0' emissiveColor='1 0.5 1'/>
+        </Appearance>
+      </Shape>
+      <Transform USE='TransparentBackdropForTouchSensor'/>
+    </Transform>
+    <Transform translation='2 -2 0'>
+      <TouchSensor description='Polypoint2D'/>
+      <Shape>
+        <Polypoint2D point='-1 0 -0.5 1 0 0 0.5 1 1 0'/>
+        <Appearance>
+          <Material emissiveColor='1 1 1'/>
+        </Appearance>
+      </Shape>
+      <Transform translation='0.1 0.4 -0.5'>
+        <Shape>
+          <Rectangle2D DEF='BackDrop' size='2.8 2'/>
+          <Appearance>
+            <Material diffuseColor='0 0 0'/>
+          </Appearance>
+        </Shape>
+        <Transform translation='0 -0.15 0.2'>
+          <Shape>
+            <Text string='"PolyPoint2D" "5 points"'>
+              <FontStyle justify='"MIDDLE" "MIDDLE"' size='0.25' style='BOLD'/>
+            </Text>
+            <Appearance>
+              <Material/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+    <Transform translation='6 -2 0'>
+      <TouchSensor description='TriangleSet2D'/>
+      <Shape>
+        <TriangleSet2D vertices='0 0 1 1 -1 1 0 0 1 -0.5 1 0.5 0 0 -2 -1 -1 -2'/>
+        <Appearance>
+          <FillProperties DEF='TestFillProperties'/>
+          <LineProperties DEF='TestLineProperties' linewidthScaleFactor='1'>
+            <MetadataString DEF='TestLinePropertiesMetaData' name='test LineProperties metadata child'/>
+          </LineProperties>
+          <Material diffuseColor='0 1 0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>
