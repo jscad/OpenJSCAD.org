@@ -126,7 +126,7 @@ test('cli (single input file, output filename)', t => {
   t.true(fs.existsSync(outputPath))
 })
 
-test('cli (folder, output format', t => {
+test('cli (folder, output format)', t => {
   const testID = 4
 
   const inputPath = createJscad(testID)
@@ -180,4 +180,30 @@ test('cli (single input file, parameters)', t => {
   const cmd = `node ${cliPath} ${inputPath} --segments 32 --nothing "Yes"`
   execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(outputPath))
+})
+
+test('cli (no parameters)', t => {
+  const cliPath = t.context.cliPath
+
+  const cmd = `node ${cliPath}`
+  t.throws(() => {
+    execSync(cmd, { stdio: [0, 1, 2] })
+  })
+})
+
+test('cli (single input file, invalid jscad)', t => {
+  const testID = 6
+
+  const inputPath = createJscad(testID)
+  fs.writeFileSync(inputPath, "INVALID")
+  t.true(fs.existsSync(inputPath))
+
+  t.context.inputPath = inputPath
+
+  const cliPath = t.context.cliPath
+
+  const cmd = `node ${cliPath} ${inputPath}`
+  t.throws(() => {
+    execSync(cmd, { stdio: [0, 1, 2] })
+  })
 })

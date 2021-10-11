@@ -60,4 +60,7 @@ const src = fs.readFileSync(inputFile, inputFile.match(/\.stl$/i) ? 'binary' : '
 // -- and write it to disk
 generateOutputData(src, params, { outputFile, outputFormat, inputFile, inputFormat, version, addMetaData, inputIsDirectory })
   .then(outputData => writeOutput(outputFile, outputData))
-  .catch(error => console.error(error))
+  .catch(error => {
+    console.error(error)
+    process.exit(1)
+  })
