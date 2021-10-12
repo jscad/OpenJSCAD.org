@@ -12,6 +12,33 @@ const poly3 = require('../geometries/poly3')
 const cache = new WeakMap()
 
 /*
+ * Measure the min and max bounds of the given (path2) geometry.points.
+ * @return {Array[]} the min and max bounds for the geometry.points
+ */
+const measureBoundingBoxOfPath2Points = (points) => {
+  let boundingBox = cache.get(points)
+  if (boundingBox) return boundingBox
+
+  let minpoint
+  if (points.length === 0) {
+    minpoint = vec2.create()
+  } else {
+    minpoint = vec2.clone(points[0])
+  }
+  const maxpoint = vec2.clone(minpoint)
+
+  points.forEach((point) => {
+    vec2.min(minpoint, minpoint, point)
+    vec2.max(maxpoint, maxpoint, point)
+  })
+
+  boundingBox = [[minpoint[0], minpoint[1], 0], [maxpoint[0], maxpoint[1], 0]]
+  cache.set(points, boundingBox)
+
+  return boundingBox
+}
+
+/*
  * Measure the min and max bounds of the given (path2) geometry.
  * @return {Array[]} the min and max bounds for the geometry
  */
@@ -19,38 +46,60 @@ const measureBoundingBoxOfPath2 = (geometry) => {
   let boundingBox = cache.get(geometry)
   if (boundingBox) return boundingBox
 
-  let transforms = geometry.transforms
-  let points
-
-  if (mat4.isOnlyTransformScale(transforms)) {
-    points = geometry.points
-    boundingBox = cache.get(points)
+  if (mat4.isOnlyTransformScale(geometry.transforms)) {
+    // get boundingBox of original points and transform it
+    boundingBox = transformBoundingBox(measureBoundingBoxOfPath2Points(geometry.points), geometry.transforms)
   } else {
-    transforms = null
-    points = path2.toPoints(geometry)
+    // transform the points and then caclulate the boundingBox
+    boundingBox = measureBoundingBoxOfPath2Points(path2.toPoints(geometry))
   }
 
-  if (!boundingBox) {
-    let minpoint
+  cache.set(geometry, boundingBox)
+
+  return boundingBox
+}
+
+/*
+ * Measure the min and max bounds of the given (geom2) geometry.points/sides.
+ * @return {Array[]} the min and max bounds for the geometr.points/sidesy
+ */
+const measureBoundingBoxOfGeom2Points = ({ points, sides }) => {
+  const cacheKey = points || sides
+  let boundingBox = cache.get(cacheKey)
+  if (boundingBox) return boundingBox
+
+  let minpoint, maxpoint
+
+  if (points) {
     if (points.length === 0) {
       minpoint = vec2.create()
     } else {
       minpoint = vec2.clone(points[0])
     }
-    const maxpoint = vec2.clone(minpoint)
+    maxpoint = vec2.clone(minpoint)
 
     points.forEach((point) => {
       vec2.min(minpoint, minpoint, point)
       vec2.max(maxpoint, maxpoint, point)
     })
+  } else { // sides
+    // to avoid calling costly toPoints, we take advantage of the knowlege how the toPoints works
+    if (sides.length === 0) {
+      minpoint = vec2.create()
+    } else {
+      minpoint = vec2.clone(sides[0][0])
+    }
+    maxpoint = vec2.clone(minpoint)
 
-    boundingBox = [[minpoint[0], minpoint[1], 0], [maxpoint[0], maxpoint[1], 0]]
-    cache.set(points, boundingBox)
+    sides.forEach((side) => {
+      vec2.min(minpoint, minpoint, side[0])
+      vec2.max(maxpoint, maxpoint, side[0])
+    })
   }
 
-  boundingBox = transformBoundingBox(boundingBox, transforms)
+  boundingBox = [[minpoint[0], minpoint[1], 0], [maxpoint[0], maxpoint[1], 0]]
 
-  cache.set(geometry, boundingBox)
+  cache.set(cacheKey, boundingBox)
 
   return boundingBox
 }
@@ -63,57 +112,44 @@ const measureBoundingBoxOfGeom2 = (geometry) => {
   let boundingBox = cache.get(geometry)
   if (boundingBox) return boundingBox
 
-  let points = geometry.points
-  let transforms = geometry.transforms
-  let minpoint, maxpoint
-  const cacheKey = points || geometry.sides
-
-  if (mat4.isOnlyTransformScale(transforms)) {
-    points = geometry.points
-    // check cache for identity boundingBox
-    boundingBox = cache.get(cacheKey)
+  if (mat4.isOnlyTransformScale(geometry.transforms)) {
+    // get boundingBox of original points and transform it
+    boundingBox = transformBoundingBox(measureBoundingBoxOfGeom2Points(geometry), geometry.transforms)
   } else {
-    transforms = null
-    points = geom2.toPoints(geometry)
+    // transform the points and then caclulate the boundingBox
+    boundingBox = measureBoundingBoxOfGeom2Points({ points: geom2.toPoints(geometry) })
   }
-
-  if (!boundingBox) {
-    if (points) {
-      if (points.length === 0) {
-        minpoint = vec2.create()
-      } else {
-        minpoint = vec2.clone(points[0])
-      }
-      maxpoint = vec2.clone(minpoint)
-
-      points.forEach((point) => {
-        vec2.min(minpoint, minpoint, point)
-        vec2.max(maxpoint, maxpoint, point)
-      })
-    } else { // sides
-      // to avoid calling costly toPoints, we take advantage of the knowlege how the toPoints works
-      const sides = geometry.sides
-      if (sides.length === 0) {
-        minpoint = vec2.create()
-      } else {
-        minpoint = vec2.clone(sides[0][0])
-      }
-      maxpoint = vec2.clone(minpoint)
-
-      sides.forEach((side) => {
-        vec2.min(minpoint, minpoint, side[0])
-        vec2.max(maxpoint, maxpoint, side[0])
-      })
-    }
-
-    boundingBox = [[minpoint[0], minpoint[1], 0], [maxpoint[0], maxpoint[1], 0]]
-    // cache identity boundingBox
-    cache.set(cacheKey, boundingBox)
-  }
-
-  boundingBox = transformBoundingBox(boundingBox, transforms)
 
   cache.set(geometry, boundingBox)
+
+  return boundingBox
+}
+
+/*
+ * Measure the min and max bounds of the given (geom3) geometry.polygons.
+ * @return {Array[]} the min and max bounds for the geometry.polygons
+ */
+const measureBoundingBoxOfGeom3Polygons = (polygons) => {
+  let boundingBox = cache.get(polygons)
+  if (boundingBox) return boundingBox
+
+  const minpoint = vec3.create()
+  if (polygons.length > 0) {
+    const points = poly3.toPoints(polygons[0])
+    vec3.copy(minpoint, points[0])
+  }
+  const maxpoint = vec3.clone(minpoint)
+
+  polygons.forEach((polygon) => {
+    poly3.toPoints(polygon).forEach((point) => {
+      vec3.min(minpoint, minpoint, point)
+      vec3.max(maxpoint, maxpoint, point)
+    })
+  })
+
+  boundingBox = [[minpoint[0], minpoint[1], minpoint[2]], [maxpoint[0], maxpoint[1], maxpoint[2]]]
+
+  cache.set(polygons, boundingBox)
 
   return boundingBox
 }
@@ -126,38 +162,13 @@ const measureBoundingBoxOfGeom3 = (geometry) => {
   let boundingBox = cache.get(geometry)
   if (boundingBox) return boundingBox
 
-  let transforms = geometry.transforms
-  let polygons
-
-  if (mat4.isOnlyTransformScale(transforms)) {
-    polygons = geometry.polygons
-    boundingBox = cache.get(polygons)
+  if (mat4.isOnlyTransformScale(geometry.transforms)) {
+    // get boundingBox of original points and transform it
+    boundingBox = transformBoundingBox(measureBoundingBoxOfGeom3Polygons(geometry.polygons), geometry.transforms)
   } else {
-    transforms = null
-    polygons = geom3.toPolygons(geometry)
+    // transform the points and then caclulate the boundingBox
+    boundingBox = measureBoundingBoxOfGeom3Polygons(geom3.toPolygons(geometry))
   }
-
-  if (!boundingBox) {
-    const minpoint = vec3.create()
-    if (polygons.length > 0) {
-      const points = poly3.toPoints(polygons[0])
-      vec3.copy(minpoint, points[0])
-    }
-    const maxpoint = vec3.clone(minpoint)
-
-    polygons.forEach((polygon) => {
-      poly3.toPoints(polygon).forEach((point) => {
-        vec3.min(minpoint, minpoint, point)
-        vec3.max(maxpoint, maxpoint, point)
-      })
-    })
-
-    boundingBox = [[minpoint[0], minpoint[1], minpoint[2]], [maxpoint[0], maxpoint[1], maxpoint[2]]]
-    // cache identity boundingBox
-    cache.set(polygons, boundingBox)
-  }
-
-  boundingBox = transformBoundingBox(boundingBox, transforms)
 
   cache.set(geometry, boundingBox)
 
