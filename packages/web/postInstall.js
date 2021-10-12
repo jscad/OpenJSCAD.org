@@ -6,6 +6,8 @@ const fs = require('fs')
 const DocBlock = require('docblock')
 const docBlock = new DocBlock()
 
+const ignoreExamples = {Imports:1, Projects:1}
+
 const copyAndProcessExamples = (examplesSrc) => {
   const examples = { 'Creating Shapes': [], 'Manipulating Shapes': [], Colors: [], Parameters: [], Other: [] }
   const examplesDist = 'examples'
@@ -39,6 +41,12 @@ const processExamplesFile = (filePath, examples) => {
   const result = docBlock.parse(fs.readFileSync(filePath), 'js')
   if (result.length) {
     const category = result[0].tags.category
+
+    if(category in ignoreExamples){
+      console.log(`Ignoring example ${filePath}`);
+      return
+    }
+
     const title = result[0].title
     const description = result[0].description
     const sort = parseInt(result[0].tags.skillLevel)
