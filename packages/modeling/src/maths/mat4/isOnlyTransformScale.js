@@ -1,4 +1,3 @@
-const { EPSILON } = require('./constants')
 
 /**
  * Determine whether the given matrix is translate+scale.
@@ -17,6 +16,6 @@ const isOnlyTransformScale = (matrix) => (
   matrix[15] === 1
 )
 
-const isZero = (num) => Math.abs(num) < EPSILON
+const isZero = (num) => Math.abs(num) < Number.EPSILON
 
 module.exports = isOnlyTransformScale
