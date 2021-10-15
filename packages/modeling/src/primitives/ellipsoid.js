@@ -88,6 +88,7 @@ const ellipsoid = (options) => {
     }
     prevcylinderpoint = cylinderpoint
   }
+  
   const geom = geom3.create(polygons)
 
   return geom
