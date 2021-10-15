@@ -2,7 +2,6 @@ const vec3 = require('../maths/vec3')
 
 const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
-const measureBoundingBox = require('../measurements/measureBoundingBox')
 
 const { isGTE, isNumberArray } = require('./commonChecks')
 
@@ -90,17 +89,6 @@ const ellipsoid = (options) => {
     prevcylinderpoint = cylinderpoint
   }
   const geom = geom3.create(polygons)
-
-  // if default axes are used, bounding box is trivial to calculate
-  if (noAxes) {
-    // we just use the radiuses to easily calculate the corners for bounding box
-    // and we also account for when center points are != 0
-    const boundingBox = [
-      radius.map((p,i) => -p + center[i] ),
-      radius.map((p,i) =>  p + center[i] )
-    ]
-    measureBoundingBox.setCache(geom, boundingBox)
-  }
 
   return geom
 }

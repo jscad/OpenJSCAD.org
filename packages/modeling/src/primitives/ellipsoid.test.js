@@ -207,25 +207,3 @@ test('ellipsoid (options)', (t) => {
   t.true(comparePolygonsAsPoints(pts, exp))
 })
 
-
-test('ellipsoid measureBoundingBox shortcut', (t) => {
-  const obs = ellipsoid()
-  const box1 = measureBoundingBox(obs) // bounding box provided by shortcut impl.
-
-  measureBoundingBox.setCache(obs, undefined)// clear cached bounding box
-  const box2 = measureBoundingBox(obs) // bounding box provided by going through all points
-
-  t.false(box1 === box2)
-  t.deepEqual(box1, box2)
-})
-
-test('ellipsoid measureBoundingBox shortcut off center', (t) => {
-  const obs = ellipsoid({center:[1,2,3]})
-  const box1 = measureBoundingBox(obs) // bounding box provided by shortcut impl.
-
-  measureBoundingBox.setCache(obs, undefined)// clear cached bounding box
-  const box2 = measureBoundingBox(obs) // bounding box provided by going through all points
-
-  t.false(box1 === box2)
-  t.deepEqual(box1, box2)
-})
