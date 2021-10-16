@@ -1,7 +1,6 @@
 const test = require('ava')
 
 const geom3 = require('../geometries/geom3')
-const measureBoundingBox = require('../measurements/measureBoundingBox')
 
 const { ellipsoid } = require('./index')
 
@@ -206,4 +205,3 @@ test('ellipsoid (options)', (t) => {
   t.is(pts.length, 32)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
-

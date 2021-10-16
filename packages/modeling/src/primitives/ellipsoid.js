@@ -25,7 +25,6 @@ const ellipsoid = (options) => {
     segments: 32,
     axes: [[1, 0, 0], [0, -1, 0], [0, 0, 1]]
   }
-  const noAxes = !options || !options.axes
   const { center, radius, segments, axes } = Object.assign({}, defaults, options)
 
   if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
@@ -88,10 +87,7 @@ const ellipsoid = (options) => {
     }
     prevcylinderpoint = cylinderpoint
   }
-  
-  const geom = geom3.create(polygons)
-
-  return geom
+  return geom3.create(polygons)
 }
 
 module.exports = ellipsoid
