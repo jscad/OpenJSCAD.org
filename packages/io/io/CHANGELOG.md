@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io@2.0.9...@jscad/io@2.1.0) (2021-10-17)
+
+
+### Features
+
+* **io:** added registration of x3d-deserializer ([57aee3f](https://github.com/jscad/OpenJSCAD.org/commit/57aee3fee0626e8dd13bd89ea4a6a5f3f108bd54))
+
+
+
+
+
 ## [2.0.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io@2.0.8...@jscad/io@2.0.9) (2021-10-04)
 
 **Note:** Version bump only for package @jscad/io
