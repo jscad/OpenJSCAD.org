@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.2.8...@jscad/cli@2.2.9) (2021-10-17)
+
+
+### Bug Fixes
+
+* **cli:** corrected cli to exit with non-zero code in case of errors ([#931](https://github.com/jscad/OpenJSCAD.org/issues/931)) ([e66a285](https://github.com/jscad/OpenJSCAD.org/commit/e66a2851693397d2d667f7d64aef7a4f52282d80))
+* **cli:** corrected generateOutputData to use registered deserializers from IO module, and added conversion tests ([ac7cba7](https://github.com/jscad/OpenJSCAD.org/commit/ac7cba7547c75e6d7cfc9fb680eba347d7f6a7ae))
+
+
+
+
+
 ## [2.2.8](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.2.7...@jscad/cli@2.2.8) (2021-10-04)
 
 **Note:** Version bump only for package @jscad/cli

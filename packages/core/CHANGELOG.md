@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.3.8...@jscad/core@2.4.0) (2021-10-17)
+
+
+### Features
+
+* **web:** changed default serialize to false, eliminating JSON serialize/deserialize ([#928](https://github.com/jscad/OpenJSCAD.org/issues/928)) ([b29993a](https://github.com/jscad/OpenJSCAD.org/commit/b29993a8fd3da3bd43a5f871edae4c60d7f56fc7))
+
+
+
+
+
 ## [2.3.8](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.3.7...@jscad/core@2.3.8) (2021-10-04)
 
 
