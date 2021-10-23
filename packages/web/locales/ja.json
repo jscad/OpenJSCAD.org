@@ -12,13 +12,13 @@
 
   "Generation":"Geometry Generation",
   "enable geometry caching":"experimental geometry caching",
-  "timeout for generation":"timeout for solids generation",
+  "timeout for generation":"図形の生成タイムアウト",
 
   "Storage": "ストレージ",
   "settings storage path":"ストレージ パス",
 
   "File Handling":"ファイル処理",
-  "enable conversion to scripts":"Convert external formats to JSCAD scripts",
+  "enable conversion to scripts":"外部形式をスクリプトに変換",
 
   "Shortcuts":"キーボード ショートカット",
 
@@ -27,7 +27,7 @@
   "When":"場合",
   "type and hit enter":"type and hit enter",
 
-  "not settable":"(not settable)",
+  "not settable":"(変更不可)",
   "see":"see",
 
   "grid":"グリッド",
