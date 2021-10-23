@@ -7,7 +7,6 @@ const { create } = require('./index')
 test('create: Creates an empty geom3', (t) => {
   const expected = {
     polygons: [],
-    isRetesselated: false,
     transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   t.deepEqual(create(), expected)
@@ -20,7 +19,6 @@ test('create: Creates a populated geom3', (t) => {
   const polygons = [polygon]
   const expected = {
     polygons: polygons,
-    isRetesselated: false,
     transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   t.deepEqual(create(polygons), expected)
