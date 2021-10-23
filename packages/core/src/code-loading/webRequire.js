@@ -49,7 +49,7 @@ const makeWebRequire = (filesAndFolders, options) => {
     fakeFs: require('./makeFakeFs')(filesAndFolders)
   }
   const { apiMainPath, fakeFs } = Object.assign({}, defaults, options)
-  const apiModule = apiMainPath === '@jscad/modeling' ? require('@jscad/modeling') : require('./vtreeApi')
+  const apiModule = apiMainPath === '@jscad/modeling' ? require('@jscad/modeling') : require(apiMainPath)
 
   // preset core modules
   // FIXME this list of modules should be an option, replacing apiMainPath
