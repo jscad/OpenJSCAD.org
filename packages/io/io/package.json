@@ -39,6 +39,7 @@
     "@jscad/json-serializer": "2.0.9",
     "@jscad/modeling": "2.6.0",
     "@jscad/obj-deserializer": "2.0.9",
+    "@jscad/obj-serializer": "2.0.0",
     "@jscad/stl-deserializer": "2.1.6",
     "@jscad/stl-serializer": "2.0.10",
     "@jscad/svg-deserializer": "2.4.2",

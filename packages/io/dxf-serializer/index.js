@@ -68,7 +68,7 @@ const serialize = (options, ...objects) => {
 
   if (objects.length === 0) throw new Error('only JSCAD geometries can be serialized to DXF')
 
-  // covert to triangles
+  // convert to triangles
   objects = toArray(modifiers.generalize({ snap: true, triangulate: true }, objects))
 
   const dxfContent = `999
