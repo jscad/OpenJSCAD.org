@@ -77,7 +77,7 @@ const formats = {
   },
   obj: {
     displayName: 'OBJ',
-    description: 'Wavefront OBJ File Format',
+    description: 'Wavefront OBJ File',
     extension: 'obj',
     mimetype: 'text/plain',
     deserializable: true,
