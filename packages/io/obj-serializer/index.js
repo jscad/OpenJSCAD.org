@@ -28,7 +28,7 @@ Notes:
  * const { serializer, mimeType } = require('@jscad/obj-serializer')
  */
 
-const { geometries, modifiers } = require('@jscad/modeling')
+const { colors, geometries, modifiers } = require('@jscad/modeling')
 
 const { flatten, toArray } = require('@jscad/array-utils')
 
@@ -92,10 +92,17 @@ const serialize = (options, ...objects) => {
     body += '\n'
 
     // convert faces
+    let previousColor = undefined
     polygons.forEach((polygon) => {
       // convert vertices to indices
       const indices = polygon.vertices
         .map((v) => vertices.indexOf(convertVertex(v)) + 1)
+      // set face color
+      const color = getColorName(object)
+      if (color !== previousColor) {
+        body += `usemtl ${color}\n`
+        previousColor = color
+      }
       body += `f ${indices.join(' ')}\n`
     })
 
@@ -110,6 +117,30 @@ const serialize = (options, ...objects) => {
  * Convert a vertex to an obj "v" string
  */
 const convertVertex = (vertex) => `v ${vertex[0]} ${vertex[1]} ${vertex[2]}`
+
+/**
+ * Get the closest css color name
+ */
+const getColorName = (object) => {
+  let colorName = undefined
+  if (object.color) {
+    const r = object.color[0]
+    const g = object.color[1]
+    const b = object.color[2]
+    // find the closest css color number
+    let closest = 255 + 255 + 255
+    for (const name in colors.cssColors) {
+      const rgb = colors.cssColors[name]
+      const diff = Math.abs(r - rgb[0]) + Math.abs(g - rgb[1]) + Math.abs(b - rgb[2])
+      if (diff < closest) {
+        colorName = name
+        if (diff === 0) break
+        closest = diff
+      }
+    }
+  }
+  return colorName
+}
 
 module.exports = {
   serialize,
