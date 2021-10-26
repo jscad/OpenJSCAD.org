@@ -74,6 +74,7 @@ const serialize = (options, ...objects) => {
   objects3d.forEach((object, i) => {
     options.statusCallback && options.statusCallback({ progress: 100 * i / objects3d.length })
 
+    const objectColor = getColorName(object)
     const polygons = geometries.geom3.toPolygons(object)
       .filter((p) => p.vertices.length >= 3)
 
@@ -98,7 +99,7 @@ const serialize = (options, ...objects) => {
       const indices = polygon.vertices
         .map((v) => vertices.indexOf(convertVertex(v)) + 1)
       // set face color
-      const color = getColorName(object)
+      const color = getColorName(polygon) || objectColor
       if (color !== previousColor) {
         body += `usemtl ${color}\n`
         previousColor = color
