@@ -61,7 +61,7 @@ const serialize = (options, ...objects) => {
   if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to OBJ')
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to OBJ')
 
-  // snap to griad and convert to triangles
+  // snap to grid and convert to triangles
   objects3d = toArray(modifiers.generalize({ snap: true, triangulate: options.triangulate }, objects3d))
 
   options.statusCallback && options.statusCallback({ progress: 0 })
@@ -129,7 +129,7 @@ const getColorName = (object) => {
     const r = object.color[0]
     const g = object.color[1]
     const b = object.color[2]
-    // find the closest css color number
+    // find the closest css color
     let closest = 255 + 255 + 255
     for (const name in colors.cssColors) {
       const rgb = colors.cssColors[name]
