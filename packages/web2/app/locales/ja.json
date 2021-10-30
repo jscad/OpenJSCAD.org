@@ -1,0 +1,79 @@
+{
+  "language":"japanese",
+
+  "english":"英語",
+  "german":"ドイツ語",
+  "french":"フランス語",
+  "japanese":"日本語",
+  "croatian":"クロアチア語",
+
+  "Languages":"言語",
+  "Themes":"テーマ",
+
+  "Generation":"Geometry Generation",
+  "enable geometry caching":"experimental geometry caching",
+  "timeout for generation":"timeout for solids generation",
+
+  "Storage": "ストレージ",
+  "settings storage path":"ストレージ パス",
+
+  "File Handling":"ファイル処理",
+  "enable conversion to scripts":"Convert external formats to JSCAD scripts",
+
+  "Shortcuts":"キーボード ショートカット",
+
+  "Command":"コマンド",
+  "Key Binding":"キーバインディング",
+  "When":"場合",
+  "type and hit enter":"type and hit enter",
+
+  "not settable":"(not settable)",
+  "see":"see",
+
+  "grid":"グリッド",
+  "axes":"アクシス",
+  "auto rotate": "自動回転",
+  "auto reload": "自動リロード",
+  "auto zoom": "自動ズーム",
+  "export":"エクスポート",
+  "load project":"JSCADプロジェクトロード",
+
+  "AMF (experimental)":"AMF",
+  "DXF (ASCII)":"DXF (アスキー)",
+  "json":"JSON",
+  "STL (Binary)":"STL (バイナリ)",
+  "STL (ASCII)":"STL (アスキー)",
+
+  "update":"アップデート",
+  "instant update":"自動アップデート",
+  "reset":"リセット",
+
+  "toPresetView":"ビューのリセット",
+  "front":"前面",
+  "back":"背面",
+  "top":"上面",
+  "bottom":"下面",
+  "left":"左側",
+  "right":"右側",
+
+  "setProjectionType":"投影図",
+  "perspective":"透視図",
+  "orthographic":"正投影図",
+
+  "editorCommand":"エディタ コマンド",
+  "reevaluate":"コンパイル",
+
+  "Documentation":"ドキュメント",
+  "User Guide":"ユーザー ガイド",
+  "API Reference":"API リファレンス",
+  "Open Issues":"オープン問題",
+
+  "Forums":"フォーラム",
+  "User Group":"ユーザー グループ",
+  "Discord Community":"ディスコード　コミュニティ",
+  "Announcements":"アヌーセメント",
+
+  "Examples":"設計例",
+
+  "always":"いつも"
+}

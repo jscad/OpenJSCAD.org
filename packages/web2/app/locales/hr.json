@@ -1,0 +1,67 @@
+{
+  "language":"croatian",
+
+  "english":"Engleski",
+  "german":"Njemački",
+  "french":"Francuski",
+  "japanese":"Japanski",
+  "croatian":"Hrvatski",
+
+  "Languages":"Jezici",
+  "Themes":"Tema",
+
+  "Generation":"Generiranje geometrije",
+  "enable geometry caching":"Omogući eksperimentalno cachiranje geometrije, ",
+  "timeout for generation":"Timeout za generiranje modela (ms)",
+
+  "Storage": "Spremanje",
+  "settings storage path":"Putanja za spremanje postavki",
+
+  "File Handling": "Obrada datoteka",
+  "enable conversion to scripts":"Prevedi vanjske formate u JSCAD skripte",
+
+  "Shortcuts":"Kratice za tipkovnicu",
+
+  "Command":"Komanda",
+  "Key Binding":"Kombinacija tipki",
+  "When":"Kada",
+  "type and hit enter":"tipkaj i pritisni [enter]",
+
+  "not settable":"(samo pregled)",
+  "see":"vidi",
+
+  "grid":"Prikaži podlogu",
+  "axes":"Prikaži osi",
+  "auto rotate": "Auto rotacija",
+  "auto reload": "Automatsko učitavanje",
+  "auto zoom": "Auto zoom",
+  "export":"Izvoz",
+  "load project":"Učitaj JSCAD projekt",
+
+  "AMF (experimental)":"AMF",
+  "DXF (ASCII)":"DXF (ascii)",
+  "json":"JSON",
+  "STL (Binary)":"STL (binarno)",
+  "STL (ASCII)":"STL (ascii)",
+
+  "update":"Osvježi",
+  "reset":"Početne postavke",
+  "instant update":"Instant osvježavanje",
+
+  "toPresetView":"Početni pregled",
+  "front":"Naprijed",
+  "back":"Iza",
+  "top":"Vrh",
+  "bottom":"Dno",
+  "left":"Lijevo",
+  "right":"Desno",
+
+  "setProjectionType":"Tip pogleda",
+  "perspective":"Perspektiva",
+  "orthographic":"Ortografski",
+
+  "editorCommand":"Kommanda",
+  "reevaluate":"Kompajliraj",
+
+  "always":"Uvijek"
+}

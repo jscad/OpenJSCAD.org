@@ -1,0 +1,67 @@
+{
+  "language":"english",
+
+  "english":"English",
+  "german":"German",
+  "french":"French",
+  "japanese":"Japanese",
+  "croatian":"Croatian",
+
+  "Languages":"Languages",
+  "Themes":"Themes",
+
+  "Generation":"Geometry Generation",
+  "enable geometry caching":"Enable Experimental Geometry Caching, ",
+  "timeout for generation":"Timeout for Solid Generation (ms)",
+
+  "Storage": "Storage",
+  "settings storage path":"Storage path of settings",
+
+  "File Handling": "File Handling",
+  "enable conversion to scripts":"Convert external formats to JSCAD scripts",
+
+  "Shortcuts":"Keyboard Shortcuts",
+
+  "Command":"Command",
+  "Key Binding":"Key Stroke",
+  "When":"When",
+  "type and hit enter":"type and hit enter",
+
+  "not settable":"(read only)",
+  "see":"see",
+
+  "grid":"Show Grid",
+  "axes":"Show Axis",
+  "auto rotate": "Enable Auto-rotate",
+  "auto reload": "Enable Auto-reload",
+  "auto zoom": "Enable Auto-zoom",
+  "export":"Export",
+  "load project":"Load a JSCAD project",
+
+  "AMF (experimental)":"AMF",
+  "DXF (ASCII)":"DXF (ascii)",
+  "json":"JSON",
+  "STL (Binary)":"STL (binary)",
+  "STL (ASCII)":"STL (ascii)",
+
+  "update":"Update",
+  "reset":"Reset",
+  "instant update":"Instant Update",
+
+  "toPresetView":"Reset view",
+  "front":"Front",
+  "back":"Back",
+  "top":"Top",
+  "bottom":"Bottom",
+  "left":"Left",
+  "right":"Right",
+
+  "setProjectionType":"View type",
+  "perspective":"Perspective",
+  "orthographic":"Orthographic",
+
+  "editorCommand":"Editor command",
+  "reevaluate":"Compile",
+
+  "always":"Always"
+}

@@ -1,0 +1,49 @@
+{
+  "name": "@jscad/web2",
+  "version": "2.0.0",
+  "description": "Web Application for JSCAD",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "main": "src/index.js",
+  "unpkg": "dist/jscad-web.min.js",
+  "scripts": {
+    "dev-build": "esbuild src/web.js --jsx-factory=h --outdir=build --bundle --minify --sourcemap=inline --watch --loader:.js=jsx",
+    "dev-server": "http-server build -p 13080 -o index.html",
+    "dev-copy": "copy-and-watch --watch app/** build",
+    "livereload": "livereload build -p 33080 -w 50",
+    "dev": "npm-run-all --parallel dev-*",
+    "dev-live": "npm-run-all --parallel livereload dev-build dev-server dev-copy",
+    "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
+    "version": "npm run build && git add dist"
+  },
+  "contributors": [],
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "web",
+    "application"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@jscad/array-utils": "2.1.0",
+    "@jscad/core": "2.3.8",
+    "@jscad/examples": "2.3.1",
+    "@jscad/io": "2.0.9",
+    "@jscad/modeling": "2.5.3",
+    "@jscad/regl-renderer": "2.4.1",
+    "@jscad/vtree": "2.0.9",
+    "@most/create": "2.0.1",
+    "file-saver": "2.0.2",
+    "is-electron": "2.2.0",
+    "webworkify": "1.5.0"
+  },
+  "devDependencies": {
+    "copy-and-watch": "^0.1.5",
+    "npm-run-all": "^4.1.5",
+    "ava": "3.15.0"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/openjscad",
+    "logo": "https://opencollective.com/openjscad/logo.txt"
+  }
+}
