@@ -4,6 +4,7 @@ const { formats } = require('./formats')
 const amfSerializer = require('@jscad/amf-serializer')
 const dxfSerializer = require('@jscad/dxf-serializer')
 const jsonSerializer = require('@jscad/json-serializer')
+const objSerializer = require('@jscad/obj-serializer')
 const stlSerializer = require('@jscad/stl-serializer')
 const svgSerializer = require('@jscad/svg-serializer')
 const x3dSerializer = require('@jscad/x3d-serializer')
@@ -30,6 +31,7 @@ const prepareOutput = (objects, params) => {
     }, // Geom3 to STL ASCII
     stlb: stlSerializer, // Geom3 to STL BINARY
     dxf: dxfSerializer, // Geom2 to DXF
+    obj: objSerializer,
     svg: svgSerializer, // Geom2 to SVG
     x3d: x3dSerializer, // Geom3 to X3D
     json: jsonSerializer, // Geom3 or Geom2 to JSON

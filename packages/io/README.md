@@ -27,12 +27,13 @@ Following formats are supported as inputs:
 JSCAD geometries => formatted data (blob)
 
 Following formats are supported as outputs:
-  - [AMF](./amf-serializer)
-  - [DXF](./dxf-serializer)
-  - [JSON](./json-serializer)
-  - [STL (binary, ASCII)](./stl-serializer)
-  - [SVG](./svg-serializer)
-  - [X3D](./x3d-serializer)
+ - [AMF](./amf-serializer)
+ - [DXF](./dxf-serializer)
+ - [JSON](./json-serializer)
+ - [OBJ](./obj-serializer)
+ - [STL (binary, ASCII)](./stl-serializer)
+ - [SVG](./svg-serializer)
+ - [X3D](./x3d-serializer)
 
 ## Table of Contents
 
