@@ -33,9 +33,6 @@ const options = (state, i18n) => {
 
   <fieldset>
     <legend> <h3> ${i18n`Generation`}</h3> </legend>
-    <label>${i18n`enable geometry caching`} ${i18n`see`} <a href='https://github.com/jscad/jscad-desktop#geometry-caching' target="_blank">docs</a>
-      <input id='toggleVtreeMode' type='checkbox' checked=${state.design.vtreeMode}/>
-    </label>
     <label>${i18n`timeout for generation`}
       <input id='solidsTimeout' type='number' min=0 max=200000 value=${state.design.solidsTimeOut} />
     </label>

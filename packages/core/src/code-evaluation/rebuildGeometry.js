@@ -12,7 +12,6 @@ const applyParameterDefinitions = require('../parameters/applyParameterDefinitio
  * @param {Array} data.filesAndFolders - array of files / directories
  * @param {String} [data.mainPath] - path of the file containing the main function (optional)
  * @param {Boolean} [data.serialize] - true to serialize the solids into JSON
- * @param {Boolean} [data.vtreeMode] - true to use the experimental Vtree caching (optional)
  * @param {Object} [data.lookup] - geometry cache lookup (optional)
  * @param {Object} [data.lookupCounts] - geometry cache lookup counts (optional)
  * @param {Object} [data.parameterValues] - over-rides of parameter values (optional)
@@ -28,15 +27,14 @@ const rebuildSolids = (data, callback) => {
   console.log('rebuildSolids',data)
   const defaults = {
     mainPath: '',
-    vtreeMode: false,
+    apiMainPath: '@jscad/modeling',
     serialize: false,
     lookup: null,
     lookupCounts: null,
     parameterValues: {}
   }
-  let { mainPath, vtreeMode, serialize, lookup, lookupCounts, parameterValues } = Object.assign({}, defaults, data)
+  let { mainPath, apiMainPath, serialize, lookup, lookupCounts, parameterValues } = Object.assign({}, defaults, data)
 
-  const apiMainPath = '@jscad/modeling'// vtreeMode ? '../code-loading/vtreeApi' : '@jscad/modeling'
   const filesAndFolders = data.filesAndFolders
 
   // let start = new Date()
@@ -56,7 +54,6 @@ const rebuildSolids = (data, callback) => {
   parameterValues = Object.assign({}, designData.parameterValues, parameterValues)
   // start = new Date()
   const options = {
-    vtreeMode,
     lookup,
     lookupCounts,
     serialize

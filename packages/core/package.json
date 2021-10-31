@@ -38,7 +38,6 @@
     "@jscad/io": "2.1.0",
     "@jscad/io-utils": "2.0.9",
     "@jscad/modeling": "2.6.0",
-    "@jscad/vtree": "2.0.10",
     "json5": "2.2.0",
     "strip-bom": "4.0.0"
   },
