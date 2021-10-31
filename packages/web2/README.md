@@ -20,7 +20,7 @@ npm run desktop
  - [x] ELECTRON: load same index page as electron app
  - [ ] ELECTRON: recognize when in electron
  - [ ] ELECTRON: if in it, enable saving, not just reading script
- 
+ - [ ] DEMO-WEB: generate web page so proto is available for playing with as-is
 
 -------------------------------------------------
 
