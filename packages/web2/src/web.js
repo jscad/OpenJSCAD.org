@@ -15,7 +15,7 @@ const langMap = {
 }
 
 async function changeLanguage (lang) {
-  fetch(`locales/${lang}.json`).then(r => r.text()).then((json) => {
+  await fetch(`locales/${lang}.json`).then(r => r.text()).then((json) => {
     setTranslations(JSON.parse(json))
     refreshTranslations()
   })
