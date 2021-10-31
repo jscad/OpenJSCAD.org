@@ -39,7 +39,10 @@ function initApp(){
 
   const tpl = (
     <div p='main'>
-      <label><input p='opts.autoReload' type='checkbox' />{T`auto reload`}</label>
+      <div class="g-hc">
+        {T`auto reload`}
+        <label class="el-switch"><input p='opts.autoReload' type='checkbox' /><span/></label>
+      </div>
       <label><input p='opts.autoRotate' type='checkbox' />{T`auto rotate`}</label>
       <label><input p='opts.autoZoom' type='checkbox' />{T`auto zoom`}</label>
       <label><input p='opts.showGrid' type='checkbox' />{T`grid`}</label>
