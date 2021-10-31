@@ -32,7 +32,7 @@ export function runUpdaters (updaters) {
 export function makeUpdater (stateDefaults = {}) {
   const state = {}; const values = { ...stateDefaults }
   const updaters = []
-  const $$ = (f) => {
+  const $ = (f) => {
     if (typeof f === 'function') {
       const out = (...params) => {
         addDirty(updaters)
@@ -45,8 +45,8 @@ export function makeUpdater (stateDefaults = {}) {
       return f
     }
   }
-  $$.push = (updater) => updaters.push(updater)
-  $$.dirty = () => addDirty(updaters)
+  $.push = (updater) => updaters.push(updater)
+  $.dirty = () => addDirty(updaters)
 
   for (const p in stateDefaults) {
     Object.defineProperty(state, p, {
@@ -60,7 +60,7 @@ export function makeUpdater (stateDefaults = {}) {
     })
   }
 
-  return [$$, state]
+  return [$, state]
 }
 
 export function pushUpdaters (updaters, func, updater) {

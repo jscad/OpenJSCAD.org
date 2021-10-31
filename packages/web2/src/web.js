@@ -21,7 +21,7 @@ async function changeLanguage (lang) {
   })
 }
 
-changeLanguage('en').then(() => {
+function initApp(){
   const [$, state] = makeUpdater({countX:1})
   const APP = {updaters:$, insertHtml}
 
@@ -29,9 +29,12 @@ changeLanguage('en').then(() => {
 
   function langClick(evt){
     let lang = evt.target.propKey
-    console.log('lang', lang)
     changeLanguage(lang)
     setSelected(APP.langBt, lang)
+  }
+
+  function optChange(){
+    console.log('optChange', getValue(APP.opts))
   }
 
   const tpl = (
@@ -52,16 +55,15 @@ changeLanguage('en').then(() => {
     </div>
   )
 
-  function optChange(){
-    console.log('optChange', getValue(APP.opts))
-  }
 
   APP.insertHtml(document.body, null, tpl)
-  
+  setSelected(APP.langBt, 'en')
   forEachProp(APP.opts,bt=>bt.addEventListener('change', optChange))
 
   window.APP = APP
 
   console.log('self', APP, $)
   $(count++)
-})
+}
+
+changeLanguage('en').then(initApp)
