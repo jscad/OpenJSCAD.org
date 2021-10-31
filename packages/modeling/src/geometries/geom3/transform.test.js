@@ -18,7 +18,6 @@ test('transform: Adjusts the transforms of a populated geom3', (t) => {
     polygons: [
       { vertices: [[0, 0, 0], [1, 0, 0], [1, 0, 1]] }
     ],
-    isRetesselated: false,
     transforms: [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   const geometry = fromPoints(points)

@@ -77,11 +77,11 @@ const formats = {
   },
   obj: {
     displayName: 'OBJ',
-    description: 'Wavefromt OBJ File Format',
+    description: 'Wavefront OBJ File',
     extension: 'obj',
     mimetype: 'text/plain',
     deserializable: true,
-    convertGeom3: false,
+    convertGeom3: true,
     convertGeom2: false
   },
   svg: {

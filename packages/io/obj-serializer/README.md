@@ -1,9 +1,9 @@
-## @jscad/io
+## @jscad/obj-serializer
 
-> Input/Output format handling for the JSCAD project.
+> Serializer of JSCAD geometries to OBJ shapes
 
-[![NPM version](https://badge.fury.io/js/%40jscad%2Fio.svg)](https://www.npmjs.com/package/@jscad/io)
-[![NPM downloads](https://img.shields.io/npm/dw/@jscad/io)](https://www.npmjs.com/package/@jscad/io)
+[![NPM version](https://badge.fury.io/js/%40jscad%2Fobj-serializer.svg)](https://www.npmjs.com/package/@jscad/obj-serializer)
+[![NPM downloads](https://img.shields.io/npm/dw/@jscad/obj-serializer)](https://www.npmjs.com/package/@jscad/obj-serializer)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
 [![Stability](https://img.shields.io/badge/stability-stable-success)](https://github.com/emersion/stability-badges#stable)
 [![License](https://img.shields.io/github/license/jscad/OpenJSCAD.org)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
@@ -19,33 +19,11 @@
 
 ## Overview
 
-This package is a metapackage and includes all the input/output format handling for the JSCAD projects, and can also be used separately.
+This serializer outputs a 'blobable' array of data from one or more JSCAD geometries.
+The array of data can either be used to create a Blob (`new Blob(blobable)`), or converted to a Node.js buffer.
 
-### Inputs / Deserializers
-
-ie: file data => JSCAD code or JSCAD geometry
-
-Following formats are supported as inputs
-- [AMF](../amf-deserializer)
-- [DXF](../dxf-deserializer)
-- [JSON](../json-deserializer)
-- [OBJ](../obj-deserializer)
-- [STL (binary, ASCII)](../stl-deserializer)
-- [SVG](../svg-deserializer)
-- [X3D](../x3d-deserializer)
-
-### Outputs/ Serializers
-
-ie: geometry => blob
-
-Following formats are supported as outputs
-- [AMF](../amf-serializer)
-- [DXF](../dxf-serializer)
-- [JSON](../json-serializer)
-- [OBJ](../obj-serializer)
-- [STL (binary, ASCII)](../stl-serializer)
-- [SVG](../svg-serializer)
-- [X3D](../x3d-serializer)
+The serialization of the following geometries are possible.
+- serialization of 3D geometry (geom3) to OBJ object (a unique mesh containing both vertices and faces)
 
 ## Table of Contents
 
@@ -57,15 +35,19 @@ Following formats are supported as outputs
 ## Installation
 
 ```
-npm install @jscad/io
+npm install @jscad/obj-serializer
 ```
 
 ## Usage
 
-- As a Node module :
+```javascript
+const objSerializer = require('@jscad/obj-serializer')
 
-```
-const io = require('@jscad/io')
+const rawData = objSerializer.serialize({}, geometry)
+
+//in browser (with browserify etc)
+const blob = new Blob(rawData)
+
 ```
 
 ## Contributing
@@ -75,7 +57,7 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
 
-* If you want to submit a change or a patch, please read the [Contributing Guide](../../CONTRIBUTING.md). New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
+* If you want to submit a change or a patch, please read the [Contributing Guide](../../CONTRIBUTING.md) . New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
 
 * We only accept bug reports and pull requests on **GitHub**.
 
@@ -87,5 +69,5 @@ Small Note: If editing this README, please conform to the [standard-readme](http
 
 ## License
 
-[The MIT License (MIT)](../../../../LICENSE)
+[The MIT License (MIT)](../../LICENSE)
 (unless specified otherwise)

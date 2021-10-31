@@ -21,7 +21,7 @@ test('3D Geometry to JSON', (t) => {
   t.is(countOf('transforms', obs1[0]), 1)
   t.is(countOf('[', obs1[0]), 33)
   t.is(countOf(']', obs1[0]), 33)
-  t.is(countOf(',', obs1[0]), 88)
+  t.is(countOf(',', obs1[0]), 87)
 
   const geom2 = primitives.sphere({ segments: 12 })
   const obs2 = serialize({}, geom2)
@@ -29,12 +29,12 @@ test('3D Geometry to JSON', (t) => {
   t.is(countOf('transforms', obs2[0]), 1)
   t.is(countOf('[', obs2[0]), 339)
   t.is(countOf(']', obs2[0]), 339)
-  t.is(countOf(',', obs2[0]), 808)
+  t.is(countOf(',', obs2[0]), 807)
 
   const obs3 = serialize({}, geom1, geom2, ['hello', 'goodbye'])
   t.is(countOf('polygons', obs3[0]), 2)
   t.is(countOf('transforms', obs3[0]), 2)
   t.is(countOf('[', obs3[0]), 371)
   t.is(countOf(']', obs3[0]), 371)
-  t.is(countOf(',', obs3[0]), 899)
+  t.is(countOf(',', obs3[0]), 897)
 })

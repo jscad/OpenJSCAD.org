@@ -18,10 +18,8 @@ const fromCompactBinary = (data) => {
 
   created.transforms = mat4.clone(data.slice(1, 17))
 
-  created.isRetesselated = !!data[17]
-
-  const numberOfVertices = data[22]
-  let ci = 23
+  const numberOfVertices = data[21]
+  let ci = 22
   let vi = data.length - (numberOfVertices * 3)
   while (vi < data.length) {
     const verticesPerPolygon = data[ci]
@@ -36,8 +34,8 @@ const fromCompactBinary = (data) => {
   }
 
   // transfer known properities, i.e. color
-  if (data[18] >= 0) {
-    created.color = [data[18], data[19], data[20], data[21]]
+  if (data[17] >= 0) {
+    created.color = [data[17], data[18], data[19], data[20]]
   }
   // TODO: how about custom properties or fields ?
   return created

@@ -12,7 +12,6 @@ test('toCompactBinary: converts geom3 (default)', (t) => {
       0, 1, 0, 0,
       0, 0, 1, 0,
       0, 0, 0, 1,
-      0, // isRetesselated flag
       -1, -1, -1, -1, // color
       0 // number of vertices
     ]
@@ -32,7 +31,6 @@ test('toCompactBinary: converts geom3 into a compact form', (t) => {
       0, 1, 0, 0,
       0, 0, 1, 0,
       0, 0, 0, 1,
-      0, // isRetesselated flag
       -1, -1, -1, -1, // color
       7, // number of vertices
       3, // number of vertices per polygon (2)
@@ -59,7 +57,6 @@ test('toCompactBinary: converts geom3 into a compact form', (t) => {
       0, 1, 0, 0,
       0, 0, 1, 0,
       0, 0, 0, 1,
-      0, // isRetesselated flag
       1, 2, 3, 4, // color
       7, // number of vertices
       3, // number of vertices per polygon (2)
@@ -84,7 +81,6 @@ test('fromCompactBinary: convert a compact form into a geom3', (t) => {
     0, 1, 0, 0,
     0, 0, 1, 0,
     0, 0, 0, 1,
-    0, // isRetesselated flag
     -1, -1, -1, -1, // color
     0 // number of vertices
   ]
@@ -99,7 +95,6 @@ test('fromCompactBinary: convert a compact form into a geom3', (t) => {
     0, 1, 0, 0,
     0, 0, 1, 0,
     0, 0, 0, 1,
-    0, // isRetesselated flag
     -1, -1, -1, -1, // color
     7, // number of vertices
     3, // number of vertices per polygon (2)
@@ -125,7 +120,6 @@ test('fromCompactBinary: convert a compact form into a geom3', (t) => {
     0, 1, 0, 0,
     0, 0, 1, 0,
     0, 0, 0, 1,
-    0, // isRetesselated flag
     4, 5, 6, 7, // color
     7, // number of vertices
     3, // number of vertices per polygon (2)

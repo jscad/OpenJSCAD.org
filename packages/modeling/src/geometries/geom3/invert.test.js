@@ -7,7 +7,6 @@ const { comparePolygons, compareVectors } = require('../../../test/helpers/')
 test('invert: Creates a invert on an empty geom3', (t) => {
   const expected = {
     polygons: [],
-    isRetesselated: false,
     transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   const geometry = create()
@@ -22,7 +21,6 @@ test('invert: Creates a invert of a populated geom3', (t) => {
     polygons: [
       { vertices: [[1, 0, 1], [1, 0, 0], [0, 0, 0]] }
     ],
-    isRetesselated: false,
     transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   const geometry = fromPoints(points)

@@ -3,7 +3,7 @@ const vec3 = require('../../maths/vec3')
 const poly3 = require('../../geometries/poly3')
 
 const isValidPoly3 = (epsilon, polygon) => {
-  const area = poly3.measureArea(polygon)
+  const area = Math.abs(poly3.measureArea(polygon))
   return (Number.isFinite(area) && area > epsilon)
 }
 
