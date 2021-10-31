@@ -22,7 +22,9 @@ npm run desktop
  - [ ] ELECTRON: if in it, enable saving, not just reading script
  
 
-# STANDARD README STUFF FROM JSCAD IS BELOW NO NED TO READ FURTHER
+-------------------------------------------------
+
+# STANDARD README STUFF FROM JSCAD IS BELOW NO NEED TO READ FURTHER
 
 
 ## Table of Contents
