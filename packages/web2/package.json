@@ -6,7 +6,7 @@
   "main": "src/index.js",
   "unpkg": "dist/jscad-web.min.js",
   "scripts": {
-    "dev-build": "esbuild src/web.js --jsx-factory=h --outdir=build --bundle --minify --sourcemap=inline --watch --loader:.js=jsx",
+    "dev-build": "esbuild src/web.js --jsx-factory=h --outdir=build --bundle --sourcemap --watch --loader:.js=jsx",
     "dev-server": "http-server build -p 13080 -o index.html",
     "dev-copy": "copy-and-watch --watch app/** build",
     "livereload": "livereload build -p 33080 -w 50",
