@@ -1,4 +1,4 @@
-import { h, t, setTranslations, insertHtml } from './jsxxx'
+import { h, t, setTranslations, insertHtml } from './jsx6'
 
 export default function test(){
     return <Button/>

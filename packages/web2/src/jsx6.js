@@ -60,7 +60,8 @@ export function runUpdaters (updaters) {
   }
 }
 
-export function makeUpdater () {
+export function makeUpdater (stateDefaults={}) {
+  const state = {}, values = {...stateDefaults}
   const updaters = []
   const $$ = (f) => {
     if (typeof f === 'function') {
@@ -77,7 +78,20 @@ export function makeUpdater () {
   }
   $$.push = (updater) => updaters.push(updater)
   $$.dirty = () => addDirty(updaters)
-  return $$
+  
+  for(let p in stateDefaults){
+    Object.defineProperty(state, p,{
+      set: function(value){
+        addDirty(updaters)
+        values[p] = value
+      },
+      get:function() {
+        return values[p]
+      }
+    })
+  }
+
+  return [$$, state]
 }
 
 function pushUpdaters (updaters, func, updater) {
@@ -90,7 +104,7 @@ function pushUpdaters (updaters, func, updater) {
 }
 
 /** insert HMTL based on tag description */
-export function insertHtml (parent, before, def, comp = {}, updaters = []) {
+export function insertHtml (parent, before, def, self = this) {
   let out
   if (typeof def === 'string') {
     out = ct(def)
@@ -98,9 +112,9 @@ export function insertHtml (parent, before, def, comp = {}, updaters = []) {
   } else if (def instanceof Function) {
     out = ct(def())
     parent.insertBefore(out, before)
-    pushUpdaters(updaters, def, updateText(out, def))
+    pushUpdaters(self.updaters, def, updateText(out, def))
   } else if (def instanceof Array) {
-    out = def.map(c => insertHtml(parent, before, c, comp, updaters))
+    out = def.map(c => insertHtml(parent, before, c, self))
   } else {
     out = ce(def.tag)
 
@@ -116,11 +130,11 @@ export function insertHtml (parent, before, def, comp = {}, updaters = []) {
           if (a === 'p') {
             const idx = value.indexOf('.')
             if (idx === -1) {
-              comp[out.propKey = value] = out
+              self[out.propKey = value] = out
             } else {
               const gcode = value.substring(0, idx)
-              if (!comp[gcode]) comp[gcode] = {}
-              comp[out.groupKey = gcode][out.propKey = value.substring(idx + 1)] = out
+              if (!self[gcode]) self[gcode] = {}
+              self[out.groupKey = gcode][out.propKey = value.substring(idx + 1)] = out
             }
           }
         }
@@ -128,17 +142,18 @@ export function insertHtml (parent, before, def, comp = {}, updaters = []) {
     }
     parent.insertBefore(out, before)
     if (def.children && def.children.length) {
-      insertHtml(out, null, def.children, comp, updaters)
+      insertHtml(out, null, def.children, self)
     }
   }
   return out
 }
 
 /** To simplify, we just clear the element and add new nodes (no vnode diff is performed) */
-export function applyHtml (parent, def) {
+export function applyHtml (parent, def, self=this) {
+  // TODO unbind/finalize attached components
   if (typeof parent === 'string') parent = document.getElementById(parent)
   parent.innerHTML = '' // reset
-  insertHtml(parent, null, def)
+  insertHtml(parent, null, def, self)
 }
 
 export function t (code) {
