@@ -3,16 +3,17 @@
   "version": "2.0.0",
   "description": "Web Application for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
-  "main": "src/index.js",
+  "main": "main.js",
   "unpkg": "dist/jscad-web.min.js",
   "scripts": {
     "dev-build": "esbuild src/web.js --jsx-factory=h --outdir=build --bundle --sourcemap --watch --loader:.js=jsx",
     "dev-server": "http-server build -p 13080 -o index.html",
     "dev-copy": "copy-and-watch --watch app/** build",
-    "dev-css":"node-sass -o build/ src/style.scss --source-comments",
-    "dev-css-watch":"node-sass -o build/ src/style.scss --source-comments -w",
+    "dev-css": "node-sass -o build/ src/style.scss --source-comments",
+    "dev-css-watch": "node-sass -o build/ src/style.scss --source-comments -w",
     "livereload": "livereload build -p 33080 -w 50",
     "dev": "npm-run-all --parallel dev-*",
+    "desktop": "electron .",
     "dev-live": "npm-run-all --parallel livereload dev-build dev-server dev-copy dev-css dev-css-watch",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
     "version": "npm run build && git add dist"
@@ -41,6 +42,7 @@
   "devDependencies": {
     "ava": "3.15.0",
     "copy-and-watch": "^0.1.5",
+    "electron": "^15.3.0",
     "node-sass": "^6.0.1",
     "npm-run-all": "^4.1.5"
   },

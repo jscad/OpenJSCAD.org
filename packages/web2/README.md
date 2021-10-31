@@ -1,11 +1,23 @@
 # @jscad/web: NEW JSCAD Web experiment
+local web dev:
+
+```
+npm run dev-live
+```
+
+Electron app test
+
+```
+npm run desktop
+```
 
 ## checklist
 
 
  - [x] index page that can be loaded by starting a web server
  - [x] make gui skeleton with few buttons
- - [ ] ELECTRON: load same index page as electron app
+ - [x] integrate translations from jscad web
+ - [x] ELECTRON: load same index page as electron app
  - [ ] ELECTRON: recognize when in electron
  - [ ] ELECTRON: if in it, enable saving, not just reading script
  
