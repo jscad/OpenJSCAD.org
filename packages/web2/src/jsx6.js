@@ -1,18 +1,20 @@
-let ct; let ce; const TRANS = {}; const dirty = new Set(); let anim = requestAnimationFrame; let hasDirty = false; const translationUpdaters = []
+import { pushUpdaters } from './jsx6/dirty'
+let ct; let ce
+let anim = requestAnimationFrame
 
 if (typeof document !== 'undefined') {
   ct = (...args) => document.createTextNode(...args)
   ce = (...args) => document.createElement(...args)
 }
 
-export function setTranslations (trans) {
-  Object.assign(TRANS, trans)
-}
-
 export function setHtmlFunctions (createTextNode, createElement, requestAnimationFrame) {
   ct = createTextNode
   ce = createElement
   anim = requestAnimationFrame
+}
+
+export function callAnim(callback){
+  anim(callback)
 }
 
 /** Simple JSX factory.
@@ -32,75 +34,6 @@ function updateText (node, func) {
   }
   ret.node = node
   return ret
-}
-
-export function runDirty () {
-  dirty.forEach(runUpdaters)
-  dirty.clear()
-  hasDirty = false
-}
-
-export function addDirty (updaters) {
-  dirty.add(updaters)
-  if (!hasDirty) {
-    // once first dirty is marked, request animation frame, but only once
-    hasDirty = true
-    anim(runDirty)
-  }
-}
-
-export function runUpdaters (updaters) {
-  const len = updaters.length
-  for (let i = 0; i < len; i++) {
-    try {
-      updaters[i]()
-    } catch (error) {
-      console.error(error)
-    }
-  }
-}
-
-export function makeUpdater (stateDefaults={}) {
-  const state = {}, values = {...stateDefaults}
-  const updaters = []
-  const $$ = (f) => {
-    if (typeof f === 'function') {
-      const out = (...params) => {
-        addDirty(updaters)
-        return f(...params)
-      }
-      out.addUpdater = (updater) => updaters.push(updater)
-      return out
-    } else {
-      addDirty(updaters)
-      return f
-    }
-  }
-  $$.push = (updater) => updaters.push(updater)
-  $$.dirty = () => addDirty(updaters)
-  
-  for(let p in stateDefaults){
-    Object.defineProperty(state, p,{
-      set: function(value){
-        addDirty(updaters)
-        values[p] = value
-      },
-      get:function() {
-        return values[p]
-      }
-    })
-  }
-
-  return [$$, state]
-}
-
-function pushUpdaters (updaters, func, updater) {
-  // allow updater function to be refreshad from somewhere else, liver translations could use this
-  if (func.addUpdater) {
-    func.addUpdater(updater)
-  } else {
-    updaters.push(updater)
-  }
 }
 
 /** insert HMTL based on tag description */
@@ -149,29 +82,9 @@ export function insertHtml (parent, before, def, self = this) {
 }
 
 /** To simplify, we just clear the element and add new nodes (no vnode diff is performed) */
-export function applyHtml (parent, def, self=this) {
+export function applyHtml (parent, def, self = this) {
   // TODO unbind/finalize attached components
   if (typeof parent === 'string') parent = document.getElementById(parent)
   parent.innerHTML = '' // reset
   insertHtml(parent, null, def, self)
-}
-
-export function t (code) {
-  return TRANS[code] || code
-}
-
-export function refreshTranslations () {
-  addDirty(translationUpdaters)
-}
-
-function pushTranslationUpdater (u) {
-  translationUpdaters.push(u)
-}
-
-export function T (code) {
-  const out = function () {
-    return TRANS[code] || code
-  }
-  out.addUpdater = pushTranslationUpdater
-  return out
 }

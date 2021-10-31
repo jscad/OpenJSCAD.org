@@ -1,4 +1,7 @@
-import { h, t, T, setTranslations, insertHtml, makeUpdater, refreshTranslations } from './jsx6'
+import { t, T, setTranslations, refreshTranslations } from './jsx6/trans'
+import { h, insertHtml } from './jsx6'
+import { makeUpdater } from './jsx6/dirty'
+
 import forEachProp from './jsx6/forEachProp'
 import getValue from './jsx6/getValue'
 import setSelected from './jsx6/setSelected'
