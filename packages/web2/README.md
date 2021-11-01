@@ -21,7 +21,9 @@ npm run desktop
  - [ ] ELECTRON: recognize when in electron
  - [ ] ELECTRON: if in it, enable saving, not just reading script
  - [ ] DEMO-WEB: generate web page so proto is available for playing with as-is
+ - [ ] extract reusable OrbitControls to be used with different renderer (regl,three, babylon)
 
+ 
 -------------------------------------------------
 
 # STANDARD README STUFF FROM JSCAD IS BELOW NO NEED TO READ FURTHER
