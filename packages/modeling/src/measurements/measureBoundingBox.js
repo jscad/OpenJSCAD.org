@@ -175,9 +175,21 @@ const measureBoundingBoxOfGeom3 = (geometry) => {
   return boundingBox
 }
 
+const fixBound = (i, v1,v2)=>{
+  if(v1[i] > v2[i]){
+    let tmp = v1[i]
+    v1[i] = v2[i]
+    v2[i] = tmp
+  }
+}
+
 const transformBoundingBox = (boundingBox, transforms) => {
   if (transforms && !mat4.isIdentity(transforms)) {
-    return [vec3.transform(vec3.create(), boundingBox[0], transforms), vec3.transform(vec3.create(), boundingBox[1], transforms)]
+    let out = [vec3.transform(vec3.create(), boundingBox[0], transforms), vec3.transform(vec3.create(), boundingBox[1], transforms)]
+    fixBound(0, ...out)
+    fixBound(1, ...out)
+    fixBound(2, ...out)
+    return out
   }
   return boundingBox
 }
