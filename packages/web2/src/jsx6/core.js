@@ -1,4 +1,3 @@
-import { pushUpdaters } from './dirty'
 
 let ct; let ce
 let anim = requestAnimationFrame
@@ -88,4 +87,13 @@ export function applyHtml (parent, def, self = this) {
   if (typeof parent === 'string') parent = document.getElementById(parent)
   parent.innerHTML = '' // reset
   insertHtml(parent, null, def, self)
+}
+
+export function pushUpdaters (updaters, func, updater) {
+  // allow updater function to be refreshad from somewhere else, liver translations could use this
+  if (func.addUpdater) {
+    func.addUpdater(updater)
+  } else {
+    updaters.push(updater)
+  }
 }

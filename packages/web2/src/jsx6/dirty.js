@@ -63,11 +63,3 @@ export function makeUpdater (stateDefaults = {}) {
   return [$, state]
 }
 
-export function pushUpdaters (updaters, func, updater) {
-  // allow updater function to be refreshad from somewhere else, liver translations could use this
-  if (func.addUpdater) {
-    func.addUpdater(updater)
-  } else {
-    updaters.push(updater)
-  }
-}
