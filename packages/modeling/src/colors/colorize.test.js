@@ -43,15 +43,30 @@ test('color (rgba on geometry)', (t) => {
   const obs = colorize([1, 1, 0.5, 0.8], obj0, obj1, obj2, obj3)
   t.is(obs.length, 4)
 
-  t.is(obj0, obs[0])
+  t.not(obj0, obs[0])
   t.deepEqual(obs[0].color, [1, 1, 0.5, 0.8])
 
-  t.is(obj1, obs[1])
+  t.not(obj1, obs[1])
   t.deepEqual(obs[1].color, [1, 1, 0.5, 0.8])
 
-  t.is(obj2, obs[2])
+  t.not(obj2, obs[2])
   t.deepEqual(obs[2].color, [1, 1, 0.5, 0.8])
 
-  t.is(obj3, obs[3])
+  t.not(obj3, obs[3])
   t.deepEqual(obs[3].color, [1, 1, 0.5, 0.8])
+})
+
+test('color (returns new object)', (t) => {
+  const obj0 = geom2.fromPoints([[0, 0], [1, 0], [0, 1]])
+  const obj1 = geom2.fromPoints([[0, 0], [1, 0], [0, 1]])
+  const obj2 = geom2.fromPoints([[0, 0], [1, 0], [0, 1]])
+  const obj3 = geom2.fromPoints([[0, 0], [1, 0], [0, 1]])
+
+  const obs = colorize([1, 1, 1, 0.8], obj0, obj3)
+  t.not(obj0, obs[0])
+  t.deepEqual(obs[0].color, [1, 1, 1, 0.8])
+  t.is(obj0.color, undefined)
+  t.not(obj3, obs[1])
+  t.deepEqual(obs[1].color, [1, 1, 1, 0.8])
+  t.is(obj3.color, undefined)
 })

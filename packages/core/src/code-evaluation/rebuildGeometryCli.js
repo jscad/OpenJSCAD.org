@@ -6,9 +6,11 @@ const getAllParameterDefintionsAndValues = require('../parameters/getParameterDe
 const makeWebRequire = require('../code-loading/webRequire')
 
 const rebuildSolids = (data) => {
-  const defaults = { vtreeMode: false, serialize: false }
-  let { mainPath, vtreeMode, parameterValues, useFakeFs } = Object.assign({}, defaults, data)
-  const apiMainPath = vtreeMode ? '../code-loading/vtreeApi' : '@jscad/modeling'
+  const defaults = {
+    apiMainPath: '@jscad/modeling',
+    serialize: false
+  }
+  let { apiMainPath, serialize, mainPath, parameterValues, useFakeFs } = Object.assign({}, defaults, data)
   // we need to update the source for our module
   let requireFn = require
 

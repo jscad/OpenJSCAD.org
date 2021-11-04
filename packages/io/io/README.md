@@ -42,6 +42,7 @@ Following formats are supported as outputs
 - [AMF](../amf-serializer)
 - [DXF](../dxf-serializer)
 - [JSON](../json-serializer)
+- [OBJ](../obj-serializer)
 - [STL (binary, ASCII)](../stl-serializer)
 - [SVG](../svg-serializer)
 - [X3D](../x3d-serializer)

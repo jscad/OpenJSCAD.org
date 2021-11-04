@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.4.3...@jscad/web@2.4.4) (2021-10-17)
+
+
+### Bug Fixes
+
+* **web:** corrected postinstall to ignore specific types of examples ([#930](https://github.com/jscad/OpenJSCAD.org/issues/930)) ([67d68eb](https://github.com/jscad/OpenJSCAD.org/commit/67d68eb0067468cc63366bb25f94495abf02008d))
+
+
+
+
+
 ## [2.4.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.4.2...@jscad/web@2.4.3) (2021-10-04)
 
 

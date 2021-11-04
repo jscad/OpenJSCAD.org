@@ -6,6 +6,5 @@ export default Geom3
 
 declare interface Geom3 extends Colored {
   polygons: Array<Poly3>
-  isRetesselated: boolean
   transforms: Mat4
 }

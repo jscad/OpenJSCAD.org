@@ -68,7 +68,7 @@ const serialize = (options, ...objects) => {
   if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to AMF')
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to AMF')
 
-  // covert to triangles
+  // convert to triangles
   objects3d = toArray(modifiers.generalize({ snap: true, triangulate: true }, objects3d))
 
   options.statusCallback && options.statusCallback({ progress: 0 })

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.5.3...@jscad/modeling@2.6.0) (2021-10-17)
+
+
+### Features
+
+* **modeling:** add new measurements for BoundingSphere, Center, CenterOfMass, and Dimensions ([#850](https://github.com/jscad/OpenJSCAD.org/issues/850)) ([ad032f4](https://github.com/jscad/OpenJSCAD.org/commit/ad032f49b30055abcbb5464ba4249b5abb5077b2))
+* **modeling:** change geometry transforms to preserve user attributes ([#927](https://github.com/jscad/OpenJSCAD.org/issues/927)) ([a581a02](https://github.com/jscad/OpenJSCAD.org/commit/a581a02afb18a12954ffda806f4d0f04c99fb9ef))
+* **modeling:** Performance improvement for measure bounding box ([#869](https://github.com/jscad/OpenJSCAD.org/issues/869)) ([ee1c7b1](https://github.com/jscad/OpenJSCAD.org/commit/ee1c7b198a6e7a949b3c5d96d11f6537d39629fd))
+
+
+
+
+
 ## [2.5.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.5.2...@jscad/modeling@2.5.3) (2021-10-04)
 
 
