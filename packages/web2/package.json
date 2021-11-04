@@ -6,7 +6,7 @@
   "main": "main.js",
   "unpkg": "dist/jscad-web.min.js",
   "scripts": {
-    "dev-build": "esbuild src/web.js --jsx-factory=h --outdir=build --bundle --sourcemap --watch --loader:.js=jsx",
+    "dev-build": "esbuild src/web.js --jsx-factory=h --outdir=build --bundle --sourcemap --loader:.js=jsx --watch",
     "dev-server": "http-server build -p 13080 -o index.html",
     "dev-copy": "copy-and-watch --watch app/** build",
     "dev-css": "node-sass -o build/ src/style.scss --source-comments",
@@ -27,6 +27,12 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@codemirror/basic-setup": "^0.19.0",
+    "@codemirror/commands": "0.19.5",
+    "@codemirror/gutter": "^0.19.4",
+    "@codemirror/lang-javascript": "^0.19.2",
+    "@codemirror/state": "0.19.3",
+    "@codemirror/view": "0.19.11",
     "@jscad/array-utils": "2.1.0",
     "@jscad/core": "2.3.8",
     "@jscad/examples": "2.3.1",
@@ -34,7 +40,6 @@
     "@jscad/modeling": "2.5.3",
     "@jscad/regl-renderer": "2.4.1",
     "@jscad/vtree": "2.0.9",
-    "@most/create": "2.0.1",
     "file-saver": "2.0.2",
     "is-electron": "2.2.0",
     "webworkify": "1.5.0"

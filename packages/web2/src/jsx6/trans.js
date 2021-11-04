@@ -1,6 +1,6 @@
-import { addDirty } from "./dirty";
+import { addDirty } from './dirty'
 
-const TRANS = {}; 
+const TRANS = {}
 const translationUpdaters = []
 
 export function setTranslations (trans) {
@@ -26,4 +26,3 @@ export function T (code) {
   out.addUpdater = pushTranslationUpdater
   return out
 }
-

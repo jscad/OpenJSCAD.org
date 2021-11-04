@@ -1,10 +1,11 @@
-export default function setAttrBoolean (obj, attr, sel) {
-  if(obj){
+export function setAttrBoolean (obj, attr, sel) {
+  if (obj) {
     if (obj.setAttribute) {
-      if (sel) 
+      if (sel) {
         obj.setAttribute(attr, attr)
-      else 
+      } else {
         obj.removeAttribute(attr)
+      }
     } else if (typeof obj === 'object') {
       for (const p in obj) {
         setAttrBoolean(obj[p], attr, p === sel)

@@ -1,10 +1,10 @@
-import mapProp from './mapProp'
+import { mapProp } from './mapProp'
 
-export default function getValue (obj) {
-  if (obj instanceof HTMLElement) {
+export function getValue (obj) {
+  if (obj instanceof window.HTMLElement) {
     if (obj.component && typeof obj.component.getValue === 'function') {
       return obj.component.getValue
-    } else if(obj.getValue){
+    } else if (obj.getValue) {
       return obj.getValue()
     } else {
       if (obj.tagName === 'INPUT' && obj.type === 'checkbox') {

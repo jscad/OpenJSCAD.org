@@ -1,8 +1,5 @@
-import { t, T, setTranslations, refreshTranslations, h, insertHtml, makeUpdater } from './jsx6'
-
-import forEachProp from './jsx6/forEachProp'
-import getValue from './jsx6/getValue'
-import setSelected from './jsx6/setSelected'
+import { t, T, setTranslations, refreshTranslations, h, insertHtml, makeUpdater, forEachProp, getValue, setSelected } from './jsx6'
+import { JscadEditor } from './editor'
 
 const langMap = {
   en: 'english',
@@ -13,33 +10,33 @@ const langMap = {
 }
 
 async function changeLanguage (lang) {
-  await fetch(`locales/${lang}.json`).then(r => r.text()).then((json) => {
+  await window.fetch(`locales/${lang}.json`).then(r => r.text()).then((json) => {
     setTranslations(JSON.parse(json))
     refreshTranslations()
   })
 }
 
-function initApp(){
-  const [$, state] = makeUpdater({countX:1})
-  const APP = {updaters:$, insertHtml}
+function initApp () {
+  const [$, state] = makeUpdater({ countX: 1 })
+  const APP = { updaters: $, insertHtml }
 
   let count = 1
 
-  function langClick(evt){
-    let lang = evt.target.propKey
+  function langClick (evt) {
+    const lang = evt.target.propKey
     changeLanguage(lang)
     setSelected(APP.langBt, lang)
   }
 
-  function optChange(){
+  function optChange () {
     console.log('optChange', getValue(APP.opts))
   }
 
   const tpl = (
     <div p='main'>
-      <div class="g-hc">
+      <div class='g-hc'>
         {T`auto reload`}
-        <label class="el-switch"><input p='opts.autoReload' type='checkbox' /><span/></label>
+        <label class='el-switch'><input p='opts.autoReload' type='checkbox' /><span /></label>
       </div>
       <label><input p='opts.autoRotate' type='checkbox' />{T`auto rotate`}</label>
       <label><input p='opts.autoZoom' type='checkbox' />{T`auto zoom`}</label>
@@ -53,13 +50,13 @@ function initApp(){
         ))}
 
       </div>
+      <JscadEditor p='editor' />
     </div>
   )
 
-
   APP.insertHtml(document.body, null, tpl)
   setSelected(APP.langBt, 'en')
-  forEachProp(APP.opts,bt=>bt.addEventListener('change', optChange))
+  forEachProp(APP.opts, bt => bt.addEventListener('change', optChange))
 
   window.APP = APP
 

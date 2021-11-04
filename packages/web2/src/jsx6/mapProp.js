@@ -1,4 +1,4 @@
-export default function mapProp (obj, callback) {
+export function mapProp (obj, callback) {
   if (obj && typeof obj === 'object') {
     const out = {}
     for (const p in obj) {

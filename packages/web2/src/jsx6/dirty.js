@@ -1,4 +1,4 @@
-import { callAnim } from '../jsx6'
+import { callAnim } from './core'
 
 const dirty = new Set()
 let hasDirty = false
@@ -62,4 +62,3 @@ export function makeUpdater (stateDefaults = {}) {
 
   return [$, state]
 }
-

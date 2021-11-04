@@ -1,10 +1,10 @@
 
-let ct; let ce
-let anim = requestAnimationFrame
+let ct; let ce; let anim
 
 if (typeof document !== 'undefined') {
   ct = (t) => document.createTextNode(t)
-  ce = (t,o) => document.createElement(t,o)
+  ce = (t, o) => document.createElement(t, o)
+  anim = window.requestAnimationFrame
 }
 
 export function setHtmlFunctions (createTextNode, createElement, requestAnimationFrame) {
@@ -13,7 +13,7 @@ export function setHtmlFunctions (createTextNode, createElement, requestAnimatio
   anim = requestAnimationFrame
 }
 
-export function callAnim(callback){
+export function callAnim (callback) {
   anim(callback)
 }
 
@@ -48,6 +48,8 @@ export function insertHtml (parent, before, def, self = this) {
     pushUpdaters(self.updaters, def, updateText(out, def))
   } else if (def instanceof Array) {
     out = def.map(c => insertHtml(parent, before, c, self))
+  } else if (def.tag instanceof Function) {
+    out = def.tag(self, parent, before, def.attr, def.children)
   } else {
     out = ce(def.tag)
 
