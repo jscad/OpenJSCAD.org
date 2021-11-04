@@ -175,7 +175,9 @@ const measureBoundingBoxOfGeom3 = (geometry) => {
   return boundingBox
 }
 
+/* swap values if specific axis value in the second vector has lower value than the axis value in first vector */
 const fixBound = (i, v1,v2)=>{
+  // this function will likely be inlined by the JS optimization compiler 
   if(v1[i] > v2[i]){
     let tmp = v1[i]
     v1[i] = v2[i]
@@ -186,9 +188,14 @@ const fixBound = (i, v1,v2)=>{
 const transformBoundingBox = (boundingBox, transforms) => {
   if (transforms && !mat4.isIdentity(transforms)) {
     let out = [vec3.transform(vec3.create(), boundingBox[0], transforms), vec3.transform(vec3.create(), boundingBox[1], transforms)]
-    fixBound(0, ...out)
-    fixBound(1, ...out)
-    fixBound(2, ...out)
+    
+    // we now have a new 2 vectors:  [v1,v2] => [ [x1,y1,z1],  [x2,y2,z2] ]
+    // transform can move bounding box corner in such way that it is no longer true that 
+    //  - v1 = [min(x1,x2),min(y1,y2),min(z1,z2)]
+    //  - v2 = [max(x1,x2),max(y1,y2),max(z1,z2)]
+    fixBound(0, ...out)// swap x, if higher value is in first vector
+    fixBound(1, ...out)// swap y, if higher value is in first vector
+    fixBound(2, ...out)// swap z, if higher value is in first vector
     return out
   }
   return boundingBox
