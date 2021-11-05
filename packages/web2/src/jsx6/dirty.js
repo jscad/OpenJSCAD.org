@@ -56,7 +56,8 @@ export function makeUpdater (stateDefaults = {}) {
       },
       get: function () {
         return values[p]
-      }
+      },
+      enumerable: true
     })
   }
 
