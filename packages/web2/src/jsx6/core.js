@@ -107,9 +107,18 @@ export function insertHtml (parent, before, def, self = this, component = null) 
 
 /** To simplify, we just clear the element and add new nodes (no vnode diff is performed) */
 export function applyHtml (parent, def, self = this) {
-  // TODO unbind/finalize attached components
   if (typeof parent === 'string') parent = document.getElementById(parent)
-  parent.innerHTML = '' // reset
+
+  function destroy(el) {
+    let ch = el.firstElementChild
+    while(ch){
+      destroy(ch)
+      ch = ch.nextElementSibling
+    }
+    el?.component?.destroy()
+  }
+  destroy(parent)
+  parent.innerHTML = ''
   insertHtml(parent, null, def, self)
 }
 
@@ -154,6 +163,9 @@ export class Jsx6{
   }
 
   created () {}
+  destroy () { 
+    delete this.el.component
+  }
   destroyed () { }
 
   initTemplate () {
