@@ -18,6 +18,7 @@ export class App extends Jsx6{
     }
     setVisible(this, false)
     forEachProp(this.opts, bt => bt.addEventListener('change', optChange))
+    this.language.value = 'en'
     this.changeLanguage('en').then(()=>setVisible(this, true))
   }
   
@@ -26,13 +27,12 @@ export class App extends Jsx6{
     await window.fetch(`locales/${lang}.json`).then(r => r.text()).then((json) => {
       setTranslations(JSON.parse(json))
       refreshTranslations()
-      setSelected(this.langBt, lang)
     })
   }
 
   tpl (state, $) {
     const langClick = (evt)=>{
-      const lang = evt.target.propKey
+      const lang = evt.target.value
       this.changeLanguage(lang)
     }
 
@@ -46,11 +46,11 @@ export class App extends Jsx6{
       <label><input p='opts.showGrid' type='checkbox' />{T`grid`}</label>
       <label><input p='opts.showAxes' type='checkbox' />{T`axes`}</label>
       <div>
-        <button onclick={() => state.counter++}>test counter: {() => state.counter}</button>
+        <select p='language' onchange={langClick}>
         {Object.keys(langMap).map(l => (
-          <button p={['langBt', l]} key={l} onclick={langClick}>{T(langMap[l])}</button>
+          <option value={l}>{T(langMap[l])}</option>
         ))}
-
+        </select>
       </div>
       <JscadEditor p='editor' class='editor' tag-name='B' />
     </div>

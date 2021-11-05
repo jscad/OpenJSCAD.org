@@ -4,7 +4,7 @@ import { defaultKeymap } from '@codemirror/commands'
 import { Jsx6 } from './jsx6'
 
 export class JscadEditor extends Jsx6 {
-  created () {
+  init () {
     const startState = EditorState.create({
       doc: 'Hello World',
       extensions: [keymap.of(defaultKeymap)]

@@ -4,7 +4,7 @@ let ct; let ce; let anim
 
 if (typeof document !== 'undefined') {
   ct = (t) => document.createTextNode(t)
-  ce = (t, o) => document.createElement(t, o)
+  ce = (t, o) =>{ if(!t) throw Error('null tag'); return document.createElement(t, o)}
   anim = window.requestAnimationFrame
 }
 
@@ -66,7 +66,7 @@ export function insertHtml (parent, before, def, self = this, component = null) 
       out = new def.tag()
       out.insertEl(self, parent, before, def.attr)
       out.initTemplate()
-      out.insertChildren(parent, before, def.children)
+      out.insertChildren(def.children)
       out.init(out.state)
     } else{
       out = def.tag(self, parent, before, def.attr, def.children)
