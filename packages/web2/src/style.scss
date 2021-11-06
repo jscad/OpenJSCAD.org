@@ -3,8 +3,15 @@ html,body{
   height: 100%;
   margin: 0;
 }
+body{
+  font-family: 'Open sans' ,sans-serif;
+  font-size: 13px;
+}
 *{
   box-sizing: border-box;
+}
+[hidden]{
+  display: none !important;
 }
 
 button{
@@ -15,9 +22,39 @@ button{
 .g-ib{
   display: inline-block;
 }
-.g-hc{
+// vertical center
+.g-vc{
   display: inline-flex;
   align-items: center;
+}
+
+.g-fs{
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+// form row
+.f-r{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.svg-icon{
+  width: 24px;
+  height: 24px;
+}
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: #4691f6;
+}
+
+.svg-icon circle {
+  stroke: #4691f6;
+  stroke-width: 1;
 }
 
 .el-switch {
@@ -66,5 +103,6 @@ button{
   > input[type="checkbox"]:checked[disabled] + span {
     background-color: #b0d7f5;
   }
-
 }
+
+@import './css/App'

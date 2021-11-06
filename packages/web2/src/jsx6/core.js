@@ -1,16 +1,17 @@
 import { makeUpdater } from './dirty'
 
-let ct; let ce; let anim
+let _createText; let _createElement; let _createElementSvg; let anim
 
 if (typeof document !== 'undefined') {
-  ct = (t) => document.createTextNode(t)
-  ce = (t, o) =>{ if(!t) throw Error('null tag'); return document.createElement(t, o)}
+  _createText = (t) => document.createTextNode(t)
+  _createElementSvg = (t) => document.createElementNS('http://www.w3.org/2000/svg', t)
+  _createElement = (t, o) =>{ if(!t) throw Error('null tag'); return document.createElement(t, o)}
   anim = window.requestAnimationFrame
 }
 
 export function setHtmlFunctions (createTextNode, createElement, requestAnimationFrame) {
-  ct = createTextNode
-  ce = createElement
+  _createText = createTextNode
+  _createElement = createElement
   anim = requestAnimationFrame
 }
 
@@ -22,6 +23,7 @@ export function callAnim (callback) {
 Creates an object that describes the the html element.
 */
 export function h (tag, attr, ...children) {
+  if(tag === h) return children
   return { tag, attr, children }
 }
 
@@ -47,21 +49,17 @@ function setPropGroup (self, part, [groupKey, propKey]) {
 }
 
 /** insert HMTL based on tag description */
-export function insertHtml (parent, before, def, self = this, component = null) {
+export function insertHtml (parent, before, def, self = this, component = null, createElement = _createElement) {
   let out
-  if (typeof def === 'string') {
-    out = ct(def)
-    parent.insertBefore(out, before)
-
-  } else if (def instanceof Function) {
-    out = ct(def())
+  if (def instanceof Function) {
+    out = _createText(def())
     parent.insertBefore(out, before)
     pushUpdaters(self.updaters, def, updateText(out, def))
 
   } else if (def instanceof Array) {
-    out = def.map(c => insertHtml(parent, before, c, self))
+    out = def.map(c => insertHtml(parent, before, c, self, null, createElement))
 
-  } else if (def.tag instanceof Function) {
+  } else if (def && def.tag instanceof Function) {
     if(def.tag.isComponentClass){
       out = new def.tag()
       out.insertEl(self, parent, before, def.attr)
@@ -72,8 +70,9 @@ export function insertHtml (parent, before, def, self = this, component = null) 
       out = def.tag(self, parent, before, def.attr, def.children)
     }
 
-  } else {
-    out = ce(def.tag)
+  } else if ( def && typeof def === 'object'){
+    if(def.tag.toUpperCase() === 'SVG') createElement = _createElementSvg
+    out = createElement(def.tag)
 
     if (def.attr) {
       for (const a in def.attr) {
@@ -98,9 +97,12 @@ export function insertHtml (parent, before, def, self = this, component = null) 
     }
     parent.insertBefore(out, before)
     if (def.children && def.children.length) {
-      // component is not forwarded on purpose
-      insertHtml(out, null, def.children, self)
+      // component is not forwarded on purpose as it is used only for inital element
+      insertHtml(out, null, def.children, self, null, createElement)
     }
+  } else {
+    out = _createText(''+def)
+    parent.insertBefore(out, before)
   }
   return out
 }
@@ -137,11 +139,13 @@ export class Jsx6{
   propKey;
   groupKey;
   parent;
+  tagName = 'DIV';
+  state = {};
 
   insertEl (parent, parentNode, beforeSibling, attr){
     this.parent = parent;
 
-    let tag = 'DIV'
+    let tag = this.tagName
     if(attr && attr['tag-name']){
       tag = attr['tag-name']
       delete attr['tag-name']
@@ -173,6 +177,7 @@ export class Jsx6{
     if(def) this.insertHtml(this.el, null, def)
   }
 
+  dirty () { this.updaters.dirty() }
   tpl (state, $) { }
 
   insertChildren (children) {

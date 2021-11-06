@@ -13,10 +13,13 @@ npm run desktop
 
 ## checklist
 
-
  - [x] index page that can be loaded by starting a web server
  - [x] make gui skeleton with few buttons
  - [x] integrate translations from jscad web
+ - [ ] initial layout (top buttons, editor panel, empty model panel)
+ - [ ] toggle editor
+ - [ ] toggle settigns
+ - [ ] integrate themes from jscad web
  - [x] ELECTRON: load same index page as electron app
  - [ ] ELECTRON: recognize when in electron
  - [ ] ELECTRON: if in it, enable saving, not just reading script

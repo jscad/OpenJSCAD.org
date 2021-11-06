@@ -1,7 +1,7 @@
 import { mapProp } from './mapProp'
 
 export function getValue (obj) {
-  if (obj instanceof window.HTMLElement) {
+  if (obj instanceof window.Element) {
     if (obj.component && typeof obj.component.getValue === 'function') {
       return obj.component.getValue()
     } else if (obj.getValue) {

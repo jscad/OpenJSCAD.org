@@ -29,37 +29,33 @@ export function runUpdaters (updaters) {
   }
 }
 
-export function makeUpdater (stateDefaults = {}) {
-  const state = {}; const values = { ...stateDefaults }
+export function makeUpdater (_state = {}) {
   const updaters = []
   const $ = (f) => {
     if (typeof f === 'function') {
       const out = (...params) => {
-        addDirty(updaters)
+        if (updaters.length) addDirty(updaters)
         return f(...params)
       }
       out.addUpdater = (updater) => updaters.push(updater)
       return out
     } else {
-      addDirty(updaters)
+      if (updaters.length) addDirty(updaters)
       return f
     }
   }
   $.push = (updater) => updaters.push(updater)
   $.dirty = () => addDirty(updaters)
+  $.list = updaters
 
-  for (const p in stateDefaults) {
-    Object.defineProperty(state, p, {
-      set: function (value) {
-        addDirty(updaters)
-        values[p] = value
-      },
-      get: function () {
-        return values[p]
-      },
-      enumerable: true
-    })
+  const handler = {
+    set: function (target, prop, value, receiver) {
+      target[prop] = value
+      if (updaters.length) addDirty(updaters)
+      return true
+    }
   }
 
+  const state = new Proxy(_state, handler)
   return [$, state]
 }
