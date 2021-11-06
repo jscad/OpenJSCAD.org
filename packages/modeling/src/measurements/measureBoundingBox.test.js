@@ -4,6 +4,8 @@ const { geom2, geom3, path2 } = require('../geometries')
 
 const { line, rectangle, cuboid } = require('../primitives')
 
+const { mirror } = require('../operations/transforms')
+
 const { measureBoundingBox } = require('./index')
 
 test('measureBoundingBox (single objects)', (t) => {
@@ -55,4 +57,10 @@ test('measureBoundingBox (multiple objects)', (t) => {
 
   allbounds = measureBoundingBox(aline, arect, acube, o)
   t.deepEqual(allbounds, [[[10, 10, 0], [15, 15, 0]], [[-5, -10, 0], [5, 10, 0]], [[-1, -1, -1], [1, 1, 1]], [[0, 0, 0], [0, 0, 0]]])
+})
+
+test('measureBoundingBox invert', (t) => {
+  const acube = mirror({}, cuboid())
+  const cbounds = measureBoundingBox(acube)
+  t.deepEqual(cbounds, [[-1, -1, -1], [1, 1, 1]])
 })
