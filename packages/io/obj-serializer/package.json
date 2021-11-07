@@ -22,6 +22,9 @@
     "obj"
   ],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@jscad/array-utils": "2.1.0",
     "@jscad/modeling": "2.6.0"
