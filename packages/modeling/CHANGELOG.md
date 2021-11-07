@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.6.0...@jscad/modeling@2.6.1) (2021-11-07)
+
+
+### Bug Fixes
+
+* **modeling:** corrected measureBoundingBox for mirrored shapes ([#946](https://github.com/jscad/OpenJSCAD.org/issues/946)) ([ab2d505](https://github.com/jscad/OpenJSCAD.org/commit/ab2d50595129167a85f330adf286eaa56ae45de5))
+* **modeling:** handle negative area polygons in snapPolygons ([#941](https://github.com/jscad/OpenJSCAD.org/issues/941)) ([971343a](https://github.com/jscad/OpenJSCAD.org/commit/971343ac8ef90701a8dd54a1889f8932bebab5da))
+
+
+
+
+
 # [2.6.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.5.3...@jscad/modeling@2.6.0) (2021-10-17)
 
 

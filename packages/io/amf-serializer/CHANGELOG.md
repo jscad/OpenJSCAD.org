@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.1.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/amf-serializer@2.0.10...@jscad/amf-serializer@2.1.0) (2021-11-07)
+
+
+### Features
+
+* **io:** new serializer for OBJ ([#942](https://github.com/jscad/OpenJSCAD.org/issues/942)) ([baaae18](https://github.com/jscad/OpenJSCAD.org/commit/baaae18ad55252ec71b074bd85dea7d137a22eb8))
+
+
+
+
+
 ## [2.0.10](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/amf-serializer@2.0.9...@jscad/amf-serializer@2.0.10) (2021-10-17)
 
 **Note:** Version bump only for package @jscad/amf-serializer
