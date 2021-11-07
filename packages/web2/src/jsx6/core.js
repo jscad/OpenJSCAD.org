@@ -134,13 +134,13 @@ export function pushUpdaters (updaters, func, updater) {
 }
 
 export class Jsx6{
-  view;
-  el;
-  propKey;
-  groupKey;
-  parent;
-  tagName = 'DIV';
-  state = {};
+// eslint-disable-next-line
+  el
+  propKey
+  groupKey
+  parent
+  tagName = 'DIV'
+  state = {}
 
   insertEl (parent, parentNode, beforeSibling, attr){
     this.parent = parent;

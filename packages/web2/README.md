@@ -16,10 +16,13 @@ npm run desktop
  - [x] index page that can be loaded by starting a web server
  - [x] make gui skeleton with few buttons
  - [x] integrate translations from jscad web
- - [ ] initial layout (top buttons, editor panel, empty model panel)
- - [ ] toggle editor
- - [ ] toggle settigns
+ - [x] initial layout (top buttons, editor panel, empty model panel)
+ - [x] toggle editor
+ - [x] toggle settigns
+ - [x] store settings to localStorage
  - [ ] integrate themes from jscad web
+ - [x] EDITOR codemirror 6
+ - [x] EDITOR javascript syntax higlight
  - [x] ELECTRON: load same index page as electron app
  - [ ] ELECTRON: recognize when in electron
  - [ ] ELECTRON: if in it, enable saving, not just reading script

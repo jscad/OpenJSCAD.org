@@ -1,11 +1,14 @@
 .jscad-app{
-
+  $shadow-color: #8fb5c7;
 
   .settings-area{
     position: absolute;
+    top: 32px;
     width: 400px;
     background: white;
     padding: 20px;
+    z-index: 1;
+    box-shadow: 2px 2px 4px $shadow-color;
   }
   
   .top-menu{
@@ -22,7 +25,6 @@
     margin-top: 32px;
     flex: 1;
     width: 50%;
-    background: #eeeeee;
   }
   .viewer-area{
     flex: 1;
