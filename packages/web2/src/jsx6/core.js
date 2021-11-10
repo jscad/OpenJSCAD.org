@@ -214,6 +214,12 @@ export class Jsx6{
   get style (){
     return this.el.style
   }
+  get innerHTML (){
+    return this.el.innerHTML
+  }
+  get textContent (){
+    return this.el.textContent
+  }
 }
 
 Jsx6.isComponentClass = true
