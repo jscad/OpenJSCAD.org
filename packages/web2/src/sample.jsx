@@ -1,10 +1,4 @@
-import { h, t, setTranslations, insertHtml } from './jsx6'
-
-export default function test(){
-    return <Button/>
-}
-
-function Button(parent, parentNode, before, attr, children) {
-    let state = {count:0}
-    let node = insertHtml(parentNode, before, <div {...attr} onclick={()=>state.count++}> {staet.count}</div>) 
+export default function (h, state, $) {
+  state.counter = 10
+  return <b onclick={() => state.counter++}>Sample {() => state.counter}</b>
 }

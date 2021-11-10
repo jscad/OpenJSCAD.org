@@ -62,13 +62,14 @@ export function insertHtml (parent, before, def, self = this, component = null, 
   } else if (def && def.tag instanceof Function) {
     if(def.tag.isComponentClass){
       out = new def.tag()
-      out.insertEl(self, parent, before, def.attr)
-      out.initTemplate()
-      out.insertChildren(def.children)
-      out.init(out.state)
-    } else{
-      out = def.tag(self, parent, before, def.attr, def.children)
+    }else{
+      out = new Jsx6()
+      out.tpl = def.tag
     }
+    out.insertEl(self, parent, before, def.attr)
+    out.initTemplate()
+    out.insertChildren(def.children)
+    out.init(out.state)
 
   } else if ( def && typeof def === 'object'){
     if(def.tag.toUpperCase() === 'SVG') createElement = _createElementSvg
@@ -173,12 +174,12 @@ export class Jsx6{
   destroyed () { }
 
   initTemplate () {
-    let def = this.tpl(this.state, this.updaters)
+    let def = this.tpl(h, this.state, this.updaters)
     if(def) this.insertHtml(this.el, null, def)
   }
 
   dirty () { this.updaters.dirty() }
-  tpl (state, $) { }
+  tpl (h, state, $) { }
 
   insertChildren (children) {
     if(children) this.insertHtml(this.el, null, children)
@@ -188,6 +189,14 @@ export class Jsx6{
 
   fireEvent(name,detail,opts){
     this.el.dispatchEvent(new CustomEvent(name,{detail, ...opts}))
+  }
+
+  setValue (value) {
+    Object.assign(this.state, value)
+  }
+
+  getValue () {
+    Object.assign({},this.state)
   }
 
   addEventListener (name, callback){
@@ -223,4 +232,3 @@ export class Jsx6{
 }
 
 Jsx6.isComponentClass = true
-
