@@ -47,6 +47,10 @@ export function makeUpdater (_state = {}) {
   $.push = (updater) => updaters.push(updater)
   $.dirty = () => addDirty(updaters)
   $.list = updaters
+  $.update = (newData) => {
+    Object.assign(_state, newData)
+    addDirty(updaters)
+  }
 
   const handler = {
     set: function (target, prop, value, receiver) {

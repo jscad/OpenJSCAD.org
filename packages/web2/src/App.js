@@ -45,10 +45,10 @@ export class App extends Jsx6 {
     this.changeLanguage(state.language).then(() => setVisible(this, true))
   }
 
-  saveSettings () {
-      const settings = getValue(this.opts);
-      settings.editorVisible = isVisible()
-      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings))
+  saveSettings () {    
+    const settings = getValue(this.opts);
+    settings.editorVisible = isVisible()
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings))
   }
 
   async changeLanguage (lang) {

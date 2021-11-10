@@ -189,48 +189,37 @@ export class Jsx6{
 
   init () { }
 
+  updateState (value) {
+    // goes behind the proxy and calls dirty() only once
+    // this is more efficient than setting props one by one on the state
+    this.updaters.update(value)
+  }
+  
+  get value () { Object.assign({},this.state) }
+  
+  set value (value) {
+    if(value && typeof value === 'object'){
+      this.updateState(value)
+    }else{
+      this.state.value = value
+    }
+  }
+  
   fireEvent(name,detail,opts){
     this.el.dispatchEvent(new CustomEvent(name,{detail, ...opts}))
   }
+  addEventListener (name, callback){ this.el.addEventListener(name, callback) }
 
-  setValue (value) {
-    Object.assign(this.state, value)
-  }
+  getAttribute (attr){ return this.el.getAttribute(attr) }
+  setAttribute (attr, value){ return this.el.setAttribute(attr, value) }
+  hasAttribute (attr){ return this.el.hasAttribute(attr) }
+  removeAttribute (attr){ return this.el.removeAttribute(attr) }
+  getBoundingClientRect (){ return this.el.getBoundingClientRect() }
+  get classList (){ return this.el.classList }
+  get style (){ return this.el.style }
+  get innerHTML (){ return this.el.innerHTML }
+  get textContent (){ return this.el.textContent }
 
-  getValue () {
-    Object.assign({},this.state)
-  }
-
-  addEventListener (name, callback){
-    this.el.addEventListener(name, callback)
-  }
-  getAttribute (attr){
-    return this.el.getAttribute(attr)
-  }
-  setAttribute (attr, value){
-    return this.el.setAttribute(attr, value)
-  }
-  hasAttribute (attr){
-    return this.el.hasAttribute(attr)
-  }
-  removeAttribute (attr){
-    return this.el.removeAttribute(attr)
-  }
-  getBoundingClientRect (){
-    return this.el.getBoundingClientRect()
-  }
-  get classList (){
-    return this.el.classList
-  }
-  get style (){
-    return this.el.style
-  }
-  get innerHTML (){
-    return this.el.innerHTML
-  }
-  get textContent (){
-    return this.el.textContent
-  }
 }
 
 Jsx6.isComponentClass = true
