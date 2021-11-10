@@ -193,6 +193,27 @@ export class Jsx6{
   addEventListener (name, callback){
     this.el.addEventListener(name, callback)
   }
+  getAttribute (attr){
+    return this.el.getAttribute(attr)
+  }
+  setAttribute (attr, value){
+    return this.el.setAttribute(attr, value)
+  }
+  hasAttribute (attr){
+    return this.el.hasAttribute(attr)
+  }
+  removeAttribute (attr){
+    return this.el.removeAttribute(attr)
+  }
+  getBoundingClientRect (){
+    return this.el.getBoundingClientRect()
+  }
+  get classList (){
+    return this.el.classList
+  }
+  get style (){
+    return this.el.style
+  }
 }
 
 Jsx6.isComponentClass = true
