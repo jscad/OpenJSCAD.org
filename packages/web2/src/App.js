@@ -19,6 +19,7 @@ const langMap = {
 }
 
 export class App extends Jsx6 {
+  cName = 'MainApp'
   state = { 
       autoReload: true,
       autoRotate: false,

@@ -141,6 +141,7 @@ export class Jsx6{
   groupKey
   parent
   tagName = 'DIV'
+  cName = ''
   state = {}
 
   insertEl (parent, parentNode, beforeSibling, attr){
@@ -153,6 +154,7 @@ export class Jsx6{
     } 
 
     this.el = insertHtml(parentNode, beforeSibling, { tag, attr }, parent, this)
+    if(this.cName) this.classList.add(this.cName)
     this.el.propKey = this.propKey
     this.el.groupKey = this.groupKey
 
