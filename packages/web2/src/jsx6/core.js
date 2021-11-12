@@ -1,4 +1,5 @@
 import { makeUpdater } from './dirty'
+import { insertBefore } from './insertBefore';
 
 let _createText; let _createElement; let _createElementSvg; let anim
 
@@ -215,6 +216,9 @@ export class Jsx6{
   hasAttribute (attr){ return this.el.hasAttribute(attr) }
   removeAttribute (attr){ return this.el.removeAttribute(attr) }
   getBoundingClientRect (){ return this.el.getBoundingClientRect() }
+  appendChild (c){ insertBefore(this.el, c) }
+  insertBefore (c, before) { insertBefore(this.el, c, before) }
+
   get classList (){ return this.el.classList }
   get style (){ return this.el.style }
   get innerHTML (){ return this.el.innerHTML }
