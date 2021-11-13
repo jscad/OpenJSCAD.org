@@ -214,6 +214,7 @@ export class Jsx6{
   state = {}
 
   constructor (tagDef) {
+
     if(!tagDef){
       tagDef = new TagDef()
     }else if(!(tagDef instanceof TagDef)){
@@ -225,8 +226,6 @@ export class Jsx6{
       tagDef.tag = attr['tag-name']
       delete attr['tag-name']
     }
-
-    if(!tagDef.tag) tagDef.tag = this.tagName
     
     this.childrenDef = tagDef.children
     delete tagDef.children
@@ -234,6 +233,7 @@ export class Jsx6{
   }
 
   insertEl (parentNode, beforeSibling, parent){
+    if(!this.tagDef.tag) this.tagDef.tag = this.tagName
     this.parent = parent;
 
     this.el = this.contentArea = insertHtml(parentNode, beforeSibling, this.tagDef, parent, this)

@@ -80,8 +80,8 @@ export class App extends Jsx6 {
       <>
         <div class="top-menu">
           <button p='toggleSettingsBt' onclick={() => this.toggleSettings()}>{gearIcon}</button>
-          <Toggle bt='1' tag-name='button' prop='editorVisible'>{editIcon}</Toggle>
-          <Toggle bt='2' tag-name='button' prop='editorVisible'>{editIcon}</Toggle>
+          <Toggle prop='editorVisible'>{editIcon}</Toggle>
+          <Toggle prop='editorVisible'>{editIcon}</Toggle>
         </div>
 
         <div p='settings' class='settings-area' hidden>
