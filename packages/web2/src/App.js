@@ -8,6 +8,7 @@ import { JscadEditor } from './editor'
 import gearIcon from './icons/gear'
 import editIcon from './icons/edit'
 import Sample from './sample';
+import Toggle from './Toggle';
 import { Comp } from './sample2';
 
 const SETTINGS_KEY = 'jscad.settings';
@@ -79,7 +80,7 @@ export class App extends Jsx6 {
       <>
         <div class="top-menu">
           <button p='toggleSettingsBt' onclick={() => this.toggleSettings()}>{gearIcon}</button>
-          <button p='toggleEditorBt' onclick={() => this.toggleEditor()}>{editIcon}</button>
+          <Toggle prop='editorVisible'>{editIcon}</Toggle>
         </div>
 
         <div p='settings' class='settings-area' hidden>
@@ -112,7 +113,7 @@ export class App extends Jsx6 {
             </select>
           </div>
         </div>
-        <JscadEditor p='editor' class='editor editor-area' tag-name='B' />
+        <JscadEditor p='editor' class='editor editor-area' tag-name='B' hidden={()=>!state.editorVisible} />
         <div class='viewer-area'>
           viewer 
           <Sample/>

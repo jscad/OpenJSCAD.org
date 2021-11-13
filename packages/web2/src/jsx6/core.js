@@ -56,6 +56,22 @@ function updateText (node, func) {
   return ret
 }
 
+function makeAttrUpdater (node, attr, func) {
+    let ret = function(){
+        let newValue = func();
+        if(node.getAttribute(attr) != newValue){
+        	if(newValue === false)
+        		node.removeAttribute(attr);
+        	else
+            	node.setAttribute(attr, newValue);       
+        } 
+    }
+    ret.node = node;
+    ret.attr = attr;
+    ret.func = func;
+    return ret;
+};
+
 function setPropGroup (self, part, [groupKey, propKey]) {
   if (propKey) {
     if (!self[groupKey]) self[groupKey] = {}
@@ -135,6 +151,10 @@ export function insertHtml (parent, before, def, self = this, component = null, 
             if(!component.propKey) component.propKey = value
             component.loopKey = value
           }
+
+        } else if(value instanceof Function){
+          pushUpdaters(self.updaters, value, makeAttrUpdater(out, a, value))
+
         } else {
           if (a === 'p') {
             setPropGroup(self, component || out, typeof value === 'string' ? value.split('.') : value)
@@ -174,6 +194,7 @@ export function applyHtml (parent, def, self = this) {
 
 export function pushUpdaters (updaters, func, updater) {
   // allow updater function to be refreshad from somewhere else, liver translations could use this
+  if(!updater) throw new Error('updater undefined')
   if (func.addUpdater) {
     func.addUpdater(updater)
   } else {
@@ -184,6 +205,7 @@ export function pushUpdaters (updaters, func, updater) {
 export class Jsx6{
 // eslint-disable-next-line
   el
+  contentArea
   propKey
   groupKey
   parent
@@ -214,7 +236,7 @@ export class Jsx6{
   insertEl (parentNode, beforeSibling, parent){
     this.parent = parent;
 
-    this.el = insertHtml(parentNode, beforeSibling, this.tagDef, parent, this)
+    this.el = this.contentArea = insertHtml(parentNode, beforeSibling, this.tagDef, parent, this)
     if(this.cName) this.classList.add(this.cName)
     this.el.propKey = this.propKey
     this.el.groupKey = this.groupKey
@@ -245,7 +267,7 @@ export class Jsx6{
   tpl (h, state, $) { }
 
   insertChildren () {
-    this.insertHtml(this.el, null, this.childrenDef)
+    this.insertHtml(this.contentArea, null, this.childrenDef)
   }
 
   init () { }

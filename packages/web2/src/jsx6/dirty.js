@@ -22,7 +22,10 @@ export function runUpdaters (updaters) {
   const len = updaters.length
   for (let i = 0; i < len; i++) {
     try {
-      updaters[i]()
+      const func = updaters[i]
+      if (!func || !(func instanceof Function)) {
+        console.error('updater is not a function', func, i, updaters)
+      } else func()
     } catch (error) {
       console.error(error)
     }
