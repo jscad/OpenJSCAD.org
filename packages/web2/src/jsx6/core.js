@@ -1,3 +1,11 @@
+/**
+ * @typedef TagDef
+ * @property tag {String|Function}
+ * @property attr {Object}
+ * @property children {Array<String|Function|TagDef>}
+ * 
+ */
+
 import { makeUpdater } from './dirty'
 import { insertBefore } from './insertBefore';
 
@@ -49,8 +57,30 @@ function setPropGroup (self, part, [groupKey, propKey]) {
   }
 }
 
+/**
+ * @param comp
+ * @returns {Jsx6}
+ */
+function insertComp (comp, parentNode, before, parent){
+
+  if(comp.__initialized){
+    insertBefore(parent, comp, before)
+  }else{
+    comp.insertEl(parentNode, before, parent)
+    comp.initTemplate()
+    comp.insertChildren()
+    comp.init(comp.state)
+    comp.__initialized = true
+  }
+
+  return comp
+}
+
 /** insert HMTL based on tag description */
 export function insertHtml (parent, before, def, self = this, component = null, createElement = _createElement) {
+  if(!def) return
+
+  /** @type {Jsx6|Element} */
   let out
   if (def instanceof Function) {
     out = _createText(def())
@@ -60,17 +90,25 @@ export function insertHtml (parent, before, def, self = this, component = null, 
   } else if (def instanceof Array) {
     out = def.map(c => insertHtml(parent, before, c, self, null, createElement))
 
-  } else if (def && def.tag instanceof Function) {
+  } else if (def instanceof Jsx6) {
+    insertComp(def, parent, before, self)
+
+  } else if (def.tag instanceof Function) {
+    
     if(def.tag.isComponentClass){
-      out = new def.tag()
+      let comp = def.tag
+      delete def.tag
+      out = new comp(def)
     }else{
-      out = new Jsx6()
-      out.tpl = def.tag
+      // use the daf.tag function to provide the template for the newly created component
+      let tplfunc = def.tag
+      delete def.tag
+      // create a new Jsx6 component
+      out = new Jsx6(def)
+      out.tpl = tplfunc
     }
-    out.insertEl(self, parent, before, def.attr)
-    out.initTemplate()
-    out.insertChildren(def.children)
-    out.init(out.state)
+
+    insertComp(out, parent, before, self)
 
   } else if ( def && typeof def === 'object'){
     if(def.tag.toUpperCase() === 'SVG') createElement = _createElementSvg
@@ -145,16 +183,25 @@ export class Jsx6{
   cName = ''
   state = {}
 
-  insertEl (parent, parentNode, beforeSibling, attr){
+  constructor (tagDef = {}) {
+    let attr = tagDef.attr
+    
+    if(attr && attr['tag-name']){
+      tagDef.tag = attr['tag-name']
+      delete attr['tag-name']
+    }
+
+    if(!tagDef.tag) tagDef.tag = this.tagName
+    
+    this.childrenDef = tagDef.children
+    delete tagDef.children
+    this.tagDef = tagDef
+  }
+
+  insertEl (parentNode, beforeSibling, parent){
     this.parent = parent;
 
-    let tag = this.tagName
-    if(attr && attr['tag-name']){
-      tag = attr['tag-name']
-      delete attr['tag-name']
-    } 
-
-    this.el = insertHtml(parentNode, beforeSibling, { tag, attr }, parent, this)
+    this.el = insertHtml(parentNode, beforeSibling, this.tagDef, parent, this)
     if(this.cName) this.classList.add(this.cName)
     this.el.propKey = this.propKey
     this.el.groupKey = this.groupKey
@@ -166,8 +213,8 @@ export class Jsx6{
     }
   }
 
-  insertHtml (parentNode, beforeSibling, children) { 
-    insertHtml(parentNode, beforeSibling, children, this) 
+  insertHtml (parentNode, beforeSibling, def) { 
+    insertHtml(parentNode, beforeSibling, def, this) 
   }
 
   created () {}
@@ -178,14 +225,14 @@ export class Jsx6{
 
   initTemplate () {
     let def = this.tpl(h, this.state, this.updaters)
-    if(def) this.insertHtml(this.el, null, def)
+    this.insertHtml(this.el, null, def)
   }
 
   dirty () { this.updaters.dirty() }
   tpl (h, state, $) { }
 
-  insertChildren (children) {
-    if(children) this.insertHtml(this.el, null, children)
+  insertChildren () {
+    this.insertHtml(this.el, null, this.childrenDef)
   }
 
   init () { }
