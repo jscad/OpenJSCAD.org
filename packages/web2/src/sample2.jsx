@@ -17,10 +17,11 @@ function toArray(obj){
 }
 
 export class Comp extends Jsx6 {
+
   editor = new Editor(<div class='editor' />)
   editorsGroup = { 
     a: new Editor(<div class='editor' />) ,
-    b: new Editor(<div class='editor' />) ,
+    b: new Editor({ 'class':'editor'}) ,
   }
   /** @type {Editor} */
   editor4
@@ -37,7 +38,7 @@ export class Comp extends Jsx6 {
 
   tpl (h, state, $) {
     return <b onclick={() => state.counter++}>
-      Sample {() => state.counter} / 
+      Sample2 / 
       {this.editor}
       {toArray(this.editorsGroup)}
       <Editor p='editor4' tag-name='SPAN' />

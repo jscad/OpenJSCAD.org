@@ -28,12 +28,20 @@ export function callAnim (callback) {
   anim(callback)
 }
 
+export class TagDef {
+  constructor (tag, attr, children){
+    if(tag) this.tag = tag
+    if(attr) this.attr = attr
+    if(children) this.children = children
+  }
+}
+
 /** Simple JSX factory.
 Creates an object that describes the the html element.
 */
 export function h (tag, attr, ...children) {
   if(tag === h) return children
-  return { tag, attr, children }
+  return new TagDef( tag, attr, children )
 }
 
 function updateText (node, func) {
@@ -183,7 +191,12 @@ export class Jsx6{
   cName = ''
   state = {}
 
-  constructor (tagDef = {}) {
+  constructor (tagDef) {
+    if(!tagDef){
+      tagDef = new TagDef()
+    }else if(!(tagDef instanceof TagDef)){
+      tagDef = new TagDef(null, tagDef)
+    }
     let attr = tagDef.attr
     
     if(attr && attr['tag-name']){
