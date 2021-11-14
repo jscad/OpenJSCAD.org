@@ -23,6 +23,11 @@ const measureArea = (poly3) => {
   const ay = Math.abs(normal[1])
   const az = Math.abs(normal[2])
 
+  if (ax + ay + az === 0) {
+    // normal does not exist
+    return 0
+  }
+
   let coord = 3 // ignore Z coordinates
   if ((ax > ay) && (ax > az)) {
     coord = 1 // ignore X coordinates
