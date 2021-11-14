@@ -37,6 +37,11 @@ test('poly3: measureArea() should return correct values', (t) => {
   let ret4 = measureArea(ply4)
   t.is(ret4, 19.5)
 
+  // colinear vertices
+  let ply5 = fromPoints([[0, 0, 0], [1, 0, 0], [2, 0, 0], [0, 1, 0]])
+  let ret5 = measureArea(ply5)
+  t.is(ret5, 1)
+
   // rotated to various angles
   let rotation = mat4.fromZRotation(mat4.create(), (45 * 0.017453292519943295))
   ply1 = transform(rotation, ply1)

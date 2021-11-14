@@ -1,4 +1,5 @@
 const vec3 = require('../../maths/vec3')
+const faceNormal = require('./faceNormal')
 
 /**
  * Measure the area of the given polygon.
@@ -14,19 +15,13 @@ const measureArea = (poly3) => {
   }
   const vertices = poly3.vertices
 
-  // calculate a real normal
-  const a = vertices[0]
-  const b = vertices[1]
-  const c = vertices[2]
-  const ba = vec3.subtract(vec3.create(), b, a)
-  const ca = vec3.subtract(vec3.create(), c, a)
-  const normal = vec3.cross(ba, ba, ca)
+  // calculate a normal vector
+  const normal = faceNormal(vertices)
 
-  // determin direction of projection
+  // determine direction of projection
   const ax = Math.abs(normal[0])
   const ay = Math.abs(normal[1])
   const az = Math.abs(normal[2])
-  const an = Math.sqrt((ax * ax) + (ay * ay) + (az * az)) // length of normal
 
   let coord = 3 // ignore Z coordinates
   if ((ax > ay) && (ax > az)) {
@@ -50,7 +45,7 @@ const measureArea = (poly3) => {
       }
       area += (vertices[0][1] * (vertices[1][2] - vertices[n - 1][2]))
       // scale to get area
-      area *= (an / (2 * normal[0]))
+      area /= (2 * normal[0])
       break
 
     case 2: // ignore Y coordinates
@@ -62,7 +57,7 @@ const measureArea = (poly3) => {
       }
       area += (vertices[0][2] * (vertices[1][0] - vertices[n - 1][0]))
       // scale to get area
-      area *= (an / (2 * normal[1]))
+      area /= (2 * normal[1])
       break
 
     case 3: // ignore Z coordinates
@@ -75,7 +70,7 @@ const measureArea = (poly3) => {
       }
       area += (vertices[0][0] * (vertices[1][1] - vertices[n - 1][1]))
       // scale to get area
-      area *= (an / (2 * normal[2]))
+      area /= (2 * normal[2])
       break
   }
   return area
