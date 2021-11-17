@@ -1,5 +1,5 @@
 const vec3 = require('../../maths/vec3')
-const plane = require('../../maths/plane')
+const plane = require('./plane')
 
 /**
  * Measure the area of the given polygon.
@@ -16,7 +16,7 @@ const measureArea = (poly3) => {
   const vertices = poly3.vertices
 
   // calculate a normal vector
-  const normal = plane.fromPoints(plane.create(), ...vertices)
+  const normal = plane(poly3)
 
   // determine direction of projection
   const ax = Math.abs(normal[0])
