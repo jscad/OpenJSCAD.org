@@ -12,11 +12,14 @@ export function t (code) {
 }
 
 export function refreshTranslations () {
-  addDirty(translationUpdaters)
+  addDirty(translationDirtyRunner)
 }
 
-function pushTranslationUpdater (u) {
-  translationUpdaters.push(u)
+const translationDirtyRunner = () => translationUpdaters.forEach(f => f())
+
+function pushTranslationUpdater (func) {
+  if (!func || typeof func !== 'function') throw new Error('translation updater must be a function')
+  translationUpdaters.push(func)
 }
 
 export function T (code) {

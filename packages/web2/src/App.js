@@ -1,17 +1,17 @@
-import { T, setTranslations, refreshTranslations, 
-  forEachProp, getValue, 
-  setSelected, Jsx6, 
+import { T, setTranslations, refreshTranslations,
+  forEachProp, getValue,
+  setSelected, Jsx6, makeUpdater,
   setVisible, isVisible,
   toggleAttrBoolean,
   setValue } from './jsx6'
 import { JscadEditor } from './editor'
 import gearIcon from './icons/gear'
 import editIcon from './icons/edit'
-import Sample from './sample';
-import Toggle from './Toggle';
-import { Comp } from './sample2';
+import Sample from './sample'
+import Toggle from './Toggle'
+import { Comp } from './sample2'
 
-const SETTINGS_KEY = 'jscad.settings';
+const SETTINGS_KEY = 'jscad.settings'
 const langMap = {
   en: 'english',
   de: 'german',
@@ -33,6 +33,10 @@ export class App extends Jsx6 {
    }
 
   init (state) {
+    this.updaters.push((old)=>{
+      console.log('old values', old, 'new value ', this.state)
+      this.saveSettings()
+    })
     const str = localStorage.getItem(SETTINGS_KEY)
     if(str){
       try {
@@ -47,9 +51,8 @@ export class App extends Jsx6 {
     this.changeLanguage(state.language).then(() => setVisible(this, true))
   }
 
-  saveSettings () {    
-    const settings = getValue(this.opts);
-    settings.editorVisible = isVisible()
+  saveSettings () {
+    const settings = {...this.state, ...getValue(this.opts)}
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings))
   }
 
@@ -58,11 +61,6 @@ export class App extends Jsx6 {
       setTranslations(JSON.parse(json))
       refreshTranslations()
     })
-  }
-
-  toggleEditor (vis) {
-    let newHidden = toggleAttrBoolean(this.editor, 'hidden', vis === undefined ? vis:!vis)
-    setSelected(this.toggleEditorBt, !newHidden)
   }
 
   toggleSettings (vis) {
@@ -76,34 +74,35 @@ export class App extends Jsx6 {
       this.changeLanguage(lang)
     }
 
+    let [$2, uiState] = makeUpdater({settingsVisible:false}, true)
+
     return (
       <>
         <div class="top-menu">
-          <button p='toggleSettingsBt' onclick={() => this.toggleSettings()}>{gearIcon}</button>
-          <Toggle prop='editorVisible'>{editIcon}</Toggle>
+          <Toggle prop={['settingsVisible', uiState]}>{gearIcon}</Toggle>
           <Toggle prop='editorVisible'>{editIcon}</Toggle>
         </div>
 
-        <div p='settings' class='settings-area' hidden>
+        <div p='settings' class='settings-area' hidden={$2(()=>!uiState.settingsVisible)}>
           <div class='f-r'>
             <label>{T`auto reload`}</label>
-            <label class='el-switch'><input p='opts.autoReload' type='checkbox' /><span /></label>
+            <Toggle class='el-switch' prop='autoReload'><span /></Toggle>
           </div>
           <div class='f-r'>
             <label>{T`auto rotate`}</label>
-            <label class='el-switch'><input p='opts.autoRotate' type='checkbox' /><span /></label>
+            <Toggle class='el-switch' prop='autoRotate'><span /></Toggle>
           </div>
           <div class='f-r'>
             <label>{T`auto zoom`}</label>
-            <label class='el-switch'><input p='opts.autoZoom' type='checkbox' /><span /></label>
+            <Toggle class='el-switch' prop='autoZoom'><span /></Toggle>
           </div>
           <div class='f-r'>
             <label>{T`grid`}</label>
-            <label class='el-switch'><input p='opts.showGrid' type='checkbox' /><span /></label>
+            <Toggle class='el-switch' prop='showGrid'><span /></Toggle>
           </div>
           <div class='f-r'>
             <label>{T`axes`}</label>
-            <label class='el-switch'><input p='opts.showAxes' type='checkbox' /><span /></label>
+            <Toggle class='el-switch' prop='showAxes'><span /></Toggle>
           </div>
           <div class='f-r'>
             {T`Languages`}

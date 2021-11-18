@@ -14,11 +14,6 @@ body{
   display: none !important;
 }
 
-button{
-  &[selected]{
-    background: rgb(207, 159, 69);
-  }
-}
 .g-ib{
   display: inline-block;
 }
@@ -58,6 +53,9 @@ button{
 }
 
 .el-switch {
+  border: none;
+  padding: 0;
+  background: transparent;
   display: inline-block;
   font-size: 100%;
   height: 1.6em;
@@ -87,20 +85,17 @@ button{
     }
   }
 
-  > input[type="checkbox"] {
-    display: none;
-  }
-  > input[type="checkbox"][disabled] + span {
+  &[disabled] > span {
     cursor: not-allowed;
     background-color: #D3DCE6;
   }
-  > input[type="checkbox"]:checked + span {
+  &[selected] > span {
     background-color: #20a0ff;
   }
-  > input[type="checkbox"]:checked + span:before {
+  &[selected] > span:before {
     left: 50%;
   }
-  > input[type="checkbox"]:checked[disabled] + span {
+  &[selected][disabled] > span {
     background-color: #b0d7f5;
   }
 }
