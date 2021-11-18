@@ -7,9 +7,9 @@ import { T, setTranslations, refreshTranslations,
 import { JscadEditor } from './editor'
 import gearIcon from './icons/gear'
 import editIcon from './icons/edit'
-import Sample from './sample'
 import Toggle from './Toggle'
-import { Comp } from './sample2'
+import { Viewer } from './Viewer'
+
 
 const SETTINGS_KEY = 'jscad.settings'
 const langMap = {
@@ -63,11 +63,6 @@ export class App extends Jsx6 {
     })
   }
 
-  toggleSettings (vis) {
-    let newHidden = toggleAttrBoolean(this.settings, 'hidden', vis === undefined ? vis:!vis)
-    setSelected(this.toggleSettingsBt, !newHidden)
-  }
-
   tpl (h, state, $) {
     const langClick = (evt) => {
       const lang = evt.target.value
@@ -114,11 +109,7 @@ export class App extends Jsx6 {
           </div>
         </div>
         <JscadEditor p='editor' class='editor editor-area' tag-name='B' hidden={()=>!state.editorVisible} />
-        <div class='viewer-area'>
-          viewer 
-          <Sample/>
-          <Comp/>
-          </div>
+        <Viewer class='viewer-area g-fs' />
       </>
     )
   }
