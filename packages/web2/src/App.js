@@ -1,6 +1,6 @@
 import { T, setTranslations, refreshTranslations,
   forEachProp, getValue,
-  setSelected, Jsx6, makeUpdater,
+  setSelected, Jsx6, makeState,
   setVisible, isVisible,
   toggleAttrBoolean,
   setValue } from './jsx6'
@@ -32,28 +32,28 @@ export class App extends Jsx6 {
       editorVisible: true,
    }
 
-  init (state) {
-    this.updaters.push((old)=>{
-      console.log('old values', old, 'new value ', this.state)
-      this.saveSettings()
-    })
+  initState () {
+    const state = this.state
     const str = localStorage.getItem(SETTINGS_KEY)
-    if(str){
+    if(str && str[0] === '{'){
       try {
         Object.assign(state, JSON.parse(str))
-      } catch (e) { console.log(e)}
+      } catch (e) { console.log(e, 'str:',str)}
     }
-    console.log('settings', state)
-    setValue(this.opts, state)
 
-    setVisible(this, false)
-    forEachProp(this.opts, bt => bt.addEventListener('change', () => this.saveSettings()))
-    this.changeLanguage(state.language).then(() => setVisible(this, true))
+    super.initState()
   }
 
-  saveSettings () {
-    const settings = {...this.state, ...getValue(this.opts)}
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings))
+  init (state, $) {
+    $().addUpdater((state, old)=>{
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(state))
+      console.log('old', old)
+      if (old.has('language')) this.changeLanguage(state.language || 'en')
+    })
+    
+    forEachProp(this.opts, bt => bt.addEventListener('change', () => $().update(getValue(this.opts))))
+    this.changeLanguage(state.language)
+    setValue(this.opts, state)
   }
 
   async changeLanguage (lang) {
@@ -64,44 +64,40 @@ export class App extends Jsx6 {
   }
 
   tpl (h, state, $) {
-    const langClick = (evt) => {
-      const lang = evt.target.value
-      this.changeLanguage(lang)
-    }
 
-    let [$2, uiState] = makeUpdater({settingsVisible:false}, true)
+    let uiState = makeState({settingsVisible:false}, true)
 
     return (
       <>
         <div class="top-menu">
-          <Toggle prop={['settingsVisible', uiState]}>{gearIcon}</Toggle>
-          <Toggle prop='editorVisible'>{editIcon}</Toggle>
+          <Toggle state={uiState.$.settingsVisible}>{gearIcon}</Toggle>
+          <Toggle state='editorVisible'>{editIcon}</Toggle>
         </div>
 
-        <div p='settings' class='settings-area' hidden={$2(()=>!uiState.settingsVisible)}>
+        <div p='settings' class='settings-area' hidden={uiState.$(()=>!uiState.settingsVisible)}>
           <div class='f-r'>
             <label>{T`auto reload`}</label>
-            <Toggle class='el-switch' prop='autoReload'><span /></Toggle>
+            <Toggle class='el-switch' state='autoReload'><span /></Toggle>
           </div>
           <div class='f-r'>
             <label>{T`auto rotate`}</label>
-            <Toggle class='el-switch' prop='autoRotate'><span /></Toggle>
+            <Toggle class='el-switch' state='autoRotate'><span /></Toggle>
           </div>
           <div class='f-r'>
             <label>{T`auto zoom`}</label>
-            <Toggle class='el-switch' prop='autoZoom'><span /></Toggle>
+            <Toggle class='el-switch' state='autoZoom'><span /></Toggle>
           </div>
           <div class='f-r'>
             <label>{T`grid`}</label>
-            <Toggle class='el-switch' prop='showGrid'><span /></Toggle>
+            <Toggle class='el-switch' state='showGrid'><span /></Toggle>
           </div>
           <div class='f-r'>
             <label>{T`axes`}</label>
-            <Toggle class='el-switch' prop='showAxes'><span /></Toggle>
+            <Toggle class='el-switch' state='showAxes'><span /></Toggle>
           </div>
           <div class='f-r'>
             {T`Languages`}
-            <select p='opts.language' onchange={langClick}>
+            <select p='opts.language'>
               {Object.keys(langMap).map(l => (
                 <option key={l} value={l}>{T(langMap[l])}</option>
                 ))}

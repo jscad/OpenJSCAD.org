@@ -18,7 +18,7 @@ async function changeLanguage(lang) {
   });
 }
 function initApp() {
-  const [$, state] = makeUpdater({ countX: 1 });
+  const [state, $] = makeUpdater({ countX: 1 });
   const APP = { updaters: $, insertHtml };
   let count = 1;
   function langClick(evt) {

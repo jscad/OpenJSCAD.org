@@ -5,25 +5,27 @@ export default class Toggle extends Jsx6 {
 
   constructor (def) {
     super(def)
-    let prop = def?.attr?.prop
-    if(typeof prop === 'string') prop = [prop]
-    this.prop = prop
+    this.stateBinding = def?.attr?.state
   }
   
   init(){
-    if(!this.prop) throw new console.error('prop not preovided for toggle', this.el) 
-    let [propName, state = this.parent.state, stateManager=this.parent.updaters] = this.prop
-    
-    const updateState = ()=>{
-      setSelected(this.el, state[propName])
+    let stateBinding = this.stateBinding
+    if(!this.stateBinding) throw console.error('state binding not preovided for toggle', this.el) 
+
+    if(typeof stateBinding === 'string'){
+      stateBinding = this.parent.state.$[stateBinding]
+    }
+  
+    const updateState = v=>{
+      setSelected(this.el, v)
     }
     // to be called when state updates by sbdy else
-    stateManager.push(updateState)
+    stateBinding.push(updateState)
 
-    updateState()
+    updateState(stateBinding())
     
     this.addEventListener('click', e => {
-      state[propName] = !state[propName]
+      stateBinding(!stateBinding())
       updateState()
     })
   }

@@ -6,7 +6,7 @@
  * 
  */
 
-import { makeUpdater } from './dirty'
+import { makeState } from './dirty'
 import { insertBefore } from './insertBefore';
 
 let _createText; let _createElement; let _createElementSvg; let anim
@@ -93,7 +93,7 @@ function insertComp (comp, parentNode, before, parent){
     comp.insertEl(parentNode, before, parent)
     comp.initTemplate()
     comp.insertChildren()
-    comp.init(comp.state)
+    comp.init(comp.state, comp.state.$)
     comp.__initialized = true
   }
 
@@ -109,7 +109,7 @@ export function insertHtml (parent, before, def, self = this, component = null, 
   if (def instanceof Function) {
     out = _createText(def())
     parent.insertBefore(out, before)
-    pushUpdaters(self.updaters, def, updateText(out, def))
+    pushUpdaters(self, def, updateText(out, def))
 
   } else if (def instanceof Array) {
     out = def.map(c => insertHtml(parent, before, c, self, null, createElement))
@@ -153,7 +153,7 @@ export function insertHtml (parent, before, def, self = this, component = null, 
           }
 
         } else if(value instanceof Function){
-          pushUpdaters(self.updaters, value, makeAttrUpdater(out, a, value))
+          pushUpdaters(self, value, makeAttrUpdater(out, a, value))
 
         } else {
           if (a === 'p') {
@@ -198,7 +198,11 @@ export function pushUpdaters (updaters, func, updater) {
   if (func.addUpdater) {
     func.addUpdater(updater)
   } else {
-    updaters.push(updater)
+    if(updaters instanceof Jsx6){
+      updaters.state.$().push(updater)
+    }else{
+      updaters.push(updater)
+    }
   }
 }
 
@@ -241,10 +245,13 @@ export class Jsx6{
     this.el.propKey = this.propKey
     this.el.groupKey = this.groupKey
 
+    this.initState()
+  }
+
+  initState(){
     if(this.state){
-      const [updaters, state] = makeUpdater(this.state)
+      const state = makeState(this.state)
       this.state = state
-      this.updaters = updaters
     }
   }
 
@@ -259,11 +266,11 @@ export class Jsx6{
   destroyed () { }
 
   initTemplate () {
-    let def = this.tpl(h, this.state, this.updaters)
+    let def = this.tpl(h, this.state, this.state.$)
     this.insertHtml(this.el, null, def)
   }
 
-  dirty () { this.updaters.dirty() }
+  dirty () { this.state.$.dirty() }
   tpl (h, state, $) { }
 
   insertChildren () {
@@ -275,7 +282,7 @@ export class Jsx6{
   updateState (value) {
     // goes behind the proxy and calls dirty() only once
     // this is more efficient than setting props one by one on the state
-    this.updaters.update(value)
+    this.state.$.update(value)
   }
   
   get value () { Object.assign({},this.state) }
