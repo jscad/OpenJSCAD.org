@@ -56,22 +56,6 @@ function updateText (node, func) {
   return ret
 }
 
-function makeAttrUpdater (node, attr, func) {
-    let ret = function(){
-        let newValue = func();
-        if(node.getAttribute(attr) != newValue){
-        	if(newValue === false)
-        		node.removeAttribute(attr);
-        	else
-            	node.setAttribute(attr, newValue);       
-        } 
-    }
-    ret.node = node;
-    ret.attr = attr;
-    ret.func = func;
-    return ret;
-};
-
 function setPropGroup (self, part, [groupKey, propKey]) {
   if (propKey) {
     if (!self[groupKey]) self[groupKey] = {}
@@ -137,33 +121,12 @@ export function insertHtml (parent, before, def, self = this, component = null, 
   } else if ( def && typeof def === 'object'){
     if(def.tag.toUpperCase() === 'SVG') createElement = _createElementSvg
     out = createElement(def.tag)
+    parent.insertBefore(out, before)
 
     if (def.attr) {
-      for (const a in def.attr) {
-        const value = def.attr[a]
-
-        if (a[0] === 'o' && a[1] === 'n' && value instanceof Function) {
-          out.addEventListener(a.substring(2), value.bind(self))
-        } else if (a === 'key') {
-          out.loopKey = value
-          if(!out.propKey) out.propKey = value
-          if (component){
-            if(!component.propKey) component.propKey = value
-            component.loopKey = value
-          }
-
-        } else if(value instanceof Function){
-          pushUpdaters(self, value, makeAttrUpdater(out, a, value))
-
-        } else {
-          if (a === 'p') {
-            setPropGroup(self, component || out, typeof value === 'string' ? value.split('.') : value)
-          }
-          out.setAttribute(a, a === 'p' && value instanceof Array ? value.join('.'):value)
-        }
-      }
+      insertAttr(def.attr, out, self, component);
     }
-    parent.insertBefore(out, before)
+    
     if (def.children && def.children.length) {
       // component is not forwarded on purpose as it is used only for inital element
       insertHtml(out, null, def.children, self, null, createElement)
@@ -174,6 +137,51 @@ export function insertHtml (parent, before, def, self = this, component = null, 
   }
   return out
 }
+
+export function insertAttr(attr, out, self, component) {
+  for (const a in attr) {
+    const value = attr[a];
+
+    if (a[0] === 'o' && a[1] === 'n' && value instanceof Function) {
+      out.addEventListener(a.substring(2), value.bind(self));
+    } else if (a === 'key') {
+      out.loopKey = value;
+      if (!out.propKey)
+        out.propKey = value;
+      if (component) {
+        if (!component.propKey)
+          component.propKey = value;
+        component.loopKey = value;
+      }
+
+    } else if (value instanceof Function) {
+      pushUpdaters(self, value, makeAttrUpdater(out, a, value));
+
+    } else {
+      if (a === 'p') {
+        setPropGroup(self, component || out, typeof value === 'string' ? value.split('.') : value);
+      }
+      out.setAttribute(a, a === 'p' && value instanceof Array ? value.join('.') : value);
+    }
+  }
+}
+
+export function makeAttrUpdater (node, attr, func) {
+    let ret = function(){
+        let newValue = func();
+        if(node.getAttribute(attr) != newValue){
+        	if(newValue === false)
+        		node.removeAttribute(attr);
+        	else
+            	node.setAttribute(attr, newValue);       
+        } 
+    }
+    ret.node = node;
+    ret.attr = attr;
+    ret.func = func;
+    ret()// set initial value for the attribute
+    return ret;
+};
 
 /** To simplify, we just clear the element and add new nodes (no vnode diff is performed) */
 export function applyHtml (parent, def, self = this) {
@@ -237,17 +245,24 @@ export class Jsx6{
   }
 
   insertEl (parentNode, beforeSibling, parent){
-    if(!this.tagDef.tag) this.tagDef.tag = this.tagName
+    if(this.tagDef.tag) this.tagName = this.tagDef.tag
     this.parent = parent;
+    
+    this.el = this.contentArea = insertHtml(parentNode, beforeSibling, {tag:this.tagName}, parent, this)
+    this.initState()
 
-    this.el = this.contentArea = insertHtml(parentNode, beforeSibling, this.tagDef, parent, this)
+    this.insertAttr(this.tagDef.attr)
+
     if(this.cName) this.classList.add(this.cName)
     this.el.propKey = this.propKey
     this.el.groupKey = this.groupKey
-
-    this.initState()
+    
   }
 
+  insertAttr (attr){
+    insertAttr(attr, this.el, this.parent, this)
+  }
+  
   initState(){
     if(this.state){
       const state = makeState(this.state)

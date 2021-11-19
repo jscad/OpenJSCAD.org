@@ -47,7 +47,6 @@ export class App extends Jsx6 {
   init (state, $) {
     $().addUpdater((state, old)=>{
       localStorage.setItem(SETTINGS_KEY, JSON.stringify(state))
-      console.log('old', old)
       if (old.has('language')) this.changeLanguage(state.language || 'en')
     })
     
@@ -70,30 +69,30 @@ export class App extends Jsx6 {
     return (
       <>
         <div class="top-menu">
-          <Toggle state={uiState.$.settingsVisible}>{gearIcon}</Toggle>
-          <Toggle state='editorVisible'>{editIcon}</Toggle>
+          <Toggle selected={uiState.$.settingsVisible}>{gearIcon}</Toggle>
+          <Toggle selected='editorVisible'>{editIcon}</Toggle>
         </div>
 
         <div p='settings' class='settings-area' hidden={uiState.$(()=>!uiState.settingsVisible)}>
           <div class='f-r'>
             <label>{T`auto reload`}</label>
-            <Toggle class='el-switch' state='autoReload'><span /></Toggle>
+            <Toggle class='el-switch' selected='autoReload'><span /></Toggle>
           </div>
           <div class='f-r'>
             <label>{T`auto rotate`}</label>
-            <Toggle class='el-switch' state='autoRotate'><span /></Toggle>
+            <Toggle class='el-switch' selected='autoRotate'><span /></Toggle>
           </div>
           <div class='f-r'>
             <label>{T`auto zoom`}</label>
-            <Toggle class='el-switch' state='autoZoom'><span /></Toggle>
+            <Toggle class='el-switch' selected='autoZoom'><span /></Toggle>
           </div>
           <div class='f-r'>
             <label>{T`grid`}</label>
-            <Toggle class='el-switch' state='showGrid'><span /></Toggle>
+            <Toggle class='el-switch' selected='showGrid'><span /></Toggle>
           </div>
           <div class='f-r'>
             <label>{T`axes`}</label>
-            <Toggle class='el-switch' state='showAxes'><span /></Toggle>
+            <Toggle class='el-switch' selected='showAxes'><span /></Toggle>
           </div>
           <div class='f-r'>
             {T`Languages`}

@@ -54,10 +54,12 @@ export function makeState (_state = {}, markDirtyNow) {
           }
           return _state[prop]
         }
+        func.dirty = () => addDirty(runUpdaters)
         func.isBinding = true
         func.state = state
         func.propName = prop
-        func.push = (updater) => updaters.push((s, old) => {
+        func.get = func.set = func
+        func.addUpdater = (updater) => updaters.push((s, old) => {
           if (old.has(prop)) updater(s[prop], prop, s, old)
         })
         bindings[prop] = func

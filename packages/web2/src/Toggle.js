@@ -1,32 +1,15 @@
-import { Jsx6, setSelected } from './jsx6'
+import { Jsx6, toBinding } from './jsx6'
 
 export default class Toggle extends Jsx6 {
   tagName = 'button'
 
-  constructor (def) {
-    super(def)
-    this.stateBinding = def?.attr?.state
-  }
-  
-  init(){
-    let stateBinding = this.stateBinding
-    if(!this.stateBinding) throw console.error('state binding not preovided for toggle', this.el) 
-
-    if(typeof stateBinding === 'string'){
-      stateBinding = this.parent.state.$[stateBinding]
-    }
-  
-    const updateState = v=>{
-      setSelected(this.el, v)
-    }
-    // to be called when state updates by sbdy else
-    stateBinding.push(updateState)
-
-    updateState(stateBinding())
+  insertAttr (attr){
     
+    let valueBinding = toBinding(attr,'selected', this.parent.state.$, this.el)
+    super.insertAttr(attr)
+
     this.addEventListener('click', e => {
-      stateBinding(!stateBinding())
-      updateState()
+      valueBinding.set(!valueBinding())
     })
   }
 }

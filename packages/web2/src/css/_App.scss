@@ -19,6 +19,12 @@
     border: solid 1px gray;
     background: white;
     z-index: 1;
+    button{
+      cursor: pointer;
+      &[selected]{
+        background-color: #61a3c2;
+      }
+    }
   }
 
   .editor-area{
