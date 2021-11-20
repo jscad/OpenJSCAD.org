@@ -331,3 +331,5 @@ export class Jsx6{
 }
 
 Jsx6.isComponentClass = true
+
+export const NOT = v=>!v

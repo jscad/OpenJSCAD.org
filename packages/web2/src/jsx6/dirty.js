@@ -25,65 +25,6 @@ export function makeState (_state = {}, markDirtyNow) {
   const bindings = {}
   const lastData = new Map()
 
-  const handler = {
-    set: function (target, prop, value, receiver) {
-      if (_state[prop] !== value) {
-        lastData.set(prop, _state[prop])
-        _state[prop] = value
-        if (updaters.length) addDirty(runUpdaters)
-      }
-      return true
-    },
-    get: function (target, prop) {
-      if (prop === '$') return bindingsProxy
-      return _state[prop]
-    }
-  }
-
-  const state = new Proxy(_state, handler)
-  const bindingsProxy = new Proxy($, {
-    get: function (target, prop) {
-      if (!bindings[prop]) {
-        const func = function (value) {
-          if (arguments.length !== 0) {
-            if (_state[prop] !== value) {
-              _state[prop] = value
-              lastData.set(prop, _state[prop])
-              addDirty(runUpdaters)
-            }
-          }
-          return _state[prop]
-        }
-        func.dirty = () => addDirty(runUpdaters)
-        func.isBinding = true
-        func.state = state
-        func.propName = prop
-        func.get = func.set = func
-        func.addUpdater = (updater) => updaters.push((s, old) => {
-          if (old.has(prop)) updater(s[prop], prop, s, old)
-        })
-        bindings[prop] = func
-      }
-      return bindings[prop]
-    }
-  })
-
-  function $ (f) {
-    if (!arguments.length) {
-      return $
-    } else if (typeof f === 'function') {
-      const out = (...params) => {
-        if (updaters.length) addDirty(runUpdaters)
-        return f(...params)
-      }
-      out.addUpdater = (updater) => updaters.push(updater)
-      return out
-    } else {
-      if (updaters.length) addDirty(runUpdaters)
-      return f
-    }
-  }
-
   function runUpdaters () {
     const len = updaters.length
     for (let i = 0; i < len; i++) {
@@ -99,24 +40,94 @@ export function makeState (_state = {}, markDirtyNow) {
     lastData.clear()
   }
 
+  function _addDirty () {
+    if (updaters.length) addDirty(runUpdaters)
+  }
+
+  const handler = {
+    set: function (target, prop, value, receiver) {
+      if (updateProp(prop, value)) _addDirty()
+      return true
+    },
+    get: function (target, prop) {
+      if (prop === '$') return bindingsProxy
+      return _state[prop]
+    }
+  }
+
+  const state = new Proxy(_state, handler)
+  const bindingsProxy = new Proxy($, {
+    get: function (target, prop) {
+      const _addUpater = (updater) => updaters.push((s, old) => {
+        if (old.has(prop)) updater(s[prop], prop, s, old)
+      })
+      if (!bindings[prop]) {
+        const func = function (value) {
+          if (arguments.length !== 0) {
+            if (value instanceof Function) {
+              return filterFunc(value)
+            }
+            if (updateProp(prop, value)) _addDirty()
+          }
+          return _state[prop]
+        }
+        const filterFunc = filter => asBinding(() => filter(func()), _addUpater, runUpdaters, state, prop)
+        func.get = func.set = func
+        func.f = filterFunc
+        bindings[prop] = asBinding(func, _addUpater, runUpdaters, state, prop)
+      }
+      return bindings[prop]
+    }
+  })
+
+  function $ (f) {
+    if (!arguments.length) {
+      return $
+    } else if (typeof f === 'function') {
+      const out = (...params) => {
+        _addDirty()
+        return f(...params)
+      }
+      out.addUpdater = (updater) => updaters.push(updater)
+      return out
+    } else {
+      _addDirty()
+      return f
+    }
+  }
+
+  function updateProp (p, value, force) {
+    if (force || _state[p] !== value) {
+      lastData.set(p, _state[p])
+      _state[p] = value
+      return true
+    }
+    return false
+  }
+
   $.push = $.addUpdater = (updater) => updaters.push(updater)
-  $.dirty = () => addDirty(runUpdaters)
+  $.dirty = _addDirty
   $.reset = () => { lastData.clear() }
   $.list = updaters
   $.update = (newData, force) => {
     if (!newData) return
     let changed = false
     for (const p in newData) {
-      if (force || _state[p] !== newData[p]) {
-        lastData.set(p, _state[p])
-        _state[p] = newData[p]
-        changed = true
-      }
+      changed |= updateProp(p, newData[p], force)
     }
-    if (changed) addDirty(runUpdaters)
+    if (changed) _addDirty()
   }
 
-  if (markDirtyNow) addDirty(runUpdaters)
+  if (markDirtyNow) _addDirty()
 
   return state
+}
+
+function asBinding (func, _addUpater, runUpdaters, state, prop) {
+  func.isBinding = true
+  func.addUpdater = _addUpater
+  func.dirty = () => _addDirty()
+  func.state = state
+  func.propName = prop
+  return func
 }

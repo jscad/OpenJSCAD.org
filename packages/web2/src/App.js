@@ -3,7 +3,8 @@ import { T, setTranslations, refreshTranslations,
   setSelected, Jsx6, makeState,
   setVisible, isVisible,
   toggleAttrBoolean,
-  setValue } from './jsx6'
+  setValue, 
+  NOT} from './jsx6'
 import { JscadEditor } from './editor'
 import gearIcon from './icons/gear'
 import editIcon from './icons/edit'
@@ -73,7 +74,7 @@ export class App extends Jsx6 {
           <Toggle selected='editorVisible'>{editIcon}</Toggle>
         </div>
 
-        <div p='settings' class='settings-area' hidden={uiState.$(()=>!uiState.settingsVisible)}>
+        <div p='settings' class='settings-area' hidden={uiState.$.settingsVisible(NOT)}>
           <div class='f-r'>
             <label>{T`auto reload`}</label>
             <Toggle class='el-switch' selected='autoReload'><span /></Toggle>
