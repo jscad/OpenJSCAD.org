@@ -1,11 +1,11 @@
-export function toBinding (obj, prop, defaultBindingSrc, target) {
-  let stateBinding = obj[prop]
-  if (!stateBinding) {
+export function toBinding (obj, prop, defBind, target) {
+  let propBind = obj[prop]
+  if (!propBind) {
     console.error(prop + ' binding not provided for', target)
   }
-  if (typeof stateBinding === 'string') {
-    stateBinding = defaultBindingSrc[stateBinding]
-    obj[prop] = stateBinding
+  if (typeof propBind === 'string') {
+    propBind = defBind[propBind]
+    obj[prop] = propBind
   }
-  return stateBinding
+  return propBind
 }

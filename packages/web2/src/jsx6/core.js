@@ -77,7 +77,7 @@ function insertComp (comp, parentNode, before, parent){
     comp.insertEl(parentNode, before, parent)
     comp.initTemplate()
     comp.insertChildren()
-    comp.init(comp.state, comp.stateBinding)
+    comp.init(comp.state, comp.stateBind)
     comp.__initialized = true
   }
 
@@ -207,7 +207,7 @@ export function pushUpdaters (updaters, func, updater) {
     func.addUpdater(updater)
   } else {
     if(updaters instanceof Jsx6){
-      updaters.stateBinding().push(updater)
+      updaters.stateBind().push(updater)
     }else{
       updaters.push(updater)
     }
@@ -224,6 +224,7 @@ export class Jsx6{
   tagName = 'DIV'
   cName = ''
   state = {}
+  stateBind
 
   constructor (tagDef) {
 
@@ -265,7 +266,7 @@ export class Jsx6{
   
   initState(){
     if(this.state){
-      ([this.state, this.stateBinding] = makeState(this.state))
+      ([this.state, this.stateBind] = makeState(this.state))
     }
   }
 
@@ -280,11 +281,11 @@ export class Jsx6{
   destroyed () { }
 
   initTemplate () {
-    let def = this.tpl(h, this.state, this.stateBinding)
+    let def = this.tpl(h, this.state, this.stateBind)
     this.insertHtml(this.el, null, def)
   }
 
-  dirty () { this.stateBinding().dirty() }
+  dirty () { this.stateBind().dirty() }
   tpl (h, state, $) { }
 
   insertChildren () {
@@ -296,7 +297,7 @@ export class Jsx6{
   updateState (value) {
     // goes behind the proxy and calls dirty() only once
     // this is more efficient than setting props one by one on the state
-    this.stateBinding().update(value)
+    this.stateBind().update(value)
   }
   
   get value () { Object.assign({},this.state) }

@@ -5,7 +5,7 @@ export default class Toggle extends Jsx6 {
 
   insertAttr (attr){
     
-    let valueBinding = toBinding(attr,'selected', this.parent.stateBinding(), this.el)
+    let valueBinding = toBinding(attr,'selected', this.parent.stateBind(), this.el)
     super.insertAttr(attr)
 
     this.addEventListener('click', e => {

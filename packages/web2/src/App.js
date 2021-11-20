@@ -66,16 +66,16 @@ export class App extends Jsx6 {
 
   tpl (h, state, $) {
 
-    let [,uiState] = makeState({settingsVisible:false}, true)
-    this.uiState = uiState
+    let [,uiBind] = makeState({settingsVisible:false}, true)
+    this.uiState = uiBind
     return (
       <>
         <div class="top-menu">
-          <Toggle selected={uiState.settingsVisible}>{gearIcon}</Toggle>
+          <Toggle selected={uiBind.settingsVisible}>{gearIcon}</Toggle>
           <Toggle selected='editorVisible'>{editIcon}</Toggle>
         </div>
 
-        <div p='settings' class='settings-area' hidden={uiState.settingsVisible(NOT)}>
+        <div p='settings' class='settings-area' hidden={uiBind.settingsVisible(NOT)}>
           <div class='f-r'>
             <label>{T`auto reload`}</label>
             <Toggle class='el-switch' selected={$.autoReload}><span /></Toggle>
