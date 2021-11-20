@@ -50,13 +50,16 @@ export function makeState (_state = {}, markDirtyNow) {
       return true
     },
     get: function (target, prop) {
-      if (prop === '$') return bindingsProxy
       return _state[prop]
     }
   }
 
   const state = new Proxy(_state, handler)
-  const bindingsProxy = new Proxy($, {
+  const bindingsProxy = new Proxy(bindingFunc, {
+    set: function (target, prop, value, receiver) {
+      if (updateProp(prop, value)) _addDirty()
+      return true
+    },
     get: function (target, prop) {
       const _addUpater = (updater) => updaters.push((s, old) => {
         if (old.has(prop)) updater(s[prop], prop, s, old)
@@ -80,7 +83,7 @@ export function makeState (_state = {}, markDirtyNow) {
     }
   })
 
-  function $ (f) {
+  function bindingFunc (f) {
     if (!arguments.length) {
       return $
     } else if (typeof f === 'function') {
@@ -105,10 +108,12 @@ export function makeState (_state = {}, markDirtyNow) {
     return false
   }
 
+  function $ () {}
   $.push = $.addUpdater = (updater) => updaters.push(updater)
   $.dirty = _addDirty
   $.reset = () => { lastData.clear() }
   $.list = updaters
+  $.toJSON = () => console.log('TO JSON')
   $.update = (newData, force) => {
     if (!newData) return
     let changed = false
@@ -120,7 +125,7 @@ export function makeState (_state = {}, markDirtyNow) {
 
   if (markDirtyNow) _addDirty()
 
-  return state
+  return [state, bindingsProxy]
 }
 
 function asBinding (func, _addUpater, runUpdaters, state, prop) {

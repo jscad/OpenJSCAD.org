@@ -10,6 +10,7 @@ import gearIcon from './icons/gear'
 import editIcon from './icons/edit'
 import Toggle from './Toggle'
 import { Viewer } from './Viewer'
+import Sample from './Sample'
 
 
 const SETTINGS_KEY = 'jscad.settings'
@@ -65,19 +66,19 @@ export class App extends Jsx6 {
 
   tpl (h, state, $) {
 
-    let uiState = makeState({settingsVisible:false}, true)
-
+    let [,uiState] = makeState({settingsVisible:false}, true)
+    this.uiState = uiState
     return (
       <>
         <div class="top-menu">
-          <Toggle selected={uiState.$.settingsVisible}>{gearIcon}</Toggle>
+          <Toggle selected={uiState.settingsVisible}>{gearIcon}</Toggle>
           <Toggle selected='editorVisible'>{editIcon}</Toggle>
         </div>
 
-        <div p='settings' class='settings-area' hidden={uiState.$.settingsVisible(NOT)}>
+        <div p='settings' class='settings-area' hidden={uiState.settingsVisible(NOT)}>
           <div class='f-r'>
             <label>{T`auto reload`}</label>
-            <Toggle class='el-switch' selected='autoReload'><span /></Toggle>
+            <Toggle class='el-switch' selected={$.autoReload}><span /></Toggle>
           </div>
           <div class='f-r'>
             <label>{T`auto rotate`}</label>
@@ -105,7 +106,10 @@ export class App extends Jsx6 {
           </div>
         </div>
         <JscadEditor p='editor' class='editor editor-area' tag-name='B' hidden={()=>!state.editorVisible} />
+        <div class='viewer-area g-fs' >
+        <Sample />
         <Viewer class='viewer-area g-fs' />
+        </div>  
       </>
     )
   }

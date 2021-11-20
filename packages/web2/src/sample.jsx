@@ -1,4 +1,4 @@
 export default function (h, state, $) {
-  state.counter = 10
+  $.counter = 11
   return <button onclick={() => state.counter++}>Sample {() => state.counter}</button>
 }
