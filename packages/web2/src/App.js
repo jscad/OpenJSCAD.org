@@ -10,7 +10,7 @@ import gearIcon from './icons/gear'
 import editIcon from './icons/edit'
 import Toggle from './Toggle'
 import { Viewer } from './Viewer'
-import Sample from './Sample'
+import Sample from './sample'
 
 
 const SETTINGS_KEY = 'jscad.settings'
