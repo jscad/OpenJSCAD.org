@@ -1,7 +1,18 @@
-import { callAnim } from './core'
-
 const dirty = new Set()
 let hasDirty = false
+let anim
+
+if (typeof document !== 'undefined') {
+  anim = window.requestAnimationFrame
+}
+
+export function setAnimFunction (animFunc) {
+  anim = animFunc
+}
+
+export function callAnim (callback) {
+  anim(callback)
+}
 
 export function addDirty (func) {
   if (!func || typeof func !== 'function') throw new Error('dirty runner must be a function')

@@ -1,9 +1,7 @@
 import { T, setTranslations, refreshTranslations,
   forEachProp, getValue,
-  setSelected, Jsx6, makeState,
-  setVisible, isVisible,
-  toggleAttrBoolean,
-  setValue, 
+  Jsx6, makeState,
+  setValue,
   NOT} from './jsx6'
 import { JscadEditor } from './editor'
 import gearIcon from './icons/gear'
@@ -65,7 +63,6 @@ export class App extends Jsx6 {
   }
 
   tpl (h, state, $) {
-
     let [,uiBind] = makeState({settingsVisible:false}, true)
     this.uiState = uiBind
     return (

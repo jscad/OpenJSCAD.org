@@ -1,7 +1,7 @@
-export function toBinding (obj, prop, defBind, target, keepAttribute) {
+export function toBinding (obj, prop, defBind, keepAttribute) {
   let propBind = obj[prop]
   if (!propBind) {
-    console.error(prop + ' binding not provided for', target)
+    console.error(prop + ' binding not provided')
   }
   if (typeof propBind === 'string') {
     propBind = defBind[propBind]

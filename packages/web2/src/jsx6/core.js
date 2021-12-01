@@ -9,23 +9,18 @@
 import { makeState } from './dirty'
 import { insertBefore } from './insertBefore';
 
-let _createText; let _createElement; let _createElementSvg; let anim
+let _createText; let _createElement; let _createElementSvg
 
 if (typeof document !== 'undefined') {
   _createText = (t) => document.createTextNode(t)
   _createElementSvg = (t) => document.createElementNS('http://www.w3.org/2000/svg', t)
   _createElement = (t, o) =>{ if(!t) throw Error('null tag'); return document.createElement(t, o)}
-  anim = window.requestAnimationFrame
 }
 
 export function setHtmlFunctions (createTextNode, createElement, requestAnimationFrame) {
   _createText = createTextNode
   _createElement = createElement
   anim = requestAnimationFrame
-}
-
-export function callAnim (callback) {
-  anim(callback)
 }
 
 export class TagDef {
@@ -41,6 +36,13 @@ Creates an object that describes the the html element.
 */
 export function h (tag, attr, ...children) {
   if(tag === h) return children
+  if(typeof tag === 'function') {
+    // create component early so if component validates parameters and throws error
+    // it can be easily traced to the JSX where it was defined
+    if(tag.isComponentClass){
+      return new tag(new TagDef(null,attr,children), this)
+    }
+  }
   return new TagDef( tag, attr, children )
 }
 
@@ -100,6 +102,9 @@ export function insertHtml (parent, before, def, self = this, component = null, 
 
   } else if (def instanceof Jsx6) {
     insertComp(def, parent, before, self)
+  } else if (!def.tag) {
+    // fragment
+    insertHtml(parent, before, def.children, self, null, createElement)
 
   } else if (def.tag instanceof Function) {
     
@@ -226,16 +231,17 @@ export class Jsx6{
   state = {}
   stateBind
 
-  constructor (tagDef) {
-
+  constructor (tagDef, parent) {
+    this.parent = parent
     if(!tagDef){
       tagDef = new TagDef()
     }else if(!(tagDef instanceof TagDef)){
       tagDef = new TagDef(null, tagDef)
     }
-    let attr = tagDef.attr
-    
-    if(attr && attr['tag-name']){
+    let attr = tagDef.attr || {}
+    tagDef.attr = attr
+
+    if(attr['tag-name']){
       tagDef.tag = attr['tag-name']
       delete attr['tag-name']
     }
@@ -243,7 +249,11 @@ export class Jsx6{
     this.childrenDef = tagDef.children
     delete tagDef.children
     this.tagDef = tagDef
+
+    this.initAttr(attr)
   }
+
+  initAttr(){}
 
   insertEl (parentNode, beforeSibling, parent){
     if(this.tagDef.tag) this.tagName = this.tagDef.tag
@@ -252,7 +262,7 @@ export class Jsx6{
     this.el = this.contentArea = insertHtml(parentNode, beforeSibling, {tag:this.tagName}, parent, this)
     this.initState()
 
-    this.insertAttr(this.tagDef.attr)
+    this.insertAttr(this.tagDef.attr || {})
 
     if(this.cName) this.classList.add(this.cName)
     this.el.propKey = this.propKey
@@ -281,7 +291,7 @@ export class Jsx6{
   destroyed () { }
 
   initTemplate () {
-    let def = this.tpl(h, this.state, this.stateBind)
+    let def = this.tpl(h.bind(this), this.state, this.stateBind)
     this.insertHtml(this.el, null, def)
   }
 
