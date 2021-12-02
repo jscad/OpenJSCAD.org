@@ -1,6 +1,7 @@
 import { makeState } from './dirty';
 import { insertBefore } from './insertBefore';
 import { insertHtml, insertAttr, h } from "./core";
+import { isObj } from '.';
 
 export class Jsx6 {
   el;
@@ -87,7 +88,7 @@ export class Jsx6 {
   get value() { Object.assign({}, this.state); }
 
   set value(value) {
-    if (value && typeof value === 'object') {
+    if (value && isObj(value)) {
       this.updateState(value);
     } else {
       this.state.value = value;
@@ -113,4 +114,5 @@ export class Jsx6 {
   get textContent() { return this.el.textContent; }
 
 }
+
 Jsx6.isComponentClass = true;

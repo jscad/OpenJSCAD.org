@@ -1,9 +1,11 @@
+import { isStr } from './core'
+
 export function toBinding (obj, prop, defBind, keepAttribute) {
   let propBind = obj[prop]
   if (!propBind) {
     console.error(prop + ' binding not provided')
   }
-  if (typeof propBind === 'string') {
+  if (isStr(propBind)) {
     propBind = defBind[propBind]
     obj[prop] = propBind
   }

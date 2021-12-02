@@ -1,8 +1,9 @@
+import { isFunc } from '.'
 import { mapProp } from './mapProp'
 
 export function getValue (obj) {
   if (obj instanceof window.Element) {
-    if (obj.component && typeof obj.component.getValue === 'function') {
+    if (obj.component && isFunc(obj.component.getValue)) {
       return obj.component.getValue()
     } else if (obj.getValue) {
       return obj.getValue()

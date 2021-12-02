@@ -1,4 +1,5 @@
 import { addDirty } from './dirty'
+import { throwErr, ERR_TRANS_UUPD_FUNC, isFunc } from './core'
 
 const TRANS = {}
 const translationUpdaters = []
@@ -18,7 +19,7 @@ export function refreshTranslations () {
 const translationDirtyRunner = () => translationUpdaters.forEach(f => f())
 
 function pushTranslationUpdater (func) {
-  if (!func || typeof func !== 'function') throw new Error('translation updater must be a function')
+  if (!func || !isFunc(func) ) throwErr(ERR_TRANS_UUPD_FUNC)
   translationUpdaters.push(func)
 }
 

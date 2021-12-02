@@ -11,19 +11,19 @@ let _createElementSvg
  * @property tag {String|Function}
  * @property attr {Object}
  * @property children {Array<String|Function|TagDef>}
- * @property children {Array<String|Function|TagDef>}
- *
  */
 
-const ERR_NULL_TAG = 1 // Tag type is not supported
+const ERR_NULL_TAG = 1 // Tag is null
 const ERR_UNSUPPORTED_TAG = 2 // Tag type is not supported
+export const ERR_TRANS_UUPD_FUNC = 3 // Translation updater must be a function
+const ERR_UPDATER_UNDEF = 4 // updater undefined
+export const ERR_DIRTY_RUNNER_FUNC = 4 // dirty runner must be a function
 
-const throwErr = (c, info) => {
+export const throwErr = (c, info) => {
   const msg = t('JSX6E' + c)
   console.error(msg, info)
   throw new Error(msg)
 }
-
 
 if (typeof document !== 'undefined') {
   _createText = (t) => document.createTextNode(t)
@@ -47,10 +47,10 @@ export function setHtmlFunctions (createTextNode, createElement, createElementSv
 export function h (tag, attr = {}, ...children) {
   if (!tag) return children
 
-  if (typeof tag === 'string') {
+  if (isStr(tag)) {
     return { tag, attr, children }
   } else {
-    if (typeof tag === 'function') {
+    if (isFunc(tag)) {
       // create component early so if component validates parameters and throws error
       // it can be easily traced to the JSX section where it was defined
       if (tag.isComponentClass) {
@@ -76,7 +76,7 @@ function updateText (node, func) {
     let newValue = func()
     // TODO join text node updating and value handling
     if (newValue === null || newValue === undefined) newValue = ''
-    if (typeof (newValue) !== 'string') newValue = '' + newValue
+    if (!isStr(newValue)) newValue = '' + newValue
     if (node.textContent !== newValue) node.textContent = newValue
   }
   ret.node = node
@@ -141,7 +141,7 @@ export function insertHtml (parent, before, def, self = this, component = null, 
   } else if (!def.tag) {
     // fragment
     insertHtml(parent, before, def.children, self, null, createElement)
-  } else if (typeof def === 'object') {
+  } else if (isObj(def)) {
     if (def.tag.toUpperCase() === 'SVG') createElement = _createElementSvg
     out = createElement(def.tag)
     parent.insertBefore(out, before)
@@ -178,7 +178,7 @@ export function insertAttr (attr, out, self, component) {
       pushUpdaters(self, value, makeAttrUpdater(out, a, value))
     } else {
       if (a === 'p') {
-        setPropGroup(self, component || out, typeof value === 'string' ? value.split('.') : value)
+        setPropGroup(self, component || out, isStr(value) ? value.split('.') : value)
       }
       out.setAttribute(a, a === 'p' && value instanceof Array ? value.join('.') : value)
     }
@@ -187,7 +187,7 @@ export function insertAttr (attr, out, self, component) {
 
 /** To simplify, we just clear the element and add new nodes (no vnode diff is performed) */
 export function applyHtml (parent, def, self = this) {
-  if (typeof parent === 'string') parent = document.getElementById(parent)
+  if (isStr(parent)) parent = document.getElementById(parent)
 
   function destroy (el) {
     let ch = el.firstElementChild
@@ -204,7 +204,8 @@ export function applyHtml (parent, def, self = this) {
 
 export function pushUpdaters (updaters, func, updater) {
   // allow updater function to be refreshad from somewhere else, liver translations could use this
-  if (!updater) throw new Error('updater undefined')
+  if (!updater) throwErr(ERR_UPDATER_UNDEF)
+
   if (func.addUpdater) {
     func.addUpdater(updater)
   } else {
@@ -217,3 +218,8 @@ export function pushUpdaters (updaters, func, updater) {
 }
 
 export const NOT = v => !v
+
+export const isFunc = f => typeof f === 'function'
+export const isStr = s => typeof s === 'string'
+export const isObj = o => typeof o === 'object'
+export const isArray = a => a instanceof Array

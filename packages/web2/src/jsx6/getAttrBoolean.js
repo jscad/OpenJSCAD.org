@@ -1,3 +1,4 @@
+import { isObj } from './core'
 import { mapProp } from './mapProp'
 
 export function getAttrBoolean (obj, attr, flip) {
@@ -8,7 +9,7 @@ export function getAttrBoolean (obj, attr, flip) {
       return out
     } else if (obj.el) {
       return getAttrBoolean(obj.el, attr, flip)
-    } else if (obj && typeof obj === 'object') {
+    } else if (obj && isObj(obj)) {
       return mapProp(obj, (o) => getAttrBoolean(o, attr, flip))
     }
   }

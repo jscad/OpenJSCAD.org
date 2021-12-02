@@ -1,3 +1,5 @@
+import { ERR_DIRTY_RUNNER_FUNC, isFunc, throwErr } from './core'
+
 const dirty = new Set()
 let hasDirty = false
 let anim
@@ -15,7 +17,7 @@ export function callAnim (callback) {
 }
 
 export function addDirty (func) {
-  if (!func || typeof func !== 'function') throw new Error('dirty runner must be a function')
+  if (!func || !isFunc(func)) throwErr(ERR_DIRTY_RUNNER_FUNC)
 
   dirty.add(func)
   if (!hasDirty) {
@@ -42,7 +44,7 @@ export function makeState (_state = {}, markDirtyNow) {
       try {
         const func = updaters[i]
         if (!func || !(func instanceof Function)) {
-          console.error('updater is not a function', func, i, updaters)
+          throwErr(ERR_DIRTY_RUNNER_FUNC, { func, i, updaters })
         } else func(state, lastData)
       } catch (error) {
         console.error(error)
@@ -97,7 +99,7 @@ export function makeState (_state = {}, markDirtyNow) {
   function bindingFunc (f) {
     if (!arguments.length) {
       return $
-    } else if (typeof f === 'function') {
+    } else if (isFunc(f)) {
       const out = (...params) => {
         _addDirty()
         return f(...params)
@@ -133,7 +135,6 @@ export function makeState (_state = {}, markDirtyNow) {
   $.dirty = _addDirty
   $.reset = () => { lastData.clear() }
   $.list = updaters
-  $.toJSON = () => console.log('TO JSON')
   $.update = (newData, force) => {
     if (!newData) return
     let changed = false

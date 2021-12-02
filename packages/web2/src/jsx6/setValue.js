@@ -1,8 +1,9 @@
+import { isFunc } from './core'
 import { mapProp } from './mapProp'
 
 export function setValue (obj, value) {
   if (obj instanceof window.Element) {
-    if (obj.component && typeof obj.component.setValue === 'function') {
+    if (obj.component && isFunc(obj.component.setValue)) {
       obj.component.setValue(value)
     } else if (obj.setValue) {
       obj.setValue(value)
