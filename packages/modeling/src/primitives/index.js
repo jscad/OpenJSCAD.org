@@ -26,5 +26,6 @@ module.exports = {
   sphere: require('./sphere'),
   square: require('./square'),
   star: require('./star'),
-  torus: require('./torus')
+  torus: require('./torus'),
+  triangle: require('./triangle')
 }
