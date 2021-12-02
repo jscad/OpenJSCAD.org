@@ -36,18 +36,6 @@ export function setHtmlFunctions (createTextNode, createElement, createElementSv
   _createElement = createElement
   _createElementSvg = createElementSvg
 }
-/** Marker class that holds:
- *  - tag - tag name or function or class
- *  - attr - attributes
- *  - children - JSX children to insert
- **/
-export class TagDef {
-  constructor (tag, attr, children) {
-    this.tag = tag
-    this.attr = attr
-    this.children = children
-  }
-}
 
 /** JSX factory to enable useful use-cases for JSX.
  - if tag is null - return children (this is for fragment support)
@@ -56,23 +44,22 @@ export class TagDef {
  - if tag is a function with isComponentClass=false - it is treated as a template and
  is injected in an anonymous Jsx6 component
 */
-export function h (tag, attr, ...children) {
+export function h (tag, attr = {}, ...children) {
   if (!tag) return children
 
   if (typeof tag === 'string') {
-    return new TagDef(tag, attr, children)
+    return { tag, attr, children }
   } else {
     if (typeof tag === 'function') {
       // create component early so if component validates parameters and throws error
       // it can be easily traced to the JSX section where it was defined
-      const def = new TagDef(null, attr, children)
       if (tag.isComponentClass) {
         // eslint-disable-next-line
-        return new tag(def, this)
+        return new tag(attr, children, this)
       } else {
         // use the tag function to provide the template for the newly created component
         // create a new Jsx6 component
-        const out = new Jsx6(def)
+        const out = new Jsx6(attr, children, this)
         out.tpl = tag
         return out
       }
@@ -154,23 +141,7 @@ export function insertHtml (parent, before, def, self = this, component = null, 
   } else if (!def.tag) {
     // fragment
     insertHtml(parent, before, def.children, self, null, createElement)
-  } else if (def.tag instanceof Function) {
-    if (def.tag.isComponentClass) {
-      const comp = def.tag
-      delete def.tag
-      // eslint-disable-next-line
-      out = new comp(def)
-    } else {
-      // use the daf.tag function to provide the template for the newly created component
-      const tplfunc = def.tag
-      delete def.tag
-      // create a new Jsx6 component
-      out = new Jsx6(def)
-      out.tpl = tplfunc
-    }
-
-    insertComp(out, parent, before, self)
-  } else if (def && typeof def === 'object') {
+  } else if (typeof def === 'object') {
     if (def.tag.toUpperCase() === 'SVG') createElement = _createElementSvg
     out = createElement(def.tag)
     parent.insertBefore(out, before)

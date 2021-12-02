@@ -1,6 +1,6 @@
 import { makeState } from './dirty';
 import { insertBefore } from './insertBefore';
-import { TagDef, insertHtml, insertAttr, h } from "./core";
+import { insertHtml, insertAttr, h } from "./core";
 
 export class Jsx6 {
   // eslint-disable-next-line
@@ -14,24 +14,16 @@ export class Jsx6 {
   state = {};
   stateBind;
 
-  constructor(tagDef, parent) {
-    this.parent = parent;
-    if (!tagDef) {
-      tagDef = new TagDef();
-    } else if (!(tagDef instanceof TagDef)) {
-      tagDef = new TagDef(null, tagDef);
-    }
-    let attr = tagDef.attr || {};
-    tagDef.attr = attr;
+  constructor(attr, children, parent) {
+		if(!attr) attr = {}
+		this.attr = attr
+    this.children = children
+    this.parent = parent
 
     if (attr['tag-name']) {
-      tagDef.tag = attr['tag-name'];
+      this.tagName = attr['tag-name'];
       delete attr['tag-name'];
     }
-
-    this.childrenDef = tagDef.children;
-    delete tagDef.children;
-    this.tagDef = tagDef;
 
     this.initAttr(attr);
   }
@@ -39,14 +31,12 @@ export class Jsx6 {
   initAttr() { }
 
   insertEl(parentNode, beforeSibling, parent) {
-    if (this.tagDef.tag)
-      this.tagName = this.tagDef.tag;
     this.parent = parent;
 
     this.el = this.contentArea = insertHtml(parentNode, beforeSibling, { tag: this.tagName }, parent, this);
     this.initState();
 
-    this.insertAttr(this.tagDef.attr || {});
+    this.insertAttr(this.attr);
 
     if (this.cName)
       this.classList.add(this.cName);
@@ -76,12 +66,12 @@ export class Jsx6 {
   destroyed() { }
 
   initTemplate() {
-    let def = this.tpl(h.bind(this), this.state, this.stateBind);
+    let def = this.tpl(h.bind(this), this.state, this.stateBind, this)
     this.insertHtml(this.el, null, def);
   }
 
   dirty() { this.stateBind().dirty(); }
-  tpl(h, state, $, this) { }
+  tpl(h, state, $, self) { }
 
   insertChildren() {
     this.insertHtml(this.contentArea, null, this.childrenDef);
