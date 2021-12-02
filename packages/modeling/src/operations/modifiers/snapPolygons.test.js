@@ -66,5 +66,5 @@ test('snapPolygons: snap of polygons produces expected results', (t) => {
     [-24.4445, 19.3468, 46.475100000000005],
     [-23.7054, 18.7986, 39.5645]
   ])
-  t.deepEqual(results[3], exp3)
+  t.deepEqual(results[3].vertices, exp3.vertices)
 })
