@@ -69,7 +69,7 @@ export class App extends Jsx6 {
       <>
         <div class="top-menu">
           <Toggle selected={uiBind.settingsVisible}>{gearIcon}</Toggle>
-          <Toggle selected='editorVisible'>{editIcon}</Toggle>
+          <Toggle selected={$.editorVisible}>{editIcon}</Toggle>
         </div>
 
         <div p='settings' class='settings-area' hidden={uiBind.settingsVisible(NOT)}>

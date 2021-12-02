@@ -1,49 +1,87 @@
+import { t } from './trans'
+import { Jsx6 } from './Jsx6'
+import { insertBefore } from './insertBefore'
+
+let _createText
+let _createElement
+let _createElementSvg
+
 /**
  * @typedef TagDef
  * @property tag {String|Function}
  * @property attr {Object}
  * @property children {Array<String|Function|TagDef>}
- * 
+ * @property children {Array<String|Function|TagDef>}
+ *
  */
 
-import { makeState } from './dirty'
-import { insertBefore } from './insertBefore';
+const ERR_NULL_TAG = 1 // Tag type is not supported
+const ERR_UNSUPPORTED_TAG = 2 // Tag type is not supported
 
-let _createText; let _createElement; let _createElementSvg
+const throwErr = (c, info) => {
+  const msg = t('JSX6E' + c)
+  console.error(msg, info)
+  throw new Error(msg)
+}
+
 
 if (typeof document !== 'undefined') {
   _createText = (t) => document.createTextNode(t)
-  _createElementSvg = (t) => document.createElementNS('http://www.w3.org/2000/svg', t)
-  _createElement = (t, o) =>{ if(!t) throw Error('null tag'); return document.createElement(t, o)}
+  _createElementSvg = (t) => t ? document.createElementNS('http://www.w3.org/2000/svg', t) : throwErr(ERR_NULL_TAG)
+  _createElement = (t, o) => t ? document.createElement(t, o) : throwErr(ERR_NULL_TAG)
 }
 
-export function setHtmlFunctions (createTextNode, createElement, requestAnimationFrame) {
+export function setHtmlFunctions (createTextNode, createElement, createElementSvg) {
   _createText = createTextNode
   _createElement = createElement
-  anim = requestAnimationFrame
+  _createElementSvg = createElementSvg
 }
-
+/** Marker class that holds:
+ *  - tag - tag name or function or class
+ *  - attr - attributes
+ *  - children - JSX children to insert
+ **/
 export class TagDef {
-  constructor (tag, attr, children){
-    if(tag) this.tag = tag
-    if(attr) this.attr = attr
-    if(children) this.children = children
+  constructor (tag, attr, children) {
+    this.tag = tag
+    this.attr = attr
+    this.children = children
   }
 }
 
-/** Simple JSX factory.
-Creates an object that describes the the html element.
+/** JSX factory to enable useful use-cases for JSX.
+ - if tag is null - return children (this is for fragment support)
+ - if tag is a string - just generates TagDef to be inserted
+ - if tag is a function with isComponentClass=true  - it is called as constructor
+ - if tag is a function with isComponentClass=false - it is treated as a template and
+ is injected in an anonymous Jsx6 component
 */
 export function h (tag, attr, ...children) {
-  if(tag === h) return children
-  if(typeof tag === 'function') {
-    // create component early so if component validates parameters and throws error
-    // it can be easily traced to the JSX where it was defined
-    if(tag.isComponentClass){
-      return new tag(new TagDef(null,attr,children), this)
+  if (!tag) return children
+
+  if (typeof tag === 'string') {
+    return new TagDef(tag, attr, children)
+  } else {
+    if (typeof tag === 'function') {
+      // create component early so if component validates parameters and throws error
+      // it can be easily traced to the JSX section where it was defined
+      const def = new TagDef(null, attr, children)
+      if (tag.isComponentClass) {
+        // eslint-disable-next-line
+        return new tag(def, this)
+      } else {
+        // use the tag function to provide the template for the newly created component
+        // create a new Jsx6 component
+        const out = new Jsx6(def)
+        out.tpl = tag
+        return out
+      }
+    } else {
+      // not sure what else to enable if tag is type of object
+      // this may be expanded in the future to allow more capabilities
+      throwErr(ERR_UNSUPPORTED_TAG, tag)
     }
   }
-  return new TagDef( tag, attr, children )
 }
 
 function updateText (node, func) {
@@ -55,6 +93,20 @@ function updateText (node, func) {
     if (node.textContent !== newValue) node.textContent = newValue
   }
   ret.node = node
+  return ret
+}
+
+export function makeAttrUpdater (node, attr, func) {
+  const ret = function () {
+    const newValue = func()
+    if (node.getAttribute(attr) !== newValue) {
+      if (newValue === false) { node.removeAttribute(attr) } else { node.setAttribute(attr, newValue) }
+    }
+  }
+  ret.node = node
+  ret.attr = attr
+  ret.func = func
+  ret()// set initial value for the attribute
   return ret
 }
 
@@ -71,11 +123,10 @@ function setPropGroup (self, part, [groupKey, propKey]) {
  * @param comp
  * @returns {Jsx6}
  */
-function insertComp (comp, parentNode, before, parent){
-
-  if(comp.__initialized){
+function insertComp (comp, parentNode, before, parent) {
+  if (comp.__initialized) {
     insertBefore(parent, comp, before)
-  }else{
+  } else {
     comp.insertEl(parentNode, before, parent)
     comp.initTemplate()
     comp.insertChildren()
@@ -88,7 +139,7 @@ function insertComp (comp, parentNode, before, parent){
 
 /** insert HMTL based on tag description */
 export function insertHtml (parent, before, def, self = this, component = null, createElement = _createElement) {
-  if(!def) return
+  if (!def) return
 
   /** @type {Jsx6|Element} */
   let out
@@ -96,25 +147,22 @@ export function insertHtml (parent, before, def, self = this, component = null, 
     out = _createText(def())
     parent.insertBefore(out, before)
     pushUpdaters(self, def, updateText(out, def))
-
   } else if (def instanceof Array) {
     out = def.map(c => insertHtml(parent, before, c, self, null, createElement))
-
   } else if (def instanceof Jsx6) {
     insertComp(def, parent, before, self)
   } else if (!def.tag) {
     // fragment
     insertHtml(parent, before, def.children, self, null, createElement)
-
   } else if (def.tag instanceof Function) {
-    
-    if(def.tag.isComponentClass){
-      let comp = def.tag
+    if (def.tag.isComponentClass) {
+      const comp = def.tag
       delete def.tag
+      // eslint-disable-next-line
       out = new comp(def)
-    }else{
+    } else {
       // use the daf.tag function to provide the template for the newly created component
-      let tplfunc = def.tag
+      const tplfunc = def.tag
       delete def.tag
       // create a new Jsx6 component
       out = new Jsx6(def)
@@ -122,79 +170,57 @@ export function insertHtml (parent, before, def, self = this, component = null, 
     }
 
     insertComp(out, parent, before, self)
-
-  } else if ( def && typeof def === 'object'){
-    if(def.tag.toUpperCase() === 'SVG') createElement = _createElementSvg
+  } else if (def && typeof def === 'object') {
+    if (def.tag.toUpperCase() === 'SVG') createElement = _createElementSvg
     out = createElement(def.tag)
     parent.insertBefore(out, before)
 
     if (def.attr) {
-      insertAttr(def.attr, out, self, component);
+      insertAttr(def.attr, out, self, component)
     }
-    
+
     if (def.children && def.children.length) {
       // component is not forwarded on purpose as it is used only for inital element
       insertHtml(out, null, def.children, self, null, createElement)
     }
   } else {
-    out = _createText(''+def)
+    out = _createText('' + def)
     parent.insertBefore(out, before)
   }
   return out
 }
 
-export function insertAttr(attr, out, self, component) {
+export function insertAttr (attr, out, self, component) {
   for (const a in attr) {
-    const value = attr[a];
+    const value = attr[a]
 
     if (a[0] === 'o' && a[1] === 'n' && value instanceof Function) {
-      out.addEventListener(a.substring(2), value.bind(self));
+      out.addEventListener(a.substring(2), value.bind(self))
     } else if (a === 'key') {
-      out.loopKey = value;
-      if (!out.propKey)
-        out.propKey = value;
+      out.loopKey = value
+      if (!out.propKey) { out.propKey = value }
       if (component) {
-        if (!component.propKey)
-          component.propKey = value;
-        component.loopKey = value;
+        if (!component.propKey) { component.propKey = value }
+        component.loopKey = value
       }
-
     } else if (value instanceof Function) {
-      pushUpdaters(self, value, makeAttrUpdater(out, a, value));
-
+      pushUpdaters(self, value, makeAttrUpdater(out, a, value))
     } else {
       if (a === 'p') {
-        setPropGroup(self, component || out, typeof value === 'string' ? value.split('.') : value);
+        setPropGroup(self, component || out, typeof value === 'string' ? value.split('.') : value)
       }
-      out.setAttribute(a, a === 'p' && value instanceof Array ? value.join('.') : value);
+      out.setAttribute(a, a === 'p' && value instanceof Array ? value.join('.') : value)
     }
   }
 }
-
-export function makeAttrUpdater (node, attr, func) {
-    let ret = function(){
-        let newValue = func();
-        if(node.getAttribute(attr) != newValue){
-        	if(newValue === false)
-        		node.removeAttribute(attr);
-        	else
-            	node.setAttribute(attr, newValue);       
-        } 
-    }
-    ret.node = node;
-    ret.attr = attr;
-    ret.func = func;
-    ret()// set initial value for the attribute
-    return ret;
-};
 
 /** To simplify, we just clear the element and add new nodes (no vnode diff is performed) */
 export function applyHtml (parent, def, self = this) {
   if (typeof parent === 'string') parent = document.getElementById(parent)
 
-  function destroy(el) {
+  function destroy (el) {
     let ch = el.firstElementChild
-    while(ch){
+    while (ch) {
       destroy(ch)
       ch = ch.nextElementSibling
     }
@@ -207,139 +233,16 @@ export function applyHtml (parent, def, self = this) {
 
 export function pushUpdaters (updaters, func, updater) {
   // allow updater function to be refreshad from somewhere else, liver translations could use this
-  if(!updater) throw new Error('updater undefined')
+  if (!updater) throw new Error('updater undefined')
   if (func.addUpdater) {
     func.addUpdater(updater)
   } else {
-    if(updaters instanceof Jsx6){
+    if (updaters instanceof Jsx6) {
       updaters.stateBind().push(updater)
-    }else{
+    } else {
       updaters.push(updater)
     }
   }
 }
 
-export class Jsx6{
-// eslint-disable-next-line
-  el
-  contentArea
-  propKey
-  groupKey
-  parent
-  tagName = 'DIV'
-  cName = ''
-  state = {}
-  stateBind
-
-  constructor (tagDef, parent) {
-    this.parent = parent
-    if(!tagDef){
-      tagDef = new TagDef()
-    }else if(!(tagDef instanceof TagDef)){
-      tagDef = new TagDef(null, tagDef)
-    }
-    let attr = tagDef.attr || {}
-    tagDef.attr = attr
-
-    if(attr['tag-name']){
-      tagDef.tag = attr['tag-name']
-      delete attr['tag-name']
-    }
-    
-    this.childrenDef = tagDef.children
-    delete tagDef.children
-    this.tagDef = tagDef
-
-    this.initAttr(attr)
-  }
-
-  initAttr(){}
-
-  insertEl (parentNode, beforeSibling, parent){
-    if(this.tagDef.tag) this.tagName = this.tagDef.tag
-    this.parent = parent;
-    
-    this.el = this.contentArea = insertHtml(parentNode, beforeSibling, {tag:this.tagName}, parent, this)
-    this.initState()
-
-    this.insertAttr(this.tagDef.attr || {})
-
-    if(this.cName) this.classList.add(this.cName)
-    this.el.propKey = this.propKey
-    this.el.groupKey = this.groupKey
-    
-  }
-
-  insertAttr (attr){
-    insertAttr(attr, this.el, this.parent, this)
-  }
-  
-  initState(){
-    if(this.state){
-      ([this.state, this.stateBind] = makeState(this.state))
-    }
-  }
-
-  insertHtml (parentNode, beforeSibling, def) { 
-    insertHtml(parentNode, beforeSibling, def, this) 
-  }
-
-  created () {}
-  destroy () { 
-    delete this.el.component
-  }
-  destroyed () { }
-
-  initTemplate () {
-    let def = this.tpl(h.bind(this), this.state, this.stateBind)
-    this.insertHtml(this.el, null, def)
-  }
-
-  dirty () { this.stateBind().dirty() }
-  tpl (h, state, $) { }
-
-  insertChildren () {
-    this.insertHtml(this.contentArea, null, this.childrenDef)
-  }
-
-  init () { }
-
-  updateState (value) {
-    // goes behind the proxy and calls dirty() only once
-    // this is more efficient than setting props one by one on the state
-    this.stateBind().update(value)
-  }
-  
-  get value () { Object.assign({},this.state) }
-  
-  set value (value) {
-    if(value && typeof value === 'object'){
-      this.updateState(value)
-    }else{
-      this.state.value = value
-    }
-  }
-  
-  fireEvent(name,detail,opts){
-    this.el.dispatchEvent(new CustomEvent(name,{detail, ...opts}))
-  }
-  addEventListener (name, callback){ this.el.addEventListener(name, callback) }
-
-  getAttribute (attr){ return this.el.getAttribute(attr) }
-  setAttribute (attr, value){ return this.el.setAttribute(attr, value) }
-  hasAttribute (attr){ return this.el.hasAttribute(attr) }
-  removeAttribute (attr){ return this.el.removeAttribute(attr) }
-  getBoundingClientRect (){ return this.el.getBoundingClientRect() }
-  appendChild (c){ insertBefore(this.el, c) }
-  insertBefore (c, before) { insertBefore(this.el, c, before) }
-
-  get classList (){ return this.el.classList }
-  get style (){ return this.el.style }
-  get innerHTML (){ return this.el.innerHTML }
-  get textContent (){ return this.el.textContent }
-
-}
-
-Jsx6.isComponentClass = true
-
-export const NOT = v=>!v
+export const NOT = v => !v

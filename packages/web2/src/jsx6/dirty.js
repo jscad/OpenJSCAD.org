@@ -110,6 +110,15 @@ export function makeState (_state = {}, markDirtyNow) {
     }
   }
 
+  function asBinding (func, _addUpater, runUpdaters, state, prop) {
+    func.isBinding = true
+    func.addUpdater = _addUpater
+    func.dirty = () => _addDirty()
+    func.state = state
+    func.propName = prop
+    return func
+  }
+
   function updateProp (p, value, force) {
     if (force || _state[p] !== value) {
       lastData.set(p, _state[p])
@@ -137,13 +146,4 @@ export function makeState (_state = {}, markDirtyNow) {
   if (markDirtyNow) _addDirty()
 
   return [state, bindingsProxy]
-}
-
-function asBinding (func, _addUpater, runUpdaters, state, prop) {
-  func.isBinding = true
-  func.addUpdater = _addUpater
-  func.dirty = () => _addDirty()
-  func.state = state
-  func.propName = prop
-  return func
 }

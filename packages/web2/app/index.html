@@ -10,5 +10,15 @@
 
 </body>
 </html>
-<script src="web.js"></script>
+<script>
+	function addScript(source, callback, errback) {
+			var tag = document.createElement("script");
+			tag.type = "text/javascript";
+			tag.src = source;
+			tag.onload = callback || function () { };
+			tag.onerror = errback;
+			document.head.append(tag);
+		}
+		addScript('web.js?__MT__='+Math.random())
+</script>
 <script src="http://localhost:33080/livereload.js?snipver=1"></script>
