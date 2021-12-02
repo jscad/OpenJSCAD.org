@@ -98,7 +98,11 @@ function insertComp (comp, parentNode, before, parent) {
   return comp
 }
 
-/** insert HMTL based on tag description */
+/** insert SVG based on tag description */
+export function insertSvg (parent, before, def, self = this, component = null) {
+  insertHtml(parent, before, def, self, component, _createElementSvg)
+}
+
 export function insertHtml (parent, before, def, self = this, component = null, createElement = _createElement) {
   // component parameter is not forwarded to recursive calls on purpose as it is used only for inital element
 
