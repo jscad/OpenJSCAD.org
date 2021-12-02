@@ -43,7 +43,7 @@ export function makeState (_state = {}, markDirtyNow) {
     for (let i = 0; i < len; i++) {
       try {
         const func = updaters[i]
-        if (!func || !(func instanceof Function)) {
+        if (!func || !isFunc(func)) {
           throwErr(ERR_DIRTY_RUNNER_FUNC, { func, i, updaters })
         } else func(state, lastData)
       } catch (error) {
@@ -80,7 +80,7 @@ export function makeState (_state = {}, markDirtyNow) {
       if (!bindings[prop]) {
         const func = function (value) {
           if (arguments.length !== 0) {
-            if (value instanceof Function) {
+            if (isFunc(value)) {
               return filterFunc(value)
             }
             if (updateProp(prop, value)) _addDirty()

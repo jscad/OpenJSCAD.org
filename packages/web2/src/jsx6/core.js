@@ -17,7 +17,7 @@ const ERR_NULL_TAG = 1 // Tag is null
 const ERR_UNSUPPORTED_TAG = 2 // Tag type is not supported
 export const ERR_TRANS_UUPD_FUNC = 3 // Translation updater must be a function
 const ERR_UPDATER_UNDEF = 4 // updater undefined
-export const ERR_DIRTY_RUNNER_FUNC = 4 // dirty runner must be a function
+export const ERR_DIRTY_RUNNER_FUNC = 5 // dirty runner must be a function
 
 export const throwErr = (c, info) => {
   const msg = t('JSX6E' + c)
@@ -71,32 +71,6 @@ export function h (tag, attr = {}, ...children) {
   }
 }
 
-function updateText (node, func) {
-  const ret = function () {
-    let newValue = func()
-    // TODO join text node updating and value handling
-    if (newValue === null || newValue === undefined) newValue = ''
-    if (!isStr(newValue)) newValue = '' + newValue
-    if (node.textContent !== newValue) node.textContent = newValue
-  }
-  ret.node = node
-  return ret
-}
-
-export function makeAttrUpdater (node, attr, func) {
-  const ret = function () {
-    const newValue = func()
-    if (node.getAttribute(attr) !== newValue) {
-      if (newValue === false) { node.removeAttribute(attr) } else { node.setAttribute(attr, newValue) }
-    }
-  }
-  ret.node = node
-  ret.attr = attr
-  ret.func = func
-  ret()// set initial value for the attribute
-  return ret
-}
-
 function setPropGroup (self, part, [groupKey, propKey]) {
   if (propKey) {
     if (!self[groupKey]) self[groupKey] = {}
@@ -126,32 +100,29 @@ function insertComp (comp, parentNode, before, parent) {
 
 /** insert HMTL based on tag description */
 export function insertHtml (parent, before, def, self = this, component = null, createElement = _createElement) {
+  // component parameter is not forwarded to recursive calls on purpose as it is used only for inital element
+
   if (!def) return
 
-  /** @type {Jsx6|Element} */
+  /** @type {Jsx6|Node} */
   let out
-  if (def instanceof Function) {
+  if (isFunc(def)) {
     out = _createText(def())
     parent.insertBefore(out, before)
-    pushUpdaters(self, def, updateText(out, def))
+    makeUpdater(out, before, null, def, self)
   } else if (def instanceof Array) {
     out = def.map(c => insertHtml(parent, before, c, self, null, createElement))
   } else if (def instanceof Jsx6) {
     insertComp(def, parent, before, self)
-  } else if (!def.tag) {
-    // fragment
-    insertHtml(parent, before, def.children, self, null, createElement)
   } else if (isObj(def)) {
     if (def.tag.toUpperCase() === 'SVG') createElement = _createElementSvg
+
     out = createElement(def.tag)
     parent.insertBefore(out, before)
 
-    if (def.attr) {
-      insertAttr(def.attr, out, self, component)
-    }
+    insertAttr(def.attr, out, self, component)
 
     if (def.children && def.children.length) {
-      // component is not forwarded on purpose as it is used only for inital element
       insertHtml(out, null, def.children, self, null, createElement)
     }
   } else {
@@ -161,11 +132,57 @@ export function insertHtml (parent, before, def, self = this, component = null, 
   return out
 }
 
+/*
+need to update
+ - attrib
+ - node - only text for now
+need to refresh the value
+ - call the function to recalc
+ - add the updater as listener for changes (state change, etc)
+ - default is change handler of the parent component
+*/
+export function makeUpdater (parent, before, attr, func, updaters) {
+  if (updaters instanceof Jsx6) {
+    updaters = updaters.stateBind()
+  }
+
+  let updater
+  if (func.makeUpdater) {
+    updater = func.makeUpdater(parent, before, attr, func, updaters)
+  } else {
+    if (attr) {
+      updater = makeAttrUpdater(parent, attr, func, updaters)
+    } else {
+      updater = makeNodeUpdater(parent, func)
+    }
+
+    if (func.addUpdater) {
+      func.addUpdater(updater)
+    } else {
+      updaters.push(updater)
+    }
+  }
+}
+
+export function makeNodeUpdater (node, func) {
+  const ret = function () {
+    let newValue = func()
+    // TODO join text node updating and value handling
+    if (newValue === null || newValue === undefined) newValue = ''
+    if (!isStr(newValue)) newValue = '' + newValue
+    if (node.textContent !== newValue) node.textContent = newValue
+  }
+  ret.node = node
+  return ret
+}
+
 export function insertAttr (attr, out, self, component) {
+  if (!attr) return
+
   for (const a in attr) {
     const value = attr[a]
 
-    if (a[0] === 'o' && a[1] === 'n' && value instanceof Function) {
+    if (a[0] === 'o' && a[1] === 'n' && isFunc(value)) {
       out.addEventListener(a.substring(2), value.bind(self))
     } else if (a === 'key') {
       out.loopKey = value
@@ -174,8 +191,8 @@ export function insertAttr (attr, out, self, component) {
         if (!component.propKey) { component.propKey = value }
         component.loopKey = value
       }
-    } else if (value instanceof Function) {
-      pushUpdaters(self, value, makeAttrUpdater(out, a, value))
+    } else if (isFunc(value)) {
+      makeUpdater(out, null, a, value, self)
     } else {
       if (a === 'p') {
         setPropGroup(self, component || out, isStr(value) ? value.split('.') : value)
@@ -183,6 +200,24 @@ export function insertAttr (attr, out, self, component) {
       out.setAttribute(a, a === 'p' && value instanceof Array ? value.join('.') : value)
     }
   }
+}
+
+export function makeAttrUpdater (node, attr, func) {
+  const ret = function () {
+    const newValue = func()
+    if (node.getAttribute(attr) !== newValue) {
+      if (newValue === false || newValue === null || newValue === undefined) {
+        node.removeAttribute(attr)
+      } else {
+        node.setAttribute(attr, newValue)
+      }
+    }
+  }
+  ret.node = node
+  ret.attr = attr
+  ret.func = func
+  ret() // set initial value for the attribute
+  return ret
 }
 
 /** To simplify, we just clear the element and add new nodes (no vnode diff is performed) */
@@ -200,21 +235,6 @@ export function applyHtml (parent, def, self = this) {
   destroy(parent)
   parent.innerHTML = ''
   insertHtml(parent, null, def, self)
-}
-
-export function pushUpdaters (updaters, func, updater) {
-  // allow updater function to be refreshad from somewhere else, liver translations could use this
-  if (!updater) throwErr(ERR_UPDATER_UNDEF)
-
-  if (func.addUpdater) {
-    func.addUpdater(updater)
-  } else {
-    if (updaters instanceof Jsx6) {
-      updaters.stateBind().push(updater)
-    } else {
-      updaters.push(updater)
-    }
-  }
 }
 
 export const NOT = v => !v
