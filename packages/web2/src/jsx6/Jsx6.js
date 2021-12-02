@@ -2,7 +2,18 @@ import { makeState } from './dirty';
 import { insertBefore } from './insertBefore';
 import { insertHtml, insertAttr, h } from "./core";
 import { isObj } from '.';
+/**
+ * @typedef {Object} Jsx6Extras 
+ * @class 
+ * @mixin
+ * @property {string} XXL - xxl prop
+ * 
+ */
 
+/**
+ * @mixes Jsx6Extras
+ * @class
+ */
 export class Jsx6 {
   el;
   contentArea;
@@ -15,7 +26,7 @@ export class Jsx6 {
   stateBind;
 
   constructor(attr, children, parent) {
-		if(!attr) attr = {}
+		attr ||= {}
 		this.attr = attr
     this.children = children
     this.parent = parent
@@ -28,15 +39,19 @@ export class Jsx6 {
     this.initAttr(attr);
   }
 
+	/**
+	 * @param attr - attributes
+	 */
   initAttr() { }
 
   insertEl(parentNode, beforeSibling, parent) {
     this.parent = parent;
 
-    this.el = this.contentArea = insertHtml(parentNode, beforeSibling, { tag: this.tagName }, parent, this);
-    this.initState();
+    this.el = insertHtml(parentNode, beforeSibling, { tag: this.tagName }, parent, this);
+		this.contentArea ||= this.el
+    this.initState()
 
-    this.insertAttr(this.attr);
+    this.insertAttr(this.attr)
 
     if (this.cName)
       this.classList.add(this.cName);
@@ -55,10 +70,6 @@ export class Jsx6 {
     }
   }
 
-  insertHtml(parentNode, beforeSibling, def) {
-    insertHtml(parentNode, beforeSibling, def, this);
-  }
-
   created() { }
   destroy() {
     delete this.el.component;
@@ -67,14 +78,19 @@ export class Jsx6 {
 
   initTemplate() {
     let def = this.tpl(h.bind(this), this.state, this.stateBind, this)
-    this.insertHtml(this.el, null, def);
+    insertHtml(this.el, null, def, this);
   }
 
-  dirty() { this.stateBind().dirty(); }
-  tpl(h, state, $, self) { }
+	/**
+	 * @param h - jsx factory
+	 * @param state - state object
+	 * @param $ - state binding proxy
+	 * @param self - reference to this
+	 */
+  tpl(/*h, state, $, self*/) { }
 
   insertChildren() {
-    this.insertHtml(this.contentArea, null, this.children);
+    insertHtml(this.contentArea, null, this.children, this);
   }
 
   init() { }
@@ -95,9 +111,6 @@ export class Jsx6 {
     }
   }
 
-  fireEvent(name, detail, opts) {
-    this.el.dispatchEvent(new CustomEvent(name, { detail, ...opts }));
-  }
   addEventListener(name, callback) { this.el.addEventListener(name, callback); }
 
   getAttribute(attr) { return this.el.getAttribute(attr); }
@@ -116,3 +129,4 @@ export class Jsx6 {
 }
 
 Jsx6.isComponentClass = true;
+
