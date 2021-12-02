@@ -3,7 +3,6 @@ import { insertBefore } from './insertBefore';
 import { insertHtml, insertAttr, h } from "./core";
 
 export class Jsx6 {
-  // eslint-disable-next-line
   el;
   contentArea;
   propKey;
@@ -74,7 +73,7 @@ export class Jsx6 {
   tpl(h, state, $, self) { }
 
   insertChildren() {
-    this.insertHtml(this.contentArea, null, this.childrenDef);
+    this.insertHtml(this.contentArea, null, this.children);
   }
 
   init() { }
