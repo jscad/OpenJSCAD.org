@@ -13,7 +13,7 @@ const areVerticesConvex = (vertices) => {
   const numvertices = vertices.length
   if (numvertices > 2) {
     // note: plane ~= normal point
-    const normal = plane.fromPoints(plane.create(), vertices[0], vertices[1], vertices[2])
+    const normal = plane.fromPoints(plane.create(), ...vertices)
     let prevprevpos = vertices[numvertices - 2]
     let prevpos = vertices[numvertices - 1]
     for (let i = 0; i < numvertices; i++) {
