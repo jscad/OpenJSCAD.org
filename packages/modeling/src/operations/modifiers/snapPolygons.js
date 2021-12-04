@@ -17,7 +17,7 @@ const snapPolygons = (epsilon, polygons) => {
     const newvertices = []
     for (let i = 0; i < snapvertices.length; i++) {
       const j = (i + 1) % snapvertices.length
-      if (! vec3.equals(snapvertices[i], snapvertices[j])) newvertices.push(snapvertices[i])
+      if (!vec3.equals(snapvertices[i], snapvertices[j])) newvertices.push(snapvertices[i])
     }
     const newpolygon = poly3.create(newvertices)
     if (polygon.color) newpolygon.color = polygon.color
