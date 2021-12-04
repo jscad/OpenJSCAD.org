@@ -31,10 +31,9 @@ const measureBoundingBoxOfPath2Points = (points) => {
     vec2.min(minpoint, minpoint, point)
     vec2.max(maxpoint, maxpoint, point)
   })
-
   boundingBox = [[minpoint[0], minpoint[1], 0], [maxpoint[0], maxpoint[1], 0]]
-  cache.set(points, boundingBox)
 
+  cache.set(points, boundingBox)
   return boundingBox
 }
 
@@ -55,7 +54,6 @@ const measureBoundingBoxOfPath2 = (geometry) => {
   }
 
   cache.set(geometry, boundingBox)
-
   return boundingBox
 }
 
@@ -65,6 +63,7 @@ const measureBoundingBoxOfPath2 = (geometry) => {
  */
 const measureBoundingBoxOfGeom2Points = ({ points, sides }) => {
   const cacheKey = points || sides
+
   let boundingBox = cache.get(cacheKey)
   if (boundingBox) return boundingBox
 
@@ -96,11 +95,9 @@ const measureBoundingBoxOfGeom2Points = ({ points, sides }) => {
       vec2.max(maxpoint, maxpoint, side[0])
     })
   }
-
   boundingBox = [[minpoint[0], minpoint[1], 0], [maxpoint[0], maxpoint[1], 0]]
 
   cache.set(cacheKey, boundingBox)
-
   return boundingBox
 }
 
@@ -121,7 +118,6 @@ const measureBoundingBoxOfGeom2 = (geometry) => {
   }
 
   cache.set(geometry, boundingBox)
-
   return boundingBox
 }
 
@@ -150,7 +146,6 @@ const measureBoundingBoxOfGeom3Polygons = (polygons) => {
   boundingBox = [[minpoint[0], minpoint[1], minpoint[2]], [maxpoint[0], maxpoint[1], maxpoint[2]]]
 
   cache.set(polygons, boundingBox)
-
   return boundingBox
 }
 
@@ -171,13 +166,13 @@ const measureBoundingBoxOfGeom3 = (geometry) => {
   }
 
   cache.set(geometry, boundingBox)
-
   return boundingBox
 }
 
-/* swap values if specific axis value in the second vector has lower value than the axis value in first vector */
+/*
+ * swap values if specific axis value in the second vector has lower value than the axis value in first vector
+ */
 const fixBound = (i, v1, v2) => {
-  // this function will likely be inlined by the JS optimization compiler
   if (v1[i] > v2[i]) {
     const tmp = v1[i]
     v1[i] = v2[i]
@@ -185,18 +180,21 @@ const fixBound = (i, v1, v2) => {
   }
 }
 
+/*
+ * Transform the given bounding box
+ */
 const transformBoundingBox = (boundingBox, transforms) => {
-  if (transforms && !mat4.isIdentity(transforms)) {
-    const out = [vec3.transform(vec3.create(), boundingBox[0], transforms), vec3.transform(vec3.create(), boundingBox[1], transforms)]
+  if (!mat4.isIdentity(transforms)) {
+    vec3.transform(boundingBox[0], boundingBox[0], transforms),
+    vec3.transform(boundingBox[1], boundingBox[1], transforms)
 
     // we now have a new 2 vectors:  [v1,v2] => [ [x1,y1,z1],  [x2,y2,z2] ]
     // transform can move bounding box corner in such way that it is no longer true that
     //  - v1 = [min(x1,x2),min(y1,y2),min(z1,z2)]
     //  - v2 = [max(x1,x2),max(y1,y2),max(z1,z2)]
-    fixBound(0, ...out)// swap x, if higher value is in first vector
-    fixBound(1, ...out)// swap y, if higher value is in first vector
-    fixBound(2, ...out)// swap z, if higher value is in first vector
-    return out
+    fixBound(0, ...boundingBox)  // swap x, if higher value is in first vector
+    fixBound(1, ...boundingBox)  // swap y, if higher value is in first vector
+    fixBound(2, ...boundingBox)  // swap z, if higher value is in first vector
   }
   return boundingBox
 }
@@ -222,16 +220,5 @@ const measureBoundingBox = (...geometries) => {
   })
   return results.length === 1 ? results[0] : results
 }
-
-/**
- * Shortcut for geometries that are complex but have a fast way to calculate bounding box.
- * Ellipsoid, or cylinder can provide boundingBox that pre-calculated based on parameters without traversing points.
- *
- * Another option is to calculate boundingBox durint toPoints (so the boundingBox could be calculated during transform)
- *
- * NOTE: It seems that measureBoundingBox is used all over the place, and it would be wise to allow
- * shortcuts for calculating it, as default implementation goes through all points in geometry which is bound to be slow.
-*/
-measureBoundingBox.setCache = (geometry, boundingBox) => cache.set(geometry, boundingBox)
 
 module.exports = measureBoundingBox
