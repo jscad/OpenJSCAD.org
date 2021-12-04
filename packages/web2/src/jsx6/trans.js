@@ -1,5 +1,7 @@
 import { addDirty } from './dirty'
-import { throwErr, ERR_TRANS_UUPD_FUNC, isFunc } from './core'
+import { throwErr, isFunc } from './core'
+
+const ERR_TRANS_UUPD_FUNC = 3 //    JSX6E3 - Translation updater must be a function
 
 const TRANS = {}
 const translationUpdaters = []

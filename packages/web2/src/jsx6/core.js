@@ -13,14 +13,14 @@ let _createElementSvg
  * @property children {Array<String|Function|TagDef>}
  */
 
-const ERR_NULL_TAG = 1 // Tag is null
-const ERR_UNSUPPORTED_TAG = 2 // Tag type is not supported
-export const ERR_TRANS_UUPD_FUNC = 3 // Translation updater must be a function
-const ERR_UPDATER_UNDEF = 4 // updater undefined
-export const ERR_DIRTY_RUNNER_FUNC = 5 // dirty runner must be a function
+const ERR_NULL_TAG = 1 //           JSX6E1 - Tag is null
+const ERR_UNSUPPORTED_TAG = 2 //    JSX6E2 - Tag type is not supported
+const ERR_UPDATER_UNDEF = 4 //      JSX6E4 - updater undefined
+// MAX ERR_MUST_CALL_BINDING = 6 // JSX6E6
 
+export const errorMessage = c => t('JSX6E' + c)
 export const throwErr = (c, info) => {
-  const msg = t('JSX6E' + c)
+  const msg = errorMessage(c)
   console.error(msg, info)
   throw new Error(msg)
 }
@@ -117,7 +117,7 @@ export function insertHtml (parent, before, def, self = this, component = null, 
   } else if (def instanceof Array) {
     out = def.map(c => insertHtml(parent, before, c, self, null, createElement))
   } else if (def instanceof Jsx6) {
-    insertComp(def, parent, before, self)
+    return insertComp(def, parent, before, self)
   } else if (isObj(def)) {
     if (def.tag.toUpperCase() === 'SVG') createElement = _createElementSvg
 

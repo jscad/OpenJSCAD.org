@@ -1,4 +1,7 @@
-import { ERR_DIRTY_RUNNER_FUNC, isFunc, throwErr } from './core'
+import { isFunc, throwErr } from './core'
+
+const ERR_DIRTY_RUNNER_FUNC = 5 //  JSX6E5 - dirty runner must be a function
+const ERR_MUST_CALL_BINDING = 6 //  JSX6E6 - If you are seeing this, you forgot to call a binding as a function, or tried to call binding.toString() /.
 
 const dirty = new Set()
 let hasDirty = false
@@ -90,6 +93,7 @@ export function makeState (_state = {}, markDirtyNow) {
         const filterFunc = filter => asBinding(() => filter(func()), _addUpater, runUpdaters, state, prop)
         func.get = func.set = func
         func.f = filterFunc
+        func.toString = () => throwErr(ERR_MUST_CALL_BINDING, prop)
         bindings[prop] = asBinding(func, _addUpater, runUpdaters, state, prop)
       }
       return bindings[prop]
