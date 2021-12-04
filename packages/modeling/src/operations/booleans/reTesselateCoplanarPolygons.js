@@ -309,7 +309,7 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
           const polygon = poly3.fromPointsAndPlane(vertices3d, plane) // TODO support shared
 
           // if we let empty polygon out, next retesselate will crash
-          if(polygon.vertices.length) destpolygons.push(polygon)
+          if (polygon.vertices.length) destpolygons.push(polygon)
         }
       }
     } // if(yindex > 0)

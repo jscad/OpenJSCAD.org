@@ -1,7 +1,5 @@
 const mat4 = require('../../maths/mat4')
 
-const create = require('./create')
-
 /**
  * Transform the given geometry using the given matrix.
  * This is a lazy transform of the sides, as this function only adjusts the transforms.

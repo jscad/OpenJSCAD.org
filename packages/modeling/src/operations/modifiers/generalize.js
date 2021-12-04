@@ -19,7 +19,6 @@ const generalizePath2 = (options, geometry) => {
   return geometry
 }
 
-
 /*
  */
 const generalizeGeom2 = (options, geometry) => {

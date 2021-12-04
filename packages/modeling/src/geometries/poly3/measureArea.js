@@ -1,4 +1,3 @@
-const vec3 = require('../../maths/vec3')
 const plane = require('./plane')
 
 /**

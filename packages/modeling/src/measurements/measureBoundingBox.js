@@ -185,16 +185,16 @@ const fixBound = (i, v1, v2) => {
  */
 const transformBoundingBox = (boundingBox, transforms) => {
   if (!mat4.isIdentity(transforms)) {
-    vec3.transform(boundingBox[0], boundingBox[0], transforms),
+    vec3.transform(boundingBox[0], boundingBox[0], transforms)
     vec3.transform(boundingBox[1], boundingBox[1], transforms)
 
     // we now have a new 2 vectors:  [v1,v2] => [ [x1,y1,z1],  [x2,y2,z2] ]
     // transform can move bounding box corner in such way that it is no longer true that
     //  - v1 = [min(x1,x2),min(y1,y2),min(z1,z2)]
     //  - v2 = [max(x1,x2),max(y1,y2),max(z1,z2)]
-    fixBound(0, ...boundingBox)  // swap x, if higher value is in first vector
-    fixBound(1, ...boundingBox)  // swap y, if higher value is in first vector
-    fixBound(2, ...boundingBox)  // swap z, if higher value is in first vector
+    fixBound(0, ...boundingBox) // swap x, if higher value is in first vector
+    fixBound(1, ...boundingBox) // swap y, if higher value is in first vector
+    fixBound(2, ...boundingBox) // swap z, if higher value is in first vector
   }
   return boundingBox
 }

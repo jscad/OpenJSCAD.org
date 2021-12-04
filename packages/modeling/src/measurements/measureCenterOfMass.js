@@ -4,7 +4,6 @@ const vec3 = require('../maths/vec3')
 
 const geom2 = require('../geometries/geom2')
 const geom3 = require('../geometries/geom3')
-const path2 = require('../geometries/path2')
 
 const cacheOfCenterOfMass = new WeakMap()
 
