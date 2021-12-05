@@ -1,5 +1,5 @@
 
-export function moveParams (obj, defaults, params) {
+export function moveParams (defaults, params, obj = {}) {
   for (const p in defaults) {
     if (p in params) {
       obj[p] = params[p]
@@ -8,4 +8,5 @@ export function moveParams (obj, defaults, params) {
       obj[p] = defaults[p]
     }
   }
+  return obj
 }

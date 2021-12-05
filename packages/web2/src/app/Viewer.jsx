@@ -30,10 +30,10 @@ export class Viewer extends Jsx6 {
   }
 
   initAttr (attr){
-    moveParams(this,{
+    moveParams({
       alias: [],
       baseURI: '',
-    }, attr)
+    }, attr, this)
   }
 
   tpl (h, state, $) {
