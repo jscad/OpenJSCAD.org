@@ -137,10 +137,9 @@ export function makeState (_state = {}, markDirtyNow) {
     }
     return false
   }
-
   function $ () { return { ..._state } }
   Object.defineProperty($, 'value', {
-    get: () => _state
+    get: $
   })
   $.toJSON = () => _state
   $.push = $.addUpdater = (updater) => updaters.push(updater)

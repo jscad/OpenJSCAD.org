@@ -65,8 +65,7 @@ export class App extends Jsx6 {
   
   tpl (h, state) {
     // tpl is called before init, so we create settings here
-    const $s = (this.settings = makeState(
-      {
+    const $s = this.settings = makeState({
         autoReload: true,
         autoRotate: false,
         autoZoom: false,
@@ -76,7 +75,7 @@ export class App extends Jsx6 {
         editorVisible: true,
       },
       true
-    ));
+    )
 
     return (
       <>
