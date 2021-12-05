@@ -15,7 +15,7 @@ let _createElementSvg
 
 const ERR_NULL_TAG = 1 //           JSX6E1 - Tag is null
 const ERR_UNSUPPORTED_TAG = 2 //    JSX6E2 - Tag type is not supported
-const ERR_UPDATER_UNDEF = 4 //      JSX6E4 - updater undefined
+// UNUSED const ERR_UPDATER_UNDEF = 4 //      JSX6E4 - updater undefined
 // MAX ERR_MUST_CALL_BINDING = 6 // JSX6E6
 
 export const errorMessage = c => t('JSX6E' + c)
@@ -42,7 +42,7 @@ export function setHtmlFunctions (createTextNode, createElement, createElementSv
  - if tag is a string - just generates TagDef to be inserted
  - if tag is a function with isComponentClass=true  - it is called as constructor
  - if tag is a function with isComponentClass=false - it is treated as a template and
- is injected in an anonymous Jsx6 component
+ is injected into an anonymous Jsx6 component
 */
 export function h (tag, attr = {}, ...children) {
   if (!tag) return children
