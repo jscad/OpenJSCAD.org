@@ -14,6 +14,7 @@ objects/
 *.swp
 *~
 .idea/
+.history/
 
 # project ignores
 packages/web/examples/
