@@ -98,11 +98,6 @@ function insertComp (comp, parentNode, before, parent) {
   return comp
 }
 
-/** insert SVG based on tag description */
-export function insertSvg (parent, before, def, self = this, component = null) {
-  insertHtml(parent, before, def, self, component, _createElementSvg)
-}
-
 export function insertHtml (parent, before, def, self = this, component = null, createElement = _createElement) {
   // component parameter is not forwarded to recursive calls on purpose as it is used only for inital element
 
@@ -119,7 +114,7 @@ export function insertHtml (parent, before, def, self = this, component = null, 
   } else if (def instanceof Jsx6) {
     return insertComp(def, parent, before, self)
   } else if (isObj(def)) {
-    if (def.tag.toUpperCase() === 'SVG') createElement = _createElementSvg
+    if (isSvg(def.tag) || isSvg(parent?.tagName)) createElement = _createElementSvg
 
     out = createElement(def.tag)
     parent.insertBefore(out, before)
@@ -134,6 +129,10 @@ export function insertHtml (parent, before, def, self = this, component = null, 
     parent.insertBefore(out, before)
   }
   return out
+}
+
+export function isSvg (tag) {
+  return tag && tag.toUpperCase() === 'SVG'
 }
 
 /*
@@ -180,6 +179,24 @@ export function makeNodeUpdater (node, func) {
   return ret
 }
 
+export function makeAttrUpdater (node, attr, func) {
+  const ret = function () {
+    const newValue = func()
+    if (node.getAttribute(attr) !== newValue) {
+      if (newValue === false || newValue === null || newValue === undefined) {
+        node.removeAttribute(attr)
+      } else {
+        node.setAttribute(attr, newValue)
+      }
+    }
+  }
+  ret.node = node
+  ret.attr = attr
+  ret.func = func
+  ret() // set initial value for the attribute
+  return ret
+}
+
 export function insertAttr (attr, out, self, component) {
   if (!attr) return
 
@@ -204,24 +221,6 @@ export function insertAttr (attr, out, self, component) {
       out.setAttribute(a, a === 'p' && value instanceof Array ? value.join('.') : value)
     }
   }
-}
-
-export function makeAttrUpdater (node, attr, func) {
-  const ret = function () {
-    const newValue = func()
-    if (node.getAttribute(attr) !== newValue) {
-      if (newValue === false || newValue === null || newValue === undefined) {
-        node.removeAttribute(attr)
-      } else {
-        node.setAttribute(attr, newValue)
-      }
-    }
-  }
-  ret.node = node
-  ret.attr = attr
-  ret.func = func
-  ret() // set initial value for the attribute
-  return ret
 }
 
 /** To simplify, we just clear the element and add new nodes (no vnode diff is performed) */
