@@ -151,3 +151,29 @@ const updateAndRender = (timestamp) => {
     updateRender = ''
   }
 }
+
+function resize ({ width, height }) {
+  state.canvas.width = width
+  state.canvas.height = height
+  perspectiveCamera.setProjection(state.camera, state.camera, { width, height })
+  perspectiveCamera.update(state.camera, state.camera)
+  updateView()
+}
+
+const handlers = {
+  pan: ({ dx, dy }) => {
+    panDelta[0] += dx
+    panDelta[1] += dy
+    updateView()
+  },
+  resize,
+  rotate: ({ dx, dy }) => {
+    rotateDelta[0] -= dx
+    rotateDelta[1] -= dy
+    updateView()
+  },
+  zoom: ({ dy }) => {
+    zoomDelta += dy
+    updateView()
+  }
+}

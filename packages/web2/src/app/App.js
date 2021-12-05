@@ -44,6 +44,19 @@ export class App extends Jsx6 {
   }
 
   init (state, $) {
+    const dropHandler = (ev) => {
+      ev.preventDefault();
+      this.$ui.showDrop = false;
+      this.viewer.fileDropped(ev)
+    }
+
+    const dragOverHandler = (ev) => {
+      ev.preventDefault();
+      this.$ui.showDrop = true;
+    }
+    this.el.ondrop = dropHandler;
+    this.el.ondragover = dragOverHandler;
+
     $().addUpdater((state, old)=>{
       localStorage.setItem(SETTINGS_KEY, JSON.stringify(state))
       if (old.has('language')) this.changeLanguage(state.language || 'en')
@@ -62,50 +75,71 @@ export class App extends Jsx6 {
   }
 
   tpl (h, state, $) {
-    let [,$ui] = makeState({settingsVisible:false}, true)
+    let [,$ui] = makeState({settingsVisible:false, showDrop:false}, true)
     this.$ui = $ui
     return (
       <>
+        <div class="drop-handler" hidden={$ui.showDrop(NOT)}></div>
         <div class="top-menu">
           <Toggle selected={$ui.settingsVisible}>{gearIcon}</Toggle>
           <Toggle selected={$.editorVisible}>{editIcon}</Toggle>
         </div>
 
-        <div p='settings' class='settings-area' hidden={$ui.settingsVisible(NOT)}>
-          <div class='f-r'>
+        <div
+          p="settings"
+          class="settings-area"
+          hidden={$ui.settingsVisible(NOT)}
+        >
+          <div class="f-r">
             <label>{T`auto reload`}</label>
-            <Toggle class='el-switch' selected={$.autoReload}><span /></Toggle>
+            <Toggle class="el-switch" selected={$.autoReload}>
+              <span />
+            </Toggle>
           </div>
-          <div class='f-r'>
+          <div class="f-r">
             <label>{T`auto rotate`}</label>
-            <Toggle class='el-switch' selected='autoRotate'><span /></Toggle>
+            <Toggle class="el-switch" selected="autoRotate">
+              <span />
+            </Toggle>
           </div>
-          <div class='f-r'>
+          <div class="f-r">
             <label>{T`auto zoom`}</label>
-            <Toggle class='el-switch' selected='autoZoom'><span /></Toggle>
+            <Toggle class="el-switch" selected="autoZoom">
+              <span />
+            </Toggle>
           </div>
-          <div class='f-r'>
+          <div class="f-r">
             <label>{T`grid`}</label>
-            <Toggle class='el-switch' selected='showGrid'><span /></Toggle>
+            <Toggle class="el-switch" selected="showGrid">
+              <span />
+            </Toggle>
           </div>
-          <div class='f-r'>
+          <div class="f-r">
             <label>{T`axes`}</label>
-            <Toggle class='el-switch' selected='showAxes'><span /></Toggle>
+            <Toggle class="el-switch" selected="showAxes">
+              <span />
+            </Toggle>
           </div>
-          <div class='f-r'>
+          <div class="f-r">
             {T`Languages`}
-            <select p='opts.language'>
-              {Object.keys(langMap).map(l => (
-                <option key={l} value={l}>{T(langMap[l])}</option>
-                ))}
+            <select p="opts.language">
+              {Object.keys(langMap).map((l) => (
+                <option key={l} value={l}>
+                  {T(langMap[l])}
+                </option>
+              ))}
             </select>
           </div>
         </div>
-        <JscadEditor p='editor' class='editor editor-area' hidden={$.editorVisible(NOT)} />
-        <div class='viewer-area g-fs' >
-        <Viewer class='viewer-area g-fs' />
-        </div>  
+        <JscadEditor
+          p="editor"
+          class="editor editor-area"
+          hidden={$.editorVisible(NOT)}
+        />
+        <div class="viewer-area g-fs">
+          <Viewer p="viewer" class="viewer-area g-fs" />
+        </div>
       </>
-    )
+    );
   }
 }

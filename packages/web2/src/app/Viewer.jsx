@@ -5,6 +5,11 @@ export class Viewer extends Jsx6 {
   /**@type {HTMLCanvasElement} */
   canvas
 
+  fileDropped (ev){
+    const dataTransfer = {files:ev.dataTransfer.files}
+    this.worker.postMessage({action:'fileDropped', dataTransfer})
+  }
+
   init (){
     const cmdParams = {
       alias: this.alias,
@@ -32,7 +37,7 @@ export class Viewer extends Jsx6 {
   }
 
   tpl (h, state, $) {
-    this.worker = new Worker('./regl-worker.js')
+    this.worker = new Worker('./jscad-worker.js')
 
     const sendCmd = (cmd, ...rest)=> this.worker.postMessage(cmd, ...rest)
 
