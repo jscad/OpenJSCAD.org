@@ -3,7 +3,7 @@ import { EditorView } from '@codemirror/view'
 import { } from '@codemirror/highlight'
 import { basicSetup } from '@codemirror/basic-setup'
 import { javascript } from '@codemirror/lang-javascript'
-import { Jsx6 } from './jsx6'
+import { Jsx6 } from '../jsx6'
 
 export class JscadEditor extends Jsx6 {
   init () {

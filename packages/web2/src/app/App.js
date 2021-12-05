@@ -2,11 +2,11 @@ import { T, setTranslations, refreshTranslations,
   forEachProp, getValue,
   Jsx6, makeState,
   setValue,
-  NOT} from './jsx6'
+  NOT} from '../jsx6'
 import { JscadEditor } from './editor'
-import gearIcon from './icons/gear'
-import editIcon from './icons/edit'
-import Toggle from './Toggle'
+import gearIcon from '../icons/gear'
+import editIcon from '../icons/edit'
+import Toggle from '../comp/Toggle'
 import { Viewer } from './Viewer'
 import Sample from './sample'
 
@@ -103,7 +103,6 @@ export class App extends Jsx6 {
         </div>
         <JscadEditor p='editor' class='editor editor-area' hidden={$.editorVisible(NOT)} />
         <div class='viewer-area g-fs' >
-        <Sample />
         <Viewer class='viewer-area g-fs' />
         </div>  
       </>
