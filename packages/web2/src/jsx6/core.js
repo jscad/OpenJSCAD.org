@@ -95,7 +95,7 @@ function insertComp (comp, parentNode, before, parent) {
     comp.insertEl(parentNode, before, parent)
     comp.initTemplate()
     comp.insertChildren()
-    comp.init(comp.state, comp.$state)
+    comp.init(comp.state)
     comp.__initialized = true
   }
 
@@ -150,7 +150,7 @@ need to refresh the value
 */
 export function makeUpdater (parent, before, attr, func, updaters) {
   if (updaters instanceof Jsx6) {
-    updaters = updaters.$state()
+    updaters = updaters.state()
   }
 
   let updater

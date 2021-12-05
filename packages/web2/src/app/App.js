@@ -22,7 +22,12 @@ const langMap = {
 
 export class App extends Jsx6 {
   cName = 'MainApp'
-  state = { 
+  state = { settingsVisible:false, showDrop:false }
+   
+
+  initState () {
+    super.initState()
+    this.settings = makeState({ 
       autoReload: true,
       autoRotate: false,
       autoZoom: false,
@@ -30,41 +35,41 @@ export class App extends Jsx6 {
       showAxes: true,
       language: 'en',
       editorVisible: true,
-   }
+    }, true)
 
-  initState () {
-    super.initState()
     const str = localStorage.getItem(SETTINGS_KEY)
     if(str && str[0] === '{'){
       try {
-        this.$state().update(JSON.parse(str))
+        this.settings().update(JSON.parse(str))
       } catch (e) { console.log(e, 'str:',str)}
     }
 
   }
 
-  init (state, $) {
+  init ($) {
+    const $s = this.settings
+    console.log('settings',this.settings)
     const dropHandler = (ev) => {
-      ev.preventDefault();
-      this.$ui.showDrop = false;
+      ev.preventDefault()
+      $.showDrop = false
       this.viewer.fileDropped(ev)
     }
 
     const dragOverHandler = (ev) => {
       ev.preventDefault();
-      this.$ui.showDrop = true;
+      $.showDrop = true
     }
     this.el.ondrop = dropHandler;
     this.el.ondragover = dragOverHandler;
 
-    $().addUpdater((state, old)=>{
-      localStorage.setItem(SETTINGS_KEY, JSON.stringify(state))
-      if (old.has('language')) this.changeLanguage(state.language || 'en')
+    $s().addUpdater((state, old)=>{
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(state().getValue()))
+      if (old.has('language')) this.changeLanguage(state.language() || 'en')
     })
     
-    forEachProp(this.opts, bt => bt.addEventListener('change', () => $().update(getValue(this.opts))))
-    this.changeLanguage($.language())
-    setValue(this.opts, $()())
+    this.changeLanguage($s.language())
+    console.log("ssss", $s()())
+    setValue(this.opts, $s()())
   }
 
   async changeLanguage (lang) {
@@ -74,49 +79,47 @@ export class App extends Jsx6 {
     })
   }
 
-  tpl (h, state, $) {
-    let [,$ui] = makeState({settingsVisible:false, showDrop:false}, true)
-    this.$ui = $ui
+  tpl (h, $) {
+    const $s = this.settings
     return (
       <>
-        <div class="drop-handler" hidden={$ui.showDrop(NOT)}></div>
+        <div class="drop-handler" hidden={$.showDrop(NOT)}></div>
         <div class="top-menu">
-          <Toggle selected={$ui.settingsVisible}>{gearIcon}</Toggle>
-          <Toggle selected={$.editorVisible}>{editIcon}</Toggle>
+          <Toggle selected={$.settingsVisible}>{gearIcon}</Toggle>
+          <Toggle selected={$s.editorVisible}>{editIcon}</Toggle>
         </div>
 
         <div
-          p="settings"
           class="settings-area"
-          hidden={$ui.settingsVisible(NOT)}
+          hidden={$.settingsVisible(NOT)}
         >
           <div class="f-r">
             <label>{T`auto reload`}</label>
-            <Toggle class="el-switch" selected={$.autoReload}>
+            <Toggle class="el-switch" selected={$s.autoReload}>
               <span />
             </Toggle>
           </div>
           <div class="f-r">
             <label>{T`auto rotate`}</label>
-            <Toggle class="el-switch" selected="autoRotate">
+            <Toggle class="el-switch" selected={$s.autoRotate}>
               <span />
             </Toggle>
           </div>
           <div class="f-r">
             <label>{T`auto zoom`}</label>
-            <Toggle class="el-switch" selected="autoZoom">
+            <Toggle class="el-switch" selected={$s.autoZoom}>
               <span />
             </Toggle>
           </div>
           <div class="f-r">
             <label>{T`grid`}</label>
-            <Toggle class="el-switch" selected="showGrid">
+            <Toggle class="el-switch" selected={$s.showGrid}>
               <span />
             </Toggle>
           </div>
           <div class="f-r">
             <label>{T`axes`}</label>
-            <Toggle class="el-switch" selected="showAxes">
+            <Toggle class="el-switch" selected={$s.showAxes}>
               <span />
             </Toggle>
           </div>
@@ -134,7 +137,7 @@ export class App extends Jsx6 {
         <JscadEditor
           p="editor"
           class="editor editor-area"
-          hidden={$.editorVisible(NOT)}
+          hidden={$s.editorVisible(NOT)}
         />
         <div class="viewer-area g-fs">
           <Viewer p="viewer" class="viewer-area g-fs" />

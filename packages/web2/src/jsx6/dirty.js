@@ -1,3 +1,4 @@
+import { isObj } from '.'
 import { isFunc, throwErr } from './core'
 
 const ERR_DIRTY_RUNNER_FUNC = 5 //  JSX6E5 - dirty runner must be a function
@@ -48,7 +49,7 @@ export function makeState (_state = {}, markDirtyNow) {
         const func = updaters[i]
         if (!func || !isFunc(func)) {
           throwErr(ERR_DIRTY_RUNNER_FUNC, { func, i, updaters })
-        } else func(state, lastData)
+        } else func(bindingsProxy, lastData)
       } catch (error) {
         console.error(error)
       }
@@ -60,17 +61,17 @@ export function makeState (_state = {}, markDirtyNow) {
     if (updaters.length) addDirty(runUpdaters)
   }
 
-  const handler = {
-    set: function (target, prop, value, receiver) {
-      if (updateProp(prop, value)) _addDirty()
-      return true
-    },
-    get: function (target, prop) {
-      return _state[prop]
-    }
-  }
+  // const handler = {
+  //   set: function (target, prop, value, receiver) {
+  //     if (updateProp(prop, value)) _addDirty()
+  //     return true
+  //   },
+  //   get: function (target, prop) {
+  //     return _state[prop]
+  //   }
+  // }
 
-  const state = new Proxy(_state, handler)
+  // const state = new Proxy(_state, handler)
   const bindingsProxy = new Proxy(bindingFunc, {
     set: function (target, prop, value, receiver) {
       if (updateProp(prop, value)) _addDirty()
@@ -90,11 +91,11 @@ export function makeState (_state = {}, markDirtyNow) {
           }
           return _state[prop]
         }
-        const filterFunc = filter => asBinding(() => filter(func()), _addUpater, runUpdaters, state, prop)
+        const filterFunc = filter => asBinding(() => filter(func()), _addUpater, runUpdaters, bindingsProxy, prop)
         func.get = func.set = func
         func.f = filterFunc
         func.toString = () => throwErr(ERR_MUST_CALL_BINDING, prop)
-        bindings[prop] = asBinding(func, _addUpater, runUpdaters, state, prop)
+        bindings[prop] = asBinding(func, _addUpater, runUpdaters, bindingsProxy, prop)
       }
       return bindings[prop]
     }
@@ -110,6 +111,8 @@ export function makeState (_state = {}, markDirtyNow) {
       }
       out.addUpdater = (updater) => updaters.push(updater)
       return out
+    } else if (isObj(f)) {
+      $.update(f)
     } else {
       _addDirty()
       return f
@@ -151,5 +154,6 @@ export function makeState (_state = {}, markDirtyNow) {
 
   if (markDirtyNow) _addDirty()
 
-  return [state, bindingsProxy]
+  // return [state, bindingsProxy]
+  return bindingsProxy
 }
