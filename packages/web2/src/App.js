@@ -33,15 +33,14 @@ export class App extends Jsx6 {
    }
 
   initState () {
-    const state = this.state
+    super.initState()
     const str = localStorage.getItem(SETTINGS_KEY)
     if(str && str[0] === '{'){
       try {
-        Object.assign(state, JSON.parse(str))
+        this.$state().update(JSON.parse(str))
       } catch (e) { console.log(e, 'str:',str)}
     }
 
-    super.initState()
   }
 
   init (state, $) {
@@ -51,8 +50,8 @@ export class App extends Jsx6 {
     })
     
     forEachProp(this.opts, bt => bt.addEventListener('change', () => $().update(getValue(this.opts))))
-    this.changeLanguage(state.language)
-    setValue(this.opts, state)
+    this.changeLanguage($.language())
+    setValue(this.opts, $()())
   }
 
   async changeLanguage (lang) {
@@ -63,16 +62,16 @@ export class App extends Jsx6 {
   }
 
   tpl (h, state, $) {
-    let [,uiBind] = makeState({settingsVisible:false}, true)
-    this.uiState = uiBind
+    let [,$ui] = makeState({settingsVisible:false}, true)
+    this.$ui = $ui
     return (
       <>
         <div class="top-menu">
-          <Toggle selected={uiBind.settingsVisible}>{gearIcon}</Toggle>
+          <Toggle selected={$ui.settingsVisible}>{gearIcon}</Toggle>
           <Toggle selected={$.editorVisible}>{editIcon}</Toggle>
         </div>
 
-        <div p='settings' class='settings-area' hidden={uiBind.settingsVisible(NOT)}>
+        <div p='settings' class='settings-area' hidden={$ui.settingsVisible(NOT)}>
           <div class='f-r'>
             <label>{T`auto reload`}</label>
             <Toggle class='el-switch' selected={$.autoReload}><span /></Toggle>
@@ -102,7 +101,7 @@ export class App extends Jsx6 {
             </select>
           </div>
         </div>
-        <JscadEditor p='editor' class='editor editor-area' tag-name='B' hidden={()=>!state.editorVisible} />
+        <JscadEditor p='editor' class='editor editor-area' hidden={$.editorVisible(NOT)} />
         <div class='viewer-area g-fs' >
         <Sample />
         <Viewer class='viewer-area g-fs' />

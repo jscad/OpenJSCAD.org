@@ -134,7 +134,7 @@ export function makeState (_state = {}, markDirtyNow) {
     return false
   }
 
-  function $ () {}
+  function $ () { return { ..._state } }
   $.push = $.addUpdater = (updater) => updaters.push(updater)
   $.dirty = _addDirty
   $.reset = () => { lastData.clear() }

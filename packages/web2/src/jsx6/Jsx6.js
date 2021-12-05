@@ -23,7 +23,7 @@ export class Jsx6 {
   tagName = 'DIV';
   cName = '';
   state = {};
-  stateBind;
+  $state;
 
   constructor(attr, children, parent) {
 		attr ||= {}
@@ -47,9 +47,10 @@ export class Jsx6 {
   insertEl(parentNode, beforeSibling, parent) {
     this.parent = parent;
 
+    this.initState()
+
     this.el = insertHtml(parentNode, beforeSibling, { tag: this.tagName }, parent, this);
 		this.contentArea ||= this.el
-    this.initState()
 
     this.insertAttr(this.attr)
 
@@ -66,7 +67,7 @@ export class Jsx6 {
 
   initState() {
     if (this.state) {
-      ([this.state, this.stateBind] = makeState(this.state));
+      ([this.state, this.$state] = makeState(this.state));
     }
   }
 
@@ -77,7 +78,7 @@ export class Jsx6 {
   destroyed() { }
 
   initTemplate() {
-    let def = this.tpl(h.bind(this), this.state, this.stateBind, this)
+    let def = this.tpl(h.bind(this), this.state, this.$state, this)
     insertHtml(this.el, null, def, this);
   }
 
@@ -98,7 +99,7 @@ export class Jsx6 {
   updateState(value) {
     // goes behind the proxy and calls dirty() only once
     // this is more efficient than setting props one by one on the state
-    this.stateBind().update(value);
+    this.$state().update(value);
   }
 
   get value() { Object.assign({}, this.state); }
