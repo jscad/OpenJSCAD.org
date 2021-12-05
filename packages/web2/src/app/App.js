@@ -23,75 +23,72 @@ const langMap = {
 export class App extends Jsx6 {
   cName = 'MainApp'
   state = { settingsVisible:false, showDrop:false }
-   
-
-  initState () {
-    super.initState()
-    this.settings = makeState({ 
-      autoReload: true,
-      autoRotate: false,
-      autoZoom: false,
-      showGrid: true,
-      showAxes: true,
-      language: 'en',
-      editorVisible: true,
-    }, true)
-
+  
+  init (state) {
+    const $s = this.settings
+    
     const str = localStorage.getItem(SETTINGS_KEY)
     if(str && str[0] === '{'){
       try {
         this.settings().update(JSON.parse(str))
       } catch (e) { console.log(e, 'str:',str)}
     }
-
-  }
-
-  init ($) {
-    const $s = this.settings
     console.log('settings',this.settings)
     const dropHandler = (ev) => {
       ev.preventDefault()
-      $.showDrop = false
+      state.showDrop = false
       this.viewer.fileDropped(ev)
     }
-
+    
     const dragOverHandler = (ev) => {
       ev.preventDefault();
-      $.showDrop = true
+      state.showDrop = true
     }
     this.el.ondrop = dropHandler;
     this.el.ondragover = dragOverHandler;
-
+    
     $s().addUpdater((state, old)=>{
       localStorage.setItem(SETTINGS_KEY, JSON.stringify(state().getValue()))
       if (old.has('language')) this.changeLanguage(state.language() || 'en')
     })
     
     this.changeLanguage($s.language())
-    console.log("ssss", $s()())
     setValue(this.opts, $s()())
   }
-
+  
   async changeLanguage (lang) {
     await window.fetch(`locales/${lang}.json`).then(r => r.text()).then((json) => {
       setTranslations(JSON.parse(json))
       refreshTranslations()
     })
   }
+  
+  tpl (h, state) {
+    // tpl is called before init, so we create settings here
+    const $s = (this.settings = makeState(
+      {
+        autoReload: true,
+        autoRotate: false,
+        autoZoom: false,
+        showGrid: true,
+        showAxes: true,
+        language: "en",
+        editorVisible: true,
+      },
+      true
+    ));
 
-  tpl (h, $) {
-    const $s = this.settings
     return (
       <>
-        <div class="drop-handler" hidden={$.showDrop(NOT)}></div>
+        <div class="drop-handler" hidden={state.showDrop(NOT)}></div>
         <div class="top-menu">
-          <Toggle selected={$.settingsVisible}>{gearIcon}</Toggle>
+          <Toggle selected={state.settingsVisible}>{gearIcon}</Toggle>
           <Toggle selected={$s.editorVisible}>{editIcon}</Toggle>
         </div>
 
         <div
           class="settings-area"
-          hidden={$.settingsVisible(NOT)}
+          hidden={state.settingsVisible(NOT)}
         >
           <div class="f-r">
             <label>{T`auto reload`}</label>

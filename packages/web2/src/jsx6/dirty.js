@@ -78,7 +78,6 @@ export function makeState (_state = {}, markDirtyNow) {
       return true
     },
     get: function (target, prop) {
-      console.log('prop', prop)
       if (prop === 'toJSON') return () => _state
       const _addUpater = (updater) => updaters.push((s, old) => {
         if (old.has(prop)) updater(s[prop], prop, s, old)
@@ -140,6 +139,9 @@ export function makeState (_state = {}, markDirtyNow) {
   }
 
   function $ () { return { ..._state } }
+  Object.defineProperty($, 'value', {
+    get: () => _state
+  })
   $.toJSON = () => _state
   $.push = $.addUpdater = (updater) => updaters.push(updater)
   $.dirty = _addDirty
