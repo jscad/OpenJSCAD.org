@@ -13,6 +13,10 @@ let _createElementSvg
  * @property children {Array<String|Function|TagDef>}
  */
 
+/* Error codes are intentionally not kept in the source, but unique numerical code is chosen for each
+error is thrown using translation, so translations of errors can be included if desired in dev only
+or also in production if so desired. The choice is yours :)
+*/
 const ERR_NULL_TAG = 1 //           JSX6E1 - Tag is null
 const ERR_UNSUPPORTED_TAG = 2 //    JSX6E2 - Tag type is not supported
 // UNUSED const ERR_UPDATER_UNDEF = 4 //      JSX6E4 - updater undefined
