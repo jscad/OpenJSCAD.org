@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.7.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.6.1...@jscad/modeling@2.7.0) (2021-12-11)
+
+
+### Bug Fixes
+
+* **modeling:** compute planes from average of all vertex normals ([#953](https://github.com/jscad/OpenJSCAD.org/issues/953)) ([c8a37ad](https://github.com/jscad/OpenJSCAD.org/commit/c8a37ad6430aec8361a5e121730b34629c0d969c))
+
+
+### Features
+
+* **modeling:** new triangle primitive ([#954](https://github.com/jscad/OpenJSCAD.org/issues/954)) ([ce00d7d](https://github.com/jscad/OpenJSCAD.org/commit/ce00d7d4aed364496b7086221af7feae4ffec29c))
+
+
+### Performance Improvements
+
+* **modeling:** improved measureBoundingBox by eliminating allocations ([8abe361](https://github.com/jscad/OpenJSCAD.org/commit/8abe361fc0249ec10e438382353b316aec4644a4))
+
+
+
+
+
 ## [2.6.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.6.0...@jscad/modeling@2.6.1) (2021-11-07)
 
 

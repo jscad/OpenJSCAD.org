@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.0...@jscad/web@2.5.1) (2021-12-11)
+
+
+### Bug Fixes
+
+* **web:** changed setup to use OES_element_index_uint only if available ([2c2fcfa](https://github.com/jscad/OpenJSCAD.org/commit/2c2fcfa8b72ca8c6ddb3739e4d8a9b527a687e2e))
+
+
+
+
+
 # [2.5.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.4.4...@jscad/web@2.5.0) (2021-11-07)
 
 
