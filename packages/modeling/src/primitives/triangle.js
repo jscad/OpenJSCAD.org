@@ -125,7 +125,7 @@ const createTriangle = (A, B, C, a, b, c) => {
  * @alias module:modeling/primitives.triangle
  *
  * @example
- * let myshape = triangle({type: 'AAS', values: [values: [degToRad(62), degToRad(35), 7]})
+ * let myshape = triangle({type: 'AAS', values: [degToRad(62), degToRad(35), 7]})
  */
 const triangle = (options) => {
   const defaults = {

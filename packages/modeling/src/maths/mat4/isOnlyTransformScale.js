@@ -1,10 +1,11 @@
 
 /**
- * Determine whether the given matrix is translate+scale.
- * this code returns true for 180 rotation as it can be interpreted as scale (-1,-1)
+ * Determine whether the given matrix is only translate and/or scale.
+ * This code returns true for PI rotation as it can be interpreted as scale.
  *
- * this method is primarily useful for measureBoundingBox
- *
+ * @param {mat4} matrix - the matrix
+ * @returns {Boolean} true if matrix is for translate and/or scale
+ * @alias module:modeling/maths/mat4.isOnlyTransformScale
  */
 const isOnlyTransformScale = (matrix) => (
 

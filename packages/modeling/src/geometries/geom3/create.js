@@ -4,7 +4,7 @@ const mat4 = require('../../maths/mat4')
  * Represents a 3D geometry consisting of a list of polygons.
  * @typedef {Object} geom3
  * @property {Array} polygons - list of polygons, each polygon containing three or more points
- * @property {mat4} transforms - transforms to apply to the sides, see transform()
+ * @property {mat4} transforms - transforms to apply to the polygons, see transform()
  */
 
 /**
