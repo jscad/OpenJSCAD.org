@@ -11,7 +11,7 @@ Here you can find the full list of packages of the JSCAD organization
 
 | Package | Version | Dependencies |
 |--------|-------|------------|
-| [`@jscad/cli`](/packages/cli) | [![npm](https://img.shields.io/npm/v/@jscad/cli.svg)](https://www.npmjs.com/package/@jscad/cli) | [![Dependency Status](https://david-dm.org/jscad/OpenJSCAD.org.svg?path=packages/cli)](https://david-dm.org/jscad/OpenJSCAD.org?path=packages/cli) |
+| [`@jscad/cli`](/packages/cli) | [![npm](https://img.shields.io/npm/v/@jscad/cli.svg)](https://www.npmjs.com/package/@jscad/cli) | [![Dependency Status](https://img.shields.io/librariesio/release/npm/@jscad/cli)](https://www.npmjs.com/package/@jscad/cli) |
 | [`@jscad/web`](/packages/web) | [![npm](https://img.shields.io/npm/v/@jscad/web.svg)](https://www.npmjs.com/package/@jscad/web) | [![Dependency Status](https://david-dm.org/jscad/OpenJSCAD.org.svg?path=packages/web)](https://david-dm.org/jscad/OpenJSCAD.org?path=packages/web) |
 | [`@jscad/desktop`](/packages/desktop) | [![npm](https://img.shields.io/npm/v/@jscad/desktop.svg)](https://www.npmjs.com/package/@jscad/desktop) | [![Dependency Status](https://david-dm.org/jscad/OpenJSCAD.org.svg?path=packages/desktop)](https://david-dm.org/jscad/OpenJSCAD.org?path=packages/desktop) |
 
