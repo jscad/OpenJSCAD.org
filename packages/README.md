@@ -9,8 +9,8 @@ Here you can find the full list of packages of the JSCAD organization
 
 ### Applications
 
-| Package | Version | Dependencies |
-|--------|-------|------------|
+| Package | Version | Dependencies | Downloads |
+|---------|---------|--------------|-----------|
 | [`@jscad/cli`](/packages/cli) | [![npm](https://img.shields.io/npm/v/@jscad/cli.svg)](https://www.npmjs.com/package/@jscad/cli) | [![Dependency Status](https://img.shields.io/librariesio/release/npm/@jscad/cli)](https://www.npmjs.com/package/@jscad/cli) | ![Downloads](https://img.shields.io/npm/dw/@jscad/cli) |
 | [`@jscad/web`](/packages/web) | [![npm](https://img.shields.io/npm/v/@jscad/web.svg)](https://www.npmjs.com/package/@jscad/web) | [![Dependency Status](https://img.shields.io/librariesio/release/npm/@jscad/web)](https://www.npmjs.com/package/@jscad/web) | ![Downloads](https://img.shields.io/npm/dw/@jscad/web) |
 | [`@jscad/desktop`](/packages/desktop) | [![npm](https://img.shields.io/npm/v/@jscad/desktop.svg)](https://www.npmjs.com/package/@jscad/desktop) | [![Dependency Status](https://img.shields.io/librariesio/release/npm/@jscad/desktop)](https://www.npmjs.com/package/@jscad/desktop) | ![Downloads](https://img.shields.io/npm/dw/@jscad/desktop) |
