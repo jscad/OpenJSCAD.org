@@ -7,6 +7,18 @@ Here you can find the full list of packages of the JSCAD organization
 - [IO Packages](#io-packages)
 - [Other Packages](#other-packages)
 
+These packages are published and available for download via [NPM](https://www.npmjs.com/org/jscad)
+```
+npm install @jscad/modeling
+```
+
+In addition these packages are hosted at [UNPKG](https://unpkg.com/), and can be imported directly into webpages.
+
+```
+<script language="javascript" src="https://unpkg.com/@jscad/modeling" id="MODELING"></script>
+```
+
+
 ### Applications
 
 | Package | Version | Dependencies | Downloads |
@@ -41,6 +53,7 @@ Here you can find the full list of packages of the JSCAD organization
 | [`@jscad/stl-serializer`](/packages/io/stl-serializer) | [![npm](https://img.shields.io/npm/v/@jscad/stl-serializer.svg)](https://www.npmjs.com/package/@jscad/stl-serializer) | [![Dependency Status](https://img.shields.io/librariesio/release/npm/@jscad/stl-serializer)](https://www.npmjs.com/package/@jscad/stl-serializer) | ![Downloads](https://img.shields.io/npm/dw/@jscad/stl-serializer) |
 | [`@jscad/svg-deserializer`](/packages/io/svg-deserializer) | [![npm](https://img.shields.io/npm/v/@jscad/svg-deserializer.svg)](https://www.npmjs.com/package/@jscad/svg-deserializer) | [![Dependency Status](https://img.shields.io/librariesio/release/npm/@jscad/svg-deserializer)](https://www.npmjs.com/package/@jscad/svg-deserializer) | ![Downloads](https://img.shields.io/npm/dw/@jscad/svg-deserializer) |
 | [`@jscad/svg-serializer`](/packages/io/svg-serializer) | [![npm](https://img.shields.io/npm/v/@jscad/svg-serializer.svg)](https://www.npmjs.com/package/@jscad/svg-serializer) | [![Dependency Status](https://img.shields.io/librariesio/release/npm/@jscad/svg-serializer)](https://www.npmjs.com/package/@jscad/svg-serializer) | ![Downloads](https://img.shields.io/npm/dw/@jscad/svg-serializer) |
+| [`@jscad/x3d-deserializer`](/packages/io/x3d-deserializer) | [![npm](https://img.shields.io/npm/v/@jscad/x3d-deserializer.svg)](https://www.npmjs.com/package/@jscad/x3d-deserializer) | [![Dependency Status](https://img.shields.io/librariesio/release/npm/@jscad/x3d-deserializer)](https://www.npmjs.com/package/@jscad/x3d-deserializer) | ![Downloads](https://img.shields.io/npm/dw/@jscad/x3d-deserializer) |
 | [`@jscad/x3d-serializer`](/packages/io/x3d-serializer) | [![npm](https://img.shields.io/npm/v/@jscad/x3d-serializer.svg)](https://www.npmjs.com/package/@jscad/x3d-serializer) | [![Dependency Status](https://img.shields.io/librariesio/release/npm/@jscad/x3d-serializer)](https://www.npmjs.com/package/@jscad/x3d-serializer) | ![Downloads](https://img.shields.io/npm/dw/@jscad/x3d-serializer) |
 
 ### Other Packages
