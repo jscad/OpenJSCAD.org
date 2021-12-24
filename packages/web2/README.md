@@ -24,6 +24,9 @@ npm run desktop
  - [x] EDITOR codemirror 6
  - [x] EDITOR javascript syntax higlight
  - [x] ELECTRON: load same index page as electron app
+ - [ ] WEB - file upload and changes syncing with worker
+ - [ ] ALL - generalize file access
+ - [ ] ELECTRON - allow working with local files
  - [ ] ELECTRON: recognize when in electron
  - [ ] ELECTRON: if in it, enable saving, not just reading script
  - [ ] DEMO-WEB: generate web page so proto is available for playing with as-is

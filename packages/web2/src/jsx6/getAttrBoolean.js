@@ -1,4 +1,4 @@
-import { isObj } from './core'
+import { isObj } from "./core"
 import { mapProp } from './mapProp'
 
 export function getAttrBoolean (obj, attr, flip) {

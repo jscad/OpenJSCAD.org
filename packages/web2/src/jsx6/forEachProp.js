@@ -1,4 +1,4 @@
-import { isObj } from './core'
+import { isObj } from "./core"
 
 export function forEachProp (obj, callback) {
   if (obj && isObj(obj)) {

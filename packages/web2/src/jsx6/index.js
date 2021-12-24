@@ -1,4 +1,5 @@
 export * from './core'
+export * from './insertHtml'
 export * from './dirty'
 export * from './trans'
 export * from './getValue'

@@ -1,11 +1,12 @@
-import { isObj } from '.'
-import { isFunc, throwErr } from './core'
+import { throwErr, isObj, requireFunc, isFunc } from './core'
 
+const ERR_DIRTY_RECURSION = 4 //  JSX6E4 - not allowed to trigger dirty values during dirty update dispatch to avoid infinite updates
 const ERR_DIRTY_RUNNER_FUNC = 5 //  JSX6E5 - dirty runner must be a function
 const ERR_MUST_CALL_BINDING = 6 //  JSX6E6 - If you are seeing this, you forgot to call a binding as a function, or tried to call binding.toString() /.
 
 const dirty = new Set()
 let hasDirty = false
+let isRunning = false
 let anim
 
 if (typeof document !== 'undefined') {
@@ -21,7 +22,12 @@ export function callAnim (callback) {
 }
 
 export function addDirty (func) {
-  if (!func || !isFunc(func)) throwErr(ERR_DIRTY_RUNNER_FUNC)
+  if (isRunning) throwErr(ERR_DIRTY_RECURSION)
+  if (func instanceof Array) {
+    func.forEach(addDirty)
+    return
+  }
+  requireFunc(func, ERR_DIRTY_RUNNER_FUNC)
 
   dirty.add(func)
   if (!hasDirty) {
@@ -32,9 +38,64 @@ export function addDirty (func) {
 }
 
 export function runDirty () {
-  dirty.forEach(f => f())
+  isRunning = true
+  dirty.forEach(f => {
+    try {
+      f()
+    } catch (e) {
+      console.error(e, f)
+    }
+  })
   dirty.clear()
   hasDirty = false
+  isRunning = false
+}
+
+export function makeBinding (initialValue, obj, propName, alsoSetBindProp) {
+  const updaters = []
+  let value = initialValue
+  function _addDirty () {
+    if (updaters.length) addDirty(updaters)
+  }
+  if (obj) {
+    Object.defineProperty(obj, propName, {
+      get: () => value,
+      set: (v) => {
+        if (v !== value) {
+          value = v
+          _addDirty()
+        }
+      }
+    })
+  }
+
+  function addUpdater (u) {
+    updaters.push(u)
+  }
+
+  function bindingFunc (v) {
+    if (isFunc(v)) {
+      return asBinding(() => v(value), addUpdater, obj, propName, _addDirty)
+    }
+    if (arguments.length && v !== value) {
+      value = v
+      _addDirty()
+    }
+    return value
+  }
+
+  const binding = asBinding(bindingFunc, addUpdater, obj, propName, _addDirty)
+  if (obj && alsoSetBindProp) obj['$' + propName] = bindingFunc
+  return binding
+}
+
+function asBinding (func, _addUpater, state, prop, _addDirty) {
+  func.isBinding = true
+  func.addUpdater = _addUpater
+  func.dirty = () => _addDirty()
+  func.state = state
+  func.propName = prop
+  return func
 }
 
 export function makeState (_state = {}, markDirtyNow) {
@@ -46,10 +107,7 @@ export function makeState (_state = {}, markDirtyNow) {
     const len = updaters.length
     for (let i = 0; i < len; i++) {
       try {
-        const func = updaters[i]
-        if (!func || !isFunc(func)) {
-          throwErr(ERR_DIRTY_RUNNER_FUNC, { func, i, updaters })
-        } else func(bindingsProxy, lastData)
+        updaters[i](bindingsProxy, lastData, state)
       } catch (error) {
         console.error(error)
       }
@@ -61,17 +119,17 @@ export function makeState (_state = {}, markDirtyNow) {
     if (updaters.length) addDirty(runUpdaters)
   }
 
-  // const handler = {
-  //   set: function (target, prop, value, receiver) {
-  //     if (updateProp(prop, value)) _addDirty()
-  //     return true
-  //   },
-  //   get: function (target, prop) {
-  //     return _state[prop]
-  //   }
-  // }
+  const handler = {
+    set: function (target, prop, value, receiver) {
+      if (updateProp(prop, value)) _addDirty()
+      return true
+    },
+    get: function (target, prop) {
+      return _state[prop]
+    }
+  }
 
-  // const state = new Proxy(_state, handler)
+  const state = new Proxy(_state, handler)
   const bindingsProxy = new Proxy(bindingFunc, {
     set: function (target, prop, value, receiver) {
       if (updateProp(prop, value)) _addDirty()
@@ -92,11 +150,10 @@ export function makeState (_state = {}, markDirtyNow) {
           }
           return _state[prop]
         }
-        const filterFunc = filter => asBinding(() => filter(func()), _addUpater, runUpdaters, bindingsProxy, prop)
+        const filterFunc = filter => asBinding(() => filter(func()), _addUpater, bindingsProxy, prop, _addDirty)
         func.get = func.set = func
-        func.f = filterFunc
         func.toString = () => throwErr(ERR_MUST_CALL_BINDING, prop)
-        bindings[prop] = asBinding(func, _addUpater, runUpdaters, bindingsProxy, prop)
+        bindings[prop] = asBinding(func, _addUpater, bindingsProxy, prop, _addDirty)
       }
       return bindings[prop]
     }
@@ -110,7 +167,7 @@ export function makeState (_state = {}, markDirtyNow) {
         _addDirty()
         return f(...params)
       }
-      out.addUpdater = (updater) => updaters.push(updater)
+      out.addUpdater = (updater) => updaters.push(requireFunc(updater, ERR_DIRTY_RUNNER_FUNC))
       return out
     } else if (isObj(f)) {
       $.update(f)
@@ -118,15 +175,6 @@ export function makeState (_state = {}, markDirtyNow) {
       _addDirty()
       return f
     }
-  }
-
-  function asBinding (func, _addUpater, runUpdaters, state, prop) {
-    func.isBinding = true
-    func.addUpdater = _addUpater
-    func.dirty = () => _addDirty()
-    func.state = state
-    func.propName = prop
-    return func
   }
 
   function updateProp (p, value, force) {
@@ -137,14 +185,15 @@ export function makeState (_state = {}, markDirtyNow) {
     }
     return false
   }
-  function $ () { return { ..._state } }
+
+  function $ () { return state }
   Object.defineProperty($, 'value', {
     get: $
   })
   $.toJSON = () => _state
   $.push = $.addUpdater = (updater) => updaters.push(updater)
   $.dirty = _addDirty
-  $.getValue = $
+  $.getValue = () => ({ ..._state })
   $.reset = () => { lastData.clear() }
   $.list = updaters
   $.update = (newData, force) => {
@@ -158,6 +207,5 @@ export function makeState (_state = {}, markDirtyNow) {
 
   if (markDirtyNow) _addDirty()
 
-  // return [state, bindingsProxy]
   return bindingsProxy
 }

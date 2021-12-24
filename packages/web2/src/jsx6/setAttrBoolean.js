@@ -1,4 +1,4 @@
-import { isObj } from '.'
+import { isObj } from './core'
 import { Jsx6 } from './Jsx6'
 
 export function setAttrBoolean (obj, attr, value) {

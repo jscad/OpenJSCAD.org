@@ -1,4 +1,4 @@
-import { isObj } from './core'
+import { isObj } from "./core"
 
 export function mapProp (obj, callback) {
   if (obj && isObj(obj)) {

@@ -43,7 +43,7 @@ export class Viewer extends Jsx6 {
 
     const resize = new ResizeObserver(([box]) => {
       let rect = box.contentRect
-      
+
       this.canvas.width = rect.width
       this.canvas.height = rect.height
     })

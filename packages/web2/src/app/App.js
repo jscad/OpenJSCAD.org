@@ -2,7 +2,8 @@ import { T, setTranslations, refreshTranslations,
   forEachProp, getValue,
   Jsx6, makeState,
   setValue,
-  NOT} from '../jsx6'
+  NOT,
+  makeBinding} from '../jsx6'
 import { JscadEditor } from './editor'
 import gearIcon from '../icons/gear'
 import editIcon from '../icons/edit'
@@ -22,9 +23,11 @@ const langMap = {
 
 export class App extends Jsx6 {
   cName = 'MainApp'
+  value = 13
   state = { settingsVisible:false, showDrop:false }
   
   init (state) {
+    console.log('value',this.value)
     const $s = this.settings
     
     const str = localStorage.getItem(SETTINGS_KEY)
@@ -64,6 +67,7 @@ export class App extends Jsx6 {
   }
   
   tpl (h, state) {
+    makeBinding(11, this,'value', true);
     // tpl is called before init, so we create settings here
     const $s = this.settings = makeState({
         autoReload: true,
@@ -83,6 +87,7 @@ export class App extends Jsx6 {
         <div class="top-menu">
           <Toggle selected={state.settingsVisible}>{gearIcon}</Toggle>
           <Toggle selected={$s.editorVisible}>{editIcon}</Toggle>
+          {this.$value}
         </div>
 
         <div
