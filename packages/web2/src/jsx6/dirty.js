@@ -1,3 +1,4 @@
+import { runFunc } from '.'
 import { throwErr, isObj, requireFunc, isFunc } from './core'
 
 const ERR_DIRTY_RECURSION = 4 //  JSX6E4 - not allowed to trigger dirty values during dirty update dispatch to avoid infinite updates
@@ -39,60 +40,48 @@ export function addDirty (func) {
 
 export function runDirty () {
   isRunning = true
-  dirty.forEach(f => {
-    try {
-      f()
-    } catch (e) {
-      console.error(e, f)
-    }
-  })
+  dirty.forEach(runFunc)
   dirty.clear()
   hasDirty = false
   isRunning = false
 }
 
-export function makeBinding (initialValue, obj, propName, alsoSetBindProp) {
+export function makeBinding (initialValue, propName, obj, alsoSetBindProp) {
   const updaters = []
   let value = initialValue
-  function _addDirty () {
-    if (updaters.length) addDirty(updaters)
-  }
-  if (obj) {
-    Object.defineProperty(obj, propName, {
-      get: () => value,
-      set: (v) => {
-        if (v !== value) {
-          value = v
-          _addDirty()
-        }
-      }
-    })
-  }
-
-  function addUpdater (u) {
-    updaters.push(u)
-  }
 
   function bindingFunc (v) {
     if (isFunc(v)) {
-      return asBinding(() => v(value), addUpdater, obj, propName, _addDirty)
+      return asBinding(() => v(value), obj, propName, updaters)
     }
-    if (arguments.length && v !== value) {
-      value = v
-      _addDirty()
-    }
+    if (arguments.length) updateValue(value)
     return value
   }
 
-  const binding = asBinding(bindingFunc, addUpdater, obj, propName, _addDirty)
+  const binding = asBinding(bindingFunc, obj, propName, updaters)
+  const updateValue = v => {
+    if (v !== value) {
+      value = v
+      binding.dirty()
+    }
+  }
+
+  if (obj) {
+    Object.defineProperty(obj, propName, {
+      get: () => value,
+      set: updateValue
+    })
+  }
+
   if (obj && alsoSetBindProp) obj['$' + propName] = bindingFunc
+
   return binding
 }
 
-function asBinding (func, _addUpater, state, prop, _addDirty) {
+function asBinding (func, state, prop, updaters) {
   func.isBinding = true
-  func.addUpdater = _addUpater
-  func.dirty = () => _addDirty()
+  func.addUpdater = u => updaters.push(u)
+  func.dirty = () => { if (updaters.length) addDirty(updaters) }
   func.state = state
   func.propName = prop
   return func
@@ -100,6 +89,7 @@ function asBinding (func, _addUpater, state, prop, _addDirty) {
 
 export function makeState (_state = {}, markDirtyNow) {
   const updaters = []
+  const perPropUpdaters = {}
   const bindings = {}
   const lastData = new Map()
 
@@ -137,10 +127,15 @@ export function makeState (_state = {}, markDirtyNow) {
     },
     get: function (target, prop) {
       if (prop === 'toJSON') return () => _state
-      const _addUpater = (updater) => updaters.push((s, old) => {
-        if (old.has(prop)) updater(s[prop], prop, s, old)
-      })
+
       if (!bindings[prop]) {
+        perPropUpdaters[prop] = []
+        const _addUpater = (updater) => {
+          perPropUpdaters[prop].push(updater)
+        }
+        function _addDirty () {
+          if (perPropUpdaters[prop].length) addDirty(perPropUpdaters[prop])
+        }
         const func = function (value) {
           if (arguments.length !== 0) {
             if (isFunc(value)) {
@@ -150,10 +145,10 @@ export function makeState (_state = {}, markDirtyNow) {
           }
           return _state[prop]
         }
-        const filterFunc = filter => asBinding(() => filter(func()), _addUpater, bindingsProxy, prop, _addDirty)
+        const filterFunc = filter => asBinding(() => filter(func()), bindingsProxy, prop, perPropUpdaters[prop])
         func.get = func.set = func
         func.toString = () => throwErr(ERR_MUST_CALL_BINDING, prop)
-        bindings[prop] = asBinding(func, _addUpater, bindingsProxy, prop, _addDirty)
+        bindings[prop] = asBinding(func, bindingsProxy, prop, perPropUpdaters[prop])
       }
       return bindings[prop]
     }
@@ -194,7 +189,6 @@ export function makeState (_state = {}, markDirtyNow) {
   $.push = $.addUpdater = (updater) => updaters.push(updater)
   $.dirty = _addDirty
   $.getValue = () => ({ ..._state })
-  $.reset = () => { lastData.clear() }
   $.list = updaters
   $.update = (newData, force) => {
     if (!newData) return

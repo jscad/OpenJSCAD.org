@@ -27,7 +27,6 @@ export class App extends Jsx6 {
   state = { settingsVisible:false, showDrop:false }
   
   init (state) {
-    console.log('value',this.value)
     const $s = this.settings
     
     const str = localStorage.getItem(SETTINGS_KEY)
@@ -67,7 +66,7 @@ export class App extends Jsx6 {
   }
   
   tpl (h, state) {
-    makeBinding(11, this,'value', true);
+    makeBinding(11, 'value', this, true);
     // tpl is called before init, so we create settings here
     const $s = this.settings = makeState({
         autoReload: true,

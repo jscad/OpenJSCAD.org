@@ -33,3 +33,11 @@ export const requireFunc = (func, err = ERR_REQUIRE_FUNC) => {
   }
   return func
 }
+
+export const runFunc = (f) => {
+  try {
+    f()
+  } catch (e) {
+    console.error(e, f)
+  }
+}
