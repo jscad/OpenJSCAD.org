@@ -1,5 +1,4 @@
-import { runFunc } from '.'
-import { throwErr, isObj, requireFunc, isFunc } from './core'
+import { runFunc, throwErr, isObj, requireFunc, isFunc } from './core'
 
 const ERR_DIRTY_RECURSION = 4 //  JSX6E4 - not allowed to trigger dirty values during dirty update dispatch to avoid infinite updates
 const ERR_DIRTY_RUNNER_FUNC = 5 //  JSX6E5 - dirty runner must be a function
@@ -130,12 +129,6 @@ export function makeState (_state = {}, markDirtyNow) {
 
       if (!bindings[prop]) {
         perPropUpdaters[prop] = []
-        const _addUpater = (updater) => {
-          perPropUpdaters[prop].push(updater)
-        }
-        function _addDirty () {
-          if (perPropUpdaters[prop].length) addDirty(perPropUpdaters[prop])
-        }
         const func = function (value) {
           if (arguments.length !== 0) {
             if (isFunc(value)) {
@@ -145,7 +138,7 @@ export function makeState (_state = {}, markDirtyNow) {
           }
           return _state[prop]
         }
-        const filterFunc = filter => asBinding(() => filter(func()), bindingsProxy, prop, perPropUpdaters[prop])
+        const filterFunc = filter => asBinding(() => filter(_state[prop]), bindingsProxy, prop, perPropUpdaters[prop])
         func.get = func.set = func
         func.toString = () => throwErr(ERR_MUST_CALL_BINDING, prop)
         bindings[prop] = asBinding(func, bindingsProxy, prop, perPropUpdaters[prop])
@@ -176,6 +169,7 @@ export function makeState (_state = {}, markDirtyNow) {
     if (force || _state[p] !== value) {
       lastData.set(p, _state[p])
       _state[p] = value
+      if (perPropUpdaters[p]) addDirty(perPropUpdaters[p])
       return true
     }
     return false

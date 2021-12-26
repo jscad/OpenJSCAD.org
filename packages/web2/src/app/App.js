@@ -50,6 +50,7 @@ export class App extends Jsx6 {
     this.el.ondragover = dragOverHandler;
     
     $s().addUpdater((state, old)=>{
+      console.log('changed',state, old)
       localStorage.setItem(SETTINGS_KEY, JSON.stringify(state().getValue()))
       if (old.has('language')) this.changeLanguage(state.language() || 'en')
     })
@@ -89,10 +90,7 @@ export class App extends Jsx6 {
           {this.$value}
         </div>
 
-        <div
-          class="settings-area"
-          hidden={state.settingsVisible(NOT)}
-        >
+        <div class="settings-area" hidden={state.settingsVisible(NOT)}>
           <div class="f-r">
             <label>{T`auto reload`}</label>
             <Toggle class="el-switch" selected={$s.autoReload}>
@@ -125,9 +123,9 @@ export class App extends Jsx6 {
           </div>
           <div class="f-r">
             {T`Languages`}
-            <select p="opts.language">
+            <select onchange={(e) => $s.language(e.target.value)}>
               {Object.keys(langMap).map((l) => (
-                <option key={l} value={l}>
+                <option key={l} value={l} selected={$s.language(v=>v===l)}>
                   {T(langMap[l])}
                 </option>
               ))}
