@@ -5,6 +5,7 @@ const measureEpsilon = require('../../measurements/measureEpsilon')
 const geom2 = require('../../geometries/geom2')
 const geom3 = require('../../geometries/geom3')
 const path2 = require('../../geometries/path2')
+const mat4 = require('../../maths/mat4')
 
 const snapPolygons = require('./snapPolygons')
 const mergePolygons = require('./mergePolygons')
@@ -64,7 +65,7 @@ const generalizeGeom3 = (options, geometry) => {
   }
 
   // FIXME replace with geom3.cloneShallow() when available
-  const clone = Object.assign({}, geometry)
+  const clone = Object.assign({}, geometry, {transforms: mat4.create()})
   clone.polygons = polygons
 
   return clone
