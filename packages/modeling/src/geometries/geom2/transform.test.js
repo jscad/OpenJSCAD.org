@@ -2,7 +2,8 @@ const test = require('ava')
 
 const mat4 = require('../../maths/mat4')
 
-const { transform, fromPoints, toSides } = require('./index')
+const { transform, fromPoints } = require('./index')
+const applyTransforms = require('./applyTransforms')
 
 const { comparePoints, compareVectors } = require('../../../test/helpers/')
 
@@ -36,12 +37,10 @@ test('transform: adjusts the transforms of geom2', (t) => {
 
   // expect application of the transforms to the sides
   expected.sides = [[[4, 10], [5, 10]], [[5, 10], [5, 11]], [[5, 11], [4, 10]]]
-  expected.transforms = mat4.create()
-  toSides(another)
+  another = applyTransforms(another)
   t.true(comparePoints(another.sides[0], expected.sides[0]))
   t.true(comparePoints(another.sides[1], expected.sides[1]))
   t.true(comparePoints(another.sides[2], expected.sides[2]))
-  t.true(compareVectors(another.transforms, expected.transforms))
 
   // expect lazy transform, i.e. only the transforms change
   expected.transforms = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 10, 15, 1]

@@ -14,7 +14,7 @@ const applyTransforms = (geometry) => {
   if (mat4.isIdentity(geometry.transforms)) return geometry
 
   const transforms = geometry.transforms
-  geometry = Object.assign({}, geometry, { transforms: mat4.create()})
+  geometry = Object.assign({}, geometry, { transforms: mat4.create() })
 
   // apply transforms to each side
   geometry.sides = geometry.sides.map((side) => {

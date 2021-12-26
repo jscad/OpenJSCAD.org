@@ -13,7 +13,7 @@ const applyTransforms = (geometry) => {
   if (mat4.isIdentity(geometry.transforms)) return geometry
 
   const transforms = geometry.transforms
-  geometry = Object.assign({}, geometry, { transforms: mat4.create()})
+  geometry = Object.assign({}, geometry, { transforms: mat4.create() })
 
   geometry.points = geometry.points.map((point) => vec2.transform(vec2.create(), point, transforms))
 
