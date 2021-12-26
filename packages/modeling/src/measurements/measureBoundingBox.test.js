@@ -4,7 +4,7 @@ const { geom2, geom3, path2 } = require('../geometries')
 
 const { line, rectangle, cuboid } = require('../primitives')
 
-const { mirror } = require('../operations/transforms')
+const { mirror, translate } = require('../operations/transforms')
 
 const { measureBoundingBox } = require('./index')
 
@@ -45,6 +45,23 @@ test('measureBoundingBox (single objects)', (t) => {
   t.deepEqual(obounds, [[0, 0, 0], [0, 0, 0]])
   t.deepEqual(xbounds, [[0, 0, 0], [0, 0, 0]])
 })
+
+test('measureBoundingBox transformed', (t) => {
+  
+  const acube1 = cuboid()
+  const acube2 = translate([1,1,1], acube1)
+  const acube3 = translate([1,1,1], acube2)
+
+  let cbounds1 = measureBoundingBox(acube1)
+  let cbounds2 = measureBoundingBox(acube2)
+  let cbounds3 = measureBoundingBox(acube3)
+
+  t.deepEqual(cbounds1, [[-1, -1, -1], [1, 1, 1]])
+  t.deepEqual(cbounds2, [[0, 0, 0], [2, 2, 2]])
+  t.deepEqual(cbounds3, [[1, 1, 1], [3, 3, 3]])
+
+})
+
 
 test('measureBoundingBox (multiple objects)', (t) => {
   const aline = line([[10, 10], [15, 15]])

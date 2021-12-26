@@ -3,6 +3,7 @@ const test = require('ava')
 const { comparePolygonsAsPoints } = require('../../../test/helpers')
 
 const { geom3 } = require('../../geometries')
+const mat4 = require('../../maths/mat4')
 
 const { cuboid } = require('../../primitives')
 
@@ -29,6 +30,7 @@ test('generalize: generalize of a geom3 produces an expected geom3', (t) => {
       [1.5707963267948966, 0.7853981633974483, 3.141592653589793], [-1.5707963267948966, 0.7853981633974483, 3.141592653589793]]
   ]
   t.true(comparePolygonsAsPoints(pts, exp))
+  t.true(mat4.isIdentity(result.transforms))
 
   // apply snap only
   result = generalize({ snap: true }, geometry1)
