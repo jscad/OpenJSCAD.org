@@ -13,11 +13,14 @@ const poly3 = require('../poly3')
 const applyTransforms = (geometry) => {
   if (mat4.isIdentity(geometry.transforms)) return geometry
 
+  const transforms = geometry.transforms
+  geometry = Object.assign({}, geometry, { transforms: mat4.create()})
+
   // apply transforms to each polygon
   // const isMirror = mat4.isMirroring(geometry.transforms)
   // TBD if (isMirror) newvertices.reverse()
-  geometry.polygons = geometry.polygons.map((polygon) => poly3.transform(geometry.transforms, polygon))
-  geometry.transforms = mat4.create()
+  geometry.polygons = geometry.polygons.map((polygon) => poly3.transform(transforms, polygon))
+
   return geometry
 }
 
