@@ -8,6 +8,7 @@ const offsetPath2 = require('./offsetPath2')
 
 /**
  * Create offset geometry from the given geometry using the given options.
+ * Offsets from internal and external space are created.
  * @param {Object} options - options for offset
  * @param {Float} [options.delta=1] - delta of offset (+ to exterior, - from interior)
  * @param {String} [options.corners='edge'] - type of corner to create after offseting; edge, chamfer, round
