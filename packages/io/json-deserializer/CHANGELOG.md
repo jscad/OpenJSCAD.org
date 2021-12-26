@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.13](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/json-deserializer@2.0.12...@jscad/json-deserializer@2.0.13) (2021-12-26)
+
+**Note:** Version bump only for package @jscad/json-deserializer
+
+
+
+
+
 ## [2.0.12](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/json-deserializer@2.0.11...@jscad/json-deserializer@2.0.12) (2021-12-11)
 
 **Note:** Version bump only for package @jscad/json-deserializer

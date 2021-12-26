@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.7.0...@jscad/modeling@2.7.1) (2021-12-26)
+
+
+### Bug Fixes
+
+* **modeling:** revert measureBoundingBox to only cache per geometry ([#967](https://github.com/jscad/OpenJSCAD.org/issues/967)) ([b18c02c](https://github.com/jscad/OpenJSCAD.org/commit/b18c02c333b225981a9093caf0593795bc0861ad))
+
+
+
+
+
 # [2.7.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.6.1...@jscad/modeling@2.7.0) (2021-12-11)
 
 
