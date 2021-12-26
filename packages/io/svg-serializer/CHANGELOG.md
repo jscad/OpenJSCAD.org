@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.10](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-serializer@2.2.9...@jscad/svg-serializer@2.2.10) (2021-12-26)
+
+**Note:** Version bump only for package @jscad/svg-serializer
+
+
+
+
+
 ## [2.2.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-serializer@2.2.8...@jscad/svg-serializer@2.2.9) (2021-12-11)
 
 **Note:** Version bump only for package @jscad/svg-serializer
