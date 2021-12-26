@@ -2,7 +2,8 @@ const test = require('ava')
 
 const mat4 = require('../../maths/mat4')
 
-const { transform, fromPoints, toPoints } = require('./index')
+const { transform, fromPoints } = require('./index')
+const applyTransforms = require('./applyTransforms')
 
 const { comparePoints, compareVectors } = require('../../../test/helpers/')
 
@@ -36,7 +37,7 @@ test('transform: adjusts the transforms of path', (t) => {
   // expect application of the transforms to the sides
   expected.points = [[5, 10], [5, 11], [4, 10]]
   expected.transforms = mat4.create()
-  toPoints(another)
+  another = applyTransforms(another)
   t.true(comparePoints(another.points, expected.points))
   t.false(another.isClosed)
   t.true(compareVectors(another.transforms, expected.transforms))

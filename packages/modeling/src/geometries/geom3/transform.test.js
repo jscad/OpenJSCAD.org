@@ -2,7 +2,8 @@ const test = require('ava')
 
 const mat4 = require('../../maths/mat4')
 
-const { transform, fromPoints, toPolygons } = require('./index')
+const { transform, fromPoints } = require('./index')
+const applyTransforms = require('./applyTransforms')
 
 const { comparePolygons, compareVectors } = require('../../../test/helpers/')
 
@@ -37,7 +38,7 @@ test('transform: Adjusts the transforms of a populated geom3', (t) => {
     { vertices: [[5, 10, 15], [5, 11, 15], [5, 11, 16]] }
   ]
   expected.transforms = mat4.create()
-  toPolygons(another)
+  another = applyTransforms(another)
   t.true(comparePolygons(another.polygons[0], expected.polygons[0]))
   t.true(compareVectors(another.transforms, expected.transforms))
 
