@@ -77,6 +77,9 @@ const serialize = (options, ...objects) => {
       width: width + options.unit,
       height: height + options.unit,
       viewBox: ('0 0 ' + width + ' ' + height),
+      fill: "none",
+      'fill-rule': "evenodd",
+      'stroke-width': "0.1px",
       version: '1.1',
       baseProfile: 'tiny',
       xmlns: 'http://www.w3.org/2000/svg',
@@ -154,19 +157,19 @@ const convertGeom2 = (object, offsets, options) => {
 const convertToContinousPath = (paths, offsets, options) => {
   let instructions = ''
   paths.forEach((path) => (instructions += convertPath(path, offsets, options)))
-  let continouspath = ['path', { d: instructions }]
+  color = "black" // SVG initial color
   if (paths.length > 0) {
-    const path0 = paths[0]
-    if (path0.fill) {
-      continouspath = ['path', { 'fill-rule': 'evenodd', fill: convertColor(path0.fill), d: instructions }]
+    if (paths[0].fill) {
+      color = convertColor(paths[0].fill)
     }
   }
+  let continouspath = ['path', { fill: color, d: instructions }]
   return ['g', continouspath]
 }
 
 const convertPaths = (paths, offsets, options) => paths.reduce((res, path, i) => {
   if (path.color) {
-    return res.concat([['path', { stroke: convertColor(path.color), 'stroke-width': 1, d: convertPath(path, offsets, options) }]])
+    return res.concat([['path', { stroke: convertColor(path.color), d: convertPath(path, offsets, options) }]])
   }
   return res.concat([['path', { d: convertPath(path, offsets, options) }]])
 }, ['g'])
