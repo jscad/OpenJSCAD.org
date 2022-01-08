@@ -9,11 +9,16 @@ All code released under MIT license
 
 Notes:
 1) geom2 conversion to:
-     SVG GROUP containing a SVG PATH for each outline of the geometry
+     SVG GROUP containing a continous SVG PATH that contains the outlines of the geometry
 2) geom3 conversion to:
      none
 3) path2 conversion to:
      SVG GROUP containing a SVG PATH for each path
+
+geom2 and path2 objects may have specific attributes which are converted into SVG attributes
+- color
+- id
+- class
 */
 
 /**
@@ -146,32 +151,32 @@ const reflect = (x, y, px, py) => {
 const convertGeom2 = (object, offsets, options) => {
   const outlines = geometries.geom2.toOutlines(object)
   const paths = outlines.map((outline) => geometries.path2.fromPoints({ closed: true }, outline))
-  if (object.color) {
-    paths.forEach((path) => {
-      path.fill = object.color
-    })
-  }
+
+  options.color = "black" // SVG initial color
+  if (object.color) options.color = convertColor(object.color)
+  options.id = null
+  if (object.id) options.id = object.id
+  options.class = null
+  if (object.class) options.class = object.class
+
   return convertToContinousPath(paths, offsets, options)
 }
 
 const convertToContinousPath = (paths, offsets, options) => {
   let instructions = ''
   paths.forEach((path) => (instructions += convertPath(path, offsets, options)))
-  color = "black" // SVG initial color
-  if (paths.length > 0) {
-    if (paths[0].fill) {
-      color = convertColor(paths[0].fill)
-    }
-  }
-  let continouspath = ['path', { fill: color, d: instructions }]
-  return ['g', continouspath]
+  const d = { fill: options.color, d: instructions }
+  if (options.id) d.id = options.id
+  if (options.class) d.class = options.class
+  return ['g', ['path', d]]
 }
 
 const convertPaths = (paths, offsets, options) => paths.reduce((res, path, i) => {
-  if (path.color) {
-    return res.concat([['path', { stroke: convertColor(path.color), d: convertPath(path, offsets, options) }]])
-  }
-  return res.concat([['path', { d: convertPath(path, offsets, options) }]])
+  d = { d: convertPath(path, offsets, options) }
+  if (path.color) d.stroke = convertColor(path.color)
+  if (path.id) d.id = path.id
+  if (path.class) d.class = path.class
+  return res.concat([['path', d]])
 }, ['g'])
 
 const convertPath = (path, offsets, options) => {

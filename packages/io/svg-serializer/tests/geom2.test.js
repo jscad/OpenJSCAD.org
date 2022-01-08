@@ -25,6 +25,8 @@ test('serialize 2D geometries (simple) to svg', (t) => {
 test('serialize 2D geometries (color) to svg', (t) => {
   let cag2 = primitives.rectangle({ size: [10, 20] })
   cag2 = colors.colorize([0.5, 0.5, 0.5, 0.5], cag2)
+  cag2.id = 'r2'
+  cag2.class = 'gray-rect'
 
   const observed2 = serializer.serialize({}, cag2)
   t.deepEqual([expected4], observed2)
@@ -97,7 +99,7 @@ const expected4 = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg width="10mm" height="20mm" viewBox="0 0 10 20" fill="none" fill-rule="evenodd" stroke-width="0.1px" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <path fill="rgb(127.5,127.5,127.5,127.5)" d="M0 20L10 20L10 0L0 0L0 20"/>
+    <path fill="rgb(127.5,127.5,127.5,127.5)" d="M0 20L10 20L10 0L0 0L0 20" id="r2" class="gray-rect"/>
   </g>
 </svg>
 `

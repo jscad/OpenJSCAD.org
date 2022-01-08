@@ -26,6 +26,8 @@ The serialization of the following geometries are possible.
 - serialization of 2D geometry (geom2) to continous SVG paths, where the color (initial fill) is 'black' if not provided
 - serialization of 2D paths (path2) to individual SVG paths, where the color (initial stroke) is 'none' if not provided
 
+In addition, geometries can have special attributes (id, class) which will be passed on to the SVG paths.
+
 ## Table of Contents
 
 - [Installation](#installation)
