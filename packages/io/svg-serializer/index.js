@@ -14,15 +14,18 @@ Notes:
      none
 3) path2 conversion to:
      SVG GROUP containing a SVG PATH for each path
-
-geom2 and path2 objects may have specific attributes which are converted into SVG attributes
-- color
-- id
-- class
 */
 
 /**
- * Serializer of JSCAD geometries to SVG elements.
+ * Serializer of JSCAD geometries to SVG source (XML).
+ *
+ * The serialization of the following geometries are possible.
+ * - serialization of 2D geometry (geom2) to SVG path (a continous path containing the outlines of the geometry)
+ * - serialization of 2D geometry (path2) to SVG path
+ *
+ * Colors are added to SVG shapes when found on the geometry.
+ * Special attributes (id and class) are added to SVG shapes when found on the geometry.
+ *
  * @module io/svg-serializer
  * @example
  * const { serializer, mimeType } = require('@jscad/svg-serializer')
@@ -37,12 +40,13 @@ const version = require('./package.json').version
 const mimeType = 'image/svg+xml'
 
 /**
- * Serialize the give objects to SVG format.
+ * Serialize the give objects to SVG code (XML).
+ * @see https://www.w3.org/TR/SVG/Overview.html
  * @param {Object} options - options for serialization, REQUIRED
  * @param {String} [options.unit='mm'] - unit of design; em, ex, px, in, cm, mm, pt, pc
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
  * @param {Object|Array} objects - objects to serialize as SVG
- * @returns {Array} serialized contents with one SVG structure (string)
+ * @returns {Array} serialized contents, SVG code (XML string)
  * @alias module:io/svg-serializer.serialize
  * @example
  * const geometry = primitives.square()
