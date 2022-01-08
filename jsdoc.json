@@ -37,6 +37,7 @@
       "packages/io/amf-deserializer/src",
       "packages/io/amf-serializer",
       "packages/io/svg-deserializer/src",
+      "packages/io/svg-serializer",
       "packages/io/x3d-deserializer/src"
     ],
     "includePattern": ".+\\.js(doc|x)?$",
