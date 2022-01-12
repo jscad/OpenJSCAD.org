@@ -59,8 +59,8 @@ const src = fs.readFileSync(inputFile, inputFile.match(/\.stl$/i) ? 'binary' : '
 // -- convert from JSCAD script into the desired output format
 // -- and write it to disk
 generateOutputData(src, params, { outputFile, outputFormat, inputFile, inputFormat, version, addMetaData, inputIsDirectory })
-  .then(outputData => writeOutput(outputFile, outputData))
-  .catch(error => {
+  .then((outputData) => writeOutput(outputFile, outputData))
+  .catch((error) => {
     console.error(error)
     process.exit(1)
   })

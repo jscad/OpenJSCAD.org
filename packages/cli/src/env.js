@@ -1,13 +1,13 @@
 const version = require('../package.json').version
 
-function env () {
-  var env = 'OpenJSCAD ' + version
+const env = () => {
+  let env = 'OpenJSCAD ' + version
   if (typeof document !== 'undefined') {
-    var w = document.defaultView
+    const w = document.defaultView
     env = env + ' [' + w.navigator.userAgent + ']'
   } else {
     if (typeof require === 'function') {
-      var os = require('os')
+      const os = require('os')
       env = env + ' [' + os.type() + ':' + os.release() + ',' + os.platform() + ':' + os.arch() + ']'
     }
   }

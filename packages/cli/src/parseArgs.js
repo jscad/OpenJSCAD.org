@@ -5,7 +5,7 @@ const { supportedInputExtensions, supportedOutputExtensions, supportedOutputForm
 
 const env = require('./env')
 
-const parseArgs = args => {
+const parseArgs = (args) => {
   const inputExtensions = supportedInputExtensions()
   const outputExtensions = supportedOutputExtensions()
   const outputFormats = supportedOutputFormats()
@@ -28,17 +28,15 @@ const parseArgs = args => {
   let addMetaData = false // wether to add metadata to outputs or not : ie version info, timestamp etc
   let inputIsDirectory = false // did we pass in a folder or a file ?
 
-  const isValidInputFileFormat = input => {
+  const isValidInputFileFormat = (input) => {
     if (input === undefined || input === null || !(typeof input === 'string')) {
       return false
     }
-    return inputExtensions.reduce((acc, format) => {
-      return input.toLowerCase().endsWith('.' + format) || acc
-    }, false)
+    return inputExtensions.reduce((acc, format) => input.toLowerCase().endsWith('.' + format) || acc, false)
   }
-  const getFileExtensionFromString = input => (input.substring(input.lastIndexOf('.') + 1)).toLowerCase()
+  const getFileExtensionFromString = (input) => (input.substring(input.lastIndexOf('.') + 1)).toLowerCase()
 
-  const parseBool = input => input.toLowerCase() === 'true'
+  const parseBool = (input) => input.toLowerCase() === 'true'
 
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '-of') { // -of <format>
