@@ -54,8 +54,6 @@ const parseArgs = args => {
       params[RegExp.$1] = RegExp.$2
     } else if (args[i].match(/^--(\w+)$/)) { // params for main()
       params[RegExp.$1] = args[++i]
-    } else if (args[i].match(/^--(\w+)$/)) { // params for main()
-      params[RegExp.$1] = args[++i]
     } else if (isValidInputFileFormat(args[i])) {
       inputFile = args[i]
       inputFormat = getFileExtensionFromString(args[i])
