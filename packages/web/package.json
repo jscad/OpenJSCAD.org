@@ -1,6 +1,6 @@
 {
   "name": "@jscad/web",
-  "version": "2.5.2",
+  "version": "2.5.3",
   "description": "Web Application for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
@@ -35,9 +35,9 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/array-utils": "2.1.1",
-    "@jscad/core": "2.5.2",
+    "@jscad/core": "2.5.3",
     "@jscad/examples": "2.3.1",
-    "@jscad/io": "2.2.2",
+    "@jscad/io": "2.2.3",
     "@jscad/modeling": "2.7.1",
     "@jscad/regl-renderer": "2.5.3",
     "@most/create": "2.0.1",
