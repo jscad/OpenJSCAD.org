@@ -4,7 +4,7 @@ const path = require('path')
 const { execSync } = require('child_process')
 const fs = require('fs')
 
-test.afterEach.always(t => {
+test.afterEach.always((t) => {
   // remove files
   try {
     if (t.context.file1Path) fs.unlinkSync(t.context.file1Path)
@@ -23,7 +23,7 @@ test.afterEach.always(t => {
   } catch (err) {}
 })
 
-test.beforeEach(t => {
+test.beforeEach((t) => {
   const cliName = './cli.js'
   t.context = {
     cliPath: path.resolve(__dirname, cliName)
@@ -68,7 +68,7 @@ module.exports = { main, getParameterDefinitions }
   return filePath
 }
 
-test('cli (conversions STL)', t => {
+test('cli (conversions STL)', (t) => {
   const testID = 11
 
   // convert from JSCAD script to STL
@@ -101,7 +101,7 @@ test('cli (conversions STL)', t => {
   t.true(fs.existsSync(file3Path))
 })
 
-test('cli (conversions DXF)', t => {
+test('cli (conversions DXF)', (t) => {
   const testID = 12
 
   // convert from JSCAD to DXF
@@ -134,7 +134,7 @@ test('cli (conversions DXF)', t => {
   t.true(fs.existsSync(file3Path))
 })
 
-test('cli (conversions AMF)', t => {
+test('cli (conversions AMF)', (t) => {
   const testID = 13
 
   // convert from JSCAD to AMF
@@ -167,7 +167,7 @@ test('cli (conversions AMF)', t => {
   t.true(fs.existsSync(file3Path))
 })
 
-test('cli (conversions JSON)', t => {
+test('cli (conversions JSON)', (t) => {
   const testID = 14
 
   // convert from JSCAD to JSON
@@ -200,7 +200,7 @@ test('cli (conversions JSON)', t => {
   t.true(fs.existsSync(file3Path))
 })
 
-test('cli (conversions SVG)', t => {
+test('cli (conversions SVG)', (t) => {
   const testID = 15
 
   // convert from JSCAD to SVG
@@ -233,7 +233,7 @@ test('cli (conversions SVG)', t => {
   t.true(fs.existsSync(file3Path))
 })
 
-test('cli (conversions X3D)', t => {
+test('cli (conversions X3D)', (t) => {
   const testID = 16
 
   // convert from JSCAD to X3D
