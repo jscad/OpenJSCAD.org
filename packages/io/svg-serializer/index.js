@@ -9,7 +9,7 @@ All code released under MIT license
 
 Notes:
 1) geom2 conversion to:
-     SVG GROUP containing a SVG PATH for each outline of the geometry
+     SVG GROUP containing a continous SVG PATH that contains the outlines of the geometry
 2) geom3 conversion to:
      none
 3) path2 conversion to:
@@ -17,7 +17,15 @@ Notes:
 */
 
 /**
- * Serializer of JSCAD geometries to SVG elements.
+ * Serializer of JSCAD geometries to SVG source (XML).
+ *
+ * The serialization of the following geometries are possible.
+ * - serialization of 2D geometry (geom2) to SVG path (a continous path containing the outlines of the geometry)
+ * - serialization of 2D geometry (path2) to SVG path
+ *
+ * Colors are added to SVG shapes when found on the geometry.
+ * Special attributes (id and class) are added to SVG shapes when found on the geometry.
+ *
  * @module io/svg-serializer
  * @example
  * const { serializer, mimeType } = require('@jscad/svg-serializer')
@@ -32,12 +40,13 @@ const version = require('./package.json').version
 const mimeType = 'image/svg+xml'
 
 /**
- * Serialize the give objects to SVG format.
+ * Serialize the give objects to SVG code (XML).
+ * @see https://www.w3.org/TR/SVG/Overview.html
  * @param {Object} options - options for serialization, REQUIRED
  * @param {String} [options.unit='mm'] - unit of design; em, ex, px, in, cm, mm, pt, pc
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
  * @param {Object|Array} objects - objects to serialize as SVG
- * @returns {Array} serialized contents with one SVG structure (string)
+ * @returns {Array} serialized contents, SVG code (XML string)
  * @alias module:io/svg-serializer.serialize
  * @example
  * const geometry = primitives.square()
@@ -77,6 +86,9 @@ const serialize = (options, ...objects) => {
       width: width + options.unit,
       height: height + options.unit,
       viewBox: ('0 0 ' + width + ' ' + height),
+      fill: "none",
+      'fill-rule': "evenodd",
+      'stroke-width': "0.1px",
       version: '1.1',
       baseProfile: 'tiny',
       xmlns: 'http://www.w3.org/2000/svg',
@@ -143,32 +155,32 @@ const reflect = (x, y, px, py) => {
 const convertGeom2 = (object, offsets, options) => {
   const outlines = geometries.geom2.toOutlines(object)
   const paths = outlines.map((outline) => geometries.path2.fromPoints({ closed: true }, outline))
-  if (object.color) {
-    paths.forEach((path) => {
-      path.fill = object.color
-    })
-  }
+
+  options.color = "black" // SVG initial color
+  if (object.color) options.color = convertColor(object.color)
+  options.id = null
+  if (object.id) options.id = object.id
+  options.class = null
+  if (object.class) options.class = object.class
+
   return convertToContinousPath(paths, offsets, options)
 }
 
 const convertToContinousPath = (paths, offsets, options) => {
   let instructions = ''
   paths.forEach((path) => (instructions += convertPath(path, offsets, options)))
-  let continouspath = ['path', { d: instructions }]
-  if (paths.length > 0) {
-    const path0 = paths[0]
-    if (path0.fill) {
-      continouspath = ['path', { 'fill-rule': 'evenodd', fill: convertColor(path0.fill), d: instructions }]
-    }
-  }
-  return ['g', continouspath]
+  const d = { fill: options.color, d: instructions }
+  if (options.id) d.id = options.id
+  if (options.class) d.class = options.class
+  return ['g', ['path', d]]
 }
 
 const convertPaths = (paths, offsets, options) => paths.reduce((res, path, i) => {
-  if (path.color) {
-    return res.concat([['path', { stroke: convertColor(path.color), 'stroke-width': 1, d: convertPath(path, offsets, options) }]])
-  }
-  return res.concat([['path', { d: convertPath(path, offsets, options) }]])
+  d = { d: convertPath(path, offsets, options) }
+  if (path.color) d.stroke = convertColor(path.color)
+  if (path.id) d.id = path.id
+  if (path.class) d.class = path.class
+  return res.concat([['path', d]])
 }, ['g'])
 
 const convertPath = (path, offsets, options) => {
