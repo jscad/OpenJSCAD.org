@@ -13,9 +13,13 @@ test('webRequire: should support require, from a single file', (t) => {
 
   let requireFn = makeWebRequire(singleFileJs, { apiMainPath })
   let designRootModule = requireFn(singleFileJs[0].fullPath)
+  const designRootModule2 = requireFn(singleFileJs[0].fullPath)
 
   t.true('main' in designRootModule)
   t.true(designRootModule.main instanceof Function)
+
+  t.is(designRootModule, designRootModule2)
+  t.deepEqual(designRootModule, designRootModule2)
 
   // NOTE: 'jscad' must be registered as an extension
   const fakeFs = makeFakeFs(singleFileJscad)
@@ -32,7 +36,6 @@ test('webRequire: should support require, from a directory with index.js', (t) =
 
   const requireFn = makeWebRequire(directoryWithIndexJs, { apiMainPath })
   const designRootModule = requireFn('/project')
-
   t.true('main' in designRootModule)
   t.true(designRootModule.main instanceof Function)
 })
