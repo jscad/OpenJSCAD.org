@@ -2,7 +2,7 @@ const fs = require('fs')
 
 const writeOutputDataToFile = (outputFile, outputData) => {
   fs.writeFile(outputFile, outputData.asBuffer(),
-    function (err) {
+    (err) => {
       if (err) {
         console.log('err', err)
       } else {

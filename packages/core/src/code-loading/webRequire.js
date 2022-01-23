@@ -72,6 +72,7 @@ const makeWebRequire = (filesAndFolders, options) => {
   // console.log('*****\n',filesAndFolders,'\n*****')
 
   const extensions = {}
+  const moduleCache = {}
 
   /* Require (obtain) the exports for the given require path, relative to the given current path.
    * The logic is based on the original NODE require() function.
@@ -105,6 +106,7 @@ const makeWebRequire = (filesAndFolders, options) => {
       if (entry.children) return null // directory
 
       if (extensions[baseExt]) {
+        if(moduleCache[requirePath]) return moduleCache[requirePath]
         // evaluate the content
         const matchingModule = {
           exports: {},
@@ -121,7 +123,7 @@ const makeWebRequire = (filesAndFolders, options) => {
           }
         }
         extensions[baseExt](matchingModule, entry.fullPath)
-        return matchingModule.exports
+        return moduleCache[requirePath] = matchingModule.exports
       }
       return null
     }

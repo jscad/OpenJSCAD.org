@@ -4,10 +4,11 @@ const { createParamControls } = require('./parameterControls')
 
 const designParameters = (state, paramsCallbacktoStream, i18n) => {
   const { parameterValues, parameterDefinitions, parameterDefaults } = state.design
-  const { controls } = createParamControls(
-    Object.assign({}, parameterDefaults, parameterValues), parameterDefinitions, paramsCallbacktoStream.callback
-  )
-  return html`
+  try {
+    const { controls } = createParamControls(
+      Object.assign({}, parameterDefaults, parameterValues), parameterDefinitions, paramsCallbacktoStream.callback
+    )
+    return html`
   <section id='params' style='visibility:${state.design.parameterDefinitions.length === 0 ? 'hidden' : 'visible'};color:${state.themes.themeSettings.secondaryTextColor}'>
     <span id='paramsTable'>
       <table>
@@ -22,6 +23,10 @@ const designParameters = (state, paramsCallbacktoStream, i18n) => {
     </span>
   </section>
 `
+  } catch (e) {
+    e.stack = undefined // remove unhelpful stacktrace
+    state.status.error = e
+  }
 }
 
 module.exports = designParameters
