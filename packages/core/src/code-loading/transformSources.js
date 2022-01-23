@@ -1,18 +1,10 @@
 const { deserializers } = require('@jscad/io')
 
-const isCommonJsModule = require('./isCommonJsModule')
-const modulifySource = require('./modulifySource')
-
-const passThroughTransform = (options, entry) => entry
-
-/* function to turn old style jscad code with implicit imports
-into code with explicit exports/imports */
-// FIXME wouldn't a javascript error be better then 'hacking' the users code?
+/*
+ * Transform the entry into a ready-to-use module.
+ */
 const modulifyTransform = (options, entry) => {
-  const { apiMainPath } = options
-  const isFileCommonJs = isCommonJsModule(entry.source)
-  const source = !isFileCommonJs ? modulifySource(entry.source, apiMainPath) : entry.source
-  return Object.assign({}, entry, { source })
+  return Object.assign({}, entry, { source: entry.source })
 }
 
 /*
