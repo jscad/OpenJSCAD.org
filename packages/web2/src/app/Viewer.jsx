@@ -11,11 +11,11 @@ export class Viewer extends Jsx6 {
   }
 
   initAttr (attr){
-    this.axisBinding = toBinding(attr,'showAxes', this.parent.state, true)
-    this.axisBinding.addUpdater(show=>this.viewer.sendCmd({action:'showAxes', show:this.axisBinding()}))
+    this.axisBinding = toBinding(attr,'showAxes', true, true)
+    this.axisBinding.addUpdater(()=>this.viewer.sendCmd({action:'showAxes', show:this.axisBinding()}))
 
-    this.gridBinding = toBinding(attr,'showGrid', this.parent.state, true)
-    this.gridBinding.addUpdater(show=>this.viewer.sendCmd({action:'showGrid', show:this.gridBinding()}))
+    this.gridBinding = toBinding(attr,'showGrid', true, true)
+    this.gridBinding.addUpdater(()=>this.viewer.sendCmd({action:'showGrid', show:this.gridBinding()}))
 
     moveParams({
       alias: [],

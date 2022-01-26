@@ -1,13 +1,14 @@
 import { isStr } from './core'
 
-export function toBinding (obj, prop, defBind, keepAttribute) {
+export function toBinding (obj, prop, defValue, keepAttribute, required) {
   let propBind = obj[prop]
   if (!propBind) {
-    console.error(prop + ' binding not provided')
-  }
-  if (isStr(propBind)) {
-    propBind = defBind[propBind]
-    obj[prop] = propBind
+    if (required) {
+      throw new Error(prop + ' binding not provided')
+    } else {
+      propBind = () => defValue
+      propBind.addUpdater = () => {}
+    }
   }
   if (!keepAttribute) delete obj[prop]
   return propBind

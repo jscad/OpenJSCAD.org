@@ -200,62 +200,61 @@ function sendCmd (cmd) {
   receiveCmd(cmd)
 }
 
+let lastX = 0
+let lastY = 0
+
+let pointerDown = false
+
+const moveHandler = (ev) => {
+  if (!pointerDown) return
+  const cmd = {
+    dx: lastX - ev.pageX,
+    dy: ev.pageY - lastY
+  }
+
+  const shiftKey = (ev.shiftKey === true) || (ev.touches && ev.touches.length > 2)
+  cmd.action = shiftKey ? 'pan' : 'rotate'
+  sendCmd(cmd)
+
+  lastX = ev.pageX
+  lastY = ev.pageY
+
+  ev.preventDefault()
+}
+const downHandler = (ev) => {
+  pointerDown = true
+  lastX = ev.pageX
+  lastY = ev.pageY
+  canvas.setPointerCapture(ev.pointerId)
+  ev.preventDefault()
+}
+
+const upHandler = (ev) => {
+  pointerDown = false
+  canvas.releasePointerCapture(ev.pointerId)
+  ev.preventDefault()
+}
+
+const wheelHandler = (ev) => {
+  sendCmd({ action: 'zoom', dy: ev.deltaY })
+  ev.preventDefault()
+}
+
 export default function JscadReglViewer (el, { showAxes = true, showGrid = true } = {}) {
-  let lastX = 0
-  let lastY = 0
-
-  let pointerDown = false
-
-  const moveHandler = (ev) => {
-    if (!pointerDown) return
-    const cmd = {
-      dx: lastX - ev.pageX,
-      dy: ev.pageY - lastY
-    }
-
-    const shiftKey = (ev.shiftKey === true) || (ev.touches && ev.touches.length > 2)
-    cmd.action = shiftKey ? 'pan' : 'rotate'
-    sendCmd(cmd)
-
-    lastX = ev.pageX
-    lastY = ev.pageY
-
-    ev.preventDefault()
-  }
-  const downHandler = (ev) => {
-    pointerDown = true
-    lastX = ev.pageX
-    lastY = ev.pageY
-    canvas.setPointerCapture(ev.pointerId)
-    ev.preventDefault()
-  }
-
-  const upHandler = (ev) => {
-    pointerDown = false
-    canvas.releasePointerCapture(ev.pointerId)
-    ev.preventDefault()
-  }
-
-  const wheelHandler = (ev) => {
-    sendCmd({ action: 'zoom', dy: ev.deltaY })
-    ev.preventDefault()
-  }
-
   const canvas = document.createElement('CANVAS')
   el.appendChild(canvas)
   startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
+
   canvas.onpointermove = moveHandler
   canvas.onpointerdown = downHandler
   canvas.onpointerup = upHandler
   canvas.onwheel = wheelHandler
 
   const resizeObserver = new ResizeObserver(entries => {
-    console.log('entries', entries[0])
     const rect = entries[0].contentRect
     resize(rect)
   })
   resizeObserver.observe(el)
-  console.log('start JscadReglViewer on dom node ', el)
 
   return { sendCmd }
 }
