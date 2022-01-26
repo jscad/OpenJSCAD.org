@@ -1,4 +1,4 @@
-import { isStr } from "./core"
+import { isStr } from './core'
 
 export function toBinding (obj, prop, defBind, keepAttribute) {
   let propBind = obj[prop]

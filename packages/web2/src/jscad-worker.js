@@ -2,8 +2,6 @@ import { CSGToBuffers } from './util/CsgToBuffers'
 
 /*
 
-0
-
 You should use event.dataTransfer.files to get the FileList. then you can post that directly to the worker:
 
 var files=e.dataTransfer.files || e.target.files; // Cross browser FileList

@@ -1,106 +1,62 @@
 
-import { Jsx6, moveParams } from '../jsx6'
+import { Jsx6, moveParams, toBinding } from '../jsx6'
 
 export class Viewer extends Jsx6 {
-  /**@type {HTMLCanvasElement} */
-  canvas
+  viewer
+  worker
 
   fileDropped (ev){
     const dataTransfer = {files:ev.dataTransfer.files}
     this.worker.postMessage({action:'fileDropped', dataTransfer})
   }
 
-  init (){
-    const cmdParams = {
-      alias: this.alias,
-      action: 'init',
-      baseURI: this.baseURI || document.baseURI
-    }
-    const cmdTransfer = []
-
-    if (this.canvas) {
-      this.canvas.width = this.canvas.clientWidth
-      this.canvas.height = this.canvas.clientHeight
-
-      cmdParams.width = this.canvas.width
-      cmdParams.height = this.canvas.height
-    }
-
-    this.worker.postMessage(cmdParams, cmdTransfer)
-  }
-
   initAttr (attr){
+    this.axisBinding = toBinding(attr,'showAxes', this.parent.state, true)
+    this.axisBinding.addUpdater(show=>this.viewer.sendCmd({action:'showAxes', show:this.axisBinding()}))
+
+    this.gridBinding = toBinding(attr,'showGrid', this.parent.state, true)
+    this.gridBinding.addUpdater(show=>this.viewer.sendCmd({action:'showGrid', show:this.gridBinding()}))
+
     moveParams({
       alias: [],
       baseURI: '',
+      viewerClass: 'JscadReglViewer',
     }, attr, this)
+    this.worker = new Worker('./jscad-worker.js')
+  }
+  
+  errNotFound(err){
+    console.log('Viewer class ',this.viewer,' not found in window or as module ', `./${this.viewer}.js`,err)
   }
 
-  tpl (h, state, $) {
-    this.worker = new Worker('./jscad-worker.js')
+  init(){
+    let viewerName = this.viewerClass
+    let viewerFunction = window[viewerName]
+    if(viewerFunction){
+      doInit(viewerFunction)      
+    }else{
+      const modulePath = `./${viewerName}.js`
+      import(modulePath).then(mod=>{
+        viewerFunction = mod.default
+        if(viewerFunction){
+          doInit(viewerFunction)      
+        } else{
+         this.errNotFound()
+        }  
+      }).catch(err=>this.errNotFound(err))
+    }
 
-    const sendCmd = (cmd, ...rest)=> this.worker.postMessage(cmd, ...rest)
-
-    const resize = new ResizeObserver(([box]) => {
-      let rect = box.contentRect
-
-      this.canvas.width = rect.width
-      this.canvas.height = rect.height
-    })
-    resize.observe(this.el)
-
-
-  // convert HTML events (mouse movement) to viewer changes
-    let lastX = 0
-    let lastY = 0
-
-    let pointerDown = false
-
-    const moveHandler = (ev) => {
-      if (!pointerDown) return
-      const cmd = {
-        dx: lastX - ev.pageX,
-        dy: ev.pageY - lastY
+    const doInit = viewerFunction => {
+      this.viewer = viewerFunction(this.el,{showAxes:this.axisBinding(), showGrid: this.gridBinding()})
+      const cmdParams = {
+        alias: this.alias,
+        action: 'init',
+        baseURI: this.baseURI || document.baseURI
       }
-
-      const shiftKey = (ev.shiftKey === true) || (ev.touches && ev.touches.length > 2)
-      cmd.action = shiftKey ? 'pan' : 'rotate'
-      sendCmd(cmd)
-
-      lastX = ev.pageX
-      lastY = ev.pageY
-
-      ev.preventDefault()
+      let cmdTransfer = []
+  
+      this.worker.postMessage(cmdParams, cmdTransfer)
     }
 
-    const downHandler = (ev) => {
-      pointerDown = true
-      lastX = ev.pageX
-      lastY = ev.pageY
-      this.canvas.setPointerCapture(ev.pointerId)
-      ev.preventDefault()
-    }
-
-    const upHandler = (ev) => {
-      pointerDown = false
-      this.canvas.releasePointerCapture(ev.pointerId)
-      ev.preventDefault()
-    }
-
-    const wheelHandler = (ev) => {
-      sendCmd({ action: 'zoom', dy: ev.deltaY })
-      ev.preventDefault()
-    }
-
-    return (
-      <>
-        <canvas p='canvas' 
-          onpointermove={moveHandler}
-          onpointerdown={downHandler}
-          onpointerup={upHandler}
-          onwheel={wheelHandler}
-        />
-      </>
-    )
   }
 }

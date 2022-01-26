@@ -21,6 +21,13 @@ const langMap = {
   hr: 'croatian'
 }
 
+const viewerMap = {
+  JscadReglViewer: 'regl',
+  JscadThreeViewer: 'Three.js',
+  JscadBabylonViewer: 'Babylon.js',
+}
+
+
 export class App extends Jsx6 {
   cName = 'MainApp'
   value = 13
@@ -28,14 +35,6 @@ export class App extends Jsx6 {
   
   init (state) {
     const $s = this.settings
-    
-    const str = localStorage.getItem(SETTINGS_KEY)
-    if(str && str[0] === '{'){
-      try {
-        this.settings().update(JSON.parse(str))
-      } catch (e) { console.log(e, 'str:',str)}
-    }
-    console.log('settings',this.settings)
     const dropHandler = (ev) => {
       ev.preventDefault()
       state.showDrop = false
@@ -59,8 +58,8 @@ export class App extends Jsx6 {
     setValue(this.opts, $s()())
   }
   
-  async changeLanguage (lang) {
-    await window.fetch(`locales/${lang}.json`).then(r => r.text()).then((json) => {
+  changeLanguage (lang) {
+    window.fetch(`locales/${lang}.json`).then(r => r.text()).then((json) => {
       setTranslations(JSON.parse(json))
       refreshTranslations()
     })
@@ -80,6 +79,13 @@ export class App extends Jsx6 {
       },
       true
     )
+    const str = localStorage.getItem(SETTINGS_KEY)
+    if(str && str[0] === '{'){
+      try {
+        this.settings().update(JSON.parse(str))
+      } catch (e) { console.log(e, 'str:',str)}
+    }
+    console.log('settings',this.settings().getValue())
 
     return (
       <>
@@ -87,46 +93,45 @@ export class App extends Jsx6 {
         <div class="top-menu">
           <Toggle selected={state.settingsVisible}>{gearIcon}</Toggle>
           <Toggle selected={$s.editorVisible}>{editIcon}</Toggle>
-          {this.$value}
         </div>
 
         <div class="settings-area" hidden={state.settingsVisible(NOT)}>
           <div class="f-r">
             <label>{T`auto reload`}</label>
-            <Toggle class="el-switch" selected={$s.autoReload}>
-              <span />
-            </Toggle>
+            <Toggle class="el-switch" selected={$s.autoReload}/>
           </div>
           <div class="f-r">
             <label>{T`auto rotate`}</label>
-            <Toggle class="el-switch" selected={$s.autoRotate}>
-              <span />
-            </Toggle>
+            <Toggle class="el-switch" selected={$s.autoRotate}/>
           </div>
           <div class="f-r">
             <label>{T`auto zoom`}</label>
-            <Toggle class="el-switch" selected={$s.autoZoom}>
-              <span />
-            </Toggle>
+            <Toggle class="el-switch" selected={$s.autoZoom}/>
           </div>
           <div class="f-r">
             <label>{T`grid`}</label>
-            <Toggle class="el-switch" selected={$s.showGrid}>
-              <span />
-            </Toggle>
+            <Toggle class="el-switch" selected={$s.showGrid}/>
           </div>
           <div class="f-r">
             <label>{T`axes`}</label>
-            <Toggle class="el-switch" selected={$s.showAxes}>
-              <span />
-            </Toggle>
+            <Toggle class="el-switch" selected={$s.showAxes}/>
           </div>
           <div class="f-r">
             {T`Languages`}
             <select onchange={(e) => $s.language(e.target.value)}>
               {Object.keys(langMap).map((l) => (
-                <option key={l} value={l} selected={$s.language(v=>v===l)}>
+                <option key={l} value={l} selected={$s.language(lang=>lang===l)}>
                   {T(langMap[l])}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div class="f-r">
+            {T`viewer`} ({T`requires_restart`})
+            <select onchange={(e) => $s.viewer(e.target.value)}>
+              {Object.keys(viewerMap).map((v) => (
+                <option key={v} value={v} selected={$s.viewer(viewer=>viewer===v)}>
+                  {T(viewerMap[v])}
                 </option>
               ))}
             </select>
@@ -138,7 +143,7 @@ export class App extends Jsx6 {
           hidden={$s.editorVisible(NOT)}
         />
         <div class="viewer-area g-fs">
-          <Viewer p="viewer" class="viewer-area g-fs" />
+          <Viewer p="viewer" class="viewer-area g-fs" viewer={this.settings.viewer()} showAxes={$s.showAxes} showGrid={$s.showGrid}/>
         </div>
       </>
     );

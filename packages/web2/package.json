@@ -6,7 +6,8 @@
   "main": "main.js",
   "unpkg": "dist/jscad-web.min.js",
   "scripts": {
-    "dev-build": "esbuild src/web.js src/regl-renderer.js src/jscad-worker.js --jsx-factory=h --jsx-fragment=null --outdir=build --bundle --sourcemap --loader:.js=jsx --watch",
+    "dev-build": "esbuild src/web.js src/jscad-worker.js --jsx-factory=h --jsx-fragment=null --outdir=build --bundle --sourcemap --loader:.js=jsx --watch",
+    "dev-build-regl": "esbuild ./src/JscadReglViewer.js --outdir=build --bundle --sourcemap --watch --format=esm",
     "dev-server": "http-server build -p 13080 -o index.html",
     "dev-copy": "copy-and-watch --watch app/** build",
     "dev-css": "node-sass -o build/ src/style.scss --source-comments",
