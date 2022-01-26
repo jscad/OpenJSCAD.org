@@ -1,5 +1,19 @@
 const { merge } = require('most')
 
+let isPinching = false
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('pinchStarted', (e) => {
+    // console.log("received pinch started");
+    isPinching = true
+  })
+
+  window.addEventListener('pinchEnded', (e) => {
+    // console.log("received pinch ended");
+    isPinching = false
+  })
+}
+
 // based on http://jsfiddle.net/mattpodwysocki/pfCqq/
 const mouseDrags = (mouseDowns$, mouseUps, mouseMoves, settings) => {
   const { pixelRatio } = settings
@@ -47,6 +61,7 @@ const touchDrags = (touchStarts$, touchEnds$, touchMoves$, settings) => {
       let prevY = startY
 
       return touchMoves$
+        .takeWhile((e) => isPinching === false)
         .map((e) => {
           const curX = e.touches[0].pageX * pixelRatio
           const curY = e.touches[0].pageY * pixelRatio
