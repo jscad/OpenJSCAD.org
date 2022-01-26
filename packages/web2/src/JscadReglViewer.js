@@ -204,6 +204,7 @@ let lastX = 0
 let lastY = 0
 
 let pointerDown = false
+let canvas
 
 const moveHandler = (ev) => {
   if (!pointerDown) return
@@ -241,7 +242,7 @@ const wheelHandler = (ev) => {
 }
 
 export default function JscadReglViewer (el, { showAxes = true, showGrid = true } = {}) {
-  const canvas = document.createElement('CANVAS')
+  canvas = document.createElement('CANVAS')
   el.appendChild(canvas)
   startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
 
