@@ -10,7 +10,7 @@ import editIcon from '../icons/edit'
 import Toggle from '../comp/Toggle'
 import { Viewer } from './Viewer'
 import Sample from './sample'
-
+import { themes } from '../themes.js'
 
 const SETTINGS_KEY = 'jscad.settings'
 const langMap = {
@@ -26,7 +26,6 @@ const viewerMap = {
   JscadThreeViewer: 'Three.js',
   JscadBabylonViewer: 'Babylon.js',
 }
-
 
 export class App extends Jsx6 {
   cName = 'MainApp'
@@ -74,7 +73,9 @@ export class App extends Jsx6 {
         autoZoom: false,
         showGrid: true,
         showAxes: true,
-        language: "en",
+        language: 'en',
+        theme: 'Light',
+        viewer: 'JscadReglViewer',
         editorVisible: true,
       },
       true
@@ -113,6 +114,16 @@ export class App extends Jsx6 {
           {Object.keys(langMap).map((l) => (
             <option key={l} value={l} selected={$s.language(lang=>lang===l)}>
               {T(langMap[l])}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div class="f-r">
+        {T`theme`}
+        <select onchange={(e) => $s.theme(e.target.value)}>
+          {Object.keys(themes).map((v) => (
+            <option key={v} value={v} selected={$s.theme(k=>k===v)}>
+              {T(themes[v].name)}
             </option>
           ))}
         </select>
