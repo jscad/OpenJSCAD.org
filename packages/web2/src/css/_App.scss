@@ -11,14 +11,16 @@
     box-shadow: 2px 2px 4px $shadow-color;
   }
   
-  .top-menu{
+  .menu-area{
     position: absolute;
-    display: flex;
     height: 32px;
     width: fit-content;
     border: solid 1px gray;
     background: white;
     z-index: 1;
+  }
+
+  .menu-buttons{
     button{
       cursor: pointer;
       &[selected]{
@@ -27,16 +29,10 @@
     }
   }
 
-  .editor-area{
-    margin-top: 32px;
-    flex: 1;
-    width: 50%;
-  }
   .viewer-area{
-    flex: 1;
-    width: 50%;
     background: #fafafa;
   }
+
   .drop-handler{
     position: fixed;
     height: 100%;

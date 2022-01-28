@@ -4,4 +4,4 @@ import { App } from './app/App'
 import * as errTranslations from './jsx6/errTranslations'
 
 setTranslations(errTranslations.default)
-window.APP = insertHtml(document.body, null, <App class='jscad-app g-fs g-f1' />)
+window.APP = insertHtml(document.body, null, <App class='jscad-app fxs fx1' />)

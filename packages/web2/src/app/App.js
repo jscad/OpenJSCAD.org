@@ -87,63 +87,67 @@ export class App extends Jsx6 {
     }
     console.log('settings',this.settings().getValue())
 
+    let settingsArea = <div class="settings-area" hidden={state.settingsVisible(NOT)}>
+      <div class="f-r">
+        <label>{T`auto reload`}</label>
+        <Toggle class="el-switch" selected={$s.autoReload}/>
+      </div>
+      <div class="f-r">
+        <label>{T`auto rotate`}</label>
+        <Toggle class="el-switch" selected={$s.autoRotate}/>
+      </div>
+      <div class="f-r">
+        <label>{T`auto zoom`}</label>
+        <Toggle class="el-switch" selected={$s.autoZoom}/>
+      </div>
+      <div class="f-r">
+        <label>{T`grid`}</label>
+        <Toggle class="el-switch" selected={$s.showGrid}/>
+      </div>
+      <div class="f-r">
+        <label>{T`axes`}</label>
+        <Toggle class="el-switch" selected={$s.showAxes}/>
+      </div>
+      <div class="f-r">
+        {T`Languages`}
+        <select onchange={(e) => $s.language(e.target.value)}>
+          {Object.keys(langMap).map((l) => (
+            <option key={l} value={l} selected={$s.language(lang=>lang===l)}>
+              {T(langMap[l])}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div class="f-r">
+        {T`viewer`} ({T`requires_restart`})
+        <select onchange={(e) => $s.viewer(e.target.value)}>
+          {Object.keys(viewerMap).map((v) => (
+            <option key={v} value={v} selected={$s.viewer(viewer=>viewer===v)}>
+              {T(viewerMap[v])}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+    //END settingsArea
+
+
+    // LAYOUT
     return (
       <>
         <div class="drop-handler" hidden={state.showDrop(NOT)}></div>
-        <div class="top-menu">
-          <Toggle selected={state.settingsVisible}>{gearIcon}</Toggle>
-          <Toggle selected={$s.editorVisible}>{editIcon}</Toggle>
-        </div>
-
-        <div class="settings-area" hidden={state.settingsVisible(NOT)}>
-          <div class="f-r">
-            <label>{T`auto reload`}</label>
-            <Toggle class="el-switch" selected={$s.autoReload}/>
+        <div class="fxs fx1">
+          <JscadEditor p="editor" class="editor editor-area fx1 w50" hidden={$s.editorVisible(NOT)}/>
+          <div class="viewer-area fxs fx1 w50">
+            <div class="menu-area">
+              <div class="menu-buttons">
+                <Toggle selected={state.settingsVisible}>{gearIcon}</Toggle>
+                <Toggle selected={$s.editorVisible}>{editIcon}</Toggle>
+              </div>
+              {settingsArea}
+            </div>
+            <Viewer p="viewer" class="viewer-area fxs fx1 owh" viewer={this.settings.viewer()} showAxes={$s.showAxes} showGrid={$s.showGrid}/>
           </div>
-          <div class="f-r">
-            <label>{T`auto rotate`}</label>
-            <Toggle class="el-switch" selected={$s.autoRotate}/>
-          </div>
-          <div class="f-r">
-            <label>{T`auto zoom`}</label>
-            <Toggle class="el-switch" selected={$s.autoZoom}/>
-          </div>
-          <div class="f-r">
-            <label>{T`grid`}</label>
-            <Toggle class="el-switch" selected={$s.showGrid}/>
-          </div>
-          <div class="f-r">
-            <label>{T`axes`}</label>
-            <Toggle class="el-switch" selected={$s.showAxes}/>
-          </div>
-          <div class="f-r">
-            {T`Languages`}
-            <select onchange={(e) => $s.language(e.target.value)}>
-              {Object.keys(langMap).map((l) => (
-                <option key={l} value={l} selected={$s.language(lang=>lang===l)}>
-                  {T(langMap[l])}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div class="f-r">
-            {T`viewer`} ({T`requires_restart`})
-            <select onchange={(e) => $s.viewer(e.target.value)}>
-              {Object.keys(viewerMap).map((v) => (
-                <option key={v} value={v} selected={$s.viewer(viewer=>viewer===v)}>
-                  {T(viewerMap[v])}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-        <JscadEditor
-          p="editor"
-          class="editor editor-area"
-          hidden={$s.editorVisible(NOT)}
-        />
-        <div class="viewer-area g-fs">
-          <Viewer p="viewer" class="viewer-area g-fs" viewer={this.settings.viewer()} showAxes={$s.showAxes} showGrid={$s.showGrid}/>
         </div>
       </>
     );

@@ -14,24 +14,37 @@ body{
   display: none !important;
 }
 
-.g-ib{
-  display: inline-block;
-}
-// vertical center
-.g-vc{
-  display: inline-flex;
-  align-items: center;
-}
+// display block commons case
+.bl{ display: block; }
+.bli{ display: inline-block; }
 
-.g-f1{
-  flex: 1;
-}
+// flex
+.fx1   { flex: 1; }
+.fx    { display: flex; }
+.fxi   { display: inline-flex; }
+// default is row, so class for column is needed
+.fx-fc { display: flex; flex-flow: column;}
+// flex with everything stretched
+.fxc { display: flex; justify-content: center; align-items: center;}
+// flex with everything centered
+.fxs { display: flex; justify-content: stretch; align-items: stretch;}
+// flex justify tweaks
+.fx-jc { justify-content: center; }
+.fx-ac { align-items: center; }
+.fx-js { justify-content: flex-start; }
+.fx-as { align-items: flex-start; }
+.fx-je { justify-content: flex-end; }
+.fx-ae { align-items: flex-end; }
 
-.g-fs{
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
-}
+// some very common sizes
+.wa { width: auto; }
+.w100 { width: 100%; }
+.w50 { width: 50%; }
+.h100 { height: 100%; }
+// often needed owerflow
+.owh{ overflow: hidden;}
+.owa{ overflow: auto;}
+
 // form row
 .f-r{
   display: flex;
@@ -71,7 +84,7 @@ body{
     display: inline-block;
     position: relative;
     top: 0;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
     width: 3em;
     cursor: pointer;
     &:before{
@@ -84,7 +97,7 @@ body{
       border-radius: 50%;
       left: 0.1em;
       top: 0.1em;
-      transition: all 0.3s ease-in-out;
+      transition: all 0.2s ease-in-out;
     }
   }
 
