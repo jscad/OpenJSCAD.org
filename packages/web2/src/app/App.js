@@ -31,7 +31,7 @@ const viewerMap = {
 export class App extends Jsx6 {
   cName = 'MainApp'
   value = 13
-  state = { settingsVisible:false, showDrop:false }
+  state = { showDrop:false }
   
   init (state) {
     const $s = this.settings
@@ -86,7 +86,7 @@ export class App extends Jsx6 {
       } catch (e) { console.log(e, 'str:',str)}
     }
 
-    let settingsArea = <div class="settings-area g-focus-menu-inner" p="settingsArea" _hidden={state.settingsVisible(NOT)}>
+    let settingsArea = <div class="settings-area g-focus-menu-inner" p="settingsArea">
       <div class="f-r">
         <label>{T`auto reload`}</label>
         <Toggle class="el-switch" selected={$s.autoReload}/>
@@ -130,27 +130,21 @@ export class App extends Jsx6 {
     </div>
     //END settingsArea
 
-    // force blur on settings button, so settings menu hides
-    let menuDisplayBeforeClick = ''
-    let downHandler = ()=>menuDisplayBeforeClick = getComputedStyle(this.settingsArea).display
-    let clickHandler = e=>{if(menuDisplayBeforeClick != 'none') this.focusTrap.focus()}
-
     // LAYOUT
     return (
       <>
-        <input p="focusTrap" class="focusTrap"/>
         <button class="drop-handler" hidden={state.showDrop(NOT)}></button>
         <div class="fxs fx1">
           <JscadEditor p="editor" class="editor editor-area fx1 w50" hidden={$s.editorVisible(NOT)}/>
           <div class="viewer-area fxs fx1 w50">
             <div class="menu-area">
               <div class="menu-buttons">
-                <Toggle selected={state.settingsVisible}>{gearIcon}</Toggle>
+                <button class="g-focus-menu">{gearIcon} {settingsArea}</button>
                 <Toggle selected={$s.editorVisible}>{editIcon}</Toggle>
+                <button onclick={()=>this.viewer.ruunScript(this.editor.getValue())}>run</button>
               </div>
-              <button class="g-focus-menu" onmousedown={downHandler} onclick={clickHandler}>{gearIcon} {settingsArea}</button>
             </div>
-            <Viewer p="viewer" class="viewer-area fxs fx1 owh" viewer={this.settings.viewer()} showAxes={$s.showAxes} showGrid={$s.showGrid}/>
+            <Viewer p="viewer" class="viewer-area fxs fx1 owh" viewerClass={this.settings.viewer()} showAxes={$s.showAxes} showGrid={$s.showGrid} />
           </div>
         </div>
       </>

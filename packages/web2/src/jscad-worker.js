@@ -36,6 +36,7 @@ function requireFile (url) {
 }
 
 function requireModule (url, source) {
+  if (!source && !url) throw new Error('You must define either a script source or urls for script download')
   try {
     const exports = {}
     if (!source) source = requireFile(url)
@@ -71,7 +72,7 @@ function runMain (params = {}) {
 
 let initialized = false
 const handlers = {
-  fileDropped: ({dataTransfer}) => {
+  fileDropped: ({ dataTransfer }) => {
     console.log('File(s) dropped ddd', dataTransfer)
     let file
     if (dataTransfer.items) {
@@ -85,7 +86,7 @@ const handlers = {
           else if (file.getAsEntry) file = file.getAsEntry()
           else file = file.webkitGetAsFile()
           console.log('... item file[' + i + '].name = ' + file.name)
-          break;
+          break
         }
       }
     } else {
@@ -126,8 +127,7 @@ const handlers = {
       const [orig, ...aliases] = arr
       aliases.forEach((a) => {
         require.alias[a] = orig
-        if (a.toLowerCase().substr(-3) !== '.js')
-          {require.alias[a + ".js"] = orig;}
+        if (a.toLowerCase().substr(-3) !== '.js') { require.alias[a + '.js'] = orig }
       })
     })
     initialized = true
@@ -135,7 +135,7 @@ const handlers = {
 }
 
 function sendCmd (cmd, trans) {
-  self.postMessage(cmd, trans)
+  self.postMessage(cmd, trans.map(a => a.buffer || a))
 }
 
 function receiveCmd (cmd) {
@@ -143,7 +143,12 @@ function receiveCmd (cmd) {
   if (!fn) {
     throw new Error('no handler for type: ' + cmd.action)
   }
-  fn(cmd)
+  try {
+    fn(cmd)
+  } catch (error) {
+    console.log('problem executing command', cmd, error.message)
+    throw error
+  }
 }
 
 console.log('WORKER started', self.addEventListener, self)

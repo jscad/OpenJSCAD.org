@@ -59,5 +59,10 @@ module.exports = { main } // eslint-disable-line
       state: startState,
       parent: this.el
     })
+    console.log(this.view.state)
+  }
+
+  getValue () {
+    return this.view.state.doc.toString()
   }
 }

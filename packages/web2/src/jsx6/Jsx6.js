@@ -36,13 +36,7 @@ export class Jsx6 {
       delete attr['tag-name'];
     }
 
-    this.initAttr(attr);
   }
-
-	/**
-	 * @param attr - attributes
-	 */
-  initAttr() { }
 
   insertEl(parentNode, beforeSibling, parent) {
     this.parent = parent;
