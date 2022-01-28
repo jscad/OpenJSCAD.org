@@ -13,6 +13,10 @@ body{
 [hidden]{
   display: none !important;
 }
+button{
+  border: none;
+  background-color: transparent;
+}
 
 // display block commons case
 .bl{ display: block; }
@@ -51,6 +55,16 @@ body{
   flex-direction: row;
   justify-content: space-between;
   padding: 4px 0;
+}
+
+.g-focus-menu {
+  position: relative;
+  .g-focus-menu-inner {
+    position: absolute;
+  }
+  &:not(:focus-within) .g-focus-menu-inner {
+    display: none;
+  }
 }
 
 .svg-icon{

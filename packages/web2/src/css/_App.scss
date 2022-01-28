@@ -40,6 +40,11 @@
     background: rgba(255,255,255, 0.5);
     z-index: 999;
   }
+
+  .focusTrap{
+    position: absolute;
+    top:-100px;
+  }
 }
 
 
