@@ -99,9 +99,7 @@ const splitPolygon = (openedge, polygon, eps) => {
 /*
  * TBD This should be part of vec3.
  */
-const almostEquals = (eps, v1, v2) => {
-  return (Math.abs(v1[0] - v2[0]) <= eps && Math.abs(v1[1] - v2[1]) <= eps && Math.abs(v1[2] - v2[2]) <= eps)
-}
+const almostEquals = (eps, v1, v2) => (Math.abs(v1[0] - v2[0]) <= eps && Math.abs(v1[1] - v2[1]) <= eps && Math.abs(v1[2] - v2[2]) <= eps)
 
 const enclosedEdge = (openedge, edge, eps) => {
   if (openedge.distance < edge.distance) {

@@ -74,7 +74,7 @@ const serialize = (options, ...objects) => {
 
   // convert objects
   // TODO: group objects together
-  let previousColor = "default"
+  let previousColor = 'default'
   objects3d.forEach((object, i) => {
     options.statusCallback && options.statusCallback({ progress: 100 * i / objects3d.length })
     body += '\n'
@@ -101,7 +101,7 @@ const serialize = (options, ...objects) => {
       const indices = polygon.vertices
         .map((v) => vertices.indexOf(convertVertex(v)) + 1)
       // set face color
-      const color = getColorName(polygon) || objectColor || "default"
+      const color = getColorName(polygon) || objectColor || 'default'
       if (color !== previousColor) {
         body += `usemtl ${color}\n`
         previousColor = color

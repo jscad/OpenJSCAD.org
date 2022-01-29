@@ -13,7 +13,7 @@ test('path2ToGeometries (empty solid)', (t) => {
   const solid = {
     points: []
   }
-  let expected = []
+  const expected = []
   let geometries = path2ToGeometries({ color: [1, 2, 3, 4] }, solid)
   t.deepEqual(geometries, expected)
 

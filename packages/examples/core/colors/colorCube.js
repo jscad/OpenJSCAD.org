@@ -48,17 +48,15 @@ const main = (params) => {
   return o
 }
 
-const getParameterDefinitions = () => {
-  return [
-    {
-      name: 'method',
-      type: 'choice',
-      caption: 'Colorize Method',
-      values: ['rgb', 'hsv', 'hsl'],
-      captions: ['(r,g,b) = (x,y,z)', '(h,s,v) = (x,y,z)', '(h,s,l) = (x,y,z)'],
-      initial: 'hsl'
-    }
-  ]
-}
+const getParameterDefinitions = () => [
+  {
+    name: 'method',
+    type: 'choice',
+    caption: 'Colorize Method',
+    values: ['rgb', 'hsv', 'hsl'],
+    captions: ['(r,g,b) = (x,y,z)', '(h,s,v) = (x,y,z)', '(h,s,l) = (x,y,z)'],
+    initial: 'hsl'
+  }
+]
 
 module.exports = { main, getParameterDefinitions }

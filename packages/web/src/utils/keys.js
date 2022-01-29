@@ -50,7 +50,6 @@ const getKeyCombos = (options, keyUps$, keyDown$) => {
     }, [])
     .filter((x) => x !== undefined)
     .filter((x) => x.event !== undefined)
-    // .tap(x => console.log('key stuff', x))
     .multicast()
 
   return keyCombos$

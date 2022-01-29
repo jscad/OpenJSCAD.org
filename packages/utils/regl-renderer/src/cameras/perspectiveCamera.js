@@ -22,7 +22,6 @@ const cameraProps = {}
 const defaults = Object.assign({}, cameraState, cameraProps)
 
 const setProjection = (output, camera, input) => {
-  // console.log('input', input, 'camera', camera)
   // context.viewportWidth / context.viewportHeight,
   const aspect = input.width / input.height
 

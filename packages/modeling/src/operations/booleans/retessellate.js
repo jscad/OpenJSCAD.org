@@ -10,9 +10,7 @@ const reTesselateCoplanarPolygons = require('./reTesselateCoplanarPolygons')
 const NEPS = 1e-13
 
 // Compare two normals (unit vectors) for equality.
-const aboutEqualNormals = (a, b) => {
-  return (Math.abs(a[0] - b[0]) <= NEPS && Math.abs(a[1] - b[1]) <= NEPS && Math.abs(a[2] - b[2]) <= NEPS)
-}
+const aboutEqualNormals = (a, b) => (Math.abs(a[0] - b[0]) <= NEPS && Math.abs(a[1] - b[1]) <= NEPS && Math.abs(a[2] - b[2]) <= NEPS)
 
 const coplanar = (plane1, plane2) => {
   // expect the same distance from the origin, within tolerance

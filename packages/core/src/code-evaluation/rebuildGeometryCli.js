@@ -7,10 +7,9 @@ const makeWebRequire = require('../code-loading/webRequire')
 
 const rebuildSolids = (data) => {
   const defaults = {
-    apiMainPath: '@jscad/modeling',
-    serialize: false
+    apiMainPath: '@jscad/modeling'
   }
-  let { apiMainPath, serialize, mainPath, parameterValues, useFakeFs } = Object.assign({}, defaults, data)
+  let { apiMainPath, mainPath, parameterValues, useFakeFs } = Object.assign({}, defaults, data)
   // we need to update the source for our module
   let requireFn = require
 
