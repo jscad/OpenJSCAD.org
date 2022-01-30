@@ -30,8 +30,6 @@ const binaryMimetypes = {
  * @returns {Promise} new promise to read and convert the file
  */
 const readFileAsync = (file, fileMeta) => {
-  // console.log('readFileAsync',file,fileMeta)
-
   const fullPath = file.fullPath ? file.fullPath : fileMeta.fullPath ? fileMeta.fullPath : ''
   const ext = getFileExtensionFromString(file.name)
   const mimetype = file.mimetype
@@ -43,7 +41,7 @@ const readFileAsync = (file, fileMeta) => {
       const result = event.target.result
       if (result.byteLength) {
         resolve({ name: file.name, ext, fullPath, mimetype, source: result })
-      } else if (typeof(result) === 'string') {
+      } else if (typeof result === 'string') {
         resolve({ name: file.name, ext, fullPath, mimetype, source: result })
       }
     }
@@ -87,7 +85,6 @@ const isEmpty = (x) => x !== null && x !== undefined // skip empty items
  * @returns {Promise} one promise to resolve them all
  */
 const processEntries = (items) => {
-  // console.log('processEntries',items)
   const results = pseudoArraytoArray(items.filter(isEmpty))
     .filter(isEmpty) // skip empty items
     .reduce((result, item) => {
@@ -117,7 +114,6 @@ const processEntries = (items) => {
  * @returns {Promise} new promise to read and process the file
  */
 const processFile = (fileItem) => {
-  // console.log('processFile',fileItem)
   const promiseFile = new Promise((resolve, reject) => {
     fileItem.file(
       (fileData) => {
@@ -138,7 +134,6 @@ const processFile = (fileItem) => {
  * @returns {Promise} new promise to read and process the directory
  */
 const processDirectory = (directory) => {
-  // console.log('processDirectory',directory)
   const promiseDirectory = new Promise((resolve, reject) => {
     if (directory.entries) {
       directory.entries.length ? processEntries(directory.entries).then(resolve) : resolve([])

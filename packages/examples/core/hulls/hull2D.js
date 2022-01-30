@@ -13,11 +13,9 @@ const { circle, rectangle } = jscad.primitives
 const { translate } = jscad.transforms
 const { hull, hullChain } = jscad.hulls
 
-const getParameterDefinitions = () => {
-  return [
-    { name: 'doHull', type: 'radio', caption: 'Show:', values: ['shapes', 'hull', 'chain'], captions: ['Original Shapes', 'Hull', 'Hull Chain'], initial: 'shapes' }
-  ]
-}
+const getParameterDefinitions = () => [
+  { name: 'doHull', type: 'radio', caption: 'Show:', values: ['shapes', 'hull', 'chain'], captions: ['Original Shapes', 'Hull', 'Hull Chain'], initial: 'shapes' }
+]
 
 const main = (params) => {
   const shapes = [

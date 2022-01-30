@@ -106,12 +106,12 @@ const makeWebRequire = (filesAndFolders, options) => {
       if (entry.children) return null // directory
 
       if (extensions[baseExt]) {
-        if(moduleCache[requirePath]) return moduleCache[requirePath]
+        if (moduleCache[requirePath]) return moduleCache[requirePath]
         // evaluate the content
         const matchingModule = {
           exports: {},
           _compile: (content, fileName) => {
-            const moduleMakerFunction = new Function('require', 'module', content)
+            const moduleMakerFunction = new Function('require', 'module', content) // eslint-disable-line no-new-func
             moduleMakerFunction(_require.bind(null, entry.fullPath), matchingModule)
 
             const paramDefFromSource = content.includes('@jscad-params') ? getParameterDefinitionsFromSource(content, fileName) : []
@@ -123,7 +123,8 @@ const makeWebRequire = (filesAndFolders, options) => {
           }
         }
         extensions[baseExt](matchingModule, entry.fullPath)
-        return moduleCache[requirePath] = matchingModule.exports
+        moduleCache[requirePath] = matchingModule.exports
+        return moduleCache[requirePath]
       }
       return null
     }

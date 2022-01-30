@@ -13,7 +13,6 @@ const makeFakeFs = (filesAndFolders) => {
       }
     }
     return undefined
-    // return filesAndFolders
   }
 
   const statSync = (path) => {
@@ -27,16 +26,13 @@ const makeFakeFs = (filesAndFolders) => {
     statSync,
     existsSync: (path) => {
       const entry = findMatch(path)
-      // console.log('does ', path, 'exist ?', entry !== undefined)
       return entry !== undefined
     },
     readdirSync: (path) => {
       const entry = findMatch(path)
       return entry.children.map((x) => x.name)
-      // filesAndFolders
     },
     readDir: (path, callback) => {
-      // console.log('readDir', path, callback)
       const entry = findMatch(path)
       callback(null, entry)
     },
@@ -48,7 +44,6 @@ const makeFakeFs = (filesAndFolders) => {
       if (!statSync(path).isFile()) {
         callback(new Error(`${entry} is not a file, cannot read`))
       } else {
-        // console.log('readFile', path, entry)
         callback(null, entry.source)
       }
     },
@@ -60,7 +55,6 @@ const makeFakeFs = (filesAndFolders) => {
       if (!statSync(path).isFile()) {
         throw new Error(`${entry} is not a file, cannot read`)
       } else {
-        // console.log('readFile sync', path, entry)
         return entry.source
       }
     }

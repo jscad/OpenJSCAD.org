@@ -86,9 +86,9 @@ const serialize = (options, ...objects) => {
       width: width + options.unit,
       height: height + options.unit,
       viewBox: ('0 0 ' + width + ' ' + height),
-      fill: "none",
-      'fill-rule': "evenodd",
-      'stroke-width': "0.1px",
+      fill: 'none',
+      'fill-rule': 'evenodd',
+      'stroke-width': '0.1px',
       version: '1.1',
       baseProfile: 'tiny',
       xmlns: 'http://www.w3.org/2000/svg',
@@ -156,7 +156,7 @@ const convertGeom2 = (object, offsets, options) => {
   const outlines = geometries.geom2.toOutlines(object)
   const paths = outlines.map((outline) => geometries.path2.fromPoints({ closed: true }, outline))
 
-  options.color = "black" // SVG initial color
+  options.color = 'black' // SVG initial color
   if (object.color) options.color = convertColor(object.color)
   options.id = null
   if (object.id) options.id = object.id
@@ -176,7 +176,7 @@ const convertToContinousPath = (paths, offsets, options) => {
 }
 
 const convertPaths = (paths, offsets, options) => paths.reduce((res, path, i) => {
-  d = { d: convertPath(path, offsets, options) }
+  const d = { d: convertPath(path, offsets, options) }
   if (path.color) d.stroke = convertColor(path.color)
   if (path.id) d.id = path.id
   if (path.class) d.class = path.class

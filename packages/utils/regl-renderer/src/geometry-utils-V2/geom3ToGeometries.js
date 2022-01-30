@@ -7,14 +7,13 @@ const maxIndex = 65535
  * Convert the given solid into one or more geometries for rendering.
  * @param {Object} options - options for conversion
  * @param {Array} options.color - RGBA of solid
- * @param {Float} options.normalThreshold - threshold beyond which to split normals
  * @param {Boolean} options.smoothLighting - set to true in order to use interpolated vertex normals
  * this creates nice round spheres but does not represent the shape of the actual model
  * @param {geom3} solid - the solid to convert
  * @return {Array} list of new geometries
  */
 const geom3ToGeometries = (options, solid) => {
-  let { color, smoothLighting, normalThreshold } = options
+  let { color, smoothLighting } = options
 
   if ('color' in solid) color = solid.color
 
@@ -97,7 +96,7 @@ const smoothing = () => {
   const color = []
   let isTransparent = true
   const smoothLighting = true
-  const normalThreshold = 0.5
+  const normalThreshold = 0.5 // threshold beyond which to split normals
   const positions = []
   const normals = []
   const indices = []

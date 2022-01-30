@@ -16,27 +16,25 @@ const { translate } = jscad.transforms
 const { slice } = jscad.extrusions
 const { bezier } = jscad.curves
 
-const main = () => {
-  return [
-    box4x4([-8, -4, 2], [1, 0, 0]),
-    box4x4([8, 4, 12], [0, 1, 0]),
-    tube([
-      [6, 4, 12],
-      [-3, 4, 12],
-      [4, -4, 2],
-      [-6, -4, 2]
-    ]),
-    tube([
-      [8, 2, 12],
-      [8, -6, 12],
-      [8, 0, 0],
-      [-8, 4, 2],
-      [-8, -2, 2]
-    ])
-  ]
-}
+const main = () => [
+  box4x4([-8, -4, 2], [1, 0, 0]),
+  box4x4([8, 4, 12], [0, 1, 0]),
+  tube([
+    [6, 4, 12],
+    [-3, 4, 12],
+    [4, -4, 2],
+    [-6, -4, 2]
+  ]),
+  tube([
+    [8, 2, 12],
+    [8, -6, 12],
+    [8, 0, 0],
+    [-8, 4, 2],
+    [-8, -2, 2]
+  ])
+]
 
-function tube (bezierControlPoints) {
+const tube = (bezierControlPoints) => {
   // Create the initial slice
   const circ = circle({ radius: 1, segments: 32 })
   const l = bezierControlPoints.length - 1
@@ -69,7 +67,7 @@ function tube (bezierControlPoints) {
   }, tubeSlice)
 }
 
-function rotationMatrixFromVectors (srcVector, targetVector) {
+const rotationMatrixFromVectors = (srcVector, targetVector) => {
   // From https://gist.github.com/kevinmoran/b45980723e53edeb8a5a43c49f134724
   srcVector = maths.vec3.normalize(maths.vec3.create(), srcVector)
   targetVector = maths.vec3.normalize(maths.vec3.create(), targetVector)
@@ -86,7 +84,7 @@ function rotationMatrixFromVectors (srcVector, targetVector) {
   )
 }
 
-function box4x4 (translation, color) {
+const box4x4 = (translation, color) => {
   const b = cuboid({ size: [4, 4, 4] })
   return colors.colorize(color, translate(translation, b))
 }

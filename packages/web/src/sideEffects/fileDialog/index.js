@@ -21,7 +21,6 @@ const makeFileDialog = (params) => {
       const blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
       saveAs(blob, filePath) */
 
-      console.log('here')
       const input = document.createElement('input')
       input.id = 'foo'
       input.name = 'gna'
@@ -31,7 +30,6 @@ const makeFileDialog = (params) => {
       // input.trigger('click')// opening dialog
       // return false; // avoiding navigation
       input.addEventListener('change', () => {
-        console.log('foo')
       })
     })
   }

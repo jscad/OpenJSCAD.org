@@ -26,7 +26,6 @@ const makeDatSideEffect = async (params) => {
     // every time a new command is recieved (observable)
     commands$.forEach((command) => {
       const { type, id, urls, path } = command
-      // console.log('command', command)
       if (!enabled) {
         commandResponses.callback({ type, id, error: new Error('Dat archives not supported in this environment!') })
         return
@@ -44,7 +43,6 @@ const makeDatSideEffect = async (params) => {
 
           archive = new DatArchive(url, {})
           const filesAndFolders = await archive.readdir(path, { recursive: true, stat: true })
-          // console.log('filesAndFolders', filesAndFolders)
           const fileContents = await Promise.all(filesAndFolders.map(async (f) => {
             const fullPath = `${path}/${f.name}`
             if (f.stat.isFile() && f.name.includes('js')) {
@@ -67,7 +65,6 @@ const makeDatSideEffect = async (params) => {
           }]
           commandResponses.callback({ type, id, url, data: hiearchyRoot })
           const history = await archive.history()
-          console.log('history', history)
         })
       }
 
@@ -77,7 +74,6 @@ const makeDatSideEffect = async (params) => {
       }
 
       const watch = () => {
-        console.log('starting watch')
         const evts = archive.watch()
         // TODO: deal with additions & deletions
         // ex /holder.stl has been updated!
@@ -86,11 +82,9 @@ const makeDatSideEffect = async (params) => {
         evts.addEventListener('changed', async ({ path }) => {
           // const fullPath = `${path}/${f.name}`
           // TODO: how about folders ?
-          console.log(path, 'has been updated!')
           const content = await archive.readFile(path)
           const name = require('path').basename(path)
           const entry = { name, ext: 'js', source: content, fullPath: `/${rootFolder}` + path }
-          // console.log('content', content)
           // FIXME: cannot work
           // hiearchyRoot.children = [...hiearchyRoot.children]
           const index = hiearchyRoot[0].children.findIndex((el) => el.fullPath === entry.fullPath)

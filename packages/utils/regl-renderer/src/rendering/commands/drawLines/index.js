@@ -14,9 +14,7 @@ const drawLines = (regl, params = {}) => {
   const hasIndices = !!(geometry.indices && geometry.indices.length > 0)
   const hasNormals = !!(geometry.normals && geometry.normals.length > 0)
 
-  // console.log('type', geometry.type, 'color', color, hasIndices, hasNormals)
-
-  let commandParams = {
+  const commandParams = {
     primitive: 'lines',
     vert: require('./meshShaders').vert,
     frag: require('./colorOnlyShaders').frag,

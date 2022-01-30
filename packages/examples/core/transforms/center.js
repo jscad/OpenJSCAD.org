@@ -13,13 +13,11 @@ const { polygon } = jscad.primitives
 const { extrudeLinear } = jscad.extrusions
 const { center } = jscad.transforms
 
-const getParameterDefinitions = () => {
-  return [
-    { name: 'centerx', type: 'checkbox', checked: false, caption: 'Center on X:' },
-    { name: 'centery', type: 'checkbox', checked: false, caption: 'Center on Y:' },
-    { name: 'centerz', type: 'checkbox', checked: false, caption: 'Center on Z:' }
-  ]
-}
+const getParameterDefinitions = () => [
+  { name: 'centerx', type: 'checkbox', checked: false, caption: 'Center on X:' },
+  { name: 'centery', type: 'checkbox', checked: false, caption: 'Center on Y:' },
+  { name: 'centerz', type: 'checkbox', checked: false, caption: 'Center on Z:' }
+]
 
 /**
  * Creates a 3D crosshair, and centers it on various axes according to the parameters
@@ -36,7 +34,7 @@ const main = (params) => {
   return crossHair3D
 }
 
-function crosshair () {
+const crosshair = () => {
   const poly = polygon({
     points: [
       [0, 0], [10, 0], [10, 4], [9, 4], [9, 1], [6, 1], [5, 3],
