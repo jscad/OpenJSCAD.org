@@ -5,8 +5,8 @@ export default class Toggle extends Jsx6 {
 
   constructor(attr, children, parent) {
     super(attr, children, parent)
-    let valueBinding = toBinding(attr,'selected', this.parent.state, true)
-    if(valueBinding) attr.onclick = e => valueBinding.set(!valueBinding())
+    let valueBinding = toBinding(attr,'selected', false)
+    attr.onclick = e => valueBinding.set(!valueBinding())
   }
 
   tpl(h){

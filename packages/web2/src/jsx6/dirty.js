@@ -39,10 +39,14 @@ export function addDirty (func) {
 
 export function runDirty () {
   isRunning = true
-  dirty.forEach(runFunc)
+  dirty.forEach(f => runFunc(f))
   dirty.clear()
   hasDirty = false
   isRunning = false
+}
+
+function runUpdaters (updaters, args) {
+  updaters.forEach(u => u(...args))
 }
 
 export function makeBinding (initialValue, propName, obj, alsoSetBindProp) {
@@ -80,7 +84,7 @@ export function makeBinding (initialValue, propName, obj, alsoSetBindProp) {
 function asBinding (func, state, prop, updaters) {
   func.isBinding = true
   func.addUpdater = u => updaters.push(u)
-  func.dirty = () => { if (updaters.length) addDirty(updaters) }
+  func.dirty = () => { if (updaters.length) addDirty(() => runUpdaters(updaters, [state[prop]])) }
   func.state = state
   func.propName = prop
   return func
@@ -89,6 +93,7 @@ function asBinding (func, state, prop, updaters) {
 export function makeState (_state = {}, markDirtyNow) {
   const updaters = []
   const perPropUpdaters = {}
+  const perPropUpdaterRunner = {}
   const bindings = {}
   const lastData = new Map()
 
@@ -129,6 +134,7 @@ export function makeState (_state = {}, markDirtyNow) {
 
       if (!bindings[prop]) {
         perPropUpdaters[prop] = []
+        perPropUpdaterRunner[prop] = () => perPropUpdaters[prop].forEach(f => runFunc(f, [_state[prop]]))
         const func = function (value) {
           if (arguments.length !== 0) {
             if (isFunc(value)) {
@@ -169,7 +175,7 @@ export function makeState (_state = {}, markDirtyNow) {
     if (force || _state[p] !== value) {
       lastData.set(p, _state[p])
       _state[p] = value
-      if (perPropUpdaters[p]) addDirty(perPropUpdaters[p])
+      if (perPropUpdaters[p]) addDirty(perPropUpdaterRunner[p])
       return true
     }
     return false

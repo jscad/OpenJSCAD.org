@@ -8,11 +8,13 @@ export class Viewer extends Jsx6 {
   constructor(attr, children, parent) {
     super(attr, children, parent)
 
-    this.axisBinding = toBinding(attr,'showAxes', true, true)
-    this.axisBinding.addUpdater(()=>this.viewer.sendCmd({action:'showAxes', show:this.axisBinding()}))
+    this.axisBinding = toBinding(attr,'showAxes', true, { 
+      callback: show=>this.viewer.sendCmd({action:'showAxes', show})
+    })
 
-    this.gridBinding = toBinding(attr,'showGrid', true, true)
-    this.gridBinding.addUpdater(()=>this.viewer.sendCmd({action:'showGrid', show:this.gridBinding()}))
+    this.gridBinding = toBinding(attr,'showGrid', true, {
+      callback: show=>this.viewer.sendCmd({action:'showGrid', show})      
+    })
 
     moveParams({
       alias: [],

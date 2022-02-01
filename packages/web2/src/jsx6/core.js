@@ -34,10 +34,10 @@ export const requireFunc = (func, err = ERR_REQUIRE_FUNC) => {
   return func
 }
 
-export const runFunc = (f) => {
+export const runFunc = (f, args = []) => {
   try {
-    f()
+    f(...args)
   } catch (e) {
-    console.error(e, f)
+    console.error(e, f, args)
   }
 }

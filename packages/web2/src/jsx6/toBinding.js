@@ -1,15 +1,19 @@
-import { isStr } from './core'
-
-export function toBinding (obj, prop, defValue, keepAttribute, required) {
+export function toBinding (obj, prop, defValue, { keep = true, required = true, callback } = {}) {
   let propBind = obj[prop]
-  if (!propBind) {
+
+  if (propBind) {
+    if (callback) propBind.addUpdater(callback)
+  } else {
     if (required) {
       throw new Error(prop + ' binding not provided')
     } else {
+      // TODO make utility in jsx6 for static values
       propBind = () => defValue
       propBind.addUpdater = () => {}
     }
   }
-  if (!keepAttribute) delete obj[prop]
+
+  if (!keep) delete obj[prop]
+
   return propBind
 }
