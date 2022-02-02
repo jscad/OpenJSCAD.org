@@ -17,7 +17,8 @@ export class Viewer extends Jsx6 {
         callback: show=>this.viewer.sendCmd({action:'showGrid', show})      
       },
       viewerClass: {
-        def:'JscadReglViewer'
+        def:'JscadReglViewer',
+        callback: v=>this.initViewer()
       },
     }, attr, this, true)
 
@@ -31,7 +32,7 @@ export class Viewer extends Jsx6 {
       console.log('worker message', m)
       m = m.data
       if(m.action === 'entities'){
-        CSG
+        this.lastEntities = m
       }
     }
   }
@@ -46,14 +47,20 @@ export class Viewer extends Jsx6 {
   }
 
   errNotFound(err){
-    console.log('Viewer class ',this.viewerClass,' not found in window or as module ', `./${this.viewerClass}.js`,err)
+    console.log('Viewer class ',this.viewerClass(),' not found in window or as module ', `./${this.viewerClass()}.js`,err)
   }
 
   init(){
+    this.initViewer()
+  }
+
+  initViewer(){
     let viewerName = this.viewerClass()
     let viewerFunction = window[viewerName]
 
     const doInit = viewerFunction => {
+      if(this.viewer) console.log(this.viewer.destroy, this.viewer)
+      if(this.viewer) this.viewer.destroy()
       this.viewer = viewerFunction(this.el,{showAxes:this.showAxes(), showGrid: this.showGrid()})
       const cmdParams = {
         alias: this.alias,

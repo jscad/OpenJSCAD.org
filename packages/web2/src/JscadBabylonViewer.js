@@ -52,13 +52,23 @@ export default function JscadBabylonViewer (el, { showAxes = true, showGrid = tr
   console.log('init Babylon.js viewer')
   canvas = document.createElement('CANVAS')
   el.appendChild(canvas)
-  startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
 
-  const resizeObserver = new ResizeObserver(entries => {
-    const rect = entries[0].contentRect
-    resize(rect)
-  })
-  resizeObserver.observe(el)
+  const destroy = () => {
+    el.removeChild(canvas)
+  }
 
-  return { sendCmd }
+  try {
+    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
+
+    const resizeObserver = new ResizeObserver(entries => {
+      const rect = entries[0].contentRect
+      resize(rect)
+    })
+    resizeObserver.observe(el)
+  } catch (error) {
+    destroy()
+    throw error
+  }
+
+  return { sendCmd, destroy }
 }

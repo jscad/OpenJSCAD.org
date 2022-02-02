@@ -14,8 +14,8 @@ let renderTimer
 const tmFunc = typeof requestAnimationFrame === 'undefined' ? setTimeout : requestAnimationFrame
 
 function updateView (delay = 8) {
-  if (renderTimer || !renderer) return
-  renderTimer = tmFunc(updateAndRender, delay)
+  // if (renderTimer || !renderer) return
+  // renderTimer = tmFunc(updateAndRender, delay)
 }
 
 function resize ({ width, height }) {
@@ -56,13 +56,23 @@ export default function JscadThreeViewer (el, { showAxes = true, showGrid = true
   console.log('init Three.js viewer')
   canvas = document.createElement('CANVAS')
   el.appendChild(canvas)
-  startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
 
-  const resizeObserver = new ResizeObserver(entries => {
-    const rect = entries[0].contentRect
-    resize(rect)
-  })
-  resizeObserver.observe(el)
+  const destroy = () => {
+    el.removeChild(canvas)
+  }
 
-  return { sendCmd }
+  try {
+    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
+
+    const resizeObserver = new ResizeObserver(entries => {
+      const rect = entries[0].contentRect
+      resize(rect)
+    })
+    resizeObserver.observe(el)
+  } catch (error) {
+    destroy()
+    throw error
+  }
+
+  return { sendCmd, destroy }
 }

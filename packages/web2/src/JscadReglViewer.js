@@ -244,18 +244,27 @@ const wheelHandler = (ev) => {
 export default function JscadReglViewer (el, { showAxes = true, showGrid = true } = {}) {
   canvas = document.createElement('CANVAS')
   el.appendChild(canvas)
-  startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
+  const destroy = () => {
+    el.removeChild(canvas)
+  }
 
-  canvas.onpointermove = moveHandler
-  canvas.onpointerdown = downHandler
-  canvas.onpointerup = upHandler
-  canvas.onwheel = wheelHandler
+  try {
+    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
 
-  const resizeObserver = new ResizeObserver(entries => {
-    const rect = entries[0].contentRect
-    resize(rect)
-  })
-  resizeObserver.observe(el)
+    canvas.onpointermove = moveHandler
+    canvas.onpointerdown = downHandler
+    canvas.onpointerup = upHandler
+    canvas.onwheel = wheelHandler
 
-  return { sendCmd }
+    const resizeObserver = new ResizeObserver(entries => {
+      const rect = entries[0].contentRect
+      resize(rect)
+    })
+    resizeObserver.observe(el)
+  } catch (error) {
+    destroy()
+    throw error
+  }
+
+  return { sendCmd, destroy }
 }
