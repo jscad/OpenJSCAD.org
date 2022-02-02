@@ -244,6 +244,7 @@ const wheelHandler = (ev) => {
 export default function JscadReglViewer (el, { showAxes = true, showGrid = true } = {}) {
   canvas = document.createElement('CANVAS')
   el.appendChild(canvas)
+  
   const destroy = () => {
     el.removeChild(canvas)
   }

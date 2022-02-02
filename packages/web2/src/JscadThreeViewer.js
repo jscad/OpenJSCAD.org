@@ -19,8 +19,8 @@ function updateView (delay = 8) {
 }
 
 function resize ({ width, height }) {
-  // state.canvas.width = width
-  // state.canvas.height = height
+  canvas.width = width
+  canvas.height = height
   // perspectiveCamera.setProjection(state.camera, state.camera, { width, height })
   // perspectiveCamera.update(state.camera, state.camera)
   updateView()
@@ -62,7 +62,7 @@ export default function JscadThreeViewer (el, { showAxes = true, showGrid = true
   }
 
   try {
-    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
+    // startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
 
     const resizeObserver = new ResizeObserver(entries => {
       const rect = entries[0].contentRect

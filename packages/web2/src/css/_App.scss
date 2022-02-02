@@ -32,6 +32,9 @@
   .viewer-area{
     background: #fafafa;
   }
+  [p="viewer"]{
+    width: 100px;
+  }
 
   .drop-handler{
     position: fixed;

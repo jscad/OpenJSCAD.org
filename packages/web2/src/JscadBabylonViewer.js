@@ -10,13 +10,13 @@ let renderTimer
 const tmFunc = typeof requestAnimationFrame === 'undefined' ? setTimeout : requestAnimationFrame
 
 function updateView (delay = 8) {
-  if (renderTimer || !renderer) return
-  renderTimer = tmFunc(updateAndRender, delay)
+  // if (renderTimer || !renderer) return
+  // renderTimer = tmFunc(updateAndRender, delay)
 }
 
 function resize ({ width, height }) {
-  // state.canvas.width = width
-  // state.canvas.height = height
+  canvas.width = width
+  canvas.height = height
   // perspectiveCamera.setProjection(state.camera, state.camera, { width, height })
   // perspectiveCamera.update(state.camera, state.camera)
   updateView()
@@ -58,7 +58,7 @@ export default function JscadBabylonViewer (el, { showAxes = true, showGrid = tr
   }
 
   try {
-    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
+    // startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
 
     const resizeObserver = new ResizeObserver(entries => {
       const rect = entries[0].contentRect

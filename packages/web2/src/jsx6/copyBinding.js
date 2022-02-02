@@ -32,7 +32,6 @@ export function copyBinding (params, prop, options = {}, defRequired, defKeep) {
 
 export function copyBindings (defaults, params, obj = {}, defRequired, defKeep) {
   for (const p in defaults) {
-    console.log('copyBinding', p, defaults[p])
     obj[p] = copyBinding(params, p, defaults[p], defRequired, defKeep)
   }
   return obj
