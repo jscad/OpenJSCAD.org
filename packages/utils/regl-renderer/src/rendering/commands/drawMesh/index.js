@@ -28,15 +28,13 @@ const drawMesh = (regl, params = { extras: {} }) => {
   const frag = hasVertexColors ? require('./vColorShaders').frag : require('./meshShaders').frag
   const modelMatrixInv = mat4.invert(mat4.create(), transforms)
 
-  // console.log('type', geometry.type, 'color', color, hasVertexColors)
-
   let commandParams = {
     primitive: 'triangles',
     vert,
     frag,
 
     uniforms: {
-      model: (context, props) => transforms ,
+      model: (context, props) => transforms,
       ucolor: (context, props) => (props && props.color) ? props.color : color,
       // semi hack, woraround to enable/disable vertex colors !!!
       vColorToggler: (context, props) => (props && props.useVertexColors && props.useVertexColors === true) ? 1.0 : 0.0,

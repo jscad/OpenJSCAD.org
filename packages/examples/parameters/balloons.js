@@ -12,30 +12,27 @@ const jscad = require('@jscad/modeling')
 
 const { subtract, union } = jscad.booleans
 const { colorize, hexToRgb } = jscad.colors
-const { expand } = jscad.expansions
 const { extrudeFromSlices, extrudeLinear, slice } = jscad.extrusions
 const { geom2 } = jscad.geometries
 const { hullChain } = jscad.hulls
 const { mat4 } = jscad.maths
 const { measureBoundingBox } = jscad.measurements
-const { circle, ellipsoid, line } = jscad.primitives
+const { circle, ellipsoid } = jscad.primitives
 const { vectorText } = jscad.text
 const { translate, scale, rotateX, center } = jscad.transforms
 
 const options = { segments: 32 }
 
-const getParameterDefinitions = () => {
-  return [
-    { name: 'balloon', type: 'group', caption: 'Balloons' },
-    { name: 'isBig', type: 'checkbox', checked: true, initial: '20', caption: 'Big?' },
-    { name: 'color', type: 'color', initial: '#FFB431', caption: 'Color?' },
-    { name: 'count', type: 'slider', initial: 4, min: 2, max: 10, step: 1, caption: 'How many?' },
-    { name: 'friend', type: 'group', caption: 'Friend' },
-    { name: 'name', type: 'text', initial: '', size: 20, maxLength: 20, caption: 'Name?', placeholder: '20 characters' },
-    { name: 'birthdate', type: 'date', initial: '', min: '1915-01-01', max: '2030-12-31', caption: 'Birthday?', placeholder: 'YYYY-MM-DD' },
-    { name: 'age', type: 'int', initial: 20, min: 1, max: 100, step: 1, caption: 'Age?' }
-  ]
-}
+const getParameterDefinitions = () => [
+  { name: 'balloon', type: 'group', caption: 'Balloons' },
+  { name: 'isBig', type: 'checkbox', checked: true, initial: '20', caption: 'Big?' },
+  { name: 'color', type: 'color', initial: '#FFB431', caption: 'Color?' },
+  { name: 'count', type: 'slider', initial: 4, min: 2, max: 10, step: 1, caption: 'How many?' },
+  { name: 'friend', type: 'group', caption: 'Friend' },
+  { name: 'name', type: 'text', initial: '', size: 20, maxLength: 20, caption: 'Name?', placeholder: '20 characters' },
+  { name: 'birthdate', type: 'date', initial: '', min: '1915-01-01', max: '2030-12-31', caption: 'Birthday?', placeholder: 'YYYY-MM-DD' },
+  { name: 'age', type: 'int', initial: 20, min: 1, max: 100, step: 1, caption: 'Age?' }
+]
 
 const initializeOptions = (params) => {
   // use the checkbox to determine the size of the sphere
@@ -64,10 +61,10 @@ const text = (message, extrusionHeight, characterLineWidth) => {
 
 const createSingleBalloon = (params) => {
   let t = rotateX(Math.PI / 2, text(params.age.toString(), 2, 2))
-  let m = measureBoundingBox(t)
-  let x = (options.b_radius * 0.70) / Math.max(m[1][0], m[1][2])
-  let y = options.b_radius * 3
-  let z = x
+  const m = measureBoundingBox(t)
+  const x = (options.b_radius * 0.70) / Math.max(m[1][0], m[1][2])
+  const y = options.b_radius * 3
+  const z = x
   t = translate([0, y / 2, 0], scale([x, y, z], t))
 
   const b = ellipsoid({
@@ -116,14 +113,6 @@ const createSalutation = (name) => {
     salutation = `Happy Birthday, ${name}!`
   }
   return translate([0, -10, 0], scale([0.5, 0.5, 0.5], text(salutation, 2, 2)))
-}
-
-const createAge = (age) => {
-  let age3D = text(age.toString(), 10, 3)
-  age3D = scale([2, 2, 2], age3D)
-  age3D = rotateX(Math.PI / 2, age3D)
-  age3D = translate([0, 30, 30], age3D)
-  return age3D
 }
 
 const createBirthDate = (birthDate) => {

@@ -10,15 +10,13 @@
 
 const { cuboid, roundedCuboid } = require('@jscad/modeling').primitives
 
-const getParameterDefinitions = () => {
-  return [
-    { name: 'width', type: 'float', default: 10, caption: 'Width:' },
-    { name: 'height', type: 'float', default: 14, caption: 'Height:' },
-    { name: 'depth', type: 'float', default: 7, caption: 'Depth:' },
-    { name: 'rounded', type: 'choice', caption: 'Round the corners', values: [0, 1], captions: ['No', 'Yes'], default: 1 },
-    { name: 'radius', type: 'float', default: 2, caption: 'Corner Radius:' }
-  ]
-}
+const getParameterDefinitions = () => [
+  { name: 'width', type: 'float', default: 10, caption: 'Width:' },
+  { name: 'height', type: 'float', default: 14, caption: 'Height:' },
+  { name: 'depth', type: 'float', default: 7, caption: 'Depth:' },
+  { name: 'rounded', type: 'choice', caption: 'Round the corners', values: [0, 1], captions: ['No', 'Yes'], default: 1 },
+  { name: 'radius', type: 'float', default: 2, caption: 'Corner Radius:' }
+]
 
 /**
  * Create a rounded cuboid with the supplied parameters

@@ -33,11 +33,8 @@ const makeState = (params) => {
   const source = () => {
     const commandResponses$ = commandResponses.stream.multicast()
     // return commandResponses$
-    // commandResponses$.forEach(x=>console.log('commandResponses', x))
     return most.scan((state, input) => {
-      // console.log('updating state', state.design, input.type, input.state.design)
       const foo = Object.assign({}, state, input.state)
-      // console.log('output state', foo.design)
       return foo
     }, initialState, commandResponses$)
       .startWith(initialState)
@@ -47,14 +44,6 @@ const makeState = (params) => {
 
   const sink = (out$) => {
     out$.forEach((command) => {
-      // const { state } = command
-      /* try {
-        const newState = state
-      } catch (error) {
-        console.error('caught error', error)
-        const status = Object.assign({}, state.status, {error})
-        state = Object.assign({}, state, {status})
-      } */
       commandResponses.callback(command)
     })
   }

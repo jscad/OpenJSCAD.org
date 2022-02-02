@@ -155,7 +155,6 @@ const actions = ({ sources }) => {
   const triggerFromShortcut$ = keyCombos$
     .thru(withLatestFrom(reducers.triggerShortcut, sources.state))
     .filter((x) => x !== undefined)
-    // .tap(x => console.log('triggerFromShortcut', x))
 
   // this means we wait until the data here has been initialized before saving
   const requestLoadSettings$ = initialize$

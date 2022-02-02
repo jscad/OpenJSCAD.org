@@ -4,7 +4,8 @@
  */
 const modulifySource = (source, apiMainPath) => {
   const getParamsString = source.includes('getParameterDefinitions')
-    ? 'module.exports.getParameterDefinitions = getParameterDefinitions' : ''
+    ? 'module.exports.getParameterDefinitions = getParameterDefinitions'
+    : ''
   const updatedSource = `
     const {geom2, geom3, path2, pol2, poly3} = require('${apiMainPath}').geometries
 

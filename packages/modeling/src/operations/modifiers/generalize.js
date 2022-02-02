@@ -16,15 +16,11 @@ const repairTjunctions = require('./repairTjunctions')
 
 /*
  */
-const generalizePath2 = (options, geometry) => {
-  return geometry
-}
+const generalizePath2 = (options, geometry) => geometry
 
 /*
  */
-const generalizeGeom2 = (options, geometry) => {
-  return geometry
-}
+const generalizeGeom2 = (options, geometry) => geometry
 
 /*
  */

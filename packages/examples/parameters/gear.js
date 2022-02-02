@@ -17,16 +17,14 @@ const { vec2 } = jscad.maths
 const { degToRad } = jscad.utils
 
 // Here we define the user editable parameters:
-const getParameterDefinitions = () => {
-  return [
-    { name: 'numTeeth', caption: 'Number of teeth:', type: 'int', initial: 10, min: 5, max: 20, step: 1 },
-    { name: 'circularPitch', caption: 'Circular pitch:', type: 'float', initial: 5 },
-    { name: 'pressureAngle', caption: 'Pressure angle:', type: 'float', initial: 20 },
-    { name: 'clearance', caption: 'Clearance:', type: 'float', initial: 0.0, step: 0.1 },
-    { name: 'thickness', caption: 'Thickness:', type: 'float', initial: 5 },
-    { name: 'centerholeradius', caption: 'Radius of center hole (0 for no hole):', type: 'float', initial: 2 }
-  ]
-}
+const getParameterDefinitions = () => [
+  { name: 'numTeeth', caption: 'Number of teeth:', type: 'int', initial: 10, min: 5, max: 20, step: 1 },
+  { name: 'circularPitch', caption: 'Circular pitch:', type: 'float', initial: 5 },
+  { name: 'pressureAngle', caption: 'Pressure angle:', type: 'float', initial: 20 },
+  { name: 'clearance', caption: 'Clearance:', type: 'float', initial: 0.0, step: 0.1 },
+  { name: 'thickness', caption: 'Thickness:', type: 'float', initial: 5 },
+  { name: 'centerholeradius', caption: 'Radius of center hole (0 for no hole):', type: 'float', initial: 2 }
+]
 
 // Main entry point; here we construct our solid:
 const main = (params) => {
@@ -74,7 +72,7 @@ const createBaseCirclePolygon = (numTeeth, angularToothWidthAtBase, rootRadius) 
   const toothCenterAngle = 0.5 * angularToothWidthAtBase
   for (let k = 0; k < numTeeth; k++) {
     const currentAngle = toothCenterAngle + k * toothAngle
-    var p1 = vec2.scale(vec2.create(), vec2.fromAngleRadians(vec2.create(), currentAngle), rootRadius)
+    const p1 = vec2.scale(vec2.create(), vec2.fromAngleRadians(vec2.create(), currentAngle), rootRadius)
     points.push([p1[0], p1[1]])
   }
   return polygon({ points, closed: true })

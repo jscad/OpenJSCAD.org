@@ -26,10 +26,8 @@ const openscadOpenJscadParser = require('@jscad/openscad-openjscad-translator')
 const setUpEditor = (element, gProcessor) => {
   const langTools = ace.acequire('ace/ext/language_tools')
 
-  console.log('langTools', langTools)
   const flowCompleter = {
     getCompletions: (editor, session, pos, prefix, callback) => {
-      console.log('getCompletions')
       // your code
     }
   }
@@ -93,7 +91,6 @@ const setUpEditor = (element, gProcessor) => {
   document.body.addEventListener('keydown', (evt) => {
     if (evt.key === 'F5') {
       evt.preventDefault()
-      // console.log('no accidental reloading!')
       runExec(gEditor)
     }
   })
@@ -184,12 +181,9 @@ const editorWrapper = (state, editorCallbackToStream) => {
   // editor.resize(true)
   // editor.renderer.updateFull()
   /* ace.config.loadModule('ace/snippets/javascript', function (ba) {
-    console.log('boo', ba)
   })
   ace.config.loadModule('ace/ext/language_tools', function () {
-    console.log('gna')
     const bla = require('brace/snippets/javascript')
-    console.log('foo', bla)
     editor.insertSnippet(bli);
   }) */
   editor.setOptions({

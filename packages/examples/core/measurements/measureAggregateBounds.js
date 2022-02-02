@@ -14,13 +14,11 @@ const { measureAggregateBoundingBox } = require('@jscad/modeling').measurements
 const { colorize } = require('@jscad/modeling').colors
 const { subtract } = require('@jscad/modeling').booleans
 
-const getParameterDefinitions = () => {
-  return [
-    { name: 'rotatex', type: 'slider', initial: 0, min: -3.14, max: 3.14, step: 0.01, caption: 'X Rotation:' },
-    { name: 'rotatey', type: 'slider', initial: 0, min: -3.14, max: 3.14, step: 0.01, caption: 'Y Rotation:' },
-    { name: 'rotatez', type: 'slider', initial: 0, min: -3.14, max: 3.14, step: 0.01, caption: 'Z Rotation:' }
-  ]
-}
+const getParameterDefinitions = () => [
+  { name: 'rotatex', type: 'slider', initial: 0, min: -3.14, max: 3.14, step: 0.01, caption: 'X Rotation:' },
+  { name: 'rotatey', type: 'slider', initial: 0, min: -3.14, max: 3.14, step: 0.01, caption: 'Y Rotation:' },
+  { name: 'rotatez', type: 'slider', initial: 0, min: -3.14, max: 3.14, step: 0.01, caption: 'Z Rotation:' }
+]
 
 const buildBoundingBox = (bounds) => {
   // Bounding box format is an array of arrays of values, eg:

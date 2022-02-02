@@ -41,7 +41,7 @@ test('serialize non-triangulated 3D geometry to obj', (t) => {
 test('serialize color 3D geometry to obj', (t) => {
   const testCubes = [
     colors.colorize([1, 0.8, 0.8], primitives.cuboid({})),
-    primitives.cuboid({center: [0, 3, 0]})
+    primitives.cuboid({ center: [0, 3, 0] })
   ]
   const observed4 = serializer.serialize({ triangulate: false }, testCubes)
   t.is(observed4.length, 1)

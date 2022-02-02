@@ -72,8 +72,7 @@ class Blob {
           break
         case 'object':
           object = contents[index] // this should be a reference to an object
-          if (Buffer.isBuffer(object)) {
-          }
+          // FIXME if (Buffer.isBuffer(object)) { }
           if (object instanceof ArrayBuffer) {
             const view = new DataView(object)
             for (let bindex = 0; bindex < object.byteLength; bindex++) {
