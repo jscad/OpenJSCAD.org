@@ -1,11 +1,11 @@
-import { Jsx6, toBinding } from '../jsx6'
+import { Jsx6, copyBinding } from '../jsx6'
 
 export default class Toggle extends Jsx6 {
   tagName = 'button'
 
   constructor(attr, children, parent) {
     super(attr, children, parent)
-    let valueBinding = toBinding(attr,'selected', false)
+    const valueBinding = copyBinding(attr,'selected', {keep:true, required: true})
     attr.onclick = e => valueBinding.set(!valueBinding())
   }
 

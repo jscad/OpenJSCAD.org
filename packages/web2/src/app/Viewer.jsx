@@ -1,5 +1,5 @@
 
-import { Jsx6, moveParams, toBinding } from '../jsx6'
+import { Jsx6, moveParams, copyBinding, copyBindings } from '../jsx6'
 
 export class Viewer extends Jsx6 {
   worker
@@ -8,18 +8,22 @@ export class Viewer extends Jsx6 {
   constructor(attr, children, parent) {
     super(attr, children, parent)
 
-    this.axisBinding = toBinding(attr,'showAxes', true, { 
-      callback: show=>this.viewer.sendCmd({action:'showAxes', show})
-    })
-
-    this.gridBinding = toBinding(attr,'showGrid', true, {
-      callback: show=>this.viewer.sendCmd({action:'showGrid', show})      
-    })
+    copyBindings({
+      showAxes: { 
+        def: true,
+        callback: show=>this.viewer.sendCmd({action:'showAxes', show})
+      },
+      showGrid: {
+        callback: show=>this.viewer.sendCmd({action:'showGrid', show})      
+      },
+      viewerClass: {
+        def:'JscadReglViewer'
+      },
+    }, attr, this, true)
 
     moveParams({
       alias: [],
       baseURI: '',
-      viewerClass: 'JscadReglViewer',
     }, attr, this)
 
     this.worker = new Worker('./jscad-worker.js')
@@ -46,11 +50,11 @@ export class Viewer extends Jsx6 {
   }
 
   init(){
-    let viewerName = this.viewerClass
+    let viewerName = this.viewerClass()
     let viewerFunction = window[viewerName]
 
     const doInit = viewerFunction => {
-      this.viewer = viewerFunction(this.el,{showAxes:this.axisBinding(), showGrid: this.gridBinding()})
+      this.viewer = viewerFunction(this.el,{showAxes:this.showAxes(), showGrid: this.showGrid()})
       const cmdParams = {
         alias: this.alias,
         action: 'init',

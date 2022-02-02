@@ -129,7 +129,7 @@ export class App extends Jsx6 {
         </select>
       </div>
       <div class="f-r">
-        {T`viewer`} ({T`requires_restart`})
+        {T`viewer`}
         <select onchange={(e) => $s.viewer(e.target.value)}>
           {Object.keys(viewerMap).map((v) => (
             <option key={v} value={v} selected={$s.viewer(viewer=>viewer===v)}>
@@ -155,7 +155,7 @@ export class App extends Jsx6 {
                 <button onclick={()=>this.viewer.ruunScript(this.editor.getValue())}>run</button>
               </div>
             </div>
-            <Viewer p="viewer" class="viewer-area fxs fx1 owh" viewerClass={this.settings.viewer()} showAxes={$s.showAxes} showGrid={$s.showGrid} />
+            <Viewer p="viewer" class="viewer-area fxs fx1 owh" viewerClass={this.settings.viewer} showAxes={$s.showAxes} showGrid={$s.showGrid} />
           </div>
         </div>
       </>
