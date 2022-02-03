@@ -152,4 +152,6 @@ function receiveCmd (cmd) {
 }
 
 console.log('WORKER started', self.addEventListener, self)
+require('@jscad/modeling')
+console.log('WORKER initialized', self.addEventListener, self)
 self.addEventListener('message', (e) => receiveCmd(e.data))

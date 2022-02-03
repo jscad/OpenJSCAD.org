@@ -2,27 +2,106 @@
 import * as THREE from './Three.jscad.js'
 import { CSG2Object3D } from './util/CSG2Object3D.js'
 
+const { OrbitControls } = THREE
+
+let scene
+let camera
+let controls
+let mesh
+let grid2
+let grid1
+let ground
+let renderer
+const SHADOW = false
+const AXIS2 = true
+const CAM_DISTANCE = 100
+const shouldRender = Date.now()
+const lastRender = true
+let renderTimer
+// animate()
+
 const entities = []
 let canvas
 
 CSG2Object3D(THREE)
 
 const startRenderer = ({ canvas, cameraPosition, cameraTarget, axis = {}, grid = {} }) => {
+  camera = new THREE.PerspectiveCamera(45, 1, 1, 50000)
+  camera.position.set(180, -180, 220)
+  camera.up.set(0, 0, 1)
+
+  scene = new THREE.Scene()
+  scene.background = new THREE.Color(0xffffff)
+
+  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444)
+  hemiLight.position.set(0, 0, 2000)
+  scene.add(hemiLight)
+
+  const directionalLight = new THREE.DirectionalLight(0xffffff)
+  directionalLight.position.set(0, 200, 100)
+  directionalLight.castShadow = SHADOW
+  if (SHADOW) {
+    directionalLight.shadow.camera.top = 180
+    directionalLight.shadow.camera.bottom = -100
+    directionalLight.shadow.camera.left = -120
+    directionalLight.shadow.camera.right = 120
+  }
+  scene.add(directionalLight)
+
+  // ground
+
+  ground = new THREE.Mesh(new THREE.PlaneBufferGeometry(200, 200), new THREE.MeshPhongMaterial({ color: 0xffffff, depthWrite: false }))
+  // ground.rotation.x =  - Math.PI / 2;
+  // ground.rotation.y =  - Math.PI / 2;
+  ground.receiveShadow = SHADOW
+  scene.add(ground)
+
+  grid1 = new THREE.GridHelper(200, 20, 0x000000, 0x000000)
+  grid1.rotation.x = -Math.PI / 2
+  // grid.rotation.y = - Math.PI / 2;
+  grid1.material.opacity = 0.2
+  grid1.material.transparent = true
+  scene.add(grid1)
+
+  grid2 = new THREE.GridHelper(200, 200, 0x000000, 0x000000)
+  grid2.rotation.x = -Math.PI / 2
+  // grid.rotation.y = - Math.PI / 2;
+  grid2.material.opacity = 0.1
+  grid2.material.transparent = true
+  scene.add(grid2)
+
+  const axes = new THREE.AxesHelper(10)
+  scene.add(axes)
+
+  renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, canvas })
+  renderer.setPixelRatio(window.devicePixelRatio)
+  console.log('canvasssssa', renderer.domElement)
+  controls = new THREE.OrbitControls(camera, canvas)
+  controls.target.set(0, 0, 0)
+  controls.update()
+  controls.addEventListener('change', function () {
+    updateView()
+  })
 }
 
-let renderTimer
 const tmFunc = typeof requestAnimationFrame === 'undefined' ? setTimeout : requestAnimationFrame
 
 function updateView (delay = 8) {
-  // if (renderTimer || !renderer) return
-  // renderTimer = tmFunc(updateAndRender, delay)
+  if (renderTimer || !renderer) return
+  renderTimer = tmFunc(updateAndRender, delay)
+}
+
+function updateAndRender () {
+  renderTimer = null
+  console.log('updateAndRender')
+  controls.update()
+  renderer.render(scene, camera)
 }
 
 function resize ({ width, height }) {
-  canvas.width = width
-  canvas.height = height
-  // perspectiveCamera.setProjection(state.camera, state.camera, { width, height })
-  // perspectiveCamera.update(state.camera, state.camera)
+  camera.aspect = width / height
+  camera.updateProjectionMatrix()
+  renderer.setSize(width, height)
   updateView()
 }
 
@@ -62,7 +141,7 @@ export default function JscadThreeViewer (el, { showAxes = true, showGrid = true
   }
 
   try {
-    // startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
+    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
 
     const resizeObserver = new ResizeObserver(entries => {
       const rect = entries[0].contentRect
