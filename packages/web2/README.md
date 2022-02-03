@@ -20,16 +20,24 @@ npm run desktop
  - [x] toggle editor
  - [x] toggle settigns
  - [x] store settings to localStorage
- - [ ] integrate themes from jscad web
+ - [ ] integrate themes from jscad web (only for 3d view)
+ - [ ] themes for UI (dark/light) 
  - [x] EDITOR codemirror 6
  - [x] EDITOR javascript syntax higlight
  - [x] ELECTRON: load same index page as electron app
+ - [x] VIEWER - regl renderer 
+ - [x] VIEWER - Three.js renderer 
+ - [ ] VIEWER - Babylon renderer 
+ - [ ] WORKER - run script
  - [ ] WEB - file upload and changes syncing with worker
  - [ ] ALL - generalize file access
  - [ ] ELECTRON - allow working with local files
  - [ ] ELECTRON: recognize when in electron
  - [ ] ELECTRON: if in it, enable saving, not just reading script
  - [ ] DEMO-WEB: generate web page so proto is available for playing with as-is
+
+nice to have or to consider if worth doing
+
  - [ ] extract reusable OrbitControls to be used with different renderer (regl,three, babylon)
 
  
