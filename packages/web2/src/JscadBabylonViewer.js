@@ -1,8 +1,6 @@
 // cd c:\hrg\3dp_dev\three.js; esbuild Three.jscad.js --outfile=C:/hrg/3dp_dev/OpenJSCAD.org/packages/web2/src/Three.jscad.js --bundle --watch --sourcemap=external --minify --format=esm
-const { Engine, Scene, HemisphericLight, ArcRotateCamera, Vector3, AxesViewer, MeshBuilder } = require('@babylonjs/core')
+const { Engine, Scene, HemisphericLight, ArcRotateCamera, Vector3, AxesViewer, MeshBuilder, Mesh, Plane } = require('@babylonjs/core')
 const { GridMaterial } = require('@babylonjs/materials')
-
-console.log('babylon', { Engine })
 
 const entities = []
 let canvas
@@ -15,12 +13,15 @@ const startRenderer = ({ canvas, cameraPosition, cameraTarget, axis = {}, grid =
   scene = new Scene(engine)
 
   camera = new ArcRotateCamera('camera', -Math.PI / 2, Math.PI / 2.5, 15, new Vector3(0, 0, 0))
+  camera.upVector = new Vector3(0, 0, 1)
+
   camera.attachControl(canvas, true)
   const light = new HemisphericLight('light', new Vector3(1, 1, 0))
   scene.addLight(light)
 
-  const ground = MeshBuilder.CreateGround("ground", {width:100, height:100})
-  ground.material = new GridMaterial("groundMaterial", scene);
+  const ground = MeshBuilder.CreatePlane('ground', { width: 100, height: 100, sideOrientation: Mesh.DOUBLESIDE, sourcePlane: new Plane(0, 0, 1, 0) })
+  const gridMat = ground.material = new GridMaterial('groundMaterial', scene)
+  gridMat.opacity = 0.8
   scene.addGeometry(ground)
   new AxesViewer(scene, 10)
 
