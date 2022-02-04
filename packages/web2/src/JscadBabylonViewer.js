@@ -43,6 +43,8 @@ function updateAndRender () {
 }
 
 function resize ({ width, height }) {
+  canvas.width = width
+  canvas.height = height
   engine.resize()
   updateView()
 }
@@ -85,7 +87,9 @@ export default function JscadBabylonViewer (el, { showAxes = true, showGrid = tr
 
   try {
     startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
-
+    canvas.addEventListener('wheel', e => {
+      e.preventDefault()
+    })
     const resizeObserver = new ResizeObserver(entries => {
       const rect = entries[0].contentRect
       resize(rect)

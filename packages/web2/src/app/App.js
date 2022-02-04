@@ -146,7 +146,7 @@ export class App extends Jsx6 {
       <>
         <button class="drop-handler" hidden={state.showDrop(NOT)}></button>
         <div class="fxs fx1">
-          <JscadEditor p="editor" class="editor editor-area fx1 w50" hidden={$s.editorVisible(NOT)}/>
+          <JscadEditor p="editor" class="editor editor-area fx1 w50 owa" hidden={$s.editorVisible(NOT)}/>
           <div class="viewer-area fxs fx1 w50">
             <div class="menu-area">
               <div class="menu-buttons">
