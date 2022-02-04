@@ -27,7 +27,7 @@ npm run desktop
  - [x] ELECTRON: load same index page as electron app
  - [x] VIEWER - regl renderer 
  - [x] VIEWER - Three.js renderer 
- - [ ] VIEWER - Babylon renderer 
+ - [x] VIEWER - Babylon renderer 
  - [ ] WORKER - run script
  - [ ] WEB - file upload and changes syncing with worker
  - [ ] ALL - generalize file access
