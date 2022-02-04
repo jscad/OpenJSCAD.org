@@ -1,9 +1,32 @@
 // cd c:\hrg\3dp_dev\three.js; esbuild Three.jscad.js --outfile=C:/hrg/3dp_dev/OpenJSCAD.org/packages/web2/src/Three.jscad.js --bundle --watch --sourcemap=external --minify --format=esm
+const { Engine, Scene, HemisphericLight, ArcRotateCamera, Vector3, AxesViewer, MeshBuilder } = require('@babylonjs/core')
+const { GridMaterial } = require('@babylonjs/materials')
+
+console.log('babylon', { Engine })
 
 const entities = []
 let canvas
+let engine
+let scene
+let camera
 
 const startRenderer = ({ canvas, cameraPosition, cameraTarget, axis = {}, grid = {} }) => {
+  engine = new Engine(canvas, true)
+  scene = new Scene(engine)
+
+  camera = new ArcRotateCamera('camera', -Math.PI / 2, Math.PI / 2.5, 15, new Vector3(0, 0, 0))
+  camera.attachControl(canvas, true)
+  const light = new HemisphericLight('light', new Vector3(1, 1, 0))
+  scene.addLight(light)
+
+  const ground = MeshBuilder.CreateGround("ground", {width:100, height:100})
+  ground.material = new GridMaterial("groundMaterial", scene);
+  scene.addGeometry(ground)
+  new AxesViewer(scene, 10)
+
+  engine.runRenderLoop(function () {
+    scene.render()
+  })
 }
 
 let renderTimer
@@ -14,11 +37,12 @@ function updateView (delay = 8) {
   // renderTimer = tmFunc(updateAndRender, delay)
 }
 
+function updateAndRender () {
+//  scene.render()
+}
+
 function resize ({ width, height }) {
-  canvas.width = width
-  canvas.height = height
-  // perspectiveCamera.setProjection(state.camera, state.camera, { width, height })
-  // perspectiveCamera.update(state.camera, state.camera)
+  engine.resize()
   updateView()
 }
 
@@ -51,6 +75,7 @@ function sendCmd (cmd) {
 export default function JscadBabylonViewer (el, { showAxes = true, showGrid = true } = {}) {
   console.log('init Babylon.js viewer')
   canvas = document.createElement('CANVAS')
+  canvas.setAttribute('touch-action', 'none')
   el.appendChild(canvas)
 
   const destroy = () => {
@@ -58,7 +83,7 @@ export default function JscadBabylonViewer (el, { showAxes = true, showGrid = tr
   }
 
   try {
-    // startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
+    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
 
     const resizeObserver = new ResizeObserver(entries => {
       const rect = entries[0].contentRect
