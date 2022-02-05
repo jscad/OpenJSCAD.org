@@ -2,6 +2,7 @@ import { T, setTranslations, refreshTranslations,
   forEachProp, getValue,
   Jsx6, makeState,
   setValue,
+  eq,
   NOT,
   makeBinding} from '../jsx6'
 import { JscadEditor } from './editor'
@@ -112,7 +113,7 @@ export class App extends Jsx6 {
         {T`Languages`}
         <select onchange={(e) => $s.language(e.target.value)}>
           {Object.keys(langMap).map((l) => (
-            <option key={l} value={l} selected={$s.language(lang=>lang===l)}>
+            <option key={l} value={l} selected={$s.language(eq(l))}>
               {T(langMap[l])}
             </option>
           ))}
@@ -122,7 +123,7 @@ export class App extends Jsx6 {
         {T`theme`}
         <select onchange={(e) => $s.theme(e.target.value)}>
           {Object.keys(themes).map((v) => (
-            <option key={v} value={v} selected={$s.theme(k=>k===v)}>
+            <option key={v} value={v} selected={$s.theme(eq(v))}>
               {T(themes[v].name)}
             </option>
           ))}
@@ -132,7 +133,7 @@ export class App extends Jsx6 {
         {T`viewer`}
         <select onchange={(e) => $s.viewer(e.target.value)}>
           {Object.keys(viewerMap).map((v) => (
-            <option key={v} value={v} selected={$s.viewer(viewer=>viewer===v)}>
+            <option key={v} value={v} selected={$s.viewer(eq(v))}>
               {T(viewerMap[v])}
             </option>
           ))}

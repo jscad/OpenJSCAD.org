@@ -40,6 +40,35 @@ nice to have or to consider if worth doing
 
  - [ ] extract reusable OrbitControls to be used with different renderer (regl,three, babylon)
 
+regl checklist
+ - [ ] theme background
+ - [ ] theme default mesh color
+ - [ ] theme grid
+ - [ ] grid show / hide
+ - [ ] axes show / hide
+ - [ ] axes helper show / hide
+ - [ ] get camera
+ - [ ] set camera
+
+Babylon.js checklist
+ - [ ] theme background
+ - [ ] theme default mesh color
+ - [ ] theme grid
+ - [ ] grid show / hide
+ - [ ] axes show / hide
+ - [ ] axes helper show / hide
+ - [ ] get camera
+ - [ ] set camera
+
+Three.js checklist
+ - [ ] theme background
+ - [ ] theme default mesh color
+ - [ ] theme grid
+ - [ ] grid show / hide
+ - [ ] axes show / hide
+ - [ ] axes helper show / hide
+ - [ ] get camera
+ - [ ] set camera
  
 -------------------------------------------------
 

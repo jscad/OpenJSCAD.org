@@ -21,6 +21,16 @@ export function callAnim (callback) {
   anim(callback)
 }
 
+export function eq (...args) {
+  if (args.length > 1) {
+    return value(args[0]) === value(args[1])
+  }
+  return other => value(args[0]) === value(other)
+}
+
+export function value (v) {
+  return (v && isFunc(v)) ? v() : v
+}
 export function addDirty (func) {
   if (isRunning) throwErr(ERR_DIRTY_RECURSION)
   if (func instanceof Array) {

@@ -1,5 +1,5 @@
 
-import { Jsx6, moveParams, copyBinding, copyBindings } from '../jsx6'
+import { Jsx6, moveParams, copyBindings } from '../jsx6'
 
 export class Viewer extends Jsx6 {
   worker
