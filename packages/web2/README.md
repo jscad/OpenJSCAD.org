@@ -44,9 +44,9 @@ regl checklist
  - [ ] theme background
  - [ ] theme default mesh color
  - [ ] theme grid
- - [ ] grid show / hide
- - [ ] axes show / hide
- - [ ] axes helper show / hide
+ - [x] grid show / hide
+ - [x] axes show / hide
+ - [ ] (WONTFIX) axes helper + show / hide
  - [ ] get camera
  - [ ] set camera
 
@@ -56,7 +56,7 @@ Babylon.js checklist
  - [ ] theme grid
  - [ ] grid show / hide
  - [ ] axes show / hide
- - [ ] axes helper show / hide
+ - [ ] axes helper + show / hide
  - [ ] get camera
  - [ ] set camera
 
@@ -66,7 +66,7 @@ Three.js checklist
  - [ ] theme grid
  - [ ] grid show / hide
  - [ ] axes show / hide
- - [ ] axes helper show / hide
+ - [ ] axes helper + show / hide
  - [ ] get camera
  - [ ] set camera
  
