@@ -11,7 +11,7 @@ const serializeSolids = (solids) => {
   // imcomplete support for transfering objects via web workers
 
   // NOTE: JSON.stringify was used at some point, but was removed because it was no longer needed
-  // for postMessage JavaScript engines now use an optimized structured clone alg. 
+  // for postMessage JavaScript engines now use an optimized structured clone alg.
   // which should be at least as fast as JSON.stringify
   solids = solids.map((object) => {
     // apply the transforms before serializing
@@ -22,6 +22,5 @@ const serializeSolids = (solids) => {
   })
   return solids
 }
-
 
 module.exports = serializeSolids

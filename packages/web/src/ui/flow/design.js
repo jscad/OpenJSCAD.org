@@ -79,7 +79,6 @@ const reducers = {
    * @returns {Object} the updated state
    */
   resetDesign: (state, origin) => {
-    // console.log('design: reset', origin)
     // we reset only the given fields: mostly all except design specific things
     const fieldsToReset = [
       'name', 'path', 'mainPath', 'origin', 'filesAndFolders',
@@ -101,7 +100,6 @@ const reducers = {
    * @returns {Object} the updated state
    */
   setDesignContent: (state, payload) => {
-    // console.log('design: set content', state, state.design, payload)
     // all our available data (specific to web)
     const { filesAndFolders } = payload
     const fakeFs = makeFakeFs(filesAndFolders)
@@ -109,7 +107,6 @@ const reducers = {
     const mainPath = getDesignEntryPoint(fakeFs, rootPath)
     const designName = getDesignName(fakeFs, rootPath)
     const designPath = path.dirname(rootPath)
-    // console.log('BLAA', rootPath, designName, designPath)
 
     let design = state.design
     // to track computation time
@@ -142,7 +139,6 @@ const reducers = {
    * @returns {Object} the updated state
    */
   setDesignSolids: (state, { solids, lookup, lookupCounts }) => {
-    // console.log('design: set solids', lookup, lookupCounts)
     solids = solids || []
     lookup = lookup || {}
     lookupCounts = lookupCounts || {}
@@ -182,7 +178,6 @@ const reducers = {
   },
 
   setDesignParameterDefinitions: (state, data) => {
-    // console.log('design: set parameter definitions & defaults', data)
     const parameterDefaults = data.parameterDefaults || state.design.parameterDefaults
     const parameterDefinitions = data.parameterDefinitions || state.design.parameterDefinitions
     const design = Object.assign({}, state.design, {
@@ -201,7 +196,6 @@ const reducers = {
    * @returns {Object} the updated state
    */
   setDesignParameterValues: (state, data) => {
-    // console.log('setDesignParameterValues',state,data)
     let parameterValues = data.parameterValues
     // one of many ways of filtering out data from instantUpdates
     if (data.origin === 'instantUpdate' && !state.design.instantUpdate) {
@@ -227,7 +221,6 @@ const reducers = {
   },
 
   setSettings: (state, { data }) => {
-    // console.log('design: set settings', state.design, data)
     const {
       vtreeMode,
       autoReload,
@@ -258,7 +251,6 @@ const reducers = {
   },
 
   requestWriteCachedGeometry: ({ design }, cache) => {
-    // console.log('requestWriteCachedGeometry', cache)
     const data = {}
     Object.keys(cache).forEach((key) => {
       data[key] = cache[key]
@@ -278,7 +270,6 @@ const reducers = {
     if (!previousState.design) {
       return false
     }
-    // console.log('isDesignTheSame', previousState.design, state.design)
     const current = JSON.stringify(keep(designEqualityFields, state.design))
     const previous = JSON.stringify(keep(designEqualityFields, previousState.design))
     return previous === current
@@ -344,16 +335,10 @@ const actions = ({ sources }) => {
     .multicast()
 
   const requestLoadDesignContent$ = most.mergeArray([
-    // load previously loaded remote file (or example)
-    /* sources.store
-      .filter(reply => reply.key === 'design' && reply.type === 'read' && reply.data !== undefined && reply.data.origin === 'http')
-      .map(({ data }) => data.mainPath), */
-
     // load files from drag & drop (file or folder)
     sources.drops
       .filter((d) => d.type === 'fileOrFolder')
       .tap((x) => console.log('dropped file', x))
-      // url, text, "fileOrFolder"
       .map(({ data }) => ({ sink: 'fs', data, path: 'realFs', urls: [] })),
 
     // load remote file from drag & drop (url)
@@ -367,8 +352,7 @@ const actions = ({ sources }) => {
         const urls = url ? [url] : []
         const { protocol, pathname } = urlData
         return { sink: protocol.replace(':', ''), urls, origin, path: pathname, proxy: true }
-      })
-      .tap((x) => console.log('load url', x)),
+      }),
 
     // load example from click
     sources.dom.select('.example').events('click')
@@ -416,9 +400,8 @@ const actions = ({ sources }) => {
       })
   ])
     .filter((x) => x !== undefined)
-    .thru(holdUntil(setDesignSettings$))// only after FIXME : this does not seem to work
+    .thru(holdUntil(setDesignSettings$)) // only after FIXME : this does not seem to work
     .map((data) => ({ type: 'read', id: 'loadRemote', urls: data.urls, sink: data.sink, origin: data.origin, path: data.path, data: data.data, proxy: data.proxy }))
-    .tap((x) => console.log('load remote', x))
     .multicast()
     .skipRepeats()
 
@@ -431,7 +414,6 @@ const actions = ({ sources }) => {
     .map(({ data }) => ({ filesAndFolders: data }))
     .thru(withLatestFrom(reducers.setDesignContent, sources.state))
     .map((data) => ({ type: 'setDesignContent', state: data, sink: 'state' }))
-    // .tap((x) => console.log(x))
     .multicast()
 
   const requestWatchDesign$ = most.mergeArray([
@@ -450,7 +432,6 @@ const actions = ({ sources }) => {
       .skipRepeatsWith(jsonCompare)
   ])
     .map((payload) => Object.assign({}, { type: 'watch', sink: payload.origin }, payload))
-    .tap((x) => console.log('watch', x))
     .multicast()
 
   const requestWriteCachedGeometry$ = most.mergeArray([
@@ -471,21 +452,19 @@ const actions = ({ sources }) => {
     // .thru(holdUntil(setDesignSettings$))// only after FIXME : this does not seem to work
     .thru(withLatestFrom(reducers.resetDesign, sources.state))
     .map((data) => ({ type: 'resetDesign', state: data, sink: 'state' }))
-    // .tap((x) => console.log('design reset', x))
     .multicast()
 
   const setDesignSolids$ = most.mergeArray([
     sources.solidWorker
       .filter((event) => !('error' in event) && event.data instanceof Object && event.data.type === 'solids')
       .map((event) => {
-          const { lookupCounts, lookup, solids } = event.data
-          return { solids, lookup, lookupCounts }
+        const { lookupCounts, lookup, solids } = event.data
+        return { solids, lookup, lookupCounts }
       })
-    .multicast(),
+      .multicast(),
     sources.fs
       .filter((res) => res.type === 'read' && res.id === 'loadCachedGeometry' && res.data)
       .map((raw) => {
-        console.log('loading cached ')
         const deserialize = () => {}
         const lookup = deserialize(raw.data)
         return { solids: undefined, lookupCounts: undefined, lookup }

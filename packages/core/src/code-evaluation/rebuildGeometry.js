@@ -24,7 +24,6 @@ const applyParameterDefinitions = require('../parameters/applyParameterDefinitio
  * And transfering data back & forth is both complex (see transferables) and costly (time)
  **/
 const rebuildSolids = (data, callback) => {
-  console.log('rebuildSolids',data)
   const defaults = {
     mainPath: '',
     apiMainPath: '@jscad/modeling',
@@ -47,7 +46,6 @@ const rebuildSolids = (data, callback) => {
     parameterDefaults: designData.parameterValues,
     parameterDefinitions: designData.parameterDefinitions
   })
-  // console.warn(`loadDesignData`, new Date() - start)
   // make sure parameters are correct by applying parameter definitions
   // this might be redundant with ui-side logic, but it makes sure this core piece works regardless of ui
   parameterValues = applyParameterDefinitions(parameterValues, designData.parameterDefinitions)
@@ -59,7 +57,6 @@ const rebuildSolids = (data, callback) => {
     serialize
   }
   const solidsData = instanciateDesign(designData.rootModule, parameterValues, options)
-  // console.warn(`instanciateDesign`, new Date() - start)
 
   // send back solids & any other metadata
   callback(null, {

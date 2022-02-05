@@ -14,7 +14,7 @@ const { extrudeRectangular, extrudeLinear, extrudeRotate } = jscad.extrusions
 const { translate } = jscad.transforms
 const { expand } = jscad.expansions
 
-function main () {
+const main = () => {
   const shapes = []
   const aLine = line([[0, 0], [0, 5], [2, 8], [5, 9]])
   shapes.push(translate([-17, 0, 0], aLine))
@@ -29,8 +29,8 @@ function main () {
   const extrudedPoly = extrudeLinear({ height: 5, twistAngle: Math.PI / 4, twistSteps: 10 }, poly)
   shapes.push(translate([-1, 0, 0], extrudedPoly))
 
-  const starPoly = translate([3,0,0], star())
-  const extrudedStar = extrudeRotate({segments: 32, startAngle: 0, angle: (Math.PI * 0.75), overflow: 'cap'}, starPoly)
+  const starPoly = translate([3, 0, 0], star())
+  const extrudedStar = extrudeRotate({ segments: 32, startAngle: 0, angle: (Math.PI * 0.75), overflow: 'cap' }, starPoly)
   shapes.push(translate([9, 0, 0], extrudedStar))
 
   return shapes

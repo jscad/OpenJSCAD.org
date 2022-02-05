@@ -3,9 +3,7 @@ const { deserializers } = require('@jscad/io')
 /*
  * Transform the entry into a ready-to-use module.
  */
-const modulifyTransform = (options, entry) => {
-  return Object.assign({}, entry, { source: entry.source })
-}
+const modulifyTransform = (options, entry) => Object.assign({}, entry, { source: entry.source })
 
 /*
  * Create a new entry for a script (JSCAD) from the given entry and source
@@ -24,8 +22,6 @@ const createJscadEntry = (entry, source) => {
  * Transforms are NOT applied to projects.
  */
 const transformSources = (options, filesAndFolders) => {
-  // console.log('***** transformSources', options, filesAndFolders)
-
   if (filesAndFolders && filesAndFolders.length > 1) return filesAndFolders // skip projects
 
   const codeTransforms = {

@@ -2,24 +2,6 @@ const makeReactions = (inputs) => {
   const { sinks, outputs$ } = inputs
   const { store, fs, http, https, i18n, dom, solidWorker, state, dat } = sinks
 
-  /* outputs$
-    .filter(x => 'sink' in x && x.sink === 'dom')
-    .forEach(x => console.log(' out to dom', x))
-  outputs$
-    .filter(x => 'sink' in x && x.sink === 'state')
-    .forEach(x => console.log(' out to state', x))
-
-  outputs$
-    .filter(x => 'sink' in x && x.sink === 'i18n')
-    .forEach(x => console.log(' out to i18n', x))
-
-  outputs$
-    .filter(x => 'sink' in x && x.sink === 'store')
-    .forEach(x => console.log(' out to store', x))
-  outputs$
-    .filter(x => 'sink' in x && x.sink === 'fs')
-    .forEach(x => console.log(' out to fs', x)) */
-
   // output to dom
   dom(require('./dom')(inputs))
   // output to i18n
@@ -40,12 +22,6 @@ const makeReactions = (inputs) => {
   state(outputs$.filter((x) => 'sink' in x && x.sink === 'state'))
 
   dat(outputs$.filter((x) => 'sink' in x && x.sink === 'dat'))
-
-  // titlebar & store side effects
-  // FIXME/ not compatible with multiple instances !!
-  /* titleBar.sink(
-    state.map(state => state.appTitle).skipRepeats()
-  ) */
 }
 
 module.exports = makeReactions
