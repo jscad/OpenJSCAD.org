@@ -85,7 +85,7 @@ const extrudeFromSlices = (options, base) => {
 
   if (capEnd) {
     // create a cap at the end
-    const endPolygons = slice.toPolygons(endSlice)
+    const endPolygons = slice.toTriangles(endSlice)
     polygons = polygons.concat(endPolygons)
   }
   if (capStart) {
