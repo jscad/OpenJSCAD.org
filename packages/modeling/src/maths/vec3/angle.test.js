@@ -25,5 +25,22 @@ test('vec3: angle() should return correct values', (t) => {
   const angle4 = angle(veca4, vec4)
   nearlyEqual(t, angle4, 3.14159, EPS)
 
+  const vec5a = fromValues(1, 0, 0)
+  const vec5b = fromValues(1, 1, 0)
+  const angle5 = angle(vec5a, vec5b)
+  nearlyEqual(t, angle5, 0.785398, EPS)
+
+  // tiny values
+  const vec6a = fromValues(1, 0, 0)
+  const vec6b = fromValues(1e-200, 1e-200, 0)
+  const angle6 = angle(vec6a, vec6b)
+  nearlyEqual(t, angle6, 0.785398, EPS)
+
+  // huge values
+  const vec7a = fromValues(1, 0, 0)
+  const vec7b = fromValues(1e200, 1e200, 0)
+  const angle7 = angle(vec7a, vec7b)
+  nearlyEqual(t, angle7, 0.785398, EPS)
+
   t.true(true)
 })
