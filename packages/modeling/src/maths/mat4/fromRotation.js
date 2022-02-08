@@ -19,7 +19,7 @@ const { EPSILON } = require('./constants')
  */
 const fromRotation = (out, rad, axis) => {
   let [x, y, z] = axis
-  let len = Math.sqrt(x * x + y * y + z * z)
+  let len = Math.hypot(x, y, z)
 
   if (Math.abs(len) < EPSILON) {
     // axis is 0,0,0 or almost
