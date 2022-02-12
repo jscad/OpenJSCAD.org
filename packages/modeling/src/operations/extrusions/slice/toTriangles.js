@@ -4,6 +4,7 @@ const poly3 = require('../../../geometries/poly3')
 const flatten = require('../../../utils/flatten')
 const earcut = require('../earcut')
 const calculatePlane = require('./calculatePlane')
+const repairGeom2 = require('./repairGeom2')
 
 /**
  * Return a list of polygons which are enclosed by the slice.
@@ -15,7 +16,9 @@ const toTriangles = (slice) => {
   const plane = calculatePlane(slice)
 
   // compute outlines
-  const outlines = geom2.toOutlines(geom2.create(slice.edges))
+  const geometry = geom2.create(slice.edges)
+  repairGeom2(geometry)
+  const outlines = geom2.toOutlines(geometry)
 
   // find holes
   const holes = []
@@ -24,7 +27,7 @@ const toTriangles = (slice) => {
     const area = poly2.measureArea({vertices: points})
     if (area < 0) {
       holes.push(points)
-    } else {
+    } else if (area > 0) {
       // Append the start point so that multi-solids can be connected
       solids.push([...points, points[0]])
     }

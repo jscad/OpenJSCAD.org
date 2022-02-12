@@ -1,6 +1,6 @@
 const eliminateHoles = require('./eliminateHoles')
 const { removeNode, sortLinked } = require('./linkedList')
-const { cureLocalIntersections, filterPoints, linkedPolygon, splitPolygon } = require('./linkedPolygon')
+const { cureLocalIntersections, filterPoints, isValidDiagonal, linkedPolygon, splitPolygon } = require('./linkedPolygon')
 const { area, pointInTriangle } = require('./triangle')
 
 /**
