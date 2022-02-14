@@ -1,11 +1,10 @@
 /**
- * Mend gaps in a 2D geometry to make it a closed polygon
+ * Mend gaps in a 2D slice to make it a closed polygon
  */
-const repairGeom2 = (geometry) => {
-  // TODO: Apply transforms? (could affect x/y/z stretch for distance)
+const repairSlice = (slice) => {
   const vertexMap = {} // string key to vertex map
   const edgeCount = {} // count of (in - out) edges
-  geometry.sides.forEach((edge) => {
+  slice.edges.forEach((edge) => {
     const inKey = edge[0].toString()
     const outKey = edge[1].toString()
     vertexMap[inKey] = edge[0]
@@ -32,12 +31,12 @@ const repairGeom2 = (geometry) => {
     })
     console.log(`Repair gap ${v1} → ${bestReplacement} dist ${bestDistance}`)
     // merge broken vertices
-    geometry.sides.forEach((edge) => {
+    slice.edges.forEach((edge) => {
       if (edge[0].toString() === key1) edge[0] = bestReplacement
       if (edge[1].toString() === key1) edge[1] = bestReplacement
     })
   })
-  return geometry
+  return slice
 }
 
-module.exports = repairGeom2
+module.exports = repairSlice

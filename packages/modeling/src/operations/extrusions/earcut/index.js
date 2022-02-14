@@ -5,7 +5,6 @@ const { area, pointInTriangle } = require('./triangle')
 
 /**
  * An implementation of the earcut polygon triangulation algorithm.
- * The input data must be non-self-intersecting.
  * @param {data} A flat array of vertex coordinates.
  * @param {holeIndices} An array of hole indices if any.
  * @param {dim} The number of coordinates per vertex in the input array.
@@ -115,8 +114,9 @@ const isEar = (ear) => {
   let p = ear.next.next
 
   while (p !== ear.prev) {
-    if (pointInTriangle(a.x, a.y, b.x, b.y, c.x, c.y, p.x, p.y) &&
-      area(p.prev, p, p.next) >= 0) return false
+    if (pointInTriangle(a.x, a.y, b.x, b.y, c.x, c.y, p.x, p.y) && area(p.prev, p, p.next) >= 0) {
+      return false
+    }
     p = p.next
   }
 

@@ -5,6 +5,7 @@ const geom3 = require('../../geometries/geom3')
 const poly3 = require('../../geometries/poly3')
 
 const slice = require('./slice')
+const repairSlice = require('./slice/repairSlice')
 
 const extrudeWalls = require('./extrudeWalls')
 
@@ -54,6 +55,9 @@ const extrudeFromSlices = (options, base) => {
 
   if (numberOfSlices < 2) throw new Error('numberOfSlices must be 2 or more')
 
+  // Repair gaps in the base slice
+  repairSlice(base)
+
   const sMax = numberOfSlices - 1
 
   let startSlice = null
@@ -90,9 +94,9 @@ const extrudeFromSlices = (options, base) => {
   }
   if (capStart) {
     // create a cap at the start
-    slice.reverse(startSlice, startSlice)
-    const startPolygons = slice.toPolygons(startSlice)
-    polygons = polygons.concat(startPolygons)
+    const startPolygons = slice.toTriangles(startSlice)
+    const inverted = startPolygons.map(poly3.invert)
+    polygons = polygons.concat(inverted)
   }
   if (!capStart && !capEnd) {
     // create walls between end and start slices

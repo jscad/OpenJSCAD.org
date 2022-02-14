@@ -62,7 +62,6 @@ const toOutlines = (geometry) => {
       if (nextvertex === startvertex) break // the outline has been closed
       const nextpossiblesides = vertexMap.get(nextvertex)
       if (!nextpossiblesides) {
-        console.error(`Geometry error: ${nextvertex} has no successor`)
         throw new Error('the given geometry is not closed. verify proper construction')
       }
       let nextsideindex = -1
