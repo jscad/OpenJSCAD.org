@@ -1,3 +1,5 @@
+const vec3 = require('../../../maths/vec3')
+
 /**
  * Mend gaps in a 2D slice to make it a closed polygon
  */
@@ -36,6 +38,8 @@ const repairSlice = (slice) => {
       if (edge[1].toString() === key1) edge[1] = bestReplacement
     })
   })
+  // Remove self-edges
+  slice.edges = slice.edges.filter((e) => !vec3.equals(e[0], e[1]))
   return slice
 }
 

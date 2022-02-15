@@ -23,10 +23,13 @@ const calculatePlane = (slice) => {
   let farthestEdge
   let distance = 0
   edges.forEach((edge) => {
-    const d = vec3.squaredDistance(midpoint, edge[0])
-    if (d > distance) {
-      farthestEdge = edge
-      distance = d
+    // Make sure that the farthest edge is not a self-edge
+    if (!vec3.equals(edge[0], edge[1])) {
+      const d = vec3.squaredDistance(midpoint, edge[0])
+      if (d > distance) {
+        farthestEdge = edge
+        distance = d
+      }
     }
   })
   // find the before edge
