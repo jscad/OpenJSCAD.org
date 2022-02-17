@@ -1,6 +1,6 @@
 const geom2 = require('../../../geometries/geom2')
-const poly2 = require('../../../geometries/poly2')
 const poly3 = require('../../../geometries/poly3')
+const OrthoNormalBasis = require('../../../maths/OrthoNormalBasis')
 const flatten = require('../../../utils/flatten')
 const earcut = require('../earcut')
 const calculatePlane = require('./calculatePlane')
@@ -15,8 +15,12 @@ const toTrees = require('./toTrees')
 const toTriangles = (slice) => {
   const plane = calculatePlane(slice)
 
+  // Project to 2D plane
+  const basis = new OrthoNormalBasis(plane)
+  const projected = slice.edges.map((e) => e.map((v) => basis.to2D(v)))
+
   // compute polygon hierarchies
-  const geometry = geom2.create(slice.edges)
+  const geometry = geom2.create(projected)
   const trees = toTrees(geometry)
 
   const triangles = []
@@ -31,13 +35,12 @@ const toTriangles = (slice) => {
 
     // compute earcut triangulation for each solid
     const vertices = flatten([tree.solid, tree.holes])
-    const getVertex = (i) => [vertices[i * 3], vertices[i * 3 + 1], vertices[i * 3 + 2]]
-    const indices = earcut(vertices, holesIndex, 3)
+    const getVertex = (i) => [vertices[i * 2], vertices[i * 2 + 1]]
+    const indices = earcut(vertices, holesIndex)
     for (let i = 0; i < indices.length; i += 3) {
-      triangles.push(poly3.fromPointsAndPlane(
-        [getVertex(indices[i]), getVertex(indices[i + 1]), getVertex(indices[i + 2])],
-        plane
-      ))
+      // TODO: Map back to original vertices
+      const tri = indices.slice(i, i + 3).map(getVertex).map((v) => basis.to3D(v))
+      triangles.push(poly3.fromPointsAndPlane(tri, plane))
     }
   })
 
