@@ -23,10 +23,10 @@ const toTrees = (geometry) => {
   const areas = outlines.map(area)
   const solids = [] // solid indices
   const holes = [] // hole indices
-  areas.forEach((a, i) => {
-    if (a < 0) {
+  areas.forEach((area, i) => {
+    if (area < 0) {
       holes.push(i)
-    } else if (a > 0) {
+    } else if (area > 0) {
       solids.push(i)
     }
   })
@@ -39,7 +39,7 @@ const toTrees = (geometry) => {
     holes.forEach((h, j) => {
       const hole = outlines[h]
       // Check if a point of hole j is inside solid i
-      if (arePointsInside([hole[0]], {vertices: solid})) {
+      if (arePointsInside([hole[0]], { vertices: solid })) {
         children[i].push(h)
         if (!parents[j]) parents[j] = []
         parents[j].push(i)
@@ -48,7 +48,7 @@ const toTrees = (geometry) => {
   })
   // Check if holes have multiple parents and choose one with fewest children
   holes.forEach((h, j) => {
-    if (parents[j].length > 1) {
+    if (parents[j] && parents[j].length > 1) {
       const parent = minIndex(parents[j], (p) => p.length)
       parents[j].forEach((p, i) => {
         if (i !== parent) {
@@ -66,13 +66,13 @@ const toTrees = (geometry) => {
 }
 
 /**
- * Find the item in the list with smallest fn(item)
+ * Find the item in the list with smallest score(item)
  */
-const minIndex = (list, fn) => {
+const minIndex = (list, score) => {
   let bestIndex
   let best
   list.forEach((item, index) => {
-    const value = fn(item)
+    const value = score(item)
     if (best === undefined || value < best) {
       bestIndex = index
       best = value

@@ -30,7 +30,7 @@ test('torus (Simple options)', (t) => {
 test('torus (complex options)', (t) => {
   const obs = torus({ innerRadius: 1, outerRadius: 5, innerSegments: 32, outerSegments: 72, startAngle: Math.PI / 2, outerRotation: Math.PI / 2 })
   const pts = geom3.toPoints(obs)
-  t.is(pts.length, 1154)
+  t.is(pts.length, 1212)
 
   const bounds = measureBoundingBox(obs)
   const expectedBounds = [[-6, 0, -1], [0, 6, 1]]

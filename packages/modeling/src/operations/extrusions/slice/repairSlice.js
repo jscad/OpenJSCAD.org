@@ -4,6 +4,7 @@ const vec3 = require('../../../maths/vec3')
  * Mend gaps in a 2D slice to make it a closed polygon
  */
 const repairSlice = (slice) => {
+  if (!slice.edges) return slice
   const vertexMap = {} // string key to vertex map
   const edgeCount = {} // count of (in - out) edges
   slice.edges.forEach((edge) => {
@@ -22,7 +23,7 @@ const repairSlice = (slice) => {
     const v1 = vertexMap[key1]
     // find the closest vertex that is missing an out edge
     let bestDistance = Infinity
-    let bestReplacement = undefined
+    let bestReplacement
     missingOut.forEach((key2) => {
       const v2 = vertexMap[key2]
       const distance = Math.hypot(v1[0] - v2[0], v1[1] - v2[1])

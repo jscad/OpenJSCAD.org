@@ -106,7 +106,9 @@ const findHoleBridge = (hole, outerNode) => {
   return m
 }
 
-// whether sector in vertex m contains sector in vertex p in the same coordinates
+/**
+ * whether sector in vertex m contains sector in vertex p in the same coordinates
+ */
 const sectorContainsSector = (m, p) => area(m.prev, m, p.prev) < 0 && area(p.next, m, m.next) < 0
 
 /**
