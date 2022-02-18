@@ -260,6 +260,8 @@ const resize = (viewerElement) => {
 
 let idCounter = Date.now()
 const compareSolids = (current, previous) => {
+  // any solid or value type compares to null is false
+  if (current.indexOf(null) > -1) return false
   // add an id to each solid if not already
   current = current.map((s) => {
     if (!s.id) s.id = ++idCounter
@@ -271,4 +273,4 @@ const compareSolids = (current, previous) => {
   return current.reduce((acc, id, i) => acc && current[i].id === previous[i].id, true)
 }
 
-module.exports = viewer
+module.exports = { viewer, compareSolids }
