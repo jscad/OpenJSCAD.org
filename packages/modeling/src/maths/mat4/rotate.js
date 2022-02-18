@@ -12,7 +12,7 @@ const copy = require('./copy')
  */
 const rotate = (out, matrix, radians, axis) => {
   let [x, y, z] = axis
-  let len = Math.sqrt(x * x + y * y + z * z)
+  let len = Math.hypot(x, y, z)
 
   if (Math.abs(len) < 0.000001) {
     // axis is 0,0,0 or almost
