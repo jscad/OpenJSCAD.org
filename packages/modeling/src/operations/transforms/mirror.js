@@ -64,7 +64,7 @@ const mirrorY = (...objects) => mirror({ normal: [0, 1, 0] }, objects)
 
 /**
  * Mirror the given object(s) about the Z axis.
- * @param {...Object} objects - the geometries to mirror
+ * @param {...Object} geometries - the geometries to mirror
  * @return {Object|Array} the mirrored geometry, or a list of mirrored geometry
  * @alias module:modeling/transforms.mirrorZ
  */

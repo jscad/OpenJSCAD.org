@@ -79,7 +79,7 @@ const geodesicSphere = (options) => {
 
         // -- normalize
         for (let k = 0; k < 3; k++) {
-          const r = Math.sqrt(q[k][0] * q[k][0] + q[k][1] * q[k][1] + q[k][2] * q[k][2])
+          const r = Math.hypot(q[k][0], q[k][1], q[k][2])
           for (let l = 0; l < 3; l++) {
             q[k][l] /= r
           }
@@ -95,7 +95,7 @@ const geodesicSphere = (options) => {
 
           // -- normalize
           for (let k = 0; k < 3; k++) {
-            const r = Math.sqrt(q[k][0] * q[k][0] + q[k][1] * q[k][1] + q[k][2] * q[k][2])
+            const r = Math.hypot(q[k][0], q[k][1], q[k][2])
             for (let l = 0; l < 3; l++) {
               q[k][l] /= r
             }
