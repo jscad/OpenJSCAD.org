@@ -3,6 +3,7 @@
  * @param  {Number} p
  * @param  {Number} q
  * @param  {Number} t
+ * @return {Number} color component
  * @alias module:modeling/colors.hueToColorComponent
  */
 const hueToColorComponent = (p, q, t) => {

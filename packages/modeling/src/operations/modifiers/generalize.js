@@ -73,6 +73,7 @@ const generalizeGeom3 = (options, geometry) => {
  * @param {Boolean} [options.simplify=false] the geometries should be simplified
  * @param {Boolean} [options.triangulate=false] the geometries should be triangulated
  * @param {Boolean} [options.repair=false] the geometries should be repaired
+ * @param {...Object} geometries - the geometries to generalize
  * @return {Object|Array} the modified geometry, or a list of modified geometries
  * @alias module:modeling/modifiers.generalize
  */
