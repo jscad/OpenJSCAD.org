@@ -60,7 +60,7 @@ const projectGeom3 = (options, geometry) => {
  * @param {Object} options - options for project
  * @param {Array} [options.axis=[0,0,1]] the axis of the plane (default is Z axis)
  * @param {Array} [options.origin=[0,0,0]] the origin of the plane
- * @param {...Object} geometry - the list of 3D geometry to project
+ * @param {...Object} objects - the list of 3D geometry to project
  * @return {geom2|Array} the projected 2D geometry, or a list of 2D projected geometry
  * @alias module:modeling/extrusions.project
  *

@@ -1,10 +1,10 @@
 /**
  * Calculates the length of the given vector.
  *
- * @param {vec2} vector - vector of reference
+ * @param {vec2} vec - vector of reference
  * @returns {Number} length
  * @alias module:modeling/maths/vec2.length
  */
-const length = (a) => Math.hypot(a[0], a[1])
+const length = (vec) => Math.hypot(vec[0], vec[1])
 
 module.exports = length

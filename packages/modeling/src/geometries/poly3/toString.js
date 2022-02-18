@@ -5,9 +5,9 @@ const vec3 = require('../../maths/vec3/')
  * @return {String} the string representation
  * @alias module:modeling/geometries/poly3.toString
  */
-const toString = (poly3) => {
+const toString = (polygon) => {
   let result = 'poly3: vertices: ['
-  poly3.vertices.forEach((vertex) => {
+  polygon.vertices.forEach((vertex) => {
     result += `${vec3.toString(vertex)}, `
   })
   result += ']'
