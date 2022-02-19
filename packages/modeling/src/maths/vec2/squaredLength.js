@@ -1,13 +1,13 @@
 /**
  * Calculates the squared length of the given vector.
  *
- * @param {vec2} vec - vector of reference
+ * @param {vec2} vector - vector of reference
  * @returns {Number} squared length
  * @alias module:modeling/maths/vec2.squaredLength
  */
-const squaredLength = (vec) => {
-  const x = vec[0]
-  const y = vec[1]
+const squaredLength = (vector) => {
+  const x = vector[0]
+  const y = vector[1]
   return x * x + y * y
 }
 
