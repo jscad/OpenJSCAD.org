@@ -21,7 +21,7 @@
  * Represents a 3D geometry consisting of a list of polygons.
  *
  * ```js
- * colorize([0.5,0,1,0.4], cube()) // transparent cube
+ * colorize([0,0.5,1,0.6], cube()) // transparent ice cube
  * ````
  *
  * ```json
@@ -35,7 +35,7 @@
  *     {"vertices": [[-1,-1,1], [1,-1,1], [1,1,1], [-1,1,1]]}
  *   ],
  *   "transforms": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
- *   "color": [0.5,0,1,0.4]
+ *   "color": [0,0.5,1,0.6]
  * }
  * ```
  *
@@ -43,7 +43,7 @@
  * Represents a 2D geometry consisting of a list of ordered points.
  *
  * ```js
- * colorize([0.5,0,1,1], path2.fromPoints({closed: true}, [[0,0], [4,0], [4,3]]))
+ * colorize([0,0,0,1], path2.fromPoints({closed: true}, [[0,0], [4,0], [4,3]]))
  * ````
  *
  * ```json
@@ -51,7 +51,7 @@
  *   "points": [[0,0], [4,0], [4,3]],
  *   "isClosed": true,
  *   "transforms": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
- *   "color": [0.5,0,1,1]
+ *   "color": [0,0,0,1]
  * }
  * ```
  *
