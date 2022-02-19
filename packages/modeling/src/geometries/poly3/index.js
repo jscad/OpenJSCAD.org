@@ -1,5 +1,5 @@
 /**
- * Represents a convex 3D polygon consisting of a list of vertices.
+ * Represents a convex 3D polygon consisting of a list of ordered vertices.
  * @see {@link poly3} for data structure information.
  * @module modeling/geometries/poly3
  */
