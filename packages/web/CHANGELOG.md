@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.3...@jscad/web@2.5.4) (2022-02-19)
+
+
+### Bug Fixes
+
+* **web:** corrected touch handing to skip rotation while pinching ([#983](https://github.com/jscad/OpenJSCAD.org/issues/983)) ([3633dfb](https://github.com/jscad/OpenJSCAD.org/commit/3633dfb444ae2af14742242dba6868fa6a76d494))
+
+
+
+
+
 ## [2.5.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.2...@jscad/web@2.5.3) (2022-01-23)
 
 
