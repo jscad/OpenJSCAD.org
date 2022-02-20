@@ -16,11 +16,15 @@ const hullPath2 = (...geometries) => {
 
   // extract the unique points from the geometries
   const uniquepoints = []
+  const found = {}
   geometries.forEach((geometry) => {
     const points = path2.toPoints(geometry)
     points.forEach((point) => {
-      const index = uniquepoints.findIndex((unique) => vec2.equals(unique, point))
-      if (index < 0) uniquepoints.push(point)
+      const key = point.toString()
+      if (!found[key]) {
+        uniquepoints.push(point)
+        found[key] = true
+      }
     })
   })
 
