@@ -38,10 +38,19 @@ class Blob {
     this.encoding = 'utf8'
     // storage
     this.buffer = null
-    this.length = 32e+6 // allocation, not contents
+    this.length = 0 // allocation, not contents
 
     if (!contents) return
     if (!Array.isArray(contents)) return
+
+    // Find content length
+    contents.forEach((content) => {
+      if (typeof (content) === 'string') {
+        this.length += content.length
+      } else if (content instanceof ArrayBuffer) {
+        this.length += content.byteLength
+      }
+    })
 
     // process options if any
     if (options.type) {
