@@ -66,12 +66,12 @@ export function h (tag, attr = {}, ...children) {
   }
 }
 
-function setPropGroup (self, part, [groupKey, propKey]) {
-  if (propKey) {
-    if (!self[groupKey]) self[groupKey] = new Group()
-    self[part.groupKey = groupKey][part.propKey = propKey] = part
+function setPropGroup (self, part, [$group, $key]) {
+  if ($key) {
+    if (!self[$group]) self[$group] = new Group()
+    self[part.$group = $group][part.$key = $key] = part
   } else {
-    self[part.propKey = groupKey] = part
+    self[part.$key = $group] = part
   }
 }
 
@@ -198,9 +198,9 @@ export function insertAttr (attr, out, self, component) {
       out.addEventListener(a.substring(2), value.bind(self))
     } else if (a === 'key') {
       out.loopKey = value
-      if (!out.propKey) { out.propKey = value }
+      if (!out.$key) { out.$key = value }
       if (component) {
-        if (!component.propKey) { component.propKey = value }
+        if (!component.$key) { component.$key = value }
         component.loopKey = value
       }
     } else if (isFunc(value)) {

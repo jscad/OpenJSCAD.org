@@ -28,7 +28,11 @@
       }
     }
   }
-
+  .tab-buttons{
+    [selected]{
+      background-color: #61a3c2;
+    }
+  }
   .viewer-area{
     background: #fafafa;
   }
