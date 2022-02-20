@@ -36,10 +36,6 @@ npm run desktop
  - [ ] ELECTRON: if in it, enable saving, not just reading script
  - [ ] DEMO-WEB: generate web page so proto is available for playing with as-is
 
-nice to have or to consider if worth doing
-
- - [ ] extract reusable OrbitControls to be used with different renderer (regl,three, babylon)
-
 regl checklist
  - [ ] theme background
  - [ ] theme default mesh color
@@ -69,7 +65,12 @@ Three.js checklist
  - [ ] axes helper + show / hide
  - [ ] get camera
  - [ ] set camera
- 
+
+
+nice to have or to consider if worth doing
+
+ - [ ] extract reusable OrbitControls to be used with different renderer (regl,three, babylon)
+
 -------------------------------------------------
 
 # STANDARD README STUFF FROM JSCAD IS BELOW NO NEED TO READ FURTHER

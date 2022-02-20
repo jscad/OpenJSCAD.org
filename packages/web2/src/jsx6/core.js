@@ -4,6 +4,8 @@ export const ERR_REQUIRE_FUNC = 7 //    JSX6E7 - Function required
 
 const TRANS = {}
 
+export class Group {}
+
 export function setTranslations (trans) {
   Object.assign(TRANS, trans)
 }

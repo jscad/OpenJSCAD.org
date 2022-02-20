@@ -1,5 +1,4 @@
 import { T, setTranslations, refreshTranslations,
-  forEachProp, getValue,
   Jsx6, makeState,
   setValue,
   eq,
@@ -10,10 +9,23 @@ import gearIcon from '../icons/gear'
 import editIcon from '../icons/edit'
 import Toggle from '../comp/Toggle'
 import { Viewer } from './Viewer'
-import Sample from './sample'
 import { themes } from '../themes.js'
+import { SampleForm } from './sample.form'
 
 const SETTINGS_KEY = 'jscad.settings'
+
+const settingsDefaults =  {
+  autoReload: true,
+  autoRotate: false,
+  autoZoom: false,
+  showGrid: true,
+  showAxes: true,
+  language: 'en',
+  theme: 'Light',
+  viewer: 'JscadReglViewer',
+  editorVisible: true,
+}
+
 const langMap = {
   en: 'english',
   de: 'german',
@@ -67,24 +79,11 @@ export class App extends Jsx6 {
   
   tpl (h, state) {
     makeBinding(11, 'value', this, true);
-    // tpl is called before init, so we create settings here
-    const $s = this.settings = makeState({
-        autoReload: true,
-        autoRotate: false,
-        autoZoom: false,
-        showGrid: true,
-        showAxes: true,
-        language: 'en',
-        theme: 'Light',
-        viewer: 'JscadReglViewer',
-        editorVisible: true,
-      },
-      true
-    )
+    const $s = this.settings = makeState(settingsDefaults, true)
     const str = localStorage.getItem(SETTINGS_KEY)
     if(str && str[0] === '{'){
       try {
-        this.settings().update(JSON.parse(str))
+        $s().update(JSON.parse(str))
       } catch (e) { console.log(e, 'str:',str)}
     }
 
@@ -141,21 +140,26 @@ export class App extends Jsx6 {
       </div>
     </div>
     //END settingsArea
-
+    
+    const menu = <div class="menu-area">
+    <div class="menu-buttons">
+      <button class="g-focus-menu">{gearIcon} {settingsArea}</button>
+      <Toggle selected={$s.editorVisible}>{editIcon}</Toggle>
+      <button onclick={()=>this.viewer.ruunScript(this.editor.getValue())}>run</button>
+    </div>
+  </div>
+    
     // LAYOUT
     return (
       <>
         <button class="drop-handler" hidden={state.showDrop(NOT)}></button>
         <div class="fxs fx1">
-          <JscadEditor p="editor" class="editor editor-area fx1 w50 owa" hidden={$s.editorVisible(NOT)}/>
+          <div class="fxs fx-col">
+            <SampleForm />
+            <JscadEditor p="editor" class="editor editor-area fx1 w50 owa" hidden={$s.editorVisible(NOT)}/>
+          </div>
           <div class="viewer-area fxs fx1 w50">
-            <div class="menu-area">
-              <div class="menu-buttons">
-                <button class="g-focus-menu">{gearIcon} {settingsArea}</button>
-                <Toggle selected={$s.editorVisible}>{editIcon}</Toggle>
-                <button onclick={()=>this.viewer.ruunScript(this.editor.getValue())}>run</button>
-              </div>
-            </div>
+            {menu}
             <Viewer p="viewer" class="viewer-area fxs fx1 owh" viewerClass={this.settings.viewer} showAxes={$s.showAxes} showGrid={$s.showGrid} />
           </div>
         </div>

@@ -23,11 +23,11 @@ button{
 .bli{ display: inline-block; }
 
 // flex
-.fx1   { flex: 1; }
 .fx    { display: flex; }
 .fxi   { display: inline-flex; }
+.fx1   { flex: 1; }
 // default is row, so class for column is needed
-.fx-fc { display: flex; flex-flow: column;}
+.fx-col { display: flex; flex-flow: column;}
 // flex with everything stretched
 .fxc { display: flex; justify-content: center; align-items: center;}
 // flex with everything centered
@@ -48,6 +48,7 @@ button{
 // often needed owerflow
 .owh{ overflow: hidden;}
 .owa{ overflow: auto;}
+
 
 // form row
 .f-r{
@@ -112,7 +113,7 @@ button{
       border-radius: 50%;
       left: 0.1em;
       top: 0.1em;
-      transition: all 0.2s ease-in-out;
+      transition: all 0.1s;
     }
   }
 

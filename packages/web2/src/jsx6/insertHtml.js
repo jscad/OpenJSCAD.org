@@ -1,6 +1,6 @@
 import { Jsx6 } from './Jsx6'
 import { insertBefore } from './insertBefore'
-import { isStr, isFunc, isObj, throwErr } from './core'
+import { isStr, isFunc, isObj, throwErr, Group } from './core'
 
 let _createText
 let _createElement
@@ -68,7 +68,7 @@ export function h (tag, attr = {}, ...children) {
 
 function setPropGroup (self, part, [groupKey, propKey]) {
   if (propKey) {
-    if (!self[groupKey]) self[groupKey] = {}
+    if (!self[groupKey]) self[groupKey] = new Group()
     self[part.groupKey = groupKey][part.propKey = propKey] = part
   } else {
     self[part.propKey = groupKey] = part
