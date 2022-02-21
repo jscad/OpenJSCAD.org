@@ -15,16 +15,18 @@ const unionGeom3Sub = require('../booleans/unionGeom3Sub')
 
 const extrudePolygon = require('./extrudePolygon')
 
+/**
+ * Collect all planes adjacent to each vertex
+ */
 const mapPlaneToVertex = (map, vertex, plane) => {
-  const i = map.findIndex((item) => vec3.equals(item[0], vertex))
-  if (i < 0) {
+  const key = vertex.toString()
+  if (!map.has(key)) {
     const entry = [vertex, [plane]]
-    map.push(entry)
-    return map.length
+    map.set(key, entry)
+  } else {
+    const planes = map.get(key)[1]
+    planes.push(plane)
   }
-  const planes = map[i][1]
-  planes.push(plane)
-  return i
 }
 
 const mapPlaneToEdge = (map, edge, plane) => {
@@ -32,20 +34,17 @@ const mapPlaneToEdge = (map, edge, plane) => {
   if (i < 0) {
     const entry = [edge, [plane]]
     map.push(entry)
-    return map.length
+    return
   }
   const planes = map[i][1]
   planes.push(plane)
-  return i
 }
 
 const addUniqueAngle = (map, angle) => {
   const i = map.findIndex((item) => item === angle)
   if (i < 0) {
     map.push(angle)
-    return map.length
   }
-  return i
 }
 
 /*
@@ -65,7 +64,7 @@ const expandShell = (options, geometry) => {
   const { delta, segments } = Object.assign({ }, defaults, options)
 
   let result = geom3.create()
-  const vertices2planes = [] // contents: [vertex, [plane, ...]]
+  const vertices2planes = new Map() // {vertex: [vertex, [plane, ...]]}
   const edges2planes = [] // contents: [[vertex, vertex], [plane, ...]]
 
   const v1 = vec3.create()
