@@ -28,7 +28,7 @@ npm run desktop
  - [x] VIEWER - regl renderer 
  - [x] VIEWER - Three.js renderer 
  - [x] VIEWER - Babylon renderer 
- - [ ] WORKER - run script
+ - [x] WORKER - run script
  - [ ] WEB - file upload and changes syncing with worker
  - [ ] ALL - generalize file access
  - [ ] ELECTRON - allow working with local files

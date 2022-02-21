@@ -1,5 +1,5 @@
 // cd c:\hrg\3dp_dev\three.js; esbuild Three.jscad.js --outfile=C:/hrg/3dp_dev/OpenJSCAD.org/packages/web2/src/Three.jscad.js --bundle --watch --sourcemap=external --minify --format=esm
-const { Engine, Scene, HemisphericLight, ArcRotateCamera, Vector3, AxesViewer, MeshBuilder, Mesh, Plane } = require('@babylonjs/core')
+const { Engine, Scene, HemisphericLight, ArcRotateCamera, Vector3, AxesViewer, MeshBuilder, Mesh, Plane, Color3 } = require('@babylonjs/core')
 const { GridMaterial } = require('@babylonjs/materials')
 
 const entities = []
@@ -8,20 +8,37 @@ let engine
 let scene
 let camera
 
-const startRenderer = ({ canvas, cameraPosition, cameraTarget, axis = {}, grid = {} }) => {
+const startRenderer = ({
+  canvas,
+  cameraPosition = [180, -180, 220],
+  cameraTarget = [0, 0, 0],
+  axis = {},
+  grid = {}
+}) => {
   engine = new Engine(canvas, true)
   scene = new Scene(engine)
+  scene.clearColor = new Color3(1, 1, 1)
+  // COMPAT another thing to be compatible with threejs and regl
+  scene.useRightHandedSystem = true // https://forum.babylonjs.com/t/unexpected-behavior-for-z-up-right-handed-coordinate-system/1090/7
 
-  camera = new ArcRotateCamera('camera', -Math.PI / 2, Math.PI / 2.5, 15, new Vector3(0, 0, 0))
+  camera = new ArcRotateCamera('camera', 0, 0, 50, new Vector3(...cameraTarget))
   camera.upVector = new Vector3(0, 0, 1)
+  camera.setPosition(new Vector3(...cameraPosition))
+  // COMPAT this almost matches what seems as default in threejs and regl
+  camera.fov = Math.PI / 4
 
   camera.attachControl(canvas, true)
   const light = new HemisphericLight('light', new Vector3(1, 1, 0))
   scene.addLight(light)
 
-  const ground = MeshBuilder.CreatePlane('ground', { width: 100, height: 100, sideOrientation: Mesh.DOUBLESIDE, sourcePlane: new Plane(0, 0, 1, 0) })
+  const ground = MeshBuilder.CreatePlane('ground', { width: 200, height: 200, sideOrientation: Mesh.DOUBLESIDE, sourcePlane: new Plane(0, 0, 1, 0) })
   const gridMat = ground.material = new GridMaterial('groundMaterial', scene)
   gridMat.opacity = 0.8
+  gridMat.gridRatio = 1
+  gridMat.lineColor = new Color3(0.9, 0.9, 0.9)
+  gridMat.minorUnitVisibility = 0.2
+  gridMat.majorUnitFrequency = 10
+
   scene.addGeometry(ground)
   new AxesViewer(scene, 10)
 
@@ -75,7 +92,7 @@ function sendCmd (cmd) {
   receiveCmd(cmd)
 }
 
-export default function JscadBabylonViewer (el, { showAxes = true, showGrid = true } = {}) {
+export default function JscadBabylonViewer (el, { showAxes = true, showGrid = true, camera: _camera = {} } = {}) {
   console.log('init Babylon.js viewer')
   canvas = document.createElement('CANVAS')
   canvas.setAttribute('touch-action', 'none')
@@ -86,7 +103,7 @@ export default function JscadBabylonViewer (el, { showAxes = true, showGrid = tr
   }
 
   try {
-    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
+    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid }, cameraPosition: _camera.position, cameraTarget: _camera.target })
     canvas.addEventListener('wheel', e => {
       e.preventDefault()
     })
@@ -100,14 +117,13 @@ export default function JscadBabylonViewer (el, { showAxes = true, showGrid = tr
     throw error
   }
   function setCamera ({ position, target }) {
-    // if (position) state.camera.position = position
-    // if (target) state.camera.target = target
-    // updateView()
+    if (position) camera.setPosition(new Vector3(...position))
+    if (target) camera.setTtarget(new Vector3(...target))
   }
 
   function getCamera () {
-    // return { position: Array.from(state.camera.position), target: state.camera.target }
+    return { position: camera.position.asArray(), target: camera.getTarget().asArray() }
   }
 
-  return { sendCmd, destroy, getCamera, setCamera }
+  return { sendCmd, destroy, getCamera, setCamera, camera }
 }
