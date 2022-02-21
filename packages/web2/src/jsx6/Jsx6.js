@@ -2,6 +2,7 @@ import { makeState } from './dirty'
 import { insertBefore } from './insertBefore'
 import { insertHtml, insertAttr, h } from './insertHtml'
 import { isObj } from "./core";
+import { isFunc, NOT } from '.';
 
 /**
  * @typedef {Object} Jsx6Extras 
@@ -27,6 +28,11 @@ export class Jsx6 {
 
   constructor(attr, children, parent) {
 		attr ||= {}
+    // if(attr.if){
+    //   const ifValue = attr.if
+    //   delete attr.if
+    //   attr.hidden = isFunc(ifValue) ? v=>!ifValue() : !ifValue
+    // }
 		this.attr = attr
     this.children = children
     this.parent = parent

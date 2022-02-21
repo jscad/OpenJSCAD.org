@@ -37,34 +37,31 @@ npm run desktop
  - [ ] DEMO-WEB: generate web page so proto is available for playing with as-is
 
 regl checklist
+ - [x] get/set camera
  - [ ] theme background
  - [ ] theme default mesh color
  - [ ] theme grid
  - [x] grid show / hide
  - [x] axes show / hide
  - [ ] (WONTFIX) axes helper + show / hide
- - [ ] get camera
- - [ ] set camera
 
 Babylon.js checklist
+ - [ ] get/set camera
  - [ ] theme background
  - [ ] theme default mesh color
  - [ ] theme grid
  - [ ] grid show / hide
  - [ ] axes show / hide
  - [ ] axes helper + show / hide
- - [ ] get camera
- - [ ] set camera
 
 Three.js checklist
+ - [ ] get/set camera
  - [ ] theme background
  - [ ] theme default mesh color
  - [ ] theme grid
  - [ ] grid show / hide
  - [ ] axes show / hide
  - [ ] axes helper + show / hide
- - [ ] get camera
- - [ ] set camera
 
 
 nice to have or to consider if worth doing

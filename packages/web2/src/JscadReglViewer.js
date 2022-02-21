@@ -30,7 +30,7 @@ function createContext (canvas, contextAttributes) {
 const state = {}
 let perspectiveCamera
 
-const startRenderer = ({ canvas, cameraPosition, cameraTarget, axis = {}, grid = {} }) => {
+const startRenderer = ({ canvas, cameraPosition = [180, -180, 220], cameraTarget = [0, 0, 0], axis = {}, grid = {} }) => {
   // ********************
   // Renderer configuration and initiation.
   // ********************
@@ -241,7 +241,7 @@ const wheelHandler = (ev) => {
   ev.preventDefault()
 }
 
-export default function JscadReglViewer (el, { showAxes = true, showGrid = true } = {}) {
+export default function JscadReglViewer (el, { showAxes = true, showGrid = true, camera = {} } = {}) {
   canvas = document.createElement('CANVAS')
   el.appendChild(canvas)
 
@@ -250,7 +250,7 @@ export default function JscadReglViewer (el, { showAxes = true, showGrid = true 
   }
 
   try {
-    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
+    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid }, cameraPosition: camera.position, cameraTarget: camera.target })
 
     canvas.onpointermove = moveHandler
     canvas.onpointerdown = downHandler
@@ -267,5 +267,15 @@ export default function JscadReglViewer (el, { showAxes = true, showGrid = true 
     throw error
   }
 
-  return { sendCmd, destroy }
+  function setCamera ({ position, target }) {
+    if (position) state.camera.position = position
+    if (target) state.camera.target = target
+    updateView()
+  }
+
+  function getCamera () {
+    return { position: Array.from(state.camera.position), target: state.camera.target }
+  }
+
+  return { sendCmd, destroy, state, getCamera, setCamera }
 }
