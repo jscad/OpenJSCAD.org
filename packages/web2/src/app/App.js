@@ -3,7 +3,8 @@ import { T, setTranslations, refreshTranslations,
   setValue,
   eq,
   NOT,
-  makeBinding} from '../jsx6'
+  makeBinding,
+  findParent} from '../jsx6'
 import { JscadEditor } from './editor'
 import gearIcon from '../icons/gear'
 import editIcon from '../icons/edit'
@@ -141,11 +142,21 @@ export class App extends Jsx6 {
     </div>
     //END settingsArea
     
+    // CSS using :focus-within handles opening/closing menu nicely for most cases, 
+    // but clicking the settings button again does not hide the menu because it is
+    // still focused. We check if menu is focused on mousedown event, but then use
+    // this information to close the menu if needed
+    let wasActive = false
+    const markActive = e=> wasActive = findParent(document.activeElement,eq(this.settingsBt))
+
     const menu = <div class="menu-area">
     <div class="menu-buttons">
-      <button class="g-focus-menu">{gearIcon} {settingsArea}</button>
+      <button p="settingsBt" class="g-focus-menu">
+        <button onmousedown={markActive} onclick={()=>{if(wasActive) this.runButton.focus() }}>{gearIcon}</button>
+        {settingsArea}
+        </button>
       <Toggle selected={$s.editorVisible}>{editIcon}</Toggle>
-      <button onclick={()=>this.viewer.ruunScript(this.editor.getValue())}>run</button>
+      <button p="runButton" onclick={()=>this.viewer.ruunScript(this.editor.getValue())}>run</button>
     </div>
   </div>
     
@@ -155,7 +166,7 @@ export class App extends Jsx6 {
         <button class="drop-handler" hidden={state.showDrop(NOT)}></button>
         <div class="fxs fx1">
           <div class="fxs fx-col">
-            <SampleForm />
+            {/*<SampleForm />*/}
             <JscadEditor p="editor" class="editor editor-area fx1 w50 owa" hidden={$s.editorVisible(NOT)}/>
           </div>
           <div class="viewer-area fxs fx1 w50">

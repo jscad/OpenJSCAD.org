@@ -9,7 +9,7 @@ const { OrbitControls } = THREE
 let scene
 let camera
 let controls
-let mesh
+let axis
 let grid2
 let grid1
 let ground
@@ -31,7 +31,7 @@ const startRenderer = ({
   canvas,
   cameraPosition = [180, -180, 220],
   cameraTarget = [0, 0, 0],
-  axis = {},
+  axis: _axis = {},
   grid = {}
 }) => {
   camera = new THREE.PerspectiveCamera(45, 1, 1, 50000)
@@ -70,6 +70,7 @@ const startRenderer = ({
   // grid.rotation.y = - Math.PI / 2;
   grid1.material.opacity = 0.2
   grid1.material.transparent = true
+  grid1.visible = grid.show
   scene.add(grid1)
 
   grid2 = new THREE.GridHelper(200, 200, 0x000000, 0x000000)
@@ -77,10 +78,12 @@ const startRenderer = ({
   // grid.rotation.y = - Math.PI / 2;
   grid2.material.opacity = 0.1
   grid2.material.transparent = true
+  grid2.visible = grid.show
   scene.add(grid2)
 
-  const axes = new THREE.AxesHelper(10)
-  scene.add(axes)
+  axis = new THREE.AxesHelper(10)
+  axis.visible = _axis.show
+  scene.add(axis)
 
   renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, canvas })
   renderer.setPixelRatio(window.devicePixelRatio)
@@ -116,14 +119,14 @@ function resize ({ width, height }) {
 
 const handlers = {
   showAxes: ({ show }) => {
-    // axisOptions.visuals.show = show
+    axis.visible = show
     updateView()
   },
   entities: ({ entities }) => {
     entities.push()
   },
   showGrid: ({ show }) => {
-    // gridOptions.visuals.show = show
+    grid1.visible = grid2.visible = show
     updateView()
   }
 }
@@ -177,6 +180,5 @@ export default function JscadThreeViewer (el, { showAxes = true, showGrid = true
     throw error
   }
 
-
-  return { sendCmd, destroy, getCamera, setCamera, camera }
+  return { sendCmd, destroy, getCamera, setCamera, camera, grid1, grid2, axis }
 }

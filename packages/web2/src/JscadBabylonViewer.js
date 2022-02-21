@@ -7,13 +7,15 @@ let canvas
 let engine
 let scene
 let camera
+let grid
+let axis
 
 const startRenderer = ({
   canvas,
   cameraPosition = [180, -180, 220],
   cameraTarget = [0, 0, 0],
-  axis = {},
-  grid = {}
+  axis: _axis = {},
+  grid: _grid = {}
 }) => {
   engine = new Engine(canvas, true)
   scene = new Scene(engine)
@@ -31,17 +33,18 @@ const startRenderer = ({
   const light = new HemisphericLight('light', new Vector3(1, 1, 0))
   scene.addLight(light)
 
-  const ground = MeshBuilder.CreatePlane('ground', { width: 200, height: 200, sideOrientation: Mesh.DOUBLESIDE, sourcePlane: new Plane(0, 0, 1, 0) })
-  const gridMat = ground.material = new GridMaterial('groundMaterial', scene)
+  grid = MeshBuilder.CreatePlane('ground', { width: 200, height: 200, sideOrientation: Mesh.DOUBLESIDE, sourcePlane: new Plane(0, 0, 1, 0) })
+  const gridMat = grid.material = new GridMaterial('groundMaterial', scene)
   gridMat.opacity = 0.8
   gridMat.gridRatio = 1
   gridMat.lineColor = new Color3(0.9, 0.9, 0.9)
   gridMat.minorUnitVisibility = 0.2
   gridMat.majorUnitFrequency = 10
+  handlers.showGrid(_grid)
 
-  scene.addGeometry(ground)
-  new AxesViewer(scene, 10)
-
+  scene.addGeometry(grid)
+  axis = new AxesViewer(scene, 10)
+  handlers.showAxes(_axis)
   engine.runRenderLoop(function () {
     scene.render()
   })
@@ -68,15 +71,15 @@ function resize ({ width, height }) {
 
 const handlers = {
   showAxes: ({ show }) => {
-    // axisOptions.visuals.show = show
-    updateView()
+    axis.xAxis.setEnabled(show)
+    axis.yAxis.setEnabled(show)
+    axis.zAxis.setEnabled(show)
   },
   entities: ({ entities }) => {
     entities.push()
   },
   showGrid: ({ show }) => {
-    // gridOptions.visuals.show = show
-    updateView()
+    grid.visibility = show ? 1 : 0
   }
 }
 
@@ -125,5 +128,5 @@ export default function JscadBabylonViewer (el, { showAxes = true, showGrid = tr
     return { position: camera.position.asArray(), target: camera.getTarget().asArray() }
   }
 
-  return { sendCmd, destroy, getCamera, setCamera, camera }
+  return { sendCmd, destroy, getCamera, setCamera, camera, scene, grid, axes: axis }
 }

@@ -44,14 +44,15 @@ regl checklist
  - [x] grid show / hide
  - [x] axes show / hide
  - [ ] (WONTFIX) axes helper + show / hide
+ - [ ] issue with clicking canvas (orbitcontrol uses preventdefault so popup menu does not hide)
 
 Babylon.js checklist
- - [ ] get/set camera
+ - [x] get/set camera
  - [ ] theme background
  - [ ] theme default mesh color
  - [ ] theme grid
- - [ ] grid show / hide
- - [ ] axes show / hide
+ - [x] grid show / hide
+ - [x] axes show / hide
  - [ ] axes helper + show / hide
 
 Three.js checklist
@@ -59,8 +60,8 @@ Three.js checklist
  - [ ] theme background
  - [ ] theme default mesh color
  - [ ] theme grid
- - [ ] grid show / hide
- - [ ] axes show / hide
+ - [x] grid show / hide
+ - [x] axes show / hide
  - [ ] axes helper + show / hide
 
 
