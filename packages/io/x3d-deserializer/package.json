@@ -1,6 +1,6 @@
 {
   "name": "@jscad/x3d-deserializer",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "X3D Deserializer for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org/",
   "main": "src/index.js",
