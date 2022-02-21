@@ -4,6 +4,7 @@ import { Jsx6, moveParams, copyBindings } from '../jsx6'
 export class Viewer extends Jsx6 {
   worker
   viewer
+  camera = {position: [180, -180, 220], target: [0, 0, 0]}
 
   constructor(attr, children, parent) {
     super(attr, children, parent)
@@ -59,9 +60,12 @@ export class Viewer extends Jsx6 {
     let viewerFunction = window[viewerName]
 
     const doInit = viewerFunction => {
-      if(this.viewer) console.log(this.viewer.destroy, this.viewer)
-      if(this.viewer) this.viewer.destroy()
-      this.viewer = viewerFunction(this.el,{showAxes:this.showAxes(), showGrid: this.showGrid()})
+      if(this.viewer){ 
+        this.camera = this.viewer.getCamera()
+        console.log(this.viewer.destroy, this.viewer, this.camera)
+        this.viewer.destroy()
+      }
+      this.viewer = viewerFunction(this.el,{showAxes:this.showAxes(), showGrid: this.showGrid(), camera:this.camera})
       const cmdParams = {
         alias: this.alias,
         action: 'init',

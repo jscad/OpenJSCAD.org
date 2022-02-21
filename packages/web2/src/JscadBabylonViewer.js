@@ -99,6 +99,15 @@ export default function JscadBabylonViewer (el, { showAxes = true, showGrid = tr
     destroy()
     throw error
   }
+  function setCamera ({ position, target }) {
+    // if (position) state.camera.position = position
+    // if (target) state.camera.target = target
+    // updateView()
+  }
 
-  return { sendCmd, destroy }
+  function getCamera () {
+    // return { position: Array.from(state.camera.position), target: state.camera.target }
+  }
+
+  return { sendCmd, destroy, getCamera, setCamera }
 }

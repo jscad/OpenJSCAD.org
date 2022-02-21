@@ -55,7 +55,7 @@ Babylon.js checklist
  - [ ] axes helper + show / hide
 
 Three.js checklist
- - [ ] get/set camera
+ - [x] get/set camera
  - [ ] theme background
  - [ ] theme default mesh color
  - [ ] theme grid

@@ -27,10 +27,17 @@ let canvas
 
 CSG2Object3D(THREE)
 
-const startRenderer = ({ canvas, cameraPosition, cameraTarget, axis = {}, grid = {} }) => {
+const startRenderer = ({
+  canvas,
+  cameraPosition = [180, -180, 220],
+  cameraTarget = [0, 0, 0],
+  axis = {},
+  grid = {}
+}) => {
   camera = new THREE.PerspectiveCamera(45, 1, 1, 50000)
-  camera.position.set(180, -180, 220)
   camera.up.set(0, 0, 1)
+  camera.position.set(...cameraPosition)
+  camera.lookAt(...cameraTarget)
 
   scene = new THREE.Scene()
   scene.background = new THREE.Color(0xffffff)
@@ -133,7 +140,22 @@ function sendCmd (cmd) {
   receiveCmd(cmd)
 }
 
-export default function JscadThreeViewer (el, { showAxes = true, showGrid = true } = {}) {
+function setCamera ({ position, target }) {
+  if (position) camera.position.set(...position)
+  // if (target) state.camera.target = target
+  // updateView()
+}
+
+function getCamera () {
+  const target = new THREE.Vector3(0, 0, -1)
+  target.applyQuaternion(camera.quaternion)
+  return {
+    position: camera.position.toArray(),
+    target: target.toArray()
+  }
+}
+
+export default function JscadThreeViewer (el, { showAxes = true, showGrid = true, camera: _camera = {} } = {}) {
   console.log('init Three.js viewer')
   canvas = document.createElement('CANVAS')
   el.appendChild(canvas)
@@ -143,7 +165,7 @@ export default function JscadThreeViewer (el, { showAxes = true, showGrid = true
   }
 
   try {
-    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid } })
+    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid }, cameraPosition: _camera.position, cameraTarget: _camera.target })
 
     const resizeObserver = new ResizeObserver(entries => {
       const rect = entries[0].contentRect
@@ -155,5 +177,6 @@ export default function JscadThreeViewer (el, { showAxes = true, showGrid = true
     throw error
   }
 
-  return { sendCmd, destroy }
+
+  return { sendCmd, destroy, getCamera, setCamera, camera }
 }
