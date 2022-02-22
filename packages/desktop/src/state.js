@@ -61,7 +61,7 @@ function makeState (actions) {
   const reducers = Object.assign({}, rootReducers, designReducers, ioReducers, viewerReducers)
 
   const state$ = actions
-    .scan(function (state, action) {
+    .scan((state, action) => {
       const reducer = reducers[action.type] ? reducers[action.type] : (state) => state
       try {
         const newState = reducer(state, action.data, initialState)
@@ -73,7 +73,7 @@ function makeState (actions) {
       // const newState = merge({}, state, updatedData)
       // console.log('SCAAAN', action, newState)
     }, initialState)
-    .filter(x => x !== undefined)// just in case ...
+    .filter((x) => x !== undefined)// just in case ...
     .multicast()
 
   return state$

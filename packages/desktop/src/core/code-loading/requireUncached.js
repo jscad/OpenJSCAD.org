@@ -9,7 +9,7 @@ function requireUncached (moduleName) {
     }
   })
   return require(moduleName) */
-  var decache = require('decache')
+  const decache = require('decache')
   decache(moduleName)
 }
 

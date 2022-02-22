@@ -4,7 +4,7 @@ const most = require('most')
 
 function electronStoreSink (outToStore$) {
   if (outToStore$) {
-    outToStore$.forEach(function (outToStore) {
+    outToStore$.forEach((outToStore) => {
       store.set(outToStore)
     })
   }

@@ -36,7 +36,7 @@ function isCSG (object) {
  */
 function merge (output = {}, currentState, options) {
   output = currentState // JSON.parse(JSON.stringify(currentState))
-  Object.keys(options).forEach(function (key) {
+  Object.keys(options).forEach((key) => {
     const item = options[key]
     const isObject = typeof item === 'object'
     const isFunction = typeof item === 'function'

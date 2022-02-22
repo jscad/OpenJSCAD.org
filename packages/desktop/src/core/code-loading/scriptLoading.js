@@ -2,9 +2,7 @@ const path = require('path')
 const getParameterValuesFromParameters = require('@jscad/core/parameters/getParameterValuesFromParameters')
 const requireFromString = require('./requireFromString')
 
-const doesModuleExportParameterDefiniitions = moduleToCheck => {
-  return moduleToCheck && 'getParameterDefinitions' in moduleToCheck
-}
+const doesModuleExportParameterDefiniitions = (moduleToCheck) => moduleToCheck && 'getParameterDefinitions' in moduleToCheck
 
 /** load a jscad script, injecting the basic dependencies if necessary
  * @param  {} filePath

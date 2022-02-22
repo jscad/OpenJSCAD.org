@@ -13,18 +13,14 @@ const changeTheme = (state, themeName) => {
 }
 
 // set all shortcuts
-const setShortcuts = (state, shortcuts) => {
-  return Object.assign({}, state, { shortcuts })
-}
+const setShortcuts = (state, shortcuts) => Object.assign({}, state, { shortcuts })
 
 // set a specific shortcut
 const setShortcut = (state, shortcutData) => {
-  const alreadyExists = key => {
-    return state.shortcuts
-      .filter(shortcut => shortcut.key === key)
-      .length > 0
-  }
-  const shortcuts = state.shortcuts.map(shortcut => {
+  const alreadyExists = (key) => state.shortcuts
+    .filter((shortcut) => shortcut.key === key)
+    .length > 0
+  const shortcuts = state.shortcuts.map((shortcut) => {
     const match = shortcut.command === shortcutData.command && shortcut.args === shortcutData.args
     if (!match) {
       return shortcut
@@ -49,17 +45,11 @@ const setShortcut = (state, shortcutData) => {
   return Object.assign({}, state, { shortcuts })
 }
 
-const changeLanguage = (state, locale) => {
-  return Object.assign({}, state, { locale })
-}
+const changeLanguage = (state, locale) => Object.assign({}, state, { locale })
 
-const setAvailableLanguages = (state, availableLanguages) => {
-  return Object.assign({}, state, { availableLanguages })
-}
+const setAvailableLanguages = (state, availableLanguages) => Object.assign({}, state, { availableLanguages })
 
-const toggleOptions = (state) => {
-  return Object.assign({}, state, { showOptions: !state.showOptions })
-}
+const toggleOptions = (state) => Object.assign({}, state, { showOptions: !state.showOptions })
 
 const clearErrors = (state, _) => {
   console.log('clear errors')
@@ -70,10 +60,9 @@ const setErrors = (state, { error }) => {
   const formattedError = error// {message: error.message, lineno:}
   return Object.assign({}, state, { error: formattedError, busy: false })
 }
-const setAppUpdatesAvailable = (state, appUpdates) => {
+const setAppUpdatesAvailable = (state, appUpdates) =>
   // console.log('updates available', appUpdates)
-  return Object.assign({}, state, { appUpdates })
-}
+  Object.assign({}, state, { appUpdates })
 
 module.exports = {
   changeTheme,

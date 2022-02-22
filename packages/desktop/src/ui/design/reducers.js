@@ -4,30 +4,28 @@ const { getDesignEntryPoint, getDesignName } = require('@jscad/core/code-loading
 const { availableExportFormatsFromSolids, exportFilePathFromFormatAndDesign } = require('../../core/io/exportUtils')
 const packageMetadata = require('../../../package.json')
 
-const initialize = () => {
-  return {
-    // metadata
-    name: '',
-    path: '',
-    mainPath: '',
-    // list of all paths of require() calls + main
-    modulePaths: [],
-    // code
-    script: '',
-    source: '',
-    // parameters
-    paramDefinitions: [],
-    paramValues: {},
-    paramDefaults: {},
-    previousParams: {},
-    // solids
-    solids: [],
-    // geometry caching
-    vtreeMode: false,
-    lookup: {},
-    lookupCounts: {}
-  }
-}
+const initialize = () => ({
+  // metadata
+  name: '',
+  path: '',
+  mainPath: '',
+  // list of all paths of require() calls + main
+  modulePaths: [],
+  // code
+  script: '',
+  source: '',
+  // parameters
+  paramDefinitions: [],
+  paramValues: {},
+  paramDefaults: {},
+  previousParams: {},
+  // solids
+  solids: [],
+  // geometry caching
+  vtreeMode: false,
+  lookup: {},
+  lookupCounts: {}
+})
 
 const setDesignPath = (state, paths) => {
   // console.log('setDesignPath')
@@ -100,7 +98,7 @@ const setDesignParams = (state, { paramDefaults, paramValues, paramDefinitions }
   })
 }
 
-const updateDesignFromParams = (state, { paramValues, origin, error }) => {
+const updateDesignFromParams = (state, { paramValues, origin, error }) =>
   /* if (error) { throw error }
   // disregard live updates if not enabled
   if (state.instantUpdate === false && origin === 'instantUpdate') {
@@ -111,8 +109,7 @@ const updateDesignFromParams = (state, { paramValues, origin, error }) => {
 
   const solids = toArray(script.main(paramValues))
   const design = Object.assign({}, originalDesign, {solids, paramValues}) */
-  return Object.assign({}, state, { busy: true })
-}
+  Object.assign({}, state, { busy: true })
 
 const timeOutDesignGeneration = (state) => {
   const isBusy = state.busy
@@ -126,13 +123,10 @@ const timeOutDesignGeneration = (state) => {
 }
 
 // ui/toggles
-const toggleAutoReload = (state, autoReload) => {
-  return Object.assign({}, state, { autoReload })
-}
-const toggleInstantUpdate = (state, instantUpdate) => {
+const toggleAutoReload = (state, autoReload) => Object.assign({}, state, { autoReload })
+const toggleInstantUpdate = (state, instantUpdate) =>
   // console.log('toggleInstantUpdate', instantUpdate)
-  return Object.assign({}, state, { instantUpdate })
-}
+  Object.assign({}, state, { instantUpdate })
 
 const toggleVtreeMode = (state, vtreeMode) => {
   console.log('toggleVtreeMode', vtreeMode)
@@ -151,7 +145,7 @@ const serializeGeometryCache = (cache) => {
 
   const cachePath = path.join(userDataPath, '/cache.js')
   const data = {}
-  Object.keys(cache).forEach(function (key) {
+  Object.keys(cache).forEach((key) => {
     data[key] = cache[key]// .toCompactBinary()
   })
   const compactBinary = data

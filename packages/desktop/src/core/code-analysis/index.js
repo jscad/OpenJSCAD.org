@@ -51,7 +51,7 @@ function csgTree (ast) {
         if (currentItem) {
           currentItem.children.push(leaf)
         }
-        const argsTxt = args ? `{${Object.keys(args).map(function (key) { return key + ':' + args[key] })}}` : ''
+        const argsTxt = args ? `{${Object.keys(args).map((key) => key + ':' + args[key])}}` : ''
         textStuff += ` cube(${argsTxt}), `
         // const cubeAsProgram = astUtils.toProgram(node)
       }
@@ -61,7 +61,7 @@ function csgTree (ast) {
         if (currentItem) {
           currentItem.children.push(leaf)
         }
-        const argsTxt = args ? `{${Object.keys(args).map(function (key) { return key + ':' + args[key] })}}` : ''
+        const argsTxt = args ? `{${Object.keys(args).map((key) => key + ':' + args[key])}}` : ''
         textStuff += ` sphere(${argsTxt}), `
       }
     },

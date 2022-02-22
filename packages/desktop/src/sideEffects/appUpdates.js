@@ -12,7 +12,7 @@ const appUpdateSource = (packageInfo) => {
     headers: {
       'user-agent': `jscad v${packageInfo.version}`
     }
-  }, function (res) {
+  }, (res) => {
     if (res.statusCode === 200) {
       let result = ''
       res.on('data', (x) => {
@@ -35,8 +35,6 @@ const appUpdateSource = (packageInfo) => {
   return updatesFromCB.stream
 }
 
-const makeAppUpdateSideEffect = (packageInfo) => {
-  return { source: appUpdateSource.bind(null, packageInfo) }
-}
+const makeAppUpdateSideEffect = (packageInfo) => ({ source: appUpdateSource.bind(null, packageInfo) })
 
 module.exports = makeAppUpdateSideEffect

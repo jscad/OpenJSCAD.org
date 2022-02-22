@@ -10,7 +10,7 @@ const { flatten } = require('@jscad/array-utils')
 // FIXME: not used anymore? remove?
 function watchMultiplePaths (paths, changed) {
   const prevContents = {}
-  const watchers = paths.map(function (filePath, index) {
+  const watchers = paths.map((filePath, index) => {
     prevContents[filePath] = ''
     const watcher = fs.watch(filePath, { encoding: 'utf8' }, (eventType, filename) => {
       requireUncached(filePath)
@@ -26,8 +26,8 @@ function watchMultiplePaths (paths, changed) {
   return watchers
 }
 
-const removeWatchers = watchers => {
-  watchers.map(watcher => {
+const removeWatchers = (watchers) => {
+  watchers.map((watcher) => {
     watcher.close()
     return undefined
   })
@@ -40,8 +40,8 @@ function watchTree (rootPath, changed) {
   let allDependencyPaths = Array.from(new Set(flatten(resolveDependencies(undefined, rootPath))))
     .sort()
 
-  const createWatchers = dependencyPaths =>
-    allDependencyPaths.map(function (filePath, index) {
+  const createWatchers = (dependencyPaths) =>
+    allDependencyPaths.map((filePath, index) => {
       prevContents[filePath] = ''
       const watcher = fs.watch(filePath, { encoding: 'utf8' }, handleWatch.bind(null, filePath))
       return watcher
@@ -77,10 +77,10 @@ module.exports = function makeFsSideEffects () {
   const scriptDataFromCB = callBackToStream()
 
   function fsSink (out$) {
-    out$.forEach(function ({ path, operation, id, data, options }) {
+    out$.forEach(({ path, operation, id, data, options }) => {
     // console.log('read/writing to', path, operation)
       if (operation === 'read') {
-        fs.readFile(path, 'utf8', function (error, data) {
+        fs.readFile(path, 'utf8', (error, data) => {
           if (error) {
             readFileToCB.callback({ path, operation, error, id })
           } else {

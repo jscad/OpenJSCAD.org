@@ -45,7 +45,7 @@ function solidsFromAst (ast) {
       if (isCube(node)) {
         currentItem = { type: 'cube', args: [] }
         const args = extractSimpleArgs(node)
-        const argsTxt = args ? `{${Object.keys(args).map(function (key) { return key + ':' + args[key] })}}` : ''
+        const argsTxt = args ? `{${Object.keys(args).map((key) => key + ':' + args[key])}}` : ''
         textStuff += ` cube(${argsTxt}), `
         // liveNode(node)
       }

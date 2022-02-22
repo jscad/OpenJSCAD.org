@@ -1,12 +1,12 @@
 const html = require('bel')
 
 function dom (state, paramsCallbacktoStream, i18n) {
-  const i18nFake = x => x
-  i18nFake.translate = x => x
+  const i18nFake = (x) => x
+  i18nFake.translate = (x) => x
   i18n = i18n || i18nFake
 
   const formatsList = state.availableExportFormats
-    .map(function ({ name, displayName }) {
+    .map(({ name, displayName }) => {
       displayName = i18n.translate(displayName)
       return html`<option value=${name} selected='${state.exportFormat === name}'>
         ${displayName}

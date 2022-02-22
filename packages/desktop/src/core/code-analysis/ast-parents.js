@@ -15,15 +15,15 @@ function walk (node, keyname, parent) {
     })
   }
 
-  for (var key in node) {
+  for (const key in node) {
     if (key === 'parent') continue
     if (!Object.prototype.hasOwnProperty.call(node, key)) continue
 
-    var child = node[key]
+    const child = node[key]
     if (Array.isArray(child)) {
-      var l = child.length
+      const l = child.length
 
-      for (var i = 0; i < l; i++) {
+      for (let i = 0; i < l; i++) {
         if (child[i] && child[i].type) { walk(child[i], keyname, node) }
       }
     } else
