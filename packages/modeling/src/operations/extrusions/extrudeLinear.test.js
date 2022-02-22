@@ -2,7 +2,7 @@ const test = require('ava')
 
 const comparePolygonsAsPoints = require('../../../test/helpers/comparePolygonsAsPoints')
 
-const { geom2, geom3 } = require('../../geometries')
+const { geom2, geom3, path2 } = require('../../geometries')
 
 const { extrudeLinear } = require('./index')
 
@@ -165,4 +165,28 @@ test('extrudeLinear (holes)', (t) => {
   ]
   t.is(pts.length, 24)
   t.true(comparePolygonsAsPoints(pts, exp))
+})
+
+test('extrudeLinear (path2)', (t) => {
+  const geometry2 = path2.fromPoints({ closed: true }, [[0, 0], [12, 0], [6, 10]])
+  const geometry3 = extrudeLinear({ height: 15 }, geometry2)
+  t.true(geom3.isA(geometry3))
+  const pts = geom3.toPoints(geometry3)
+  const exp = [
+    [[6, 10, 0], [0, 0, 0], [0, 0, 15]],
+    [[6, 10, 0], [0, 0, 15], [6, 10, 15]],
+    [[0, 0, 0], [12, 0, 0], [12, 0, 15]],
+    [[0, 0, 0], [12, 0, 15], [0, 0, 15]],
+    [[12, 0, 0], [6, 10, 0], [6, 10, 15]],
+    [[12, 0, 0], [6, 10, 15], [12, 0, 15]],
+    [[0, 0, 15], [11.999999999999998, 0, 15], [6, 10, 15]],
+    [[6.000000000000001, 10, 0], [12, 0, 0], [8.881784197001252e-16, 0, 0]]
+  ]
+  t.is(pts.length, 8)
+  t.true(comparePolygonsAsPoints(pts, exp))
+})
+
+test('extrudeLinear (unclosed path throws error)', (t) => {
+  const geometry2 = path2.fromPoints({ closed: false }, [[0, 0], [12, 0], [6, 10]])
+  t.throws(() => extrudeLinear({}, geometry2))
 })

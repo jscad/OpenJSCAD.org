@@ -45,7 +45,7 @@ const repartitionEdges = (newlength, edges) => {
 
 const EPSAREA = (EPS * EPS / 2) * Math.sin(Math.PI / 3)
 
-/*
+/**
  * Extrude (build) walls between the given slices.
  * Each wall consists of two triangles, which may be invalid if slices are overlapping.
  */

@@ -4,7 +4,7 @@ const expand = require('../expansions/expand')
 
 const extrudeLinearGeom2 = require('./extrudeLinearGeom2')
 
-/*
+/**
  * Expand and extrude the given geometry (path2).
  * @See expand for addition options
  * @param {Object} options - options for extrusion, if any
