@@ -352,7 +352,7 @@ test('offset (options): offsetting of a simple geom2 produces expected offset ge
     [-2, 1],
     [-1.9999999999999996, 6],
     [-6, 6],
-    [-6, -6],
+    [-6, -6]
   ]
   t.true(comparePoints(pts, exp))
 
