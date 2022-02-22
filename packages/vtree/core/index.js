@@ -1,7 +1,7 @@
 
 const { toArray, flatten } = require('./arrays')
 
-const cube = params => {
+const cube = (params) => {
   /* const defaults = {
     size: [1, 1, 1],
     center: [true, true, true]
@@ -11,7 +11,7 @@ const cube = params => {
   return Object.assign({}, _params, { type: 'cube' })
 }
 
-const sphere = params => {
+const sphere = (params) => {
   /* const defaults = {
     size: 1,
     center: [true, true, true]
@@ -21,7 +21,7 @@ const sphere = params => {
   return Object.assign({}, _params, { type: 'sphere' })
 }
 
-const cylinder = params => {
+const cylinder = (params) => {
   const _params = Object.assign({}, params)
 
   return Object.assign({}, _params, { type: 'cylinder' })

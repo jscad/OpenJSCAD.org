@@ -21,7 +21,7 @@ function wowPart () {
   return { type: 'part', children: [cube(), sphere()] }
 }
 
-const flatten = arr =>
+const flatten = (arr) =>
   arr.reduce(
     (flat, toFlatten) => flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten),
     []

@@ -12,7 +12,7 @@ const cachedGenerator = require('../../../generators/geometry-generator-cached-c
  * @param {Object} specials - hash of 'specials'
  * @returns {Function} the actual function made for measuring areas
  **/
-const makeMeasureArea = specials => {
+const makeMeasureArea = (specials) => {
   /**
  * Measure the area of the given geometry.
  *

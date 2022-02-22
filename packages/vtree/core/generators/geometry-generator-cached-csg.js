@@ -19,7 +19,7 @@ const { colorize } = modeling.colors
 const generate = (node, cache) => {
   let operands
   if (Array.isArray(node)) {
-    return flatten(node).map(n => generate(n, cache))
+    return flatten(node).map((n) => generate(n, cache))
   }
 
   const { foundData, nodeHash } = cache.find(node)
@@ -28,11 +28,11 @@ const generate = (node, cache) => {
   }
 
   const nodeWithoutParams = (node, operands, fn) => {
-    operands = flatten(node.children).map(n => generate(n, cache))
+    operands = flatten(node.children).map((n) => generate(n, cache))
     return fn(operands)
   }
   const nodeWithParams = (node, operands, fn) => {
-    operands = flatten(node.children).map(n => generate(n, cache))
+    operands = flatten(node.children).map((n) => generate(n, cache))
     return fn(node.params, operands)
   }
 
@@ -70,18 +70,16 @@ const generate = (node, cache) => {
     extrudeRectangular: () => nodeWithParams(node, operands, extrudeRectangular),
     extrudeFromSlices: () => nodeWithParams(node, operands, extrudeFromSlices),
     // measurements
-    measureArea: () => {
+    measureArea: () =>
       // first generate the actual geometry for the items, then compute
-      return measureArea(flatten(node.children).map(n => generate(n, cache)))
-    },
-    measureVolume: () => {
+      measureArea(flatten(node.children).map((n) => generate(n, cache))),
+    measureVolume: () =>
       // first generate the actual geometry for the items, then compute
-      return measureVolume(flatten(node.children).map(n => generate(n, cache)))
-    },
-    measureBounds: () => {
+      measureVolume(flatten(node.children).map((n) => generate(n, cache))),
+    measureBounds: () =>
       // first generate the actual geometry for the items, then compute
-      return measureBounds(flatten(node.children).map(n => generate(n, cache)))
-    }
+      measureBounds(flatten(node.children).map((n) => generate(n, cache)))
+
   }
 
   const result = lookup[node.type] ? lookup[node.type]() : node

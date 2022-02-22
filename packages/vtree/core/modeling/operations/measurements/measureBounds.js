@@ -11,7 +11,7 @@ const cachedGenerator = require('../../../generators/geometry-generator-cached-c
  * @param {Object} specials - hash of 'specials'
  * @returns {Function} the actual function made for measuring bounds
  **/
-const makeMeasureBounds = specials => {
+const makeMeasureBounds = (specials) => {
   const _measureBounds = (solids) => {
     // we create a premptive cache
     const cache = cacheWithInvalidation()

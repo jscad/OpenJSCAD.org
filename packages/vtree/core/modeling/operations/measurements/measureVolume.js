@@ -12,7 +12,7 @@ const cachedGenerator = require('../../../generators/geometry-generator-cached-c
  * @param {Object} specials - hash of 'specials'
  * @returns {Function} the actual function made for measuring volumes
  **/
-const makeMeasureVolume = specials => {
+const makeMeasureVolume = (specials) => {
   const _measureVolume = (...objects) => {
     objects = flatten(objects)
     // we create a premptive cache

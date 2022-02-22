@@ -2,7 +2,7 @@
  * the script on which the tree is based returns arrays of data will return those
  * @param  {} root 'findDisconnectedSubGraphs'
  */
-const findDisconnectedSubGraphs = root => {
+const findDisconnectedSubGraphs = (root) => {
   // console.log('findDisconnectedSubGraphs')
   if (Array.isArray(root)) {
     root = { children: root, type: 'root' }
@@ -27,7 +27,7 @@ const dfs = (node, stack = [], leafs = [], subTrees, depth = 0) => {
     leafs.push(node)
   }
   if (node.children) {
-    node.children.forEach(function (childNode) {
+    node.children.forEach((childNode) => {
       // childNode.parent = node
       dfs(childNode, stack, leafs)
     })
