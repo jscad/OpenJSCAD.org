@@ -54,7 +54,7 @@ const startRenderer = ({ canvas, cameraPosition = [180, -180, 220], cameraTarget
   const setupOptions = {
     glOptions: { gl }
   }
-  if (type == 'webgl') {
+  if (type === 'webgl') {
     setupOptions.glOptions.optionalExtensions = ['oes_element_index_uint']
   }
   renderer = prepareRender(setupOptions)
@@ -102,7 +102,7 @@ const startRenderer = ({ canvas, cameraPosition = [180, -180, 220], cameraTarget
 }
 
 let renderTimer
-const tmFunc = typeof requestAnimationFrame === 'undefined' ? setTimeout : requestAnimationFrame
+const tmFunc = typeof requestAnimationFrame === 'undefined' ? setTimeout : requestAnimationFrame // eslint-disable-line
 
 function updateView (delay = 8) {
   if (renderTimer || !renderer) return
@@ -257,7 +257,7 @@ export default function JscadReglViewer (el, { showAxes = true, showGrid = true,
     canvas.onpointerup = upHandler
     canvas.onwheel = wheelHandler
 
-    const resizeObserver = new ResizeObserver(entries => {
+    const resizeObserver = new ResizeObserver(entries => {// eslint-disable-line
       const rect = entries[0].contentRect
       resize(rect)
     })

@@ -151,12 +151,12 @@ export class App extends Jsx6 {
 
     const menu = <div class="menu-area">
     <div class="menu-buttons">
+      <Toggle selected={$s.editorVisible}>{editIcon}</Toggle>
+      <button p="runButton" onclick={()=>this.viewer.ruunScript(this.editor.getValue())}>run</button>
       <button p="settingsBt" class="g-focus-menu">
         <button onmousedown={markActive} onclick={()=>{if(wasActive) this.runButton.focus() }}>{gearIcon}</button>
         {settingsArea}
-        </button>
-      <Toggle selected={$s.editorVisible}>{editIcon}</Toggle>
-      <button p="runButton" onclick={()=>this.viewer.ruunScript(this.editor.getValue())}>run</button>
+      </button>
     </div>
   </div>
     
@@ -165,10 +165,7 @@ export class App extends Jsx6 {
       <>
         <button class="drop-handler" hidden={state.showDrop(NOT)}></button>
         <div class="fxs fx1">
-          <div class="fxs fx-col">
-            {/*<SampleForm />*/}
-            <JscadEditor p="editor" class="editor editor-area fx1 w50 owa" hidden={$s.editorVisible(NOT)}/>
-          </div>
+          <JscadEditor p="editor" class="editor editor-area fx1 w50 owa" hidden={$s.editorVisible(NOT)}/>
           <div class="viewer-area fxs fx1 w50">
             {menu}
             <Viewer p="viewer" class="viewer-area fxs fx1 owh" viewerClass={this.settings.viewer} showAxes={$s.showAxes} showGrid={$s.showGrid} />
