@@ -1,14 +1,14 @@
 /**
  * Produce a compact binary representation from the given path.
- * @param {path2} geometry - the path
+ * @param {path2} geometry - the path geometry
  * @returns {TypedArray} compact binary representation
  * @alias module:modeling/geometries/path2.toCompactBinary
  */
-const toCompactBinary = (geom) => {
-  const points = geom.points
-  const transforms = geom.transforms
+const toCompactBinary = (geometry) => {
+  const points = geometry.points
+  const transforms = geometry.transforms
   let color = [-1, -1, -1, -1]
-  if (geom.color) color = geom.color
+  if (geometry.color) color = geometry.color
 
   // FIXME why Float32Array?
   const compacted = new Float32Array(1 + 16 + 1 + 4 + (points.length * 2)) // type + transforms + isClosed + color + points data
@@ -32,7 +32,7 @@ const toCompactBinary = (geom) => {
   compacted[15] = transforms[14]
   compacted[16] = transforms[15]
 
-  compacted[17] = geom.isClosed ? 1 : 0
+  compacted[17] = geometry.isClosed ? 1 : 0
 
   compacted[18] = color[0]
   compacted[19] = color[1]

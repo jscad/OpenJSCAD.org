@@ -10,7 +10,7 @@ const extrudeLinearGeom2 = require('./extrudeLinearGeom2')
  * @param {Number} [options.height=1] the height of the extrusion
  * @param {Number} [options.twistAngle=0] the final rotation (RADIANS) about the origin of the shape (if any)
  * @param {Integer} [options.twistSteps=1] the resolution of the twist about the axis (if any)
- * @param {...Object} geometry - the list of geometry to extrude
+ * @param {...Object} objects - the geometries to extrude
  * @return {Object|Array} the extruded geometry, or a list of extruded geometry
  * @alias module:modeling/extrusions.extrudeLinear
  *

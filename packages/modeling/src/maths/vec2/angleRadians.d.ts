@@ -2,4 +2,4 @@ import Vec2 from './type'
 
 export default angleRadians
 
-declare function angleRadians(vec: Vec2): number
+declare function angleRadians(vector: Vec2): number

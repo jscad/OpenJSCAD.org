@@ -7,9 +7,9 @@
  * @returns {vec3} out
  * @alias module:modeling/maths/vec3.fromVec2
  */
-const fromVector2 = (out, vec2, z = 0) => {
-  out[0] = vec2[0]
-  out[1] = vec2[1]
+const fromVector2 = (out, vector, z = 0) => {
+  out[0] = vector[0]
+  out[1] = vector[1]
   out[2] = z
   return out
 }

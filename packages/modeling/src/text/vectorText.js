@@ -47,7 +47,7 @@ const vectorText = (options, text) => {
     xOffset, yOffset, input, font, height, align, extrudeOffset, lineSpacing, letterSpacing
   } = vectorParams(options, text)
   let [x, y] = [xOffset, yOffset]
-  let [i, il, char, vect, width, diff] = []
+  let i, il, char, vect, width, diff
   let line = { width: 0, segments: [] }
   const lines = []
   let output = []
