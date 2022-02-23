@@ -7,21 +7,16 @@ const toSides = require('./toSides')
  * This allows the edges to be traversed in order.
  */
 const toEdges = (sides) => {
-  const uniquevertices = []
+  const vertices = {}
   const getUniqueVertex = (vertex) => {
-    const i = uniquevertices.findIndex((v) => vec2.equals(v, vertex))
-    if (i < 0) {
-      uniquevertices.push(vertex)
-      return vertex
+    const key = vertex.toString()
+    if (!vertices[key]) {
+      vertices[key] = vertex
     }
-    return uniquevertices[i]
+    return vertices[key]
   }
 
-  const edges = []
-  sides.forEach((side) => {
-    edges.push([getUniqueVertex(side[0]), getUniqueVertex(side[1])])
-  })
-  return edges
+  return sides.map((side) => side.map(getUniqueVertex))
 }
 
 /**

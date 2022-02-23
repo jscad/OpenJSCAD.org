@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.7.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.7.1...@jscad/modeling@2.7.2) (2022-02-19)
+
+
+### Performance Improvements
+
+* **modeling:** changed geom2.toOutlines to use a map when creating unique edges ([#997](https://github.com/jscad/OpenJSCAD.org/issues/997)) ([338065f](https://github.com/jscad/OpenJSCAD.org/commit/338065fa37041a41e66cbe648ba2080239f3db97))
+* **modeling:** Use hypot instead of sqrt when possible ([#996](https://github.com/jscad/OpenJSCAD.org/issues/996)) ([113c636](https://github.com/jscad/OpenJSCAD.org/commit/113c636b1ac33e351c97789eb6ce0a546365141e))
+
+
+
+
+
 ## [2.7.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.7.0...@jscad/modeling@2.7.1) (2021-12-26)
 
 

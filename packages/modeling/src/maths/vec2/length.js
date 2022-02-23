@@ -5,6 +5,6 @@
  * @returns {Number} length
  * @alias module:modeling/maths/vec2.length
  */
-const length = (a) => Math.hypot(a[0], a[1])
+const length = (vector) => Math.hypot(vector[0], vector[1])
 
 module.exports = length

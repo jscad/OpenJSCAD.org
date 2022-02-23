@@ -5,10 +5,10 @@ const geom3 = require('../../geometries/geom3')
 const path2 = require('../../geometries/path2')
 
 /**
- * Transform the given geometries using the given matrix.
+ * Transform the given objects using the given matrix.
  * @param {mat4} matrix - a transformation matrix
- * @param {...Object} geometries - the geometries to transform
- * @return {Object|Array} the transformed geometry, or a list of transformed geometries
+ * @param {...Object} objects - the objects to transform
+ * @return {Object|Array} the transformed object, or a list of transformed objects
  * @alias module:modeling/transforms.transform
  *
  * @example

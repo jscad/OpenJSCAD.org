@@ -5,10 +5,10 @@
  * @returns {Number} length
  * @alias module:modeling/maths/vec3.length
  */
-const length = (a) => {
-  const x = a[0]
-  const y = a[1]
-  const z = a[2]
+const length = (vector) => {
+  const x = vector[0]
+  const y = vector[1]
+  const z = vector[2]
   return Math.hypot(x, y, z)
 }
 

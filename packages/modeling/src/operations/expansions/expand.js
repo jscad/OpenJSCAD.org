@@ -17,7 +17,7 @@ const expandPath2 = require('./expandPath2')
  * @param {Number} [options.delta=1] - delta (+/-) of expansion
  * @param {String} [options.corners='edge'] - type of corner to create after expanding; edge, chamfer, round
  * @param {Integer} [options.segments=16] - number of segments when creating round corners
- * @param {...Objects} geometry - the list of geometry to expand
+ * @param {...Objects} objects - the geometries to expand
  * @return {Object|Array} new geometry, or list of new geometries
  * @alias module:modeling/expansions.expand
  *
