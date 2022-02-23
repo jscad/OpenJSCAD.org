@@ -15,37 +15,43 @@ const unionGeom3Sub = require('../booleans/unionGeom3Sub')
 
 const extrudePolygon = require('./extrudePolygon')
 
+/**
+ * Collect all planes adjacent to each vertex
+ */
 const mapPlaneToVertex = (map, vertex, plane) => {
-  const i = map.findIndex((item) => vec3.equals(item[0], vertex))
-  if (i < 0) {
+  const key = vertex.toString()
+  if (!map.has(key)) {
     const entry = [vertex, [plane]]
-    map.push(entry)
-    return map.length
+    map.set(key, entry)
+  } else {
+    const planes = map.get(key)[1]
+    planes.push(plane)
   }
-  const planes = map[i][1]
-  planes.push(plane)
-  return i
 }
 
+/**
+ * Collect all planes adjacent to each edge.
+ * Combine undirected edges, no need for duplicate cylinders.
+ */
 const mapPlaneToEdge = (map, edge, plane) => {
-  const i = map.findIndex((item) => (vec3.equals(item[0], edge[0]) && vec3.equals(item[1], edge[1])) || (vec3.equals(item[0], edge[1]) && vec3.equals(item[1], edge[0])))
-  if (i < 0) {
+  const key0 = edge[0].toString()
+  const key1 = edge[1].toString()
+  // Sort keys to make edges undirected
+  const key = key0 < key1 ? `${key0},${key1}` : `${key1},${key0}`
+  if (!map.has(key)) {
     const entry = [edge, [plane]]
-    map.push(entry)
-    return map.length
+    map.set(key, entry)
+  } else {
+    const planes = map.get(key)[1]
+    planes.push(plane)
   }
-  const planes = map[i][1]
-  planes.push(plane)
-  return i
 }
 
 const addUniqueAngle = (map, angle) => {
   const i = map.findIndex((item) => item === angle)
   if (i < 0) {
     map.push(angle)
-    return map.length
   }
-  return i
 }
 
 /*
@@ -65,8 +71,8 @@ const expandShell = (options, geometry) => {
   const { delta, segments } = Object.assign({ }, defaults, options)
 
   let result = geom3.create()
-  const vertices2planes = [] // contents: [vertex, [plane, ...]]
-  const edges2planes = [] // contents: [[vertex, vertex], [plane, ...]]
+  const vertices2planes = new Map() // {vertex: [vertex, [plane, ...]]}
+  const edges2planes = new Map() // {edge: [[vertex, vertex], [plane, ...]]}
 
   const v1 = vec3.create()
   const v2 = vec3.create()
