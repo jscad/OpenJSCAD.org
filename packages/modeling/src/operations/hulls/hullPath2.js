@@ -16,14 +16,14 @@ const hullPath2 = (...geometries) => {
 
   // extract the unique points from the geometries
   const uniquepoints = []
-  const found = {}
+  const found = new Set()
   geometries.forEach((geometry) => {
     const points = path2.toPoints(geometry)
     points.forEach((point) => {
       const key = point.toString()
-      if (!found[key]) {
+      if (!found.has(key)) {
         uniquepoints.push(point)
-        found[key] = true
+        found.add(key)
       }
     })
   })
