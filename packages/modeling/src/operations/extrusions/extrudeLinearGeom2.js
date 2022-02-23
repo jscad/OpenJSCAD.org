@@ -7,7 +7,7 @@ const slice = require('./slice')
 
 const extrudeFromSlices = require('./extrudeFromSlices')
 
-/**
+/*
  * Extrude the given geometry using the given options.
  *
  * @param {Object} [options] - options for extrude

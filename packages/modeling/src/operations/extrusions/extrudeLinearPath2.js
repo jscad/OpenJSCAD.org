@@ -2,7 +2,7 @@ const { geom2, path2 } = require('../../geometries')
 
 const extrudeLinearGeom2 = require('./extrudeLinearGeom2')
 
-/**
+/*
  * Extrude the given geometry using the given options.
  *
  * @param {Object} [options] - options for extrude
