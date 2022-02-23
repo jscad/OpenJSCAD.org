@@ -7,10 +7,10 @@ const geom3 = require('../../geometries/geom3')
 const path2 = require('../../geometries/path2')
 
 /**
- * Scale the given geometries using the given options.
- * @param {Array} factors - X, Y, Z factors by which to scale the geometries
- * @param {...Object} geometries - the geometries to scale
- * @return {Object|Array} the scaled geometry, or a list of scaled geometries
+ * Scale the given objects using the given options.
+ * @param {Array} factors - X, Y, Z factors by which to scale the objects
+ * @param {...Object} objects - the objects to scale
+ * @return {Object|Array} the scaled object, or a list of scaled objects
  * @alias module:modeling/transforms.scale
  *
  * @example
@@ -40,31 +40,31 @@ const scale = (factors, ...objects) => {
 }
 
 /**
- * Scale the given geometries about the X axis using the given options.
- * @param {Number} factor - X factor by which to scale the geometries
- * @param {...Object} geometries - the geometries to scale
- * @return {Object|Array} the scaled geometry, or a list of scaled geometries
+ * Scale the given objects about the X axis using the given options.
+ * @param {Number} factor - X factor by which to scale the objects
+ * @param {...Object} objects - the objects to scale
+ * @return {Object|Array} the scaled object, or a list of scaled objects
  * @alias module:modeling/transforms.scaleX
  */
-const scaleX = (offset, ...objects) => scale([offset, 1, 1], objects)
+const scaleX = (factor, ...objects) => scale([factor, 1, 1], objects)
 
 /**
- * Scale the given geometries about the Y axis using the given options.
- * @param {Number} factor - Y factor by which to scale the geometries
- * @param {...Object} geometries - the geometries to scale
- * @return {Object|Array} the scaled geometry, or a list of scaled geometries
+ * Scale the given objects about the Y axis using the given options.
+ * @param {Number} factor - Y factor by which to scale the objects
+ * @param {...Object} objects - the objects to scale
+ * @return {Object|Array} the scaled object, or a list of scaled objects
  * @alias module:modeling/transforms.scaleY
  */
-const scaleY = (offset, ...objects) => scale([1, offset, 1], objects)
+const scaleY = (factor, ...objects) => scale([1, factor, 1], objects)
 
 /**
- * Scale the given geometries about the Z axis using the given options.
- * @param {Number} factor - Z factor by which to scale the geometries
- * @param {...Object} geometries - the geometries to scale
- * @return {Object|Array} the scaled geometry, or a list of scaled geometries
+ * Scale the given objects about the Z axis using the given options.
+ * @param {Number} factor - Z factor by which to scale the objects
+ * @param {...Object} objects - the objects to scale
+ * @return {Object|Array} the scaled object, or a list of scaled objects
  * @alias module:modeling/transforms.scaleZ
  */
-const scaleZ = (offset, ...objects) => scale([1, 1, offset], objects)
+const scaleZ = (factor, ...objects) => scale([1, 1, factor], objects)
 
 module.exports = {
   scale,

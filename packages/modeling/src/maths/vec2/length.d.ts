@@ -2,4 +2,4 @@ import Vec2 from './type'
 
 export default length
 
-declare function length(a: Vec2): number
+declare function length(vector: Vec2): number

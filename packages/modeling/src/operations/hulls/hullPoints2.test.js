@@ -42,7 +42,7 @@ test('hullPoints2 bug #114 2 circles with 18 segments', (t) => {
     [7.298133329356933, -1.9283628290596186]
   ]
 
-  // we just want to bwe sure no err happens for this case
+  // we just want to be sure no err happens for this case
   const out = hullPoints2(points)
   t.is(out.length, 19)
 })
