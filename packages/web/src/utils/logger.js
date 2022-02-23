@@ -18,7 +18,7 @@ const makeLogger = (params) => {
 
   const warning = (...params) => {
     if (enabled) {
-      console.warning(...params)
+      console.warn(...params)
     }
   }
   const error = (...params) => {

@@ -7,8 +7,8 @@ const measureBoundingBox = require('./measureBoundingBox')
  * @returns {Array} the computed bounding sphere; center point (3D) and radius
  * @alias module:modeling/geometries/poly3.measureBoundingSphere
  */
-const measureBoundingSphere = (poly3) => {
-  const box = measureBoundingBox(poly3)
+const measureBoundingSphere = (polygon) => {
+  const box = measureBoundingBox(polygon)
   const center = box[0]
   vec3.add(center, box[0], box[1])
   vec3.scale(center, center, 0.5)

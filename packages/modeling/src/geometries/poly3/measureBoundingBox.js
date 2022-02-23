@@ -5,8 +5,8 @@ const vec3 = require('../../maths/vec3')
  * @returns {Array} an array of two vectors (3D);  minimum and maximum coordinates
  * @alias module:modeling/geometries/poly3.measureBoundingBox
  */
-const measureBoundingBox = (poly3) => {
-  const vertices = poly3.vertices
+const measureBoundingBox = (polygon) => {
+  const vertices = polygon.vertices
   const numvertices = vertices.length
   const min = numvertices === 0 ? vec3.create() : vec3.clone(vertices[0])
   const max = vec3.clone(min)

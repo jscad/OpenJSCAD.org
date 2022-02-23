@@ -7,10 +7,10 @@ const geom3 = require('../../geometries/geom3')
 const path2 = require('../../geometries/path2')
 
 /**
- * Translate the given geometries using the given options.
- * @param {Array} offset - offset (vector) of which to translate the geometries
- * @param {...Object} geometries - the geometries to translate
- * @return {Object|Array} the translated geometry, or a list of translated geometries
+ * Translate the given objects using the given options.
+ * @param {Array} offset - offset (vector) of which to translate the objects
+ * @param {...Object} objects - the objects to translate
+ * @return {Object|Array} the translated object, or a list of translated objects
  * @alias module:modeling/transforms.translate
  *
  * @example
@@ -38,28 +38,28 @@ const translate = (offset, ...objects) => {
 }
 
 /**
- * Translate the given geometries along the X axis using the given options.
- * @param {Number} offset - X offset of which to translate the geometries
- * @param {...Object} geometries - the geometries to translate
- * @return {Object|Array} the translated geometry, or a list of translated geometries
+ * Translate the given objects along the X axis using the given options.
+ * @param {Number} offset - X offset of which to translate the objects
+ * @param {...Object} objects - the objects to translate
+ * @return {Object|Array} the translated object, or a list of translated objects
  * @alias module:modeling/transforms.translateX
  */
 const translateX = (offset, ...objects) => translate([offset, 0, 0], objects)
 
 /**
- * Translate the given geometries along the Y axis using the given options.
+ * Translate the given objects along the Y axis using the given options.
  * @param {Number} offset - Y offset of which to translate the geometries
- * @param {...Object} geometries - the geometries to translate
- * @return {Object|Array} the translated geometry, or a list of translated geometries
+ * @param {...Object} objects - the objects to translate
+ * @return {Object|Array} the translated object, or a list of translated objects
  * @alias module:modeling/transforms.translateY
  */
 const translateY = (offset, ...objects) => translate([0, offset, 0], objects)
 
 /**
- * Translate the given geometries along the Z axis using the given options.
+ * Translate the given objects along the Z axis using the given options.
  * @param {Number} offset - Z offset of which to translate the geometries
- * @param {...Object} geometries - the geometries to translate
- * @return {Object|Array} the translated geometry, or a list of translated geometries
+ * @param {...Object} objects - the objects to translate
+ * @return {Object|Array} the translated object, or a list of translated objects
  * @alias module:modeling/transforms.translateZ
  */
 const translateZ = (offset, ...objects) => translate([0, 0, offset], objects)

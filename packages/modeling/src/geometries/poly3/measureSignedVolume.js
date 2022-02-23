@@ -9,9 +9,9 @@ const vec3 = require('../../maths/vec3')
  * @return {Number} volume of the polygon
  * @alias module:modeling/geometries/poly3.measureSignedVolume
  */
-const measureSignedVolume = (poly3) => {
+const measureSignedVolume = (polygon) => {
   let signedVolume = 0
-  const vertices = poly3.vertices
+  const vertices = polygon.vertices
   // calculate based on triangluar polygons
   const cross = vec3.create()
   for (let i = 0; i < vertices.length - 2; i++) {

@@ -12,7 +12,7 @@ const extrudeRectangularGeom2 = require('./extrudeRectangularGeom2')
  * @param {Object} options - options for extrusion, if any
  * @param {Number} [options.size=1] - size of the rectangle
  * @param {Number} [options.height=1] - height of the extrusion
- * @param {...Object} geometry - the list of geometry to extrude
+ * @param {...Object} objects - the geometries to extrude
  * @return {Object|Array} the extruded object, or a list of extruded objects
  * @alias module:modeling/extrusions.extrudeRectangular
  *
