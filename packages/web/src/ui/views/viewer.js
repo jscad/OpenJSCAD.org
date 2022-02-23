@@ -143,7 +143,7 @@ const viewer = (state, i18n) => {
   } else {
     // only generate entities when the solids change
     // themes, options, etc also change the viewer state
-    const solids = state.design.solids
+    const solids = state.design.solids.filter((solid) => solid && (solid instanceof Object))
     if (prevSolids) {
       const theme = state.themes.themeSettings.viewer
       const color = theme.rendering.meshColor
