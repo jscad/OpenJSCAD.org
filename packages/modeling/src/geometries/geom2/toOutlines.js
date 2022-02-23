@@ -6,17 +6,37 @@ const toSides = require('./toSides')
  * Create a list of edges which SHARE vertices.
  * This allows the edges to be traversed in order.
  */
-const toEdges = (sides) => {
-  const vertices = {}
+const toSharedVertices = (sides) => {
+  const unique = new Map() // {key: vertex}
   const getUniqueVertex = (vertex) => {
     const key = vertex.toString()
-    if (!vertices[key]) {
-      vertices[key] = vertex
+    if (unique.has(key)) {
+      return unique.get(key)
+    } else {
+      unique.set(key, vertex)
+      return vertex
     }
-    return vertices[key]
   }
 
   return sides.map((side) => side.map(getUniqueVertex))
+}
+
+/*
+ * Convert a list of sides into a map from vertex to edges.
+ */
+const toVertexMap = (sides) => {
+  const vertexMap = new Map()
+  // first map to edges with shared vertices
+  const edges = toSharedVertices(sides)
+  // construct adjacent edges map
+  edges.forEach((edge) => {
+    if (vertexMap.has(edge[0])) {
+      vertexMap.get(edge[0]).push(edge)
+    } else {
+      vertexMap.set(edge[0], [edge])
+    }
+  })
+  return vertexMap
 }
 
 /**
@@ -30,16 +50,7 @@ const toEdges = (sides) => {
  * let outlines = toOutlines(geometry) // returns two outlines
  */
 const toOutlines = (geometry) => {
-  const vertexMap = new Map()
-  const edges = toEdges(toSides(geometry))
-  edges.forEach((edge) => {
-    if (!(vertexMap.has(edge[0]))) {
-      vertexMap.set(edge[0], [])
-    }
-    const sideslist = vertexMap.get(edge[0])
-    sideslist.push(edge)
-  })
-
+  const vertexMap = toVertexMap(toSides(geometry)) // {vertex: [edges]}
   const outlines = []
   while (true) {
     let startside
