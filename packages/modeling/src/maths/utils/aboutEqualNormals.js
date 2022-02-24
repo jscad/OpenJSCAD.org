@@ -1,5 +1,5 @@
-// Normals are directional vectors with component values from 0 to 1.0, requiring specialized comparision
-// This EPS is derived from a serieas of tests to determine the optimal precision for comparing coplanar polygons,
+// Normals are directional vectors with component values from 0 to 1.0, requiring specialized comparison
+// This EPS is derived from a series of tests to determine the optimal precision for comparing coplanar polygons,
 // as provided by the sphere primitive at high segmentation
 // This EPS is for 64 bit Number values
 const NEPS = 1e-13

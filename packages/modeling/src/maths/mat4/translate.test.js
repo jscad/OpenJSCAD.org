@@ -3,7 +3,7 @@ const { translate, create } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
-test('mat4: translate() called with three paramerters should update a mat4 with correct values', (t) => {
+test('mat4: translate() called with three parameters should update a mat4 with correct values', (t) => {
   const identityMatrix = [
     1, 0, 0, 0,
     0, 1, 0, 0,

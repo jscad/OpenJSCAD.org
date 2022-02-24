@@ -10,7 +10,7 @@ const expandPath2 = require('./expandPath2')
 
 /**
  * Expand the given geometry using the given options.
- * Both interal and external space is expanded for 2D and 3D shapes.
+ * Both internal and external space is expanded for 2D and 3D shapes.
  *
  * Note: Contract is expand using a negative delta.
  * @param {Object} options - options for expand

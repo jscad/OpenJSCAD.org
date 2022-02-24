@@ -3,7 +3,7 @@ const { lerp, fromValues } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
-test('vec2: lerp() called with three paramerters should update a vec2 with correct values', (t) => {
+test('vec2: lerp() called with three parameters should update a vec2 with correct values', (t) => {
   const obs1 = fromValues(0, 0)
   const ret1 = lerp(obs1, [0, 0], [0, 0], 0)
   t.true(compareVectors(obs1, [0, 0]))

@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { geom2, path2 } = require('../../geometries')
+const { path2 } = require('../../geometries')
 
 const hullPath2 = require('./hullPath2')
 

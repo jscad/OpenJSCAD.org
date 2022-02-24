@@ -26,7 +26,7 @@ const translateLine = (options, line) => {
  * @param {Float} [options.height=21] - font size (uppercase height)
  * @param {Float} [options.lineSpacing=1.4] - line spacing expressed as a percentage of font size
  * @param {Float} [options.letterSpacing=1] - extra letter spacing expressed as a percentage of font size
- * @param {String} [options.align='left'] - multi-line text alignement: left, center or right
+ * @param {String} [options.align='left'] - multi-line text alignment: left, center, right
  * @param {Float} [options.extrudeOffset=0] - width of the extrusion that will be applied (manually) after the creation of the character
  * @param {String} [options.input='?'] - ascii string (ignored/overwrited if provided as seconds parameter)
  * @param {String} [text='?'] - ascii string

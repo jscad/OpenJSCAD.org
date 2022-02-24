@@ -12,7 +12,7 @@ test('poly2: arePointsInside() should return proper values', (t) => {
   t.is(obs, 0)
 
   polygon = create([[0, 0], [5, 0], [5, 5], [0, 5]])
-  // points overlaping points
+  // points overlapping points
   obs = arePointsInside([[0, 0]], polygon)
   t.is(obs, 0)
   obs = arePointsInside([[5, 0]], polygon)

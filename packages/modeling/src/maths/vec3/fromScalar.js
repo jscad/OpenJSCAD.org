@@ -4,7 +4,7 @@
  *
  * @param {vec3} out - receiving vector
  * @param {Number} scalar
- * @returns {Vec3} out
+ * @returns {vec3} out
  * @alias module:modeling/maths/vec3.fromScalar
  */
 const fromScalar = (out, scalar) => {

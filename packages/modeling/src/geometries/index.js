@@ -1,6 +1,6 @@
 /**
  * Geometries are objects that represent the contents of primitives or the results of operations.
- * Note: Geometries are consider immutable, so never change the contents directly.
+ * Note: Geometries are considered immutable, so never change the contents directly.
  * @module modeling/geometries
  * @example
  * const { geom2, geom3, path2, poly2, poly3 } = require('@jscad/modeling').geometries

@@ -1,5 +1,5 @@
 /**
- * Determine whether the given matris is the identity transform.
+ * Determine whether the given matrix is the identity transform.
  * This is equivalent to (but much faster than):
  *
  *     mat4.equals(mat4.create(), matrix)
