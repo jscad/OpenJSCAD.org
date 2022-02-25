@@ -12,11 +12,11 @@ test('extrudeRectangular (defaults)', (t) => {
 
   let obs = extrudeRectangular({ }, geometry1)
   let pts = geom3.toPoints(obs)
-  t.is(pts.length, 50)
+  t.is(pts.length, 34)
 
   obs = extrudeRectangular({ }, geometry2)
   pts = geom3.toPoints(obs)
-  t.is(pts.length, 40)
+  t.is(pts.length, 24)
 })
 
 test('extrudeRectangular (chamfer)', (t) => {
