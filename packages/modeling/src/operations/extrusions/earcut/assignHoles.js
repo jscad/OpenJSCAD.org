@@ -2,31 +2,32 @@ const { area } = require('../../../maths/utils')
 const { toOutlines } = require('../../../geometries/geom2')
 const { arePointsInside } = require('../../../geometries/poly2')
 
-/**
+/*
  * Constructs a polygon hierarchy of solids and holes.
  * The hierarchy is represented as a forest of trees. All trees shall be depth at most 2.
  * If a solid exists inside the hole of another solid, it will be split out as its own root.
- * @param  {geom2} geometry
+ *
+ * @param {geom2} geometry
  * @returns {Array} an array of polygons with associated holes
  * @alias module:modeling/geometries/geom2.toTree
  *
  * @example
  * const geometry = subtract(rectangle({size: [5, 5]}), rectangle({size: [3, 3]}))
- * console.log(toTrees(geometry))
+ * console.log(assignHoles(geometry))
  * [{
  *   "solid": [[-2.5,-2.5],[2.5,-2.5],[2.5,2.5],[-2.5,2.5]],
  *   "holes": [[[-1.5,1.5],[1.5,1.5],[1.5,-1.5],[-1.5,-1.5]]]
  * }]
  */
-const toTrees = (geometry) => {
+const assignHoles = (geometry) => {
   const outlines = toOutlines(geometry)
-  const areas = outlines.map(area)
   const solids = [] // solid indices
   const holes = [] // hole indices
-  areas.forEach((area, i) => {
-    if (area < 0) {
+  outlines.forEach((outline, i) => {
+    const a = area(outline)
+    if (a < 0) {
       holes.push(i)
-    } else if (area > 0) {
+    } else if (a > 0) {
       solids.push(i)
     }
   })
@@ -81,4 +82,4 @@ const minIndex = (list, score) => {
   return bestIndex
 }
 
-module.exports = toTrees
+module.exports = assignHoles

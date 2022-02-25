@@ -17,7 +17,7 @@ const triangulate = (data, holeIndices, dim = 2) => {
 
   if (!outerNode || outerNode.next === outerNode.prev) return triangles
 
-  let minX, minY, maxX, maxY, x, y, invSize
+  let minX, minY, maxX, maxY, invSize
 
   if (hasHoles) outerNode = eliminateHoles(data, holeIndices, outerNode, dim)
 
@@ -27,8 +27,8 @@ const triangulate = (data, holeIndices, dim = 2) => {
     minY = maxY = data[1]
 
     for (let i = dim; i < outerLen; i += dim) {
-      x = data[i]
-      y = data[i + 1]
+      const x = data[i]
+      const y = data[i + 1]
       if (x < minX) minX = x
       if (y < minY) minY = y
       if (x > maxX) maxX = x

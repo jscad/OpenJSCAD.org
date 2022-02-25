@@ -1,5 +1,5 @@
 
-/**
+/*
  * check if a point lies within a convex triangle
  */
 const pointInTriangle = (ax, ay, bx, by, cx, cy, px, py) => (
@@ -8,7 +8,7 @@ const pointInTriangle = (ax, ay, bx, by, cx, cy, px, py) => (
       (bx - px) * (cy - py) - (cx - px) * (by - py) >= 0
 )
 
-/**
+/*
  * signed area of a triangle
  */
 const area = (p, q, r) => (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y)

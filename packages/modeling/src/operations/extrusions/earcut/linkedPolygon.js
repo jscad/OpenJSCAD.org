@@ -1,18 +1,18 @@
 const { Node, insertNode, removeNode } = require('./linkedList')
 const { area } = require('./triangle')
 
-/**
+/*
  * create a circular doubly linked list from polygon points in the specified winding order
  */
 const linkedPolygon = (data, start, end, dim, clockwise) => {
-  let i, last
+  let last
 
   if (clockwise === (signedArea(data, start, end, dim) > 0)) {
-    for (i = start; i < end; i += dim) {
+    for (let i = start; i < end; i += dim) {
       last = insertNode(i, data[i], data[i + 1], last)
     }
   } else {
-    for (i = end - dim; i >= start; i -= dim) {
+    for (let i = end - dim; i >= start; i -= dim) {
       last = insertNode(i, data[i], data[i + 1], last)
     }
   }
@@ -25,7 +25,7 @@ const linkedPolygon = (data, start, end, dim, clockwise) => {
   return last
 }
 
-/**
+/*
  * eliminate colinear or duplicate points
  */
 const filterPoints = (start, end) => {
@@ -50,7 +50,7 @@ const filterPoints = (start, end) => {
   return end
 }
 
-/**
+/*
  * go through all polygon nodes and cure small local self-intersections
  */
 const cureLocalIntersections = (start, triangles, dim) => {
@@ -77,7 +77,7 @@ const cureLocalIntersections = (start, triangles, dim) => {
   return filterPoints(p)
 }
 
-/**
+/*
  * check if a polygon diagonal intersects any polygon segments
  */
 const intersectsPolygon = (a, b) => {
@@ -91,14 +91,14 @@ const intersectsPolygon = (a, b) => {
   return false
 }
 
-/**
+/*
  * check if a polygon diagonal is locally inside the polygon
  */
 const locallyInside = (a, b) => area(a.prev, a, a.next) < 0
   ? area(a, b, a.next) >= 0 && area(a, a.prev, b) >= 0
   : area(a, b, a.prev) < 0 || area(a, a.next, b) < 0
 
-/**
+/*
  * check if the middle point of a polygon diagonal is inside the polygon
  */
 const middleInside = (a, b) => {
@@ -115,7 +115,7 @@ const middleInside = (a, b) => {
   return inside
 }
 
-/**
+/*
  * link two polygon vertices with a bridge; if the vertices belong to the same ring, it splits polygon into two
  * if one belongs to the outer ring and another to a hole, it merges it into a single ring
  */
@@ -140,7 +140,7 @@ const splitPolygon = (a, b) => {
   return b2
 }
 
-/**
+/*
  * check if a diagonal between two polygon nodes is valid (lies in polygon interior)
  */
 const isValidDiagonal = (a, b) => a.next.i !== b.i &&
@@ -152,7 +152,7 @@ const isValidDiagonal = (a, b) => a.next.i !== b.i &&
         equals(a, b) && area(a.prev, a, a.next) > 0 && area(b.prev, b, b.next) > 0
     )
 
-/**
+/*
  * check if two segments intersect
  */
 const intersects = (p1, q1, p2, q2) => {
@@ -163,16 +163,16 @@ const intersects = (p1, q1, p2, q2) => {
 
   if (o1 !== o2 && o3 !== o4) return true // general case
 
-  if (o1 === 0 && onSegment(p1, p2, q1)) return true // p1, q1 and p2 are collinear and p2 lies on p1q1
-  if (o2 === 0 && onSegment(p1, q2, q1)) return true // p1, q1 and q2 are collinear and q2 lies on p1q1
-  if (o3 === 0 && onSegment(p2, p1, q2)) return true // p2, q2 and p1 are collinear and p1 lies on p2q2
-  if (o4 === 0 && onSegment(p2, q1, q2)) return true // p2, q2 and q1 are collinear and q1 lies on p2q2
+  if (o1 === 0 && onSegment(p1, p2, q1)) return true // p1, q1 and p2 are colinear and p2 lies on p1q1
+  if (o2 === 0 && onSegment(p1, q2, q1)) return true // p1, q1 and q2 are colinear and q2 lies on p1q1
+  if (o3 === 0 && onSegment(p2, p1, q2)) return true // p2, q2 and p1 are colinear and p1 lies on p2q2
+  if (o4 === 0 && onSegment(p2, q1, q2)) return true // p2, q2 and q1 are colinear and q1 lies on p2q2
 
   return false
 }
 
-/**
- * for collinear points p, q, r, check if point q lies on segment pr
+/*
+ * for colinear points p, q, r, check if point q lies on segment pr
  */
 const onSegment = (p, q, r) => q.x <= Math.max(p.x, r.x) &&
     q.x >= Math.min(p.x, r.x) &&

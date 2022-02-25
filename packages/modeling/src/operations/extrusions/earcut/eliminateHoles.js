@@ -1,17 +1,16 @@
 const { filterPoints, linkedPolygon, locallyInside, splitPolygon } = require('./linkedPolygon')
 const { area, pointInTriangle } = require('./triangle')
 
-/**
+/*
  * link every hole into the outer loop, producing a single-ring polygon without holes
  */
 const eliminateHoles = (data, holeIndices, outerNode, dim) => {
   const queue = []
-  let i, len, start, end, list
 
-  for (i = 0, len = holeIndices.length; i < len; i++) {
-    start = holeIndices[i] * dim
-    end = i < len - 1 ? holeIndices[i + 1] * dim : data.length
-    list = linkedPolygon(data, start, end, dim, false)
+  for (let i = 0, len = holeIndices.length; i < len; i++) {
+    const start = holeIndices[i] * dim
+    const end = i < len - 1 ? holeIndices[i + 1] * dim : data.length
+    const list = linkedPolygon(data, start, end, dim, false)
     if (list === list.next) list.steiner = true
     queue.push(getLeftmost(list))
   }
@@ -19,7 +18,7 @@ const eliminateHoles = (data, holeIndices, outerNode, dim) => {
   queue.sort((a, b) => a.x - b.x) // compare X
 
   // process holes from left to right
-  for (i = 0; i < queue.length; i++) {
+  for (let i = 0; i < queue.length; i++) {
     outerNode = eliminateHole(queue[i], outerNode)
     outerNode = filterPoints(outerNode, outerNode.next)
   }
@@ -38,7 +37,7 @@ const eliminateHole = (hole, outerNode) => {
 
   const bridgeReverse = splitPolygon(bridge, hole)
 
-  // filter collinear points around the cuts
+  // filter colinear points around the cuts
   const filteredBridge = filterPoints(bridge, bridge.next)
   filterPoints(bridgeReverse, bridgeReverse.next)
 
@@ -53,7 +52,8 @@ const findHoleBridge = (hole, outerNode) => {
   let p = outerNode
   const hx = hole.x
   const hy = hole.y
-  let qx = -Infinity; let m
+  let qx = -Infinity
+  let m
 
   // find a segment intersected by a ray from the hole's leftmost point to the left
   // segment's endpoint with lesser x will be potential connection point

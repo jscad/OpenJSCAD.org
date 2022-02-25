@@ -1,10 +1,6 @@
-const geom2 = require('../../../geometries/geom2')
 const poly3 = require('../../../geometries/poly3')
-const OrthoNormalBasis = require('../../../maths/OrthoNormalBasis')
-const flatten = require('../../../utils/flatten')
 const earcut = require('../earcut')
-const calculatePlane = require('./calculatePlane')
-const toTrees = require('./toTrees')
+const PolygonTrees = require('../earcut/polygonTrees')
 
 /**
  * Return a list of polygons which are enclosed by the slice.
@@ -13,34 +9,28 @@ const toTrees = require('./toTrees')
  * @alias module:modeling/extrusions/slice.toTriangles
  */
 const toTriangles = (slice) => {
-  const plane = calculatePlane(slice)
-
-  // Project to 2D plane
-  const basis = new OrthoNormalBasis(plane)
-  const projected = slice.edges.map((e) => e.map((v) => basis.to2D(v)))
-
-  // compute polygon hierarchies
-  const geometry = geom2.create(projected)
-  const trees = toTrees(geometry)
+  const polyTrees = new PolygonTrees(slice)
 
   const triangles = []
-  trees.forEach((tree) => {
+  polyTrees.trees.forEach(({ solid, holes }) => {
     // hole indices
-    let index = tree.solid.length
+    let index = solid.length
     const holesIndex = []
-    tree.holes.forEach((hole, i) => {
+    holes.forEach((hole, i) => {
       holesIndex.push(index)
       index += hole.length
     })
 
     // compute earcut triangulation for each solid
-    const vertices = flatten([tree.solid, tree.holes])
-    const getVertex = (i) => [vertices[i * 2], vertices[i * 2 + 1]]
-    const indices = earcut(vertices, holesIndex)
+    const vertices = [solid, ...holes].flat()
+    const data = vertices.flat()
+    // Get original 3D vertex by index
+    const getVertex = (i) => polyTrees.to3D(vertices[i])
+    const indices = earcut(data, holesIndex)
     for (let i = 0; i < indices.length; i += 3) {
-      // TODO: Map back to original vertices
-      const tri = indices.slice(i, i + 3).map(getVertex).map((v) => basis.to3D(v))
-      triangles.push(poly3.fromPointsAndPlane(tri, plane))
+      // Map back to original vertices
+      const tri = indices.slice(i, i + 3).map(getVertex)
+      triangles.push(poly3.fromPointsAndPlane(tri, polyTrees.plane))
     }
   })
 
