@@ -8,6 +8,8 @@ const extrudeLinearPath2 = require('./extrudeLinearPath2')
 
 /**
  * Extrude the given geometry in an upward linear direction using the given options.
+ * Accepts path2 or geom2 objects as input. Paths must be closed.
+ *
  * @param {Object} options - options for extrude
  * @param {Number} [options.height=1] the height of the extrusion
  * @param {Number} [options.twistAngle=0] the final rotation (RADIANS) about the origin of the shape (if any)
