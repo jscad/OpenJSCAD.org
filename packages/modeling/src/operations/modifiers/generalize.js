@@ -81,7 +81,7 @@ const generalize = (options, ...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('wrong number of arguments')
 
-  const results = geometries.map((geometry, i) => {
+  const results = geometries.map((geometry) => {
     if (path2.isA(geometry)) return generalizePath2(options, geometry)
     if (geom2.isA(geometry)) return generalizeGeom2(options, geometry)
     if (geom3.isA(geometry)) return generalizeGeom3(options, geometry)

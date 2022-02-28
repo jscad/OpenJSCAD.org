@@ -3,7 +3,7 @@
  * @param {Array} anArray - the source array to copy into the result.
  * @param {*} padding - the value to add to the new array to reach the desired length.
  * @param {Number} targetLength - The desired length of the return array.
- * @returns {Array} an array of at least 'targetLength" length
+ * @returns {Array} an array of at least 'targetLength' length
  * @alias module:modeling/utils.padArrayToLength
  */
 const padArrayToLength = (anArray, padding, targetLength) => {

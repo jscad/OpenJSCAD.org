@@ -5,7 +5,7 @@ const { solve2Linear } = require('../utils')
  * Return the point of intersection between the given lines.
  *
  * NOTES:
- * The point will have Infinity values if the lines are paralell.
+ * The point will have Infinity values if the lines are parallel.
  * The point will have NaN values if the lines are the same.
  *
  * @param {line2} line1 - line of reference

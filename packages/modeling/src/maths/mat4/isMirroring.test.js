@@ -4,7 +4,7 @@ const plane = require('../plane')
 
 const { isMirroring, fromScaling, create, mirrorByPlane, rotate, scale, translate } = require('./index')
 
-test('mat4: isMirroring() should determine correctlly', (t) => {
+test('mat4: isMirroring() should determine correctly', (t) => {
   let matrix = create()
   t.false(isMirroring(matrix))
 

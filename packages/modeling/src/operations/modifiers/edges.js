@@ -149,7 +149,7 @@ const splitEdge = (openedges, edge, eps) => {
  */
 const cullOpenEdges = (edges) => {
   const openedges = []
-  edges.forEach((edge, i) => {
+  edges.forEach((edge) => {
     const polygons = edge.polygons
     if (polygons.length === 1) {
       // console.log('open edge: ',edge[0],'<-->',edge[1])

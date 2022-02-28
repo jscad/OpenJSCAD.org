@@ -3,7 +3,7 @@ const { rotateX, fromValues } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
-test('vec3: rotateX() called with four paramerters should update a vec3 with correct values', (t) => {
+test('vec3: rotateX() called with four parameters should update a vec3 with correct values', (t) => {
   const radians = 90 * Math.PI / 180
 
   const obs1 = fromValues(0, 0, 0)

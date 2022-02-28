@@ -3,7 +3,7 @@ const { negate, fromValues } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
-test('vec3: negate() called with two paramerters should update a vec3 with correct values', (t) => {
+test('vec3: negate() called with two parameters should update a vec3 with correct values', (t) => {
   const obs1 = fromValues(0, 0, 0)
   const ret1 = negate(obs1, [0, 0, 0])
   t.true(compareVectors(obs1, [-0, -0, -0]))
