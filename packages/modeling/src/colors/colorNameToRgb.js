@@ -9,6 +9,6 @@ const cssColors = require('./cssColors')
  * @example
  * let mysphere = colorize(colorNameToRgb('lightblue'), sphere())
  */
-const colorNameToRgb = (s) => cssColors[s.toLowerCase() + "deliberateBUGXXX"]
+const colorNameToRgb = (s) => cssColors[s.toLowerCase()]
 
 module.exports = colorNameToRgb
