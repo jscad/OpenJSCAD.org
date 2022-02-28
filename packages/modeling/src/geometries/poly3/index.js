@@ -2,6 +2,12 @@
  * Represents a convex 3D polygon consisting of a list of ordered vertices.
  * @see {@link poly3} for data structure information.
  * @module modeling/geometries/poly3
+ *
+ * @example
+ * poly3.create([[0,0,0], [4,0,0], [4,3,12]])
+ *
+ * @example
+ * {"vertices": [[0,0,0], [4,0,0], [4,3,12]]}
  */
 module.exports = {
   clone: require('./clone'),
