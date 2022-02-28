@@ -9,10 +9,10 @@ const fromValues = require('../vec3/fromValues')
  * @returns {Boolean} true if matrix is a mirroring transformation
  * @alias module:modeling/maths/mat4.isMirroring
  */
-const isMirroring = (mat) => {
-  const u = fromValues(mat[0], mat[4], mat[8])
-  const v = fromValues(mat[1], mat[5], mat[9])
-  const w = fromValues(mat[2], mat[6], mat[10])
+const isMirroring = (matrix) => {
+  const u = fromValues(matrix[0], matrix[4], matrix[8])
+  const v = fromValues(matrix[1], matrix[5], matrix[9])
+  const w = fromValues(matrix[2], matrix[6], matrix[10])
 
   // for a true orthogonal, non-mirrored base, u.cross(v) == w
   // If they have an opposite direction then we are mirroring
