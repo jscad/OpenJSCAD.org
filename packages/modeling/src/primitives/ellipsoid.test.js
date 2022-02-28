@@ -145,8 +145,6 @@ test('ellipsoid (options)', (t) => {
   // test segments
   obs = ellipsoid({ segments: 8 })
   pts = geom3.toPoints(obs)
-  exp = [
-  ]
   t.is(pts.length, 32)
 
   obs = ellipsoid({ center: [-3, 5, 7], segments: 8 })

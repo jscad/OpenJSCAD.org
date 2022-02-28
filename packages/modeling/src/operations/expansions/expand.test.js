@@ -120,7 +120,7 @@ test('expand: expanding of a geom3 produces expected changes to polygons', (t) =
   const geometry2 = sphere({ radius: 5, segments: 8 })
   const obs2 = expand({ delta: 5 }, geometry2)
   const pts2 = geom3.toPoints(obs2)
-  t.is(pts2.length, 2065)
+  t.is(pts2.length, 1612)
 })
 
 test('expand (options): offsetting of a complex geom2 produces expected offset geom2', (t) => {
@@ -151,59 +151,27 @@ test('expand (options): offsetting of a complex geom2 produces expected offset g
   const obs = expand({ delta: 2, corners: 'edge' }, geometry)
   const pts = geom2.toPoints(obs)
   const exp = [
-    [-77, -77],
-    [-75, -77],
-    [75, -77],
     [77, -77],
-    [77, -75],
-    [77, 75],
     [77, 77],
-    [75, 77],
-    [40, 77],
     [38, 77],
-    [38, 75],
     [38, 2],
     [-38, 2],
-    [-38, 75],
     [-37.99999999999999, 77],
-    [-40, 77],
-    [-75, 77],
     [-77, 77],
-    [-77, 75],
-    [17, -40],
     [16.999999999999996, -42],
-    [15, -42],
-    [8, -42],
     [6, -42],
-    [6, -40],
     [6, -27],
     [-6, -27],
-    [-6, -40],
     [-6.000000000000001, -42],
-    [-8, -42],
-    [-15, -42],
     [-17, -42],
-    [-17, -40],
-    [-17, -10],
     [-16.999999999999996, -8],
-    [-15, -8],
-    [15, -8],
     [17, -8.000000000000004],
-    [17, -10],
-    [-4, -19],
     [-4, -21],
-    [-2, -21],
-    [1.9999999999999998, -21],
     [3.9999999999999996, -21],
-    [4, -19],
-    [4, -15],
     [4, -13],
-    [2, -13],
-    [-1.9999999999999998, -13],
     [-4, -13],
-    [-4, -15],
-    [-77, -75]
+    [-77, -77]
   ]
-  t.is(pts.length, 52)
+  t.is(pts.length, 20)
   t.true(comparePoints(pts, exp))
 })

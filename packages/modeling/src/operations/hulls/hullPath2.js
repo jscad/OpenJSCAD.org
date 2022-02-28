@@ -1,7 +1,5 @@
 const flatten = require('../../utils/flatten')
 
-const vec2 = require('../../maths/vec2')
-
 const path2 = require('../../geometries/path2')
 
 const hullPoints2 = require('./hullPoints2')
@@ -16,11 +14,15 @@ const hullPath2 = (...geometries) => {
 
   // extract the unique points from the geometries
   const uniquepoints = []
+  const found = new Set()
   geometries.forEach((geometry) => {
     const points = path2.toPoints(geometry)
     points.forEach((point) => {
-      const index = uniquepoints.findIndex((unique) => vec2.equals(unique, point))
-      if (index < 0) uniquepoints.push(point)
+      const key = point.toString()
+      if (!found.has(key)) {
+        uniquepoints.push(point)
+        found.add(key)
+      }
     })
   })
 

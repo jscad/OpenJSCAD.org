@@ -2,4 +2,4 @@ import Vec2 from './type'
 
 export default squaredLength
 
-declare function squaredLength(vec: Vec2): number
+declare function squaredLength(vector: Vec2): number

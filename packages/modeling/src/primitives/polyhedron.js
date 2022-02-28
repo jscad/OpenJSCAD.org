@@ -11,7 +11,7 @@ const { isNumberArray } = require('./commonChecks')
  * @param {Array} options.points - list of points in 3D space
  * @param {Array} options.faces - list of faces, where each face is a set of indexes into the points
  * @param {Array} [options.colors=undefined] - list of RGBA colors to apply to each face
- * @param {Array} [options.orientation='outward'] - orientation of faces
+ * @param {String} [options.orientation='outward'] - orientation of faces
  * @returns {geom3} new 3D geometry
  * @alias module:modeling/primitives.polyhedron
  *

@@ -7,15 +7,15 @@ const plane = require('./plane')
  * @return {Number} area of the polygon
  * @alias module:modeling/geometries/poly3.measureArea
  */
-const measureArea = (poly3) => {
-  const n = poly3.vertices.length
+const measureArea = (polygon) => {
+  const n = polygon.vertices.length
   if (n < 3) {
     return 0 // degenerate polygon
   }
-  const vertices = poly3.vertices
+  const vertices = polygon.vertices
 
   // calculate a normal vector
-  const normal = plane(poly3)
+  const normal = plane(polygon)
 
   // determine direction of projection
   const ax = Math.abs(normal[0])

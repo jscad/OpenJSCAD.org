@@ -1,3 +1,3 @@
 export default head
 
-declare function head(anArray: Array<T>): <T>
+declare function head<T>(anArray: Array<T>): T

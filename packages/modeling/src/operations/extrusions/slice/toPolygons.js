@@ -60,7 +60,7 @@ const toPolygons = (slice) => {
   const wallPolygons = edges.map((edge) => toPolygon3D(splane, edge))
   const walls = geom3.create(wallPolygons)
 
-  // make an insection of the base and the walls, creating... a set of polygons!
+  // make an intersection of the base and the walls, creating... a set of polygons!
   const geometry3 = intersectGeom3Sub(base, walls)
 
   // return only those polygons from the base
