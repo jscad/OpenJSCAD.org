@@ -11,7 +11,7 @@ test('blob constructors', (t) => {
   t.is(ablob.type, '')
   t.is(ablob.isClosed, false)
   t.is(ablob.encoding, 'utf8')
-  t.is(ablob.length, 32000000)
+  t.is(ablob.length, 0)
   t.is(ablob.buffer, null)
 
   // empty contents
