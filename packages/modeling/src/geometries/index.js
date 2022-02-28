@@ -5,8 +5,8 @@
  * @see {@link geom2} - 2D geometry consisting of sides
  * @see {@link geom3} - 3D geometry consisting of polygons
  * @see {@link path2} - 2D geometry consisting of ordered points
- * @see {@link poly2} - 2D polygon consisting of ordered points
- * @see {@link poly3} - 3D polygon consisting of ordered points
+ * @see {@link poly2} - 2D polygon consisting of ordered vertices
+ * @see {@link poly3} - 3D polygon consisting of ordered vertices
  *
  * @module modeling/geometries
  * @example
