@@ -8,7 +8,7 @@ const resolveDependencies = require('../core/code-loading/resolveDependencies')
 const { flatten } = require('@jscad/array-utils')
 
 // FIXME: not used anymore? remove?
-function watchMultiplePaths (paths, changed) {
+const watchMultiplePaths = (paths, changed) => {
   const prevContents = {}
   const watchers = paths.map((filePath, index) => {
     prevContents[filePath] = ''
@@ -33,8 +33,7 @@ const removeWatchers = (watchers) => {
   })
 }
 
-function watchTree (rootPath, changed) {
-  // console.log('watchTree')
+const watchTree = (rootPath, changed) => {
   const prevContents = {}
   let watchers = []
   let allDependencyPaths = Array.from(new Set(flatten(resolveDependencies(undefined, rootPath))))
@@ -76,7 +75,7 @@ module.exports = function makeFsSideEffects () {
   // for watchers
   const scriptDataFromCB = callBackToStream()
 
-  function fsSink (out$) {
+  const fsSink = (out$) => {
     out$.forEach(({ path, operation, id, data, options }) => {
     // console.log('read/writing to', path, operation)
       if (operation === 'read') {
@@ -122,7 +121,7 @@ module.exports = function makeFsSideEffects () {
     })
   }
 
-  function fsSource () {
+  const fsSource = () => {
     const fs$ = readFileToCB.stream.multicast()
     const watch$ = scriptDataFromCB.stream
       .debounce(400)

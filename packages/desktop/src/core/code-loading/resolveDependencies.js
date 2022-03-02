@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const detective = require('detective-cjs')
 
-function resolveDependencies (options, rootPath, depth = 0) {
+const resolveDependencies = (options, rootPath, depth = 0) => {
   depth += 1
   const defaults = { maxDepth: 3, relativeOnly: true }
   options = Object.assign({}, defaults, options)
@@ -17,7 +17,7 @@ function resolveDependencies (options, rootPath, depth = 0) {
   const dependencies = Array.from(new Set(rawDependencies))
   // console.log(`rawDependencies of ${rootPath}`, dependencies)
   // FIXME : shamefully stolen from https://github.com/jkroso/node-resolve-module
-  function resolve (parent, name) {
+  const resolve = (parent, name) => {
     const Module = require('module')
     return Module._resolveFilename(name, {
       paths: Module._nodeModulePaths(path.dirname(parent)),

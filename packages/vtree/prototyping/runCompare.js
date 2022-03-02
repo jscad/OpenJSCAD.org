@@ -2,14 +2,14 @@ const generate = require('../core/geometry-generator-cached')
 // const decache = require('decache')
 const { toArray } = require('@jscad/array-utils')
 
-function runCompare (basePath, runs = 10) {
+const runCompare = (basePath, runs = 10) => {
   console.log('running benchmarks for ' + basePath)
 
   const moduleNameVanilla = basePath + '-base'
   const moduleNameVtree = basePath + '-vtree'
   // first verify they all have the same output
   const baseLinePolyCounts = runVanilla(moduleNameVanilla)
-  if (!samePolygonCount(baseLinePolyCounts, runVTreeTree(moduleNameVtree))) {
+  if (!samePolygonCount(baseLinePolyCounts, runVTree(moduleNameVtree))) {
     throw new Error(`Mismatch of polygon count in vtree-tree mode!! should be ${baseLinePolyCounts}`)
   }
   if (!samePolygonCount(baseLinePolyCounts, runVTree(moduleNameVtree))) {

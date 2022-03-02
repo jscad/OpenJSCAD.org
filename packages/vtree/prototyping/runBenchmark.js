@@ -1,7 +1,7 @@
 // const decache = require('decache')
 const child_process = require('child_process')
 
-function runBenchMark (runFn, name, runs = 10) {
+const runBenchMark = (runFn, name, runs = 10) => {
   console.log('running benchmarks for ' + name + ' ' + runs + ' times')
 
   // first verify they all have the same output
@@ -17,7 +17,7 @@ function runBenchMark (runFn, name, runs = 10) {
   runPass(runFn, runs, name)
 }
 
-function spawnBenchMark (path, runs = 100) {
+const spawnBenchMark = (path, runs = 100) => {
   const usage = require('usage')
   const cpuNumbers = []
   const memNumbers = []

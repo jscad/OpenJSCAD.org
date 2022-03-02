@@ -2,7 +2,7 @@ const astring = require('astring')
 const estraverse = require('estraverse')
 const { isCube, isDifference, isSphere, extractSimpleArgs, returnsArray } = require('./utils')
 
-function liveNode (node) {
+const liveNode = (node) => {
   let pieceCode = astring.generate(node, { indent: '  ', lineEnd: '\n' })
   pieceCode = `
   const {cube, sphere} = require('@jscad/scad-api').primitives3d
@@ -19,7 +19,7 @@ function liveNode (node) {
   return solid
 }
 
-function solidsFromAst (ast) {
+const solidsFromAst = (ast) => {
   const results = []
   let currentItem
   let textStuff = ''

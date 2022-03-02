@@ -23,8 +23,8 @@ module.exports = function viewer (state, i18n) {
     <canvas id='renderTarget' width='${width}' height='${height}'> </canvas>
   `
 }
-// FIXME: dirty, redudant code
-function setCanvasSize (viewerElement) {
+// FIXME: dirty, redundant code
+const setCanvasSize = (viewerElement) => {
   if (!viewerElement) {
     return
   }
@@ -45,6 +45,7 @@ function setCanvasSize (viewerElement) {
   // viewerElement.style.width = width + 'px'
   // viewerElement.style.height = height + 'px'
 }
+
 window.onresize = function () {
   setCanvasSize(document.getElementById('renderTarget'))
 }

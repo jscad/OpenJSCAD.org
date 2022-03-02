@@ -1,5 +1,5 @@
 // from https://stackoverflow.com/questions/9210542/node-js-require-cache-possible-to-invalidate/16060619#16060619
-function requireUncached (moduleName) {
+const requireUncached = (moduleName) => {
   /* console.log(`removing ${moduleName} from cache`)
   delete require.cache[require.resolve(moduleName)]
 

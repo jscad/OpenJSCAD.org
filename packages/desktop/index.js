@@ -14,7 +14,7 @@ app.commandLine.appendSwitch('ignore-gpu-blacklist', 'true')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-function createWindow () {
+const createWindow = () => {
   // Create the browser window.
   const options = {
     title: require('./package.json').name,

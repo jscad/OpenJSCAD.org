@@ -8,7 +8,7 @@ console.log('astUtils', astUtils)
 
 const { isCube, isDifference, isSphere, extractSimpleArgs } = require('./utils')
 
-function astFromSource (source, options) {
+const astFromSource = (source, options) => {
   const defaults = {
     loc: true, range: true, tolerant: true, tokens: true
   }
@@ -25,8 +25,7 @@ function astFromSource (source, options) {
   return ast
 }
 
-function csgTree (ast) {
-  console.log('foo')
+const csgTree = (ast) => {
   ast = astParents(ast)
   const results = []
   let currentItem
@@ -78,7 +77,7 @@ function csgTree (ast) {
   return results
 }
 
-// function replaceIncludesInAst (ast, replacement = '') {
+// const replaceIncludesInAst = (ast, replacement = '') => {
 //   const result = estraverse.replace(ast, {
 //     enter: function (node, parent) {
 //       if (isInclude(node)) {

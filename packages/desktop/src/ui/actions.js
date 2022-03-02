@@ -1,7 +1,7 @@
 const most = require('most')
 const { head } = require('../utils/utils')
 
-function compositeKeyFromKeyEvent (event) {
+const compositeKeyFromKeyEvent = (event) => {
   const ctrl = event.ctrlKey ? 'ctrl+' : ''
   const shift = event.shiftKey ? 'shift+' : ''
   const meta = event.metaKey ? 'command+' : ''

@@ -49,7 +49,7 @@ converting: `Converting ${data} <img id=busy src='imgs/busy.gif'>`,
 fetching: `Fetching ${data} <img id=busy src='imgs/busy.gif'>`,
 rendering: `Rendering. Please wait <img id=busy src='imgs/busy.gif'>` */
 
-function makeState (actions) {
+const makeState = (actions) => {
   // const reducers = //Object.assign({}, dataParamsReducers, cameraControlsReducers)
   actions = mergeArray(actions)
 

@@ -1,11 +1,10 @@
-module.exports = addParents
 
-function addParents (ast, key) {
+const addParents = (ast, key) => {
   walk(ast, key || '$parent')
   return ast
 }
 
-function walk (node, keyname, parent) {
+const walk = (node, keyname, parent) => {
   if (parent) {
     Object.defineProperty(node, keyname, {
       value: parent,
@@ -32,3 +31,5 @@ function walk (node, keyname, parent) {
     }
   }
 }
+
+module.exports = addParents
