@@ -15,7 +15,7 @@ const cachedGenerator = require('../../../generators/geometry-generator-cached-c
 const makeMeasureVolume = (specials) => {
   const _measureVolume = (...objects) => {
     objects = flatten(objects)
-    // we create a premptive cache
+    // we create a preemptive cache
     const cache = cacheWithInvalidation()
     const operands = cachedGenerator(objects, cache)
 

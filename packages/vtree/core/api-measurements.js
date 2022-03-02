@@ -8,7 +8,7 @@ const makeMeasureArea = (specials) => {
     // console.log('measure area in overlay api', solids)
     // console.log(arguments[1])
     solids = toArray(solids)
-    // we create a premptive cache
+    // we create a preemptive cache
     const cache = cacheWithInvalidation()
     const operands = cachedGenerator(solids, cache)
 
@@ -28,7 +28,7 @@ const makeMeasureArea = (specials) => {
 const makeMeasureVolume = (specials) => {
   const measureVolume = (...solids) => {
     solids = toArray(solids)
-    // we create a premptive cache
+    // we create a preemptive cache
     const cache = cacheWithInvalidation()
     const operands = cachedGenerator(solids, cache)
 
@@ -47,7 +47,7 @@ const makeMeasureVolume = (specials) => {
 
 const makeMeasureBounds = (specials) => {
   const measureBounds = (solid) => {
-    // we create a premptive cache
+    // we create a preemptive cache
     const cache = cacheWithInvalidation()
     const operands = cachedGenerator([solid], cache)
     const bounds = operands[0].getBounds()

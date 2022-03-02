@@ -13,7 +13,7 @@ const findDisconnectedSubGraphs = (root) => {
   const subTrees = []
   dfs(root, stack, leafs, subTrees)
 
-  // const independantSubtree = root.children
+  // const independentSubtree = root.children
   // console.log('results subTrees', JSON.stringify(subTrees[0]))
   return subTrees[0]
 }

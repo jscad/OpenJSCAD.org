@@ -12,7 +12,7 @@ const { extrudeLinear, extrudeRotate, extrudeFromSlices, extrudeRectangular } = 
 const { measureArea, measureVolume, measureBounds } = modeling.measurements
 const { colorize } = modeling.colors
 
-/** genere actual 'genometry' based on vtree node(s)
+/** generate actual 'geometry' based on vtree node(s)
  * @param  {} node
  * @param  {} cache
  */

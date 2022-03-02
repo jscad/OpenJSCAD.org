@@ -126,7 +126,7 @@ const measureBounds = require('./api-measurements').makeMeasureBounds(specials)
   // return {type: 'vector_text', params}
 } */
 
-// this is a convenience object, that mimicks the structure of the jscad functional api
+// this is a convenience object, that mimics the structure of the jscad functional api
 const apiClone = {
   primitives3d: {
     cube,
@@ -207,6 +207,6 @@ module.exports = {
   measureVolume,
   measureBounds,
 
-  // seperate
+  // separate
   specials
 }
