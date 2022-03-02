@@ -51,18 +51,12 @@ const setAvailableLanguages = (state, availableLanguages) => Object.assign({}, s
 
 const toggleOptions = (state) => Object.assign({}, state, { showOptions: !state.showOptions })
 
-const clearErrors = (state, _) => {
-  console.log('clear errors')
-  return Object.assign({}, state, { error: undefined })
-}
-const setErrors = (state, { error }) => {
-  console.log('set Errors', error)
-  const formattedError = error// {message: error.message, lineno:}
-  return Object.assign({}, state, { error: formattedError, busy: false })
-}
-const setAppUpdatesAvailable = (state, appUpdates) =>
-  // console.log('updates available', appUpdates)
-  Object.assign({}, state, { appUpdates })
+const clearErrors = (state, _) => Object.assign({}, state, { error: undefined })
+
+// error = {message: error.message, lineno:}
+const setErrors = (state, { error }) => Object.assign({}, state, { error, busy: false })
+
+const setAppUpdatesAvailable = (state, appUpdates) => Object.assign({}, state, { appUpdates })
 
 module.exports = {
   changeTheme,

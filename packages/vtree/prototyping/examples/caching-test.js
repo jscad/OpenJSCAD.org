@@ -1,4 +1,4 @@
-// not that API is injected so it is independent of implementation ! (vanilla vs vtree)
+// note that API is injected so it is independent of implementation ! (vanilla vs vtree)
 const main = (api) => {
   const { cube, sphere, union, translate } = api
 

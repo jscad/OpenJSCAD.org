@@ -28,7 +28,6 @@ const initialize = () => ({
 })
 
 const setDesignPath = (state, paths) => {
-  // console.log('setDesignPath')
   const mainPath = getDesignEntryPoint(paths)
   const filePath = paths[0]
   const designName = getDesignName(paths)
@@ -46,7 +45,6 @@ const setDesignPath = (state, paths) => {
 }
 
 const setDesignContent = (state, source) => {
-  // console.log('setDesignContent')
   /*
     func(paramDefinitions) => paramsUI
     func(paramsUI + interaction) => params
@@ -62,7 +60,6 @@ const setDesignContent = (state, source) => {
 }
 
 const setDesignSolids = (state, { solids, lookup, lookupCounts }) => {
-  // console.log('setDesignSolids')
   solids = solids || []
   lookup = lookup || {}
   lookupCounts = lookupCounts || {}
@@ -87,7 +84,6 @@ const setDesignSolids = (state, { solids, lookup, lookupCounts }) => {
 }
 
 const setDesignParams = (state, { paramDefaults, paramValues, paramDefinitions }) => {
-  console.log('setDesignParams')
   const design = Object.assign({}, state.design, {
     paramDefaults,
     paramValues,
@@ -124,9 +120,7 @@ const timeOutDesignGeneration = (state) => {
 
 // ui/toggles
 const toggleAutoReload = (state, autoReload) => Object.assign({}, state, { autoReload })
-const toggleInstantUpdate = (state, instantUpdate) =>
-  // console.log('toggleInstantUpdate', instantUpdate)
-  Object.assign({}, state, { instantUpdate })
+const toggleInstantUpdate = (state, instantUpdate) => Object.assign({}, state, { instantUpdate })
 
 const toggleVtreeMode = (state, vtreeMode) => {
   console.log('toggleVtreeMode', vtreeMode)
