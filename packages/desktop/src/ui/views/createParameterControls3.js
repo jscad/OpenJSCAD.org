@@ -4,7 +4,7 @@ const html = require('bel')
 const createParamControls = (prevParamValues = {}, paramDefinitions, rebuildSolid) => {
   const paramControls = []
 
-  const controls = paramDefinitions.map(function (paramDefinition) {
+  const controls = paramDefinitions.map((paramDefinition) => {
     const type = paramDefinition.type.toLowerCase()
     let subControls
     // console.log('type', type)
@@ -33,9 +33,9 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, rebuildSoli
     if (type === 'group') {
       label = html`<h1>${label}</h1>`
       trClassName = 'groupTitle'
-      subControls = subControls.map(control => html`<th class=${control.className}> ${control.text} </th>`)
+      subControls = subControls.map((control) => html`<th class=${control.className}> ${control.text} </th>`)
     } else {
-      subControls.forEach(control => {
+      subControls.forEach((control) => {
         control.onchange = function (e) {
           const l = e.currentTarget.nextElementSibling
           if (l !== null && l.nodeName === 'LABEL') {
@@ -47,9 +47,7 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, rebuildSoli
         }
       })
     }
-    const subItems = subControls.map(control => {
-      return html`<div>${control} ${'label' in control ? control.label : ''}</div>`
-    })
+    const subItems = subControls.map((control) => html`<div>${control} ${'label' in control ? control.label : ''}</div>`)
     return html`<tr class=${trClassName}>
       <td class=${className}> ${label} </td>
       <td> ${subItems}</td>
@@ -59,7 +57,7 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, rebuildSoli
   return { controls }
 }
 
-const createGroupControl = definition => {
+const createGroupControl = (definition) => {
   const text = definition.caption ? definition.caption : definition.name
   const className = definition.caption ? 'caption' : ''
   const control = html`<title class=${className}>${text}</title>`
@@ -79,7 +77,7 @@ const createChoiceControl = (definition, prevValue) => {
     throw new Error('Definition of choice parameter (' + definition.name + ") should have the same number of items for 'captions' and 'values'")
   }
 
-  const options = captions.map(function (caption, index) {
+  const options = captions.map((caption, index) => {
     const value = values[index]
     let selected = false
     if (prevValue !== undefined) {
@@ -114,7 +112,7 @@ const createRadioControl = (definition, prevValue) => {
     throw new Error('Definition of choice parameter (' + definition.name + ") should have the same number of items for 'captions' and 'values'")
   }
 
-  const controls = captions.map(function (caption, index) {
+  const controls = captions.map((caption, index) => {
     const value = values[index]
     let selected = false
     if (prevValue !== undefined) {
@@ -158,7 +156,7 @@ const createControl = (definition, prevValue) => {
   if (!('type' in definition)) {
     throw new Error('Parameter definition (' + definition + ") must include a 'type' parameter")
   }
-  let typeData = controlList.filter(x => definition.type === x.type)
+  let typeData = controlList.filter((x) => definition.type === x.type)
   typeData = (typeData && typeData.length > 0) ? typeData[0] : undefined
   if (!typeData) {
     throw new Error('Parameter definition (' + definition + ') is not known')
@@ -166,7 +164,7 @@ const createControl = (definition, prevValue) => {
 
   // validate fields
   const definitionFields = Object.keys(definition)
-  typeData.required.forEach(function (requiredField) {
+  typeData.required.forEach((requiredField) => {
     if (!definitionFields.includes(requiredField)) {
       throw new Error(`Parameter definition for "${definition.name}" must include a "${requiredField}" parameter`)
     }

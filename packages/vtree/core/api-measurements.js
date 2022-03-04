@@ -3,19 +3,17 @@ const { toArray } = require('./arrays')
 const cacheWithInvalidation = require('./cacheWithInvalidation')
 const cachedGenerator = require('./geometry-generator-cached')
 
-const makeMeasureArea = specials => {
+const makeMeasureArea = (specials) => {
   const measureArea = (...solids) => {
     // console.log('measure area in overlay api', solids)
     // console.log(arguments[1])
     solids = toArray(solids)
-    // we create a premptive cache
+    // we create a preemptive cache
     const cache = cacheWithInvalidation()
     const operands = cachedGenerator(solids, cache)
 
     const area = operands.reduce((acc, csg) => {
-      const tmpArea = csg.toTriangles().reduce(function (accSub, triPoly) {
-        return accSub + triPoly.getTetraFeatures(['area'])[0]
-      }, 0)
+      const tmpArea = csg.toTriangles().reduce((accSub, triPoly) => accSub + triPoly.getTetraFeatures(['area'])[0], 0)
       return acc + tmpArea
     }, 0)
 
@@ -27,17 +25,15 @@ const makeMeasureArea = specials => {
   return measureArea
 }
 
-const makeMeasureVolume = specials => {
+const makeMeasureVolume = (specials) => {
   const measureVolume = (...solids) => {
     solids = toArray(solids)
-    // we create a premptive cache
+    // we create a preemptive cache
     const cache = cacheWithInvalidation()
     const operands = cachedGenerator(solids, cache)
 
     const volume = operands.reduce((acc, csg) => {
-      const tmpArea = csg.toTriangles().reduce(function (accSub, triPoly) {
-        return accSub + triPoly.getTetraFeatures(['volume'])[0]
-      }, 0)
+      const tmpArea = csg.toTriangles().reduce((accSub, triPoly) => accSub + triPoly.getTetraFeatures(['volume'])[0], 0)
       return acc + tmpArea
     }, 0)
 
@@ -49,9 +45,9 @@ const makeMeasureVolume = specials => {
   return measureVolume
 }
 
-const makeMeasureBounds = specials => {
+const makeMeasureBounds = (specials) => {
   const measureBounds = (solid) => {
-    // we create a premptive cache
+    // we create a preemptive cache
     const cache = cacheWithInvalidation()
     const operands = cachedGenerator([solid], cache)
     const bounds = operands[0].getBounds()

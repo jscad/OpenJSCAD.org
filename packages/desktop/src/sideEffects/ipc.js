@@ -1,5 +1,5 @@
 const { ipcRenderer } = require('electron')
-var data = ipcRenderer.sendSync('get-file-data')
+const data = ipcRenderer.sendSync('get-file-data')
 if (data === null) {
   console.log('There is no file')
 } else {

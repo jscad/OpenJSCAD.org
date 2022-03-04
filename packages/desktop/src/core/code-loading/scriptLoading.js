@@ -2,15 +2,13 @@ const path = require('path')
 const getParameterValuesFromParameters = require('@jscad/core/parameters/getParameterValuesFromParameters')
 const requireFromString = require('./requireFromString')
 
-const doesModuleExportParameterDefiniitions = moduleToCheck => {
-  return moduleToCheck && 'getParameterDefinitions' in moduleToCheck
-}
+const doesModuleExportParameterDefiniitions = (moduleToCheck) => moduleToCheck && 'getParameterDefinitions' in moduleToCheck
 
 /** load a jscad script, injecting the basic dependencies if necessary
  * @param  {} filePath
  * @param  {} csgBasePath='../../../../core/tmp/csg.js : relative path or  '@jscad/csg'
  */
-function loadScript (scriptAsText, filePath, csgBasePath = '@jscad/csg/api') {
+const loadScript = (scriptAsText, filePath, csgBasePath = '@jscad/csg/api') => {
   if (csgBasePath.includes('.')) {
     csgBasePath = path.resolve(__dirname, csgBasePath)
   }

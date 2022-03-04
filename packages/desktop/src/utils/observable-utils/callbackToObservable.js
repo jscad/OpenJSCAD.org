@@ -1,6 +1,6 @@
 const { create } = require('@most/create')
 
-function callBackToStream () {
+const callBackToStream = () => {
   let addWrap = function () {}
 
   function callbackTest (externalData) {
@@ -12,4 +12,5 @@ function callBackToStream () {
   })
   return { stream, callback }
 }
+
 module.exports = callBackToStream

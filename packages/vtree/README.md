@@ -39,13 +39,13 @@ Some people (need to find their names again, sorry folks !) mentioned AST based 
     * do diffs of the previous tree structure to determine the changed parts
  * make use of caching when possible:
     * caching of all possible variants of objects is not really feasable (there are infinite possible sizes of even a single cube() for example)
-    * but it should be possible to at least cache some of the 'previous versions' of a design before things change again (since not everything changes at once)
+    * but it should be possible to at least cache some 'previous versions' of a design before things change again (since not everything changes at once)
     * perhaps cache each geometry in the csg tree
 
 
 This repository will contain code that tries to explore these possibilities.
 
->It is also important to mention that some of the experiments here are also inspired by Maker.js by Dan Marshall, particularly the use of 'pojo' (plain old javascript objects) as a way to define shapes
+>It is also important to mention that some experiments here are also inspired by Maker.js by Dan Marshall, particularly the use of 'pojo' (plain old javascript objects) as a way to define shapes
 
 ## running the benchmarks
 
