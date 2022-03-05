@@ -89,14 +89,13 @@ const extrudeFromSlices = (options, base) => {
 
   if (capEnd) {
     // create a cap at the end
-    const endPolygons = slice.toTriangles(endSlice)
+    const endPolygons = slice.toPolygons(endSlice)
     polygons = polygons.concat(endPolygons)
   }
   if (capStart) {
     // create a cap at the start
-    const startPolygons = slice.toTriangles(startSlice)
-    const inverted = startPolygons.map(poly3.invert)
-    polygons = polygons.concat(inverted)
+    const startPolygons = slice.toPolygons(startSlice).map(poly3.invert)
+    polygons = polygons.concat(startPolygons)
   }
   if (!capStart && !capEnd) {
     // create walls between end and start slices

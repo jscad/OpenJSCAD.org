@@ -8,7 +8,6 @@ export { default as isA } from './isA'
 export { default as reverse } from './reverse'
 export { default as toEdges } from './toEdges'
 export { default as toPolygons } from './toPolygons'
-export { default as toTriangles } from './toTriangles'
 export { default as toString } from './toString'
 export { default as transform } from './transform'
 

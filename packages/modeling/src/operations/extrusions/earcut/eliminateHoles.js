@@ -27,7 +27,7 @@ const eliminateHoles = (data, holeIndices, outerNode, dim) => {
 }
 
 /**
- * find a bridge between vertices that connects hole with an outer ring and and link it
+ * find a bridge between vertices that connects hole with an outer ring and link it
  */
 const eliminateHole = (hole, outerNode) => {
   const bridge = findHoleBridge(hole, outerNode)

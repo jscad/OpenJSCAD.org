@@ -12,7 +12,6 @@ module.exports = {
   reverse: require('./reverse'),
   toEdges: require('./toEdges'),
   toPolygons: require('./toPolygons'),
-  toTriangles: require('./toTriangles'),
   toString: require('./toString'),
   transform: require('./transform')
 }
