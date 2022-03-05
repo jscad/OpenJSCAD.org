@@ -31,7 +31,7 @@ const assignHoles = (geometry) => {
       solids.push(i)
     }
   })
-  // For each hole, determine what solids it is inside of
+  // for each hole, determine what solids it is inside of
   const children = [] // child holes of solid[i]
   const parents = [] // parent solids of hole[i]
   solids.forEach((s, i) => {
@@ -39,7 +39,7 @@ const assignHoles = (geometry) => {
     children[i] = []
     holes.forEach((h, j) => {
       const hole = outlines[h]
-      // Check if a point of hole j is inside solid i
+      // check if a point of hole j is inside solid i
       if (arePointsInside([hole[0]], { vertices: solid })) {
         children[i].push(h)
         if (!parents[j]) parents[j] = []
@@ -47,8 +47,9 @@ const assignHoles = (geometry) => {
       }
     })
   })
-  // Check if holes have multiple parents and choose one with fewest children
+  // check if holes have multiple parents and choose one with fewest children
   holes.forEach((h, j) => {
+    // ensure at least one parent exists
     if (parents[j] && parents[j].length > 1) {
       const parent = minIndex(parents[j], (p) => p.length)
       parents[j].forEach((p, i) => {
@@ -59,7 +60,7 @@ const assignHoles = (geometry) => {
       })
     }
   })
-  // Map indices back to points
+  // map indices back to points
   return children.map((holes, i) => ({
     solid: outlines[solids[i]],
     holes: holes.map((h) => outlines[h])
@@ -67,7 +68,8 @@ const assignHoles = (geometry) => {
 }
 
 /**
- * Find the item in the list with smallest score(item)
+ * Find the item in the list with smallest score(item).
+ * If the list is empty, return undefined.
  */
 const minIndex = (list, score) => {
   let bestIndex

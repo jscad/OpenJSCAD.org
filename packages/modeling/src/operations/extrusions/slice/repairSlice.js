@@ -1,6 +1,6 @@
 const vec3 = require('../../../maths/vec3')
 
-/**
+/*
  * Mend gaps in a 2D slice to make it a closed polygon
  */
 const repairSlice = (slice) => {

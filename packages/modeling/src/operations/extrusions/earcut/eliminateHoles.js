@@ -3,6 +3,9 @@ const { area, pointInTriangle } = require('./triangle')
 
 /*
  * link every hole into the outer loop, producing a single-ring polygon without holes
+ *
+ * Original source from https://github.com/mapbox/earcut
+ * Copyright (c) 2016 Mapbox
  */
 const eliminateHoles = (data, holeIndices, outerNode, dim) => {
   const queue = []

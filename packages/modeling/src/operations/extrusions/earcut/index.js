@@ -3,8 +3,12 @@ const { removeNode, sortLinked } = require('./linkedList')
 const { cureLocalIntersections, filterPoints, isValidDiagonal, linkedPolygon, splitPolygon } = require('./linkedPolygon')
 const { area, pointInTriangle } = require('./triangle')
 
-/**
+/*
  * An implementation of the earcut polygon triangulation algorithm.
+ *
+ * Original source from https://github.com/mapbox/earcut
+ * Copyright (c) 2016 Mapbox
+ *
  * @param {data} A flat array of vertex coordinates.
  * @param {holeIndices} An array of hole indices if any.
  * @param {dim} The number of coordinates per vertex in the input array.
@@ -55,7 +59,8 @@ const earcutLinked = (ear, triangles, dim, minX, minY, invSize, pass) => {
   if (!pass && invSize) indexCurve(ear, minX, minY, invSize)
 
   let stop = ear
-  let prev; let next
+  let prev
+  let next
 
   // iterate through ears, slicing them one by one
   while (ear.prev !== ear.next) {

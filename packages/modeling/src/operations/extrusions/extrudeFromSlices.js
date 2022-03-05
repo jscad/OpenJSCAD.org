@@ -26,6 +26,7 @@ const defaultCallback = (progress, index, base) => {
  * @param {Boolean} [options.capStart=true] the solid should have a cap at the start
  * @param {Boolean} [options.capEnd=true] the solid should have a cap at the end
  * @param {Boolean} [options.close=false] the solid should have a closing section between start and end
+ * @param {Boolean} [options.repair=true] - repair gaps in the geometry
  * @param {Function} [options.callback] the callback function that generates each slice
  * @param {Object} base - the base object which is used to create slices (see the example for callback information)
  * @return {geom3} the extruded shape
@@ -49,14 +50,17 @@ const extrudeFromSlices = (options, base) => {
     capStart: true,
     capEnd: true,
     close: false,
+    repair: true,
     callback: defaultCallback
   }
-  const { numberOfSlices, capStart, capEnd, close, callback: generate } = Object.assign({ }, defaults, options)
+  const { numberOfSlices, capStart, capEnd, close, repair, callback: generate } = Object.assign({ }, defaults, options)
 
   if (numberOfSlices < 2) throw new Error('numberOfSlices must be 2 or more')
 
   // Repair gaps in the base slice
-  repairSlice(base)
+  if (repair) {
+    repairSlice(base)
+  }
 
   const sMax = numberOfSlices - 1
 
