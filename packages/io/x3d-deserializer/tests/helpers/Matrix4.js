@@ -1,7 +1,7 @@
 const Vector3 = require('./Vector3')
 const Rotation4 = require('./Rotation4')
 
-function Matrix4() {
+function Matrix4 () {
   if (arguments.length) {
     this[0] = arguments[0]
     this[1] = arguments[1]

@@ -13,14 +13,6 @@ const getParameterValuesFromUIControls = (paramControls, parameterDefinitions, o
     switch (control.paramType) {
       case 'choice':
         value = control.options[control.selectedIndex].value
-        /* console.log('choice', control, control.paramName)
-        // we try to match values against captions, then parse as numbers if applicable, then fallback to original value
-        const valueIndex = !definition ? -1 : definition.captions.indexOf(value)
-        const valueInDefinition = valueIndex > -1
-        // const valueInDefintionCaptionsAndValue = valueInDefinition && definition.values.length >= valueIndex
-        value = definition.values.length > 0 && isNumber(definition.values[0]) ? parseFloat(value) : value
-        value = definition.values.length > 0 && typeof value === 'boolean' ? !!value : value
-        console.log('foo', value) */
         break
       case 'float':
       case 'number':
@@ -63,7 +55,6 @@ const getParameterValuesFromUIControls = (paramControls, parameterDefinitions, o
       }
     }
     parameterValues[control.paramName] = value
-  // console.log(control.paramName+":"+parameterValues[control.paramName])
   }
   return parameterValues
 }

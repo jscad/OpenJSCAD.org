@@ -3,11 +3,11 @@ const vec3 = require('../../maths/vec3')
 
 /**
  * Check whether the given polygon is convex.
- * @param {poly3} polygon - the polygon to interogate
+ * @param {poly3} polygon - the polygon to interrogate
  * @returns {Boolean} true if convex
  * @alias module:modeling/geometries/poly3.isConvex
  */
-const isConvex = (poly3) => areVerticesConvex(poly3.vertices)
+const isConvex = (polygon) => areVerticesConvex(polygon.vertices)
 
 const areVerticesConvex = (vertices) => {
   const numvertices = vertices.length

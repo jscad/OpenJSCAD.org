@@ -38,10 +38,19 @@ class Blob {
     this.encoding = 'utf8'
     // storage
     this.buffer = null
-    this.length = 32e+6 // allocation, not contents
+    this.length = 0 // allocation, not contents
 
     if (!contents) return
     if (!Array.isArray(contents)) return
+
+    // Find content length
+    contents.forEach((content) => {
+      if (typeof (content) === 'string') {
+        this.length += content.length
+      } else if (content instanceof ArrayBuffer) {
+        this.length += content.byteLength
+      }
+    })
 
     // process options if any
     if (options.type) {
@@ -72,8 +81,7 @@ class Blob {
           break
         case 'object':
           object = contents[index] // this should be a reference to an object
-          if (Buffer.isBuffer(object)) {
-          }
+          // FIXME if (Buffer.isBuffer(object)) { }
           if (object instanceof ArrayBuffer) {
             const view = new DataView(object)
             for (let bindex = 0; bindex < object.byteLength; bindex++) {

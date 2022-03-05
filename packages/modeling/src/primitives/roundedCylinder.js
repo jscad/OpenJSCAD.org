@@ -11,7 +11,7 @@ const { isGT, isGTE, isNumberArray } = require('./commonChecks')
  * Construct a Z axis-aligned solid cylinder in three dimensional space with rounded ends.
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of cylinder
- * @param {Array} [options.height=2] - height of cylinder
+ * @param {Number} [options.height=2] - height of cylinder
  * @param {Number} [options.radius=1] - radius of cylinder
  * @param {Number} [options.roundRadius=0.2] - radius of rounded edges
  * @param {Number} [options.segments=32] - number of segments to create per full rotation

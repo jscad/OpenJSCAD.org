@@ -34,7 +34,7 @@ const offsetFromPoints = (options, points) => {
   delta = Math.abs(delta) // sign is no longer required
 
   let previousSegment = null
-  const newPoints = []
+  let newPoints = []
   const newCorners = []
   const of = vec2.create()
   const n = points.length
@@ -94,6 +94,10 @@ const offsetFromPoints = (options, points) => {
   // generate corners if necessary
 
   if (corners === 'edge') {
+    // map for fast point index lookup
+    const pointIndex = new Map() // {point: index}
+    newPoints.forEach((point, index) => pointIndex.set(point, index))
+
     // create edge corners
     const line0 = line2.create()
     const line1 = line2.create()
@@ -103,16 +107,17 @@ const offsetFromPoints = (options, points) => {
       const ip = line2.intersectPointOfLines(line0, line1)
       if (Number.isFinite(ip[0]) && Number.isFinite(ip[1])) {
         const p0 = corner.s0[1]
-        let i = newPoints.findIndex((point) => vec2.equals(p0, point))
-        i = (i + 1) % newPoints.length
-        newPoints.splice(i, 0, ip)
+        const i = pointIndex.get(p0)
+        newPoints[i] = ip
+        newPoints[(i + 1) % newPoints.length] = undefined
       } else {
         // paralell segments, drop one
         const p0 = corner.s1[0]
-        const i = newPoints.findIndex((point) => vec2.equals(p0, point))
-        newPoints.splice(i, 1)
+        const i = pointIndex.get(p0)
+        newPoints[i] = undefined
       }
     })
+    newPoints = newPoints.filter((p) => p !== undefined)
   }
 
   if (corners === 'round') {

@@ -18,9 +18,7 @@ const makeBuildCachedGeometryFromTree = (params) => {
   const { passesBeforeElimination, lookup, lookupCounts } = Object.assign({}, defaults, params)
   const cache = makeCacheWithInvalidation(passesBeforeElimination, lookup, lookupCounts)
 
-  const buildFinalResult = (tree, deep) => {
-    return toArray(dfs(tree, cache))
-  }
+  const buildFinalResult = (tree, deep) => toArray(dfs(tree, cache))
 
   // main function, this can be called every time one needs to generate
   // geometry from the vtree
@@ -50,7 +48,7 @@ const makeBuildCachedGeometryFromTree = (params) => {
 const dfs = (node, cache) => {
   // console.log('dfs', node)
   if (node.children) {
-    flatten(node.children).forEach(function (childNode) {
+    flatten(node.children).forEach((childNode) => {
       dfs(childNode, cache)
     })
   }

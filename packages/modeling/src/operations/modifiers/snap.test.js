@@ -11,7 +11,7 @@ const { snap } = require('./index')
 test('snap: snap of a path2 produces an expected path2', (t) => {
   const geometry1 = path2.create()
   const geometry2 = arc({ radius: 1 / 2, segments: 8 })
-  const geometry3 = arc({ radius: 1.3333333333333333333 / 2, segments: 8 })
+  const geometry3 = arc({ radius: 1.3333333333333333 / 2, segments: 8 })
   const geometry4 = arc({ radius: Math.PI * 1000 / 2, segments: 8 })
 
   const results = snap(geometry1, geometry2, geometry3, geometry4)
@@ -55,7 +55,7 @@ test('snap: snap of a path2 produces an expected path2', (t) => {
 test('snap: snap of a geom2 produces an expected geom2', (t) => {
   const geometry1 = geom2.create()
   const geometry2 = rectangle({ size: [1, 1, 1] })
-  const geometry3 = rectangle({ size: [1.3333333333333333333, 1.3333333333333333333, 1.3333333333333333333] })
+  const geometry3 = rectangle({ size: [1.3333333333333333, 1.3333333333333333, 1.3333333333333333] })
   const geometry4 = rectangle({ size: [Math.PI * 1000, Math.PI * 1000, Math.PI * 1000] })
 
   const results = snap(geometry1, geometry2, geometry3, geometry4)
@@ -87,7 +87,7 @@ test('snap: snap of a geom2 produces an expected geom2', (t) => {
 test('snap: snap of a geom3 produces an expected geom3', (t) => {
   const geometry1 = geom3.create()
   const geometry2 = cuboid({ size: [1, 1, 1] })
-  const geometry3 = cuboid({ size: [1.3333333333333333333, 1.3333333333333333333, 1.3333333333333333333] })
+  const geometry3 = cuboid({ size: [1.3333333333333333, 1.3333333333333333, 1.3333333333333333] })
   const geometry4 = cuboid({ size: [Math.PI * 1000, Math.PI * 1000, Math.PI * 1000] })
 
   const results = snap(geometry1, geometry2, geometry3, geometry4)

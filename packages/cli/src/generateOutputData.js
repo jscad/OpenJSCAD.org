@@ -60,7 +60,7 @@ const generateOutputData = (source, params, options) => {
       }
     }
   })
-    .then(solids => {
+    .then((solids) => {
       const serializerOptions = Object.assign({ format: outputFormat }, params)
       return solidsAsBlob(solids, serializerOptions)
     })

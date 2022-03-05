@@ -16,13 +16,11 @@ const { circle, sphere } = jscad.primitives
 const { vectorText } = jscad.text
 const { translate } = jscad.transforms
 
-const getParameterDefinitions = () => {
-  return [
-    { name: 'outline_string', initial: 'Outline', type: 'text', caption: 'Outline Text', size: 30 },
-    { name: 'flat_string', initial: 'Flat', type: 'text', caption: 'Flat Text', size: 30 },
-    { name: 'round_string', initial: 'Round', type: 'text', caption: 'Round Text', size: 30 }
-  ]
-}
+const getParameterDefinitions = () => [
+  { name: 'outline_string', initial: 'Outline', type: 'text', caption: 'Outline Text', size: 30 },
+  { name: 'flat_string', initial: 'Flat', type: 'text', caption: 'Flat Text', size: 30 },
+  { name: 'round_string', initial: 'Round', type: 'text', caption: 'Round Text', size: 30 }
+]
 
 const main = (params) => {
   const outlineText = buildOutlineText(params.outline_string, 2)
@@ -39,7 +37,6 @@ const buildOutlineText = (message, characterLineWidth) => {
   const lineRadius = characterLineWidth / 2
   const lineCorner = circle({ radius: lineRadius })
 
-  const lineSegments3D = []
   const lineSegmentPointArrays = vectorText({ x: 0, y: 0, input: message }) // line segments for each character
 
   const lineSegments = []

@@ -3,7 +3,7 @@ const { transform, create, fromPoints } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
-test('line3: transform() called with three paramerters should update a line3 with correct values', (t) => {
+test('line3: transform() called with three parameters should update a line3 with correct values', (t) => {
   const line1 = create()
   const line2 = fromPoints(create(), [1, 0, 0], [0, 1, 0])
   const line3 = fromPoints(create(), [-3, -3, -3], [3, 3, 3])

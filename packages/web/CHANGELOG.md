@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.3...@jscad/web@2.5.4) (2022-02-19)
+
+
+### Bug Fixes
+
+* **web:** corrected touch handing to skip rotation while pinching ([#983](https://github.com/jscad/OpenJSCAD.org/issues/983)) ([3633dfb](https://github.com/jscad/OpenJSCAD.org/commit/3633dfb444ae2af14742242dba6868fa6a76d494))
+
+
+
+
+
+## [2.5.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.2...@jscad/web@2.5.3) (2022-01-23)
+
+
+### Bug Fixes
+
+* **core:** corrected checks for proper main module, and improved error messages ([#979](https://github.com/jscad/OpenJSCAD.org/issues/979)) ([e4e6c12](https://github.com/jscad/OpenJSCAD.org/commit/e4e6c126f3bdccc54efc3ce8f31c08dd514e592c))
+* **web:** corrected to handle exceptions in parameter definitions ([#976](https://github.com/jscad/OpenJSCAD.org/issues/976)) ([bd82558](https://github.com/jscad/OpenJSCAD.org/commit/bd825588e5c6c538b6188070b778d1221f95520b))
+
+
+
+
+
 ## [2.5.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.1...@jscad/web@2.5.2) (2021-12-26)
 
 **Note:** Version bump only for package @jscad/web

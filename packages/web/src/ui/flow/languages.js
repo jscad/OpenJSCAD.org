@@ -15,7 +15,6 @@ const reducers = {
     return { languages }
   },
   setAvailableLanguages: (state, available) => {
-    // console.log('setAvailableLanguages', available)
     const languages = Object.assign({}, state.languages, { available })
     return { languages }
   },

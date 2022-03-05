@@ -96,7 +96,7 @@ test('mat4: fromVectorRotation() called with out parameter should return a mat4 
   t.is(ret, out)
   t.true(compareVectors(out, [1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1]))
 
-  // differnt units
+  // different units
   ret = fromVectorRotation(out, [11, 0, 0], [0, 33, 0])
   t.is(ret, out)
   t.true(compareVectors(out, [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]))

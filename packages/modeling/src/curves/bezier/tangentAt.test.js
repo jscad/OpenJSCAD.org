@@ -20,7 +20,7 @@ test('quadratic bezier (3 control points)', (t) => {
   t.is(bezier.tangentAt(1, OneDCurve), 20)
 })
 
-test('quadratic bezier (3 control points, non symetric)', (t) => {
+test('quadratic bezier (3 control points, non symmetric)', (t) => {
   const OneDCurve = bezier.create([0, 0, 20])
   t.is(bezier.tangentAt(0, OneDCurve), 0)
   t.is(bezier.tangentAt(0.5, OneDCurve), 20)

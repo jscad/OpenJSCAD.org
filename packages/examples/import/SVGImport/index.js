@@ -8,7 +8,6 @@
  * @licence MIT License
  */
 
-
 const { translate } = require('@jscad/modeling').transforms
 const { extrudeLinear } = require('@jscad/modeling').extrusions
 const { polygon } = require('@jscad/modeling').primitives

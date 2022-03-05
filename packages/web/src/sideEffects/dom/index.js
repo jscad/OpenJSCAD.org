@@ -41,7 +41,6 @@ const makeDomSideEffect = ({ targetEl }) => {
     } */
 
     const select = (query) => {
-      // console.log('selecting', query)
       const items = getElements(query)
 
       let outputStream
@@ -61,7 +60,6 @@ const makeDomSideEffect = ({ targetEl }) => {
     }
 
     out$.forEach(() => {
-    // console.log('dom source watching dom change')
       Object.keys(storedListeners).forEach((queryAndEventName) => {
         const [query] = queryAndEventName.split('@@')
         const items = getElements(query)

@@ -13,7 +13,7 @@ test('geom2ToGeometries (empty solid)', (t) => {
   const solid = {
     sides: []
   }
-  let expected = []
+  const expected = []
   let geometries = geom2ToGeometries({ color: [1, 2, 3, 4] }, solid)
   t.deepEqual(geometries, expected)
 

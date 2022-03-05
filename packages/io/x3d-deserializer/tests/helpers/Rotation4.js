@@ -64,7 +64,7 @@ Rotation4.prototype = {
     this.z_ = z
     this.angle_ = angle
 
-    let scale = Math.sqrt(x * x + y * y + z * z)
+    let scale = Math.hypot(x, y, z)
 
     if (scale === 0) {
       this.value.set(0, 0, 0, 1)

@@ -1,7 +1,7 @@
 /**
  * Convert the given vector to a representative string.
  *
- * @param {vec4} vector - vector to convert
+ * @param {vec4} vec - vector to convert
  * @returns {String} representative string
  * @alias module:modeling/maths/vec4.toString
  */

@@ -18,6 +18,16 @@ const pinchZooms = ({ touchStarts$, touchMoves$, touchEnds$ }, settings) => {
       return touchMoves$
         .tap((e) => e.preventDefault())
         .filter((t) => t.touches.length === 2)
+        .tap((e) => {
+          // console.log("pinch started");
+          if (typeof CustomEvent !== 'undefined') {
+            const pinchStarted = new CustomEvent('pinchStarted', {
+              detail: true
+            })
+
+            window.dispatchEvent(pinchStarted)
+          }
+        })
         .map((e) => {
           const curX1 = e.touches[0].pageX * pixelRatio
           const curY1 = e.touches[0].pageY * pixelRatio
@@ -43,7 +53,16 @@ const pinchZooms = ({ touchStarts$, touchMoves$, touchEnds$ }, settings) => {
           const scale = e > 0 ? Math.sqrt(e) : -Math.sqrt(Math.abs(e))
           return scale
         }) */
-        .takeUntil(touchEnds$)
+        .takeUntil(touchEnds$.tap((e) => {
+          // console.log("pinch ended");
+          if (typeof CustomEvent !== 'undefined') {
+            const pinchEnded = new CustomEvent('pinchEnded', {
+              detail: true
+            })
+
+            window.dispatchEvent(pinchEnded)
+          }
+        }))
     })
 }
 

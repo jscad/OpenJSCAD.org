@@ -1,6 +1,6 @@
 /**
  * Convert the given vector to a representative string.
- * @param {vec3} vector - vector of reference
+ * @param {vec3} vec - vector of reference
  * @returns {String} string representation
  * @alias module:modeling/maths/vec3.toString
  */

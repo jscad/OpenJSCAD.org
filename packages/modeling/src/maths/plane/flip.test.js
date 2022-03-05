@@ -3,7 +3,7 @@ const { create, flip } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
-test('plane: flip() called with two paramerters should update a plane with correct values', (t) => {
+test('plane: flip() called with two parameters should update a plane with correct values', (t) => {
   const org1 = create()
   const ret1 = flip(org1, [0, 0, 0, 0])
   t.true(compareVectors(org1, [-0, -0, -0, -0]))

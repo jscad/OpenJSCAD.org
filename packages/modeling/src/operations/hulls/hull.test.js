@@ -43,7 +43,7 @@ test('hull (single, geom2)', (t) => {
   t.is(pts.length, 7)
 })
 
-test('hull (multiple, overlaping, geom2)', (t) => {
+test('hull (multiple, overlapping, geom2)', (t) => {
   const geometry1 = geom2.fromPoints([[5, 5], [-5, 5], [-5, -5], [5, -5]])
   const geometry2 = geom2.fromPoints([[3, 3], [-3, 3], [-3, -3], [3, -3]])
   const geometry3 = geom2.fromPoints([[6, 3], [-6, 3], [-6, -3], [6, -3]])

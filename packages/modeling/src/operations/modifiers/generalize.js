@@ -15,15 +15,11 @@ const repairTjunctions = require('./repairTjunctions')
 
 /*
  */
-const generalizePath2 = (options, geometry) => {
-  return geometry
-}
+const generalizePath2 = (options, geometry) => geometry
 
 /*
  */
-const generalizeGeom2 = (options, geometry) => {
-  return geometry
-}
+const generalizeGeom2 = (options, geometry) => geometry
 
 /*
  */
@@ -77,6 +73,7 @@ const generalizeGeom3 = (options, geometry) => {
  * @param {Boolean} [options.simplify=false] the geometries should be simplified
  * @param {Boolean} [options.triangulate=false] the geometries should be triangulated
  * @param {Boolean} [options.repair=false] the geometries should be repaired
+ * @param {...Object} geometries - the geometries to generalize
  * @return {Object|Array} the modified geometry, or a list of modified geometries
  * @alias module:modeling/modifiers.generalize
  */
@@ -84,7 +81,7 @@ const generalize = (options, ...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('wrong number of arguments')
 
-  const results = geometries.map((geometry, i) => {
+  const results = geometries.map((geometry) => {
     if (path2.isA(geometry)) return generalizePath2(options, geometry)
     if (geom2.isA(geometry)) return generalizeGeom2(options, geometry)
     if (geom3.isA(geometry)) return generalizeGeom3(options, geometry)

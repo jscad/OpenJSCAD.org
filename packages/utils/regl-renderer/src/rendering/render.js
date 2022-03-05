@@ -27,7 +27,6 @@ const prepareRender = (params) => {
 
   // create the main draw command
   const command = (props) => {
-    // console.log('params in render', props)
     props.rendering = Object.assign({}, renderDefaults, props.rendering)
 
     // props is the first parameter, the second one is a function, doing the actual rendering
@@ -58,7 +57,6 @@ const prepareRender = (params) => {
                 drawCmd = props.drawCommands[visuals.drawCmd](regl, entity)
                 drawCache2.set(visuals.cacheId, drawCmd)
               }
-              // console.log('drawing with', drawCmd, entity)
               const drawParams = { // FIXME: horrible, tidy up !!: what is needed/should be passed to render pass ?
                 ...entity,
                 ...visuals,

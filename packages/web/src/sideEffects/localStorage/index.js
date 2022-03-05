@@ -20,7 +20,6 @@ const makeStorageSideEffect = ({ name }) => {
           const { type, key, data } = command
           // const storage = target === `local` ? localStorage : sessionStorage
           if (type === 'write') {
-            // console.log('writing settings', data)
             localStorage.setItem(`jscad:${name}-${key}`, JSON.stringify(data))
           } else if (type === 'read') {
             const settings = localStorage.getItem(`jscad:${name}-${key}`)

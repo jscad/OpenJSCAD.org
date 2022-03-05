@@ -1,7 +1,5 @@
 const { cube } = require('@jscad/csg/api').primitives3d
 
-function main () {
-  return cube()
-}
+const main = () => cube()
 
 module.exports = main

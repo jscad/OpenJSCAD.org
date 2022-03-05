@@ -13,13 +13,11 @@ const { cuboid } = jscad.primitives
 const { subtract } = jscad.booleans
 const { align } = jscad.transforms
 
-const getParameterDefinitions = () => {
-  return [
-    { name: 'grouped', type: 'checkbox', checked: false, caption: 'Align as group' },
-    { name: 'modes', type: 'choice', caption: 'modes:', values: ['["none","none","none"]', '["center","center","min"]', '["min","min","min"]', '["max","min","center"]'], initial: '["none","none","none"]' },
-    { name: 'relativeTo', type: 'choice', caption: 'relativeTo:', values: ['[0,0,0]', '[null,null,null]', '[10,-10,0]'], initial: '[0,0,0]' }
-  ]
-}
+const getParameterDefinitions = () => [
+  { name: 'grouped', type: 'checkbox', checked: false, caption: 'Align as group' },
+  { name: 'modes', type: 'choice', caption: 'modes:', values: ['["none","none","none"]', '["center","center","min"]', '["min","min","min"]', '["max","min","center"]'], initial: '["none","none","none"]' },
+  { name: 'relativeTo', type: 'choice', caption: 'relativeTo:', values: ['[0,0,0]', '[null,null,null]', '[10,-10,0]'], initial: '[0,0,0]' }
+]
 
 /**
  * Generates a series of boxes of various sizes, and uses the align function to align them in different ways.

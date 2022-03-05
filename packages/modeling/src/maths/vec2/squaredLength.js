@@ -5,9 +5,9 @@
  * @returns {Number} squared length
  * @alias module:modeling/maths/vec2.squaredLength
  */
-const squaredLength = (a) => {
-  const x = a[0]
-  const y = a[1]
+const squaredLength = (vector) => {
+  const x = vector[0]
+  const y = vector[1]
   return x * x + y * y
 }
 

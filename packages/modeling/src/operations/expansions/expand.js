@@ -10,14 +10,14 @@ const expandPath2 = require('./expandPath2')
 
 /**
  * Expand the given geometry using the given options.
- * Both interal and external space is expanded for 2D and 3D shapes.
+ * Both internal and external space is expanded for 2D and 3D shapes.
  *
  * Note: Contract is expand using a negative delta.
  * @param {Object} options - options for expand
  * @param {Number} [options.delta=1] - delta (+/-) of expansion
  * @param {String} [options.corners='edge'] - type of corner to create after expanding; edge, chamfer, round
  * @param {Integer} [options.segments=16] - number of segments when creating round corners
- * @param {...Objects} geometry - the list of geometry to expand
+ * @param {...Objects} objects - the geometries to expand
  * @return {Object|Array} new geometry, or list of new geometries
  * @alias module:modeling/expansions.expand
  *

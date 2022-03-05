@@ -7,7 +7,8 @@ const status = (state, paramsCallbacktoStream) => {
   const errorLine = status.error !== undefined && status.error.lineno ? `Line: ${status.error.lineno}` : ''
   const errorStack = status.error !== undefined && status.error.stack ? `Stack: ${status.error.stack}` : ''
 
-  const statusMessage = status.error !== undefined ? html`<span>
+  const statusMessage = status.error !== undefined
+    ? html`<span>
     <div>
       ERROR: 
     </div>
@@ -20,7 +21,8 @@ const status = (state, paramsCallbacktoStream) => {
     <div>
       ${errorStack}
     </div>
-  </span>` : ''
+  </span>`
+    : ''
 
   // ? `Error: ${status.error.message} line: ${status.error.lineno}, filename:${status.error.filename} stack:  ${status.error.stack}` : ''
   // ${statusMessage}

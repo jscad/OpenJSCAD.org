@@ -5,7 +5,7 @@ const path = require('path')
  * @param  {String} src the source code of the module
  * @param  {String} filename the filename of the module
  */
-function requireFromString (src, filename) {
+const requireFromString = (src, filename) => {
   // completely ripped out of https://github.com/floatdrop/require-from-string
   // shamefully
   const Module = require('module')

@@ -32,8 +32,6 @@ const dodecahedron = (h) => {
   return scale([h, h, h], cuboid1) // scale by height parameter
 }
 
-const main = () => {
-  return dodecahedron(10)
-}
+const main = () => dodecahedron(10)
 
 module.exports = { main }

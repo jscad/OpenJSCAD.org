@@ -13,7 +13,7 @@ const offsetPath2 = require('./offsetPath2')
  * @param {Float} [options.delta=1] - delta of offset (+ to exterior, - from interior)
  * @param {String} [options.corners='edge'] - type of corner to create after offseting; edge, chamfer, round
  * @param {Integer} [options.segments=16] - number of segments when creating round corners
- * @param {...Object} geometry - the list of geometry to offset
+ * @param {...Object} objects - the geometries to offset
  * @return {Object|Array} new geometry, or list of new geometries
  * @alias module:modeling/expansions.offset
  *

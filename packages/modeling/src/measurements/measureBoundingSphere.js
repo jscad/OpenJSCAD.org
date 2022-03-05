@@ -24,7 +24,7 @@ const measureBoundingSphereOfPath2 = (geometry) => {
   const points = path2.toPoints(geometry)
 
   if (points.length > 0) {
-    // calculate the centriod of the geometry
+    // calculate the centroid of the geometry
     let numPoints = 0
     const temp = vec3.create()
     points.forEach((point) => {
@@ -60,7 +60,7 @@ const measureBoundingSphereOfGeom2 = (geometry) => {
   const sides = geom2.toSides(geometry)
 
   if (sides.length > 0) {
-    // calculate the centriod of the geometry
+    // calculate the centroid of the geometry
     let numPoints = 0
     const temp = vec3.create()
     sides.forEach((side) => {
@@ -96,7 +96,7 @@ const measureBoundingSphereOfGeom3 = (geometry) => {
   const polygons = geom3.toPolygons(geometry)
 
   if (polygons.length > 0) {
-    // calculate the centriod of the geometry
+    // calculate the centroid of the geometry
     let numPoints = 0
     polygons.forEach((polygon) => {
       poly3.toPoints(polygon).forEach((point) => {
@@ -122,7 +122,7 @@ const measureBoundingSphereOfGeom3 = (geometry) => {
 }
 
 /**
- * Measure the (aproximate) bounding sphere of the given geometries.
+ * Measure the (approximate) bounding sphere of the given geometries.
  * @see https://en.wikipedia.org/wiki/Bounding_sphere
  * @param {...Object} geometries - the geometries to measure
  * @return {Array} the bounding sphere for each geometry, i.e. [centroid, radius]
