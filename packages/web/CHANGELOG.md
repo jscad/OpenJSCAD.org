@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.4...@jscad/web@2.5.5) (2022-03-06)
+
+
+### Bug Fixes
+
+* **web:** corrected uncaught type trror in viewer [#999](https://github.com/jscad/OpenJSCAD.org/issues/999) ([#1002](https://github.com/jscad/OpenJSCAD.org/issues/1002)) ([96ff951](https://github.com/jscad/OpenJSCAD.org/commit/96ff951f7d846bcfc10847dc028309f8f938df5e))
+
+
+
+
+
 ## [2.5.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.3...@jscad/web@2.5.4) (2022-02-19)
 
 

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/stl-serializer@2.1.3...@jscad/stl-serializer@2.1.4) (2022-03-06)
+
+**Note:** Version bump only for package @jscad/stl-serializer
+
+
+
+
+
 ## [2.1.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/stl-serializer@2.1.2...@jscad/stl-serializer@2.1.3) (2022-02-19)
 
 **Note:** Version bump only for package @jscad/stl-serializer

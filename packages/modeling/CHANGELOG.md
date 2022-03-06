@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.8.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.7.2...@jscad/modeling@2.8.0) (2022-03-06)
+
+
+### Bug Fixes
+
+* **modeling:** fixed type of relativeTo in align() options, TS ([#1015](https://github.com/jscad/OpenJSCAD.org/issues/1015)) ([ca4927e](https://github.com/jscad/OpenJSCAD.org/commit/ca4927eb37b21a7c278b46375b788c808d235e77))
+
+
+### Features
+
+* **modeling:** enchanced extrudeLinear to support path2 ([#1009](https://github.com/jscad/OpenJSCAD.org/issues/1009)) ([5a62a6b](https://github.com/jscad/OpenJSCAD.org/commit/5a62a6b9fe4cca9f85ff48be0dc12cdd1323f70a))
+
+
+### Performance Improvements
+
+* **modeling:** improved performace of path2 offsets ([#1013](https://github.com/jscad/OpenJSCAD.org/issues/1013)) ([47f824b](https://github.com/jscad/OpenJSCAD.org/commit/47f824b5abe2b31077a03604ac62f9b14ada64d9))
+* **modeling:** improved performance of expanding geom3, and bug fix ([#1008](https://github.com/jscad/OpenJSCAD.org/issues/1008)) ([d0d035a](https://github.com/jscad/OpenJSCAD.org/commit/d0d035a5d94eaff8de7360fe96e60cc496231eef))
+* **modeling:** use Set to create unique points in hullPath2 ([#1007](https://github.com/jscad/OpenJSCAD.org/issues/1007)) ([bd75a98](https://github.com/jscad/OpenJSCAD.org/commit/bd75a9870d614796a64a25fb874b5e77ad359e6f))
+
+
+
+
+
 ## [2.7.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.7.1...@jscad/modeling@2.7.2) (2022-02-19)
 
 
