@@ -7,6 +7,10 @@ const poly3 = require('../geometries/poly3')
 
 const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 
+// fix rounding errors when sin and cos should be 0
+const sin = (radians) => radians % Math.PI === 0 ? 0 : Math.sin(radians)
+const cos = (radians) => (radians - Math.PI / 2) % Math.PI === 0 ? 0 : Math.cos(radians)
+
 /**
  * Construct a Z axis-aligned elliptic cylinder in three dimensional space.
  * @param {Object} [options] - options for construction
@@ -75,8 +79,8 @@ const cylinderElliptic = (options) => {
   const v3 = vec3.create()
   const point = (stack, slice, radius) => {
     const angle = slice * rotation + startAngle
-    vec3.scale(v1, axisX, radius[0] * Math.cos(angle))
-    vec3.scale(v2, axisY, radius[1] * Math.sin(angle))
+    vec3.scale(v1, axisX, radius[0] * cos(angle))
+    vec3.scale(v2, axisY, radius[1] * sin(angle))
     vec3.add(v1, v1, v2)
 
     vec3.scale(v3, ray, stack)
