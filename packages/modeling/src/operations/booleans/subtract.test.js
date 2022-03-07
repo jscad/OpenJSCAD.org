@@ -36,6 +36,7 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
     [0, -2],
     [1.4142000000000001, -1.4142000000000001]
   ]
+  t.true(geom2.isA(result1))
   t.is(obs.length, 8)
   t.true(comparePoints(obs, exp))
 
@@ -54,6 +55,7 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
     [0, -2],
     [1.4142000000000001, -1.4142000000000001]
   ]
+  t.true(geom2.isA(result2))
   t.is(obs.length, 8)
   t.true(comparePoints(obs, exp))
 
@@ -65,6 +67,7 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
   exp = [
     [12, 12], [9, 9], [8, 9], [8, 12], [9, 8], [12, 8]
   ]
+  t.true(geom2.isA(result3))
   t.is(obs.length, 6)
   t.true(comparePoints(obs, exp))
 
@@ -73,6 +76,7 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
   obs = geom2.toPoints(result4)
   exp = [
   ]
+  t.true(geom2.isA(result4))
   t.is(obs.length, 0)
   t.deepEqual(obs, exp)
 })
@@ -133,6 +137,7 @@ test('subtract: subtract of one or more geom3 objects produces expected geometry
     [[0.9999999999999998, 1.0000000000000002, -1.414213562373095], [1.4142135623730951, 3.4638242249419736e-16, -1.414213562373095], [8.65956056235493e-17, 8.659560562354935e-17, -2]],
     [[8.65956056235493e-17, 8.659560562354935e-17, 2], [1.4142135623730951, 3.4638242249419736e-16, 1.414213562373095], [0.9999999999999998, 1.0000000000000002, 1.414213562373095]]
   ]
+  t.true(geom3.isA(result1))
   t.is(obs.length, 32)
   t.true(comparePolygonsAsPoints(obs, exp))
 
@@ -141,6 +146,7 @@ test('subtract: subtract of one or more geom3 objects produces expected geometry
 
   const result2 = subtract(geometry1, geometry2)
   obs = geom3.toPoints(result2)
+  t.true(geom3.isA(result2))
   t.is(obs.length, 32)
 
   // subtract of two partially overlapping objects
@@ -162,11 +168,13 @@ test('subtract: subtract of one or more geom3 objects produces expected geometry
     [[12, 12, 8], [12, 9, 8], [8, 9, 8], [8, 12, 8]],
     [[12, 9, 8], [12, 8, 8], [9, 8, 8], [9, 9, 8]]
   ]
+  t.true(geom3.isA(result3))
   t.is(obs.length, 12)
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // subtract of two completely overlapping objects
   const result4 = subtract(geometry1, geometry3)
   obs = geom3.toPoints(result4)
+  t.true(geom3.validate(result4))
   t.is(obs.length, 0)
 })

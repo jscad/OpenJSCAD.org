@@ -10,6 +10,7 @@ test('roundedRectangle (defaults)', (t) => {
   const geometry = roundedRectangle()
   const obs = geom2.toPoints(geometry)
 
+  t.true(geom2.isA(geometry))
   t.deepEqual(obs.length, 36)
 })
 
@@ -39,6 +40,7 @@ test('roundedRectangle (options)', (t) => {
     [4.984775906502257, 4.123463313526982],
     [5, 4.2]
   ]
+  t.true(geom2.isA(geometry))
   t.deepEqual(obs.length, 20)
   t.true(comparePoints(obs, exp))
 
@@ -67,6 +69,7 @@ test('roundedRectangle (options)', (t) => {
     [4.984775906502257, -2.8765366864730177],
     [5, -2.8]
   ]
+  t.true(geom2.isA(geometry))
   t.deepEqual(obs.length, 20)
   t.true(comparePoints(obs, exp))
 
@@ -95,11 +98,13 @@ test('roundedRectangle (options)', (t) => {
     [4.847759065022574, -1.7653668647301801],
     [5, -1.0000000000000004]
   ]
+  t.true(geom2.isA(geometry))
   t.deepEqual(obs.length, 20)
   t.true(comparePoints(obs, exp))
 
   // test segments
   geometry = roundedRectangle({ size: [10, 6], roundRadius: 2, segments: 64 })
   obs = geom2.toPoints(geometry)
+  t.true(geom2.isA(geometry))
   t.deepEqual(obs.length, 68)
 })

@@ -9,6 +9,7 @@ const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoi
 test('geodesicSphere (defaults)', (t) => {
   const obs = geodesicSphere()
   const pts = geom3.toPoints(obs)
+  t.true(geom3.validate(obs))
   t.is(pts.length, 20)
 })
 
@@ -39,6 +40,7 @@ test('geodesicSphere (options)', (t) => {
     [[0, -2.628654726407001, -4.253254557317035], [2.628654726407001, -4.253254557317035, 0], [-2.628654726407001, -4.253254557317035, 0]]
   ]
 
+  t.true(geom3.validate(obs))
   t.is(pts.length, 20)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -46,5 +48,6 @@ test('geodesicSphere (options)', (t) => {
   obs = geodesicSphere({ radius: 5, frequency: 18 })
   pts = geom3.toPoints(obs)
 
+  t.true(geom3.isA(obs))
   t.is(pts.length, 180)
 })

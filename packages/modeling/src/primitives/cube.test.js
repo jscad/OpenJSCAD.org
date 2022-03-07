@@ -9,6 +9,7 @@ const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoi
 test('cube (defaults)', (t) => {
   const obs = cube()
   const pts = geom3.toPoints(obs)
+  t.true(geom3.validate(obs))
   t.is(pts.length, 6)
 })
 
@@ -25,6 +26,7 @@ test('cube (options)', (t) => {
     [[3, 3, 10], [10, 3, 10], [10, 10, 10], [3, 10, 10]]
   ]
 
+  t.true(geom3.validate(obs))
   t.is(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -40,6 +42,7 @@ test('cube (options)', (t) => {
     [[-3.5, -3.5, 3.5], [3.5, -3.5, 3.5], [3.5, 3.5, 3.5], [-3.5, 3.5, 3.5]]
   ]
 
+  t.true(geom3.validate(obs))
   t.is(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 })

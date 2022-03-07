@@ -10,6 +10,7 @@ test('ellipse (defaults)', (t) => {
   const geometry = ellipse()
   const obs = geom2.toPoints(geometry)
 
+  t.true(geom2.isA(geometry))
   t.deepEqual(obs.length, 32)
 })
 
@@ -52,6 +53,7 @@ test('ellipse (options)', (t) => {
     [3.9807852804032304, 4.804909677983871]
   ]
 
+  t.true(geom2.isA(geometry))
   t.deepEqual(obs.length, 32)
   t.true(comparePoints(obs, exp))
 
@@ -77,6 +79,7 @@ test('ellipse (options)', (t) => {
     [2.7716385975338595, -1.913417161825452]
   ]
 
+  t.true(geom2.isA(geometry))
   t.deepEqual(obs.length, 16)
   t.true(comparePoints(obs, exp))
 
@@ -100,6 +103,7 @@ test('ellipse (options)', (t) => {
     [0, 0]
   ]
 
+  t.true(geom2.isA(geometry))
   t.deepEqual(obs.length, 14)
   t.true(comparePoints(obs, exp))
 
@@ -115,11 +119,13 @@ test('ellipse (options)', (t) => {
     [0, 0]
   ]
 
+  t.true(geom2.isA(geometry))
   t.deepEqual(obs.length, 6)
   t.true(comparePoints(obs, exp))
 
   // test segments
   geometry = ellipse({ segments: 72 })
   obs = geom2.toPoints(geometry)
+  t.true(geom2.isA(geometry))
   t.deepEqual(obs.length, 72)
 })

@@ -11,6 +11,7 @@ test('extrudeRotate: (defaults) extruding of a geom2 produces an expected geom3'
 
   const geometry3 = extrudeRotate({ }, geometry2)
   const pts = geom3.toPoints(geometry3)
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 96)
 })
 
@@ -34,15 +35,18 @@ test('extrudeRotate: (angle) extruding of a geom2 produces an expected geom3', (
     [[26, 4.898587196589413e-16, 8], [10, 4.898587196589413e-16, 8], [10, -4.898587196589413e-16, -8]],
     [[10, -4.898587196589413e-16, -8], [26, -4.898587196589413e-16, -8], [26, 4.898587196589413e-16, 8]]
   ]
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 
   geometry3 = extrudeRotate({ segments: 4, angle: -250 * 0.017453292519943295 }, geometry2)
   pts = geom3.toPoints(geometry3)
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 28)
 
   geometry3 = extrudeRotate({ segments: 4, angle: 250 * 0.017453292519943295 }, geometry2)
   pts = geom3.toPoints(geometry3)
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 28)
 })
 
@@ -57,6 +61,7 @@ test('extrudeRotate: (startAngle) extruding of a geom2 produces an expected geom
     [18.38477631085024, 18.384776310850235, 8],
     [-11.803752993228215, 23.166169628897567, 8]
   ]
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 40)
   t.true(comparePoints(pts[0], exp))
 
@@ -67,6 +72,7 @@ test('extrudeRotate: (startAngle) extruding of a geom2 produces an expected geom
     [18.38477631085024, -18.384776310850235, 8],
     [23.166169628897567, 11.803752993228215, 8]
   ]
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 40)
   t.true(comparePoints(pts[0], exp))
 })
@@ -77,22 +83,26 @@ test('extrudeRotate: (segments) extruding of a geom2 produces an expected geom3'
   // test segments
   let geometry3 = extrudeRotate({ segments: 4 }, geometry2)
   let pts = geom3.toPoints(geometry3)
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 32)
 
   geometry3 = extrudeRotate({ segments: 64 }, geometry2)
   pts = geom3.toPoints(geometry3)
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 512)
 
   // test overlapping edges
   geometry2 = geom2.fromPoints([[0, 0], [2, 1], [1, 2], [1, 3], [3, 4], [0, 5]])
   geometry3 = extrudeRotate({ segments: 8 }, geometry2)
   pts = geom3.toPoints(geometry3)
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 64)
 
   // test overlapping edges that produce hollow shape
   geometry2 = geom2.fromPoints([[30, 0], [30, 60], [0, 60], [0, 50], [10, 40], [10, 30], [0, 20], [0, 10], [10, 0]])
   geometry3 = extrudeRotate({ segments: 8 }, geometry2)
   pts = geom3.toPoints(geometry3)
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 80)
 })
 
@@ -112,6 +122,7 @@ test('extrudeRotate: (overlap +/-) extruding of a geom2 produces an expected geo
     [[7, 4.898587196589413e-16, 8], [0, 4.898587196589413e-16, 8], [0, -4.898587196589413e-16, -8]],
     [[0, -4.898587196589413e-16, -8], [7, -4.898587196589413e-16, -8], [7, 4.898587196589413e-16, 8]]
   ]
+  t.true(geom3.isA(obs))
   t.is(pts.length, 8)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -140,6 +151,7 @@ test('extrudeRotate: (overlap +/-) extruding of a geom2 produces an expected geo
     [[2, 2.4492935982947064e-16, 4], [1, 4.898587196589413e-16, 8], [0, 4.898587196589413e-16, 8]],
     [[0, 4.898587196589413e-16, 8], [1, -4.898587196589413e-16, -8], [2, 2.4492935982947064e-16, 4]]
   ]
+  t.true(geom3.isA(obs))
   t.is(pts.length, 18)
   t.true(comparePolygonsAsPoints(pts, exp))
 })

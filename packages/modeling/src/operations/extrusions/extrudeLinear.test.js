@@ -25,6 +25,7 @@ test('extrudeLinear (defaults)', (t) => {
     [[5, 5, 0], [5, -5, 0], [-5, -5, 0]],
     [[-5, -5, 0], [-5, 5, 0], [5, 5, 0]]
   ]
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
@@ -48,6 +49,7 @@ test('extrudeLinear (no twist)', (t) => {
     [[5, 5, 0], [5, -5, 0], [-5, -5, 0]],
     [[-5, -5, 0], [-5, 5, 0], [5, 5, 0]]
   ]
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -67,6 +69,7 @@ test('extrudeLinear (no twist)', (t) => {
     [[5, -5, 0], [5, 5, 0], [-5, 5, 0]],
     [[-5, 5, 0], [-5, -5, 0], [5, -5, 0]]
   ]
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
@@ -98,6 +101,7 @@ test('extrudeLinear (twist)', (t) => {
     [[5, 5, 0], [5, -5, 0], [-5, -5, 0]],
     [[-5, -5, 0], [-5, 5, 0], [5, 5, 0]]
   ]
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -138,6 +142,7 @@ test('extrudeLinear (twist)', (t) => {
 
   geometry3 = extrudeLinear({ height: 15, twistAngle: Math.PI / 2, twistSteps: 30 }, geometry2)
   pts = geom3.toPoints(geometry3)
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 244)
 })
 
@@ -188,6 +193,7 @@ test('extrudeLinear (holes)', (t) => {
     [[-2, -2, 0], [2, -2, 0], [-5, -5, 0]],
     [[-5, -5, 0], [-5, 5, 0], [-2, -2, 0]]
   ]
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 32)
   t.true(comparePolygonsAsPoints(pts, exp))
 })

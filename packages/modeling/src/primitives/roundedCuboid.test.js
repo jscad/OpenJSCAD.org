@@ -10,6 +10,7 @@ test('roundedCuboid (defaults)', (t) => {
   const obs = roundedCuboid()
   const pts = geom3.toPoints(obs)
 
+  t.true(geom3.validate(obs))
   t.deepEqual(pts.length, 614)
 })
 
@@ -19,6 +20,7 @@ test('roundedCuboid (options)', (t) => {
   let pts = geom3.toPoints(obs)
   let exp = []
 
+  t.true(geom3.validate(obs))
   t.is(pts.length, 62)
 
   // test center
@@ -27,6 +29,7 @@ test('roundedCuboid (options)', (t) => {
   exp = [
   ]
 
+  t.true(geom3.validate(obs))
   t.is(pts.length, 62)
 
   // test size
@@ -126,6 +129,7 @@ test('roundedCuboid (options)', (t) => {
     [[3.8, -4.8, -6], [-3.8, -4.8, -6],
       [-3.8, 4.8, -6], [3.8, 4.8, -6]]
   ]
+  t.true(geom3.validate(obs))
   t.deepEqual(pts.length, 62)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -224,6 +228,7 @@ test('roundedCuboid (options)', (t) => {
     [[2, 3, 6], [-2, 3, 6], [-2, -3, 6], [2, -3, 6]],
     [[2, -3, -6], [-2, -3, -6], [-2, 3, -6], [2, 3, -6]]
   ]
+  t.true(geom3.validate(obs))
   t.deepEqual(pts.length, 62)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
