@@ -1,7 +1,7 @@
 
 // Simon Tatham's linked list merge sort algorithm
-// http://www.chiark.greenend.org.uk/~sgtatham/algorithms/listsort.html
-const sortLinked = (list) => {
+// https://www.chiark.greenend.org.uk/~sgtatham/algorithms/listsort.html
+const sortLinked = (list, fn) => {
   let i, p, q, e, numMerges
   let inSize = 1
 
@@ -24,7 +24,7 @@ const sortLinked = (list) => {
       let qSize = inSize
 
       while (pSize > 0 || (qSize > 0 && q)) {
-        if (pSize !== 0 && (qSize === 0 || !q || p.z <= q.z)) {
+        if (pSize !== 0 && (qSize === 0 || !q || fn(p) <= fn(q))) {
           e = p
           p = p.nextZ
           pSize--

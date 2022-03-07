@@ -29,7 +29,7 @@ const eliminateHoles = (data, holeIndices, outerNode, dim) => {
   return outerNode
 }
 
-/**
+/*
  * find a bridge between vertices that connects hole with an outer ring and link it
  */
 const eliminateHole = (hole, outerNode) => {
@@ -48,7 +48,7 @@ const eliminateHole = (hole, outerNode) => {
   return outerNode === bridge ? filteredBridge : outerNode
 }
 
-/**
+/*
  * David Eberly's algorithm for finding a bridge between hole and outer polygon
  */
 const findHoleBridge = (hole, outerNode) => {
@@ -109,12 +109,12 @@ const findHoleBridge = (hole, outerNode) => {
   return m
 }
 
-/**
+/*
  * whether sector in vertex m contains sector in vertex p in the same coordinates
  */
 const sectorContainsSector = (m, p) => area(m.prev, m, p.prev) < 0 && area(p.next, m, m.next) < 0
 
-/**
+/*
  * find the leftmost node of a polygon ring
  */
 const getLeftmost = (start) => {

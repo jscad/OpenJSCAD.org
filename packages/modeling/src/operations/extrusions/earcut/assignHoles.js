@@ -67,7 +67,7 @@ const assignHoles = (geometry) => {
   }))
 }
 
-/**
+/*
  * Find the item in the list with smallest score(item).
  * If the list is empty, return undefined.
  */

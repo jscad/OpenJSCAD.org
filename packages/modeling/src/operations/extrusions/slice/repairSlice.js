@@ -32,7 +32,7 @@ const repairSlice = (slice) => {
         bestReplacement = v2
       }
     })
-    console.log(`Repair gap ${v1} → ${bestReplacement} dist ${bestDistance}`)
+    console.warn(`repairSlice: repairing vertex gap ${v1} to ${bestReplacement} distance ${bestDistance}`)
     // merge broken vertices
     slice.edges.forEach((edge) => {
       if (edge[0].toString() === key1) edge[0] = bestReplacement

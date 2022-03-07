@@ -49,7 +49,7 @@ const triangulate = (data, holeIndices, dim = 2) => {
   return triangles
 }
 
-/**
+/*
  * main ear slicing loop which triangulates a polygon (given as a linked list)
  */
 const earcutLinked = (ear, triangles, dim, minX, minY, invSize, pass) => {
@@ -105,7 +105,7 @@ const earcutLinked = (ear, triangles, dim, minX, minY, invSize, pass) => {
   }
 }
 
-/**
+/*
  * check whether a polygon node forms a valid ear with adjacent nodes
  */
 const isEar = (ear) => {
@@ -180,7 +180,7 @@ const isEarHashed = (ear, minX, minY, invSize) => {
   return true
 }
 
-/**
+/*
  * try splitting polygon into two and triangulate them independently
  */
 const splitEarcut = (start, triangles, dim, minX, minY, invSize) => {
@@ -210,7 +210,7 @@ const splitEarcut = (start, triangles, dim, minX, minY, invSize) => {
   } while (a !== start)
 }
 
-/**
+/*
  * interlink polygon nodes in z-order
  */
 const indexCurve = (start, minX, minY, invSize) => {
@@ -225,10 +225,10 @@ const indexCurve = (start, minX, minY, invSize) => {
   p.prevZ.nextZ = null
   p.prevZ = null
 
-  sortLinked(p)
+  sortLinked(p, (p) => p.z)
 }
 
-/**
+/*
  * z-order of a point given coords and inverse of the longer side of data bbox
  */
 const zOrder = (x, y, minX, minY, invSize) => {

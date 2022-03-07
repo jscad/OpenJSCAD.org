@@ -6,11 +6,11 @@ const calculatePlane = require('../slice/calculatePlane')
 const assignHoles = require('./assignHoles')
 
 /*
+ * Constructs a polygon hierarchy which associates holes with their outer solids.
  * This class maps a 3D polygon onto a 2D space using an orthonormal basis.
  * It tracks the mapping so that points can be reversed back to 3D losslessly.
- * Also constructs a polygon hierarchy which associates holes with their outer solids.
  */
-class PolygonTrees {
+class PolygonHierarchy {
   constructor (slice) {
     this.plane = calculatePlane(slice)
 
@@ -29,7 +29,7 @@ class PolygonTrees {
 
     // compute polygon hierarchies, assign holes to solids
     const geometry = geom2.create(projected)
-    this.trees = assignHoles(geometry)
+    this.roots = assignHoles(geometry)
   }
 
   /*
@@ -61,4 +61,4 @@ class PolygonTrees {
   }
 }
 
-module.exports = PolygonTrees
+module.exports = PolygonHierarchy
