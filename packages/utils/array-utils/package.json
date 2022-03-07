@@ -1,6 +1,6 @@
 {
   "name": "@jscad/array-utils",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Array Utilities for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",

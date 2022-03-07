@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.14](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io-utils@2.0.13...@jscad/io-utils@2.0.14) (2022-03-06)
+
+
+### Bug Fixes
+
+* **io:** corrected Blob to allocate internal buffer based contents ([#1006](https://github.com/jscad/OpenJSCAD.org/issues/1006)) ([df4552a](https://github.com/jscad/OpenJSCAD.org/commit/df4552a842fd884680d618f6f9b97ac7c7eb9d8b))
+
+
+
+
+
 ## [2.0.13](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io-utils@2.0.12...@jscad/io-utils@2.0.13) (2022-02-19)
 
 **Note:** Version bump only for package @jscad/io-utils
