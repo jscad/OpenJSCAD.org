@@ -114,7 +114,11 @@ const extrudeRotate = (options, geometry) => {
 
   const matrix = mat4.create()
   const createSlice = (progress, index, base) => {
-    const Zrotation = rotationPerSlice * index + startAngle
+    let Zrotation = rotationPerSlice * index + startAngle
+    // fix rounding error when rotating 2 * PI radians
+    if (totalRotation === Math.PI * 2 && index === segments) {
+      Zrotation = startAngle
+    }
     mat4.multiply(matrix, mat4.fromZRotation(matrix, Zrotation), mat4.fromXRotation(mat4.create(), Math.PI / 2))
 
     return slice.transform(matrix, base)
