@@ -25,7 +25,7 @@ test('extrudeLinear (defaults)', (t) => {
     [[5, 5, 0], [5, -5, 0], [-5, -5, 0]],
     [[-5, -5, 0], [-5, 5, 0], [5, 5, 0]]
   ]
-  t.true(geom3.isA(geometry3))
+  t.true(geom3.validate(geometry3))
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
@@ -49,7 +49,7 @@ test('extrudeLinear (no twist)', (t) => {
     [[5, 5, 0], [5, -5, 0], [-5, -5, 0]],
     [[-5, -5, 0], [-5, 5, 0], [5, 5, 0]]
   ]
-  t.true(geom3.isA(geometry3))
+  t.true(geom3.validate(geometry3))
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -69,7 +69,7 @@ test('extrudeLinear (no twist)', (t) => {
     [[5, -5, 0], [5, 5, 0], [-5, 5, 0]],
     [[-5, 5, 0], [-5, -5, 0], [5, -5, 0]]
   ]
-  t.true(geom3.isA(geometry3))
+  t.true(geom3.validate(geometry3))
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
@@ -101,7 +101,7 @@ test('extrudeLinear (twist)', (t) => {
     [[5, 5, 0], [5, -5, 0], [-5, -5, 0]],
     [[-5, -5, 0], [-5, 5, 0], [5, 5, 0]]
   ]
-  t.true(geom3.isA(geometry3))
+  t.true(geom3.validate(geometry3))
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -142,20 +142,20 @@ test('extrudeLinear (twist)', (t) => {
 
   geometry3 = extrudeLinear({ height: 15, twistAngle: Math.PI / 2, twistSteps: 30 }, geometry2)
   pts = geom3.toPoints(geometry3)
-  t.true(geom3.isA(geometry3))
+  t.true(geom3.validate(geometry3))
   t.is(pts.length, 244)
 })
 
 test('extrudeLinear (holes)', (t) => {
   const geometry2 = geom2.create([
-    [[-5.00000, 5.00000], [-5.00000, -5.00000]],
-    [[-5.00000, -5.00000], [5.00000, -5.00000]],
-    [[5.00000, -5.00000], [5.00000, 5.00000]],
-    [[5.00000, 5.00000], [-5.00000, 5.00000]],
-    [[-2.00000, -2.00000], [-2.00000, 2.00000]],
-    [[2.00000, -2.00000], [-2.00000, -2.00000]],
-    [[2.00000, 2.00000], [2.00000, -2.00000]],
-    [[-2.00000, 2.00000], [2.00000, 2.00000]]
+    [[-5, 5], [-5, -5]],
+    [[-5, -5], [5, -5]],
+    [[5, -5], [5, 5]],
+    [[5, 5], [-5, 5]],
+    [[-2, -2], [-2, 2]],
+    [[2, -2], [-2, -2]],
+    [[2, 2], [2, -2]],
+    [[-2, 2], [2, 2]]
   ])
   const geometry3 = extrudeLinear({ height: 15 }, geometry2)
   const pts = geom3.toPoints(geometry3)
@@ -193,7 +193,7 @@ test('extrudeLinear (holes)', (t) => {
     [[-2, -2, 0], [2, -2, 0], [-5, -5, 0]],
     [[-5, -5, 0], [-5, 5, 0], [-2, -2, 0]]
   ]
-  t.true(geom3.isA(geometry3))
+  t.true(geom3.validate(geometry3))
   t.is(pts.length, 32)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
@@ -201,7 +201,7 @@ test('extrudeLinear (holes)', (t) => {
 test('extrudeLinear (path2)', (t) => {
   const geometry2 = path2.fromPoints({ closed: true }, [[0, 0], [12, 0], [6, 10]])
   const geometry3 = extrudeLinear({ height: 15 }, geometry2)
-  t.true(geom3.isA(geometry3))
+  t.true(geom3.validate(geometry3))
   const pts = geom3.toPoints(geometry3)
   const exp = [
     [[6, 10, 0], [0, 0, 0], [0, 0, 15]],

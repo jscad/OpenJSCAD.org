@@ -35,18 +35,18 @@ test('extrudeRotate: (angle) extruding of a geom2 produces an expected geom3', (
     [[26, 4.898587196589413e-16, 8], [10, 4.898587196589413e-16, 8], [10, -4.898587196589413e-16, -8]],
     [[10, -4.898587196589413e-16, -8], [26, -4.898587196589413e-16, -8], [26, 4.898587196589413e-16, 8]]
   ]
-  t.true(geom3.isA(geometry3))
+  t.true(geom3.validate(geometry3))
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 
   geometry3 = extrudeRotate({ segments: 4, angle: -250 * 0.017453292519943295 }, geometry2)
   pts = geom3.toPoints(geometry3)
-  t.true(geom3.isA(geometry3))
+  t.true(geom3.validate(geometry3))
   t.is(pts.length, 28)
 
   geometry3 = extrudeRotate({ segments: 4, angle: 250 * 0.017453292519943295 }, geometry2)
   pts = geom3.toPoints(geometry3)
-  t.true(geom3.isA(geometry3))
+  t.true(geom3.validate(geometry3))
   t.is(pts.length, 28)
 })
 
