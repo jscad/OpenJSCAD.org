@@ -15,7 +15,7 @@ const unionGeom3Sub = require('../booleans/unionGeom3Sub')
 
 const extrudePolygon = require('./extrudePolygon')
 
-/**
+/*
  * Collect all planes adjacent to each vertex
  */
 const mapPlaneToVertex = (map, vertex, plane) => {
@@ -29,7 +29,7 @@ const mapPlaneToVertex = (map, vertex, plane) => {
   }
 }
 
-/**
+/*
  * Collect all planes adjacent to each edge.
  * Combine undirected edges, no need for duplicate cylinders.
  */
