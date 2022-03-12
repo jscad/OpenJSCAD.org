@@ -106,20 +106,21 @@ test('extrudeFromSlices (changing shape, changing dimensions)', (t) => {
     }, base
   )
   const pts = geom3.toPoints(geometry3)
+  t.true(geom3.isA(geometry3))
   t.is(pts.length, 304)
 })
 
 test('extrudeFromSlices (holes)', (t) => {
   const geometry2 = geom2.create(
     [
-      [[-10.0, 10.0], [-10.0, -10.0]],
-      [[-10.0, -10.0], [10.0, -10.0]],
-      [[10.0, -10.0], [10.0, 10.0]],
-      [[10.0, 10.0], [-10.0, 10.0]],
-      [[-5.0, -5.0], [-5.0, 5.0]],
-      [[5.0, -5.0], [-5.0, -5.0]],
-      [[5.0, 5.0], [5.0, -5.0]],
-      [[-5.0, 5.0], [5.0, 5.0]]
+      [[-10, 10], [-10, -10]],
+      [[-10, -10], [10, -10]],
+      [[10, -10], [10, 10]],
+      [[10, 10], [-10, 10]],
+      [[-5, -5], [-5, 5]],
+      [[5, -5], [-5, -5]],
+      [[5, 5], [5, -5]],
+      [[-5, 5], [5, 5]]
     ]
   )
   const geometry3 = extrudeFromSlices({ }, geometry2)
