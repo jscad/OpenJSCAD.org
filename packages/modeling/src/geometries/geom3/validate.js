@@ -4,7 +4,8 @@ const isA = require('./isA')
 /**
  * Determine if the given object is a valid 3D geometry.
  * Checks for valid data structure, convex polygon faces, and manifold edges.
- * If the geometry is not valid, an exception will be thrown with details of the geometry error.
+ *
+ * **If the geometry is not valid, an exception will be thrown with details of the geometry error.**
  *
  * @param {object} object - the object to interrogate
  * @returns {Boolean} true if the object matches a geom3
