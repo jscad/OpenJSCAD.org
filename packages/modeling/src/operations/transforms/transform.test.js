@@ -51,7 +51,7 @@ test('transform: transforming of a geom3 produces expected changes to polygons',
     [[-5, -10, -15], [-5, 10, -15], [5, 10, -15], [5, -10, -15]],
     [[-5, -10, 15], [5, -10, 15], [5, 10, 15], [-5, 10, 15]]
   ]
-  t.true(geom3.validate(geometry))
+  t.notThrows(() => geom3.validate(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 })
 

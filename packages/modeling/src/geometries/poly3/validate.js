@@ -9,8 +9,7 @@ const isConvex = require('./isConvex')
  * **If the geometry is not valid, an exception will be thrown with details of the geometry error.**
  *
  * @param {Object} object - the object to interrogate
- * @returns {Boolean} true if the object matches a poly3
- * @throws error if the geometry is not valid
+ * @throws {Error} error if the geometry is not valid
  * @alias module:modeling/geometries/poly3.validate
  */
 const validate = (object) => {
@@ -30,7 +29,6 @@ const validate = (object) => {
   if (!isConvex(object)) {
     throw new Error('poly3 must be convex')
   }
-  return true
 }
 
 module.exports = validate

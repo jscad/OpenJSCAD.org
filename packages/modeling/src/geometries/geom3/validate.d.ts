@@ -1,5 +1,4 @@
-import Geom3 from './type'
 
 export default validate
 
-declare function validate(object: any): object is Geom3
+declare function validate(object: any): void

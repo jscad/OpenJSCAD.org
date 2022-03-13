@@ -21,7 +21,7 @@ test('polyhedron (points and faces)', (t) => {
     [[-1, -1, -1], [-1, 1, -1], [1, 1, -1], [1, -1, -1]],
     [[-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1]]
   ]
-  t.true(geom3.validate(obs))
+  t.notThrows(() => geom3.validate(obs))
   t.deepEqual(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -38,7 +38,7 @@ test('polyhedron (points and faces)', (t) => {
     [[-10, 10, 0], [10, 10, 0], [10, -10, 0]],
     [[-10, 10, 0], [10, -10, 0], [-10, -10, 0]]
   ]
-  t.true(geom3.validate(obs))
+  t.notThrows(() => geom3.validate(obs))
   t.deepEqual(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 })

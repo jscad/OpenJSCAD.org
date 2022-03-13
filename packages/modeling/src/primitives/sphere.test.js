@@ -10,7 +10,7 @@ test('sphere (defaults)', (t) => {
   const obs = sphere()
   const pts = geom3.toPoints(obs)
 
-  t.true(geom3.isA(obs))
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 512)
 })
 
@@ -19,7 +19,7 @@ test('sphere (options)', (t) => {
   let obs = sphere({ radius: 5, segments: 12 })
   let pts = geom3.toPoints(obs)
   let exp = []
-  t.true(geom3.isA(obs))
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 72)
   // t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -127,7 +127,7 @@ test('sphere (options)', (t) => {
       [0.7071067811865476, 1.7319121124709868e-16, 0.7071067811865475],
       [0.4999999999999999, 0.5000000000000001, 0.7071067811865475]]
   ]
-  t.true(geom3.isA(obs))
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 32)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -184,7 +184,7 @@ test('sphere (options)', (t) => {
     [[-2.5, 5.5, 6.292893218813452], [-2.2928932188134525, 5, 6.292893218813452], [-3, 5, 6]],
     [[-3, 5, 8], [-2.2928932188134525, 5, 7.707106781186548], [-2.5, 5.5, 7.707106781186548]]
   ]
-  t.true(geom3.validate(obs))
+  t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 32)
   t.true(comparePolygonsAsPoints(pts, exp))
 })

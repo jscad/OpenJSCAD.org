@@ -10,7 +10,7 @@ test('cylinderElliptic (defaults)', (t) => {
   const obs = cylinderElliptic()
   const pts = geom3.toPoints(obs)
 
-  t.true(geom3.isA(obs))
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 96)
 })
 
@@ -69,7 +69,7 @@ test('cylinderElliptic (options)', (t) => {
     [[0, 0, 5], [0.8660254037844384, -0.5000000000000004, 5], [1, -2.4492935982947064e-16, 5]]
   ]
 
-  t.true(geom3.isA(obs))
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 36)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -127,7 +127,7 @@ test('cylinderElliptic (options)', (t) => {
     [[1.7320508075688767, -0.5000000000000004, 1], [1, -4.898587196589413e-16, -1], [2, -2.4492935982947064e-16, 1]]
   ]
 
-  t.true(geom3.isA(obs))
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 48)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -135,7 +135,7 @@ test('cylinderElliptic (options)', (t) => {
   obs = cylinderElliptic({ startRadius: [1, 2], endRadius: [2, 1], startAngle: Math.PI / 2, endAngle: Math.PI * 2 * 0.75, segments: 12 })
   pts = geom3.toPoints(obs)
 
-  t.true(geom3.validate(obs))
+  t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 28)
   // t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -143,7 +143,7 @@ test('cylinderElliptic (options)', (t) => {
   obs = cylinderElliptic({ segments: 8 })
   pts = geom3.toPoints(obs)
 
-  t.true(geom3.isA(obs))
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 24)
 
   // test center
@@ -184,7 +184,7 @@ test('cylinderElliptic (options)', (t) => {
     [[-5, -5, -3.5], [-4.292893218813453, -5.707106781186548, -3.5], [-4, -5, -3.5]]
   ]
 
-  t.true(geom3.validate(obs))
+  t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 24)
   t.true(comparePolygonsAsPoints(pts, exp))
 })

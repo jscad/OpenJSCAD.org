@@ -17,7 +17,7 @@ test('cuboid (defaults)', (t) => {
     [[-1, -1, -1], [-1, 1, -1], [1, 1, -1], [1, -1, -1]],
     [[-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1]]
   ]
-  t.true(geom3.validate(obs))
+  t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
@@ -35,7 +35,7 @@ test('cuboid (options)', (t) => {
     [[0, 2, 10], [6, 2, 10], [6, 8, 10], [0, 8, 10]]
   ]
 
-  t.true(geom3.validate(obs))
+  t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -51,7 +51,7 @@ test('cuboid (options)', (t) => {
     [[-2.25, -0.75, 3.5], [2.25, -0.75, 3.5], [2.25, 0.75, 3.5], [-2.25, 0.75, 3.5]]
   ]
 
-  t.true(geom3.validate(obs))
+  t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 })

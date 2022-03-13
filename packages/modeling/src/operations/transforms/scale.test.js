@@ -84,12 +84,12 @@ test('scale: scaling of a geom3 produces expected changes to polygons', (t) => {
     [[-6, -7, -12], [-6, 13, -12], [24, 13, -12], [24, -7, -12]],
     [[-6, -7, 18], [24, -7, 18], [24, 13, 18], [-6, 13, 18]]
   ]
-  t.true(geom3.validate(scaled))
+  t.notThrows(() => geom3.validate(scaled))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   scaled = scaleX(3, geometry)
   obs = geom3.toPoints(scaled)
-  t.true(geom3.validate(scaled))
+  t.notThrows(() => geom3.validate(scaled))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // scale Y
@@ -107,7 +107,7 @@ test('scale: scaling of a geom3 produces expected changes to polygons', (t) => {
 
   scaled = scaleY(0.5, geometry)
   obs = geom3.toPoints(scaled)
-  t.true(geom3.validate(scaled))
+  t.notThrows(() => geom3.validate(scaled))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // scale Z
@@ -121,12 +121,12 @@ test('scale: scaling of a geom3 produces expected changes to polygons', (t) => {
     [[-2, -7, -60], [-2, 13, -60], [8, 13, -60], [8, -7, -60]],
     [[-2, -7, 90], [8, -7, 90], [8, 13, 90], [-2, 13, 90]]
   ]
-  t.true(geom3.validate(scaled))
+  t.notThrows(() => geom3.validate(scaled))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   scaled = scaleZ(5, geometry)
   obs = geom3.toPoints(scaled)
-  t.true(geom3.validate(scaled))
+  t.notThrows(() => geom3.validate(scaled))
   t.true(comparePolygonsAsPoints(obs, exp))
 })
 

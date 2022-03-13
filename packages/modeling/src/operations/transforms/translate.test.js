@@ -84,12 +84,12 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
     [[1, -7, -12], [1, 13, -12], [11, 13, -12], [11, -7, -12]],
     [[1, -7, 18], [11, -7, 18], [11, 13, 18], [1, 13, 18]]
   ]
-  t.true(geom3.validate(translated))
+  t.notThrows(() => geom3.validate(translated))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   translated = translateX(3, geometry)
   obs = geom3.toPoints(translated)
-  t.true(geom3.validate(translated))
+  t.notThrows(() => geom3.validate(translated))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // translated Y
@@ -103,12 +103,12 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
     [[-2, -4, -12], [-2, 16, -12], [8, 16, -12], [8, -4, -12]],
     [[-2, -4, 18], [8, -4, 18], [8, 16, 18], [-2, 16, 18]]
   ]
-  t.true(geom3.validate(translated))
+  t.notThrows(() => geom3.validate(translated))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   translated = translateY(3, geometry)
   obs = geom3.toPoints(translated)
-  t.true(geom3.validate(translated))
+  t.notThrows(() => geom3.validate(translated))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // translate Z
@@ -122,12 +122,12 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
     [[-2, -7, -9], [-2, 13, -9], [8, 13, -9], [8, -7, -9]],
     [[-2, -7, 21], [8, -7, 21], [8, 13, 21], [-2, 13, 21]]
   ]
-  t.true(geom3.validate(translated))
+  t.notThrows(() => geom3.validate(translated))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   translated = translateZ(3, geometry)
   obs = geom3.toPoints(translated)
-  t.true(geom3.validate(translated))
+  t.notThrows(() => geom3.validate(translated))
   t.true(comparePolygonsAsPoints(obs, exp))
 })
 

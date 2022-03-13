@@ -10,7 +10,7 @@ test('ellipsoid (defaults)', (t) => {
   const obs = ellipsoid()
   const pts = geom3.toPoints(obs)
 
-  t.true(geom3.isA(obs))
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 512)
 })
 
@@ -140,14 +140,14 @@ test('ellipsoid (options)', (t) => {
     [[1.2990381056766578, 1.2500000000000013, -6.06217782649107], [1.5000000000000004, 6.123233995736767e-16, -6.06217782649107], [1.5908628580873598e-16, 1.5308084989341928e-16, -7]],
     [[1.5908628580873598e-16, 1.5308084989341928e-16, 7], [1.5000000000000004, 6.123233995736767e-16, 6.06217782649107], [1.2990381056766578, 1.2500000000000013, 6.06217782649107]]
   ]
-  t.true(geom3.isA(obs))
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 72)
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // test segments
   obs = ellipsoid({ segments: 8 })
   pts = geom3.toPoints(obs)
-  t.true(geom3.isA(obs))
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 32)
 
   obs = ellipsoid({ center: [-3, 5, 7], segments: 8 })
@@ -203,7 +203,7 @@ test('ellipsoid (options)', (t) => {
     [[-3, 5, 8], [-2.2928932188134525, 5, 7.707106781186548], [-2.5, 5.5, 7.707106781186548]]
   ]
 
-  t.true(geom3.validate(obs))
+  t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 32)
   t.true(comparePolygonsAsPoints(pts, exp))
 })

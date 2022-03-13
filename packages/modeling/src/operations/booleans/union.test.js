@@ -148,7 +148,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
     [[0.9999999999999998, 1.0000000000000002, -1.414213562373095], [1.4142135623730951, 3.4638242249419736e-16, -1.414213562373095], [8.65956056235493e-17, 8.659560562354935e-17, -2]],
     [[8.65956056235493e-17, 8.659560562354935e-17, 2], [1.4142135623730951, 3.4638242249419736e-16, 1.414213562373095], [0.9999999999999998, 1.0000000000000002, 1.414213562373095]]
   ]
-  t.true(geom3.isA(result1))
+  t.notThrows.skip(() => geom3.validate(result1))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // union of two non-overlapping objects
@@ -156,7 +156,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
 
   const result2 = union(geometry1, geometry2)
   obs = geom3.toPoints(result2)
-  t.true(geom3.isA(result2))
+  t.notThrows.skip(() => geom3.validate(result2))
   t.is(obs.length, 38)
 
   // union of two partially overlapping objects
@@ -184,7 +184,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
     [[-9, 9, 9], [-9, 8, 9], [8, 8, 9], [8, 9, 9]],
     [[-9, 8, 9], [-9, -9, 9], [9, -9, 9], [9, 8, 9]]
   ]
-  t.true(geom3.isA(result3))
+  t.notThrows.skip(() => geom3.validate(result3))
   t.is(obs.length, 18)
   t.true(comparePolygonsAsPoints(obs, exp))
 
@@ -199,7 +199,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
     [[-9, -9, -9], [-9, 9, -9], [9, 9, -9], [9, -9, -9]],
     [[-9, -9, 9], [9, -9, 9], [9, 9, 9], [-9, 9, 9]]
   ]
-  t.true(geom3.validate(result4))
+  t.notThrows(() => geom3.validate(result4))
   t.is(obs.length, 6)
   t.true(comparePolygonsAsPoints(obs, exp))
 })
@@ -210,7 +210,7 @@ test('union of geom3 with rounding issues #137', (t) => {
 
   const obs = union(geometry1, geometry2)
   const pts = geom3.toPoints(obs)
-  t.true(geom3.validate(obs))
+  t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 6) // number of polygons in union
 })
 

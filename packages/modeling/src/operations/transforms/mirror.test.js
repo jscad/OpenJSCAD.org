@@ -84,13 +84,13 @@ test('mirror: mirroring of geom3 about X/Y/Z produces expected changes to polygo
     [[-8, -7, -12], [-8, 13, -12], [2, 13, -12], [2, -7, -12]],
     [[2, 13, 18], [-8, 13, 18], [-8, -7, 18], [2, -7, 18]]
   ]
-  t.true(geom3.validate(mirrored))
+  t.notThrows(() => geom3.validate(mirrored))
   t.true(comparePolygonsAsPoints(obs, exp))
   t.deepEqual(obs, exp)
 
   mirrored = mirrorX(geometry)
   obs = geom3.toPoints(mirrored)
-  t.true(geom3.validate(mirrored))
+  t.notThrows(() => geom3.validate(mirrored))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // mirror about Y
@@ -104,12 +104,12 @@ test('mirror: mirroring of geom3 about X/Y/Z produces expected changes to polygo
     [[8, 7, -12], [8, -13, -12], [-2, -13, -12], [-2, 7, -12]],
     [[-2, -13, 18], [8, -13, 18], [8, 7, 18], [-2, 7, 18]]
   ]
-  t.true(geom3.validate(mirrored))
+  t.notThrows(() => geom3.validate(mirrored))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   mirrored = mirrorY(geometry)
   obs = geom3.toPoints(mirrored)
-  t.true(geom3.validate(mirrored))
+  t.notThrows(() => geom3.validate(mirrored))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // mirror about Z
@@ -123,12 +123,12 @@ test('mirror: mirroring of geom3 about X/Y/Z produces expected changes to polygo
     [[8, -7, 12], [8, 13, 12], [-2, 13, 12], [-2, -7, 12]],
     [[-2, 13, -18], [8, 13, -18], [8, -7, -18], [-2, -7, -18]]
   ]
-  t.true(geom3.validate(mirrored))
+  t.notThrows(() => geom3.validate(mirrored))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   mirrored = mirrorZ(geometry)
   obs = geom3.toPoints(mirrored)
-  t.true(geom3.validate(mirrored))
+  t.notThrows(() => geom3.validate(mirrored))
   t.true(comparePolygonsAsPoints(obs, exp))
 })
 

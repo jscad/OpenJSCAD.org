@@ -60,12 +60,12 @@ test('center: centering of a geom3 produces expected changes to polygons', (t) =
     [[-5, -7, -12], [-5, 13, -12], [5, 13, -12], [5, -7, -12]],
     [[-5, -7, 18], [5, -7, 18], [5, 13, 18], [-5, 13, 18]]
   ]
-  t.true(geom3.validate(centered))
+  t.notThrows(() => geom3.validate(centered))
   t.true(comparePolygonsAsPoints(pts, exp))
 
   centered = centerX(geometry)
   pts = geom3.toPoints(centered)
-  t.true(geom3.validate(centered))
+  t.notThrows(() => geom3.validate(centered))
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // center about Y
@@ -79,12 +79,12 @@ test('center: centering of a geom3 produces expected changes to polygons', (t) =
     [[-2, -10, -12], [-2, 10, -12], [8, 10, -12], [8, -10, -12]],
     [[-2, -10, 18], [8, -10, 18], [8, 10, 18], [-2, 10, 18]]
   ]
-  t.true(geom3.validate(centered))
+  t.notThrows(() => geom3.validate(centered))
   t.true(comparePolygonsAsPoints(pts, exp))
 
   centered = centerY(geometry)
   pts = geom3.toPoints(centered)
-  t.true(geom3.validate(centered))
+  t.notThrows(() => geom3.validate(centered))
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // center about Z
@@ -98,12 +98,12 @@ test('center: centering of a geom3 produces expected changes to polygons', (t) =
     [[-2, -7, -15], [-2, 13, -15], [8, 13, -15], [8, -7, -15]],
     [[-2, -7, 15], [8, -7, 15], [8, 13, 15], [-2, 13, 15]]
   ]
-  t.true(geom3.validate(centered))
+  t.notThrows(() => geom3.validate(centered))
   t.true(comparePolygonsAsPoints(pts, exp))
 
   centered = centerZ(geometry)
   pts = geom3.toPoints(centered)
-  t.true(geom3.validate(centered))
+  t.notThrows(() => geom3.validate(centered))
   t.true(comparePolygonsAsPoints(pts, exp))
 })
 

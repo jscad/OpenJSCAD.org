@@ -10,7 +10,7 @@ test('cylinder (defaults)', (t) => {
   const obs = cylinder()
   const pts = geom3.toPoints(obs)
 
-  t.true(geom3.isA(obs))
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 96)
 })
 
@@ -40,7 +40,7 @@ test('cylinder (options)', (t) => {
     [[0, 0, 5], [1.236067977499789, -3.8042260651806146, 5], [4, -9.797174393178826e-16, 5]]
   ]
 
-  t.true(geom3.isA(obs))
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 15)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -70,7 +70,7 @@ test('cylinder (options)', (t) => {
     [[-5, -5, -4], [-4.6909830056250525, -5.951056516295154, -4], [-4, -5, -4]]
   ]
 
-  t.true(geom3.validate(obs))
+  t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 15)
   t.true(comparePolygonsAsPoints(pts, exp))
 })

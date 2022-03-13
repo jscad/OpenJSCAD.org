@@ -73,12 +73,12 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', (t) =>
     [[-2, -18, -6.999999999999999], [8, -18, -6.999999999999999],
       [8, -18, 13.000000000000002], [-2, -18, 13.000000000000002]]
   ]
-  t.true(geom3.validate(rotated))
+  t.notThrows(() => geom3.validate(rotated))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   rotated = rotateX(Math.PI / 2, geometry)
   obs = geom3.toPoints(rotated)
-  t.true(geom3.validate(rotated))
+  t.notThrows(() => geom3.validate(rotated))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // rotate about Y
@@ -98,7 +98,7 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', (t) =>
     [[-18, -7, -1.999999999999999], [-18, -7, 8.000000000000002],
       [-18, 13, 8.000000000000002], [-18, 13, -1.999999999999999]]
   ]
-  t.true(geom3.validate(rotated))
+  t.notThrows(() => geom3.validate(rotated))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   rotated = rotateY(-Math.PI / 2, geometry)
@@ -122,12 +122,12 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', (t) =>
     [[2.000000000000001, 7, 18], [-7.999999999999999, 7.000000000000001, 18],
       [-8.000000000000002, -12.999999999999998, 18], [1.9999999999999984, -13, 18]]
   ]
-  t.true(geom3.validate(rotated))
+  t.notThrows(() => geom3.validate(rotated))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   rotated = rotateZ(Math.PI, geometry)
   obs = geom3.toPoints(rotated)
-  t.true(geom3.validate(rotated))
+  t.notThrows(() => geom3.validate(rotated))
   t.true(comparePolygonsAsPoints(obs, exp))
 })
 
