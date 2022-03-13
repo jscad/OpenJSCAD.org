@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.8.0...@jscad/modeling@2.9.0) (2022-03-13)
+
+
+### Features
+
+* **modeling:** added earcut triangulation algorithm for extrusion caps ([#1021](https://github.com/jscad/OpenJSCAD.org/issues/1021)) ([c7f8ddf](https://github.com/jscad/OpenJSCAD.org/commit/c7f8ddfb34d3ff6a0c8d2c129f2b150c23987f59))
+
+
+
+
+
 # [2.8.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.7.2...@jscad/modeling@2.8.0) (2022-03-06)
 
 
