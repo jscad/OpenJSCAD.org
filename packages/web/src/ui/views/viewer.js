@@ -143,7 +143,7 @@ const viewer = (state, i18n) => {
   } else {
     // only generate entities when the solids change
     // themes, options, etc also change the viewer state
-    const solids = state.design.solids
+    const solids = state.design.solids.filter((solid) => solid && (solid instanceof Object))
     if (prevSolids) {
       const theme = state.themes.themeSettings.viewer
       const color = theme.rendering.meshColor
@@ -232,11 +232,9 @@ const setup = (element) => {
     entities: []
   }
   if (type === 'webgl') {
-    if (!gl.getExtension('OES_element_index_uint')) {
-      error = 'Your browser uses an old version of WebGL without OES_element_index_uint. Please upgrade your browser to use this application'
+    if (gl.getExtension('OES_element_index_uint')) {
+      viewerOptions.glOptions.optionalExtensions = ['oes_element_index_uint']
     }
-
-    viewerOptions.glOptions.optionalExtensions = ['oes_element_index_uint']
   }
   return { viewerOptions, camera, error }
 }

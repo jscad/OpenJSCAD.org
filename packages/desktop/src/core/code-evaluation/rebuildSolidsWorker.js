@@ -35,7 +35,7 @@ onmessage = function (event) {
         solids = rawResults
       } else if (vtreeMode) {
         // TODO: optimise this !!
-        Object.keys(lookup).forEach(function (key) {
+        Object.keys(lookup).forEach((key) => {
           const object = lookup[key]
           let result
           if (object.class === 'CSG') {
@@ -53,7 +53,7 @@ onmessage = function (event) {
         throw new Error('Bad output from script: expected CSG/CAG objects')
       }
       solids = solids
-        .map(object => {
+        .map((object) => {
           if (isCSG(object) || isCAG(object)) {
             return object.toCompactBinary()
           }
@@ -61,7 +61,7 @@ onmessage = function (event) {
 
       // FIXME: optimise this !!
       const compactLookup = {}
-      Object.keys(convertedLookup).forEach(function (key) {
+      Object.keys(convertedLookup).forEach((key) => {
         const object = convertedLookup[key]
         let result = object
         // FIXME: isCSG/isCAG should not fail on arbitraty objects

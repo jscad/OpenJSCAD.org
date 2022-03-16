@@ -3,6 +3,96 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.9.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.8.0...@jscad/modeling@2.9.0) (2022-03-13)
+
+
+### Features
+
+* **modeling:** added earcut triangulation algorithm for extrusion caps ([#1021](https://github.com/jscad/OpenJSCAD.org/issues/1021)) ([c7f8ddf](https://github.com/jscad/OpenJSCAD.org/commit/c7f8ddfb34d3ff6a0c8d2c129f2b150c23987f59))
+
+
+
+
+
+# [2.8.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.7.2...@jscad/modeling@2.8.0) (2022-03-06)
+
+
+### Bug Fixes
+
+* **modeling:** fixed type of relativeTo in align() options, TS ([#1015](https://github.com/jscad/OpenJSCAD.org/issues/1015)) ([ca4927e](https://github.com/jscad/OpenJSCAD.org/commit/ca4927eb37b21a7c278b46375b788c808d235e77))
+
+
+### Features
+
+* **modeling:** enchanced extrudeLinear to support path2 ([#1009](https://github.com/jscad/OpenJSCAD.org/issues/1009)) ([5a62a6b](https://github.com/jscad/OpenJSCAD.org/commit/5a62a6b9fe4cca9f85ff48be0dc12cdd1323f70a))
+
+
+### Performance Improvements
+
+* **modeling:** improved performace of path2 offsets ([#1013](https://github.com/jscad/OpenJSCAD.org/issues/1013)) ([47f824b](https://github.com/jscad/OpenJSCAD.org/commit/47f824b5abe2b31077a03604ac62f9b14ada64d9))
+* **modeling:** improved performance of expanding geom3, and bug fix ([#1008](https://github.com/jscad/OpenJSCAD.org/issues/1008)) ([d0d035a](https://github.com/jscad/OpenJSCAD.org/commit/d0d035a5d94eaff8de7360fe96e60cc496231eef))
+* **modeling:** use Set to create unique points in hullPath2 ([#1007](https://github.com/jscad/OpenJSCAD.org/issues/1007)) ([bd75a98](https://github.com/jscad/OpenJSCAD.org/commit/bd75a9870d614796a64a25fb874b5e77ad359e6f))
+
+
+
+
+
+## [2.7.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.7.1...@jscad/modeling@2.7.2) (2022-02-19)
+
+
+### Performance Improvements
+
+* **modeling:** changed geom2.toOutlines to use a map when creating unique edges ([#997](https://github.com/jscad/OpenJSCAD.org/issues/997)) ([338065f](https://github.com/jscad/OpenJSCAD.org/commit/338065fa37041a41e66cbe648ba2080239f3db97))
+* **modeling:** Use hypot instead of sqrt when possible ([#996](https://github.com/jscad/OpenJSCAD.org/issues/996)) ([113c636](https://github.com/jscad/OpenJSCAD.org/commit/113c636b1ac33e351c97789eb6ce0a546365141e))
+
+
+
+
+
+## [2.7.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.7.0...@jscad/modeling@2.7.1) (2021-12-26)
+
+
+### Bug Fixes
+
+* **modeling:** revert measureBoundingBox to only cache per geometry ([#967](https://github.com/jscad/OpenJSCAD.org/issues/967)) ([b18c02c](https://github.com/jscad/OpenJSCAD.org/commit/b18c02c333b225981a9093caf0593795bc0861ad))
+
+
+
+
+
+# [2.7.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.6.1...@jscad/modeling@2.7.0) (2021-12-11)
+
+
+### Bug Fixes
+
+* **modeling:** compute planes from average of all vertex normals ([#953](https://github.com/jscad/OpenJSCAD.org/issues/953)) ([c8a37ad](https://github.com/jscad/OpenJSCAD.org/commit/c8a37ad6430aec8361a5e121730b34629c0d969c))
+
+
+### Features
+
+* **modeling:** new triangle primitive ([#954](https://github.com/jscad/OpenJSCAD.org/issues/954)) ([ce00d7d](https://github.com/jscad/OpenJSCAD.org/commit/ce00d7d4aed364496b7086221af7feae4ffec29c))
+
+
+### Performance Improvements
+
+* **modeling:** improved measureBoundingBox by eliminating allocations ([8abe361](https://github.com/jscad/OpenJSCAD.org/commit/8abe361fc0249ec10e438382353b316aec4644a4))
+
+
+
+
+
+## [2.6.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.6.0...@jscad/modeling@2.6.1) (2021-11-07)
+
+
+### Bug Fixes
+
+* **modeling:** corrected measureBoundingBox for mirrored shapes ([#946](https://github.com/jscad/OpenJSCAD.org/issues/946)) ([ab2d505](https://github.com/jscad/OpenJSCAD.org/commit/ab2d50595129167a85f330adf286eaa56ae45de5))
+* **modeling:** handle negative area polygons in snapPolygons ([#941](https://github.com/jscad/OpenJSCAD.org/issues/941)) ([971343a](https://github.com/jscad/OpenJSCAD.org/commit/971343ac8ef90701a8dd54a1889f8932bebab5da))
+
+
+
+
+
 # [2.6.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.5.3...@jscad/modeling@2.6.0) (2021-10-17)
 
 

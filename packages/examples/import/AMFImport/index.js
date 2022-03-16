@@ -11,8 +11,6 @@
 // Load the AMF files using require
 const rook = require('./Rook.amf')
 
-const main = () => {
-  return rook
-}
+const main = () => rook
 
 module.exports = { main }

@@ -131,8 +131,6 @@ test('cylinderElliptic (options)', (t) => {
   // test startAngle and endAngle
   obs = cylinderElliptic({ startRadius: [1, 2], endRadius: [2, 1], startAngle: Math.PI / 2, endAngle: Math.PI * 2 * 0.75, segments: 12 })
   pts = geom3.toPoints(obs)
-  exp = [
-  ]
 
   t.is(pts.length, 28)
   // t.true(comparePolygonsAsPoints(pts, exp))

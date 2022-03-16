@@ -18,5 +18,6 @@ export { default as sphere, SphereOptions } from './sphere'
 export { default as square, SquareOptions } from './square'
 export { default as star, StarOptions } from './star'
 export { default as torus, TorusOptions } from './torus'
+export { default as triangle, TriangleOptions } from './triangle'
 
 export as namespace primitives

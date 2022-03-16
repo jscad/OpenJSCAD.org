@@ -2,14 +2,14 @@ const generate = require('../core/geometry-generator-cached')
 // const decache = require('decache')
 const { toArray } = require('@jscad/array-utils')
 
-function runCompare (basePath, runs = 10) {
+const runCompare = (basePath, runs = 10) => {
   console.log('running benchmarks for ' + basePath)
 
   const moduleNameVanilla = basePath + '-base'
   const moduleNameVtree = basePath + '-vtree'
   // first verify they all have the same output
   const baseLinePolyCounts = runVanilla(moduleNameVanilla)
-  if (!samePolygonCount(baseLinePolyCounts, runVTreeTree(moduleNameVtree))) {
+  if (!samePolygonCount(baseLinePolyCounts, runVTree(moduleNameVtree))) {
     throw new Error(`Mismatch of polygon count in vtree-tree mode!! should be ${baseLinePolyCounts}`)
   }
   if (!samePolygonCount(baseLinePolyCounts, runVTree(moduleNameVtree))) {
@@ -27,7 +27,7 @@ const runPass = (moduleName, runFn, runs, name) => {
   let start
 
   const numbers = []
-  for (var i = 0; i < runs; i++) {
+  for (let i = 0; i < runs; i++) {
     // decache(moduleName)
 
     start = process.hrtime()
@@ -43,17 +43,17 @@ const runPass = (moduleName, runFn, runs, name) => {
 
 const runVanilla = (moduleName) => {
   const results = toArray(require(moduleName)())
-  const resultPolys = results.map(r => r.polygons.length)
+  const resultPolys = results.map((r) => r.polygons.length)
   return resultPolys
 }
 const runVTree = (moduleName) => {
   let results = require(moduleName)()
   results = toArray(generate(results))
-  const resultPolys = results.map(r => r.polygons.length)
+  const resultPolys = results.map((r) => r.polygons.length)
   return resultPolys
 }
 
-const median = sequence => {
+const median = (sequence) => {
   sequence.sort() // note that direction doesn't matter
   return sequence[Math.ceil(sequence.length / 2)]
 }

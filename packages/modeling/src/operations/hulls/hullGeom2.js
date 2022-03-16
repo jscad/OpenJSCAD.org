@@ -30,7 +30,7 @@ const hullGeom2 = (...geometries) => {
 
   const hullpoints = hullPoints2(uniquepoints)
 
-  // NOTE: more then three points are required to create a new geometry
+  // NOTE: more than three points are required to create a new geometry
   if (hullpoints.length < 3) return geom2.create()
 
   // assemble a new geometry from the list of points

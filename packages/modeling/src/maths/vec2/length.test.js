@@ -25,5 +25,15 @@ test('vec2: length() should return correct values', (t) => {
   const length5 = length(vec5)
   nearlyEqual(t, length5, 2.23606, EPS)
 
+  // huge vector
+  const vec6 = fromValues(1e200, 1e200)
+  const length6 = length(vec6)
+  nearlyEqual(t, length6, Math.SQRT2 * 1e200, EPS)
+
+  // tiny vector
+  const vec7 = fromValues(1e-200, 1e-200)
+  const length7 = length(vec7)
+  nearlyEqual(t, length7, Math.SQRT2 * 1e-200, EPS)
+
   t.true(true)
 })

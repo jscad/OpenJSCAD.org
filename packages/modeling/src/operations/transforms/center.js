@@ -24,18 +24,18 @@ const centerGeometry = (options, object) => {
 }
 
 /**
- * Center the given geometries using the given options.
+ * Center the given objects using the given options.
  * @param {Object} options - options for centering
  * @param {Array} [options.axes=[true,true,true]] - axis of which to center, true or false
- * @param {Array} [options.relativeTo=[0,0,0]] - relative point of which to center the geometries
- * @param {...Object} geometries - the geometries to center
- * @return {Object|Array} the centered geometry, or a list of centered geometries
+ * @param {Array} [options.relativeTo=[0,0,0]] - relative point of which to center the objects
+ * @param {...Object} objects - the objects to center
+ * @return {Object|Array} the centered object, or a list of centered objects
  * @alias module:modeling/transforms.center
  *
  * @example
  * let myshape = center({axes: [true,false,false]}, sphere()) // center about the X axis
  */
-const center = (options, ...geometries) => {
+const center = (options, ...objects) => {
   const defaults = {
     axes: [true, true, true],
     relativeTo: [0, 0, 0]
@@ -43,13 +43,13 @@ const center = (options, ...geometries) => {
   }
   const { axes, relativeTo } = Object.assign({}, defaults, options)
 
-  geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('wrong number of arguments')
+  objects = flatten(objects)
+  if (objects.length === 0) throw new Error('wrong number of arguments')
   if (relativeTo.length !== 3) throw new Error('relativeTo must be an array of length 3')
 
   options = { axes, relativeTo }
 
-  const results = geometries.map((object) => {
+  const results = objects.map((object) => {
     if (path2.isA(object)) return centerGeometry(options, object)
     if (geom2.isA(object)) return centerGeometry(options, object)
     if (geom3.isA(object)) return centerGeometry(options, object)
@@ -59,25 +59,25 @@ const center = (options, ...geometries) => {
 }
 
 /**
- * Center the given geometries about the X axis.
- * @param {...Object} geometries - the geometries to center
- * @return {Object|Array} the centered geometry, or a list of centered geometry
+ * Center the given objects about the X axis.
+ * @param {...Object} objects - the objects to center
+ * @return {Object|Array} the centered object, or a list of centered objects
  * @alias module:modeling/transforms.centerX
  */
 const centerX = (...objects) => center({ axes: [true, false, false] }, objects)
 
 /**
- * Center the given geometries about the Y axis.
- * @param {...Object} geometries - the geometries to center
- * @return {Object|Array} the centered geometry, or a list of centered geometry
+ * Center the given objects about the Y axis.
+ * @param {...Object} objects - the objects to center
+ * @return {Object|Array} the centered object, or a list of centered objects
  * @alias module:modeling/transforms.centerY
  */
 const centerY = (...objects) => center({ axes: [false, true, false] }, objects)
 
 /**
- * Center the given geometries about the Z axis.
- * @param {...Object} geometries - the geometries to center
- * @return {Object|Array} the centered geometry, or a list of centered geometry
+ * Center the given objects about the Z axis.
+ * @param {...Object} objects - the objects to center
+ * @return {Object|Array} the centered object, or a list of centered objects
  * @alias module:modeling/transforms.centerZ
  */
 const centerZ = (...objects) => center({ axes: [false, false, true] }, objects)

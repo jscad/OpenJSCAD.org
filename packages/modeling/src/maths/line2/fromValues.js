@@ -9,11 +9,11 @@ const create = require('./create')
  * @returns {line2} a new unbounded line
  * @alias module:modeling/maths/line2.fromValues
  */
-const fromValues = (x, y, w) => {
+const fromValues = (x, y, d) => {
   const out = create()
   out[0] = x
   out[1] = y
-  out[2] = w
+  out[2] = d
   return out
 }
 

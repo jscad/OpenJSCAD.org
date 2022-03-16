@@ -3,6 +3,65 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-serializer@2.3.2...@jscad/svg-serializer@2.3.3) (2022-03-13)
+
+**Note:** Version bump only for package @jscad/svg-serializer
+
+
+
+
+
+## [2.3.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-serializer@2.3.1...@jscad/svg-serializer@2.3.2) (2022-03-06)
+
+**Note:** Version bump only for package @jscad/svg-serializer
+
+
+
+
+
+## [2.3.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-serializer@2.3.0...@jscad/svg-serializer@2.3.1) (2022-02-19)
+
+**Note:** Version bump only for package @jscad/svg-serializer
+
+
+
+
+
+# [2.3.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-serializer@2.2.10...@jscad/svg-serializer@2.3.0) (2022-01-23)
+
+
+### Features
+
+* **svg-serializer:** enhanced to serialize id and class attributes to SVG ([ca91bb9](https://github.com/jscad/OpenJSCAD.org/commit/ca91bb9a38232b3ea355aeff905223290539d5c2))
+
+
+
+
+
+## [2.2.10](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-serializer@2.2.9...@jscad/svg-serializer@2.2.10) (2021-12-26)
+
+**Note:** Version bump only for package @jscad/svg-serializer
+
+
+
+
+
+## [2.2.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-serializer@2.2.8...@jscad/svg-serializer@2.2.9) (2021-12-11)
+
+**Note:** Version bump only for package @jscad/svg-serializer
+
+
+
+
+
+## [2.2.8](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-serializer@2.2.7...@jscad/svg-serializer@2.2.8) (2021-11-07)
+
+**Note:** Version bump only for package @jscad/svg-serializer
+
+
+
+
+
 ## [2.2.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-serializer@2.2.6...@jscad/svg-serializer@2.2.7) (2021-10-17)
 
 **Note:** Version bump only for package @jscad/svg-serializer

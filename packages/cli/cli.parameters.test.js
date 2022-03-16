@@ -4,7 +4,7 @@ const path = require('path')
 const { execSync } = require('child_process')
 const fs = require('fs')
 
-test.afterEach.always(t => {
+test.afterEach.always((t) => {
   // remove files
   try {
     if (t.context.inputPath) fs.unlinkSync(t.context.inputPath)
@@ -19,7 +19,7 @@ test.afterEach.always(t => {
   } catch (err) {}
 })
 
-test.beforeEach(t => {
+test.beforeEach((t) => {
   const cliName = './cli.js'
   t.context = {
     cliPath: path.resolve(__dirname, cliName)
@@ -63,7 +63,7 @@ module.exports = { main, getParameterDefinitions }
   return filePath
 }
 
-test('cli (single input file)', t => {
+test('cli (single input file)', (t) => {
   const testID = 1
 
   const inputPath = createJscad(testID)
@@ -84,7 +84,7 @@ test('cli (single input file)', t => {
   t.true(fs.existsSync(outputPath))
 })
 
-test('cli (single input file, output format)', t => {
+test('cli (single input file, output format)', (t) => {
   const testID = 2
 
   const inputPath = createJscad(testID)
@@ -105,7 +105,7 @@ test('cli (single input file, output format)', t => {
   t.true(fs.existsSync(outputPath))
 })
 
-test('cli (single input file, output filename)', t => {
+test('cli (single input file, output filename)', (t) => {
   const testID = 3
 
   const inputPath = createJscad(testID)
@@ -126,7 +126,7 @@ test('cli (single input file, output filename)', t => {
   t.true(fs.existsSync(outputPath))
 })
 
-test('cli (folder, output format)', t => {
+test('cli (folder, output format)', (t) => {
   const testID = 4
 
   const inputPath = createJscad(testID)
@@ -161,7 +161,7 @@ test('cli (folder, output format)', t => {
   t.true(fs.existsSync(outputPath))
 })
 
-test('cli (single input file, parameters)', t => {
+test('cli (single input file, parameters)', (t) => {
   const testID = 5
 
   const inputPath = createJscad(testID)
@@ -182,7 +182,7 @@ test('cli (single input file, parameters)', t => {
   t.true(fs.existsSync(outputPath))
 })
 
-test('cli (no parameters)', t => {
+test('cli (no parameters)', (t) => {
   const cliPath = t.context.cliPath
 
   const cmd = `node ${cliPath}`
@@ -191,11 +191,11 @@ test('cli (no parameters)', t => {
   })
 })
 
-test('cli (single input file, invalid jscad)', t => {
+test('cli (single input file, invalid jscad)', (t) => {
   const testID = 6
 
   const inputPath = createJscad(testID)
-  fs.writeFileSync(inputPath, "INVALID")
+  fs.writeFileSync(inputPath, 'INVALID')
   t.true(fs.existsSync(inputPath))
 
   t.context.inputPath = inputPath

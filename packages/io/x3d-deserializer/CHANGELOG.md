@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-deserializer@2.1.2...@jscad/x3d-deserializer@2.1.3) (2022-03-06)
+
+**Note:** Version bump only for package @jscad/x3d-deserializer
+
+
+
+
+
+## [2.1.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-deserializer@2.1.1...@jscad/x3d-deserializer@2.1.2) (2022-02-19)
+
+
+### Performance Improvements
+
+* **modeling:** Use hypot instead of sqrt when possible ([#996](https://github.com/jscad/OpenJSCAD.org/issues/996)) ([113c636](https://github.com/jscad/OpenJSCAD.org/commit/113c636b1ac33e351c97789eb6ce0a546365141e))
+
+
+
+
+
+## [2.1.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-deserializer@2.1.0...@jscad/x3d-deserializer@2.1.1) (2021-12-26)
+
+**Note:** Version bump only for package @jscad/x3d-deserializer
+
+
+
+
+
 # 2.1.0 (2021-10-17)
 
 

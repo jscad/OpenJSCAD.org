@@ -13,13 +13,11 @@ const { maths, extrusions } = jscad
 const { bezier } = jscad.curves
 const { slice } = extrusions
 
-const main = () => {
-  return [
-    extrudeWobble(30)
-  ]
-}
+const main = () => [
+  extrudeWobble(30)
+]
 
-function extrudeWobble (height) {
+const extrudeWobble = (height) => {
   const squareSlice = slice.fromPoints([[10, 10], [-10, 10], [-10, -10], [10, -10]])
 
   const xCurve = bezier.create([1, 2, 0.4, 1])

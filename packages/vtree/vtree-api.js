@@ -1,1 +1,1 @@
-module.exports = require('./core/index/').apiClone
+module.exports = require('./core/index').apiClone

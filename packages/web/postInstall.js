@@ -6,7 +6,7 @@ const fs = require('fs')
 const DocBlock = require('docblock')
 const docBlock = new DocBlock()
 
-const ignoreExamples = {Imports:1, Projects:1}
+const ignoreExamples = { Imports: 1, Projects: 1 }
 
 const copyAndProcessExamples = (examplesSrc) => {
   const examples = { 'Creating Shapes': [], 'Manipulating Shapes': [], Colors: [], Parameters: [], Other: [] }
@@ -42,8 +42,8 @@ const processExamplesFile = (filePath, examples) => {
   if (result.length) {
     const category = result[0].tags.category
 
-    if(category in ignoreExamples){
-      console.log(`Ignoring example ${filePath}`);
+    if (category in ignoreExamples) {
+      console.log(`Ignoring example ${filePath}`)
       return
     }
 

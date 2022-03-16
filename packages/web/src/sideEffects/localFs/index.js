@@ -17,7 +17,6 @@ const makeLocalFsSideEffect = async (params) => {
     webSocket = new WebSocket(localFsOptions.livereloadUrl)
 
     webSocket.onopen = function (event) {
-      console.log('websocket open', event)
       sendWs({ command: 'hello', protocols: ['http://livereload.com/protocols/official-6', 'http://livereload.com/protocols/official-7'], ver: '2.0.8', ext: 'Chrome', extver: '2.1.0' })
     }
 
@@ -28,11 +27,10 @@ const makeLocalFsSideEffect = async (params) => {
     }
 
     webSocket.onerror = function (event) {
-      console.log('websocket error', event)
+      console.warn('websocket error', event)
     }
 
     webSocket.onclose = function (event) {
-      console.log('websocket closed', event)
       webSocket = null
     }
   }
@@ -111,7 +109,6 @@ const makeLocalFsSideEffect = async (params) => {
       }
 
       const write = () => {
-        // console.error('writing to local file system is not implemented yet')
       }
 
       const commandHandlers = {

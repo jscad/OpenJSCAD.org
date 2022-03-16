@@ -8,7 +8,7 @@ const fromValues = require('../vec3/fromValues')
  * @param {mat4} matrix the input matrix
  * @returns {vec3} output
  */
-const lefttMultiplyVec3 = (vector, matrix) => {
+const leftMultiplyVec3 = (vector, matrix) => {
   const [v0, v1, v2] = vector
   const v3 = 1
   let x = v0 * matrix[0] + v1 * matrix[4] + v2 * matrix[8] + v3 * matrix[12]
@@ -26,4 +26,4 @@ const lefttMultiplyVec3 = (vector, matrix) => {
   return fromValues(x, y, z)
 }
 
-module.exports = lefttMultiplyVec3
+module.exports = leftMultiplyVec3

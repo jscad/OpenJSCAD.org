@@ -20,7 +20,6 @@ const splitPolygonByPlane = require('./splitPolygonByPlane')
 // remove() removes a polygon from the tree. Once a polygon is removed, the parent polygons are invalidated
 // since they are no longer intact.
 class PolygonTreeNode {
-
   // constructor creates the root node
   constructor () {
     this.parent = null

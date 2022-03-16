@@ -4,11 +4,11 @@
  * @returns {TypedArray} compact binary representation
  * @alias module:modeling/geometries/geom2.toCompactBinary
  */
-const toCompactBinary = (geom) => {
-  const sides = geom.sides
-  const transforms = geom.transforms
+const toCompactBinary = (geometry) => {
+  const sides = geometry.sides
+  const transforms = geometry.transforms
   let color = [-1, -1, -1, -1]
-  if (geom.color) color = geom.color
+  if (geometry.color) color = geometry.color
 
   // FIXME why Float32Array?
   const compacted = new Float32Array(1 + 16 + 4 + (sides.length * 4)) // type + transforms + color + sides data

@@ -12,7 +12,6 @@ const longNames = {
 
 const getDefaultLocale = () => {
   let localeBase
-  // console.log('is electron', isElectron())
   if (isElectron()) {
     // localeBase = require('electron').remote.app.getLocale().split('-')[0]
   } else {

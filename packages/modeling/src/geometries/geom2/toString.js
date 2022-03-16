@@ -5,7 +5,7 @@ const toSides = require('./toSides')
 /**
  * Create a string representing the contents of the given geometry.
  * @param {geom2} geometry - the geometry
- * @returns {String} a representive string
+ * @returns {String} a representative string
  * @alias module:modeling/geometries/geom2.toString
  *
  * @example

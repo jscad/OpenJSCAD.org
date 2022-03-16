@@ -80,9 +80,6 @@ const update = ({ controls, camera }, output) => {
   let theta
   let phi
 
-  // console.log('target', target)
-  // console.log(matrix)
-
   if (up[2] === 1) {
     // angle from z-axis around y-axis, upVector : z
     theta = atan2(offset[0], offset[1])
@@ -325,35 +322,6 @@ const reset = ({ controls, camera }, desiredState) => {
     }
   }
   return options
-}
-
-// FIXME: upgrade or obsolete
-const setFocus = ({ controls, camera }, focusPoint) => {
-  const sub = (a, b) => a.map((a1, i) => a1 - b[i])
-  const add = (a, b) => a.map((a1, i) => a1 + b[i]) // NOTE: NO typedArray.map support on old browsers, polyfilled
-  const camTarget = camera.target
-  const diff = sub(focusPoint, camTarget) // [ focusPoint[0] - camTarget[0],
-  const zOffset = [0, 0, diff[2] * 0.5]
-  camera.target = add(camTarget, zOffset)
-  camera.position = add(camera.position, zOffset)
-  return camera
-
-  // old 'zoom to fit' update code
-  /* if (targetTgt && positionTgt) {
-    const posDiff = vec3.subtract([], positionTgt, newPosition)
-    const tgtDiff = vec3.subtract([], targetTgt, newTarget)
-    // console.log('posDiff', newPosition, positionTgt, newTarget, targetTgt)
-    if (vec3.length(posDiff) > 0.1 && vec3.length(tgtDiff) > 0.1) {
-      newPosition = vec3.scaleAndAdd(newPosition, newPosition, posDiff, 0.1)
-      newTarget = vec3.scaleAndAdd(newTarget, newTarget, tgtDiff, 0.1)
-    }
-
-    if (settings.autoAdjustPlanes) {
-      var distance = vec3.squaredDistance(newTarget, newPosition)
-      near = Math.min(Math.max(5, distance * 0.0015), 100) // these are empirical values , after a LOT of testing
-      projection = mat4.perspective([], camera.fov, camera.aspect, camera.near, camera.far)
-    }
-  } */
 }
 
 module.exports = {

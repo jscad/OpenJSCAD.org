@@ -62,7 +62,7 @@ const createParamControls = (prevParamValues = {}, paramDefinitions, instantUpda
   return { controls: results, paramControls }
 }
 
-const createGroupControl = definition => {
+const createGroupControl = (definition) => {
   const control = document.createElement('title')
   control.paramName = definition.name
   control.paramType = definition.type

@@ -25,9 +25,7 @@ const main = () => {
     star({ vertices: 9, outerRadius: 2, innerRadius: 0.8, density: 2, startAngle: Math.PI / 18 })
   ]
 
-  return allPrimitives.map((primitive, index) => {
-    return translate([(index % 4 - 2) * 6, Math.floor(index / 4 - 2) * 6, 0], primitive)
-  })
+  return allPrimitives.map((primitive, index) => translate([(index % 4 - 2) * 6, Math.floor(index / 4 - 2) * 6, 0], primitive))
 }
 
 module.exports = { main }

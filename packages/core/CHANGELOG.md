@@ -3,6 +3,69 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.5.5...@jscad/core@2.5.6) (2022-03-13)
+
+**Note:** Version bump only for package @jscad/core
+
+
+
+
+
+## [2.5.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.5.4...@jscad/core@2.5.5) (2022-03-06)
+
+**Note:** Version bump only for package @jscad/core
+
+
+
+
+
+## [2.5.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.5.3...@jscad/core@2.5.4) (2022-02-19)
+
+**Note:** Version bump only for package @jscad/core
+
+
+
+
+
+## [2.5.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.5.2...@jscad/core@2.5.3) (2022-01-23)
+
+
+### Bug Fixes
+
+* **core:** add caching to webRequire ([#971](https://github.com/jscad/OpenJSCAD.org/issues/971)) ([9095129](https://github.com/jscad/OpenJSCAD.org/commit/9095129263c10afb28fa161a94be776428e02bb3))
+* **core:** corrected checks for proper main module, and improved error messages ([#979](https://github.com/jscad/OpenJSCAD.org/issues/979)) ([e4e6c12](https://github.com/jscad/OpenJSCAD.org/commit/e4e6c126f3bdccc54efc3ce8f31c08dd514e592c))
+
+
+
+
+
+## [2.5.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.5.1...@jscad/core@2.5.2) (2021-12-26)
+
+**Note:** Version bump only for package @jscad/core
+
+
+
+
+
+## [2.5.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.5.0...@jscad/core@2.5.1) (2021-12-11)
+
+**Note:** Version bump only for package @jscad/core
+
+
+
+
+
+# [2.5.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.4.0...@jscad/core@2.5.0) (2021-11-07)
+
+
+### Features
+
+* **core:** remove VTREE from core and web modules ([#938](https://github.com/jscad/OpenJSCAD.org/issues/938)) ([11431dc](https://github.com/jscad/OpenJSCAD.org/commit/11431dc41f9da085dcfc95a9f6af23b28d9809ea))
+
+
+
+
+
 # [2.4.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.3.8...@jscad/core@2.4.0) (2021-10-17)
 
 

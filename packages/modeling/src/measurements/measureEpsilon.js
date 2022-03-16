@@ -8,25 +8,19 @@ const measureBoundingBox = require('./measureBoundingBox')
  * Measure the epsilon of the given (path2) geometry.
  * @return {Number} the epsilon (precision) of the geometry
  */
-const measureEpsilonOfPath2 = (geometry) => {
-  return calculateEpsilonFromBounds(measureBoundingBox(geometry), 2)
-}
+const measureEpsilonOfPath2 = (geometry) => calculateEpsilonFromBounds(measureBoundingBox(geometry), 2)
 
 /*
  * Measure the epsilon of the given (geom2) geometry.
  * @return {Number} the epsilon (precision) of the geometry
  */
-const measureEpsilonOfGeom2 = (geometry) => {
-  return calculateEpsilonFromBounds(measureBoundingBox(geometry), 2)
-}
+const measureEpsilonOfGeom2 = (geometry) => calculateEpsilonFromBounds(measureBoundingBox(geometry), 2)
 
 /*
  * Measure the epsilon of the given (geom3) geometry.
  * @return {Float} the epsilon (precision) of the geometry
  */
-const measureEpsilonOfGeom3 = (geometry) => {
-  return calculateEpsilonFromBounds(measureBoundingBox(geometry), 3)
-}
+const measureEpsilonOfGeom3 = (geometry) => calculateEpsilonFromBounds(measureBoundingBox(geometry), 3)
 
 /**
  * Measure the epsilon of the given geometries.

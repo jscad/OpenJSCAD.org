@@ -8,6 +8,10 @@ const nearlyEqual = (t, a, b, epsilon, failMessage) => {
   const absA = Math.abs(a)
   const absB = Math.abs(b)
   const diff = Math.abs(a - b)
+  if (Number.isNaN(diff)) {
+    failMessage = failMessage === undefined ? 'difference is not a number' : failMessage
+    t.fail(failMessage + '(' + a + ',' + b + ')')
+  }
   if (a === 0 || b === 0 || diff < Number.EPSILON) {
   // a or b is zero or both are extremely close to it
   // relative error is less meaningful here

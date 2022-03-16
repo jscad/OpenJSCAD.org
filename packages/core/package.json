@@ -1,6 +1,6 @@
 {
   "name": "@jscad/core",
-  "version": "2.4.0",
+  "version": "2.5.6",
   "description": "Core functionality for JSCAD Applications",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
@@ -34,10 +34,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/array-utils": "2.1.0",
-    "@jscad/io": "2.1.0",
-    "@jscad/io-utils": "2.0.9",
-    "@jscad/modeling": "2.6.0",
+    "@jscad/array-utils": "2.1.2",
+    "@jscad/io": "2.2.6",
+    "@jscad/io-utils": "2.0.15",
+    "@jscad/modeling": "2.9.0",
     "json5": "2.2.0",
     "strip-bom": "4.0.0"
   },

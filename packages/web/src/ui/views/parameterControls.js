@@ -245,7 +245,6 @@ const createRadioControl = (definition, prevValue) => {
  * @returns {[*]}
  */
 const createInputControl = (definition, prevValue) => {
-  // console.log('parameterControls.createInputControl')
   const controlList = [
     { type: 'text', control: 'text', required: ['type', 'name'], initial: '' },
     { type: 'int', control: 'number', required: ['type', 'name'], initial: 0 },

@@ -23,8 +23,6 @@ const drawNormals = (regl, params) => {
     size, 0, 0
   ]
 
-  console.log('geometry', geometry)
-
   const commandParams = {
     frag: `precision mediump float;
     uniform vec4 color;

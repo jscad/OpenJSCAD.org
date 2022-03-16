@@ -224,5 +224,5 @@ test('multiline error', (t) => {
 test('single line /* ...*/ ok', (t) => {
   t.deepEqual(getParameterDefinitionsFromSource(`function main({//@jscad-params
   /* group */
-  width=14})`), [{type:'group', caption:'group', name:'_group_1'},...sampleParams2])
+  width=14})`), [{ type: 'group', caption: 'group', name: '_group_1' }, ...sampleParams2])
 })

@@ -86,7 +86,7 @@ const conversionFormats = [
   'svg'
 ]
 
-function supportedFormatsForObjects (objects) {
+const supportedFormatsForObjects = (objects) => {
   const objectFormats = []
   let foundCSG = false
   let foundCAG = false

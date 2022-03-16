@@ -6,14 +6,14 @@ const poly3 = require('../poly3')
  * @return {TypedArray} compact binary representation
  * @alias module:modeling/geometries/geom3.toCompactBinary
  */
-const toCompactBinary = (geom) => {
-  const polygons = geom.polygons
-  const transforms = geom.transforms
+const toCompactBinary = (geometry) => {
+  const polygons = geometry.polygons
+  const transforms = geometry.transforms
 
   const numberOfPolygons = polygons.length
   const numberOfVertices = polygons.reduce((count, polygon) => count + polygon.vertices.length, 0)
   let color = [-1, -1, -1, -1]
-  if (geom.color) color = geom.color
+  if (geometry.color) color = geometry.color
 
   // FIXME why Float32Array?
   const compacted = new Float32Array(1 + 16 + 4 + 1 + numberOfPolygons + (numberOfVertices * 3))

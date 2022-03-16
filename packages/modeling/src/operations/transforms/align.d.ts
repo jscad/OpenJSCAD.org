@@ -7,7 +7,7 @@ type NullableNumber = null | number
 
 export interface AlignOptions {
   modes?: Array<'center' | 'max' | 'min' | 'none'>
-  relativeTo?: [NullableNumber] | [NullableNumber | NullableNumber] | [NullableNumber | NullableNumber | NullableNumber]
+  relativeTo?: [NullableNumber] | [NullableNumber, NullableNumber] | [NullableNumber, NullableNumber, NullableNumber]
   grouped?: boolean
 }
 

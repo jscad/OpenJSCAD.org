@@ -5,7 +5,7 @@ const union = require('../booleans/union')
 const hull = require('./hull')
 
 /**
- * Create a chain of hulled geometries from the given gemetries.
+ * Create a chain of hulled geometries from the given geometries.
  * Essentially hull A+B, B+C, C+D, etc., then union the results.
  * The given geometries should be of the same type, either geom2 or geom3 or path2.
  *

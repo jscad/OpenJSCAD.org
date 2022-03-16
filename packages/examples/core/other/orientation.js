@@ -20,7 +20,6 @@ const getParameterDefinitions = () => {
   // UG... only integer steps can be performed reliably
   const max = 360
   const min = -max
-  const step = max / 360
   return [
     { name: 'rotations', type: 'group', caption: 'Rotations (Degrees)' },
     { name: 'rotateX', type: 'float', caption: 'About X axis', title: 'Rotation from Y to Z', initial: 0, min, max },
@@ -38,7 +37,7 @@ const getParameterDefinitions = () => {
  */
 const main = (params) => {
   const dimension = 20
-  const coordinateSystem = colorize([0, 0, 0, 0.5], cuboidFrame({size: [20, 20, 20]}))
+  const coordinateSystem = colorize([0, 0, 0, 0.5], cuboidFrame({ size: [20, 20, 20] }))
 
   const axisX = colorize([1, 0, 0], axisDirection(dimension, 'X'))
   const axisY = colorize([0, 1, 0], axisDirection(dimension, 'Y'))
@@ -46,7 +45,7 @@ const main = (params) => {
 
   // apply the rotations
   const rotations = [degToRad(params.rotateX), degToRad(params.rotateY), degToRad(params.rotateZ)]
-  let rotated = rotate(rotations, coordinateSystem)
+  const rotated = rotate(rotations, coordinateSystem)
 
   return [coordinateSystem, rotated, axisX, axisY, axisZ]
 }

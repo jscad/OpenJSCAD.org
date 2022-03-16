@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.5...@jscad/web@2.5.6) (2022-03-13)
+
+**Note:** Version bump only for package @jscad/web
+
+
+
+
+
+## [2.5.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.4...@jscad/web@2.5.5) (2022-03-06)
+
+
+### Bug Fixes
+
+* **web:** corrected uncaught type trror in viewer [#999](https://github.com/jscad/OpenJSCAD.org/issues/999) ([#1002](https://github.com/jscad/OpenJSCAD.org/issues/1002)) ([96ff951](https://github.com/jscad/OpenJSCAD.org/commit/96ff951f7d846bcfc10847dc028309f8f938df5e))
+
+
+
+
+
+## [2.5.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.3...@jscad/web@2.5.4) (2022-02-19)
+
+
+### Bug Fixes
+
+* **web:** corrected touch handing to skip rotation while pinching ([#983](https://github.com/jscad/OpenJSCAD.org/issues/983)) ([3633dfb](https://github.com/jscad/OpenJSCAD.org/commit/3633dfb444ae2af14742242dba6868fa6a76d494))
+
+
+
+
+
+## [2.5.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.2...@jscad/web@2.5.3) (2022-01-23)
+
+
+### Bug Fixes
+
+* **core:** corrected checks for proper main module, and improved error messages ([#979](https://github.com/jscad/OpenJSCAD.org/issues/979)) ([e4e6c12](https://github.com/jscad/OpenJSCAD.org/commit/e4e6c126f3bdccc54efc3ce8f31c08dd514e592c))
+* **web:** corrected to handle exceptions in parameter definitions ([#976](https://github.com/jscad/OpenJSCAD.org/issues/976)) ([bd82558](https://github.com/jscad/OpenJSCAD.org/commit/bd825588e5c6c538b6188070b778d1221f95520b))
+
+
+
+
+
+## [2.5.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.1...@jscad/web@2.5.2) (2021-12-26)
+
+**Note:** Version bump only for package @jscad/web
+
+
+
+
+
+## [2.5.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.0...@jscad/web@2.5.1) (2021-12-11)
+
+
+### Bug Fixes
+
+* **web:** changed setup to use OES_element_index_uint only if available ([2c2fcfa](https://github.com/jscad/OpenJSCAD.org/commit/2c2fcfa8b72ca8c6ddb3739e4d8a9b527a687e2e))
+
+
+
+
+
+# [2.5.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.4.4...@jscad/web@2.5.0) (2021-11-07)
+
+
+### Features
+
+* **core:** remove VTREE from core and web modules ([#938](https://github.com/jscad/OpenJSCAD.org/issues/938)) ([11431dc](https://github.com/jscad/OpenJSCAD.org/commit/11431dc41f9da085dcfc95a9f6af23b28d9809ea))
+
+
+
+
+
 ## [2.4.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.4.3...@jscad/web@2.4.4) (2021-10-17)
 
 
