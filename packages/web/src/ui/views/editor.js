@@ -98,6 +98,9 @@ const editorWrapper = (state, editorCallbackToStream) => {
 
     editor.focus()
     editor.scrollIntoView({ line: 0, ch: 0 })
+    // workaround to make content appear without clicking the editor after loading an example
+    // call the refresh in a setTimeout to force js to run it in the next global event loop
+    setTimeout(() => editor.refresh(), 0)
   } else {
     el.style.visibility = 'hidden'
   }
