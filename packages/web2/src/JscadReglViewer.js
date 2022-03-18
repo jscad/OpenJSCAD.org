@@ -7,7 +7,7 @@ let rotateDelta = [0, 0]
 let panDelta = [0, 0]
 let zoomDelta = 0
 let updateRender = true
-let orbitControls, renderOptions, gridOptions, axisOptions, renderer
+let orbitControls, renderOptions, renderer
 
 const entities = []
 
@@ -30,14 +30,13 @@ function createContext (canvas, contextAttributes) {
 const state = {}
 let perspectiveCamera
 
-const startRenderer = ({ canvas, cameraPosition = [180, -180, 220], cameraTarget = [0, 0, 0], axis = {}, grid = {} }) => {
+const startRenderer = ({ canvas, cameraPosition = [180, -180, 220], cameraTarget = [0, 0, 0], bg = [1, 1, 1] }) => {
   // ********************
   // Renderer configuration and initiation.
   // ********************
 
   perspectiveCamera = cameras.perspective
   orbitControls = controls.orbit
-
   state.canvas = canvas
   // prepare the camera
   state.camera = Object.assign({}, perspectiveCamera.defaults)
@@ -59,30 +58,13 @@ const startRenderer = ({ canvas, cameraPosition = [180, -180, 220], cameraTarget
   }
   renderer = prepareRender(setupOptions)
 
-  gridOptions = {
-    visuals: {
-      drawCmd: 'drawGrid',
-      show: grid.show || grid.show === undefined,
-      color: grid.color || [0, 0, 0, 1],
-      subColor: grid.subColor || [0, 0, 1, 0.5],
-      fadeOut: false,
-      transparent: true
-    },
-    size: grid.size || [200, 200],
-    ticks: grid.ticks || [10, 1]
-  }
-
-  axisOptions = {
-    visuals: {
-      drawCmd: 'drawAxis',
-      show: axis.show || axis.show === undefined
-    },
-    size: axis.size || 100
-  }
-
   // assemble the options for rendering
   renderOptions = {
     camera: state.camera,
+    rendering: {
+      // meshColor: [0, 0.6, 1, 1],
+      background: bg
+    },
     drawCommands: {
       drawAxis: drawCommands.drawAxis,
       drawGrid: drawCommands.drawGrid,
@@ -90,11 +72,7 @@ const startRenderer = ({ canvas, cameraPosition = [180, -180, 220], cameraTarget
       drawMesh: drawCommands.drawMesh
     },
     // define the visual content
-    entities: [
-      gridOptions,
-      axisOptions,
-      ...entities
-    ]
+    entities
   }
   // the heart of rendering, as themes, controls, etc change
 
@@ -141,11 +119,7 @@ const updateAndRender = (timestamp) => {
 
   state.camera.position = updates.camera.position
   perspectiveCamera.update(state.camera)
-  renderOptions.entities = [
-    gridOptions,
-    axisOptions,
-    ...entities
-  ]
+  renderOptions.entities = entities
   const time = Date.now()
   renderer(renderOptions)
   if (updateRender) {
@@ -178,14 +152,10 @@ const handlers = {
     zoomDelta += dy
     updateView()
   },
-  showAxes: ({ show }) => {
-    axisOptions.visuals.show = show
+  setBg: (bg = [1, 1, 1]) => {
+    renderOptions.rendering.background = bg
     updateView()
   },
-  showGrid: ({ show }) => {
-    gridOptions.visuals.show = show
-    updateView()
-  }
 }
 
 function receiveCmd (cmd) {
@@ -241,7 +211,7 @@ const wheelHandler = (ev) => {
   ev.preventDefault()
 }
 
-export default function JscadReglViewer (el, { showAxes = true, showGrid = true, camera = {} } = {}) {
+export default function JscadReglViewer (el, { camera = {}, bg = [1, 1, 1] } = {}) {
   canvas = document.createElement('CANVAS')
   el.appendChild(canvas)
 
@@ -250,7 +220,7 @@ export default function JscadReglViewer (el, { showAxes = true, showGrid = true,
   }
 
   try {
-    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid }, cameraPosition: camera.position, cameraTarget: camera.target })
+    startRenderer({ canvas, cameraPosition: camera.position, cameraTarget: camera.target, bg })
 
     canvas.onpointermove = moveHandler
     canvas.onpointerdown = downHandler
@@ -277,5 +247,5 @@ export default function JscadReglViewer (el, { showAxes = true, showGrid = true,
     return { position: Array.from(state.camera.position), target: state.camera.target }
   }
 
-  return { sendCmd, destroy, state, getCamera, setCamera }
+  return { sendCmd, destroy, state, getCamera, setCamera, setBg: handlers.setBg }
 }

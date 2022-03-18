@@ -93,7 +93,7 @@ export function makeBinding (initialValue, propName, obj, alsoSetBindProp) {
 
 function asBinding (func, state, prop, updaters) {
   func.isBinding = true
-  func.addUpdater = u => updaters.push(u)
+  func.addUpdater = u => updaters.push(v => u(func(v)))
   func.dirty = () => { if (updaters.length) addDirty(() => runUpdaters(updaters, [state[prop]])) }
   func.state = state
   func.propName = prop

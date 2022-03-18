@@ -4,19 +4,15 @@
 import * as THREE from './Three.jscad.js'
 import { CSG2Object3D } from './util/CSG2Object3D.js'
 
-const { OrbitControls } = THREE
-
+function toColor (c) {
+  return new THREE.Color(...c)
+}
 let scene
 let camera
 let controls
-let axis
-let grid2
-let grid1
 let ground
 let renderer
 const SHADOW = false
-const AXIS2 = true
-const CAM_DISTANCE = 100
 const shouldRender = Date.now()
 const lastRender = true
 let renderTimer
@@ -31,8 +27,7 @@ const startRenderer = ({
   canvas,
   cameraPosition = [180, -180, 220],
   cameraTarget = [0, 0, 0],
-  axis: _axis = {},
-  grid = {}
+  bg = [1, 1, 1]
 }) => {
   camera = new THREE.PerspectiveCamera(45, 1, 1, 50000)
   camera.up.set(0, 0, 1)
@@ -40,7 +35,6 @@ const startRenderer = ({
   camera.lookAt(...cameraTarget)
 
   scene = new THREE.Scene()
-  scene.background = new THREE.Color(0xffffff)
 
   const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444)
   hemiLight.position.set(0, 0, 2000)
@@ -63,27 +57,9 @@ const startRenderer = ({
   // ground.rotation.x =  - Math.PI / 2;
   // ground.rotation.y =  - Math.PI / 2;
   ground.receiveShadow = SHADOW
-  scene.add(ground)
+  // scene.add(ground)
 
-  grid1 = new THREE.GridHelper(200, 20, 0x000000, 0x000000)
-  grid1.rotation.x = -Math.PI / 2
-  // grid.rotation.y = - Math.PI / 2;
-  grid1.material.opacity = 0.2
-  grid1.material.transparent = true
-  grid1.visible = grid.show
-  scene.add(grid1)
-
-  grid2 = new THREE.GridHelper(200, 200, 0x000000, 0x000000)
-  grid2.rotation.x = -Math.PI / 2
-  // grid.rotation.y = - Math.PI / 2;
-  grid2.material.opacity = 0.1
-  grid2.material.transparent = true
-  grid2.visible = grid.show
-  scene.add(grid2)
-
-  axis = new THREE.AxesHelper(10)
-  axis.visible = _axis.show
-  scene.add(axis)
+  setBg(bg)
 
   renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, canvas })
   renderer.setPixelRatio(window.devicePixelRatio)
@@ -103,11 +79,26 @@ function updateView (delay = 8) {
   renderTimer = tmFunc(updateAndRender, delay)
 }
 
+function setBg (bg = [1, 1, 1]) {
+  scene.background = new THREE.Color(...bg)
+  updateView()
+}
+
 function updateAndRender () {
   renderTimer = null
   console.log('updateAndRender')
   controls.update()
+
   renderer.render(scene, camera)
+  renderer.autoClear = false // allow to render multiple scenes one over other if needed
+  // https://discourse.threejs.org/t/very-low-fps-when-using-composer-with-2-viewports-and-1-renderer/18586
+  // https://webgl2fundamentals.org/webgl/lessons/webgl-multiple-views.html
+  // http://jyunming-chen.github.io/tutsplus/tutsplus15.html  - top view plus 3d
+  // https://codepen.io/jdrew1303/pen/poyVOyG --- BEST example
+  // renderer.render(scene2, camera)
+  // https://github.com/fennec-hub/ThreeOrbitControlsGizmo
+  renderer.autoClear = true
+
 }
 
 function resize ({ width, height }) {
@@ -118,16 +109,8 @@ function resize ({ width, height }) {
 }
 
 const handlers = {
-  showAxes: ({ show }) => {
-    axis.visible = show
-    updateView()
-  },
   entities: ({ entities }) => {
     entities.push()
-  },
-  showGrid: ({ show }) => {
-    grid1.visible = grid2.visible = show
-    updateView()
   }
 }
 
@@ -145,8 +128,8 @@ function sendCmd (cmd) {
 
 function setCamera ({ position, target }) {
   if (position) camera.position.set(...position)
-  // if (target) state.camera.target = target
-  // updateView()
+  if (target) camera.lookAt(...position)
+  updateView()
 }
 
 function getCamera () {
@@ -158,7 +141,7 @@ function getCamera () {
   }
 }
 
-export default function JscadThreeViewer (el, { showAxes = true, showGrid = true, camera: _camera = {} } = {}) {
+export default function JscadThreeViewer (el, { camera: _camera = {}, bg } = {}) {
   console.log('init Three.js viewer')
   canvas = document.createElement('CANVAS')
   el.appendChild(canvas)
@@ -168,7 +151,7 @@ export default function JscadThreeViewer (el, { showAxes = true, showGrid = true
   }
 
   try {
-    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid }, cameraPosition: _camera.position, cameraTarget: _camera.target })
+    startRenderer({ canvas, bg, cameraPosition: _camera.position, cameraTarget: _camera.target })
 
     const resizeObserver = new ResizeObserver(entries => {
       const rect = entries[0].contentRect
@@ -180,5 +163,5 @@ export default function JscadThreeViewer (el, { showAxes = true, showGrid = true
     throw error
   }
 
-  return { sendCmd, destroy, getCamera, setCamera, camera, grid1, grid2, axis }
+  return { sendCmd, destroy, getCamera, setCamera, camera, setBg: setBg }
 }

@@ -110,6 +110,10 @@ export class App extends Jsx6 {
         <Toggle class="el-switch" selected={$s.showAxes}/>
       </div>
       <div class="f-r">
+        <label>{T`remember_camera_position`}</label>
+        <Toggle class="el-switch" selected={$s.rememberCamera}/>
+      </div>
+      <div class="f-r">
         {T`Languages`}
         <select onchange={(e) => $s.language(e.target.value)}>
           {Object.keys(langMap).map((l) => (
@@ -168,7 +172,11 @@ export class App extends Jsx6 {
           <JscadEditor p="editor" class="editor editor-area fx1 w50 owa" hidden={$s.editorVisible(NOT)}/>
           <div class="viewer-area fxs fx1 w50">
             {menu}
-            <Viewer p="viewer" class="viewer-area fxs fx1 owh" viewerClass={this.settings.viewer} showAxes={$s.showAxes} showGrid={$s.showGrid} />
+            <Viewer p="viewer" class="viewer-area fxs fx1 owh" 
+              viewerClass={this.settings.viewer} 
+              theme={this.settings.theme(code=>themes[code])} 
+              showAxes={$s.showAxes} 
+              showGrid={$s.showGrid} />
           </div>
         </div>
       </>

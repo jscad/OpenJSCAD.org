@@ -7,15 +7,14 @@ let canvas
 let engine
 let scene
 let camera
-let grid
-let axis
 
 const startRenderer = ({
   canvas,
   cameraPosition = [180, -180, 220],
   cameraTarget = [0, 0, 0],
   axis: _axis = {},
-  grid: _grid = {}
+  grid: _grid = {},
+  bg = [1, 1, 1]
 }) => {
   engine = new Engine(canvas, true)
   scene = new Scene(engine)
@@ -33,53 +32,25 @@ const startRenderer = ({
   const light = new HemisphericLight('light', new Vector3(1, 1, 0))
   scene.addLight(light)
 
-  grid = MeshBuilder.CreatePlane('ground', { width: 200, height: 200, sideOrientation: Mesh.DOUBLESIDE, sourcePlane: new Plane(0, 0, 1, 0) })
-  const gridMat = grid.material = new GridMaterial('groundMaterial', scene)
-  gridMat.opacity = 0.8
-  gridMat.gridRatio = 1
-  gridMat.lineColor = new Color3(0.9, 0.9, 0.9)
-  gridMat.minorUnitVisibility = 0.2
-  gridMat.majorUnitFrequency = 10
-  handlers.showGrid(_grid)
+  handlers.setBg(bg)
 
-  scene.addGeometry(grid)
-  axis = new AxesViewer(scene, 10)
-  handlers.showAxes(_axis)
   engine.runRenderLoop(function () {
     scene.render()
   })
-}
-
-let renderTimer
-const tmFunc = typeof requestAnimationFrame === 'undefined' ? setTimeout : requestAnimationFrame
-
-function updateView (delay = 8) {
-  // if (renderTimer || !renderer) return
-  // renderTimer = tmFunc(updateAndRender, delay)
-}
-
-function updateAndRender () {
-//  scene.render()
 }
 
 function resize ({ width, height }) {
   canvas.width = width
   canvas.height = height
   engine.resize()
-  updateView()
 }
 
 const handlers = {
-  showAxes: ({ show }) => {
-    axis.xAxis.setEnabled(show)
-    axis.yAxis.setEnabled(show)
-    axis.zAxis.setEnabled(show)
-  },
   entities: ({ entities }) => {
     entities.push()
   },
-  showGrid: ({ show }) => {
-    grid.visibility = show ? 1 : 0
+  setBg: (bg = [1, 1, 1]) => {
+    scene.clearColor = new Color3(...bg)
   }
 }
 
@@ -95,7 +66,7 @@ function sendCmd (cmd) {
   receiveCmd(cmd)
 }
 
-export default function JscadBabylonViewer (el, { showAxes = true, showGrid = true, camera: _camera = {} } = {}) {
+export default function JscadBabylonViewer (el, { camera: _camera = {}, bg } = {}) {
   console.log('init Babylon.js viewer')
   canvas = document.createElement('CANVAS')
   canvas.setAttribute('touch-action', 'none')
@@ -106,7 +77,7 @@ export default function JscadBabylonViewer (el, { showAxes = true, showGrid = tr
   }
 
   try {
-    startRenderer({ canvas, axis: { show: showAxes }, grid: { show: showGrid }, cameraPosition: _camera.position, cameraTarget: _camera.target })
+    startRenderer({ canvas, cameraPosition: _camera.position, cameraTarget: _camera.target, bg })
     canvas.addEventListener('wheel', e => {
       e.preventDefault()
     })
@@ -128,5 +99,5 @@ export default function JscadBabylonViewer (el, { showAxes = true, showGrid = tr
     return { position: camera.position.asArray(), target: camera.getTarget().asArray() }
   }
 
-  return { sendCmd, destroy, getCamera, setCamera, camera, scene, grid, axes: axis }
+  return { sendCmd, destroy, getCamera, setCamera, setBg: handlers.setBg }
 }

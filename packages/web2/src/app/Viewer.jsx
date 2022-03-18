@@ -18,11 +18,18 @@ export class Viewer extends Jsx6 {
         callback: show=>this.viewer.sendCmd({action:'showGrid', show})      
       },
       viewerClass: {
+        keep: true,
         def:'JscadReglViewer',
         callback: v=>this.initViewer()
       },
+      theme:{
+        def:{},
+        callback: v=>this.setTheme(v),
+        required: false
+      }
     }, attr, this, true)
-
+  
+    console.log('theme',this.theme())
     moveParams({
       alias: [],
       baseURI: '',
@@ -55,6 +62,10 @@ export class Viewer extends Jsx6 {
     this.initViewer()
   }
 
+  setTheme (theme){
+    this.viewer.setBg(theme.bg)
+  }
+
   initViewer(){
     let viewerName = this.viewerClass()
     let viewerFunction = window[viewerName]
@@ -65,7 +76,7 @@ export class Viewer extends Jsx6 {
         console.log(this.viewer.destroy, this.viewer, this.camera)
         this.viewer.destroy()
       }
-      this.viewer = viewerFunction(this.el,{showAxes:this.showAxes(), showGrid: this.showGrid(), camera:this.camera})
+      this.viewer = viewerFunction(this.el,{camera:this.camera, bg:this.theme().bg})
       const cmdParams = {
         alias: this.alias,
         action: 'init',
