@@ -11,7 +11,7 @@ test('transform: adjusts the transforms of geom2', (t) => {
   const rotation = 90 * 0.017453292519943295
   const rotate90 = mat4.fromZRotation(mat4.create(), rotation)
 
-  // continue with typical user scenario, several itterations of transforms and access
+  // continue with typical user scenario, several iterations of transforms and access
 
   // expect lazy transform, i.e. only the transforms change
   const expected = {

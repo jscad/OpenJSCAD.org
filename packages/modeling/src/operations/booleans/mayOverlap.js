@@ -4,9 +4,9 @@ const measureBoundingBox = require('../../measurements/measureBoundingBox')
 
 /*
  * Determine if the given geometries overlap by comparing min and max bounds.
- * NOTE: This is used in union for performace gains.
- * @param {geom3} geometry1 - geometry for comparision
- * @param {geom3} geometry2 - geometry for comparision
+ * NOTE: This is used in union for performance gains.
+ * @param {geom3} geometry1 - geometry for comparison
+ * @param {geom3} geometry2 - geometry for comparison
  * @returns {boolean} true if the geometries overlap
  */
 const mayOverlap = (geometry1, geometry2) => {

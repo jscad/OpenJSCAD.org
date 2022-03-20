@@ -6,7 +6,7 @@ const estraverse = require('estraverse')
           results.push({raw, value})
         } */
 
-function findByPredicate (predicate, dataExtractor, ast) {
+const findByPredicate = (predicate, dataExtractor, ast) => {
   const results = []
   estraverse.traverse(ast, {
     enter: function (node, parent) {

@@ -12,7 +12,7 @@ const cachedGenerator = require('../../../generators/geometry-generator-cached-c
  * @param {Object} specials - hash of 'specials'
  * @returns {Function} the actual function made for measuring areas
  **/
-const makeMeasureArea = specials => {
+const makeMeasureArea = (specials) => {
   /**
  * Measure the area of the given geometry.
  *
@@ -22,7 +22,7 @@ const makeMeasureArea = specials => {
  **/
   const _measureArea = (...objects) => {
     objects = flatten(objects)
-    // we create a premptive cache
+    // we create a preemptive cache
     const cache = cacheWithInvalidation()
     const operands = cachedGenerator(objects, cache)
 

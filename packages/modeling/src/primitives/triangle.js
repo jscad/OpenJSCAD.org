@@ -119,7 +119,7 @@ const createTriangle = (A, B, C, a, b, c) => {
  * The triangle is always constructed CCW from the origin, [0, 0, 0].
  * @see https://www.mathsisfun.com/algebra/trig-solving-triangles.html
  * @param {Object} [options] - options for construction
- * @param {String} [options.type='SSS' - type of triangle to construct; A ~ angle, S ~ side
+ * @param {String} [options.type='SSS'] - type of triangle to construct; A ~ angle, S ~ side
  * @param {Array} [options.values=[1,1,1]] - angle (radians) of corners or length of sides
  * @returns {geom2} new 2D geometry
  * @alias module:modeling/primitives.triangle

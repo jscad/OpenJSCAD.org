@@ -1,6 +1,6 @@
 /**
  * Maths are computational units for fundamental Euclidean geometry. All maths operate upon array data structures.
- * Note: Maths data structues are consider immutable, so never change the contents directly.
+ * Note: Maths data structures are considered immutable, so never change the contents directly.
  * @see Most computations are based upon the glMatrix library (glmatrix.net)
  * @module modeling/maths
  * @example

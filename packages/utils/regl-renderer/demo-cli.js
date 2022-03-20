@@ -79,7 +79,7 @@ const options = {
         show: true
       },
       size: [500, 500],
-      ticks: [25, 5],
+      ticks: [25, 5]
       // color: [0, 0, 1, 1],
       // subColor: [0, 0, 1, 0.5]
     },
@@ -88,7 +88,7 @@ const options = {
         drawCmd: 'drawAxis',
         show: true
       },
-      size: 300,
+      size: 300
       // alwaysVisible: false,
       // xColor: [0, 0, 1, 1],
       // yColor: [1, 0, 1, 1],

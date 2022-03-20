@@ -78,7 +78,7 @@ const arc = (options) => {
       pointArray.push(point)
     }
   }
-  return path2.fromPoints({ close: false }, pointArray)
+  return path2.fromPoints({ closed: false }, pointArray)
 }
 
 module.exports = arc

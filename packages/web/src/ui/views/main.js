@@ -11,7 +11,7 @@ const dom = (state, i18n, paramsCallbacktoStream, editorCallbackToStream) => {
   const help = require('./help')(state, i18n)
 
   const io = require('./io')(state, i18n)
-  const editor = require('./editor2').editorWrapper(state, editorCallbackToStream, i18n)
+  const editor = require('./editor').editorWrapper(state, editorCallbackToStream, i18n)
   const toolBar = require('./toolbar')(state, i18n)
 
   const viewer = require('./viewer')(state, i18n)

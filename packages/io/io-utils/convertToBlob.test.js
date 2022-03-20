@@ -8,7 +8,7 @@ test('convert strings', (t) => {
   t.is(ablob.type, 'test1')
   t.is(ablob.isClosed, false)
   t.is(ablob.encoding, 'utf8')
-  t.is(ablob.length, 32000000)
+  t.is(ablob.length, 4)
   t.not(ablob.buffer, null)
 
   ablob = convertToBlob({ data: ['1FAE', '0c8a'], mimeType: 'test2' })
@@ -16,7 +16,7 @@ test('convert strings', (t) => {
   t.is(ablob.type, 'test2')
   t.is(ablob.isClosed, false)
   t.is(ablob.encoding, 'utf8')
-  t.is(ablob.length, 32000000)
+  t.is(ablob.length, 8)
   t.not(ablob.buffer, null)
 })
 
@@ -26,7 +26,7 @@ test('convert array buffers', (t) => {
   t.is(ablob.type, 'test3')
   t.is(ablob.isClosed, false)
   t.is(ablob.encoding, 'utf8')
-  t.is(ablob.length, 32000000)
+  t.is(ablob.length, 20)
   t.not(ablob.buffer, null)
 
   // multiple buffers
@@ -35,6 +35,6 @@ test('convert array buffers', (t) => {
   t.is(ablob.type, 'test4')
   t.is(ablob.isClosed, false)
   t.is(ablob.encoding, 'utf8')
-  t.is(ablob.length, 32000000)
+  t.is(ablob.length, 30)
   t.not(ablob.buffer, null)
 })

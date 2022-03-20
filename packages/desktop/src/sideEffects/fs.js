@@ -8,9 +8,9 @@ const resolveDependencies = require('../core/code-loading/resolveDependencies')
 const { flatten } = require('@jscad/array-utils')
 
 // FIXME: not used anymore? remove?
-function watchMultiplePaths (paths, changed) {
+const watchMultiplePaths = (paths, changed) => {
   const prevContents = {}
-  const watchers = paths.map(function (filePath, index) {
+  const watchers = paths.map((filePath, index) => {
     prevContents[filePath] = ''
     const watcher = fs.watch(filePath, { encoding: 'utf8' }, (eventType, filename) => {
       requireUncached(filePath)
@@ -26,22 +26,21 @@ function watchMultiplePaths (paths, changed) {
   return watchers
 }
 
-const removeWatchers = watchers => {
-  watchers.map(watcher => {
+const removeWatchers = (watchers) => {
+  watchers.map((watcher) => {
     watcher.close()
     return undefined
   })
 }
 
-function watchTree (rootPath, changed) {
-  // console.log('watchTree')
+const watchTree = (rootPath, changed) => {
   const prevContents = {}
   let watchers = []
   let allDependencyPaths = Array.from(new Set(flatten(resolveDependencies(undefined, rootPath))))
     .sort()
 
-  const createWatchers = dependencyPaths =>
-    allDependencyPaths.map(function (filePath, index) {
+  const createWatchers = (dependencyPaths) =>
+    allDependencyPaths.map((filePath, index) => {
       prevContents[filePath] = ''
       const watcher = fs.watch(filePath, { encoding: 'utf8' }, handleWatch.bind(null, filePath))
       return watcher
@@ -76,11 +75,11 @@ module.exports = function makeFsSideEffects () {
   // for watchers
   const scriptDataFromCB = callBackToStream()
 
-  function fsSink (out$) {
-    out$.forEach(function ({ path, operation, id, data, options }) {
+  const fsSink = (out$) => {
+    out$.forEach(({ path, operation, id, data, options }) => {
     // console.log('read/writing to', path, operation)
       if (operation === 'read') {
-        fs.readFile(path, 'utf8', function (error, data) {
+        fs.readFile(path, 'utf8', (error, data) => {
           if (error) {
             readFileToCB.callback({ path, operation, error, id })
           } else {
@@ -122,7 +121,7 @@ module.exports = function makeFsSideEffects () {
     })
   }
 
-  function fsSource () {
+  const fsSource = () => {
     const fs$ = readFileToCB.stream.multicast()
     const watch$ = scriptDataFromCB.stream
       .debounce(400)

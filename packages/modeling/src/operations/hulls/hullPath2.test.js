@@ -1,6 +1,6 @@
 const test = require('ava')
 
-const { geom2, path2 } = require('../../geometries')
+const { path2 } = require('../../geometries')
 
 const hullPath2 = require('./hullPath2')
 
@@ -11,6 +11,6 @@ test('hullPath2', (t) => {
 
   const obs = hullPath2(geometry1, geometry2)
   t.true(path2.isA(obs))
-  let pts = path2.toPoints(obs)
+  const pts = path2.toPoints(obs)
   t.is(pts.length, 4)
 })

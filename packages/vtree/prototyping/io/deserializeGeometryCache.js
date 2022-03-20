@@ -2,7 +2,7 @@ const serialize = require('serialize-to-js')
 
 const deserializeGeometryCache = (cache) => {
   const data = {}
-  Object.keys(cache).map(function (key) {
+  Object.keys(cache).map((key) => {
     data[key] = cache[key]// .toCompactBinary()
   })
   /* results.forEach(function (result) {

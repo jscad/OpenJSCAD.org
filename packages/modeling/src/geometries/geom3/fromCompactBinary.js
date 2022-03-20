@@ -33,7 +33,7 @@ const fromCompactBinary = (data) => {
     created.polygons.push(poly3.create(vertices))
   }
 
-  // transfer known properities, i.e. color
+  // transfer known properties, i.e. color
   if (data[17] >= 0) {
     created.color = [data[17], data[18], data[19], data[20]]
   }

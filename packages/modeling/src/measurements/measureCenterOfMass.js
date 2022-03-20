@@ -61,7 +61,7 @@ const measureCenterOfMassGeom3 = (geometry) => {
   let totalVolume = 0
   const vector = vec3.create() // for speed
   polygons.forEach((polygon) => {
-    // calculate volume and center of each tetrahedon
+    // calculate volume and center of each tetrahedron
     const vertices = polygon.vertices
     for (let i = 0; i < vertices.length - 2; i++) {
       vec3.cross(vector, vertices[i + 1], vertices[i + 2])

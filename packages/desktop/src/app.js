@@ -57,11 +57,11 @@ attach(makeState(Object.values(actions$)))
 // after this point, formating of data data that goes out to the sink side effects
 // titlebar & store side effects
 titleBar.sink(
-  state$.map(state => state.appTitle).skipRepeats()
+  state$.map((state) => state.appTitle).skipRepeats()
 )
 
 //
-const settingsStorage = state => {
+const settingsStorage = (state) => {
   const { themeName, design, locale, shortcuts } = state
   const { name, mainPath, vtreeMode, paramDefinitions, paramDefaults, paramValues } = design
   return {
@@ -97,11 +97,9 @@ fs.sink(
   most.mergeArray([
     // watched data
     state$
-      .filter(state => state.design.mainPath !== '')
-      .map(state => ({ path: state.design.mainPath, enabled: state.autoReload }))
-      .skipRepeatsWith((state, previousState) => {
-        return JSON.stringify(state) === JSON.stringify(previousState)
-      })
+      .filter((state) => state.design.mainPath !== '')
+      .map((state) => ({ path: state.design.mainPath, enabled: state.autoReload }))
+      .skipRepeatsWith((state, previousState) => JSON.stringify(state) === JSON.stringify(previousState))
       .map(({ path, enabled }) => ({
         operation: 'watch',
         id: 'watchScript',
@@ -111,14 +109,12 @@ fs.sink(
       ),
     // files to read/write
     state$
-      .filter(state => state.design.mainPath !== '')
-      .map(state => state.design.mainPath)
-      .skipRepeatsWith((state, previousState) => {
-        return JSON.stringify(state) === JSON.stringify(previousState)
-      })
-      .map(path => ({ operation: 'read', id: 'loadScript', path })),
+      .filter((state) => state.design.mainPath !== '')
+      .map((state) => state.design.mainPath)
+      .skipRepeatsWith((state, previousState) => JSON.stringify(state) === JSON.stringify(previousState))
+      .map((path) => ({ operation: 'read', id: 'loadScript', path })),
     most.just()
-      .map(function () {
+      .map(() => {
         const electron = require('electron').remote
         const userDataPath = electron.app.getPath('userData')
         const path = require('path')
@@ -132,24 +128,24 @@ fs.sink(
 i18n.sink(
   most.mergeArray([
     state$
-      .map(state => state.locale)
+      .map((state) => state.locale)
       .skipRepeats()
-      .map(data => ({ operation: 'changeSettings', data })),
+      .map((data) => ({ operation: 'changeSettings', data })),
     // get all available translations
     state$
       .take(1)
-      .map(data => ({ operation: 'getAvailableLanguages', data }))
+      .map((data) => ({ operation: 'getAvailableLanguages', data }))
   ])
 )
 
 // web worker sink
 const solidWorkerBase$ = most.mergeArray([
-  actions$.setDesignContent$.map(action => ({ paramValues: undefined, origin: 'designContent', error: undefined })),
-  actions$.updateDesignFromParams$.map(action => action.data)
+  actions$.setDesignContent$.map((action) => ({ paramValues: undefined, origin: 'designContent', error: undefined })),
+  actions$.updateDesignFromParams$.map((action) => action.data)
 ]).multicast()
 
 solidWorker.sink(
-  most.sample(function ({ origin, paramValues, error }, { design, instantUpdate }) {
+  most.sample(({ origin, paramValues, error }, { design, instantUpdate }) => {
     if (error) {
       return undefined
     }
@@ -167,24 +163,24 @@ solidWorker.sink(
   solidWorkerBase$,
   solidWorkerBase$,
   state$
-    .filter(state => state.design.mainPath !== '')
+    .filter((state) => state.design.mainPath !== '')
     .skipRepeats()
   )
-    .filter(x => x !== undefined)
+    .filter((x) => x !== undefined)
     .map(({ source, mainPath, paramValues, options }) => ({ cmd: 'render', source, mainPath, parameters: paramValues, options }))
 )
 
 // viewer data
 state$
-  .filter(state => state.design.mainPath !== '')
-  .skipRepeatsWith(function (state, previousState) {
+  .filter((state) => state.design.mainPath !== '')
+  .skipRepeatsWith((state, previousState) => {
     // const sameParamDefinitions = JSON.stringify(state.design.paramDefinitions) === JSON.stringify(previousState.design.paramDefinitions)
     // const sameParamValues = JSON.stringify(state.design.paramValues) === JSON.stringify(previousState.design.paramValues)
     const sameSolids = state.design.solids.length === previousState.design.solids.length &&
     JSON.stringify(state.design.solids) === JSON.stringify(previousState.design.solids)
     return sameSolids
   })
-  .forEach(state => {
+  .forEach((state) => {
     if (csgViewer !== undefined) {
       csgViewer(undefined, { solids: state.design.solids })
     }
@@ -193,7 +189,7 @@ state$
 // ui updates, exports
 // FIXME: this is horrible, restructure
 const outToDom$ = state$
-  .skipRepeatsWith(function (state, previousState) {
+  .skipRepeatsWith((state, previousState) => {
     const sameParamDefinitions = JSON.stringify(state.design.paramDefinitions) === JSON.stringify(previousState.design.paramDefinitions)
     const sameParamValues = JSON.stringify(state.design.paramValues) === JSON.stringify(previousState.design.paramValues)
 
@@ -223,9 +219,7 @@ const outToDom$ = state$
       sameAutoreload && sameInstantUpdate && sameError && sameShowOptions && samevtreeMode && sameAppUpdates &&
       sameLocale && sameAvailableLanguages && sameShortcuts
   })
-  .combine(function (state, i18n) {
-    return require('./ui/views/main')(state, paramsCallbacktoStream, i18n)
-  }, sources.i18n.filter(x => x.operation === 'changeSettings').map(x => x.data))
+  .combine((state, i18n) => require('./ui/views/main')(state, paramsCallbacktoStream, i18n), sources.i18n.filter((x) => x.operation === 'changeSettings').map((x) => x.data))
 
 dom.sink(outToDom$)
 
@@ -247,12 +241,12 @@ dom.sink(outToDom$)
     }
   }) */
 state$
-  .map(state => state.viewer)
-  .skipRepeatsWith(function (state, previousState) {
+  .map((state) => state.viewer)
+  .skipRepeatsWith((state, previousState) => {
     const sameViewerParams = JSON.stringify(state) === JSON.stringify(previousState)
     return sameViewerParams
   })
-  .forEach(params => {
+  .forEach((params) => {
     const viewerElement = document.getElementById('renderTarget')
     // initialize viewer if it has not been done already
     if (viewerElement && !csgViewer) {

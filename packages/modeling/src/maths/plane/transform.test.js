@@ -3,7 +3,7 @@ const { transform, create, fromValues } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
-test('plane: transform() called with three paramerters should return a plane with correct values', (t) => {
+test('plane: transform() called with three parameters should return a plane with correct values', (t) => {
   const identityMatrix = [
     1, 0, 0, 0,
     0, 1, 0, 0,

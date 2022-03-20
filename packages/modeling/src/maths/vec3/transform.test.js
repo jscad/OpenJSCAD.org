@@ -3,7 +3,7 @@ const { transform, fromValues } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
-test('vec3: transform() called with three paramerters should update a vec3 with correct values', (t) => {
+test('vec3: transform() called with three parameters should update a vec3 with correct values', (t) => {
   const identityMatrix = [
     1, 0, 0, 0,
     0, 1, 0, 0,

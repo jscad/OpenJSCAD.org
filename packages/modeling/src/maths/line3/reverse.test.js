@@ -3,7 +3,7 @@ const { reverse, create, fromPoints } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
-test('line3: reverse() called with two paramerters should update a line3 with proper values', (t) => {
+test('line3: reverse() called with two parameters should update a line3 with proper values', (t) => {
   const line1 = create()
   const out = create()
   let rev = reverse(out, line1)

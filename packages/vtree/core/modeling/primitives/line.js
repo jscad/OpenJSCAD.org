@@ -1,3 +1,3 @@
-const line = params => Object.assign({}, params, { type: 'line' })
+const line = (params) => Object.assign({}, params, { type: 'line' })
 
 module.exports = line

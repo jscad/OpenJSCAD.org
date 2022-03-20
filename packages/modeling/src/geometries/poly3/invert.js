@@ -1,3 +1,4 @@
+const plane = require('../../maths/plane')
 const create = require('./create')
 
 /**
@@ -9,7 +10,12 @@ const create = require('./create')
  */
 const invert = (polygon) => {
   const vertices = polygon.vertices.slice().reverse()
-  return create(vertices)
+  const inverted = create(vertices)
+  if (polygon.plane) {
+    // Flip existing plane to save recompute
+    inverted.plane = plane.flip(plane.create(), polygon.plane)
+  }
+  return inverted
 }
 
 module.exports = invert

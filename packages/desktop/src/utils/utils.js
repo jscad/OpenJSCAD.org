@@ -1,4 +1,4 @@
-function isCAG (object) {
+const isCAG = (object) => {
   // objects[i] instanceof CAG => NOT RELIABLE
   // 'instanceof' causes huge issues when using objects from
   // two different versions of CSG.js as they are not reckonized as one and the same
@@ -13,7 +13,7 @@ function isCAG (object) {
   return true
 }
 
-function isCSG (object) {
+const isCSG = (object) => {
   // objects[i] instanceof CSG => NOT RELIABLE
   // 'instanceof' causes huge issues when using objects from
   // two different versions of CSG.js as they are not reckonized as one and the same
@@ -34,9 +34,9 @@ function isCSG (object) {
  * @param  {} currentState
  * @param  {} options
  */
-function merge (output = {}, currentState, options) {
+const merge = (output = {}, currentState, options) => {
   output = currentState // JSON.parse(JSON.stringify(currentState))
-  Object.keys(options).forEach(function (key) {
+  Object.keys(options).forEach((key) => {
     const item = options[key]
     const isObject = typeof item === 'object'
     const isFunction = typeof item === 'function'

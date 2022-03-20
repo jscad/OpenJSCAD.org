@@ -10,7 +10,7 @@ const generate = (node, cache) => {
   let result
   let operands
   if (Array.isArray(node)) {
-    return flatten(node).map(n => generate(n, cache))
+    return flatten(node).map((n) => generate(n, cache))
   }
 
   const { foundData, nodeHash } = cache.find(node)
@@ -41,67 +41,67 @@ const generate = (node, cache) => {
       result = square(node)
       break
     case 'union' :
-      operands = flatten(node.children).map(n => generate(n, cache))
+      operands = flatten(node.children).map((n) => generate(n, cache))
       result = union(operands)
       break
     case 'difference' :
-      operands = flatten(node.children).map(n => generate(n, cache))
+      operands = flatten(node.children).map((n) => generate(n, cache))
       result = difference(operands)
       break
     case 'intersection' :
-      operands = flatten(node.children).map(n => generate(n, cache))
+      operands = flatten(node.children).map((n) => generate(n, cache))
       result = intersection(operands)
       break
     case 'translate':
-      operands = flatten(node.children).map(n => generate(n, cache))
+      operands = flatten(node.children).map((n) => generate(n, cache))
       // console.log('translate::::', node.params, operands)
       result = translate(node.params, operands)
       break
     case 'rotate':
-      operands = flatten(node.children).map(n => generate(n, cache))
+      operands = flatten(node.children).map((n) => generate(n, cache))
       result = rotate(node.params, operands)
       break
     case 'scale':
-      operands = flatten(node.children).map(n => generate(n, cache))
+      operands = flatten(node.children).map((n) => generate(n, cache))
       result = scale(node.params, operands)
       break
     case 'contract':
       console.log('contract', node)
-      operands = flatten(node.children).map(n => generate(n, cache))
+      operands = flatten(node.children).map((n) => generate(n, cache))
       // FIXME: REALLY NEEDED ???
       operands = union(operands)
       result = contract(node.radius, node.n, operands)
       break
     case 'mirror':
-      operands = flatten(node.children).map(n => generate(n, cache))
+      operands = flatten(node.children).map((n) => generate(n, cache))
       result = mirror(node.params, operands)
       break
     case 'hull':
-      operands = flatten(node.children).map(n => generate(n, cache))
+      operands = flatten(node.children).map((n) => generate(n, cache))
       result = hull(operands)
       break
     case 'chain_hull':
-      operands = flatten(node.children).map(n => generate(n, cache))
+      operands = flatten(node.children).map((n) => generate(n, cache))
       result = chain_hull(operands)
       break
     case 'colorize':
-      operands = flatten(node.children).map(n => generate(n, cache))
+      operands = flatten(node.children).map((n) => generate(n, cache))
       result = colorize(node.params, operands)
       break
     case 'linear_extrude':
-      operands = flatten(node.children).map(n => generate(n, cache))
+      operands = flatten(node.children).map((n) => generate(n, cache))
       // FIXME: REALLY NEEDED ???
       operands = union(operands)
       result = linear_extrude(node.params, operands)
       break
     case 'rotate_extrude':
-      operands = flatten(node.children).map(n => generate(n, cache))
+      operands = flatten(node.children).map((n) => generate(n, cache))
       // FIXME: REALLY NEEDED ???
       operands = union(operands)
       result = rotate_extrude(node.params, operands)
       break
     case 'rectangular_extrude':
-      operands = flatten(node.children).map(n => generate(n, cache))
+      operands = flatten(node.children).map((n) => generate(n, cache))
       // operands = flatten(node.children).map(n => generate(n, cache))
       // FIXME: REALLY NEEDED ???
       // operands = union(operands)
@@ -109,11 +109,9 @@ const generate = (node, cache) => {
       break
     case 'measureArea':
       // console.log('actual measure Area')
-      operands = flatten(node.children).map(n => generate(n, cache))
+      operands = flatten(node.children).map((n) => generate(n, cache))
       result = operands.reduce((acc, csg) => {
-        const tmpArea = csg.toTriangles().reduce(function (accSub, triPoly) {
-          return accSub + triPoly.getTetraFeatures(['area'])
-        }, 0)
+        const tmpArea = csg.toTriangles().reduce((accSub, triPoly) => accSub + triPoly.getTetraFeatures(['area']), 0)
         return acc + tmpArea
       }, 0)
       break

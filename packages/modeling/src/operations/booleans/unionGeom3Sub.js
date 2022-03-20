@@ -7,7 +7,7 @@ const { Tree } = require('./trees')
  * Return a new 3D geometry representing the space in the given geometries.
  * @param {geom3} geometry1 - geometry to union
  * @param {geom3} geometry2 - geometry to union
- * @returns {goem3} new 3D geometry
+ * @returns {geom3} new 3D geometry
  */
 const unionSub = (geometry1, geometry2) => {
   if (!mayOverlap(geometry1, geometry2)) {

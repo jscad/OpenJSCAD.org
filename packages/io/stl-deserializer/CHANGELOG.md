@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.12](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/stl-deserializer@2.1.11...@jscad/stl-deserializer@2.1.12) (2022-03-13)
+
+**Note:** Version bump only for package @jscad/stl-deserializer
+
+
+
+
+
+## [2.1.11](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/stl-deserializer@2.1.10...@jscad/stl-deserializer@2.1.11) (2022-03-06)
+
+**Note:** Version bump only for package @jscad/stl-deserializer
+
+
+
+
+
 ## [2.1.10](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/stl-deserializer@2.1.9...@jscad/stl-deserializer@2.1.10) (2022-02-19)
 
 **Note:** Version bump only for package @jscad/stl-deserializer

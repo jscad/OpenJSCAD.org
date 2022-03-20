@@ -3,7 +3,7 @@
  *
  * @param {vec2} out - receiving vector
  * @param {Number} scalar - the scalar value
- * @returns {Vec2} out
+ * @returns {vec2} out
  * @alias module:modeling/maths/vec2.fromScalar
  */
 const fromScalar = (out, scalar) => {

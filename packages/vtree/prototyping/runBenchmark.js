@@ -1,7 +1,7 @@
 // const decache = require('decache')
 const child_process = require('child_process')
 
-function runBenchMark (runFn, name, runs = 10) {
+const runBenchMark = (runFn, name, runs = 10) => {
   console.log('running benchmarks for ' + name + ' ' + runs + ' times')
 
   // first verify they all have the same output
@@ -17,7 +17,7 @@ function runBenchMark (runFn, name, runs = 10) {
   runPass(runFn, runs, name)
 }
 
-function spawnBenchMark (path, runs = 100) {
+const spawnBenchMark = (path, runs = 100) => {
   const usage = require('usage')
   const cpuNumbers = []
   const memNumbers = []
@@ -25,8 +25,8 @@ function spawnBenchMark (path, runs = 100) {
   const process = child_process.spawn('node', [path, runs])
 
   const pid = process.pid // you can use any valid PID instead
-  const measureInterval = setInterval(function () {
-    usage.lookup(pid, function (err, result) {
+  const measureInterval = setInterval(() => {
+    usage.lookup(pid, (err, result) => {
       if (err) {
         console.log('error?', err)
       }
@@ -37,15 +37,15 @@ function spawnBenchMark (path, runs = 100) {
     })
   }, 1000)
 
-  process.stdout.on('data', function (data) {
+  process.stdout.on('data', (data) => {
     console.log('' + data)
   })
 
-  process.stderr.on('data', function (data) {
+  process.stderr.on('data', (data) => {
     console.log('' + data)
   })
 
-  process.on('close', function (code) {
+  process.on('close', (code) => {
     // console.log('Child process is exiting with exit code: ' + code)
     clearInterval(measureInterval)
 
@@ -62,7 +62,7 @@ const runPass = (runFn, runs, name) => {
   let start
 
   const numbers = []
-  for (var i = 0; i < runs; i++) {
+  for (let i = 0; i < runs; i++) {
     // decache(moduleName)
 
     start = process.hrtime()
@@ -76,7 +76,7 @@ const runPass = (runFn, runs, name) => {
   // console.log(name + process.hrtime(start)[0] + ' s, ' + elapsed.toFixed(precision) + ' ms - ')
 }
 
-const median = sequence => {
+const median = (sequence) => {
   sequence.sort() // note that direction doesn't matter
   return sequence[Math.ceil(sequence.length / 2)]
 }
