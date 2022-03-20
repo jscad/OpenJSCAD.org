@@ -12,7 +12,7 @@ let orbitControls, renderOptions, renderer
 const entities = []
 
 function createContext (canvas, contextAttributes) {
-  function get (type) {
+  function get (type) { 
     try {
       return { gl: canvas.getContext(type, contextAttributes), type }
     } catch (e) {

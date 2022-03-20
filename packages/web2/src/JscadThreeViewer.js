@@ -2,26 +2,24 @@
 // cd c:\hrg\3dp_dev\Babylon.js; esbuild src/index.ts --outfile=C:/hrg/3dp_dev/OpenJSCAD.org/packages/web2/src/babylon.js --bundle --watch --sourcemap=external --minify --format=esm
 
 import * as THREE from './Three.jscad.js'
-import { CSG2Object3D } from './util/CSG2Object3D.js'
+import { CSG2Threejs } from './util/CSG2Threejs.js'
 
 function toColor (c) {
   return new THREE.Color(...c)
 }
-let scene
-let camera
+let _scene
+let _camera
 let controls
-let ground
 let renderer
 const SHADOW = false
 const shouldRender = Date.now()
 const lastRender = true
 let renderTimer
-// animate()
 
 const entities = []
 let canvas
 
-CSG2Object3D(THREE)
+const csgConvert = CSG2Threejs(THREE)
 
 const startRenderer = ({
   canvas,
@@ -29,16 +27,16 @@ const startRenderer = ({
   cameraTarget = [0, 0, 0],
   bg = [1, 1, 1]
 }) => {
-  camera = new THREE.PerspectiveCamera(45, 1, 1, 50000)
-  camera.up.set(0, 0, 1)
-  camera.position.set(...cameraPosition)
-  camera.lookAt(...cameraTarget)
+  _camera = new THREE.PerspectiveCamera(45, 1, 1, 50000)
+  _camera.up.set(0, 0, 1)
+  _camera.position.set(...cameraPosition)
+  _camera.lookAt(...cameraTarget)
 
-  scene = new THREE.Scene()
+  _scene = new THREE.Scene()
 
   const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444)
   hemiLight.position.set(0, 0, 2000)
-  scene.add(hemiLight)
+  _scene.add(hemiLight)
 
   const directionalLight = new THREE.DirectionalLight(0xffffff)
   directionalLight.position.set(0, 200, 100)
@@ -49,22 +47,14 @@ const startRenderer = ({
     directionalLight.shadow.camera.left = -120
     directionalLight.shadow.camera.right = 120
   }
-  scene.add(directionalLight)
-
-  // ground
-
-  ground = new THREE.Mesh(new THREE.PlaneBufferGeometry(200, 200), new THREE.MeshPhongMaterial({ color: 0xffffff, depthWrite: false }))
-  // ground.rotation.x =  - Math.PI / 2;
-  // ground.rotation.y =  - Math.PI / 2;
-  ground.receiveShadow = SHADOW
-  // scene.add(ground)
+  _scene.add(directionalLight)
 
   setBg(bg)
 
   renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, canvas })
   renderer.setPixelRatio(window.devicePixelRatio)
   console.log('canvasssssa', renderer.domElement)
-  controls = new THREE.OrbitControls(camera, canvas)
+  controls = new THREE.OrbitControls(_camera, canvas)
   controls.target.set(0, 0, 0)
   controls.update()
   controls.addEventListener('change', function () {
@@ -80,7 +70,7 @@ function updateView (delay = 8) {
 }
 
 function setBg (bg = [1, 1, 1]) {
-  scene.background = new THREE.Color(...bg)
+  _scene.background = new THREE.Color(...bg)
   updateView()
 }
 
@@ -89,7 +79,7 @@ function updateAndRender () {
   console.log('updateAndRender')
   controls.update()
 
-  renderer.render(scene, camera)
+  renderer.render(_scene, _camera)
   renderer.autoClear = false // allow to render multiple scenes one over other if needed
   // https://discourse.threejs.org/t/very-low-fps-when-using-composer-with-2-viewports-and-1-renderer/18586
   // https://webgl2fundamentals.org/webgl/lessons/webgl-multiple-views.html
@@ -98,21 +88,17 @@ function updateAndRender () {
   // renderer.render(scene2, camera)
   // https://github.com/fennec-hub/ThreeOrbitControlsGizmo
   renderer.autoClear = true
-
 }
 
 function resize ({ width, height }) {
-  camera.aspect = width / height
-  camera.updateProjectionMatrix()
+  _camera.aspect = width / height
+  _camera.updateProjectionMatrix()
   renderer.setSize(width, height)
   updateView()
 }
 
-const handlers = {
-  entities: ({ entities }) => {
-    entities.push()
-  }
-}
+const handlers = { setScene }
+
 
 function receiveCmd (cmd) {
   const fn = handlers[cmd.action]
@@ -127,16 +113,16 @@ function sendCmd (cmd) {
 }
 
 function setCamera ({ position, target }) {
-  if (position) camera.position.set(...position)
-  if (target) camera.lookAt(...position)
+  if (position) _camera.position.set(...position)
+  if (target) _camera.lookAt(...position)
   updateView()
 }
 
 function getCamera () {
   const target = new THREE.Vector3(0, 0, -1)
-  target.applyQuaternion(camera.quaternion)
+  target.applyQuaternion(_camera.quaternion)
   return {
-    position: camera.position.toArray(),
+    position: _camera.position.toArray(),
     target: target.toArray()
   }
 }
@@ -163,5 +149,18 @@ export default function JscadThreeViewer (el, { camera: _camera = {}, bg } = {})
     throw error
   }
 
-  return { sendCmd, destroy, getCamera, setCamera, camera, setBg: setBg }
+  return { sendCmd, destroy, getCamera, setCamera, camera: _camera, setBg: setBg, setScene }
+}
+
+function setScene (scene) {
+  scene.items.forEach(item => {
+    const group = new THREE.Group()
+    item.items.forEach(obj => {
+      const obj3d = csgConvert(obj)
+      console.log('obj3d', obj3d, obj)
+      group.add(obj3d)
+    })
+    _scene.add(group)
+  })
+  updateView()
 }
