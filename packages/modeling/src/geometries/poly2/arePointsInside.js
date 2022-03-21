@@ -26,41 +26,6 @@ const arePointsInside = (points, polygon) => {
 /*
  * Determine if the given point is inside the polygon.
  *
- * @see http://geomalgorithms.com/a03-_inclusion.html
- * @param {Array} point - an array with X and Y values
- * @param {Array} polygon - a list of points, where each point is an array with X and Y values
- * @return {Integer} 1 if the point is inside, 0 if outside
- */
-const isPointInsideOld = (point, polygon) => {
-  let wn = 0
-  const n = polygon.length
-  const x = point[0]
-  const y = point[1]
-  for (let i = 0; i < polygon.length; i++) {
-    const p1 = polygon[i]
-    const p2 = polygon[(i + 1) % n]
-    if (x !== p1[0] && y !== p1[1] && x !== p2[0] && y !== p2[1]) { // no overlap of points
-      if (p1[1] <= y) {
-        if (p2[1] > y) { // upward crossing
-          if (isLeft(p1, p2, point) > 0) { // point left of edge
-            wn++
-          }
-        }
-      } else {
-        if (p2[1] <= y) { // downward crossing
-          if (isLeft(p1, p2, point) < 0) { // point right of edge
-            wn--
-          }
-        }
-      }
-    }
-  }
-  return wn === 0 ? 1 : 0
-}
-
-/*
- * Determine if the given point is inside the polygon.
- *
  * @see http://erich.realtimerendering.com/ptinpoly/ (Crossings Test)
  * @param {Array} point - an array with X and Y values
  * @param {Array} polygon - a list of points, where each point is an array with X and Y values
