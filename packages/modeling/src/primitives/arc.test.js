@@ -10,6 +10,7 @@ test('arc (defaults)', (t) => {
   const geometry = arc()
   const obs = path2.toPoints(geometry)
 
+  t.true(path2.isA(geometry))
   t.deepEqual(obs.length, 33)
 })
 
@@ -37,6 +38,7 @@ test('arc (options)', (t) => {
   let geometry = arc({ center: [2, 2], segments: 16 })
   let obs = path2.toPoints(geometry)
 
+  t.true(path2.isA(geometry))
   t.deepEqual(obs.length, 17)
   t.true(comparePoints(obs, exp))
 
@@ -63,6 +65,7 @@ test('arc (options)', (t) => {
   geometry = arc({ radius: 2, segments: 16 })
   obs = path2.toPoints(geometry)
 
+  t.true(path2.isA(geometry))
   t.deepEqual(obs.length, 17)
   t.true(comparePoints(obs, exp))
 
@@ -86,6 +89,7 @@ test('arc (options)', (t) => {
   geometry = arc({ startAngle: Math.PI / 2, segments: 16 })
   obs = path2.toPoints(geometry)
 
+  t.true(path2.isA(geometry))
   t.deepEqual(obs.length, 14)
   t.true(comparePoints(obs, exp))
 
@@ -101,6 +105,7 @@ test('arc (options)', (t) => {
   geometry = arc({ endAngle: Math.PI / 2, segments: 16 })
   obs = path2.toPoints(geometry)
 
+  t.true(path2.isA(geometry))
   t.deepEqual(obs.length, 6)
   t.true(comparePoints(obs, exp))
 
@@ -129,6 +134,7 @@ test('arc (options)', (t) => {
   geometry = arc({ makeTangent: true, segments: 16 })
   obs = path2.toPoints(geometry)
 
+  t.true(path2.isA(geometry))
   t.deepEqual(obs.length, 19)
   t.true(comparePoints(obs, exp))
 
@@ -147,6 +153,7 @@ test('arc (options)', (t) => {
   geometry = arc({ segments: 8 })
   obs = path2.toPoints(geometry)
 
+  t.true(path2.isA(geometry))
   t.deepEqual(obs.length, 9)
   t.true(comparePoints(obs, exp))
 })
@@ -163,6 +170,7 @@ test('arc (rotations)', (t) => {
   let geometry = arc({ startAngle: Math.PI / 2, endAngle: Math.PI, segments: 16 })
   let obs = path2.toPoints(geometry)
 
+  t.true(path2.isA(geometry))
   t.deepEqual(obs.length, 6)
   t.true(comparePoints(obs, exp))
 
@@ -181,6 +189,7 @@ test('arc (rotations)', (t) => {
   geometry = arc({ startAngle: Math.PI, endAngle: Math.PI * 2, segments: 16 })
   obs = path2.toPoints(geometry)
 
+  t.true(path2.isA(geometry))
   t.deepEqual(obs.length, 10)
   t.true(comparePoints(obs, exp))
 
@@ -199,6 +208,7 @@ test('arc (rotations)', (t) => {
   geometry = arc({ startAngle: Math.PI * 2 * 0.75, endAngle: Math.PI / 2, segments: 16 })
   obs = path2.toPoints(geometry)
 
+  t.true(path2.isA(geometry))
   t.deepEqual(obs.length, 10)
   t.true(comparePoints(obs, exp))
 
@@ -206,6 +216,7 @@ test('arc (rotations)', (t) => {
   geometry = arc({ startAngle: Math.PI * 2 * 0.75, endAngle: 270.000000005 * 0.017453292519943295, segments: 16 })
   obs = path2.toPoints(geometry)
 
+  t.true(path2.isA(geometry))
   t.deepEqual(obs.length, 1)
   t.true(comparePoints(obs, exp))
 })

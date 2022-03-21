@@ -24,5 +24,6 @@ module.exports = {
   plane: require('./plane'),
   toPoints: require('./toPoints'),
   toString: require('./toString'),
-  transform: require('./transform')
+  transform: require('./transform'),
+  validate: require('./validate')
 }

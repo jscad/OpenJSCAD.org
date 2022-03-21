@@ -10,6 +10,7 @@ test('roundedCylinder (defaults)', (t) => {
   const obs = roundedCylinder()
   const pts = geom3.toPoints(obs)
 
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 544)
 })
 
@@ -20,6 +21,7 @@ test('roundedCylinder (options)', (t) => {
   let exp = [
   ]
 
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 15)
 
   // test center
@@ -48,6 +50,7 @@ test('roundedCylinder (options)', (t) => {
     [[-5, -5, -4], [-5, -4, -4.2], [-5.951056516295154, -4.6909830056250525, -4.2]]
   ]
 
+  t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 15)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -77,6 +80,7 @@ test('roundedCylinder (options)', (t) => {
     [[-5.823541592445463e-17, 1.8921833652170737e-17, 10], [-2.4492935982947064e-16, 1, 9.8], [-0.9510565162951536, 0.30901699437494723, 9.8]]
   ]
 
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 15)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -106,6 +110,7 @@ test('roundedCylinder (options)', (t) => {
     [[-5.823541592445462e-16, 1.8921833652170739e-16, 1], [-2.4492935982947065e-15, 10, 0.8], [-9.510565162951536, 3.0901699437494723, 0.8]]
   ]
 
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 15)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -135,6 +140,7 @@ test('roundedCylinder (options)', (t) => {
     [[-2.911770796222731e-16, 9.460916826085369e-17, 10], [-1.2246467991473533e-15, 5, 8], [-4.755282581475768, 1.5450849718747361, 8]]
   ]
 
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 15)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
