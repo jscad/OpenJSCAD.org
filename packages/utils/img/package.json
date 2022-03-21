@@ -17,6 +17,6 @@
     "access": "public"
   },
   "dependencies": {
-    "pngjs": "5.0.0"
+    "pngjs": "6.0.0"
   }
 }
