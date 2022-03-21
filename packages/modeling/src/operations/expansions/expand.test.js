@@ -14,6 +14,7 @@ test('expand: edge-expanding a straight line produces rectangle', (t) => {
   const expandedPathGeom2 = expand({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
   const expandedPoints = geom2.toPoints(expandedPathGeom2)
 
+  t.true(geom2.isA(expandedPathGeom2))
   t.is(area(expandedPoints), 40)
   t.true(comparePoints(measureBoundingBox(expandedPathGeom2), [[-2, 0, 0], [2, 10, 0]]))
 })
@@ -24,6 +25,7 @@ test('expand: edge-expanding a bent line produces expected geometry', (t) => {
   const expandedPathGeom2 = expand({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
   const expandedPoints = geom2.toPoints(expandedPathGeom2)
 
+  t.true(geom2.isA(expandedPathGeom2))
   t.is(area(expandedPoints), 60)
   const boundingBox = measureBoundingBox(expandedPathGeom2)
   t.true(comparePoints(boundingBox, [[-5, 0, 0], [2, 12, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
@@ -35,6 +37,7 @@ test('expand: edge-expanding a bent line, reversed points, produces expected geo
   const expandedPathGeom2 = expand({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
   const expandedPoints = geom2.toPoints(expandedPathGeom2)
 
+  t.true(geom2.isA(expandedPathGeom2))
   t.is(area(expandedPoints), 60)
   const boundingBox = measureBoundingBox(expandedPathGeom2)
   t.true(comparePoints(boundingBox, [[-5, 0, 0], [2, 12, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
@@ -47,6 +50,7 @@ test('expand: round-expanding a bent line produces expected geometry', (t) => {
   const expandedPathGeom2 = expand({ delta, corners: 'round', segments: 128 }, linePath2)
   const expandedPoints = geom2.toPoints(expandedPathGeom2)
 
+  t.true(geom2.isA(expandedPathGeom2))
   const expectedArea = 56 + 2 * Math.PI * delta * 1.25 // shape will have 1 and 1/4 circles
   nearlyEqual(t, area(expandedPoints), expectedArea, 0.01, 'Measured area should be pretty close')
   const boundingBox = measureBoundingBox(expandedPathGeom2)
@@ -60,6 +64,7 @@ test('expand: chamfer-expanding a bent line produces expected geometry', (t) => 
   const expandedPathGeom2 = expand({ delta, corners: 'chamfer', segments: 8 }, linePath2)
   const expandedPoints = geom2.toPoints(expandedPathGeom2)
 
+  t.true(geom2.isA(expandedPathGeom2))
   t.is(area(expandedPoints), 58)
   const boundingBox = measureBoundingBox(expandedPathGeom2)
   t.true(comparePoints(boundingBox, [[-5, 0, 0], [2, 12, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
@@ -84,6 +89,7 @@ test('expand: expanding of a geom2 produces expected changes to points', (t) => 
     [-10, 8],
     [-10, -8]
   ]
+  t.true(geom2.isA(obs))
   t.is(pts.length, 12)
   t.true(comparePoints(pts, exp))
 })
@@ -113,6 +119,7 @@ test('expand: expanding of a geom3 produces expected changes to polygons', (t) =
     [16, -6.414213562373095, 16]
   ]
 
+  t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 62)
   t.true(comparePoints(pts[0], exp0))
   t.true(comparePoints(pts[61], exp61))
@@ -120,6 +127,7 @@ test('expand: expanding of a geom3 produces expected changes to polygons', (t) =
   const geometry2 = sphere({ radius: 5, segments: 8 })
   const obs2 = expand({ delta: 5 }, geometry2)
   const pts2 = geom3.toPoints(obs2)
+  t.notThrows.skip(() => geom3.validate(obs2))
   t.is(pts2.length, 1588)
 })
 
@@ -172,6 +180,7 @@ test('expand (options): offsetting of a complex geom2 produces expected offset g
     [-4, -13],
     [-77, -77]
   ]
+  t.true(geom2.isA(obs))
   t.is(pts.length, 20)
   t.true(comparePoints(pts, exp))
 })

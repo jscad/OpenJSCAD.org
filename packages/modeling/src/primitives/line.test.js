@@ -11,6 +11,7 @@ test('line (defaults)', (t) => {
   const geometry = line([[0, 0], [1, 1], [-3, 3]])
   const obs = path2.toPoints(geometry)
 
+  t.true(path2.isA(geometry))
   t.deepEqual(obs.length, 3)
   t.true(comparePoints(obs, exp))
 })

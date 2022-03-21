@@ -1,7 +1,7 @@
 const sortLinked = require('./linkedListSort')
 
 class Node {
-  constructor(i, x, y) {
+  constructor (i, x, y) {
     // vertex index in coordinates array
     this.i = i
 

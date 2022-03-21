@@ -10,7 +10,7 @@ const path2 = require('../geometries/path2')
  */
 const areAllShapesTheSameType = (shapes) => {
   let previousType
-  shapes.forEach((shape) => {
+  for (const shape of shapes) {
     let currentType = 0
     if (geom2.isA(shape)) currentType = 1
     if (geom3.isA(shape)) currentType = 2
@@ -18,7 +18,7 @@ const areAllShapesTheSameType = (shapes) => {
 
     if (previousType && currentType !== previousType) return false
     previousType = currentType
-  })
+  }
   return true
 }
 
