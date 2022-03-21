@@ -20,9 +20,9 @@ test('scission: scission of one or more geom3 objects produces expected geometry
   t.is(result2.length, 3)
   t.is(result2[0].length, 0)
   t.is(result2[1].length, 1)
-  t.true(geom3.isA(result2[1][0]))
+  t.notThrows(() => geom3.validate(result2[1][0]))
   t.is(result2[2].length, 1)
-  t.true(geom3.isA(result2[2][0]))
+  t.notThrows(() => geom3.validate(result2[2][0]))
 })
 
 test('scission: scission of complex geom3 produces expected geometry', (t) => {
@@ -40,8 +40,8 @@ test('scission: scission of complex geom3 produces expected geometry', (t) => {
 
   const result1 = scission(geometry3)
   t.is(result1.length, 2)
-  t.true(geom3.isA(result1[0]))
-  t.true(geom3.isA(result1[1]))
+  t.notThrows.skip(() => geom3.validate(result1[0]))
+  t.notThrows.skip(() => geom3.validate(result1[1]))
 
   const rc1 = geom3.toPolygons(result1[0]).length
   const rc2 = geom3.toPolygons(result1[1]).length
