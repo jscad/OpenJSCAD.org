@@ -40,9 +40,10 @@ const cylinderElliptic = (options) => {
   if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
   if (!isGT(height, 0)) throw new Error('height must be greater then zero')
   if (!isNumberArray(startRadius, 2)) throw new Error('startRadius must be an array of X and Y values')
-  if (!startRadius.every((n) => n > 0)) throw new Error('startRadius values must be greater than zero')
+  if (!startRadius.every((n) => n >= 0)) throw new Error('startRadius values must be positive')
   if (!isNumberArray(endRadius, 2)) throw new Error('endRadius must be an array of X and Y values')
-  if (!endRadius.every((n) => n > 0)) throw new Error('endRadius values must be greater than zero')
+  if (!endRadius.every((n) => n >= 0)) throw new Error('endRadius values must be positive')
+  if (endRadius.every((n) => n === 0) && startRadius.every((n) => n === 0)) throw new Error('at least one radius must be positive')
   if (!isGTE(startAngle, 0)) throw new Error('startAngle must be positive')
   if (!isGTE(endAngle, 0)) throw new Error('endAngle must be positive')
   if (!isGTE(segments, 4)) throw new Error('segments must be four or more')
@@ -102,12 +103,16 @@ const cylinderElliptic = (options) => {
       polygons.push(fromPoints(point(0, t1, endRadius), point(1, t1, endRadius), point(1, t0, endRadius), point(0, t0, endRadius)))
       polygons.push(fromPoints(end, point(1, t0, endRadius), point(1, t1, endRadius)))
     } else {
-      if (startRadius[0] > 0) {
+      if (startRadius[0] > 0 && startRadius[1] > 0) {
         polygons.push(fromPoints(start, point(0, t1, startRadius), point(0, t0, startRadius)))
+      }
+      if (startRadius[0] > 0 || startRadius[1] > 0) {
         polygons.push(fromPoints(point(0, t0, startRadius), point(0, t1, startRadius), point(1, t0, endRadius)))
       }
-      if (endRadius[0] > 0) {
+      if (endRadius[0] > 0 && endRadius[1] > 0) {
         polygons.push(fromPoints(end, point(1, t0, endRadius), point(1, t1, endRadius)))
+      }
+      if (endRadius[0] > 0 || endRadius[1] > 0) {
         polygons.push(fromPoints(point(1, t0, endRadius), point(0, t1, startRadius), point(1, t1, endRadius)))
       }
     }

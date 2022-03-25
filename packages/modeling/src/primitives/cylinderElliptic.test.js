@@ -188,3 +188,19 @@ test('cylinderElliptic (options)', (t) => {
   t.is(pts.length, 24)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
+
+test('cylinderElliptic (cone)', (t) => {
+  const obs = cylinderElliptic({ endRadius: [0, 0] })
+  const pts = geom3.toPoints(obs)
+
+  t.notThrows(() => geom3.validate(obs))
+  t.is(pts.length, 64)
+})
+
+test('cylinderElliptic (squished)', (t) => {
+  const obs = cylinderElliptic({ startRadius: [1, 0], endRadius: [0, 1], segments: 4 })
+  const pts = geom3.toPoints(obs)
+
+  t.notThrows(() => geom3.validate(obs))
+  t.is(pts.length, 8)
+})
