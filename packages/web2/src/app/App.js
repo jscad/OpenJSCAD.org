@@ -40,6 +40,7 @@ const viewerMap = {
   JscadThreeViewer: 'Three.js',
   JscadBabylonViewer: 'Babylon.js',
 }
+const viewerName = v=>viewerMap[v]
 
 export class App extends Jsx6 {
   cName = 'MainApp'
@@ -161,6 +162,7 @@ export class App extends Jsx6 {
         <button onmousedown={markActive} onclick={()=>{if(wasActive) this.runButton.focus() }}>{gearIcon}</button>
         {settingsArea}
       </button>
+      <span>{this.settings.viewer(viewerName)}</span>
     </div>
   </div>
     

@@ -99,7 +99,6 @@ function resize ({ width, height }) {
 
 const handlers = { setScene }
 
-
 function receiveCmd (cmd) {
   const fn = handlers[cmd.action]
   if (!fn) {
@@ -149,7 +148,12 @@ export default function JscadThreeViewer (el, { camera: _camera = {}, bg } = {})
     throw error
   }
 
-  return { sendCmd, destroy, getCamera, setCamera, camera: _camera, setBg: setBg, setScene }
+  const getViewerEnv = () => ({
+    forceColors4: false,
+    forceIndex: false
+  })
+
+  return { sendCmd, destroy, getCamera, setCamera, camera: _camera, setBg: setBg, setScene, getViewerEnv }
 }
 
 function setScene (scene) {

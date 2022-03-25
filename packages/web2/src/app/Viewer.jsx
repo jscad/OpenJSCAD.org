@@ -19,7 +19,7 @@ const makeAxes = (len = 100) =>{
  
  Even though opacity in jscad theme is 1 for color1 and 0.5 for color2, the closest match to the color on the website
  is 0.2 and 0.1
- Opaciti per segment is tricky and was added only in threejs 127. so splitting the grid into 2 separate set of lines
+ Opacity per line-segment is tricky and was added only in threejs 127. so splitting the grid into 2 separate set of lines
  allows to have different opacity for grid and subgrid via opacity attribute and keep rgb colors. Also this removes the need to use
  solor per line, and the two set of lines can simply use color property
  */
@@ -60,8 +60,8 @@ const makeGrid = ({color1 = [0,0,0,0.2], color2 = [0,0,0.6,0.1], size = 200}={})
     }
   }
   return [
-    {vertices:lines1, color:color1, type:'lines'},
-    {vertices:lines2, color:color2, type:'lines'},
+    {vertices:lines1, color:color1, type:'lines', isTransparent: true},
+    {vertices:lines2, color:color2, type:'lines', isTransparent: true},
   ]
 }
 

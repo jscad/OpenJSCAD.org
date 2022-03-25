@@ -38,31 +38,22 @@ npm run desktop
 
 regl checklist
  - [x] get/set camera
- - [ ] theme background
- - [ ] theme default mesh color
- - [ ] theme grid
- - [x] grid show / hide
- - [x] axes show / hide
- - [ ] (WONTFIX) axes helper + show / hide
+ - [x] theme background
+ - [ ] support line segments 
+ - [ ] support mesh
  - [ ] issue with clicking canvas (orbitcontrol uses preventdefault so popup menu does not hide)
 
 Babylon.js checklist
  - [x] get/set camera
- - [ ] theme background
- - [ ] theme default mesh color
- - [ ] theme grid
- - [x] grid show / hide
- - [x] axes show / hide
- - [ ] axes helper + show / hide
+ - [x] theme background
+ - [ ] support line segments 
+ - [ ] support mesh
 
 Three.js checklist
  - [x] get/set camera
  - [ ] theme background
  - [ ] theme default mesh color
- - [ ] theme grid
- - [x] grid show / hide
- - [x] axes show / hide
- - [ ] axes helper + show / hide
+ - [ ] support mesh
 
 
 nice to have or to consider if worth doing

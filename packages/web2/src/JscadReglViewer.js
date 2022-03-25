@@ -247,5 +247,10 @@ export default function JscadReglViewer (el, { camera = {}, bg = [1, 1, 1] } = {
     return { position: Array.from(state.camera.position), target: state.camera.target }
   }
 
-  return { sendCmd, destroy, state, getCamera, setCamera, setBg: handlers.setBg }
+  const getViewerEnv = () => ({
+    forceColors4: false,
+    forceIndex: false
+  })
+
+  return { sendCmd, destroy, state, getCamera, setCamera, setBg: handlers.setBg, getViewerEnv }
 }

@@ -6,6 +6,18 @@ Format for the different types of geometries needs to be defined to be then supp
 
 Main goal is to use ArrayBuffers because they are transferable, and because all 3 rendering engines also use them internally, and will likely have same format/layout because those buffers end-up in GPU.
 
+## requirements for worker
+Due to implementation differences it is important for worker to generate ouput a bit differently for specific viewer.
+
+###  `forceIndex` - force indices data gen
+ - babylon uses indices data, and may not have support for working without indices
+ - threejs works even without (check if tehy are generated on the fly, then might be ok to also do it in the worker)
+
+
+### `forceColors4` force 4 channel in colors (per vertex)
+ - babylon always uses 4 channel data in colors buffer
+
+
 ## Geometry
 
 Geometry holds basic data about a shape (points in space and how they are connected to represent a shape). 
@@ -33,8 +45,10 @@ Shape itself is lightweight (even with color per vertex, can reuse the colors if
 In a context of an UI for 3d modeling it is useful to temporarily change view settings for a shape, group of shapes or whole scene. Although the provided shapes must be immutable to avoid issues with different parts of code causing unexpected issues, a kind of mutable state is needed for fast updates. This  will be done via `updateShape` and `resetShape` method. Since original shape is immutable, those overrides will be tracked separately and then can be purged via reset.
 
 - `visible` - true by default
-- `opacity` - 
+- `opacity` - update shape to use specific opacity
 - `color` - color override (for highlight, etc.)
+- `addTransform` - apply transform to the initial transform
+- `transform`  - use instead of existing transform
 
 
 ## Shape: line segments `type:lines`
