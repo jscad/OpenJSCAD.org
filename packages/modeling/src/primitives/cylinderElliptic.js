@@ -5,11 +5,9 @@ const vec3 = require('../maths/vec3')
 const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
-const { isGT, isGTE, isNumberArray } = require('./commonChecks')
+const { sin, cos } = require('../utils/trigonometry')
 
-// fix rounding errors when sin and cos should be 0
-const sin = (radians) => radians % Math.PI === 0 ? 0 : Math.sin(radians)
-const cos = (radians) => (radians - Math.PI / 2) % Math.PI === 0 ? 0 : Math.cos(radians)
+const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 
 /**
  * Construct a Z axis-aligned elliptic cylinder in three dimensional space.

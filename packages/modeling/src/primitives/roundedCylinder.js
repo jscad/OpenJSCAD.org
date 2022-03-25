@@ -5,6 +5,8 @@ const vec3 = require('../maths/vec3')
 const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
+const { sin, cos } = require('../utils/trigonometry')
+
 const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 
 /**
@@ -72,8 +74,8 @@ const roundedCylinder = (options) => {
   const v2 = vec3.create()
   let prevcylinderpoint
   for (let slice1 = 0; slice1 <= segments; slice1++) {
-    const angle = 2 * Math.PI * (slice1 % segments) / segments
-    const cylinderpoint = vec3.add(vec3.create(), vec3.scale(v1, xvector, Math.cos(angle)), vec3.scale(v2, yvector, Math.sin(angle)))
+    const angle = 2 * Math.PI * slice1 / segments
+    const cylinderpoint = vec3.add(vec3.create(), vec3.scale(v1, xvector, cos(angle)), vec3.scale(v2, yvector, sin(angle)))
     if (slice1 > 0) {
       // cylinder wall
       let points = []
@@ -86,9 +88,8 @@ const roundedCylinder = (options) => {
       let prevcospitch, prevsinpitch
       for (let slice2 = 0; slice2 <= qsegments; slice2++) {
         const pitch = 0.5 * Math.PI * slice2 / qsegments
-        // check for case where Math.cos(Math.PI / 2) should be 0
-        const cospitch = slice2 === qsegments ? 0 : Math.cos(pitch)
-        const sinpitch = Math.sin(pitch)
+        const cospitch = cos(pitch)
+        const sinpitch = sin(pitch)
         if (slice2 > 0) {
           // cylinder rounding, start
           points = []
