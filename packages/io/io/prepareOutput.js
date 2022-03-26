@@ -8,6 +8,7 @@ const objSerializer = require('@jscad/obj-serializer')
 const stlSerializer = require('@jscad/stl-serializer')
 const svgSerializer = require('@jscad/svg-serializer')
 const x3dSerializer = require('@jscad/x3d-serializer')
+const m3fSerializer = require('@jscad/3mf-serializer') // UG javascript doesn't allow names with leading #
 
 const prepareOutput = (objects, params) => {
   const defaults = {
@@ -34,6 +35,7 @@ const prepareOutput = (objects, params) => {
     obj: objSerializer,
     svg: svgSerializer, // Geom2 to SVG
     x3d: x3dSerializer, // Geom3 to X3D
+    '3mf': m3fSerializer, // Geom3 to 3MF
     json: jsonSerializer, // Geom3 or Geom2 to JSON
     js: {
       mimeType: formats.js.mimetype,

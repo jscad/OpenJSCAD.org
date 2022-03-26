@@ -45,6 +45,7 @@
     "@jscad/svg-deserializer": "2.4.8",
     "@jscad/svg-serializer": "2.3.3",
     "@jscad/x3d-deserializer": "2.1.3",
-    "@jscad/x3d-serializer": "2.3.5"
+    "@jscad/x3d-serializer": "2.3.5",
+    "@jscad/3mf-serializer": "2.0.0"
   }
 }

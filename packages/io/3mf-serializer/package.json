@@ -1,0 +1,35 @@
+{
+  "name": "@jscad/3mf-serializer",
+  "version": "2.0.0",
+  "description": "3MF serializer for JSCAD project",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "main": "src/index.js",
+  "scripts": {
+    "coverage": "nyc --reporter=html --reporter=text npm test",
+    "test": "ava --concurrency 3 --verbose --timeout 40000 './tests/*.test.js'"
+  },
+  "contributors": [
+    {
+      "name": "z3dev",
+      "url": "http://www.z3d.jp"
+    }
+  ],
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "export",
+    "serializer",
+    "3mf"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@jscad/array-utils": "2.1.2",
+    "@jscad/modeling": "2.9.0",
+    "onml": "1.2.0",
+    "fflate": "0.7.3"
+  },
+  "devDependencies": {
+    "ava": "3.15.0",
+    "nyc": "15.1.0"
+  }
+}

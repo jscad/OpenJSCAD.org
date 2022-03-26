@@ -7,6 +7,7 @@ const objSerializer = require('@jscad/obj-serializer')
 const stlSerializer = require('@jscad/stl-serializer')
 const svgSerializer = require('@jscad/svg-serializer')
 const x3dSerializer = require('@jscad/x3d-serializer')
+const m3fSerializer = require('@jscad/3mf-serializer')
 
 const prepareOutput = require('./prepareOutput')
 const deserializers = require('./deserializers')
@@ -24,6 +25,7 @@ module.exports = {
   stlSerializer,
   svgSerializer,
   x3dSerializer,
+  m3fSerializer, // UG javascript doesn't allow names with leading digit
 
   deserializers
 }
