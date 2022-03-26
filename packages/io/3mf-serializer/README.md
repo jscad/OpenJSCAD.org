@@ -31,9 +31,9 @@ npm install @jscad/3mf-serializer
 ## Usage
 
 ```javascript
-const 3mfSerializer = require('@jscad/3mf-serializer')
+const { serialize } = require('@jscad/3mf-serializer')
 
-const rawData = 3mfSerializer.serialize({unit: inch}, geometry)
+const rawData = serialize({unit: inch}, geometry)
 
 //in browser (with browserify etc)
 const blob = new Blob(rawData)
@@ -42,7 +42,7 @@ const blob = new Blob(rawData)
 
 ## Contribute
 
-For questions about the API, please contact the [User Group](https://jscad.xyz/forum)
+For questions about the API, please contact the [User Group](https://openjscad.xyz/forum.html)
 
 Please see the README information of the OpenJSCAD.org project for how to submit bug reports or changes.
 
