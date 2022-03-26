@@ -46,6 +46,7 @@ Following formats are supported as outputs
 - [STL (binary, ASCII)](../stl-serializer)
 - [SVG](../svg-serializer)
 - [X3D](../x3d-serializer)
+- [3MF](../3mf-serializer)
 
 ## Table of Contents
 

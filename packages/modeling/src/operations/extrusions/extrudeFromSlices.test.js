@@ -88,7 +88,8 @@ test('extrudeFromSlices (same shape, changing dimensions)', (t) => {
     }, base
   )
   const pts = geom3.toPoints(geometry3)
-  t.notThrows.skip(() => geom3.validate(geometry3))
+  // expected to throw because capEnd is false (non-closed geometry)
+  t.throws(() => geom3.validate(geometry3))
   t.is(pts.length, 26)
 })
 

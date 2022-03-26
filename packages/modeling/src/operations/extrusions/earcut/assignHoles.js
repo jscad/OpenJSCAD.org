@@ -31,6 +31,7 @@ const assignHoles = (geometry) => {
       solids.push(i)
     }
   })
+
   // for each hole, determine what solids it is inside of
   const children = [] // child holes of solid[i]
   const parents = [] // parent solids of hole[i]
@@ -47,19 +48,22 @@ const assignHoles = (geometry) => {
       }
     })
   })
+
   // check if holes have multiple parents and choose one with fewest children
   holes.forEach((h, j) => {
     // ensure at least one parent exists
     if (parents[j] && parents[j].length > 1) {
-      const parent = minIndex(parents[j], (p) => p.length)
+      // the solid directly containing this hole
+      const directParent = minIndex(parents[j], (p) => children[p].length)
       parents[j].forEach((p, i) => {
-        if (i !== parent) {
+        if (i !== directParent) {
           // Remove hole from skip level parents
-          children[p] = children[p].filter((c) => c !== j)
+          children[p] = children[p].filter((c) => c !== h)
         }
       })
     }
   })
+
   // map indices back to points
   return children.map((holes, i) => ({
     solid: outlines[solids[i]],

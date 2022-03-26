@@ -135,16 +135,6 @@ class Node {
       current = stack.pop()
     } while (current !== undefined)
   }
-
-  // TODO is this still used?
-  getParentPlaneNormals (normals, maxdepth) {
-    if (maxdepth > 0) {
-      if (this.parent) {
-        normals.push(this.parent.plane.normal)
-        this.parent.getParentPlaneNormals(normals, maxdepth - 1)
-      }
-    }
-  }
 }
 
 module.exports = Node
