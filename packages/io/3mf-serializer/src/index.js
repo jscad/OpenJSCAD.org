@@ -45,7 +45,7 @@ const fileExtension = '3mf'
 
 /**
  * Serialize the give objects to 3MF contents (XML) or 3MF packaging (OPC).
- * @see http://www.3mf.io/specification/
+ * @see https://3mf.io/specification/
  * @param {Object} [options] - options for serialization
  * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer
  * @param {Boolean} [options.metadata=true] - add metadata to 3MF contents, such at CreationDate
@@ -61,7 +61,7 @@ const serialize = (options, ...objects) => {
   const defaults = {
     unit: 'millimeter', // micron, millimeter, centimeter, inch, foot, meter
     metadata: true,
-    defaultcolor: [0, 0, 0, 1], // BLACK
+    defaultcolor: [255/255, 160/255, 0, 1], // JSCAD Orange
     compress: true
   }
   options = Object.assign({}, defaults, options)

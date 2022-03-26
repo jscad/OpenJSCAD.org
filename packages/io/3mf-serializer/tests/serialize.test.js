@@ -51,7 +51,7 @@ const expected1 = [
   <metadata name="Application">JSCAD</metadata>
   <resources>
     <basematerials id="0">
-      <base name="mat0" displaycolor="#000000FF"/>
+      <base name="mat0" displaycolor="#FFA000FF"/>
     </basematerials>
   </resources>
   <build>
@@ -67,7 +67,7 @@ const expected2 = [
   <metadata name="Application">JSCAD</metadata>
   <resources>
     <basematerials id="0">
-      <base name="mat0" displaycolor="#000000FF"/>
+      <base name="mat0" displaycolor="#FFA000FF"/>
     </basematerials>
     <object id="1" type="model" pid="0" pindex="0" name="Part 0">
       <mesh>
