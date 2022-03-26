@@ -65,6 +65,6 @@ test('extrudeRectangular (holes)', (t) => {
 
   const obs = extrudeRectangular({ size: 2, height: 15, segments: 16, corners: 'round' }, geometry2)
   const pts = geom3.toPoints(obs)
-  t.notThrows.skip(() => geom3.validate(obs))
+  t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 192)
 })
