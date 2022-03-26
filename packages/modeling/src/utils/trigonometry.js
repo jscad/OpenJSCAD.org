@@ -1,8 +1,10 @@
 
+const NEPS = 1e-13
+
 /*
  * Returns zero if n is within epsilon of zero, otherwise return n
  */
-const rezero = (n) => Math.abs(n) < 1e-5 ? 0 : n
+const rezero = (n) => Math.abs(n) < NEPS ? 0 : n
 
 /*
  * Return Math.sin but accurate for 90 degree rotations.
