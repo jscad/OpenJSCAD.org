@@ -36,7 +36,7 @@ const splitPolygonByPlane = (splane, polygon) => {
     const MINEPS = -EPS
     for (let i = 0; i < numvertices; i++) {
       const t = vec3.dot(splane, vertices[i]) - splane[3]
-      const isback = (t < 0)
+      const isback = (t < MINEPS)
       vertexIsBack.push(isback)
       if (t > EPS) hasfront = true
       if (t < MINEPS) hasback = true
@@ -69,9 +69,8 @@ const splitPolygonByPlane = (splane, polygon) => {
           }
         } else {
           // line segment intersects plane:
-          const point = vertex
           const nextpoint = vertices[nextvertexindex]
-          const intersectionpoint = splitLineSegmentByPlane(splane, point, nextpoint)
+          const intersectionpoint = splitLineSegmentByPlane(splane, vertex, nextpoint)
           if (isback) {
             backvertices.push(vertex)
             backvertices.push(intersectionpoint)
