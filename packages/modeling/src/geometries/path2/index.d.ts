@@ -15,6 +15,7 @@ export { default as toPoints } from './toPoints'
 export { default as toString } from './toString'
 export { default as toCompactBinary } from './toCompactBinary'
 export { default as transform } from './transform'
+export { default as validate } from './validate'
 
 export { default as Path2 } from './type'
 export as namespace path2

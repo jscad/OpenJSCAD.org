@@ -21,7 +21,7 @@ test('rotate: rotating of a path2 produces expected changes to points', (t) => {
 
   rotated = rotateZ(Math.PI / 2, geometry)
   obs = path2.toPoints(rotated)
-  t.true(path2.isA(rotated))
+  t.notThrows(() => path2.validate(rotated))
   t.true(comparePoints(obs, exp))
 })
 
@@ -36,12 +36,12 @@ test('rotate: rotating of a geom2 produces expected changes to points', (t) => {
     new Float32Array([0, -1]),
     new Float32Array([1, 0])
   ]
-  t.true(geom2.isA(rotated))
+  t.notThrows(() => geom2.validate(rotated))
   t.true(comparePoints(obs, exp))
 
   rotated = rotateZ(-Math.PI / 2, geometry)
   obs = geom2.toPoints(rotated)
-  t.true(geom2.isA(rotated))
+  t.notThrows(() => geom2.validate(rotated))
   t.true(comparePoints(obs, exp))
 })
 
@@ -142,11 +142,11 @@ test('rotate: rotating of multiple objects produces expected changes', (t) => {
 
   const obs1 = path2.toPoints(rotated[1])
   const exp1 = [[-5, -5], [-5, 5], [5, -5], [5.000000000000001, 10]]
-  t.true(path2.isA(rotated[1]))
+  t.notThrows(() => path2.validate(rotated[1]))
   t.true(comparePoints(obs1, exp1))
 
   const obs2 = geom2.toPoints(rotated[2])
   const exp2 = [[5, -5], [-5, 3.061616997868383e-16], [5.000000000000001, 10]]
-  t.true(geom2.isA(rotated[2]))
+  t.notThrows(() => geom2.validate(rotated[2]))
   t.true(comparePoints(obs2, exp2))
 })

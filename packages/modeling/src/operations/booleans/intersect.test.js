@@ -36,7 +36,7 @@ test('intersect: intersect of one or more geom2 objects produces expected geomet
     [0, -2],
     [1.4142000000000001, -1.4142000000000001]
   ]
-  t.true(geom2.isA(result1))
+  t.notThrows(() => geom2.validate(result1))
   t.is(obs.length, 8)
   t.true(comparePoints(obs, exp))
 
@@ -45,7 +45,7 @@ test('intersect: intersect of one or more geom2 objects produces expected geomet
 
   const result2 = intersect(geometry1, geometry2)
   obs = geom2.toPoints(result2)
-  t.true(geom2.isA(result2))
+  t.notThrows(() => geom2.validate(result2))
   t.is(obs.length, 0)
 
   // intersect of two partially overlapping objects
@@ -56,7 +56,7 @@ test('intersect: intersect of one or more geom2 objects produces expected geomet
   exp = [
     [9, 9], [8, 9], [8, 8], [9, 8]
   ]
-  t.true(geom2.isA(result3))
+  t.notThrows(() => geom2.validate(result3))
   t.is(obs.length, 4)
   t.true(comparePoints(obs, exp))
 
@@ -73,7 +73,7 @@ test('intersect: intersect of one or more geom2 objects produces expected geomet
     [0, -2],
     [1.4142000000000001, -1.4142000000000001]
   ]
-  t.true(geom2.isA(result4))
+  t.notThrows(() => geom2.validate(result4))
   t.is(obs.length, 8)
   t.true(comparePoints(obs, exp))
 })

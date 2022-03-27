@@ -12,14 +12,14 @@ test('hullChain (two, geom2)', (t) => {
   let obs = hullChain(geometry1, geometry1)
   let pts = geom2.toPoints(obs)
 
-  t.true(geom2.isA(obs))
+    t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 4)
 
   // different
   obs = hullChain(geometry1, geometry2)
   pts = geom2.toPoints(obs)
 
-  t.true(geom2.isA(obs))
+    t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 6)
 })
 
@@ -33,7 +33,7 @@ test('hullChain (three, geom2)', (t) => {
   let pts = geom2.toPoints(obs)
 
   // the sides change based on the bestplane chosen in trees/Node.js
-  t.true(geom2.isA(obs))
+    t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 10)
 
   // closed
@@ -41,7 +41,7 @@ test('hullChain (three, geom2)', (t) => {
   pts = geom2.toPoints(obs)
 
   // the sides change based on the bestplane chosen in trees/Node.js
-  t.true(geom2.isA(obs))
+    t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 10)
 })
 

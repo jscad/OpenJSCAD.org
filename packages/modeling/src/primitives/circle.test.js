@@ -10,7 +10,7 @@ test('circle (defaults)', (t) => {
   const geometry = circle()
   const pts = geom2.toPoints(geometry)
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(pts.length, 32)
 })
 
@@ -53,7 +53,7 @@ test('circle (options)', (t) => {
     [9.932748481411306, 5.817183872943549]
   ]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(pts.length, 32)
   t.true(comparePoints(pts, exp))
 
@@ -79,7 +79,7 @@ test('circle (options)', (t) => {
     [3.233578363789503, -1.3393920132778163]
   ]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(pts.length, 16)
   t.true(comparePoints(pts, exp))
 
@@ -103,7 +103,7 @@ test('circle (options)', (t) => {
     [0, 0]
   ]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(pts.length, 14)
   t.true(comparePoints(pts, exp))
 
@@ -119,7 +119,7 @@ test('circle (options)', (t) => {
     [0, 0]
   ]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(pts.length, 6)
   t.true(comparePoints(pts, exp))
 
@@ -134,7 +134,7 @@ test('circle (options)', (t) => {
     [1.0815594803123152, -3.3286978070330377]
   ]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(pts.length, 5)
   t.true(comparePoints(pts, exp))
 })

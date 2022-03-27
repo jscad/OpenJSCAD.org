@@ -22,7 +22,7 @@ test('star (defaults)', (t) => {
     [0.3090169943749474, -0.22451398828979277]
   ]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(pts.length, 10)
   t.true(comparePoints(pts, exp))
 })
@@ -44,7 +44,7 @@ test('star (options)', (t) => {
     [6.545084971874736, 3.8774300585510364]
   ]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(pts.length, 10)
   t.true(comparePoints(pts, exp))
 
@@ -70,7 +70,7 @@ test('star (options)', (t) => {
     [3.535533905932737, -1.464466094067265]
   ]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(pts.length, 16)
   t.true(comparePoints(pts, exp))
 
@@ -96,7 +96,7 @@ test('star (options)', (t) => {
     [2.4999999999999996, -1.0355339059327393]
   ]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(pts.length, 16)
   t.true(comparePoints(pts, exp))
 
@@ -122,7 +122,7 @@ test('star (options)', (t) => {
     [0.9238795325112865, -0.3826834323650904]
   ]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(pts.length, 16)
   t.true(comparePoints(pts, exp))
 
@@ -142,7 +142,7 @@ test('star (options)', (t) => {
     [0.2987632431673025, -1.8863168790768006]
   ]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(pts.length, 10)
   t.true(comparePoints(pts, exp))
 })

@@ -31,5 +31,6 @@ module.exports = {
   toPoints: require('./toPoints'),
   toString: require('./toString'),
   toCompactBinary: require('./toCompactBinary'),
-  transform: require('./transform')
+  transform: require('./transform'),
+  validate: require('./validate')
 }

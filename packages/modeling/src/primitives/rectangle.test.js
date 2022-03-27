@@ -16,7 +16,7 @@ test('rectangle (defaults)', (t) => {
     [-1, 1]
   ]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(obs.length, 4)
   t.true(comparePoints(obs, exp))
 })
@@ -32,7 +32,7 @@ test('rectangle (options)', (t) => {
     [-5, -3]
   ]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(obs.length, 4)
   t.true(comparePoints(obs, exp))
 
@@ -46,7 +46,7 @@ test('rectangle (options)', (t) => {
     [-3, 5]
   ]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(obs.length, 4)
   t.true(comparePoints(obs, exp))
 })

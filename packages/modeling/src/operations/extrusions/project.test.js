@@ -16,14 +16,14 @@ test('project (defaults)', (t) => {
 
   const results = project({ }, geometry0, geometry1, geometry2, geometry3, geometry4)
   t.is(results.length, 5)
-  t.true(geom2.isA(results[0]))
-  t.true(geom2.isA(results[1]))
+  t.notThrows(() => geom2.validate(results[0]))
+  t.notThrows(() => geom2.validate(results[1]))
   t.is(results[2], geometry2)
   t.is(results[3], geometry3)
   t.is(results[4], geometry4)
 
   const result = project({ }, torus({ outerSegments: 4 }))
-  t.true(geom2.isA(result))
+  t.notThrows(() => geom2.validate(result))
   const pts = geom2.toPoints(result)
   const exp = [
     [0, -2.9999933333333333],
@@ -40,7 +40,7 @@ test('project (defaults)', (t) => {
 
 test('project (X and Y axis)', (t) => {
   let result = project({ axis: [1, 0, 0], origin: [1, 0, 0] }, torus({ outerSegments: 4 }))
-  t.true(geom2.isA(result))
+  t.notThrows(() => geom2.validate(result))
   let pts = geom2.toPoints(result)
   let exp = [
     [-1.0000200000000001, -3.999986666666667],
@@ -81,7 +81,7 @@ test('project (X and Y axis)', (t) => {
   t.true(comparePoints(pts, exp))
 
   result = project({ axis: [0, 1, 0], origin: [0, -1, 0] }, torus({ outerSegments: 4 }))
-  t.true(geom2.isA(result))
+  t.notThrows(() => geom2.validate(result))
   pts = geom2.toPoints(result)
   exp = [
     [3.999986666666667, -1.0000200000000001],
