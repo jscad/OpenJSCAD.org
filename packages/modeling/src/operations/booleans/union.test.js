@@ -9,6 +9,7 @@ const { circle, rectangle, sphere, cuboid } = require('../../primitives')
 const { union } = require('./index')
 
 const { center } = require('../transforms/center')
+const { translate } = require('../transforms/translate')
 
 // test('union: union of a path produces expected changes to points', (t) => {
 //   let geometry = path.fromPoints({}, [[0, 1, 0], [1, 0, 0]])
@@ -90,6 +91,22 @@ test('union of one or more geom2 objects produces expected geometry', (t) => {
   ]
   t.notThrows(() => geom2.validate(result4))
   t.true(comparePoints(obs, exp))
+
+  // union of unions of non-overlapping objects (BSP gap from #907)
+  const circ = circle({ radius: 1, segments: 32 })
+  const result5 = union(
+    union(
+      translate([17, 21], circ),
+      translate([7, 0], circ),
+    ),
+    union(
+      translate([3, 21], circ),
+      translate([17, 21], circ),
+    )
+  )
+  obs = geom2.toPoints(result5)
+  t.notThrows.skip(() => geom2.validate(result5))
+  t.is(obs.length, 112)
 })
 
 test('union of one or more geom3 objects produces expected geometry', (t) => {
