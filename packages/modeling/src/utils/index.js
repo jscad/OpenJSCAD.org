@@ -6,10 +6,12 @@
  */
 module.exports = {
   areAllShapesTheSameType: require('./areAllShapesTheSameType'),
+  cos: require('./trigonometry').cos,
   degToRad: require('./degToRad'),
   flatten: require('./flatten'),
   fnNumberSort: require('./fnNumberSort'),
   insertSorted: require('./insertSorted'),
   radiusToSegments: require('./radiusToSegments'),
-  radToDeg: require('./radToDeg')
+  radToDeg: require('./radToDeg'),
+  sin: require('./trigonometry').sin
 }
