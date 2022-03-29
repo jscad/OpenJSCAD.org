@@ -6,6 +6,8 @@ const { geom3 } = require('../../geometries')
 
 const { cuboid } = require('../../primitives')
 
+const { union } = require('../booleans')
+
 const { generalize } = require('./index')
 
 test('generalize: generalize of a geom3 produces an expected geom3', (t) => {
@@ -189,6 +191,32 @@ test('generalize: generalize of a geom3 with T junctions produces an expected ge
     [[1, 1, 1], [0, 1, 1], [0, 0, 1]],
     [[0, 1, 1], [-1, 1, 1], [0, 0, 1]],
     [[-1, 1, 1], [-1, 0, 1], [0, 0, 1]]
+  ]
+  t.true(comparePolygonsAsPoints(pts, exp))
+})
+
+test('generalize: generalize of a geom3 with repair', (t) => {
+  const geometry1 = union(
+    cuboid({ size: [8, 8, 8] }),
+    cuboid({ center: [0, 0, 4] })
+  )
+  const result = generalize({ repair: true }, geometry1)
+  const pts = geom3.toPoints(result)
+  const exp = [
+    [[-4, -4, -4], [-4, -4, 4], [-4, 4, 4], [-4, 4, -4]],
+    [[-4, -4, -4], [-4, 4, -4], [4, 4, -4], [4, -4, -4]],
+    [[-4, -4, -4], [4, -4, -4], [4, -4, 4], [-4, -4, 4]],
+    [[-4, 4, -4], [-4, 4, 4], [4, 4, 4], [4, 4, -4]],
+    [[4, -4, -4], [4, 4, -4], [4, 4, 4], [4, -4, 4]],
+    [[-4, -1, 4], [-4, -4, 4], [4, -4, 4], [4, -1, 4]],
+    [[-4, 4, 4], [-4, 1, 4], [4, 1, 4], [4, 4, 4]],
+    [[1, 1, 4], [1, -1, 4], [4, -1, 4], [4, 1, 4]],
+    [[1, 1, 4], [1, 1, 5], [1, -1, 5], [1, -1, 4]],
+    [[-4, 1, 4], [-4, -1, 4], [-1, -1, 4], [-1, 1, 4]],
+    [[-1, -1, 4], [-1, -1, 5], [-1, 1, 5], [-1, 1, 4]],
+    [[-1, -1, 5], [1, -1, 5], [1, 1, 5], [-1, 1, 5]],
+    [[1, -1, 4], [1, -1, 5], [-1, -1, 5], [-1, -1, 4]],
+    [[-1, 1, 4], [-1, 1, 5], [1, 1, 5], [1, 1, 4]]
   ]
   t.true(comparePolygonsAsPoints(pts, exp))
 })
