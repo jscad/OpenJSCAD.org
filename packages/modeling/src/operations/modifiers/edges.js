@@ -6,7 +6,7 @@ const poly3 = require('../../geometries/poly3')
 /*
  * Add a unique edge to the given list of edges.
  * Each edge has a list of associated polygons.
- * Edges with two polygons are complete, while edges with one polygon are open, i.e hole or t-junction..
+ * Edges with two polygons are complete, while edges with one polygon are open, i.e hole or t-junction.
  */
 const addEdge = (edges, edge, polygon) => {
   const ei = edges.findIndex((element) => {
@@ -61,10 +61,8 @@ const addPolygon = (edges, polygon) => {
 /*
  * Remove all polygons associated with the old edge from the given list of edges.
  */
-const removePolygons = (edges, oldedge) => {
-  // console.log('removePolygons',oldedge)
-  const polygons = oldedge.polygons
-  polygons.forEach((polygon) => {
+const removePolygons = (edges, oldEdge) => {
+  oldEdge.polygons.forEach((polygon) => {
     const vertices = polygon.vertices
     const nv = vertices.length
 
@@ -81,18 +79,15 @@ const removePolygons = (edges, oldedge) => {
 /*
  * Split the polygon, ensuring one polygon includes the open edge.
  */
-const splitPolygon = (openedge, polygon, eps) => {
-  // console.log('splitPolygon',openedge,polygon)
+const splitPolygon = (openEdge, polygon, eps) => {
   const vertices = polygon.vertices
-  const i = vertices.findIndex((point) => almostEquals(eps, point, openedge[0]))
-  const polygon1 = poly3.fromPoints([vertices[(i + 0) % 3], vertices[(i + 1) % 3], openedge[1]])
-  const polygon2 = poly3.fromPoints([openedge[1], vertices[(i + 1) % 3], vertices[(i + 2) % 3]])
+  const i = vertices.findIndex((point) => almostEquals(eps, point, openEdge[0]))
+  const polygon1 = poly3.fromPoints([vertices[(i + 0) % 3], vertices[(i + 1) % 3], openEdge[1]])
+  const polygon2 = poly3.fromPoints([openEdge[1], vertices[(i + 1) % 3], vertices[(i + 2) % 3]])
   if (polygon.color) {
     polygon1.color = polygon.color
     polygon2.color = polygon.color
   }
-  // console.log('polygon1',polygon1)
-  // console.log('polygon2',polygon2)
   return [polygon1, polygon2]
 }
 
@@ -101,21 +96,24 @@ const splitPolygon = (openedge, polygon, eps) => {
  */
 const almostEquals = (eps, v1, v2) => (Math.abs(v1[0] - v2[0]) <= eps && Math.abs(v1[1] - v2[1]) <= eps && Math.abs(v1[2] - v2[2]) <= eps)
 
-const enclosedEdge = (openedge, edge, eps) => {
-  if (openedge.distance < edge.distance) {
+/*
+ * Find edges which are enclosed by a given edge: nearby, parallel, opposed.
+ */
+const enclosedEdge = (openEdge, edge, eps) => {
+  if (openEdge.distance < edge.distance) {
     // only look for opposing edges
-    if (vec3.equals(openedge[0], edge[1])) {
+    if (vec3.equals(openEdge[0], edge[1])) {
       // only opposing open edges enclosed by the edge
-      const distanceE0O0 = vec3.squaredDistance(openedge[0], edge[0])
-      const distanceE0O1 = vec3.squaredDistance(openedge[1], edge[0])
-      const distanceE1O0 = vec3.squaredDistance(openedge[0], edge[1])
-      const distanceE1O1 = vec3.squaredDistance(openedge[1], edge[1])
+      const distanceE0O0 = vec3.squaredDistance(openEdge[0], edge[0])
+      const distanceE0O1 = vec3.squaredDistance(openEdge[1], edge[0])
+      const distanceE1O0 = vec3.squaredDistance(openEdge[0], edge[1])
+      const distanceE1O1 = vec3.squaredDistance(openEdge[1], edge[1])
       if (distanceE0O0 <= edge.distance && distanceE0O1 < edge.distance && distanceE1O0 < edge.distance && distanceE1O1 < edge.distance) {
-        // only look for paralell open edges
-        const line3d = line3.fromPoints(edge[0], edge[1])
-        const closest0 = vec3.snap(vec3.create(), eps, line3.closestPoint(openedge[0], line3d))
-        const closest1 = vec3.snap(vec3.create(), eps, line3.closestPoint(openedge[1], line3d))
-        if (almostEquals(eps, closest0, openedge[0]) && almostEquals(eps, closest1, openedge[1])) {
+        // only look for parallel open edges
+        const line3d = line3.fromPoints(line3.create(), edge[0], edge[1])
+        const closest0 = vec3.snap(vec3.create(), eps, line3.closestPoint(line3d, openEdge[0]))
+        const closest1 = vec3.snap(vec3.create(), eps, line3.closestPoint(line3d, openEdge[1]))
+        if (almostEquals(eps, closest0, openEdge[0]) && almostEquals(eps, closest1, openEdge[1])) {
           return true
         }
       }
@@ -125,22 +123,19 @@ const enclosedEdge = (openedge, edge, eps) => {
 }
 
 /*
- * Split the edge if posssible from the list of open edges.
- * Return a list of new polygons, or null if not possible
+ * Split the edge if possible from the list of open edges.
+ * Return a list of new polygons, or null if not possible.
  */
-const splitEdge = (openedges, edge, eps) => {
-  // console.log('splitEdge',edge)
-  for (let i = 0; i < openedges.length; i++) {
-    const openedge = openedges[i]
-    if (openedge) {
-      if (enclosedEdge(openedge, edge, eps)) {
+const splitEdge = (openEdges, edge, eps) => {
+  openEdges.forEach((openEdge) => {
+    if (openEdge) {
+      if (enclosedEdge(openEdge, edge, eps)) {
         // spit the polygon associated with the edge
         const polygon = edge.polygons[0]
-        const newpolygons = splitPolygon(openedge, polygon, eps)
-        return newpolygons
+        return splitPolygon(openEdge, polygon, eps)
       }
     }
-  }
+  })
   return null
 }
 
@@ -148,20 +143,15 @@ const splitEdge = (openedges, edge, eps) => {
  * Cull a list of open edges (see above) from the list of edges.
  */
 const cullOpenEdges = (edges) => {
-  const openedges = []
+  const openEdges = []
   edges.forEach((edge) => {
     const polygons = edge.polygons
     if (polygons.length === 1) {
-      // console.log('open edge: ',edge[0],'<-->',edge[1])
       edge.distance = vec3.squaredDistance(edge[0], edge[1])
-      openedges.push(edge)
+      openEdges.push(edge)
     }
   })
-  // console.log('open edges:',openedges.length)
-  // console.log('**********OPEN*********')
-  // console.log(openedges)
-  // console.log('**********OPEN*********')
-  return openedges
+  return openEdges
 }
 
 /*
