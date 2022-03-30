@@ -19,8 +19,7 @@ class Tree {
 
   // Remove all polygons in this BSP tree that are inside the other BSP tree
   // `tree`.
-  clipTo (tree, alsoRemovecoplanarFront) {
-    alsoRemovecoplanarFront = !!alsoRemovecoplanarFront
+  clipTo (tree, alsoRemovecoplanarFront = false) {
     this.rootnode.clipTo(tree, alsoRemovecoplanarFront)
   }
 
