@@ -12,7 +12,7 @@ test('offset: offsetting a straight line produces expected geometry', (t) => {
   // offset it by 2.
   let offsetLinePath2 = offset({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
   let offsetPoints = path2.toPoints(offsetLinePath2)
-  t.true(path2.isA(offsetLinePath2))
+  t.notThrows(() => path2.validate(offsetLinePath2))
   t.is(offsetPoints.length, 2)
   let boundingBox = measureBoundingBox(offsetLinePath2)
   t.true(comparePoints(boundingBox, [[2, 0, 0], [2, 10, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
@@ -20,7 +20,7 @@ test('offset: offsetting a straight line produces expected geometry', (t) => {
   // offset it by -2.
   offsetLinePath2 = offset({ delta: -2, corners: 'edge', segments: 8 }, linePath2)
   offsetPoints = path2.toPoints(offsetLinePath2)
-  t.true(path2.isA(offsetLinePath2))
+  t.notThrows(() => path2.validate(offsetLinePath2))
   t.is(offsetPoints.length, 2)
   boundingBox = measureBoundingBox(offsetLinePath2)
   t.true(comparePoints(boundingBox, [[-2, 0, 0], [-2, 10, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
@@ -29,7 +29,7 @@ test('offset: offsetting a straight line produces expected geometry', (t) => {
   linePath2 = path2.fromPoints({ closed: false }, points.reverse())
   offsetLinePath2 = offset({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
   offsetPoints = path2.toPoints(offsetLinePath2)
-  t.true(path2.isA(offsetLinePath2))
+  t.notThrows(() => path2.validate(offsetLinePath2))
   t.is(offsetPoints.length, 2)
   boundingBox = measureBoundingBox(offsetLinePath2)
   t.true(comparePoints(boundingBox, [[-2, 0, 0], [-2, 10, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
@@ -42,7 +42,7 @@ test('offset: offsetting a bent line produces expected geometry', (t) => {
   // offset it by 2.
   let offsetLinePath2 = offset({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
   let offsetPoints = path2.toPoints(offsetLinePath2)
-  t.true(path2.isA(offsetLinePath2))
+  t.notThrows(() => path2.validate(offsetLinePath2))
   t.is(offsetPoints.length, 5)
   let boundingBox = measureBoundingBox(offsetLinePath2)
   t.true(comparePoints(boundingBox, [[2, 0, 0], [10, 8, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
@@ -50,7 +50,7 @@ test('offset: offsetting a bent line produces expected geometry', (t) => {
   // offset it by -2.
   offsetLinePath2 = offset({ delta: -2, corners: 'edge', segments: 8 }, linePath2)
   offsetPoints = path2.toPoints(offsetLinePath2)
-  t.true(path2.isA(offsetLinePath2))
+  t.notThrows(() => path2.validate(offsetLinePath2))
   t.is(offsetPoints.length, 5)
   boundingBox = measureBoundingBox(offsetLinePath2)
   t.true(comparePoints(boundingBox, [[-2, 0, 0], [10, 12, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
@@ -61,7 +61,7 @@ test('offset: offsetting a 2 segment straight line produces expected geometry', 
   const linePath2 = path2.fromPoints({ closed: false }, points)
   const offsetLinePath2 = offset({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
   const offsetPoints = path2.toPoints(offsetLinePath2)
-  t.true(path2.isA(offsetLinePath2))
+  t.notThrows(() => path2.validate(offsetLinePath2))
   t.is(offsetPoints.length, 3)
   const boundingBox = measureBoundingBox(offsetLinePath2)
   t.true(comparePoints(boundingBox, [[2, 0, 0], [2, 10, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
@@ -77,7 +77,7 @@ test('offset (corners: chamfer): offset of a path2 produces expected offset path
   let pts = path2.toPoints(obs)
   let exp = [
   ]
-  t.true(path2.isA(obs))
+  t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 
   // expand +
@@ -89,7 +89,7 @@ test('offset (corners: chamfer): offset of a path2 produces expected offset path
     [5.707106781186548, 0.7071067811865475],
     [0.7071067811865475, 5.707106781186548]
   ]
-  t.true(path2.isA(obs))
+  t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 
   obs = offset({ delta: 1, corners: 'chamfer' }, closeline)
@@ -102,7 +102,7 @@ test('offset (corners: chamfer): offset of a path2 produces expected offset path
     [-1, 5],
     [-1, 6.123233995736766e-17]
   ]
-  t.true(path2.isA(obs))
+  t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 
   // contract -
@@ -113,7 +113,7 @@ test('offset (corners: chamfer): offset of a path2 produces expected offset path
     [2.5857864376269046, 1],
     [-0.7071067811865475, 4.292893218813452]
   ]
-  t.true(path2.isA(obs))
+  t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 
   obs = offset({ delta: -1, corners: 'chamfer' }, closeline)
@@ -123,7 +123,7 @@ test('offset (corners: chamfer): offset of a path2 produces expected offset path
     [2.5857864376269046, 1],
     [0.9999999999999996, 2.585786437626905]
   ]
-  t.true(path2.isA(obs))
+  t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 })
 
@@ -143,7 +143,7 @@ test('offset (corners: edge): offset of a path2 produces expected offset path2',
     [-1.9999999999999996, 6],
     [-5, 6]
   ]
-  t.true(path2.isA(obs))
+  t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 
   obs = offset({ delta: 1, corners: 'edge' }, closeline)
@@ -158,7 +158,7 @@ test('offset (corners: edge): offset of a path2 produces expected offset path2',
     [-6, 6],
     [-6, -6]
   ]
-  t.true(path2.isA(obs))
+  t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 
   obs = offset({ delta: -0.5, corners: 'edge' }, openline)
@@ -173,7 +173,7 @@ test('offset (corners: edge): offset of a path2 produces expected offset path2',
     [-3.5, 4.5],
     [-5, 4.5]
   ]
-  t.true(path2.isA(obs))
+  t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 
   obs = offset({ delta: -0.5, corners: 'edge' }, closeline)
@@ -188,7 +188,7 @@ test('offset (corners: edge): offset of a path2 produces expected offset path2',
     [-3.5, 4.5],
     [-4.5, 4.5]
   ]
-  t.true(path2.isA(obs))
+  t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 })
 
@@ -224,7 +224,7 @@ test('offset (corners: round): offset of a path2 produces expected offset path2'
     [-3, 6],
     [-5, 6]
   ]
-  t.true(path2.isA(obs))
+  t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 
   obs = offset({ delta: 1, corners: 'round', segments: 16 }, closeline)
@@ -263,7 +263,7 @@ test('offset (corners: round): offset of a path2 produces expected offset path2'
     [-6, 5],
     [-6, -5]
   ]
-  t.true(path2.isA(obs))
+  t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 })
 
@@ -306,7 +306,7 @@ test('offset (corners: round): offset of a CW path2 produces expected offset pat
     [5, -6],
     [-5, -6]
   ]
-  t.true(path2.isA(obs))
+  t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 })
 
@@ -319,7 +319,7 @@ test('offset (options): offsetting of a simple geom2 produces expected offset ge
   let pts = geom2.toPoints(obs)
   let exp = [
   ]
-  t.true(geom2.isA(obs))
+  t.notThrows(() => geom2.validate(obs))
   t.true(comparePoints(pts, exp))
 
   // expand +
@@ -341,7 +341,7 @@ test('offset (options): offsetting of a simple geom2 produces expected offset ge
     [-6, 5],
     [-6, -5]
   ]
-  t.true(geom2.isA(obs))
+  t.notThrows(() => geom2.validate(obs))
   t.true(comparePoints(pts, exp))
 
   // contract -
@@ -359,7 +359,7 @@ test('offset (options): offsetting of a simple geom2 produces expected offset ge
     [-3.5, 4.5],
     [-4.5, 4.5]
   ]
-  t.true(geom2.isA(obs))
+  t.notThrows(() => geom2.validate(obs))
   t.true(comparePoints(pts, exp))
 
   // segments 1 - sharp points at corner
@@ -375,7 +375,7 @@ test('offset (options): offsetting of a simple geom2 produces expected offset ge
     [-6, 6],
     [-6, -6]
   ]
-  t.true(geom2.isA(obs))
+  t.notThrows(() => geom2.validate(obs))
   t.true(comparePoints(pts, exp))
 
   // segments 16 - rounded corners
@@ -399,7 +399,7 @@ test('offset (options): offsetting of a simple geom2 produces expected offset ge
     [-3.5, 4.5],
     [-4.5, 4.5]
   ]
-  t.true(geom2.isA(obs))
+  t.notThrows(() => geom2.validate(obs))
   t.true(comparePoints(pts, exp))
 })
 
@@ -452,7 +452,7 @@ test('offset (options): offsetting of a complex geom2 produces expected offset g
     [-4, -13],
     [-77, -77]
   ]
-  t.true(geom2.isA(obs))
+  t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 20)
   t.true(comparePoints(pts, exp))
 })
@@ -497,7 +497,7 @@ test('offset (options): offsetting of round geom2 produces expected offset geom2
     [6.7105900605102855, -6.710590060510285],
     [8.767810140100096, -3.6317399864658024]
   ]
-  t.true(geom2.isA(obs))
+  t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 16)
   t.true(comparePoints(pts, exp))
 })

@@ -15,15 +15,24 @@ const validate = (object) => {
   if (!isA(object)) {
     throw new Error('invalid geom3 structure')
   }
+
   // check polygons
   object.polygons.forEach(poly3.validate)
   validateManifold(object)
 
-  // TODO: check for non-self intersecting
+  // check transforms
+  if (!object.transforms.every(Number.isFinite)) {
+    throw new Error(`geom3 invalid transforms ${object.transforms}`)
+  }
+
+  // TODO: check for self-intersecting
 }
 
+/*
+ * Check manifold edge condition: Every edge is in exactly 2 faces
+ */
 const validateManifold = (object) => {
-  // check manifold edge condition: Every edge is in exactly 2 faces
+  // count of each edge
   const edgeCount = new Map()
   object.polygons.forEach(({ vertices }) => {
     vertices.forEach((v, i) => {
@@ -35,9 +44,10 @@ const validateManifold = (object) => {
       edgeCount.set(edge, count + 1)
     })
   })
+
+  // check that edges are always matched
   const nonManifold = []
   edgeCount.forEach((count, edge) => {
-    // check that edges are always matched
     const complementEdge = edge.split('/').reverse().join('/')
     const complementCount = edgeCount.get(complementEdge)
     if (count !== complementCount) {

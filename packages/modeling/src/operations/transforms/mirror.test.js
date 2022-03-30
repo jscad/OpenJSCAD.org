@@ -13,24 +13,24 @@ test('mirror: mirroring of path2 about X/Y produces expected changes to points',
   let mirrored = mirror({ normal: [1, 0, 0] }, geometry)
   let obs = path2.toPoints(mirrored)
   let exp = [[5, 5], [-5, 5], [5, -5], [-10, -5]]
-  t.true(path2.isA(mirrored))
+  t.notThrows(() => path2.validate(mirrored))
   t.true(comparePoints(obs, exp))
 
   mirrored = mirrorX(geometry)
   obs = path2.toPoints(mirrored)
-  t.true(path2.isA(mirrored))
+  t.notThrows(() => path2.validate(mirrored))
   t.true(comparePoints(obs, exp))
 
   // mirror about Y
   mirrored = mirror({ normal: [0, 1, 0] }, geometry)
   obs = path2.toPoints(mirrored)
   exp = [[-5, -5], [5, -5], [-5, 5], [10, 5]]
-  t.true(path2.isA(mirrored))
+  t.notThrows(() => path2.validate(mirrored))
   t.true(comparePoints(obs, exp))
 
   mirrored = mirrorY(geometry)
   obs = path2.toPoints(mirrored)
-  t.true(path2.isA(mirrored))
+  t.notThrows(() => path2.validate(mirrored))
   t.true(comparePoints(obs, exp))
 })
 
@@ -41,24 +41,24 @@ test('mirror: mirroring of geom2 about X/Y produces expected changes to points',
   let mirrored = mirror({ normal: [1, 0, 0] }, geometry)
   let obs = geom2.toPoints(mirrored)
   let exp = [[5, -5], [0, 5], [-10, -5]]
-  t.true(geom2.isA(mirrored))
+  t.notThrows(() => geom2.validate(mirrored))
   t.true(comparePoints(obs, exp))
 
   mirrored = mirrorX(geometry)
   obs = geom2.toPoints(mirrored)
-  t.true(geom2.isA(mirrored))
+  t.notThrows(() => geom2.validate(mirrored))
   t.true(comparePoints(obs, exp))
 
   // mirror about Y
   mirrored = mirror({ normal: [0, 1, 0] }, geometry)
   obs = geom2.toPoints(mirrored)
   exp = [[-5, 5], [0, -5], [10, 5]]
-  t.true(geom2.isA(mirrored))
+  t.notThrows(() => geom2.validate(mirrored))
   t.true(comparePoints(obs, exp))
 
   mirrored = mirrorY(geometry)
   obs = geom2.toPoints(mirrored)
-  t.true(geom2.isA(mirrored))
+  t.notThrows(() => geom2.validate(mirrored))
   t.true(comparePoints(obs, exp))
 })
 
@@ -142,11 +142,11 @@ test('mirror: mirroring of multiple objects produces an array of mirrored object
 
   let obs = path2.toPoints(mirrored[1])
   let exp = [[-5, -5], [5, -5], [-5, 5], [10, 5]]
-  t.true(path2.isA(mirrored[1]))
+  t.notThrows(() => path2.validate(mirrored[1]))
   t.true(comparePoints(obs, exp))
 
   obs = geom2.toPoints(mirrored[2])
   exp = [[-5, 5], [0, -5], [10, 5]]
-  t.true(geom2.isA(mirrored[2]))
+  t.notThrows(() => geom2.validate(mirrored[2]))
   t.true(comparePoints(obs, exp))
 })

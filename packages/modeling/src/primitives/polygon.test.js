@@ -12,7 +12,7 @@ test('polygon: providing only object.points creates expected geometry', (t) => {
   let obs = geom2.toPoints(geometry)
   let exp = [[0, 0], [100, 0], [130, 50], [30, 50]]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.true(comparePoints(obs, exp))
 
   geometry = polygon({ points: [[[0, 0], [100, 0], [0, 100]], [[10, 10], [80, 10], [10, 80]]] })
@@ -20,7 +20,7 @@ test('polygon: providing only object.points creates expected geometry', (t) => {
   obs = geom2.toPoints(geometry)
   exp = [[0, 0], [100, 0], [10, 80], [10, 10], [80, 10], [0, 100]]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.true(comparePoints(obs, exp))
 })
 
@@ -30,7 +30,7 @@ test('polygon: providing object.points (array) and object.path (array) creates e
   let obs = geom2.toPoints(geometry)
   let exp = [[30, 50], [130, 50], [100, 0], [0, 0]]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.true(comparePoints(obs, exp))
 
   // multiple paths
@@ -39,7 +39,7 @@ test('polygon: providing object.points (array) and object.path (array) creates e
   obs = geom2.toPoints(geometry)
   exp = [[0, 0], [100, 0], [10, 80], [10, 10], [80, 10], [0, 100]]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.true(comparePoints(obs, exp))
 
   // multiple points and paths
@@ -48,6 +48,6 @@ test('polygon: providing object.points (array) and object.path (array) creates e
   obs = geom2.toPoints(geometry)
   exp = [[0, 0], [100, 0], [10, 80], [10, 10], [80, 10], [0, 100]]
 
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(geometry))
   t.true(comparePoints(obs, exp))
 })

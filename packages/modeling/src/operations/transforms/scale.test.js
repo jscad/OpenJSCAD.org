@@ -13,24 +13,24 @@ test('scale: scaling of a path2 produces expected changes to points', (t) => {
   let scaled = scale([3], geometry)
   let obs = path2.toPoints(scaled)
   let exp = [[0, 4], [3, 0]]
-  t.true(path2.isA(scaled))
+  t.notThrows(() => path2.validate(scaled))
   t.true(comparePoints(obs, exp))
 
   scaled = scaleX(3, geometry)
   obs = path2.toPoints(scaled)
-  t.true(path2.isA(scaled))
+  t.notThrows(() => path2.validate(scaled))
   t.true(comparePoints(obs, exp))
 
   // scale Y
   scaled = scale([1, 0.5], geometry)
   obs = path2.toPoints(scaled)
   exp = [[0, 2], [1, 0]]
-  t.true(path2.isA(scaled))
+  t.notThrows(() => path2.validate(scaled))
   t.true(comparePoints(obs, exp))
 
   scaled = scaleY(0.5, geometry)
   obs = path2.toPoints(scaled)
-  t.true(path2.isA(scaled))
+  t.notThrows(() => path2.validate(scaled))
   t.true(comparePoints(obs, exp))
 })
 
@@ -41,24 +41,24 @@ test('scale: scaling of a geom2 produces expected changes to points', (t) => {
   let scaled = scale([3], geometry)
   let obs = geom2.toPoints(scaled)
   let exp = [[-3, 0], [3, 0], [0, 1]]
-  t.true(geom2.isA(scaled))
+  t.notThrows(() => geom2.validate(scaled))
   t.true(comparePoints(obs, exp))
 
   scaled = scaleX(3, geometry)
   obs = geom2.toPoints(scaled)
-  t.true(geom2.isA(scaled))
+  t.notThrows(() => geom2.validate(scaled))
   t.true(comparePoints(obs, exp))
 
   // scale Y
   scaled = scale([1, 3], geometry)
   obs = geom2.toPoints(scaled)
   exp = [[-1, 0], [1, 0], [0, 3]]
-  t.true(geom2.isA(geometry))
+  t.notThrows(() => geom2.validate(scaled))
   t.true(comparePoints(obs, exp))
 
   scaled = scaleY(3, geometry)
   obs = geom2.toPoints(scaled)
-  t.true(geom2.isA(scaled))
+  t.notThrows(() => geom2.validate(scaled))
   t.true(comparePoints(obs, exp))
 })
 
@@ -141,11 +141,11 @@ test('scale: scaling of multiple objects produces expected changes', (t) => {
 
   const obs1 = path2.toPoints(scaled[1])
   const exp1 = [[-15, 5], [15, 5], [-15, -5], [30, -5]]
-  t.true(path2.isA(scaled[1]))
+  t.notThrows(() => path2.validate(scaled[1]))
   t.true(comparePoints(obs1, exp1))
 
   const obs2 = geom2.toPoints(scaled[2])
   const exp2 = [[-15, -5], [0, 5], [30, -5]]
-  t.true(geom2.isA(scaled[2]))
+  t.notThrows(() => geom2.validate(scaled[2]))
   t.true(comparePoints(obs2, exp2))
 })

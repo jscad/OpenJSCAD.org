@@ -36,7 +36,7 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
     [0, -2],
     [1.4142000000000001, -1.4142000000000001]
   ]
-  t.true(geom2.isA(result1))
+  t.notThrows(() => geom2.validate(result1))
   t.is(obs.length, 8)
   t.true(comparePoints(obs, exp))
 
@@ -55,7 +55,7 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
     [0, -2],
     [1.4142000000000001, -1.4142000000000001]
   ]
-  t.true(geom2.isA(result2))
+  t.notThrows(() => geom2.validate(result2))
   t.is(obs.length, 8)
   t.true(comparePoints(obs, exp))
 
@@ -67,7 +67,7 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
   exp = [
     [12, 12], [9, 9], [8, 9], [8, 12], [9, 8], [12, 8]
   ]
-  t.true(geom2.isA(result3))
+  t.notThrows(() => geom2.validate(result3))
   t.is(obs.length, 6)
   t.true(comparePoints(obs, exp))
 
@@ -76,7 +76,7 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
   obs = geom2.toPoints(result4)
   exp = [
   ]
-  t.true(geom2.isA(result4))
+  t.notThrows(() => geom2.validate(result4))
   t.is(obs.length, 0)
   t.deepEqual(obs, exp)
 })
