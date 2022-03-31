@@ -1,4 +1,5 @@
 // cd c:\hrg\3dp_dev\three.js; esbuild Three.jscad.js --outfile=C:/hrg/3dp_dev/OpenJSCAD.org/packages/web2/src/Three.jscad.js --bundle --watch --sourcemap=external --minify --format=esm
+import { AlwaysStencilFunc } from './Three.jscad'
 import { CSG2Babylonjs } from './util/CSG2Babylonjs'
 const BABYLON = require('@babylonjs/core')
 const { Engine, Scene, HemisphericLight, ArcRotateCamera, Vector3, AxesViewer, MeshBuilder, Mesh, Plane, Color3 } = BABYLON
@@ -105,7 +106,8 @@ export default function JscadBabylonViewer (el, { camera: _camera = {}, bg } = {
 
   const getViewerEnv = () => ({
     forceColors4: true,
-    forceIndex: true
+    forceIndex: true,
+    useInstances: false
   })
 
   return { sendCmd, destroy, getCamera, setCamera, setBg: handlers.setBg, setScene, getViewerEnv }

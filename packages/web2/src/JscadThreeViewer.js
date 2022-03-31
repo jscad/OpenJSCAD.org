@@ -150,7 +150,8 @@ export default function JscadThreeViewer (el, { camera: _camera = {}, bg } = {})
 
   const getViewerEnv = () => ({
     forceColors4: false,
-    forceIndex: false
+    forceIndex: false,
+    useInstances: false
   })
 
   return { sendCmd, destroy, getCamera, setCamera, camera: _camera, setBg: setBg, setScene, getViewerEnv }

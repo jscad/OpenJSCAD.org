@@ -2,17 +2,26 @@
 import { line } from '@jscad/vtree/core/modeling/primitives'
 import { Jsx6, moveParams, copyBindings } from '../jsx6'
 
-const makeAxes = (len = 100) =>{
+const makeAxes = (len = 100, forceColors4) =>{
   const lines = Float32Array.of(
     0,0,0, len,0,0,
     0,0,0, 0,len,0,
     0,0,0, 0,0,len,
   )
-  const colors = Float32Array.of(
-    1,0,0, 1,0,0,
-    0,1,0, 0,1,0,
-    0,0,1, 0,0,1,
-  )
+  let colors
+  if(forceColors4){
+    colors = Float32Array.of(
+      1,0,0,1, 1,0,0,1,
+      0,1,0,1, 0,1,0,1,
+      0,0,1,1, 0,0,1,1,
+    )
+  }else{
+    colors = Float32Array.of(
+      1,0,0, 1,0,0,
+      0,1,0, 0,1,0,
+      0,0,1, 0,0,1,
+    )
+  }
   return {vertices:lines, colors, type:'lines'}
 }
 /**

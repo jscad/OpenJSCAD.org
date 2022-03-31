@@ -10,13 +10,16 @@ Main goal is to use ArrayBuffers because they are transferable, and because all 
 Due to implementation differences it is important for worker to generate ouput a bit differently for specific viewer.
 
 ###  `forceIndex` - force indices data gen
- - babylon uses indices data, and may not have support for working without indices
- - threejs works even without (check if tehy are generated on the fly, then might be ok to also do it in the worker)
+it is beneficial to leave this optional, as webgpu renderer might fill indices in gpu or in other cases shader can be made
+to work without indices.
 
+ - threejs works even without (check if tehy are generated on the fly, then might be ok to also do it in the worker)
+ - babylon uses indices data, and may not have support for working without indices
 
 ### `forceColors4` force 4 channel in colors (per vertex)
- - babylon always uses 4 channel data in colors buffer
-
+ - regl always uses 4 channels data in colors buffer
+ - babylon always uses 4 channels data in colors buffer
+ - threejs uses 4 channels when alpha enabled, 3 channels otherwise
 
 ## Geometry
 

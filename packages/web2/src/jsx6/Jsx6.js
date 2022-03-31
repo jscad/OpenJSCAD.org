@@ -78,7 +78,7 @@ export class Jsx6 {
   destroyed() { }
 
   initTemplate() {
-    let def = this.tpl(h.bind(this), this.state, this)
+    let def = this.tpl(h.bind(this), this.state, this.state()(), this)
     insertHtml(this.el, null, def, this);
   }
 
