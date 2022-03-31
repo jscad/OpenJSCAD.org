@@ -51,8 +51,8 @@ test('measureCenterOfMass (multiple objects)', (t) => {
   const o = {}
 
   let allcenters = measureCenterOfMass(aline, arect, asphere, o)
-  t.deepEqual(allcenters, [[0, 0, 0], [10, -10, 0], [4.99999999999999, -5.000000000000007, 49.99999999999992], [0, 0, 0]])
+  t.deepEqual(allcenters, [[0, 0, 0], [10, -10, 0], [4.999999999999991, -5.000000000000006, 49.999999999999915], [0, 0, 0]])
 
   allcenters = measureCenterOfMass(aline, arect, asphere, o)
-  t.deepEqual(allcenters, [[0, 0, 0], [10, -10, 0], [4.99999999999999, -5.000000000000007, 49.99999999999992], [0, 0, 0]])
+  t.deepEqual(allcenters, [[0, 0, 0], [10, -10, 0], [4.999999999999991, -5.000000000000006, 49.999999999999915], [0, 0, 0]])
 })
