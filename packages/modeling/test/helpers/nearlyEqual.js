@@ -1,7 +1,10 @@
 // Compare two numeric values for near equality.
 // the given test is fails if the numeric values are outside the given epsilon
 const nearlyEqual = (t, a, b, epsilon, failMessage) => {
-  if (a === b) { // shortcut, also handles infinities and NaNs
+  if (typeof t !== 'object') {
+    throw new Error('first argument must be a test object')
+  }
+  if (a === b) { // shortcut, also handles infinities
     return true
   }
 
