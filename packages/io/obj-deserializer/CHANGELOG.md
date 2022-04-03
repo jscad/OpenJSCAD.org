@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.17](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/obj-deserializer@2.0.16...@jscad/obj-deserializer@2.0.17) (2022-04-03)
+
+**Note:** Version bump only for package @jscad/obj-deserializer
+
+
+
+
+
+## [2.0.16](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/obj-deserializer@2.0.15...@jscad/obj-deserializer@2.0.16) (2022-04-03)
+
+**Note:** Version bump only for package @jscad/obj-deserializer
+
+
+
+
+
 ## [2.0.15](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/obj-deserializer@2.0.14...@jscad/obj-deserializer@2.0.15) (2022-03-13)
 
 **Note:** Version bump only for package @jscad/obj-deserializer
