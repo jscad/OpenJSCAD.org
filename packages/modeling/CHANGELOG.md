@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.9.0...@jscad/modeling@2.9.1) (2022-04-03)
+
+
+### Bug Fixes
+
+* **modeling:** corrected ellipse and ellipsoid manifolds ([#1043](https://github.com/jscad/OpenJSCAD.org/issues/1043)) ([3af3506](https://github.com/jscad/OpenJSCAD.org/commit/3af3506d6830ffe026f01490ded5d704301cb542))
+* **modeling:** fix assignHoles function when there are nested holes ([#1038](https://github.com/jscad/OpenJSCAD.org/issues/1038)) ([f015224](https://github.com/jscad/OpenJSCAD.org/commit/f0152244af4f584bcdb17afd0e4b704dacf569a9))
+* **modeling:** fixed areAllShapesTheSameType and add a test ([#1034](https://github.com/jscad/OpenJSCAD.org/issues/1034)) ([c92e9be](https://github.com/jscad/OpenJSCAD.org/commit/c92e9be0fe8696a992e2151a981fc34609c47e7d))
+* **modeling:** fixed cylinder construction, enhanced to support zero radius ([#1039](https://github.com/jscad/OpenJSCAD.org/issues/1039)) ([93f103d](https://github.com/jscad/OpenJSCAD.org/commit/93f103d0aec53618966bffa7fedc355547a6008c))
+
+
+
+
+
 # [2.9.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.8.0...@jscad/modeling@2.9.0) (2022-03-13)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@jscad/svg-deserializer",
-  "version": "2.4.8",
+  "version": "2.4.9",
   "description": "SVG Deserializer for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
@@ -32,7 +32,7 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/array-utils": "2.1.2",
-    "@jscad/modeling": "2.9.0",
+    "@jscad/modeling": "2.9.1",
     "saxes": "5.0.1"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "@jscad/img-utils",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Image Utilities for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
