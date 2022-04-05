@@ -55,7 +55,7 @@ Thank you to all the people who have already contributed to this project:
 
 * If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
 
-* If you want to submit a change or a patch, please see the [Contributing guidelines](../../../CONTRIBUTING.md). New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
+* If you want to submit a change or a patch, please see the [Contributing guidelines](../../../CONTRIBUTING.md). New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GitHub.
 
 * We only accept bug reports and pull requests on **GitHub**.
 

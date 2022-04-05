@@ -7,7 +7,7 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * If you want to submit a bug report please make sure to follow the [Reporting Issues](https://github.com/jscad/OpenJSCAD.org/wiki/Reporting-Issues) guide. Bug reports are accepted as [Issues](https://github.com/jscad/OpenJSCAD.org/issues/) via GitHub.
 
-* If you want to submit a change or a patch, please read the contents below on how to make changes. New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GithHub.
+* If you want to submit a change or a patch, please read the contents below on how to make changes. New contributions are accepted as [Pull Requests](https://github.com/jscad/OpenJSCAD.org/pulls/) via GitHub.
 
 * We only accept bug reports and pull requests on **GitHub**.
 
@@ -123,6 +123,6 @@ npm run build
 ## Contributors
 
 A BIG THANKS to all the people who have already contributed to the JSCAD project!
-<a href="graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" /></a>
+<a href="https://github.com/jscad/OpenJSCAD.org/graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" /></a>
 
 The JSCAD Organization
