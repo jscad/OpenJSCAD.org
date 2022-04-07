@@ -13,5 +13,6 @@ module.exports = {
   insertSorted: require('./insertSorted'),
   radiusToSegments: require('./radiusToSegments'),
   radToDeg: require('./radToDeg'),
-  sin: require('./trigonometry').sin
+  sin: require('./trigonometry').sin,
+  uniquePoints: require('./uniquePoints')
 }

@@ -1,4 +1,4 @@
-const flatten = require('../../utils/flatten')
+const { flatten, uniquePoints } = require('../../utils')
 
 const path2 = require('../../geometries/path2')
 
@@ -13,23 +13,12 @@ const hullPath2 = (...geometries) => {
   geometries = flatten(geometries)
 
   // extract the unique points from the geometries
-  const uniquepoints = []
-  const found = new Set()
-  geometries.forEach((geometry) => {
-    const points = path2.toPoints(geometry)
-    points.forEach((point) => {
-      const key = point.toString()
-      if (!found.has(key)) {
-        uniquepoints.push(point)
-        found.add(key)
-      }
-    })
-  })
+  const unique = uniquePoints(geometries)
 
-  const hullpoints = hullPoints2(uniquepoints)
+  const hullPoints = hullPoints2(unique)
 
   // assemble a new geometry from the list of points
-  return path2.fromPoints({ closed: true }, hullpoints)
+  return path2.fromPoints({ closed: true }, hullPoints)
 }
 
 module.exports = hullPath2
