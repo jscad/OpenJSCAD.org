@@ -2,6 +2,7 @@
   "name": "@jscad/web",
   "version": "2.5.8",
   "description": "Web Application for JSCAD",
+  "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
   "unpkg": "dist/jscad-web.min.js",

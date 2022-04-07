@@ -2,6 +2,7 @@
   "name": "@jscad/svg-serializer",
   "version": "2.3.5",
   "description": "SVG Serializer for JSCAD",
+  "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "scripts": {
