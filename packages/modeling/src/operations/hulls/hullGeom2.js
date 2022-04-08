@@ -1,8 +1,9 @@
-const { flatten, uniquePoints } = require('../../utils')
+const flatten = require('../../utils/flatten')
 
 const geom2 = require('../../geometries/geom2')
 
 const hullPoints2 = require('./hullPoints2')
+const toUniquePoints = require('./toUniquePoints')
 
 /*
  * Create a convex hull of the given geom2 geometries.
@@ -13,7 +14,7 @@ const hullGeom2 = (...geometries) => {
   geometries = flatten(geometries)
 
   // extract the unique points from the geometries
-  const unique = uniquePoints(geometries)
+  const unique = toUniquePoints(geometries)
 
   const hullPoints = hullPoints2(unique)
 
