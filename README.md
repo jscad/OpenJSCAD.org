@@ -94,7 +94,7 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
 A BIG THANKS to all the people who have already contributed to the JSCAD project!
-<a href="https://github.com/jscad/OpenJSCAD.org/graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" /></a>
+<a href="https://github.com/jscad/OpenJSCAD.org/graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" alt="Open Collective"></a>
 
 ## Community
 

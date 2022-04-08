@@ -116,7 +116,7 @@ HUGE THANKS and SHOUTOUT to [nodeBB](https://nodebb.org/) for hosting our (aweso
 
 Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/openjscad#backer)]
 
-<a href="https://opencollective.com/openjscad#backers" target="_blank"><img src="https://opencollective.com/openjscad/backers.svg?width=890"></a>
+<a href="https://opencollective.com/openjscad#backers" target="_blank"><img src="https://opencollective.com/openjscad/backers.svg?width=890" alt="Open Collective"></a>
 
 ## Sponsors
 

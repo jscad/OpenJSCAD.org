@@ -48,7 +48,7 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://openjscad.xyz/forum.html) and start contributing changes.
 
 A BIG THANKS to all the people who have already contributed to the JSCAD project!
-<a href="https://github.com/jscad/OpenJSCAD.org/graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" /></a>
+<a href="https://github.com/jscad/OpenJSCAD.org/graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" alt="Open Collective"></a>
 
 ## License
 
