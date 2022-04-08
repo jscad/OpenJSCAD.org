@@ -1,6 +1,6 @@
 # @jscad/web: JSCAD Web UI
 
-This is the Web based UI for JSCAD, either to host yourself, or use directly at https://www.openjscad.xyz/.
+This is the Web based UI for JSCAD, either to host yourself, or use directly at https://openjscad.xyz/.
 
 [![NPM version](https://badge.fury.io/js/%40jscad%2Fweb.svg)](https://www.npmjs.com/package/@jscad/web)
 [![NPM downloads](https://img.shields.io/npm/dw/@jscad/web)](https://www.npmjs.com/package/@jscad/web)
@@ -32,7 +32,7 @@ This is the Web based UI for JSCAD, either to host yourself, or use directly at 
 
 ### Immediate Use (no installation)
 
-Go to *[www.openjscad.xyz](http://www.openjscad.xyz)*
+Go to *[openjscad.xyz](https://openjscad.xyz)*
 
 > Note: Tested browsers include Chrome, Firefox, Opera, Safari, Edge
 
@@ -77,8 +77,8 @@ https://YOURSITE/#http://www.thingiverse.com/download:164128
 
 ## Documentation
 
-- [JSCAD User Guide](https://www.openjscad.xyz/guide.html)
-- [JSCAD API Reference](https://www.openjscad.xyz/docs)
+- [JSCAD User Guide](https://openjscad.xyz/guide.html)
+- [JSCAD API Reference](https://openjscad.xyz/docs/)
 
 ## Known Issues
 
@@ -99,7 +99,7 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * We only accept bug reports and pull requests on **GitHub**.
 
-* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://openjscad.xyz/forum.html). You might find the answer in the [JSCAD User Guide](https://www.openjscad.xyz/guide.html).
+* If you have a question about how to use JSCAD, then please start a conversation at the [JSCAD User Group](https://openjscad.xyz/forum.html). You might find the answer in the [JSCAD User Guide](https://openjscad.xyz/guide.html).
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://openjscad.xyz/forum.html) and start contributing changes.
 
