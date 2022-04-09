@@ -53,9 +53,12 @@ const calculateAnglesBetween = (current, opposite, normal) => {
   return [angle1, angle2]
 }
 
+const v1 = vec3.create()
+const v2 = vec3.create()
+
 const calculateAngle = (prevpoint, point, nextpoint, normal) => {
-  const d0 = vec3.subtract(vec3.create(), point, prevpoint)
-  const d1 = vec3.subtract(vec3.create(), nextpoint, point)
+  const d0 = vec3.subtract(v1, point, prevpoint)
+  const d1 = vec3.subtract(v2, nextpoint, point)
   vec3.cross(d0, d0, d1)
   return vec3.dot(d0, normal)
 }
@@ -85,7 +88,7 @@ const createPolygonAnd = (edge) => {
  * @param {poly3[]} sourcepolygons - list of polygons
  * @returns {poly3[]} new set of polygons
  */
-const mergeCoplanarPolygons = (epsilon, sourcepolygons) => {
+const mergeCoplanarPolygons = (sourcepolygons) => {
   if (sourcepolygons.length < 2) return sourcepolygons
 
   const normal = sourcepolygons[0].plane
@@ -167,6 +170,8 @@ const mergeCoplanarPolygons = (epsilon, sourcepolygons) => {
     if (polygon) destpolygons.push(polygon)
   })
 
+  edgeList.clear()
+
   return destpolygons
 }
 
@@ -202,7 +207,7 @@ const mergePolygons = (epsilon, polygons) => {
   let destpolygons = []
   polygonsPerPlane.forEach((mapping) => {
     const sourcepolygons = mapping[1]
-    const retesselayedpolygons = mergeCoplanarPolygons(epsilon, sourcepolygons)
+    const retesselayedpolygons = mergeCoplanarPolygons(sourcepolygons)
     destpolygons = destpolygons.concat(retesselayedpolygons)
   })
   return destpolygons
