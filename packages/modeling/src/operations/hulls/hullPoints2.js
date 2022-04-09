@@ -1,11 +1,5 @@
 const vec2 = require('../../maths/vec2')
 
-// interface PolarPoint {
-//   point: vec2
-//   angle: number
-//   distSq: number
-// }
-
 /*
  * Create a convex hull of the given set of points, where each point is an array of [x,y].
  * Uses https://en.wikipedia.org/wiki/Graham_scan
@@ -21,12 +15,11 @@ const hullPoints2 = (uniquePoints) => {
     }
   })
 
-  // gather information for sorting by polar coordinates
+  // gather information for sorting by polar coordinates (point, angle, distSq)
   const points = []
   uniquePoints.forEach((point) => {
     // use faster fakeAtan2 instead of Math.atan2
     const angle = fakeAtan2(point[1] - min[1], point[0] - min[0])
-    // const angle = Math.atan2(point[1] - min[1], point[0] - min[0])
     const distSq = vec2.squaredDistance(point, min)
     points.push({ point, angle, distSq })
   })
