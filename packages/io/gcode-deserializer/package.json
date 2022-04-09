@@ -2,6 +2,7 @@
   "name": "@jscad/gcode-deserializer",
   "version": "1.0.0",
   "description": "Gcode Deserializer for JSCAD",
+  "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "private": true,

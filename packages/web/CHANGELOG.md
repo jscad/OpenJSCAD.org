@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.8](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.7...@jscad/web@2.5.8) (2022-04-03)
+
+**Note:** Version bump only for package @jscad/web
+
+
+
+
+
+## [2.5.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.6...@jscad/web@2.5.7) (2022-04-03)
+
+
+### Bug Fixes
+
+* **web:** editor styling and example loading fixes ([#1031](https://github.com/jscad/OpenJSCAD.org/issues/1031)) ([4f811a2](https://github.com/jscad/OpenJSCAD.org/commit/4f811a27c0cbb7caabf28fcef932cbaf19aaa6f4))
+
+
+
+
+
 ## [2.5.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.5...@jscad/web@2.5.6) (2022-03-13)
 
 **Note:** Version bump only for package @jscad/web

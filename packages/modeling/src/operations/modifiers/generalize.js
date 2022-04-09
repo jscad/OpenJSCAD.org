@@ -11,8 +11,6 @@ const mergePolygons = require('./mergePolygons')
 const insertTjunctions = require('./insertTjunctions')
 const triangulatePolygons = require('./triangulatePolygons')
 
-const repairTjunctions = require('./repairTjunctions')
-
 /*
  */
 const generalizePath2 = (options, geometry) => geometry
@@ -27,10 +25,9 @@ const generalizeGeom3 = (options, geometry) => {
   const defaults = {
     snap: false,
     simplify: false,
-    triangulate: false,
-    repair: false
+    triangulate: false
   }
-  const { snap, simplify, triangulate, repair } = Object.assign({}, defaults, options)
+  const { snap, simplify, triangulate } = Object.assign({}, defaults, options)
 
   const epsilon = measureEpsilon(geometry)
   let polygons = geom3.toPolygons(geometry)
@@ -52,13 +49,6 @@ const generalizeGeom3 = (options, geometry) => {
     polygons = triangulatePolygons(epsilon, polygons)
   }
 
-  // repair the polygons (possibly triangles) if requested
-  if (repair) {
-    // fix T junctions
-    polygons = repairTjunctions(epsilon, polygons)
-    // TODO fill holes
-  }
-
   // FIXME replace with geom3.cloneShallow() when available
   const clone = Object.assign({}, geometry)
   clone.polygons = polygons
@@ -72,7 +62,6 @@ const generalizeGeom3 = (options, geometry) => {
  * @param {Boolean} [options.snap=false] the geometries should be snapped to epsilons
  * @param {Boolean} [options.simplify=false] the geometries should be simplified
  * @param {Boolean} [options.triangulate=false] the geometries should be triangulated
- * @param {Boolean} [options.repair=false] the geometries should be repaired
  * @param {...Object} geometries - the geometries to generalize
  * @return {Object|Array} the modified geometry, or a list of modified geometries
  * @alias module:modeling/modifiers.generalize

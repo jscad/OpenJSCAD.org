@@ -10,7 +10,8 @@ const poly3 = require('../../geometries/poly3')
 
 const sphere = require('../../primitives/sphere')
 
-const retessellate = require('../booleans/retessellate')
+const retessellate = require('../modifiers/retessellate')
+
 const unionGeom3Sub = require('../booleans/unionGeom3Sub')
 
 const extrudePolygon = require('./extrudePolygon')
