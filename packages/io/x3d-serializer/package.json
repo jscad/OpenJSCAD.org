@@ -2,6 +2,7 @@
   "name": "@jscad/x3d-serializer",
   "version": "2.3.7",
   "description": "X3D Serializer for JSCAD",
+  "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "scripts": {

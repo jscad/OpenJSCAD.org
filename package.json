@@ -2,6 +2,7 @@
   "name": "@jscad/openjscad",
   "version": "2.0.0",
   "description": "",
+  "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "scripts": {
     "docs": "jsdoc --configure jsdoc.json",

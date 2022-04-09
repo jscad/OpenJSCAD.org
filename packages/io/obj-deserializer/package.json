@@ -2,6 +2,7 @@
   "name": "@jscad/obj-deserializer",
   "version": "2.0.17",
   "description": "OBJ Deserializer for JSCAD",
+  "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "scripts": {
