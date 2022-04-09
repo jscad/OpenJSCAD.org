@@ -2,6 +2,7 @@
   "name": "@jscad/io-utils",
   "version": "2.0.17",
   "description": "Utilities for JSCAD IO Packages",
+  "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "scripts": {

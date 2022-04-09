@@ -2,6 +2,7 @@
   "name": "@jscad/dxf-deserializer",
   "version": "2.3.14",
   "description": "DXF Deserializer for JSCAD",
+  "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "scripts": {

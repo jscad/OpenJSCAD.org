@@ -2,6 +2,7 @@
   "name": "@jscad/stl-deserializer",
   "version": "2.1.14",
   "description": "STL Deserializer for JSCAD",
+  "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "scripts": {

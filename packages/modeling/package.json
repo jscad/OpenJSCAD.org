@@ -2,6 +2,7 @@
   "name": "@jscad/modeling",
   "version": "2.9.2",
   "description": "Constructive Solid Geometry (CSG) Library for JSCAD",
+  "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
   "types": "src/index.d.ts",

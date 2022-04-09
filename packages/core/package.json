@@ -2,6 +2,7 @@
   "name": "@jscad/core",
   "version": "2.5.8",
   "description": "Core functionality for JSCAD Applications",
+  "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
   "unpkg": "dist/jscad-core.min.js",

@@ -2,6 +2,7 @@
   "name": "@jscad/json-serializer",
   "version": "2.0.17",
   "description": "JSON Serializer for JSCAD",
+  "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "scripts": {

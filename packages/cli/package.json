@@ -2,6 +2,7 @@
   "name": "@jscad/cli",
   "version": "2.2.18",
   "description": "Command Line Interface (CLI) for JSCAD",
+  "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "bin": {
     "jscad": "./cli.js"

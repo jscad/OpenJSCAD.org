@@ -2,6 +2,7 @@
   "name": "@jscad/amf-serializer",
   "version": "2.1.7",
   "description": "AMF Serializer for JSCAD",
+  "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "scripts": {
