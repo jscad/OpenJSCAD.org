@@ -1,3 +1,5 @@
+// cd C:\hrg\3dp_dev\OpenJSCAD.org\packages\utils\regl-renderer\
+// esbuild src/index.js --outfile=C:/hrg/3dp_dev/OpenJSCAD.org/packages/web2/src/jscad-regl-renderer.min.js --bundle --watch --sourcemap=external --minify --format=iife --global-name=jscadReglRenderer
 import { CSG2Regl } from './util/CSG2Regl'
 const { prepareRender, drawCommands, cameras, controls } = require('./jscad-regl-renderer.min.js')
 

@@ -1,3 +1,4 @@
+const white = [1, 1, 1, 1]
 export function CSG2Regl () {
   let SEQ = 0
   function _CSG2Regl (obj, scene) {
@@ -33,6 +34,7 @@ export function CSG2Regl () {
         _colors = colors
       }
     }
+		console.log('_colors', _colors)
 
     let _opacity
     switch (objType) {
@@ -50,7 +52,10 @@ export function CSG2Regl () {
         _opacity = (color ? color[3] : 0) || opacity || 1
         // mesh = new LinesMesh('lines', scene, null, undefined, undefined, useVertexColor, useVertexAlpha || _opacity < 1, material)
         if (color) geometry.color = color
-        if (_colors) geometry.colors = _colors
+        if ( _colors ){
+					geometry.colors = _colors
+					//geometry.color = white
+				}
         geometry.alpha = _opacity
 
         break
