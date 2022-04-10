@@ -77,6 +77,7 @@ const makeGrid = ({color1 = [0,0,0,0.2], color2 = [0,0,0.6,0.1], size = 200}={})
 export class Viewer extends Jsx6 {
   worker
   viewer
+  entities = []
   camera = {position: [180, -180, 220], target: [0, 0, 0]}
 
   constructor(attr, children, parent) {
@@ -137,6 +138,17 @@ export class Viewer extends Jsx6 {
 
   setTheme (theme){
     this.viewer.setBg(theme.bg)
+    this.updateView(theme)
+  }
+
+  updateView(theme) {
+    console.log('theme',theme)
+    this.viewer.setScene({
+      items:[
+        {id: 'axis', items: [makeAxes(100)]},
+        {id: 'grid', items: makeGrid({color1: theme.grid1, color2: theme.grid2})},
+      ]
+    })  
   }
 
   initViewer(){
@@ -156,14 +168,8 @@ export class Viewer extends Jsx6 {
         baseURI: this.baseURI || document.baseURI
       }
       let cmdTransfer = []
-      console.log('wwwwww', this.worker)
       this.worker.postMessage(cmdParams, cmdTransfer)
-      this.viewer.setScene({
-        items:[
-          {id: 'axis', items: [makeAxes(100)]},
-          {id: 'grid', items: makeGrid()},
-        ]
-      })
+      this.updateView(this.theme())
     }
 
     if(viewerFunction){

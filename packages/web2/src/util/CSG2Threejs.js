@@ -46,10 +46,11 @@ export function CSG2Threejs (THREE) {
       if (!colors) opts.color = _CSG2Threejs.makeColor(color)
       material = materialDef.make(opts)
       if (opacity) {
-        console.log('opacity',opacity)
+        console.log('opacity', opacity)
         material.transparent = true
         material.opacity = opacity
       }
+      console.log('opts', opts)
     }
 
     const geo = new BufferGeometry()

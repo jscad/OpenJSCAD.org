@@ -43,6 +43,7 @@ const startRenderer = ({ canvas, cameraPosition = [180, -180, 220], cameraTarget
   perspectiveCamera = cameras.perspective
   orbitControls = controls.orbit
   state.canvas = canvas
+  canvas.style.background = 'black'
   // prepare the camera
   state.camera = Object.assign({}, perspectiveCamera.defaults)
   if (cameraPosition) state.camera.position = cameraPosition

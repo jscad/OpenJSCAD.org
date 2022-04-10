@@ -34,7 +34,10 @@ export function CSG2Regl () {
         _colors = colors
       }
     }
-		console.log('_colors', _colors)
+    // if (color && color[3] == 0.2) color[3] = 0.45
+    // if (color && color[3] == 0.1) color[3] = 0.3
+    console.log('_colors', _colors)
+    console.log('color', color)
 
     let _opacity
     switch (objType) {
@@ -52,11 +55,10 @@ export function CSG2Regl () {
         _opacity = (color ? color[3] : 0) || opacity || 1
         // mesh = new LinesMesh('lines', scene, null, undefined, undefined, useVertexColor, useVertexAlpha || _opacity < 1, material)
         if (color) geometry.color = color
-        if ( _colors ){
-					geometry.colors = _colors
-					//geometry.color = white
-				}
-        geometry.alpha = _opacity
+        if (_colors) {
+          geometry.colors = _colors
+          // geometry.color = white
+        }
 
         break
     }
