@@ -20,7 +20,7 @@ npm run desktop
  - [x] toggle editor
  - [x] toggle settigns
  - [x] store settings to localStorage
- - [ ] integrate themes from jscad web (only for 3d view)
+ - [x] integrate themes from jscad web (only for 3d view)
  - [ ] themes for UI (dark/light) 
  - [x] EDITOR codemirror 6
  - [x] EDITOR javascript syntax higlight
@@ -39,20 +39,19 @@ npm run desktop
 regl checklist
  - [x] get/set camera
  - [x] theme background
- - [ ] support line segments 
+ - [x] support line segments 
  - [ ] support mesh
- - [ ] issue with clicking canvas (orbitcontrol uses preventdefault so popup menu does not hide)
+ - [x] issue with clicking canvas (orbitcontrol uses preventdefault so popup menu does not hide)
 
 Babylon.js checklist
  - [x] get/set camera
  - [x] theme background
- - [ ] support line segments 
+ - [x] support line segments 
  - [ ] support mesh
 
 Three.js checklist
  - [x] get/set camera
- - [ ] theme background
- - [ ] theme default mesh color
+ - [x] theme background
  - [ ] support mesh
 
 
