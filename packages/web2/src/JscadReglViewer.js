@@ -1,3 +1,4 @@
+import { CSG2Regl } from './util/CSG2Regl'
 const { prepareRender, drawCommands, cameras, controls } = require('./jscad-regl-renderer.min.js')
 
 const rotateSpeed = 0.002
@@ -8,6 +9,8 @@ let panDelta = [0, 0]
 let zoomDelta = 0
 let updateRender = true
 let orbitControls, renderOptions, renderer
+
+const csgConvert = CSG2Regl()
 
 const entities = []
 
@@ -197,13 +200,13 @@ const downHandler = (ev) => {
   lastX = ev.pageX
   lastY = ev.pageY
   canvas.setPointerCapture(ev.pointerId)
-  ev.preventDefault()
+//  ev.preventDefault()
 }
 
 const upHandler = (ev) => {
   pointerDown = false
   canvas.releasePointerCapture(ev.pointerId)
-  ev.preventDefault()
+//  ev.preventDefault()
 }
 
 const wheelHandler = (ev) => {
@@ -253,5 +256,21 @@ export default function JscadReglViewer (el, { camera = {}, bg = [1, 1, 1] } = {
     useInstances: false
   })
 
-  return { sendCmd, destroy, state, getCamera, setCamera, setBg: handlers.setBg, getViewerEnv }
+  function setScene (_scene) {
+    entities.length = 0
+    console.log('_scene', _scene)
+    _scene.items.forEach(item => {
+      // const group = new THREE.Group() no grouping in babylon
+      item.items.forEach(obj => {
+        const entity = csgConvert(obj, _scene)
+        console.log('obj3d.regl', entity, obj)
+        entities.push(entity)
+        // group.add(obj3d)
+        // _scene.add(obj3d)
+      })
+      // _scene.add(group)
+    })
+    updateView()
+  }
+  return { sendCmd, destroy, state, getCamera, setCamera, setBg: handlers.setBg, getViewerEnv , setScene }
 }
