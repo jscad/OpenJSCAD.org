@@ -5,7 +5,7 @@ local web dev:
 npm run dev-live
 ```
 
-Electron app test (CTR+SHIT+I is dev console)
+Electron app test (CTRL+SHIFT+I is dev console)
 
 ```
 npm run desktop
