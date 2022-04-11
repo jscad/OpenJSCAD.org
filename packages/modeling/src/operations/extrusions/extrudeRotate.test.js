@@ -11,7 +11,7 @@ test('extrudeRotate: (defaults) extruding of a geom2 produces an expected geom3'
 
   const geometry3 = extrudeRotate({ }, geometry2)
   const pts = geom3.toPoints(geometry3)
-  t.notThrows.skip(() => geom3.validate(geometry3))
+  t.notThrows(() => geom3.validate(geometry3))
   t.is(pts.length, 96)
 })
 
@@ -61,7 +61,7 @@ test('extrudeRotate: (startAngle) extruding of a geom2 produces an expected geom
     [18.38477631085024, 18.384776310850235, 8],
     [-11.803752993228215, 23.166169628897567, 8]
   ]
-  t.notThrows.skip(() => geom3.validate(geometry3))
+  t.notThrows(() => geom3.validate(geometry3))
   t.is(pts.length, 40)
   t.true(comparePoints(pts[0], exp))
 
@@ -72,7 +72,7 @@ test('extrudeRotate: (startAngle) extruding of a geom2 produces an expected geom
     [18.38477631085024, -18.384776310850235, 8],
     [23.166169628897567, 11.803752993228215, 8]
   ]
-  t.notThrows.skip(() => geom3.validate(geometry3))
+  t.notThrows(() => geom3.validate(geometry3))
   t.is(pts.length, 40)
   t.true(comparePoints(pts[0], exp))
 })
@@ -83,12 +83,12 @@ test('extrudeRotate: (segments) extruding of a geom2 produces an expected geom3'
   // test segments
   let geometry3 = extrudeRotate({ segments: 4 }, geometry2)
   let pts = geom3.toPoints(geometry3)
-  t.notThrows.skip(() => geom3.validate(geometry3))
+  t.notThrows(() => geom3.validate(geometry3))
   t.is(pts.length, 32)
 
   geometry3 = extrudeRotate({ segments: 64 }, geometry2)
   pts = geom3.toPoints(geometry3)
-  t.notThrows.skip(() => geom3.validate(geometry3))
+  t.notThrows(() => geom3.validate(geometry3))
   t.is(pts.length, 512)
 
   // test overlapping edges
