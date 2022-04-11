@@ -13,11 +13,15 @@ const drawLines = (regl, params = {}) => {
 
   const hasIndices = !!(geometry.indices && geometry.indices.length > 0)
   const hasNormals = !!(geometry.normals && geometry.normals.length > 0)
+  const hasVertexColors = !!(geometry.colors && geometry.colors.length > 0)
 
+  const vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
+  const frag = hasVertexColors ? require('./vColorShaders').frag : require('./colorOnlyShaders').frag
+  
   const commandParams = {
     primitive: 'lines',
-    vert: require('./meshShaders').vert,
-    frag: require('./colorOnlyShaders').frag,
+    vert,
+    frag,
 
     uniforms: {
       model: (context, props) => props.model || geometry.transforms || mat4.create(),
@@ -25,7 +29,26 @@ const drawLines = (regl, params = {}) => {
     },
     attributes: {
       position: regl.buffer({ usage: 'static', type: 'float', data: geometry.positions })
+    },
+  // blending is a bit tricky
+  // https://stackoverflow.com/questions/51938739/regl-color-and-alpha-blending-of-primitives
+    blend: {
+      enable: true,
+      // func: { src: 'src alpha', dst:'one minus src alpha' }
+      func: {
+        srcRGB: 'src alpha',
+        srcAlpha: 'src alpha',
+        dstRGB: 'one minus src alpha',
+        dstAlpha: 'one minus src alpha',
+      },
+    },
+    depth: { 
+      enable: true 
     }
+  }
+
+  if (hasVertexColors) {
+    commandParams.attributes.color = regl.buffer({ usage: 'static', type: 'float', data: geometry.colors })
   }
 
   if (hasIndices) {
