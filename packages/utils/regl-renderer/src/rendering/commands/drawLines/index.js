@@ -17,7 +17,7 @@ const drawLines = (regl, params = {}) => {
 
   const vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
   const frag = hasVertexColors ? require('./vColorShaders').frag : require('./colorOnlyShaders').frag
-  
+
   const commandParams = {
     primitive: 'lines',
     vert,
@@ -30,8 +30,8 @@ const drawLines = (regl, params = {}) => {
     attributes: {
       position: regl.buffer({ usage: 'static', type: 'float', data: geometry.positions })
     },
-  // blending is a bit tricky
-  // https://stackoverflow.com/questions/51938739/regl-color-and-alpha-blending-of-primitives
+    // blending is a bit tricky
+    // https://stackoverflow.com/questions/51938739/regl-color-and-alpha-blending-of-primitives
     blend: {
       enable: true,
       // func: { src: 'src alpha', dst:'one minus src alpha' }
@@ -39,11 +39,11 @@ const drawLines = (regl, params = {}) => {
         srcRGB: 'src alpha',
         srcAlpha: 'src alpha',
         dstRGB: 'one minus src alpha',
-        dstAlpha: 'one minus src alpha',
-      },
+        dstAlpha: 'one minus src alpha'
+      }
     },
-    depth: { 
-      enable: true 
+    depth: {
+      enable: true
     }
   }
 
