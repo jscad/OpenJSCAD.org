@@ -36,26 +36,17 @@ npm run desktop
  - [ ] ELECTRON: if in it, enable saving, not just reading script
  - [ ] DEMO-WEB: generate web page so proto is available for playing with as-is
 
-regl checklist
- - [x] get/set camera
- - [x] theme background
- - [x] support line segments 
- - [ ] support mesh
- - [x] issue with clicking canvas (orbitcontrol uses preventdefault so popup menu does not hide)
 
-Babylon.js checklist
- - [x] get/set camera
- - [x] theme background
- - [x] support line segments 
- - [ ] support mesh
-
-Three.js checklist
- - [x] get/set camera
- - [x] theme background
- - [ ] support mesh
+| feature | regl | Threejs | Babylonjs |
+|---| :-: | :-: | :-: |
+| get/set camera | ✓ | ✓ | ✓ |
+| get/set camera pan |    |   |   |
+| theme background | ✓ | ✓ | ✓ |
+| line segments | ✓ | ✓ | ✓ |
+| mesh |    |   |   |
 
 
-nice to have or to consider if worth doing
+features nice to have(to consider if worth doing)
 
  - [ ] extract reusable OrbitControls to be used with different renderer (regl,three, babylon)
 
