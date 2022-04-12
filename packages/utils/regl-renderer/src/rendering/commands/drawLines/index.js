@@ -29,21 +29,16 @@ const drawLines = (regl, params = {}) => {
     },
     attributes: {
       position: regl.buffer({ usage: 'static', type: 'float', data: geometry.positions })
-    },
-    // blending is a bit tricky
-    // https://stackoverflow.com/questions/51938739/regl-color-and-alpha-blending-of-primitives
-    blend: {
-      enable: true,
-      // func: { src: 'src alpha', dst:'one minus src alpha' }
-      func: {
-        srcRGB: 'src alpha',
-        srcAlpha: 'src alpha',
-        dstRGB: 'one minus src alpha',
-        dstAlpha: 'one minus src alpha'
-      }
-    },
-    depth: {
-      enable: true
+    }
+  }
+
+  // blending is a bit tricky
+  // https://stackoverflow.com/questions/51938739/regl-color-and-alpha-blending-of-primitives
+  if(isTransparent){
+    commandParams.depth = { enable: true }
+    commandParams.depth = { 
+      blend: true 
+      func: { src: 'src alpha', dst: 'one minus src alpha' }
     }
   }
 
