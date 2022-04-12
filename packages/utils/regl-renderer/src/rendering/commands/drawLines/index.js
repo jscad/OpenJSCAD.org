@@ -7,7 +7,7 @@ const drawLines = (regl, params = {}) => {
     color: meshColor,
     geometry: undefined
   }
-  let { geometry, color } = Object.assign({}, defaults, params)
+  let { geometry, color, transparent } = Object.assign({}, defaults, params)
 
   if ('color' in geometry) color = geometry.color
 
@@ -34,7 +34,7 @@ const drawLines = (regl, params = {}) => {
 
   // blending is a bit tricky
   // https://stackoverflow.com/questions/51938739/regl-color-and-alpha-blending-of-primitives
-  if(isTransparent){
+  if(transparent){
     commandParams.depth = { enable: true }
     commandParams.depth = { 
       blend: true 
