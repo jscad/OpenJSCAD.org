@@ -355,7 +355,8 @@ button {
   border-color: black;
   border-radius: 0px;
   border-width: 1px;
-  margin: 0px 5px 0px 5px;
+  margin: 0px 5px;
+  padding: 2px 6px;
   background-color: white;
   letter-spacing: .5px;
   outline: none;
@@ -363,8 +364,12 @@ button {
   opacity: 0.6;
 }
 
+button > svg {
+  vertical-align: middle;
+}
+
 button:hover svg {
-  stroke:rgb(0, 153, 255);
+  stroke: rgb(0, 153, 255);
 }
 
 #toolbar button:hover {
