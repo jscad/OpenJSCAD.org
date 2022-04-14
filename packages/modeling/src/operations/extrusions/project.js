@@ -11,7 +11,6 @@ const poly3 = require('../../geometries/poly3')
 const measureEpsilon = require('../../measurements/measureEpsilon')
 
 const unionGeom2 = require('../booleans/unionGeom2')
-const unionGeom3 = require('../booleans/unionGeom3')
 
 const projectGeom3 = (options, geometry) => {
   // create a plane from the options, and verify
@@ -27,32 +26,30 @@ const projectGeom3 = (options, geometry) => {
 
   // project the polygons to the plane
   const polygons = geom3.toPolygons(geometry)
-  const projpolys = []
+  let projpolys = []
   for (let i = 0; i < polygons.length; i++) {
     const newpoints = polygons[i].vertices.map((v) => plane.projectionOfPoint(projplane, v))
     const newpoly = poly3.create(newpoints)
-    // only keep projections that have a measurable area
-    if (poly3.measureArea(newpoly) < epsilonArea) continue
     // only keep projections that face the same direction as the plane
     const newplane = poly3.plane(newpoly)
     if (!aboutEqualNormals(projplane, newplane)) continue
+    // only keep projections that have a measurable area
+    if (poly3.measureArea(newpoly) < epsilonArea) continue
     projpolys.push(newpoly)
   }
-  // union the projected polygons to eliminate overlaying polygons
-  let projection = geom3.create(projpolys)
-  projection = unionGeom3(projection, projection)
-  // rotate the projection to lay on X/Y axes if necessary
+
+  // rotate the polygons to lay on X/Y axes if necessary
   if (!aboutEqualNormals(projplane, [0, 0, 1])) {
     const rotation = mat4.fromVectorRotation(mat4.create(), projplane, [0, 0, 1])
-    projection = geom3.transform(rotation, projection)
+    projpolys = projpolys.map((p) => poly3.transform(rotation, p))
   }
 
-  // convert the projection (polygons) into a series of 2D geometry
-  const projections2D = geom3.toPolygons(projection).map((p) => geom2.fromPoints(poly3.toPoints(p)))
-  // union the 2D geometries to obtain the outline of the projection
-  projection = unionGeom2(projections2D)
+  // sort the polygons to allow the union to ignore small pieces efficiently
+  projpolys = projpolys.sort((a, b) => poly3.measureArea(b) - poly3.measureArea(a))
 
-  return projection
+  // convert polygons to geometry, and union all pieces into a single geometry
+  const projgeoms = projpolys.map((p) => geom2.fromPoints(p.vertices))
+  return unionGeom2(projgeoms)
 }
 
 /**
