@@ -53,15 +53,15 @@ const drawMesh = (regl, params = { extras: {} }) => {
     cull: {
       enable: true,
       face: cullFace
-    }
+    },
+    depth = { enable: !transparent }
   }
 
   // blending is a bit tricky
   // https://stackoverflow.com/questions/51938739/regl-color-and-alpha-blending-of-primitives
   if(transparent){
-    commandParams.depth = { enable: true }
-    commandParams.depth = { 
-      blend: true 
+    commandParams.blend = { 
+      enable: true 
       func: { src: 'src alpha', dst: 'one minus src alpha' }
     }
   }
