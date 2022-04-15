@@ -53,32 +53,32 @@ const toOutlines = (geometry) => {
   const vertexMap = toVertexMap(toSides(geometry)) // {vertex: [edges]}
   const outlines = []
   while (true) {
-    let startside
+    let startSide
     for (const [vertex, edges] of vertexMap) {
-      startside = edges.shift()
-      if (!startside) {
+      startSide = edges.shift()
+      if (!startSide) {
         vertexMap.delete(vertex)
         continue
       }
       break
     }
-    if (startside === undefined) break // all starting sides have been visited
+    if (startSide === undefined) break // all starting sides have been visited
 
     const connectedVertexPoints = []
-    const startvertex = startside[0]
+    const startVertex = startSide[0]
     while (true) {
-      connectedVertexPoints.push(startside[0])
-      const nextvertex = startside[1]
-      if (nextvertex === startvertex) break // the outline has been closed
-      const nextpossiblesides = vertexMap.get(nextvertex)
-      if (!nextpossiblesides) {
-        throw new Error('the given geometry is not closed. verify proper construction')
+      connectedVertexPoints.push(startSide[0])
+      const nextVertex = startSide[1]
+      if (nextVertex === startVertex) break // the outline has been closed
+      const nextPossibleSides = vertexMap.get(nextVertex)
+      if (!nextPossibleSides) {
+        throw new Error(`geometry is not closed at vertex ${nextVertex}`)
       }
-      const nextEdge = popNextEdge(startside, nextpossiblesides)
-      if (nextpossiblesides.length === 0) {
-        vertexMap.delete(nextvertex)
+      const nextSide = popNextSide(startSide, nextPossibleSides)
+      if (nextPossibleSides.length === 0) {
+        vertexMap.delete(nextVertex)
       }
-      startside = nextEdge
+      startSide = nextSide
     } // inner loop
 
     // due to the logic of fromPoints()
@@ -92,17 +92,17 @@ const toOutlines = (geometry) => {
   return outlines
 }
 
-// find the first counter-clockwise edge from startEdge and pop from nextEdges
-const popNextEdge = (startEdge, nextEdges) => {
-  if (nextEdges.length === 1) {
-    return nextEdges.pop()
+// find the first counter-clockwise edge from startSide and pop from nextSides
+const popNextSide = (startSide, nextSides) => {
+  if (nextSides.length === 1) {
+    return nextSides.pop()
   }
   const v0 = vec2.create()
-  const startAngle = vec2.angleDegrees(vec2.subtract(v0, startEdge[1], startEdge[0]))
+  const startAngle = vec2.angleDegrees(vec2.subtract(v0, startSide[1], startSide[0]))
   let bestAngle
   let bestIndex
-  nextEdges.forEach((nextEdge, index) => {
-    const nextAngle = vec2.angleDegrees(vec2.subtract(v0, nextEdge[1], nextEdge[0]))
+  nextSides.forEach((nextSide, index) => {
+    const nextAngle = vec2.angleDegrees(vec2.subtract(v0, nextSide[1], nextSide[0]))
     let angle = nextAngle - startAngle
     if (angle < -180) angle += 360
     if (angle >= 180) angle -= 360
@@ -111,9 +111,9 @@ const popNextEdge = (startEdge, nextEdges) => {
       bestAngle = angle
     }
   })
-  const nextEdge = nextEdges[bestIndex]
-  nextEdges.splice(bestIndex, 1) // remove side from list
-  return nextEdge
+  const nextSide = nextSides[bestIndex]
+  nextSides.splice(bestIndex, 1) // remove side from list
+  return nextSide
 }
 
 module.exports = toOutlines
