@@ -36,8 +36,6 @@ export function CSG2Regl () {
     }
     // if (color && color[3] == 0.2) color[3] = 0.45
     // if (color && color[3] == 0.1) color[3] = 0.3
-    console.log('_colors', _colors)
-    console.log('color', color)
 
     let _opacity
     switch (objType) {
@@ -63,7 +61,6 @@ export function CSG2Regl () {
         break
     }
     //    if (transforms && !isInstanced) mesh.applyMatrix4({ elements: transforms })
-    console.log('geometry' + (++SEQ), geometry, window['geometry' + SEQ] = geometry)
     return { geometry, visuals }
   }
 

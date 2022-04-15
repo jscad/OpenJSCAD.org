@@ -17,7 +17,8 @@ import { isFunc, NOT } from '.';
  * @class
  */
 export class Jsx6 {
-  el;
+  isJsx6 = true
+  el
   contentArea;
   propKey;
   groupKey;

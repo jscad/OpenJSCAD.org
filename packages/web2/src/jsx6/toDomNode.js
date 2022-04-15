@@ -1,3 +1,3 @@
 export function toDomNode (n) {
-  return (n && n instanceof Element) ? n : n.el
+  return n && n.el ? n.el : n
 }

@@ -129,7 +129,6 @@ const updateAndRender = (timestamp) => {
   const time = Date.now()
   renderer(renderOptions)
   if (updateRender) {
-    console.log(updateRender, ' first render', Date.now() - time)
     updateRender = ''
   }
 }
@@ -261,12 +260,10 @@ export default function JscadReglViewer (el, { camera = {}, bg = [1, 1, 1] } = {
 
   function setScene (_scene) {
     entities.length = 0
-    console.log('_scene', _scene)
     _scene.items.forEach(item => {
       // const group = new THREE.Group() no grouping in babylon
       item.items.forEach(obj => {
         const entity = csgConvert(obj, _scene)
-        console.log('obj3d.regl', entity, obj)
         entities.push(entity)
         // group.add(obj3d)
         // _scene.add(obj3d)

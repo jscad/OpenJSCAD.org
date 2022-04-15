@@ -103,7 +103,6 @@ export class Viewer extends Jsx6 {
       }
     }, attr, this, true)
   
-    console.log('theme',this.theme())
     moveParams({
       alias: [],
       baseURI: '',
@@ -111,7 +110,6 @@ export class Viewer extends Jsx6 {
 
     this.worker = new Worker('./jscad-worker.js')
     this.worker.onmessage = m=>{
-      console.log('worker message', m)
       m = m.data
       if(m.action === 'entities'){
         this.lastEntities = m
@@ -142,7 +140,6 @@ export class Viewer extends Jsx6 {
   }
 
   updateView(theme) {
-    console.log('theme',theme)
     this.viewer.setScene({
       items:[
         {id: 'axis', items: [makeAxes(100)]},

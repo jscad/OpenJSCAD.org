@@ -2,6 +2,8 @@ import { Jsx6 } from './Jsx6'
 import { insertBefore } from './insertBefore'
 import { isStr, isFunc, isObj, throwErr, Group } from './core'
 
+const NO_CONTEXT = {}
+
 let _createText
 let _createElement
 let _createElementSvg
@@ -39,7 +41,7 @@ export function setHtmlFunctions (createTextNode, createElement, createElementSv
  - if tag is a function with isComponentClass=false - it is treated as a template and
  is injected into an anonymous Jsx6 component
 */
-export function h (tag, attr = {}, ...children) {
+function __h (tag, attr = {}, ...children) {
   if (!tag) return children
 
   if (isStr(tag)) {
@@ -66,13 +68,41 @@ export function h (tag, attr = {}, ...children) {
   }
 }
 
-function setPropGroup (self, part, [$group, $key]) {
-  if ($key) {
-    if (!self[$group]) self[$group] = new Group()
-    self[part.$group = $group][part.$key = $key] = part
-  } else {
-    self[part.$key = $group] = part
-  }
+// we bind the exported variant to a constant so it can check if property assignment is used without a context
+export const h = __h.bind(NO_CONTEXT)
+export const _h = h
+
+// hack to make calling bind on already bound function possible, and actually binding to the new scope
+// without this a function that is already created by .bind would keep the initial scope
+h.bind = s => { const out = __h.bind(s); out.bind = h.bind; return out }
+/*
+// sample code that demonstrates the binding trick above
+var x = {n:'x'}, y = {n:'y'}, z = {n:'z'}
+function n(){ return this.n}
+var nx = n.bind(x)
+
+// comment out next line and console.log will output: 'x x x' instead of 'x y z'
+nx.bind = s=>{ let out = n.bind(s); out.bind = nx.bind; return out; }
+
+var ny = nx.bind(y)
+var nz = ny.bind(z)
+console.log(nx(),ny(),nz())
+*/
+
+function _h2 (tag, attr = {}, ...children) {
+  return insertHtml(null, null, h(tag, attr, children), this)
+}
+
+export const h2 = _h2.bind(NO_CONTEXT)
+h2.bind = s => { const out = _h2.bind(s); out.bind = h2.bind; return out }
+
+export function domWithScope (scope, f) {
+  return f(h2.bind(scope))
+}
+export function domToProps (f) {
+  const scope = {}
+  f(h2.bind(scope))
+  return scope
 }
 
 function insertComp (comp, parentNode, before, parent) {
@@ -89,7 +119,14 @@ function insertComp (comp, parentNode, before, parent) {
   return comp
 }
 
-export function insertHtml (parent, before, def, self = this, component = null, createElement = _createElement) {
+export function insertHtml (parent, def, ...args) {
+  let before = null
+  if (def === null || def instanceof Node) {
+    before = def
+    def = args[0]
+    args.shift()
+  }
+  let [_self = this, component = null, createElement = _createElement] = args
   // component parameter is not forwarded to recursive calls on purpose as it is used only for inital element
 
   if (!def) return
@@ -99,21 +136,23 @@ export function insertHtml (parent, before, def, self = this, component = null, 
   if (isFunc(def)) {
     out = _createText(def())
     parent.insertBefore(out, before)
-    makeUpdater(out, before, null, def, self)
+    makeUpdater(out, before, null, def, _self)
   } else if (def instanceof Array) {
-    out = def.map(c => insertHtml(parent, before, c, self, null, createElement))
+    out = def.map(c => insertHtml(parent, before, c, _self, null, createElement))
   } else if (def instanceof Jsx6) {
-    return insertComp(def, parent, before, self)
+    return insertComp(def, parent, before, _self)
+  } else if (def instanceof Node) {
+    if (parent) parent.insertBefore(def, before)
   } else if (isObj(def)) {
     if (isSvg(def.tag) || isSvg(parent?.tagName)) createElement = _createElementSvg
 
+    if (!def.tag) throwErr(ERR_NULL_TAG, def)
     out = createElement(def.tag)
-    parent.insertBefore(out, before)
-
-    insertAttr(def.attr, out, self, component)
+    if (parent) parent.insertBefore(out, before)
+    insertAttr(def.attr, out, _self, component)
 
     if (def.children && def.children.length) {
-      insertHtml(out, null, def.children, self, null, createElement)
+      insertHtml(out, null, def.children, _self, null, createElement)
     }
   } else {
     out = _createText('' + def)
@@ -211,6 +250,15 @@ export function insertAttr (attr, out, self, component) {
       }
       out.setAttribute(a, a === 'p' && value instanceof Array ? value.join('.') : value)
     }
+  }
+}
+
+function setPropGroup (self, part, [$group, $key]) {
+  if ($key) {
+    if (!self[$group]) self[$group] = new Group()
+    self[part.$group = $group][part.$key = $key] = part
+  } else {
+    self[part.$key = $group] = part
   }
 }
 

@@ -67,7 +67,10 @@ export class App extends Jsx6 {
       localStorage.setItem(SETTINGS_KEY, JSON.stringify(state().getValue()))
       if (old.has('language')) this.changeLanguage(state.language() || 'en')
     })
-    
+    $s.darkMode.sync(v=>{
+      console.log('dark mode', v)
+      document.documentElement.setAttribute('data-theme', v ? 'dark':'light')
+    })
     this.changeLanguage($s.language())
     setValue(this.opts, $s()())
   }
@@ -89,7 +92,11 @@ export class App extends Jsx6 {
       } catch (e) { console.log(e, 'str:',str)}
     }
 
-    let settingsArea = <div class="settings-area g-focus-menu-inner" p="settingsArea">
+    let settingsArea = <div class="settings-area g-focus-menu-inner bg1" p="settingsArea">
+      <div class="f-r">
+        <label>{T`dark mode`}</label>
+        <Toggle class="el-switch" selected={$s.darkMode}/>
+      </div>
       <div class="f-r">
         <label>{T`auto reload`}</label>
         <Toggle class="el-switch" selected={$s.autoReload}/>
@@ -154,7 +161,7 @@ export class App extends Jsx6 {
     let wasActive = false
     const markActive = e=> wasActive = findParent(document.activeElement,eq(this.settingsBt))
 
-    const menu = <div class="menu-area">
+    const menu = <div class="menu-area bg1">
     <div class="menu-buttons">
       <Toggle selected={$s.editorVisible}>{editIcon}</Toggle>
       <button p="runButton" onclick={()=>this.viewer.ruunScript(this.editor.getValue())}>run</button>

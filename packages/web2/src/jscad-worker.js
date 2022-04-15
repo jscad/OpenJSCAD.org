@@ -115,7 +115,6 @@ const handlers = {
     runMain(params)
   },
   init: (params) => {
-    console.log('init worker', params)
     let { baseURI, alias = [] } = params
     if (!baseURI && typeof document !== 'undefined' && document.baseURI) {
       baseURI = document.baseURI
@@ -151,7 +150,5 @@ function receiveCmd (cmd) {
   }
 }
 
-console.log('WORKER started', self.addEventListener, self)
 require('@jscad/modeling')
-console.log('WORKER initialized', self.addEventListener, self)
 self.addEventListener('message', (e) => receiveCmd(e.data))
