@@ -42,15 +42,27 @@ export class Jsx6 {
       this.tagName = attr['tag-name'];
       delete attr['tag-name'];
     }
-
   }
 
-  insertEl(parentNode, beforeSibling, parent) {
+  __init(){
+    if (this.__initialized)  return
+    this.setParent(parent)
+    this.createEl()
+    this.initTemplate()
+    this.insertChildren()
+    this.init(this.state)
+    this.__initialized = true  
+  }
+
+  setParent(parent) {
     this.parent = parent;
+  }
+
+  createEl() {
 
     this.initState()
 
-    this.el = insertHtml(parentNode, beforeSibling, { tag: this.tagName }, parent, this);
+    this.el = insertHtml(null, null, { tag: this.tagName }, parent, this);
 		this.contentArea ||= this.el
 
     this.insertAttr(this.attr)
@@ -59,7 +71,6 @@ export class Jsx6 {
       this.classList.add(this.cName);
     this.el.propKey = this.propKey;
     this.el.groupKey = this.groupKey;
-
   }
 
   insertAttr(attr) {
@@ -115,7 +126,7 @@ export class Jsx6 {
   removeAttribute(attr) { return this.el.removeAttribute(attr); }
   getBoundingClientRect() { return this.el.getBoundingClientRect(); }
   appendChild(c) { insertBefore(this.el, c); }
-  insertBefore(c, before) { insertBefore(this.el, c, before); }
+  insertBefore(c, before) { insertBefore(this.contentArea || this.el, c, before); }
 
   get classList() { return this.el.classList; }
   get style() { return this.el.style; }

@@ -4,7 +4,8 @@ import { T, setTranslations, refreshTranslations,
   eq,
   NOT,
   makeBinding,
-  findParent} from '../jsx6'
+  findParent,
+  insertBefore} from '../jsx6'
 import { JscadEditor } from './editor'
 import gearIcon from '../icons/gear'
 import editIcon from '../icons/edit'
@@ -153,7 +154,6 @@ export class App extends Jsx6 {
       </div>
     </div>
     //END settingsArea
-    
     // CSS using :focus-within handles opening/closing menu nicely for most cases, 
     // but clicking the settings button again does not hide the menu because it is
     // still focused. We check if menu is focused on mousedown event, but then use

@@ -1,6 +1,6 @@
 import { Jsx6 } from './Jsx6'
 import { insertBefore } from './insertBefore'
-import { isStr, isFunc, isObj, throwErr, Group } from './core'
+import { isStr, isFunc, isObj, throwErr, Group, isNode } from './core'
 
 const NO_CONTEXT = {}
 
@@ -41,22 +41,35 @@ export function setHtmlFunctions (createTextNode, createElement, createElementSv
  - if tag is a function with isComponentClass=false - it is treated as a template and
  is injected into an anonymous Jsx6 component
 */
-function __h (tag, attr = {}, ...children) {
-  if (!tag) return children
+export function tpl (tag, attr = {}, ...children) {
+  return make(true, this, tag, attr, children)
+}
+
+function make (asTpl, _self, tag, attr = {}, ...children) {
+  if (!tag) return children // supoprt for jsx fragment (esbuild: --jsx-fragment=null)
 
   if (isStr(tag)) {
-    return { tag, attr, children }
+    if (asTpl) {
+      return { tag, attr, children }
+    } else {
+      const out = _createElement(tag)
+      insertAttr(attr, out, _self)
+      if (children && children.length) insertHtml(out, null, children, _self)
+      return out
+    }
   } else {
     if (isFunc(tag)) {
       // create component early so if component validates parameters and throws error
       // it can be easily traced to the JSX section where it was defined
       if (tag.isComponentClass) {
         // eslint-disable-next-line
-        return new tag(attr, children, this)
+        const out = new tag(attr, children, _self)
+        if (!asTpl && out.__init) out.__init()
+        return out
       } else {
         // use the tag function to provide the template for the newly created component
         // create a new Jsx6 component
-        const out = new Jsx6(attr, children, this)
+        const out = new Jsx6(attr, children, _self)
         out.tpl = tag
         return out
       }
@@ -68,13 +81,16 @@ function __h (tag, attr = {}, ...children) {
   }
 }
 
-// we bind the exported variant to a constant so it can check if property assignment is used without a context
-export const h = __h.bind(NO_CONTEXT)
-export const _h = h
+function _h2 (tag, attr = {}, ...children) {
+  return make(false, this, tag, attr, children)
+}
 
+// we bind the exported variant to a constant so it can check if property assignment is used without a context
+export const h = _h2.bind(NO_CONTEXT)
 // hack to make calling bind on already bound function possible, and actually binding to the new scope
 // without this a function that is already created by .bind would keep the initial scope
-h.bind = s => { const out = __h.bind(s); out.bind = h.bind; return out }
+h.bind = s => { const out = _h2.bind(s); out.bind = h.bind; return out }
+
 /*
 // sample code that demonstrates the binding trick above
 var x = {n:'x'}, y = {n:'y'}, z = {n:'z'}
@@ -89,74 +105,60 @@ var nz = ny.bind(z)
 console.log(nx(),ny(),nz())
 */
 
-function _h2 (tag, attr = {}, ...children) {
-  return insertHtml(null, null, h(tag, attr, children), this)
-}
-
-export const h2 = _h2.bind(NO_CONTEXT)
-h2.bind = s => { const out = _h2.bind(s); out.bind = h2.bind; return out }
-
 export function domWithScope (scope, f) {
-  return f(h2.bind(scope))
+  return f(h.bind(scope))
 }
 export function domToProps (f) {
   const scope = {}
-  f(h2.bind(scope))
+  f(h.bind(scope))
   return scope
 }
 
-function insertComp (comp, parentNode, before, parent) {
-  if (comp.__initialized) {
-    insertBefore(parent, comp, before)
-  } else {
-    comp.insertEl(parentNode, before, parent)
-    comp.initTemplate()
-    comp.insertChildren()
-    comp.init(comp.state)
-    comp.__initialized = true
-  }
+export const svg = (callback) => callback(toSvg)
 
-  return comp
+function toSvg (tag, attr = {}, ...children) {
+  if (!tag) return children // supoprt for jsx fragment (esbuild: --jsx-fragment=null)
+  const out = _createElementSvg(tag)
+  insertAttr(attr, out)
+  insertHtml(out, null, children, this, null, _createElementSvg)
+  return out
 }
 
-export function insertHtml (parent, def, ...args) {
-  let before = null
-  if (def === null || def instanceof Node) {
-    before = def
-    def = args[0]
-    args.shift()
-  }
-  let [_self = this, component = null, createElement = _createElement] = args
+export function insertSvg (parent, before, def, _self = this, component = null, createElement = _createElement) {
+  return insertHtml(parent, before, def, _self, component, _createElementSvg)
+}
+
+export function insertHtml (parent, before, def, _self = this, component = null, createElement = _createElement) {
   // component parameter is not forwarded to recursive calls on purpose as it is used only for inital element
-
   if (!def) return
-
   /** @type {Jsx6|Node} */
   let out
   if (isFunc(def)) {
     out = _createText(def())
-    parent.insertBefore(out, before)
+    if (parent) insertBefore(parent, out, before)
     makeUpdater(out, before, null, def, _self)
   } else if (def instanceof Array) {
     out = def.map(c => insertHtml(parent, before, c, _self, null, createElement))
   } else if (def instanceof Jsx6) {
-    return insertComp(def, parent, before, _self)
-  } else if (def instanceof Node) {
-    if (parent) parent.insertBefore(def, before)
+    def.__init()
+    insertBefore(parent, def, before)
+    return def
+  } else if (isNode(def)) {
+    if (parent) insertBefore(parent, def, before)
   } else if (isObj(def)) {
     if (isSvg(def.tag) || isSvg(parent?.tagName)) createElement = _createElementSvg
 
     if (!def.tag) throwErr(ERR_NULL_TAG, def)
     out = createElement(def.tag)
-    if (parent) parent.insertBefore(out, before)
     insertAttr(def.attr, out, _self, component)
+    if (parent) insertBefore(parent, out, before)
 
     if (def.children && def.children.length) {
       insertHtml(out, null, def.children, _self, null, createElement)
     }
   } else {
     out = _createText('' + def)
-    parent.insertBefore(out, before)
+    if (parent) insertBefore(parent, out, before)
   }
   return out
 }

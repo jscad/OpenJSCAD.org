@@ -1,6 +1,7 @@
 
 export const ERR_REQUIRE_FUNC = 7 //    JSX6E7 - Function required
-// MAX export const ERR_REQUIRE_FUNC = 7 //    JSX6E7 - Function required
+export const ERR_REQUIRE_PARENT = 8 //    JSX6E8 - parent required
+// MAX export const ERR_REQUIRE_PARENT = 8 //    JSX6E8 - parent required
 
 const TRANS = {}
 
@@ -28,6 +29,7 @@ export const isFunc = f => typeof f === 'function'
 export const isStr = s => typeof s === 'string'
 export const isObj = o => typeof o === 'object'
 export const isArray = a => a instanceof Array
+export const isNode = a => a.nodeType !== undefined // using 'instanceof Node' is not reliable if checking an element from a different frame
 
 export const requireFunc = (func, err = ERR_REQUIRE_FUNC) => {
   if (!func || !isFunc(func)) {

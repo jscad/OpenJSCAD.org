@@ -11,6 +11,7 @@ export default class Toggle extends Jsx6 {
 
   tpl(h){
     // if no inline template defined, return a SPAN to have a target for styling
-    if(!this.children.length) return h('span')
+    //if(!this.children.length) return h('span')
+    return h('span')
   } 
 }
