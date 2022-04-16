@@ -82,7 +82,7 @@ function make (asTpl, _self, tag, attr = {}, ...children) {
 }
 
 function _h2 (tag, attr = {}, ...children) {
-  return make(false, this, tag, attr, children)
+  return make(false, this, tag, attr, ...children)
 }
 
 // we bind the exported variant to a constant so it can check if property assignment is used without a context
