@@ -45,6 +45,13 @@ const options = (state, i18n) => {
     </label>
   </fieldset>
 
+  <fieldset>
+    <legend> <h3> ${i18n`File Handling`} </h3> </legend>
+    <label>${i18n`enable conversion to scripts`}
+      <input type='checkbox' checked=false id='design-convertSupportedTypes' checked=${state.design.convertSupportedTypes}/>
+    </label>
+  </fieldset>
+
   ${shortcuts}
 
 </section>`

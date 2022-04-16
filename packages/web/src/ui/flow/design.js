@@ -50,6 +50,9 @@ const reducers = {
       // code
       instantUpdate: false,
       autoReload: false,
+      // if set to true, will overwrite existing code with the converted imput
+      // if set to false, will create a script with an import of the input
+      convertSupportedTypes: false,
       // parameters
       parameterDefinitions: [],
       parameterValues: {},
