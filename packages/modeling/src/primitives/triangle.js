@@ -1,10 +1,9 @@
+const { NEPS } = require('../maths/constants')
 const vec2 = require('../maths/vec2')
 
 const geom2 = require('../geometries/geom2')
 
 const { isNumberArray } = require('./commonChecks')
-
-const NEPS = 1e-13
 
 // returns angle C
 const solveAngleFromSSS = (a, b, c) => Math.acos(((a * a) + (b * b) - (c * c)) / (2 * a * b))

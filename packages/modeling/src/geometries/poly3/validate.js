@@ -1,11 +1,10 @@
 const signedDistanceToPoint = require('../../maths/plane/signedDistanceToPoint')
+const { NEPS } = require('../../maths/constants')
 const vec3 = require('../../maths/vec3')
 const isA = require('./isA')
 const isConvex = require('./isConvex')
 const measureArea = require('./measureArea')
 const plane = require('./plane')
-
-const NEPS = 1e-13
 
 /**
  * Determine if the given object is a valid polygon.
