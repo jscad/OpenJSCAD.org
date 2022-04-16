@@ -1,5 +1,4 @@
-
-const NEPS = 1e-13
+const { NEPS } = require('../maths/constants')
 
 /*
  * Returns zero if n is within epsilon of zero, otherwise return n
