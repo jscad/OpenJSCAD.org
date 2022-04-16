@@ -58,7 +58,8 @@ body {
   src: local('OpenSans'), local('OpenSans'), url(../fonts/Open_Sans/OpenSans-Bold.ttf) format('truetype');
 }
 
-#renderTarget{
+#renderTarget {
+  cursor: move;
   width: 100%;
   height: 100%;
   position: absolute;
@@ -68,7 +69,7 @@ body {
   bottom: 0px;
 }
 
-#fileLoader{
+#fileLoader {
   width: 0.1px;
   height: 0.1px;
   opacity: 0;
@@ -80,9 +81,9 @@ body {
   box-shadow: none;
   border: 1px solid #bfbcbc;
   border-color: black;
-  border-radius: 0px;
+  border-radius: 1px;
   border-width: 1px;
-  padding: 2px 0px 0px 2px;
+  padding: 0px 2px;
   margin: 0px 5px 0px 0px;
   background-color: white;
   outline: none;
@@ -95,12 +96,13 @@ body {
 }
 
 #controls {
+  box-sizing: border-box;
   color: var(--main-text-color);
   position: absolute;
   width: 100%;
+  padding: 0px 10px;
   user-select: none;
   top: 30px;
-  left: 10px;
   z-index: 1;
 }
 
@@ -109,6 +111,7 @@ body {
 }
 
 section#params {
+  background-color: rgba(255, 255, 255, 0.6);
   position: absolute;
   bottom: 10px;
   left: 10px;
@@ -168,13 +171,6 @@ section#params {
   display: none;
 }
 
-/*#paramsTable .groupTitle:hover .icon-closed{
-  display: none;
-}
-#paramsTable .groupTitle:hover .icon-open{
-  display: block;
-}*/
-
 #paramsTable .controlsLine{
   padding-top: 10px;
 }
@@ -206,11 +202,6 @@ span#paramsControls {
   position: relative;
   height: 100%;
   width: 100%;
-  /*position: absolute;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;*/
 }
 
 h3 {
@@ -218,8 +209,9 @@ h3 {
 }
 
 #header {
+  box-sizing: border-box;
   position: absolute;
-  left: 10px;
+  padding: 0px 10px;
   color: var(--main-text-color);
   width: 100%;
   display: inline-flex;
@@ -262,8 +254,8 @@ section {
 section.popup-menu {
   position: absolute;
   top: 40px;
-  right: 15px;
-  height: 80%;
+  right: 10px;
+  max-height: 80%;
 }
 
 section.popup-menu h2 {
@@ -287,17 +279,19 @@ section.popup-menu ul {
 }
 
 #options {
+  background-color: rgba(255, 255, 255, 0.6);
   padding-left: 18px;
 }
 
-#options fieldset{
+#options fieldset {
   border: none;
   display: table;
+  padding-inline: 0px;
 }
-#options fieldset label{
+#options fieldset label {
   display: table-row;
 }
-#options fieldset input{
+#options fieldset input {
   display: table-row;
   align-self: flex-end;
 }
@@ -306,7 +300,9 @@ section.popup-menu ul {
 }
 
 #editor {
-  padding: 1px;
+  bottom: 10px;
+  max-height: none;
+  padding: 0px;
   font-size: 0.9em;
   width: 50%;
 }
@@ -317,6 +313,7 @@ textarea {
 }
 
 #help {
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 #help a {
@@ -358,7 +355,8 @@ button {
   border-color: black;
   border-radius: 0px;
   border-width: 1px;
-  margin: 0px 5px 0px 5px;
+  margin: 0px 5px;
+  padding: 2px 6px;
   background-color: white;
   letter-spacing: .5px;
   outline: none;
@@ -366,12 +364,12 @@ button {
   opacity: 0.6;
 }
 
-/*button:hover{
-  background-color:rgb(0, 153, 255);
-}*/
+button > svg {
+  vertical-align: middle;
+}
 
 button:hover svg {
-  stroke:rgb(0, 153, 255);
+  stroke: rgb(0, 153, 255);
 }
 
 #toolbar button:hover {
@@ -423,16 +421,16 @@ input[type="checkbox"]:hover{
 }
 
 input.error::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: red;
-    opacity: 1; /* Firefox */
+  color: red;
+  opacity: 1; /* Firefox */
 }
 
 #shortcuts .error input:-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: red;
+  color: red;
 }
 
 #shortcuts .error input::-ms-input-placeholder { /* Microsoft Edge */
-    color: red;
+  color: red;
 }
 
 .icon {
