@@ -30,7 +30,7 @@ const drawLines = (regl, params = {}) => {
     attributes: {
       position: regl.buffer({ usage: 'static', type: 'float', data: geometry.positions })
     },
-    depth = { enable: !transparent }
+    depth: { enable: !transparent }
   }
 
   // blending is a bit tricky
