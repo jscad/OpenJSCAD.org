@@ -1,7 +1,10 @@
+const signedDistanceToPoint = require('../../maths/plane/signedDistanceToPoint')
+const { NEPS } = require('../../maths/constants')
 const vec3 = require('../../maths/vec3')
 const isA = require('./isA')
 const isConvex = require('./isConvex')
 const measureArea = require('./measureArea')
+const plane = require('./plane')
 
 /**
  * Determine if the given object is a valid polygon.
@@ -45,6 +48,17 @@ const validate = (object) => {
       throw new Error(`poly3 invalid vertex ${vertex}`)
     }
   })
+
+  // check that points are co-planar
+  if (object.vertices.length > 3) {
+    const normal = plane(object)
+    object.vertices.forEach((vertex) => {
+      const dist = Math.abs(signedDistanceToPoint(normal, vertex))
+      if (dist > NEPS) {
+        throw new Error(`poly3 must be coplanar: vertex ${vertex} distance ${dist}`)
+      }
+    })
+  }
 }
 
 module.exports = validate
