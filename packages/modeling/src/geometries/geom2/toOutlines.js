@@ -6,22 +6,42 @@ const toSides = require('./toSides')
  * Create a list of edges which SHARE vertices.
  * This allows the edges to be traversed in order.
  */
-const toEdges = (sides) => {
-  const vertices = {}
+const toSharedVertices = (sides) => {
+  const unique = new Map() // {key: vertex}
   const getUniqueVertex = (vertex) => {
     const key = vertex.toString()
-    if (!vertices[key]) {
-      vertices[key] = vertex
+    if (unique.has(key)) {
+      return unique.get(key)
+    } else {
+      unique.set(key, vertex)
+      return vertex
     }
-    return vertices[key]
   }
 
   return sides.map((side) => side.map(getUniqueVertex))
 }
 
+/*
+ * Convert a list of sides into a map from vertex to edges.
+ */
+const toVertexMap = (sides) => {
+  const vertexMap = new Map()
+  // first map to edges with shared vertices
+  const edges = toSharedVertices(sides)
+  // construct adjacent edges map
+  edges.forEach((edge) => {
+    if (vertexMap.has(edge[0])) {
+      vertexMap.get(edge[0]).push(edge)
+    } else {
+      vertexMap.set(edge[0], [edge])
+    }
+  })
+  return vertexMap
+}
+
 /**
  * Create the outline(s) of the given geometry.
- * @param  {geom2} geometry
+ * @param {geom2} geometry - geometry to create outlines from
  * @returns {Array} an array of outlines, where each outline is an array of ordered points
  * @alias module:modeling/geometries/geom2.toOutlines
  *
@@ -30,65 +50,35 @@ const toEdges = (sides) => {
  * let outlines = toOutlines(geometry) // returns two outlines
  */
 const toOutlines = (geometry) => {
-  const vertexMap = new Map()
-  const edges = toEdges(toSides(geometry))
-  edges.forEach((edge) => {
-    if (!(vertexMap.has(edge[0]))) {
-      vertexMap.set(edge[0], [])
-    }
-    const sideslist = vertexMap.get(edge[0])
-    sideslist.push(edge)
-  })
-
+  const vertexMap = toVertexMap(toSides(geometry)) // {vertex: [edges]}
   const outlines = []
   while (true) {
-    let startside
+    let startSide
     for (const [vertex, edges] of vertexMap) {
-      startside = edges.shift()
-      if (!startside) {
+      startSide = edges.shift()
+      if (!startSide) {
         vertexMap.delete(vertex)
         continue
       }
       break
     }
-    if (startside === undefined) break // all starting sides have been visited
+    if (startSide === undefined) break // all starting sides have been visited
 
     const connectedVertexPoints = []
-    const startvertex = startside[0]
-    const v0 = vec2.create()
+    const startVertex = startSide[0]
     while (true) {
-      connectedVertexPoints.push(startside[0])
-      const nextvertex = startside[1]
-      if (nextvertex === startvertex) break // the outline has been closed
-      const nextpossiblesides = vertexMap.get(nextvertex)
-      if (!nextpossiblesides) {
-        throw new Error('the given geometry is not closed. verify proper construction')
+      connectedVertexPoints.push(startSide[0])
+      const nextVertex = startSide[1]
+      if (nextVertex === startVertex) break // the outline has been closed
+      const nextPossibleSides = vertexMap.get(nextVertex)
+      if (!nextPossibleSides) {
+        throw new Error(`geometry is not closed at vertex ${nextVertex}`)
       }
-      let nextsideindex = -1
-      if (nextpossiblesides.length === 1) {
-        nextsideindex = 0
-      } else {
-        // more than one side starting at the same vertex
-        let bestangle
-        const startangle = vec2.angleDegrees(vec2.subtract(v0, startside[1], startside[0]))
-        for (let sideindex = 0; sideindex < nextpossiblesides.length; sideindex++) {
-          const nextpossibleside = nextpossiblesides[sideindex]
-          const nextangle = vec2.angleDegrees(vec2.subtract(v0, nextpossibleside[1], nextpossibleside[0]))
-          let angledif = nextangle - startangle
-          if (angledif < -180) angledif += 360
-          if (angledif >= 180) angledif -= 360
-          if ((nextsideindex < 0) || (angledif > bestangle)) {
-            nextsideindex = sideindex
-            bestangle = angledif
-          }
-        }
+      const nextSide = popNextSide(startSide, nextPossibleSides)
+      if (nextPossibleSides.length === 0) {
+        vertexMap.delete(nextVertex)
       }
-      const nextside = nextpossiblesides[nextsideindex]
-      nextpossiblesides.splice(nextsideindex, 1) // remove side from list
-      if (nextpossiblesides.length === 0) {
-        vertexMap.delete(nextvertex)
-      }
-      startside = nextside
+      startSide = nextSide
     } // inner loop
 
     // due to the logic of fromPoints()
@@ -100,6 +90,30 @@ const toOutlines = (geometry) => {
   } // outer loop
   vertexMap.clear()
   return outlines
+}
+
+// find the first counter-clockwise edge from startSide and pop from nextSides
+const popNextSide = (startSide, nextSides) => {
+  if (nextSides.length === 1) {
+    return nextSides.pop()
+  }
+  const v0 = vec2.create()
+  const startAngle = vec2.angleDegrees(vec2.subtract(v0, startSide[1], startSide[0]))
+  let bestAngle
+  let bestIndex
+  nextSides.forEach((nextSide, index) => {
+    const nextAngle = vec2.angleDegrees(vec2.subtract(v0, nextSide[1], nextSide[0]))
+    let angle = nextAngle - startAngle
+    if (angle < -180) angle += 360
+    if (angle >= 180) angle -= 360
+    if (bestIndex === undefined || angle > bestAngle) {
+      bestIndex = index
+      bestAngle = angle
+    }
+  })
+  const nextSide = nextSides[bestIndex]
+  nextSides.splice(bestIndex, 1) // remove side from list
+  return nextSide
 }
 
 module.exports = toOutlines

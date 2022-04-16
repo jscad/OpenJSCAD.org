@@ -49,9 +49,8 @@ const geom3ToGeometries = (options, solid) => {
 
       const polygonIndices = []
       for (let j = 0; j < vertices.length; j++) {
-        const vertex = vertices[j]
+        const position = vertices[j]
 
-        const position = [vertex[0], vertex[1], vertex[2]]
         positions.push(position)
         normals.push(normal)
         colors.push(faceColor)
@@ -110,12 +109,11 @@ const smoothing = () => {
     const normal = calculateNormal(polygon)
     if (faceColor && faceColor[3] !== 1) isTransparent = true
     const polygonIndices = []
-    // we need unique tupples of normal + position , that gives us a specific index (indices)
+    // we need unique tupples of normal + position, that gives us a specific index (indices)
     // if the angle between a given normal and another normal is less than X they are considered the same
     for (let j = 0; j < vertices.length; j++) {
       let index
-      const vertex = vertices[j]
-      const position = [vertex[0], vertex[1], vertex[2]]
+      const position = vertices[j]
       if (smoothLighting) {
         const candidateTupple = { normal, position }
         const existingTupple = fuzyNormalAndPositionLookup(normalPositionLookup, candidateTupple, normalThreshold)
