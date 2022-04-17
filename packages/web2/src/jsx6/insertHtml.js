@@ -64,7 +64,6 @@ function make (asTpl, _self, tag, attr = {}, ...children) {
       if (tag.isComponentClass) {
         // eslint-disable-next-line
         const out = new tag(attr, children, _self)
-        if (!asTpl && out.__init) out.__init()
         return out
       } else {
         // use the tag function to provide the template for the newly created component
@@ -140,6 +139,7 @@ export function insertHtml (parent, before, def, _self = this, component = null,
   } else if (def instanceof Array) {
     out = def.map(c => insertHtml(parent, before, c, _self, null, createElement))
   } else if (def instanceof Jsx6) {
+    def.setParent(_self)
     def.__init()
     insertBefore(parent, def, before)
     return def

@@ -2,6 +2,15 @@
 import { line } from '@jscad/vtree/core/modeling/primitives'
 import { Jsx6, moveParams, copyBindings } from '../jsx6'
 
+function flatten(arr, entities) {
+  if(entities instanceof Array){
+    entities.forEach(ent=>flatten(arr, ent))
+  }else{
+    arr.push(entities)
+  }
+  return arr
+}
+
 const makeAxes = (len = 100, forceColors4) =>{
   const lines = Float32Array.of(
     0,0,0, len,0,0,
@@ -24,6 +33,7 @@ const makeAxes = (len = 100, forceColors4) =>{
   }
   return {vertices:lines, colors, type:'lines'}
 }
+
 /**
  
  Even though opacity in jscad theme is 1 for color1 and 0.5 for color2, the closest match to the color on the website
@@ -77,6 +87,7 @@ const makeGrid = ({color1 = [0,0,0,0.2], color2 = [0,0,0.6,0.1], size = 200}={})
 export class Viewer extends Jsx6 {
   worker
   viewer
+  sceneData = {}
   entities = []
   camera = {position: [180, -180, 220], target: [0, 0, 0]}
 
@@ -86,10 +97,10 @@ export class Viewer extends Jsx6 {
     copyBindings({
       showAxes: { 
         def: true,
-        callback: show=>this.viewer.sendCmd({action:'showAxes', show})
+        callback: show=>this.updateScene()
       },
       showGrid: {
-        callback: show=>this.viewer.sendCmd({action:'showGrid', show})      
+        callback: show=>this.updateScene()
       },
       viewerClass: {
         keep: true,
@@ -112,7 +123,10 @@ export class Viewer extends Jsx6 {
     this.worker.onmessage = m=>{
       m = m.data
       if(m.action === 'entities'){
+        m.entities =  flatten([],m.entities)
+        console.log('entities from worker',m)
         this.lastEntities = m
+        this.updateScene()
       }
     }
   }
@@ -122,7 +136,7 @@ export class Viewer extends Jsx6 {
     this.worker.postMessage({action:'fileDropped', dataTransfer})
   }
 
-  ruunScript (script, params, transferable) {
+  runScript (script, params, transferable) {
     this.worker.postMessage({action:'runScript', script, params}, transferable)
   }
 
@@ -140,12 +154,17 @@ export class Viewer extends Jsx6 {
   }
 
   updateView(theme) {
-    this.viewer.setScene({
-      items:[
-        {id: 'axis', items: [makeAxes(100)]},
-        {id: 'grid', items: makeGrid({color1: theme.grid1, color2: theme.grid2})},
-      ]
-    })  
+    this.sceneData.axis = [makeAxes(100)]
+    this.sceneData.grid = makeGrid({color1: theme.grid1, color2: theme.grid2})
+    this.updateScene()
+  }
+  updateScene () {
+    const items = []
+    if(this.showAxes()) items.push({ id: 'axis', items: this.sceneData.axis})
+    if(this.showGrid()) items.push({ id: 'grid', items: this.sceneData.grid})
+    if(this.lastEntities) items.push({ id: 'entities', items: this.lastEntities.entities})
+    console.log('new scene', items, this.lastEntities)
+    this.viewer.setScene({items})  
   }
 
   initViewer(){

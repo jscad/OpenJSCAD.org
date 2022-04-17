@@ -22,7 +22,11 @@
     button{
       cursor: pointer;
       &[selected]{
-        background-color: #61a3c2;
+        background-color: var(--primary);
+        color: var(--primary-in);
+        svg{
+          fill: var(--primary-in);
+        }
       }
     }
   }

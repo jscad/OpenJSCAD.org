@@ -90,9 +90,9 @@ a {
   .g-focus-menu-inner {
     position: absolute;
   }
-  /*&:not(:focus-within) .g-focus-menu-inner {
+  &:not(:focus-within) .g-focus-menu-inner {
     display: none;
-  }*/
+  } /* */
 }
 
 .svg-icon{

@@ -139,6 +139,7 @@ CSGToBuffers.prepare = (list, transferable) => {
 }
 
 export function CSGToBuffers (csg, transferable, unique) {
+  if (csg instanceof Array) return csg.map(csg2 => CSGToBuffers(csg2, transferable, unique))
   let obj
 
   if (csg.polygons) obj = CSGCached(CSG2Vertices, csg, csg.polygons, transferable, unique)

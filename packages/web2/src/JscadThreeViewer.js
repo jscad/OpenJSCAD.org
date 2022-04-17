@@ -1,5 +1,5 @@
 // cd c:\hrg\3dp_dev\three.js
-// esbuild Three.jscad.js --outfile=C:/hrg/3dp_dev/OpenJSCAD.org/packages/web2/src/Three.jscad.js --bundle --watch --sourcemap=external --minify --format=esm
+// esbuild Three.jscad.js --outfile=C:/hrg/3dp_dev/OpenJSCAD.org/packages/web2/src/Three.jscad.js --bundle --watch --sourcemap --minify --format=esm
 
 import * as THREE from './Three.jscad.js'
 import { CSG2Threejs } from './util/CSG2Threejs.js'
@@ -17,6 +17,7 @@ const lastRender = true
 let renderTimer
 
 const entities = []
+const groups = []
 let canvas
 
 const csgConvert = CSG2Threejs(THREE)
@@ -53,7 +54,6 @@ const startRenderer = ({
 
   renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, canvas })
   renderer.setPixelRatio(window.devicePixelRatio)
-  console.log('canvasssssa', renderer.domElement)
   controls = new THREE.OrbitControls(_camera, canvas)
   controls.target.set(0, 0, 0)
   controls.update()
@@ -158,12 +158,24 @@ export default function JscadThreeViewer (el, { camera: _camera = {}, bg } = {})
 }
 
 function setScene (scene) {
+  groups.forEach(group => {
+    console.log('remove', group)
+    _scene.remove(group)
+  })
+  entities.forEach(ent => {
+    if (ent.geometry) ent.geometry.dispose()
+  })
+  entities.length = 0
   scene.items.forEach(item => {
     const group = new THREE.Group()
+    groups.push(group)
     item.items.forEach(obj => {
       const obj3d = csgConvert(obj)
-      console.log('obj3d', obj3d, obj)
-      group.add(obj3d)
+      if (obj3d) {
+        entities.push(obj3d)
+        console.log('obj3d', obj3d, obj)
+        group.add(obj3d)
+      } else console.error('could not conver to obj3d ', obj)
     })
     _scene.add(group)
   })

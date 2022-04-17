@@ -49,6 +49,13 @@ export class App extends Jsx6 {
   state = { showDrop:false }
   
   init (state) {
+    window.addEventListener('keydown',e=>{
+      console.log('key', e)
+      if(e.key.toLowerCase() === 's' && e.ctrlKey){
+        this.viewer.runScript(this.editor.getValue())
+        e.preventDefault()
+      }
+    })
     const $s = this.settings
     const dropHandler = (ev) => {
       ev.preventDefault()
@@ -164,7 +171,7 @@ export class App extends Jsx6 {
     const menu = <div class="menu-area bg1">
     <div class="menu-buttons">
       <Toggle selected={$s.editorVisible}>{editIcon}</Toggle>
-      <button p="runButton" onclick={()=>this.viewer.ruunScript(this.editor.getValue())}>run</button>
+      <button p="runButton" onclick={()=>this.viewer.runScript(this.editor.getValue())}>RUN</button>
       <button p="settingsBt" class="g-focus-menu">
         <button onmousedown={markActive} onclick={()=>{if(wasActive) this.runButton.focus() }}>{gearIcon}</button>
         {settingsArea}
@@ -172,7 +179,6 @@ export class App extends Jsx6 {
       <span>{this.settings.viewer(viewerName)}</span>
     </div>
   </div>
-    
     // LAYOUT
     return (
       <>

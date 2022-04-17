@@ -46,7 +46,6 @@ export class Jsx6 {
 
   __init(){
     if (this.__initialized)  return
-    this.setParent(parent)
     this.createEl()
     this.initTemplate()
     this.insertChildren()
@@ -55,6 +54,7 @@ export class Jsx6 {
   }
 
   setParent(parent) {
+    if(parent === window) console.error('window as parent ',this)
     this.parent = parent;
   }
 
@@ -62,7 +62,7 @@ export class Jsx6 {
 
     this.initState()
 
-    this.el = insertHtml(null, null, { tag: this.tagName }, parent, this);
+    this.el = insertHtml(null, null, { tag: this.tagName }, this);
 		this.contentArea ||= this.el
 
     this.insertAttr(this.attr)
