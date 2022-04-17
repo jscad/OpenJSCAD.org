@@ -201,13 +201,11 @@ const downHandler = (ev) => {
   lastX = ev.pageX
   lastY = ev.pageY
   containerElement.setPointerCapture(ev.pointerId)
-  ev.preventDefault()
 }
 
 const upHandler = (ev) => {
   pointerDown = false
   containerElement.releasePointerCapture(ev.pointerId)
-  ev.preventDefault()
 }
 
 const wheelHandler = (ev) => {
