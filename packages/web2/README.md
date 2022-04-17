@@ -40,7 +40,7 @@ npm run desktop
 | feature | regl | Threejs | Babylonjs |
 |---| :-: | :-: | :-: |
 | get/set camera | ✓ | ✓ | ✓ |
-| get/set camera pan |    |   |   |
+| get/set camera pan | ✓ |   | ✓ |
 | theme background | ✓ | ✓ | ✓ |
 | line segments | ✓ | ✓ | ✓ |
 | mesh | ✓ | ✓ | ✓ |
