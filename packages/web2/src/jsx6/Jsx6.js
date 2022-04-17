@@ -111,8 +111,9 @@ export class Jsx6 {
   get value() { Object.assign({}, this.state); }
 
   set value(value) {
+    if(value === null || value === undefined) value = {}
     if (value && isObj(value)) {
-      this.state().update(value)
+      this.state().replace(value)
     } else {
       this.state.value = value
     }

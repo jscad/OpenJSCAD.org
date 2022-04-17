@@ -213,6 +213,19 @@ export function makeState (_state = {}, markDirtyNow) {
     }
     if (changed) _addDirty()
   }
+  $.replace = (newData, force) => {
+    if (!newData) return
+    let changed = false
+    for (const p in newData) {
+      changed |= updateProp(p, newData[p], force)
+    }
+    for (const p in _state) {
+      if (!(p in newData)) {
+        changed |= updateProp(p, undefined, force)
+      }
+    }
+    if (changed) _addDirty()
+  }
 
   if (markDirtyNow) _addDirty()
 
