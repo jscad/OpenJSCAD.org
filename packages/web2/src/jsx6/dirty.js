@@ -173,7 +173,6 @@ export function makeState (_state = {}, markDirtyNow) {
       return $
     } else if (isFunc(f)) {
       const out = (...params) => {
-        _addDirty()
         return f(...params)
       }
       out.addUpdater = (updater) => updaters.push(requireFunc(updater, ERR_DIRTY_RUNNER_FUNC))
@@ -181,7 +180,8 @@ export function makeState (_state = {}, markDirtyNow) {
     } else if (isObj(f)) {
       $.update(f)
     } else {
-      _addDirty()
+      // todo chekc if there is even a use-case
+      // _addDirty()
       return f
     }
   }

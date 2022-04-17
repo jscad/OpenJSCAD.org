@@ -24,7 +24,6 @@ export const throwErr = (c, info) => {
 }
 
 export const NOT = v => !v
-export const NN = v => v || ''
 
 export const isFunc = f => typeof f === 'function'
 export const isStr = s => typeof s === 'string'

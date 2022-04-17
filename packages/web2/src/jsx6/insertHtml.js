@@ -127,13 +127,19 @@ export function insertSvg (parent, before, def, _self = this, component = null, 
   return insertHtml(parent, before, def, _self, component, _createElementSvg)
 }
 
+function textValue (v) {
+  if (v === null || v === undefined) return ''
+  if (!isStr(v)) return '' + v
+  return v
+}
+
 export function insertHtml (parent, before, def, _self = this, component = null, createElement = _createElement) {
   // component parameter is not forwarded to recursive calls on purpose as it is used only for inital element
   if (!def) return
   /** @type {Jsx6|Node} */
   let out
   if (isFunc(def)) {
-    out = _createText(def())
+    out = _createText(textValue(def()))
     if (parent) insertBefore(parent, out, before)
     makeUpdater(out, before, null, def, _self)
   } else if (def instanceof Array) {
@@ -201,10 +207,7 @@ export function makeUpdater (parent, before, attr, func, updaters) {
 
 export function makeNodeUpdater (node, func) {
   const ret = function () {
-    let newValue = func()
-    // TODO join text node updating and value handling
-    if (newValue === null || newValue === undefined) newValue = ''
-    if (!isStr(newValue)) newValue = '' + newValue
+    const newValue = textValue(func())
     if (node.textContent !== newValue) node.textContent = newValue
   }
   ret.node = node
