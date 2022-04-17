@@ -56,7 +56,7 @@ function requireModule (url, source) {
 require.cache = {}
 require.alias = {}
 
-function runMain (params = {}) {
+function runMain (params = {}, options = {}, id) {
   const transferable = []
 
   let time = Date.now()
@@ -65,9 +65,9 @@ function runMain (params = {}) {
 
   time = Date.now()
   CSGToBuffers.clearCache()
-  const entities = CSGToBuffers(solids, transferable)
+  const entities = CSGToBuffers(solids, transferable, false, options)
 
-  sendCmd({ action: 'entities', entities, solidsTime, entitiesTime: Date.now() - time }, transferable)
+  sendCmd({ action: 'entities', entities, solidsTime, entitiesTime: Date.now() - time, id, options }, transferable)
 }
 
 let initialized = false
@@ -98,7 +98,7 @@ const handlers = {
       }
     }
   },
-  runScript: ({ script, url, params = {} }) => {
+  runScript: ({ script, url, params = {}, options = {}, id }) => {
     if (!initialized) {
       console.log('worker not initialized')
       return
@@ -109,10 +109,10 @@ const handlers = {
     if (gp) {
       sendCmd({ action: 'parameterDefinitions', data: gp() })
     }
-    runMain(params)
+    runMain(params, options, id)
   },
-  updateParams: ({ params = {} }) => {
-    runMain(params)
+  updateParams: ({ params = {}, options = {}, id }) => {
+    runMain(params, options, id)
   },
   init: (params) => {
     let { baseURI, alias = [] } = params

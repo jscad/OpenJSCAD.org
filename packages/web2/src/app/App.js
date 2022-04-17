@@ -50,7 +50,6 @@ export class App extends Jsx6 {
   
   init (state) {
     window.addEventListener('keydown',e=>{
-      console.log('key', e)
       if(e.key.toLowerCase() === 's' && e.ctrlKey){
         this.viewer.runScript(this.editor.getValue())
         e.preventDefault()

@@ -1,3 +1,5 @@
+import { Mesh } from "@babylonjs/core"
+
 export function CSG2Babylonjs (Babylon) {
   const { VertexData, LinesMesh, MeshBuilder, Vector3, Color4, Color3, VertexBuffer } = Babylon
   let SEQ = 0
@@ -58,7 +60,8 @@ export function CSG2Babylonjs (Babylon) {
     let _opacity
     switch (objType) {
       case 'mesh':
-        // mesh = new Mesh(geo, material)
+        mesh = new Mesh(geo, material)
+        geo.applyToMesh(mesh)
         break
       // case 'instances':
       //   mesh = new InstancedMesh(

@@ -11,7 +11,7 @@ export class JscadEditor extends Jsx6 {
       doc: `
 const jscad = require('@jscad/modeling')
 // https://openjscad.xyz/docs/module-modeling_primitives.html
-const { cuboid, cylinder } = jscad.primitives
+const { cuboid, sphere, torus, cylinder } = jscad.primitives
 
 const { rotate, translate } = jscad.transforms
 const { degToRad } = jscad.utils // because jscad uses radians for rotations
@@ -28,6 +28,7 @@ function main({
   wall = 1, // wall {min:0.5, step:0.5}
   flip = 0, // print orientation {type: 'choice', values: [0, 90, 180]}
 }) {
+  return sphere({radius:50})
   let wallOffset = wall * 2
   let model = subtract(
     cuboid({ size: [width, length, height] }),

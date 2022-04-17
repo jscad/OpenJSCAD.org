@@ -109,6 +109,8 @@ export default function JscadBabylonViewer (el, { camera: _camera = {}, bg } = {
   const getViewerEnv = () => ({
     forceColors4: true,
     forceIndex: true,
+    letfHanded: true,
+    forceNormals: false,
     useInstances: false
   })
 
@@ -143,11 +145,18 @@ function setScene (scene) {
   // window.BABYLON = BABYLON
 
   // return
-  console.log('_scene', _scene)
+
+  // https://doc.babylonjs.com/divingDeeper/importers/assetContainers
+  // _scene.dispose();//here I would have to restart but there is no such method.
+  // _scene = new Scene(engine);//here I would have to restart but there is no such method.
+
+  entities.forEach(ent => ent.dispose())
+  entities.length = 0
   scene.items.forEach(item => {
     // const group = new THREE.Group() no grouping in babylon
     item.items.forEach(obj => {
       const obj3d = csgConvert(obj, _scene)
+      entities.push(obj3d)
       console.log('obj3d.babylon', obj3d, obj)
       // group.add(obj3d)
       // _scene.add(obj3d)

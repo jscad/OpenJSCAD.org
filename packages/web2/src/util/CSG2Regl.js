@@ -40,7 +40,7 @@ export function CSG2Regl () {
     let _opacity
     switch (objType) {
       case 'mesh':
-        // visuals.drawCmd = 'drawMesh'
+        visuals.drawCmd = 'drawMesh'
         break
       case 'lines':
         visuals.drawCmd = 'drawLines'

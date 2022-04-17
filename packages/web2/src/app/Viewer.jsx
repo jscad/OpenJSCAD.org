@@ -137,7 +137,7 @@ export class Viewer extends Jsx6 {
   }
 
   runScript (script, params, transferable) {
-    this.worker.postMessage({action:'runScript', script, params}, transferable)
+    this.worker.postMessage({action:'runScript', script, params, options:this.viewer.getViewerEnv()}, transferable)
   }
 
   errNotFound(err){

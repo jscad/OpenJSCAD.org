@@ -151,6 +151,7 @@ export default function JscadThreeViewer (el, { camera: _camera = {}, bg } = {})
   const getViewerEnv = () => ({
     forceColors4: false,
     forceIndex: false,
+    forceNormals: false,
     useInstances: false
   })
 
