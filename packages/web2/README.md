@@ -43,7 +43,7 @@ npm run desktop
 | get/set camera pan |    |   |   |
 | theme background | ✓ | ✓ | ✓ |
 | line segments | ✓ | ✓ | ✓ |
-| mesh |    |   |   |
+| mesh | ✓ | ✓ | ✓ |
 
 
 features nice to have(to consider if worth doing)
