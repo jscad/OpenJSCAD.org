@@ -38,9 +38,9 @@ export class Jsx6 {
     this.children = children
     this.parent = parent
 
-    if (attr['tag-name'] !== undefined) {
-      this.tagName = attr['tag-name'];
-      delete attr['tag-name'];
+    if (attr.tagName !== undefined) {
+      this.tagName = attr.tagName;
+      delete attr.tagName;
     }
   }
 

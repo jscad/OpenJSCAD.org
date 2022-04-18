@@ -3,17 +3,21 @@ import { Jsx6 } from './Jsx6'
 export class Loop extends Jsx6 {
   items = []
   constructor (attr, children, parent) {
-    if(!attr['tag-name'] ) attr['tag-name'] = ''
+    let itemAttr = attr
+    attr = {tagName: attr.loopTag || '', p:attr.p }
+    delete itemAttr.p
+    delete itemAttr.loopTag
+
     super(attr, children, parent)
-    if(attr.item){
-      this.item = attr.item
-      delete attr.item
-      this.itemAttr = attr
-      this.attr = {p:attr.p}
-      delete attr.p
-    } else if(attr.tpl){
-      this.tplFunc = attr.tpl
-      delete attr.tpl
+
+    this.itemAttr = itemAttr
+
+    if(itemAttr.item){
+      this.item = itemAttr.item
+      delete itemAttr.item
+    } else if(itemAttr.tpl){
+      this.tplFunc = itemAttr.tpl
+      delete itemAttr.tpl
     }
   }
 
@@ -22,7 +26,7 @@ export class Loop extends Jsx6 {
       let comp
       
       if (this.tplFunc) {
-        comp = new Jsx6({ 'tag-name': '' })
+        comp = new Jsx6({ tagName: '' })
         comp.tpl = this.tplFunc
         comp.createEl()
         const elements = comp.initTemplate()
