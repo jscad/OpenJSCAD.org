@@ -3,6 +3,8 @@ const vec3 = require('../maths/vec3')
 const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
+const { sin, cos } = require('../utils/trigonometry')
+
 const { isGTE, isNumberArray } = require('./commonChecks')
 
 /**
@@ -42,14 +44,14 @@ const ellipsoid = (options) => {
   const p1 = vec3.create()
   const p2 = vec3.create()
   for (let slice1 = 0; slice1 <= segments; slice1++) {
-    const angle = Math.PI * 2.0 * slice1 / segments
-    const cylinderpoint = vec3.add(vec3.create(), vec3.scale(p1, xvector, Math.cos(angle)), vec3.scale(p2, yvector, Math.sin(angle)))
+    const angle = 2 * Math.PI * slice1 / segments
+    const cylinderpoint = vec3.add(vec3.create(), vec3.scale(p1, xvector, cos(angle)), vec3.scale(p2, yvector, sin(angle)))
     if (slice1 > 0) {
       let prevcospitch, prevsinpitch
       for (let slice2 = 0; slice2 <= qsegments; slice2++) {
         const pitch = 0.5 * Math.PI * slice2 / qsegments
-        const cospitch = Math.cos(pitch)
-        const sinpitch = Math.sin(pitch)
+        const cospitch = cos(pitch)
+        const sinpitch = sin(pitch)
         if (slice2 > 0) {
           let points = []
           let point

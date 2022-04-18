@@ -9,6 +9,7 @@ const comparePoints = require('../../test/helpers/comparePoints')
 test('square (defaults)', (t) => {
   const geometry = square()
   const obs = geom2.toPoints(geometry)
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(obs.length, 4)
 })
 
@@ -23,6 +24,7 @@ test('square (options)', (t) => {
     [3, 10]
   ]
 
+  t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 4)
   t.true(comparePoints(pts, exp))
 
@@ -36,6 +38,7 @@ test('square (options)', (t) => {
     [-3.5, 3.5]
   ]
 
+  t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 4)
   t.true(comparePoints(pts, exp))
 })

@@ -1,3 +1,4 @@
+const aboutEqualNormals = require('../../maths/utils/aboutEqualNormals')
 const vec3 = require('../../maths/vec3')
 
 const poly3 = require('../../geometries/poly3')
@@ -53,9 +54,12 @@ const calculateAnglesBetween = (current, opposite, normal) => {
   return [angle1, angle2]
 }
 
+const v1 = vec3.create()
+const v2 = vec3.create()
+
 const calculateAngle = (prevpoint, point, nextpoint, normal) => {
-  const d0 = vec3.subtract(vec3.create(), point, prevpoint)
-  const d1 = vec3.subtract(vec3.create(), nextpoint, point)
+  const d0 = vec3.subtract(v1, point, prevpoint)
+  const d1 = vec3.subtract(v2, nextpoint, point)
   vec3.cross(d0, d0, d1)
   return vec3.dot(d0, normal)
 }
@@ -85,7 +89,7 @@ const createPolygonAnd = (edge) => {
  * @param {poly3[]} sourcepolygons - list of polygons
  * @returns {poly3[]} new set of polygons
  */
-const mergeCoplanarPolygons = (epsilon, sourcepolygons) => {
+const mergeCoplanarPolygons = (sourcepolygons) => {
   if (sourcepolygons.length < 2) return sourcepolygons
 
   const normal = sourcepolygons[0].plane
@@ -167,17 +171,10 @@ const mergeCoplanarPolygons = (epsilon, sourcepolygons) => {
     if (polygon) destpolygons.push(polygon)
   })
 
+  edgeList.clear()
+
   return destpolygons
 }
-
-// Normals are directional vectors with component values from 0 to 1.0, requiring specialized comparision
-// This EPS is derived from a serieas of tests to determine the optimal precision for comparing coplanar polygons,
-// as provided by the sphere primitive at high segmentation
-// This EPS is for 64 bit Number values
-const NEPS = 1e-13
-
-// Compare two normals (unit vectors) for equality.
-const aboutEqualNormals = (a, b) => (Math.abs(a[0] - b[0]) <= NEPS && Math.abs(a[1] - b[1]) <= NEPS && Math.abs(a[2] - b[2]) <= NEPS)
 
 const coplanar = (plane1, plane2) => {
   // expect the same distance from the origin, within tolerance
@@ -202,7 +199,7 @@ const mergePolygons = (epsilon, polygons) => {
   let destpolygons = []
   polygonsPerPlane.forEach((mapping) => {
     const sourcepolygons = mapping[1]
-    const retesselayedpolygons = mergeCoplanarPolygons(epsilon, sourcepolygons)
+    const retesselayedpolygons = mergeCoplanarPolygons(sourcepolygons)
     destpolygons = destpolygons.concat(retesselayedpolygons)
   })
   return destpolygons

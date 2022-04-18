@@ -39,7 +39,7 @@ const center = (options, ...objects) => {
   const defaults = {
     axes: [true, true, true],
     relativeTo: [0, 0, 0]
-  // TODO : Add addition 'methods' of centering; midpoint, centeriod
+  // TODO: Add additional 'methods' of centering: midpoint, centroid
   }
   const { axes, relativeTo } = Object.assign({}, defaults, options)
 

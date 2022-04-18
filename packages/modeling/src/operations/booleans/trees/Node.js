@@ -42,28 +42,32 @@ class Node {
       node = current.node
       polygontreenodes = current.polygontreenodes
 
-      // begin "function"
       if (node.plane) {
+        const plane = node.plane
+
         const backnodes = []
         const frontnodes = []
         const coplanarfrontnodes = alsoRemovecoplanarFront ? backnodes : frontnodes
-        const plane = node.plane
         const numpolygontreenodes = polygontreenodes.length
         for (let i = 0; i < numpolygontreenodes; i++) {
-          const node1 = polygontreenodes[i]
-          if (!node1.isRemoved()) {
-            node1.splitByPlane(plane, coplanarfrontnodes, backnodes, frontnodes, backnodes)
+          const treenode = polygontreenodes[i]
+          if (!treenode.isRemoved()) {
+            // split this polygon tree node using the plane
+            // NOTE: children are added to the tree if there are spanning polygons
+            treenode.splitByPlane(plane, coplanarfrontnodes, backnodes, frontnodes, backnodes)
           }
         }
 
         if (node.front && (frontnodes.length > 0)) {
+          // add front node for further splitting
           stack.push({ node: node.front, polygontreenodes: frontnodes })
         }
         const numbacknodes = backnodes.length
         if (node.back && (numbacknodes > 0)) {
+          // add back node for further splitting
           stack.push({ node: node.back, polygontreenodes: backnodes })
         } else {
-          // there's nothing behind this plane. Delete the nodes behind this plane:
+          // remove all back nodes from processing
           for (let i = 0; i < numbacknodes; i++) {
             backnodes[i].remove()
           }
@@ -134,16 +138,6 @@ class Node {
 
       current = stack.pop()
     } while (current !== undefined)
-  }
-
-  // TODO is this still used?
-  getParentPlaneNormals (normals, maxdepth) {
-    if (maxdepth > 0) {
-      if (this.parent) {
-        normals.push(this.parent.plane.normal)
-        this.parent.getParentPlaneNormals(normals, maxdepth - 1)
-      }
-    }
   }
 }
 

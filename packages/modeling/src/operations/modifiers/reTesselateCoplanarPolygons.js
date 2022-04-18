@@ -31,7 +31,7 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
   // convert all polygon vertices to 2D
   // Make a list of all encountered y coordinates
   // And build a map of all polygons that have a vertex at a certain y coordinate:
-  const ycoordinateBinningFactor = 1.0 / EPS * 10
+  const ycoordinateBinningFactor = 10 / EPS
   for (let polygonindex = 0; polygonindex < numpolygons; polygonindex++) {
     const poly3d = sourcepolygons[polygonindex]
     let vertices2d = []

@@ -9,6 +9,7 @@ const { circle, rectangle, sphere, cuboid } = require('../../primitives')
 const { union } = require('./index')
 
 const { center } = require('../transforms/center')
+const { translate } = require('../transforms/translate')
 
 // test('union: union of a path produces expected changes to points', (t) => {
 //   let geometry = path.fromPoints({}, [[0, 1, 0], [1, 0, 0]])
@@ -36,6 +37,7 @@ test('union of one or more geom2 objects produces expected geometry', (t) => {
     [0, -2],
     [1.4142000000000001, -1.4142000000000001]
   ]
+  t.notThrows(() => geom2.validate(result1))
   t.true(comparePoints(obs, exp))
 
   // union of two non-overlapping objects
@@ -57,6 +59,7 @@ test('union of one or more geom2 objects produces expected geometry', (t) => {
     [12, 12],
     [1.4142000000000001, -1.4142000000000001]
   ]
+  t.notThrows(() => geom2.validate(result2))
   t.true(comparePoints(obs, exp))
 
   // union of two partially overlapping objects
@@ -74,6 +77,7 @@ test('union of one or more geom2 objects produces expected geometry', (t) => {
     [7.999933333333333, 9.000053333333334],
     [11.999973333333333, 7.999933333333333]
   ]
+  t.notThrows(() => geom2.validate(result3))
   t.true(comparePoints(obs, exp))
 
   // union of two completely overlapping objects
@@ -85,7 +89,24 @@ test('union of one or more geom2 objects produces expected geometry', (t) => {
     [9.000046666666666, 9.000046666666666],
     [-9.000046666666666, 9.000046666666666]
   ]
+  t.notThrows(() => geom2.validate(result4))
   t.true(comparePoints(obs, exp))
+
+  // union of unions of non-overlapping objects (BSP gap from #907)
+  const circ = circle({ radius: 1, segments: 32 })
+  const result5 = union(
+    union(
+      translate([17, 21], circ),
+      translate([7, 0], circ),
+    ),
+    union(
+      translate([3, 21], circ),
+      translate([17, 21], circ),
+    )
+  )
+  obs = geom2.toPoints(result5)
+  t.notThrows.skip(() => geom2.validate(result5))
+  t.is(obs.length, 112)
 })
 
 test('union of one or more geom3 objects produces expected geometry', (t) => {
@@ -144,6 +165,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
     [[0.9999999999999998, 1.0000000000000002, -1.414213562373095], [1.4142135623730951, 3.4638242249419736e-16, -1.414213562373095], [8.65956056235493e-17, 8.659560562354935e-17, -2]],
     [[8.65956056235493e-17, 8.659560562354935e-17, 2], [1.4142135623730951, 3.4638242249419736e-16, 1.414213562373095], [0.9999999999999998, 1.0000000000000002, 1.414213562373095]]
   ]
+  t.notThrows.skip(() => geom3.validate(result1))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // union of two non-overlapping objects
@@ -151,6 +173,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
 
   const result2 = union(geometry1, geometry2)
   obs = geom3.toPoints(result2)
+  t.notThrows.skip(() => geom3.validate(result2))
   t.is(obs.length, 38)
 
   // union of two partially overlapping objects
@@ -178,6 +201,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
     [[-9, 9, 9], [-9, 8, 9], [8, 8, 9], [8, 9, 9]],
     [[-9, 8, 9], [-9, -9, 9], [9, -9, 9], [9, 8, 9]]
   ]
+  t.notThrows.skip(() => geom3.validate(result3))
   t.is(obs.length, 18)
   t.true(comparePolygonsAsPoints(obs, exp))
 
@@ -192,6 +216,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
     [[-9, -9, -9], [-9, 9, -9], [9, 9, -9], [9, -9, -9]],
     [[-9, -9, 9], [9, -9, 9], [9, 9, 9], [-9, 9, 9]]
   ]
+  t.notThrows(() => geom3.validate(result4))
   t.is(obs.length, 6)
   t.true(comparePolygonsAsPoints(obs, exp))
 })
@@ -202,6 +227,7 @@ test('union of geom3 with rounding issues #137', (t) => {
 
   const obs = union(geometry1, geometry2)
   const pts = geom3.toPoints(obs)
+  t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 6) // number of polygons in union
 })
 
@@ -266,6 +292,7 @@ test('union of geom2 with closing issues #15', (t) => {
     [-49.34040695243976, -15.797284338334542],
     [-45.82121705016925, -16.857333163105647]
   ]
+  t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 20) // number of sides in union
   t.true(comparePoints(pts, exp))
 })

@@ -4,6 +4,8 @@ const vec2 = require('../maths/vec2')
 
 const geom2 = require('../geometries/geom2')
 
+const { sin, cos } = require('../utils/trigonometry')
+
 const { isGTE, isNumberArray } = require('./commonChecks')
 
 /**
@@ -62,7 +64,7 @@ const ellipse = (options) => {
   segments = (rotation < Math.PI * 2) ? segments + 1 : segments
   for (let i = 0; i < segments; i++) {
     const angle = (step * i) + startAngle
-    const point = vec2.fromValues(radius[0] * Math.cos(angle), radius[1] * Math.sin(angle))
+    const point = vec2.fromValues(radius[0] * cos(angle), radius[1] * sin(angle))
     vec2.add(point, centerv, point)
     points.push(point)
   }

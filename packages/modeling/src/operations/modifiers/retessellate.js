@@ -1,16 +1,9 @@
 const geom3 = require('../../geometries/geom3')
 const poly3 = require('../../geometries/poly3')
 
+const aboutEqualNormals = require('../../maths/utils/aboutEqualNormals')
+
 const reTesselateCoplanarPolygons = require('./reTesselateCoplanarPolygons')
-
-// Normals are directional vectors with component values from 0 to 1.0, requiring specialized comparison
-// This EPS is derived from a series of tests to determine the optimal precision for comparing coplanar polygons,
-// as provided by the sphere primitive at high segmentation
-// This EPS is for 64 bit Number values
-const NEPS = 1e-13
-
-// Compare two normals (unit vectors) for equality.
-const aboutEqualNormals = (a, b) => (Math.abs(a[0] - b[0]) <= NEPS && Math.abs(a[1] - b[1]) <= NEPS && Math.abs(a[2] - b[2]) <= NEPS)
 
 const coplanar = (plane1, plane2) => {
   // expect the same distance from the origin, within tolerance

@@ -1,6 +1,7 @@
 const flatten = require('../../utils/flatten')
 
-const retessellate = require('./retessellate')
+const retessellate = require('../modifiers/retessellate')
+
 const intersectSub = require('./intersectGeom3Sub')
 
 /*

@@ -21,11 +21,11 @@ const splitPolygonByPlane = require('./splitPolygonByPlane')
 // since they are no longer intact.
 class PolygonTreeNode {
   // constructor creates the root node
-  constructor () {
-    this.parent = null
+  constructor (parent, polygon) {
+    this.parent = parent
     this.children = []
-    this.polygon = null
-    this.removed = false
+    this.polygon = polygon
+    this.removed = false  // state of branch or leaf
   }
 
   // fill the tree with polygons. Should be called on the root node only; child nodes must
@@ -47,6 +47,7 @@ class PolygonTreeNode {
   remove () {
     if (!this.removed) {
       this.removed = true
+      this.polygon = null
 
       // remove ourselves from the parent's children list:
       const parentschildren = this.parent.children
@@ -183,9 +184,7 @@ class PolygonTreeNode {
   // a child should be created for every fragment of the split polygon
   // returns the newly created child
   addChild (polygon) {
-    const newchild = new PolygonTreeNode()
-    newchild.parent = this
-    newchild.polygon = polygon
+    const newchild = new PolygonTreeNode(this, polygon)
     this.children.push(newchild)
     return newchild
   }
@@ -206,13 +205,13 @@ class PolygonTreeNode {
     }
   }
 
+  // private method
+  // remove the polygon from the node, and all parent nodes above it
+  // called to invalidate parents of removed nodes
   recursivelyInvalidatePolygon () {
-    let node = this
-    while (node.polygon) {
-      node.polygon = null
-      if (node.parent) {
-        node = node.parent
-      }
+    this.polygon = null
+    if (this.parent) {
+      this.parent.recursivelyInvalidatePolygon()
     }
   }
 
@@ -248,7 +247,7 @@ class PolygonTreeNode {
         node = children[j]
         result += `${prefix}PolygonTreeNode (${node.isRootNode()}): ${node.children.length}`
         if (node.polygon) {
-          result += `\n ${prefix}poly3\n`
+          result += `\n ${prefix}polygon: ${node.polygon.vertices}\n`
         } else {
           result += '\n'
         }

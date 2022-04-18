@@ -16,6 +16,7 @@ test('triangle (defaults)', (t) => {
     [0.5000000000000002, 0.8660254037844387]
   ]
 
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(obs.length, 3)
   t.true(comparePoints(obs, exp))
 })
@@ -30,6 +31,7 @@ test('triangle (options)', (t) => {
     [1.5, 5.809475019311125]
   ]
 
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(obs.length, 3)
   t.true(comparePoints(obs, exp))
 
@@ -42,6 +44,7 @@ test('triangle (options)', (t) => {
     [0, 1.0000000000000002]
   ]
 
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(obs.length, 3)
   t.true(comparePoints(obs, exp))
 
@@ -54,6 +57,7 @@ test('triangle (options)', (t) => {
     [2.1348320069064197, 4.015035054457325]
   ]
 
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(obs.length, 3)
   t.true(comparePoints(obs, exp))
 
@@ -66,6 +70,7 @@ test('triangle (options)', (t) => {
     [1.295667368233083, 5.196637976713814]
   ]
 
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(obs.length, 3)
   t.true(comparePoints(obs, exp))
 
@@ -78,6 +83,7 @@ test('triangle (options)', (t) => {
     [0.4075867970664495, 5.282967061559405]
   ]
 
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(obs.length, 3)
   t.true(comparePoints(obs, exp))
 
@@ -90,6 +96,7 @@ test('triangle (options)', (t) => {
     [8.494946725906148, 12.990574573070846]
   ]
 
+  t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(obs.length, 3)
   t.true(comparePoints(obs, exp))
 })

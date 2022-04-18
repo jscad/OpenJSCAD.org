@@ -9,6 +9,7 @@ export { default as toPolygons } from './toPolygons'
 export { default as toString } from './toString'
 export { default as toCompactBinary } from './toCompactBinary'
 export { default as transform } from './transform'
+export { default as validate } from './validate'
 
 export { default as Geom3 } from './type'
 export as namespace geom3
