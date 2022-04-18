@@ -38,7 +38,7 @@ export class Jsx6 {
     this.children = children
     this.parent = parent
 
-    if (attr['tag-name']) {
+    if (attr['tag-name'] !== undefined) {
       this.tagName = attr['tag-name'];
       delete attr['tag-name'];
     }
@@ -61,14 +61,16 @@ export class Jsx6 {
   createEl() {
 
     this.initState()
-
-    this.el = insertHtml(null, null, { tag: this.tagName }, this);
+    if(!this.tagName){
+      this.el = [document.createTextNode('')]
+    }else{
+      this.el = insertHtml(null, null, { tag: this.tagName }, this);
+      if (this.cName)
+      this.classList.add(this.cName);
+    }
+    this.insertAttr(this.attr)
 		this.contentArea ||= this.el
 
-    this.insertAttr(this.attr)
-
-    if (this.cName)
-      this.classList.add(this.cName);
     this.el.propKey = this.propKey;
     this.el.groupKey = this.groupKey;
   }
@@ -91,7 +93,17 @@ export class Jsx6 {
 
   initTemplate() {
     let def = this.tpl(h.bind(this), this.state, this.state()(), this)
-    insertHtml(this.el, null, def, this);
+    if(def){
+      let parent = this.el
+      let before = null
+      if(this.el instanceof Array) {
+        before = this.el[0]
+        parent = before.parentNode
+//        console.error('parent', parent, 'before', before)
+      }
+      insertHtml(parent, before, def, this);
+      return def
+    } 
   }
 
 	/**
@@ -108,14 +120,20 @@ export class Jsx6 {
 
   init() { }
 
-  get value() { Object.assign({}, this.state); }
-
-  set value(value) {
+  get value() { return this.getValue() }
+  getValue () {
+    return this.jsx6SingleValue ? this.state.value() : this.state().getValue()
+  }
+  
+  set value(value) { this.setValue(value) }
+  setValue (value) {
     if(value === null || value === undefined) value = {}
     if (value && isObj(value)) {
+      this.jsx6SingleValue = false
       this.state().replace(value)
     } else {
-      this.state.value = value
+      this.jsx6SingleValue = true
+      this.state().replace({value})
     }
   }
 
@@ -127,7 +145,14 @@ export class Jsx6 {
   removeAttribute(attr) { return this.el.removeAttribute(attr); }
   getBoundingClientRect() { return this.el.getBoundingClientRect(); }
   appendChild(c) { insertBefore(this.el, c); }
-  insertBefore(c, before) { insertBefore(this.contentArea || this.el, c, before); }
+  insertBefore(c, before) {
+    if (this.el instanceof Array){
+      const el = this.el[0]
+      this.el.push(insertBefore(el.parentNode , c, el))
+    }else{
+      insertBefore(this.contentArea || this.el, c, before); 
+    }
+  }
 
   get classList() { return this.el.classList; }
   get style() { return this.el.style; }

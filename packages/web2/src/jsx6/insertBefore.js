@@ -9,6 +9,15 @@ export function insertBefore (parent, newChild, before) {
     newChild.setParent(parent)
     newChild.__init()
   }
-  _parent.insertBefore(toDomNode(newChild), toDomNode(before))
+  try {
+    let _newChild = toDomNode(newChild)
+    if (_newChild instanceof Array) _newChild = _newChild[0]
+
+    _parent.insertBefore(_newChild, toDomNode(before))
+    if (newChild.insertSelf) newChild.insertSelf()
+  } catch (error) {
+    console.error('parent', parent, 'newChild', newChild, 'before', before)
+    throw error
+  }
   return newChild
 }

@@ -253,7 +253,7 @@ export function insertAttr (attr, out, self, component) {
       if (a === 'p') {
         setPropGroup(self, component || out, isStr(value) ? value.split('.') : value)
       }
-      out.setAttribute(a, a === 'p' && value instanceof Array ? value.join('.') : value)
+      if (out.setAttribute) out.setAttribute(a, a === 'p' && value instanceof Array ? value.join('.') : value)
     }
   }
 }
