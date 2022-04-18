@@ -17,9 +17,6 @@
   "Storage": "Storage",
   "settings storage path":"Storage path of settings",
 
-  "File Handling": "File Handling",
-  "enable conversion to scripts":"Convert external formats to JSCAD scripts",
-
   "Shortcuts":"Keyboard Shortcuts",
 
   "Command":"Command",
