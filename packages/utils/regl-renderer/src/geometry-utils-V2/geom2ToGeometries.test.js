@@ -39,6 +39,7 @@ test('geom2ToGeometries (solid with sides)', (t) => {
   }
   const expected = [{
     color: [1, 2, 3, 0.8],
+    colors: [],
     indices: [0, 1, 2, 3, 4, 5],
     normals: [[0, 0, -1], [0, 0, -1], [0, 0, -1], [0, 0, -1], [0, 0, -1], [0, 0, -1]],
     positions: [[0, 0, 0], [1, 0, 0], [1, 0, 0], [1, 1, 0], [1, 1, 0], [0, 0, 0]],
