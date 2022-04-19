@@ -29,6 +29,8 @@ export class Jsx6 {
 
   constructor(attr, children, parent) {
 		attr ||= {}
+    // TODO make readonly using Object.defineProperty ... after making utility function for it
+    this.$h = h.bind(this)
     // if(attr.if){
     //   const ifValue = attr.if
     //   delete attr.if
@@ -92,7 +94,7 @@ export class Jsx6 {
   destroyed() { }
 
   initTemplate() {
-    let def = this.tpl(h.bind(this), this.state, this.state()(), this)
+    let def = this.tpl(this.$h, this.state, this.state()(), this)
     if(def){
       let parent = this.el
       let before = null

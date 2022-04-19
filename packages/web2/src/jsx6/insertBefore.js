@@ -6,7 +6,6 @@ export function insertBefore (parent, newChild, before) {
   const _parent = parent.insertBefore ? parent : toDomNode(parent)
   if (!_parent.insertBefore) console.error('missing insertBefore', _parent, parent)
   if (newChild.__init) {
-    newChild.setParent(parent)
     newChild.__init()
   }
   try {
