@@ -3,3 +3,7 @@ node_js:
   - "12"
   - "14"
   - "16"
+addons:
+  apt:
+    packages:
+    - libxi-dev
