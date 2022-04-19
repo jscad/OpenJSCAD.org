@@ -3,6 +3,8 @@ node_js:
   - "12"
   - "14"
   - "16"
+python:
+  - "3.7"
 addons:
   apt:
     packages:
