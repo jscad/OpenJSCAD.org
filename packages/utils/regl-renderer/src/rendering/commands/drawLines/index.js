@@ -35,9 +35,9 @@ const drawLines = (regl, params = {}) => {
 
   // blending is a bit tricky
   // https://stackoverflow.com/questions/51938739/regl-color-and-alpha-blending-of-primitives
-  if(transparent){
-    commandParams.blend = { 
-      enable: true 
+  if (transparent) {
+    commandParams.blend = {
+      enable: true,
       func: { src: 'src alpha', dst: 'one minus src alpha' }
     }
   }

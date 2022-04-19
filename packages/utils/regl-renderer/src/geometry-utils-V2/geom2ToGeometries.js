@@ -17,16 +17,36 @@ const geom2ToGeometries = (options, solid) => {
 
   if ('color' in solid) color = solid.color
   const isTransparent = (color[3] < 1.0)
-
+  const colors = []
   const numgeometries = Math.floor(sides.length / (maxIndex)) + 1
+  // make sure color has alpha channel
+  const addColor = (c) => {
+    // add alpha channel (copy, do not mutate)
+    if (c.length === 3) c = [...c, 1]
+    // each side needs 2 colors, both start and end color
+    colors.push(c, c)
+  }
 
   const geometries = []
   for (let g = 0; g < numgeometries; g++) {
     const offset = g * maxIndex
     const endset = Math.min(offset + maxIndex, sides.length)
     const positions = []
+
     for (let i = offset; i < endset; i++) {
       const side = sides[i]
+      if (side.color) {
+        // backfill colors, so colors array is not used unless at least one side has color defined
+        if (colors.length === 0 && positions.length > 0) {
+          const toFill = positions.length
+          for (let j = 0; j < toFill; j++) {
+            colors.push(color) // push default color
+          }
+        }
+        addColor(side.color)
+      } else if (colors.length) {
+        addColor(color)
+      }
       positions.push([side[0][0], side[0][1], 0])
       positions.push([side[1][0], side[1][1], 0])
     }
@@ -38,7 +58,8 @@ const geom2ToGeometries = (options, solid) => {
     // FIXME positions should be Float32Array buffers to eliminate another conversion
     // FIXME normals should be Float32Array buffers to eliminate another conversion
     // FIXME indices should be Uint16Array buffers to eliminate another conversion
-    geometries.push({ type: '2d', positions, normals, indices, transforms, color, isTransparent })
+    console.log(positions.length, colors.length)
+    geometries.push({ type: '2d', positions, normals, indices, transforms, color, colors, isTransparent })
   }
   return geometries
 }
