@@ -6,4 +6,14 @@ node_js:
 addons:
   apt:
     packages:
+    - xutils-dev
     - libxi-dev
+    - libxxf86vm-dev
+    - x11proto-xf86vidmode-dev
+    - mesa-utils
+    - xvfb
+    - libgl1-mesa-dri
+    - libglapi-mesa
+    - libosmesa6
+    - musl-dev
+    - libgl1-mesa-dev
