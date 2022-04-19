@@ -3,11 +3,13 @@ node_js:
   - "12"
   - "14"
   - "16"
-python:
-  - "3.7.0"
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install python3
 addons:
   apt:
     packages:
+    - python3.7
     - xutils-dev
     - libxi-dev
     - libxxf86vm-dev
