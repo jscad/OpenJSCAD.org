@@ -14,9 +14,6 @@
   "enable geometry caching":"Experimenteles caching von Geometrie,",
   "timeout for generation":"Abfallzeit für generieren von Soliden (ms)",
 
-  "Storage":"Speicher",
-  "settings storage path":"Dateipfad für Einstellungen",
-
   "Shortcuts":"Tastenkombinationen",
 
   "Command":"Befehl",

@@ -14,9 +14,6 @@
   "enable geometry caching":"experimental geometry caching",
   "timeout for generation":"図形の生成タイムアウト",
 
-  "Storage": "ストレージ",
-  "settings storage path":"ストレージ パス",
-
   "Shortcuts":"キーボード ショートカット",
 
   "Command":"コマンド",

@@ -14,9 +14,6 @@
   "enable geometry caching":"Systeme de cache experimental de la geometrie",
   "timeout for generation": "Timeout génération de solides (ms)",
 
-  "Storage":"Stockage",
-  "settings storage path":"Chemin de stockage des paramètres",
-
   "Shortcuts":"Racourcis Clavier",
 
   "Command":"Commande",

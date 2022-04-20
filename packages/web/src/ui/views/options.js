@@ -38,13 +38,6 @@ const options = (state, i18n) => {
     </label>
   </fieldset>
 
-  <fieldset>
-    <legend> <h3> ${i18n`Storage`} </h3> </legend>
-    <label>${i18n`settings storage path`} ${i18n`not settable`}
-      <input type='text' disabled value='${state.storage.path}' disabled />
-    </label>
-  </fieldset>
-
   ${shortcuts}
 
 </section>`

@@ -14,9 +14,6 @@
   "enable geometry caching":"Omogući eksperimentalno cachiranje geometrije, ",
   "timeout for generation":"Timeout za generiranje modela (ms)",
 
-  "Storage": "Spremanje",
-  "settings storage path":"Putanja za spremanje postavki",
-
   "Shortcuts":"Kratice za tipkovnicu",
 
   "Command":"Komanda",
