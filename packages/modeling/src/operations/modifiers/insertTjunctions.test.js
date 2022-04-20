@@ -56,33 +56,33 @@ test('insertTjunctions: insertTjunctions produces expected polygons', (t) => {
 
   const result3 = insertTjunctions(geom3.toPolygons(geometry3))
   let exp = [
-    poly3.fromPoints([[-1, -1, -1], [-1, -1, 1], [-1, 1, 1], [-1, 1, -1]]),
-    poly3.fromPoints([[1, -1, -1], [1, 1, -1], [1, 1, 1], [1, -1, 1]]),
-    poly3.fromPoints([[-1, -1, -1], [1, -1, -1], [1, -1, 1], [-1, -1, 1]]),
-    poly3.fromPoints([[-1, 1, -1], [-1, 1, 1], [1, 1, 1], [1, 1, -1]]),
-    poly3.fromPoints([[-1, -1, -1], [-1, 1, -1], [1, 1, -1], [1, -1, -1]]),
-    poly3.fromPoints([[0, 0, 1], [-1, -1, 1], [1, -1, 1], [1, 1, 1]]),
-    poly3.fromPoints([[1, 1, 1], [-1, 1, 1], [0, 0, 1]]),
-    poly3.fromPoints([[-1, 1, 1], [-1, -1, 1], [0, 0, 1]])
+    poly3.create([[-1, -1, -1], [-1, -1, 1], [-1, 1, 1], [-1, 1, -1]]),
+    poly3.create([[1, -1, -1], [1, 1, -1], [1, 1, 1], [1, -1, 1]]),
+    poly3.create([[-1, -1, -1], [1, -1, -1], [1, -1, 1], [-1, -1, 1]]),
+    poly3.create([[-1, 1, -1], [-1, 1, 1], [1, 1, 1], [1, 1, -1]]),
+    poly3.create([[-1, -1, -1], [-1, 1, -1], [1, 1, -1], [1, -1, -1]]),
+    poly3.create([[0, 0, 1], [-1, -1, 1], [1, -1, 1], [1, 1, 1]]),
+    poly3.create([[1, 1, 1], [-1, 1, 1], [0, 0, 1]]),
+    poly3.create([[-1, 1, 1], [-1, -1, 1], [0, 0, 1]])
   ]
   t.not(result3, geom3.toPolygons(geometry3))
   t.true(comparePolygonLists(result3, exp))
 
   const result4 = insertTjunctions(geom3.toPolygons(geometry4))
   exp = [
-    poly3.fromPoints([[-1, -1, -1], [-1, -1, 1], [-1, 0, 1], [-1, 1, 1], [-1, 1, -1]]),
-    poly3.fromPoints([[1, -1, -1], [1, 1, -1], [1, 1, 1], [1, 0, 1], [1, -1, 1]]),
-    poly3.fromPoints([[-1, -1, -1], [1, -1, -1], [1, -1, 1], [0, -1, 1], [-1, -1, 1]]),
-    poly3.fromPoints([[-1, 1, -1], [-1, 1, 1], [0, 1, 1], [1, 1, 1], [1, 1, -1]]),
-    poly3.fromPoints([[-1, -1, -1], [-1, 1, -1], [1, 1, -1], [1, -1, -1]]),
-    poly3.fromPoints([[-1, -1, 1], [0, -1, 1], [0, 0, 1]]),
-    poly3.fromPoints([[-1, 0, 1], [-1, -1, 1], [0, 0, 1]]),
-    poly3.fromPoints([[0, -1, 1], [1, -1, 1], [0, 0, 1]]),
-    poly3.fromPoints([[1, -1, 1], [1, 0, 1], [0, 0, 1]]),
-    poly3.fromPoints([[1, 0, 1], [1, 1, 1], [0, 0, 1]]),
-    poly3.fromPoints([[1, 1, 1], [0, 1, 1], [0, 0, 1]]),
-    poly3.fromPoints([[0, 1, 1], [-1, 1, 1], [0, 0, 1]]),
-    poly3.fromPoints([[-1, 1, 1], [-1, 0, 1], [0, 0, 1]])
+    poly3.create([[-1, -1, -1], [-1, -1, 1], [-1, 0, 1], [-1, 1, 1], [-1, 1, -1]]),
+    poly3.create([[1, -1, -1], [1, 1, -1], [1, 1, 1], [1, 0, 1], [1, -1, 1]]),
+    poly3.create([[-1, -1, -1], [1, -1, -1], [1, -1, 1], [0, -1, 1], [-1, -1, 1]]),
+    poly3.create([[-1, 1, -1], [-1, 1, 1], [0, 1, 1], [1, 1, 1], [1, 1, -1]]),
+    poly3.create([[-1, -1, -1], [-1, 1, -1], [1, 1, -1], [1, -1, -1]]),
+    poly3.create([[-1, -1, 1], [0, -1, 1], [0, 0, 1]]),
+    poly3.create([[-1, 0, 1], [-1, -1, 1], [0, 0, 1]]),
+    poly3.create([[0, -1, 1], [1, -1, 1], [0, 0, 1]]),
+    poly3.create([[1, -1, 1], [1, 0, 1], [0, 0, 1]]),
+    poly3.create([[1, 0, 1], [1, 1, 1], [0, 0, 1]]),
+    poly3.create([[1, 1, 1], [0, 1, 1], [0, 0, 1]]),
+    poly3.create([[0, 1, 1], [-1, 1, 1], [0, 0, 1]]),
+    poly3.create([[-1, 1, 1], [-1, 0, 1], [0, 0, 1]])
   ]
   t.not(result4, geometry4)
   t.true(comparePolygonLists(result4, exp))
