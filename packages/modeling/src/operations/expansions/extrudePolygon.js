@@ -17,14 +17,14 @@ const extrudePolygon = (offsetvector, polygon1) => {
   const polygon2 = poly3.transform(mat4.fromTranslation(mat4.create(), offsetvector), polygon1)
   const numvertices = polygon1.vertices.length
   for (let i = 0; i < numvertices; i++) {
-    const sidefacepoints = []
     const nexti = (i < (numvertices - 1)) ? i + 1 : 0
-    sidefacepoints.push(polygon1.vertices[i])
-    sidefacepoints.push(polygon2.vertices[i])
-    sidefacepoints.push(polygon2.vertices[nexti])
-    sidefacepoints.push(polygon1.vertices[nexti])
-    const sidefacepolygon = poly3.fromPoints(sidefacepoints)
-    newpolygons.push(sidefacepolygon)
+    const sideFacePolygon = poly3.create([
+      polygon1.vertices[i],
+      polygon2.vertices[i],
+      polygon2.vertices[nexti],
+      polygon1.vertices[nexti]
+    ])
+    newpolygons.push(sideFacePolygon)
   }
   newpolygons.push(poly3.invert(polygon2))
 

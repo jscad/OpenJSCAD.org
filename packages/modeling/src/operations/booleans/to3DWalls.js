@@ -14,7 +14,7 @@ const to3DWall = (z0, z1, side) => {
     vec3.fromVec2(vec3.create(), side[1], z1),
     vec3.fromVec2(vec3.create(), side[0], z1)
   ]
-  return poly3.fromPoints(points)
+  return poly3.create(points)
 }
 
 /*

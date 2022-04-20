@@ -167,7 +167,7 @@ const expandShell = (options, geometry) => {
           startfacevertices.push(p1)
           endfacevertices.push(p2)
           const points = [prevp2, p2, p1, prevp1]
-          const polygon = poly3.fromPoints(points)
+          const polygon = poly3.create(points)
           polygons.push(polygon)
         }
         prevp1 = p1
@@ -175,8 +175,8 @@ const expandShell = (options, geometry) => {
       }
     }
     endfacevertices.reverse()
-    polygons.push(poly3.fromPoints(startfacevertices))
-    polygons.push(poly3.fromPoints(endfacevertices))
+    polygons.push(poly3.create(startfacevertices))
+    polygons.push(poly3.create(endfacevertices))
 
     const cylinder = geom3.create(polygons)
     result = unionGeom3Sub(result, cylinder)
