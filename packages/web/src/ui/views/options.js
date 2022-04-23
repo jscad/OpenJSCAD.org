@@ -38,20 +38,6 @@ const options = (state, i18n) => {
     </label>
   </fieldset>
 
-  <fieldset>
-    <legend> <h3> ${i18n`Storage`} </h3> </legend>
-    <label>${i18n`settings storage path`} ${i18n`not settable`}
-      <input type='text' disabled value='${state.storage.path}' disabled />
-    </label>
-  </fieldset>
-
-  <fieldset>
-    <legend> <h3> ${i18n`File Handling`} </h3> </legend>
-    <label>${i18n`enable conversion to scripts`}
-      <input type='checkbox' checked=false id='design-convertSupportedTypes' checked=${state.design.convertSupportedTypes}/>
-    </label>
-  </fieldset>
-
   ${shortcuts}
 
 </section>`

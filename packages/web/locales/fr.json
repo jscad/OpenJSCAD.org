@@ -14,12 +14,6 @@
   "enable geometry caching":"Systeme de cache experimental de la geometrie",
   "timeout for generation": "Timeout génération de solides (ms)",
 
-  "Storage":"Stockage",
-  "settings storage path":"Chemin de stockage des paramètres",
-
-  "File Handling": "File Handling",
-  "enable conversion to scripts":"Convert external formats to JSCAD scripts",
-
   "Shortcuts":"Racourcis Clavier",
 
   "Command":"Commande",
