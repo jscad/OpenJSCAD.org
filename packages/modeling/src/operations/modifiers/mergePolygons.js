@@ -80,7 +80,7 @@ const createPolygonAnd = (edge) => {
 
     edge = next
   }
-  if (points.length > 0) polygon = poly3.fromPoints(points)
+  if (points.length > 0) polygon = poly3.create(points)
   return polygon
 }
 

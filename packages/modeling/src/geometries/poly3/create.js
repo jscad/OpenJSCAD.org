@@ -18,7 +18,7 @@ const create = (vertices) => {
   if (vertices === undefined || vertices.length < 3) {
     vertices = [] // empty contents
   }
-  return { vertices: vertices }
+  return { vertices }
 }
 
 module.exports = create

@@ -38,7 +38,7 @@ test('color (rgba on geometry)', (t) => {
   const obj0 = geom2.fromPoints([[0, 0], [1, 0], [0, 1]])
   const obj1 = geom3.fromPoints([[[0, 0, 0], [1, 0, 0], [1, 0, 1]]])
   const obj2 = path2.fromPoints({ closed: true }, [[0, 0], [1, 0], [1, 1]])
-  const obj3 = poly3.fromPoints([[0, 0, 0], [1, 0, 0], [1, 1, 0]])
+  const obj3 = poly3.create([[0, 0, 0], [1, 0, 0], [1, 1, 0]])
 
   const obs = colorize([1, 1, 0.5, 0.8], obj0, obj1, obj2, obj3)
   t.is(obs.length, 4)
