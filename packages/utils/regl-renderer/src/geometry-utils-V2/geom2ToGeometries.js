@@ -19,12 +19,11 @@ const geom2ToGeometries = (options, solid) => {
   const isTransparent = (color[3] < 1.0)
   const colors = []
   const numgeometries = Math.floor(sides.length / (maxIndex)) + 1
-  // make sure color has alpha channel
-  const addColor = (c) => {
-    // add alpha channel (copy, do not mutate)
-    if (c.length === 3) c = [...c, 1]
-    // each side needs 2 colors, both start and end color
-    colors.push(c, c)
+
+  const addColor = (startColor, endColor) => {
+    // each line needs 2 colors: startColor and endColor
+    // endColor is optional
+    colors.push(startColor, endColor || startColor)
   }
 
   const geometries = []
@@ -43,7 +42,8 @@ const geom2ToGeometries = (options, solid) => {
             colors.push(color) // push default color
           }
         }
-        addColor(side.color)
+        // shader actually allows for gradient on the lines by design
+        addColor(side.color, side.endColor)
       } else if (colors.length) {
         addColor(color)
       }
@@ -58,7 +58,6 @@ const geom2ToGeometries = (options, solid) => {
     // FIXME positions should be Float32Array buffers to eliminate another conversion
     // FIXME normals should be Float32Array buffers to eliminate another conversion
     // FIXME indices should be Uint16Array buffers to eliminate another conversion
-    console.log(positions.length, colors.length)
     geometries.push({ type: '2d', positions, normals, indices, transforms, color, colors, isTransparent })
   }
   return geometries
