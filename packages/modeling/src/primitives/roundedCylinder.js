@@ -66,7 +66,7 @@ const roundedCylinder = (options) => {
   const fromPoints = (points) => {
     // adjust the points to center
     const newpoints = points.map((point) => vec3.add(point, point, center))
-    return poly3.fromPoints(newpoints)
+    return poly3.create(newpoints)
   }
 
   const polygons = []

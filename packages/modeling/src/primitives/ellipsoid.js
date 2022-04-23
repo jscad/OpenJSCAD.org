@@ -66,7 +66,7 @@ const ellipsoid = (options) => {
           point = vec3.subtract(vec3.create(), vec3.scale(p1, prevcylinderpoint, cospitch), vec3.scale(p2, zvector, sinpitch))
           points.push(vec3.add(point, point, center))
 
-          polygons.push(poly3.fromPoints(points))
+          polygons.push(poly3.create(points))
 
           points = []
           point = vec3.add(vec3.create(), vec3.scale(p1, prevcylinderpoint, prevcospitch), vec3.scale(p2, zvector, prevsinpitch))
@@ -81,7 +81,7 @@ const ellipsoid = (options) => {
           points.push(vec3.add(vec3.create(), center, point))
           points.reverse()
 
-          polygons.push(poly3.fromPoints(points))
+          polygons.push(poly3.create(points))
         }
         prevcospitch = cospitch
         prevsinpitch = sinpitch

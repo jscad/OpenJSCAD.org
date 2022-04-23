@@ -60,7 +60,7 @@ const polyhedron = (options) => {
   }
 
   const polygons = faces.map((face, findex) => {
-    const polygon = poly3.fromPoints(face.map((pindex) => points[pindex]))
+    const polygon = poly3.create(face.map((pindex) => points[pindex]))
     if (colors && colors[findex]) polygon.color = colors[findex]
     return polygon
   })

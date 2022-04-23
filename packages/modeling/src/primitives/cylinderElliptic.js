@@ -90,7 +90,7 @@ const cylinderElliptic = (options) => {
   // adjust the points to center
   const fromPoints = (...points) => {
     const newpoints = points.map((point) => vec3.add(vec3.create(), point, center))
-    return poly3.fromPoints(newpoints)
+    return poly3.create(newpoints)
   }
 
   const polygons = []

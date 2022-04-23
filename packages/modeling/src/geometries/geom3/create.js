@@ -18,7 +18,7 @@ const create = (polygons) => {
     polygons = [] // empty contents
   }
   return {
-    polygons: polygons,
+    polygons,
     transforms: mat4.create()
   }
 }

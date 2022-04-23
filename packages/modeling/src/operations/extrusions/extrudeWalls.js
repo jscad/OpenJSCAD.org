@@ -64,11 +64,11 @@ const extrudeWalls = (slice0, slice1) => {
   edges0.forEach((edge0, i) => {
     const edge1 = edges1[i]
 
-    const poly0 = poly3.fromPoints([edge0[0], edge0[1], edge1[1]])
+    const poly0 = poly3.create([edge0[0], edge0[1], edge1[1]])
     const poly0area = poly3.measureArea(poly0)
     if (Number.isFinite(poly0area) && poly0area > EPSAREA) walls.push(poly0)
 
-    const poly1 = poly3.fromPoints([edge0[0], edge1[1], edge1[0]])
+    const poly1 = poly3.create([edge0[0], edge1[1], edge1[0]])
     const poly1area = poly3.measureArea(poly1)
     if (Number.isFinite(poly1area) && poly1area > EPSAREA) walls.push(poly1)
   })

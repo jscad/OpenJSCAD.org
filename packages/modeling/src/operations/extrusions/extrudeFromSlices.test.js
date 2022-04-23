@@ -32,7 +32,7 @@ test('extrudeFromSlices (defaults)', (t) => {
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 
-  const poly2 = poly3.fromPoints([[10, 10, 0], [-10, 10, 0], [-10, -10, 0], [10, -10, 0]])
+  const poly2 = poly3.create([[10, 10, 0], [-10, 10, 0], [-10, -10, 0], [10, -10, 0]])
   geometry3 = extrudeFromSlices({ }, poly2)
   pts = geom3.toPoints(geometry3)
 
@@ -45,7 +45,7 @@ test('extrudeFromSlices (torus)', (t) => {
   const sqrt3 = Math.sqrt(3) / 2
   const radius = 10
 
-  let hex = poly3.fromPoints([
+  let hex = poly3.create([
     [radius, 0, 0],
     [radius / 2, radius * sqrt3, 0],
     [-radius / 2, radius * sqrt3, 0],

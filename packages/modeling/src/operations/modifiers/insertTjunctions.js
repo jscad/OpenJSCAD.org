@@ -259,7 +259,7 @@ const insertTjunctions = (polygons) => {
                     // split the side by inserting the vertex:
                     const newvertices = polygon.vertices.slice(0)
                     newvertices.splice(insertionvertextagindex, 0, endvertex)
-                    const newpolygon = poly3.fromPoints(newvertices)
+                    const newpolygon = poly3.create(newvertices)
 
                     newpolygons[polygonindex] = newpolygon
 
