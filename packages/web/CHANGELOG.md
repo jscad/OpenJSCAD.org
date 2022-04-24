@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.8...@jscad/web@2.5.9) (2022-04-24)
+
+
+### Bug Fixes
+
+* **web:** remove unused file handling and storage path options ([#1071](https://github.com/jscad/OpenJSCAD.org/issues/1071)) ([02c740c](https://github.com/jscad/OpenJSCAD.org/commit/02c740ce56c04ffb7b83a5e48009abb111c64001))
+
+
+
+
+
 ## [2.5.8](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.7...@jscad/web@2.5.8) (2022-04-03)
 
 **Note:** Version bump only for package @jscad/web

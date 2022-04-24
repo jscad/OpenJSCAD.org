@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.19](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.2.18...@jscad/cli@2.2.19) (2022-04-24)
+
+**Note:** Version bump only for package @jscad/cli
+
+
+
+
+
 ## [2.2.18](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.2.17...@jscad/cli@2.2.18) (2022-04-03)
 
 **Note:** Version bump only for package @jscad/cli
