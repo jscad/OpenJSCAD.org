@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.9.2...@jscad/modeling@2.9.3) (2022-04-24)
+
+
+### Bug Fixes
+
+* **modeling:** corrected torus manifolds ([#1046](https://github.com/jscad/OpenJSCAD.org/issues/1046)) ([fe3901f](https://github.com/jscad/OpenJSCAD.org/commit/fe3901fa71d82e2b967021504cac818af04efbb5))
+* **modeling:** removed path2.eachPoint which was broken and unused ([#1069](https://github.com/jscad/OpenJSCAD.org/issues/1069)) ([f704548](https://github.com/jscad/OpenJSCAD.org/commit/f70454813f3373055e97bcc7d47325920ba2d59f))
+* **modeling:** reworked project to correct union of small polygons ([#1058](https://github.com/jscad/OpenJSCAD.org/issues/1058)) ([45d04ac](https://github.com/jscad/OpenJSCAD.org/commit/45d04ac6b1e622d57d08b11370def33755632f51))
+
+
+### Performance Improvements
+
+* **modeling:** changed internals to use geom3.create(), path2.create(), poly3.create() ([#1072](https://github.com/jscad/OpenJSCAD.org/issues/1072)) ([dc4cd15](https://github.com/jscad/OpenJSCAD.org/commit/dc4cd15c28d1d137a935e941c3777389f7c7e391))
+* **modeling:** faster geom2.toOutlines ([#1064](https://github.com/jscad/OpenJSCAD.org/issues/1064)) ([5cb2f65](https://github.com/jscad/OpenJSCAD.org/commit/5cb2f652fa099593e6ec133fe879ecf8a09705e9))
+* **modeling:** performance improvements to mergePolygons and triangulatePolygons ([647ffdf](https://github.com/jscad/OpenJSCAD.org/commit/647ffdf2a726a1daa270717eadde2690b38aebda))
+
+
+
+
+
 ## [2.9.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.9.1...@jscad/modeling@2.9.2) (2022-04-03)
 
 **Note:** Version bump only for package @jscad/modeling
