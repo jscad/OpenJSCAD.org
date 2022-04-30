@@ -1,3 +1,29 @@
+const meshVert = `
+precision mediump float;
+
+uniform float camNear, camFar;
+uniform mat4 model, view, projection;
+
+attribute vec3 position, normal;
+
+
+varying vec3 surfaceNormal, surfacePosition;
+varying vec4 _worldSpacePosition;
+
+
+void main() {
+
+
+  surfacePosition = position;
+  surfaceNormal = normal;
+  vec4 worldSpacePosition = model * vec4(position, 1);
+  _worldSpacePosition = worldSpacePosition;
+
+  vec4 glPosition = projection * view * model * vec4(position, 1);
+  gl_Position = glPosition;
+}
+`
+
 const meshFrag = `
 precision mediump float;
 varying vec3 surfaceNormal;
@@ -28,27 +54,5 @@ void main () {
 
   gl_FragColor = vec4((ambient + diffuse + diffuse2 * v), endColor.a);
 }`
-
-const meshVert = `
-precision mediump float;
-
-uniform float camNear, camFar;
-uniform mat4 model, view, projection;
-
-attribute vec3 position, normal;
-
-varying vec3 surfaceNormal, surfacePosition;
-varying vec4 _worldSpacePosition;
-
-void main() {
-  surfacePosition = position;
-  surfaceNormal = normal;
-  vec4 worldSpacePosition = model * vec4(position, 1);
-  _worldSpacePosition = worldSpacePosition;
-
-  vec4 glPosition = projection * view * model * vec4(position, 1);
-  gl_Position = glPosition;
-}
-`
 
 module.exports = { vert: meshVert, frag: meshFrag }

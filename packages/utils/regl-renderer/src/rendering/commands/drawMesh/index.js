@@ -9,7 +9,7 @@ const drawMesh = (regl, params = { extras: {} }) => {
     geometry: undefined,
     color: meshColor
   }
-  const { geometry, dynamicCulling, useVertexColors, color } = Object.assign({}, defaults, params)
+  const { geometry, dynamicCulling, useVertexColors, color, transparent } = Object.assign({}, defaults, params)
 
   // let ambientOcclusion = vao(geometry.indices, geometry.positions, 64, 64)
   const ambientOcclusion = regl.buffer([])
@@ -54,12 +54,14 @@ const drawMesh = (regl, params = { extras: {} }) => {
       enable: true,
       face: cullFace
     },
-    depth: {
-      enable: true
-    },
-    blend: {
-      enable: true,
+    depth: { enable: !transparent }
+  }
 
+  // blending is a bit tricky
+  // https://stackoverflow.com/questions/51938739/regl-color-and-alpha-blending-of-primitives
+  if (transparent) {
+    commandParams.blend = {
+      enable: true,
       func: { src: 'src alpha', dst: 'one minus src alpha' }
     }
   }
