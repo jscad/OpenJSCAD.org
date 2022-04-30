@@ -193,9 +193,13 @@ span#paramsControls {
   color: red;
   top: 60px;
   left: 0;
-  width: 33%;
   padding:  20px;
   z-index: 1;
+}
+
+#stacktrace ul{
+  padding: 0px 0px 0px 15px;
+  margin: 0px;
 }
 
 #container{
