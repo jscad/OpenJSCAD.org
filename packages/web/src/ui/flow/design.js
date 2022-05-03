@@ -575,6 +575,17 @@ const actions = ({ sources }) => {
     .multicast()
     .delay(10) // needed , why ?
 
+  // errors retrieved from worker
+  const errorsFromWorker$ = sources.solidWorker
+    .filter((event) => event.data instanceof Object && event.data.type === 'errors')
+    .map(({ data }) => ({ error: data, origin: 'worker' }))
+
+  const reportErrorsFromWorker$ = most.mergeArray([
+    errorsFromWorker$
+  ])
+    .skipRepeatsWith(jsonCompare)
+    .tap((x) => console.log('errors', x))
+
   // ui/toggles
   const toggleAutoReload$ = most.mergeArray([
     sources.dom.select('#toggleAutoReload').events('click')
@@ -614,6 +625,8 @@ const actions = ({ sources }) => {
     setDesignSolids$,
     setDesignParameterDefinitions$,
     setDesignParameterValues$,
+
+    reportErrorsFromWorker$,
 
     requestGeometryRecompute$,
     timeoutGeometryRecompute$,

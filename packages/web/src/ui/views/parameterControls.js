@@ -263,19 +263,19 @@ const createInputControl = (definition, prevValue) => {
 
   // check for required parameters
   if (!('type' in definition)) {
-    throw new Error('Parameter definition (' + definition + ") must include a 'type' parameter")
+    throw new Error(`Parameter definition (${definition.name}) must include a 'type' parameter`)
   }
   let typeData = controlList.filter((x) => definition.type === x.type)
   typeData = (typeData && typeData.length > 0) ? typeData[0] : undefined
   if (!typeData) {
-    throw new Error('Parameter definition (' + definition + ') is not known')
+    throw new Error(`Parameter definition (${definition.name}), invalid type "${definition.type}"`)
   }
 
   // validate fields
   const definitionFields = Object.keys(definition)
   typeData.required.forEach((requiredField) => {
     if (!definitionFields.includes(requiredField)) {
-      throw new Error(`Parameter definition for "${definition.name}" must include a "${requiredField}" parameter`)
+      throw new Error(`Parameter definition of type "${definition.type}" must include a "${requiredField}" parameter`)
     }
   })
 
