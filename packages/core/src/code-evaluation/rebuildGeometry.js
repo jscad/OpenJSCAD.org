@@ -72,8 +72,8 @@ const rebuildSolids = (data, callback) => {
   } catch (error) {
     callback({
       type: 'errors',
-      name: error.name,
-      message: error.message,
+      name: error.name ? error.name : 'Error',
+      message: error.message ? error.message : error.toString(),
       description: error.description ? error.description : '',
       number: error.number ? error.number : '',
       fileName: error.fileName ? error.fileName : '',
