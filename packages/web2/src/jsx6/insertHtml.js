@@ -154,13 +154,21 @@ export function insertHtml (parent, before, def, _self = this, component = null,
   } else if (isObj(def)) {
     if (isSvg(def.tag) || isSvg(parent?.tagName)) createElement = _createElementSvg
 
-    if (!def.tag) throwErr(ERR_NULL_TAG, def)
-    out = createElement(def.tag)
-    insertAttr(def.attr, out, _self, component)
-    if (parent) insertBefore(parent, out, before)
-
-    if (def.children && def.children.length) {
-      insertHtml(out, null, def.children, _self, null, createElement)
+    const toObserve = def.then || def.next
+    if(toObserve){
+      // support for promise(.then) or observable(.next) values
+      out = _createText('aaaa')
+      toObserve.call(def, r=>out.textContent = r)
+      if (parent) insertBefore(parent, out, before)      
+    }else{
+      if (!def.tag) throwErr(ERR_NULL_TAG, def)
+      out = createElement(def.tag)
+      insertAttr(def.attr, out, _self, component)
+      if (parent) insertBefore(parent, out, before)
+  
+      if (def.children && def.children.length) {
+        insertHtml(out, null, def.children, _self, null, createElement)
+      }
     }
   } else {
     out = _createText('' + def)
