@@ -11,37 +11,56 @@
 const jscad = require('@jscad/modeling')
 const { cylinder } = jscad.primitives
 const { subtract, union } = jscad.booleans
-const { translate } = jscad.transforms
+const { colorize } = jscad.colors
 const { extrudeFromSlices, slice } = jscad.extrusions
-const { sin, cos } = jscad.utils
+const { translate } = jscad.transforms
+
+const options = {
+  hexWidth: 10,
+  hexHeight: 8,
+  threadLength: 32,
+  threadSize: 4,
+  innerRadius: 4,
+  outerRadius: 5.6,
+  slicesPerRevolution: 12,
+  segments: 32
+}
 
 const main = () => {
-  const headHeight = 8
-  const headRadius = 10
-  const height = 32
-  const threads = shaft({ height, rotations: Math.PI * 16, segments: 32, radius: 4, numberOfSlices: 100 })
-
-  // generate bolt by attaching a head to the shaft
-  const bolt = union(
-    cylinder({ center: [0, 0, height + headHeight / 2], height: headHeight, radius: headRadius, segments: 6 }),
-    threads
-  )
-
-  // generate nut by subtracting the shaft from a hex block
-  const nut = subtract(
-    cylinder({ center: [0, 0, headHeight / 2], height: headHeight, radius: headRadius, segments: 6 }),
-    threads
-  )
-
   return [
-    bolt,
-    translate([30, 0, 0], nut)
+    colorize([0.9, 0.6, 0.2], bolt(options)),
+    colorize([0.4, 0.4, 0.4], translate([30, 0, 0], nut(options)))
   ]
 }
 
+// generate bolt by attaching threads to a hex head
+const bolt = (options) => {
+  return union(
+    translate([0, 0, options.threadLength], hex(options)),
+    threads(options)
+  )
+}
+
+// generate nut by subtracting threads from a hex block
+const nut = (options) => {
+  return subtract(
+    hex(options),
+    threads({ ...options, threadLength: options.hexHeight })
+  )
+}
+
+// generate hexagonal block
+const hex = (options) => {
+  const radius = options.hexWidth * 1.1547005 // hexagon outer radius
+  const height = options.hexHeight
+  return cylinder({ center: [0, 0, height / 2], height, radius, segments: 6 })
+}
+
 // generate a threaded shaft using extrudeFromSlices
-const shaft = (options) => {
-  const { height, rotations, segments, radius, numberOfSlices } = options
+const threads = (options) => {
+  const { innerRadius, outerRadius, segments, threadLength } = options
+  const revolutions = threadLength / options.threadSize
+  const numberOfSlices = options.slicesPerRevolution * revolutions
   return extrudeFromSlices({
     numberOfSlices,
     callback: (progress, index, base) => {
@@ -49,16 +68,23 @@ const shaft = (options) => {
       const points = []
       for (let i = 0; i < segments; i++) {
         const pointAngle = Math.PI * 2 * i / segments
-        const threadAngle = (rotations * progress) % (Math.PI * 2)
-        const factor = Math.max(1, Math.min(1.4, 1.5 - 0.2 * angleDiff(threadAngle, pointAngle)))
-        const x = radius * factor * cos(pointAngle)
-        const y = radius * factor * sin(pointAngle)
-        points.push([x, y, height * progress])
+        const threadAngle = (2 * Math.PI * revolutions * progress) % (Math.PI * 2)
+
+        // define the shape of the threads
+        const phase = angleDiff(threadAngle, pointAngle) / Math.PI
+        const radius = lerp(innerRadius, outerRadius, 1.4 * phase - 0.2)
+
+        const x = radius * Math.cos(pointAngle)
+        const y = radius * Math.sin(pointAngle)
+        points.push([x, y, threadLength * progress])
       }
       return slice.fromPoints(points)
     }
   }, {})
 }
+
+// linear interpolation with bounding
+const lerp = (a, b, t) => Math.max(a, Math.min(b, a + (b - a) * t))
 
 const angleDiff = (angle1, angle2) => {
   const diff = Math.abs((angle1 - angle2) % (Math.PI * 2))
