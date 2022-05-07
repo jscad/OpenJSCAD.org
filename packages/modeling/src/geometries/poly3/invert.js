@@ -15,6 +15,7 @@ const invert = (polygon) => {
     // Flip existing plane to save recompute
     inverted.plane = plane.flip(plane.create(), polygon.plane)
   }
+  inverted.color = polygon.color;
   return inverted
 }
 

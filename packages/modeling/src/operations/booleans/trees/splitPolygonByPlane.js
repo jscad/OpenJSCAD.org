@@ -109,9 +109,15 @@ const splitPolygonByPlane = (splane, polygon) => {
       }
       if (frontvertices.length >= 3) {
         result.front = poly3.fromPointsAndPlane(frontvertices, pplane)
+        if(polygon.color){
+          result.front.color = polygon.color
+        }
       }
       if (backvertices.length >= 3) {
         result.back = poly3.fromPointsAndPlane(backvertices, pplane)
+        if(polygon.color){
+          result.front.color = polygon.color
+        }
       }
     }
   }

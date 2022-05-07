@@ -20,6 +20,7 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
   const destpolygons = []
   const numpolygons = sourcepolygons.length
   const plane = poly3.plane(sourcepolygons[0])
+  const color = sourcepolygons[0].color
   const orthobasis = new OrthoNormalBasis(plane)
   const polygonvertices2d = [] // array of array of Vector2D
   const polygontopvertexindexes = [] // array of indexes of topmost vertex per polygon
@@ -307,6 +308,7 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
           const points2d = prevpolygon.outpolygon.rightpoints.concat(prevpolygon.outpolygon.leftpoints)
           const vertices3d = points2d.map((point2d) => orthobasis.to3D(point2d))
           const polygon = poly3.fromPointsAndPlane(vertices3d, plane) // TODO support shared
+          polygon.color = color
 
           // if we let empty polygon out, next retesselate will crash
           if (polygon.vertices.length) destpolygons.push(polygon)
