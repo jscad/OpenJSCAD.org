@@ -59,7 +59,8 @@ const extrudeFromSlices = (options, base) => {
 
   // Repair gaps in the base slice
   if (repair) {
-    repairSlice(base)
+    // note: base must be a slice, if base is geom2 this fails to repair
+    base = repairSlice(base)
   }
 
   const sMax = numberOfSlices - 1
