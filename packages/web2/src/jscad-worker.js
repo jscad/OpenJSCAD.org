@@ -1,4 +1,5 @@
 import { CSGToBuffers } from './util/CsgToBuffers'
+import { combineParameterDefinitions, parseParams } from './util/paramParser'
 
 /*
 
@@ -105,10 +106,8 @@ const handlers = {
     }
     const scriptModule = requireModule(url, script)
     main = scriptModule.exports.main
-    const gp = scriptModule.exports.getParameterDefinitions
-    if (gp) {
-      sendCmd({ action: 'parameterDefinitions', data: gp() })
-    }
+    const gp = combineParameterDefinitions(parseParams(script), scriptModule.exports.getParameterDefinitions)
+    sendCmd({ action: 'parameterDefinitions', data: gp })
     runMain(params, options, id)
   },
   updateParams: ({ params = {}, options = {}, id }) => {
@@ -133,7 +132,7 @@ const handlers = {
   }
 }
 
-function sendCmd (cmd, trans) {
+function sendCmd (cmd, trans = []) {
   self.postMessage(cmd, trans.map(a => a.buffer || a))
 }
 

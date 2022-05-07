@@ -2,15 +2,6 @@
 import { line } from '@jscad/vtree/core/modeling/primitives'
 import { Jsx6, moveParams, copyBindings } from '../jsx6'
 
-function flatten(arr, entities) {
-  if(entities instanceof Array){
-    entities.forEach(ent=>flatten(arr, ent))
-  }else{
-    arr.push(entities)
-  }
-  return arr
-}
-
 const makeAxes = (len = 100, forceColors4) =>{
   const lines = Float32Array.of(
     0,0,0, len,0,0,
@@ -85,7 +76,6 @@ const makeGrid = ({color1 = [0,0,0,0.2], color2 = [0,0,0.6,0.1], size = 200}={})
 }
 
 export class Viewer extends Jsx6 {
-  worker
   viewer
   sceneData = {}
   entities = []
@@ -114,30 +104,6 @@ export class Viewer extends Jsx6 {
       }
     }, attr, this, true)
   
-    moveParams({
-      alias: [],
-      baseURI: '',
-    }, attr, this)
-
-    this.worker = new Worker('./jscad-worker.js')
-    this.worker.onmessage = m=>{
-      m = m.data
-      if(m.action === 'entities'){
-        m.entities =  flatten([],m.entities)
-        console.log('entities from worker',m)
-        this.lastEntities = m
-        this.updateScene()
-      }
-    }
-  }
-
-  fileDropped (ev){
-    const dataTransfer = {files:ev.dataTransfer.files}
-    this.worker.postMessage({action:'fileDropped', dataTransfer})
-  }
-
-  runScript (script, params, transferable) {
-    this.worker.postMessage({action:'runScript', script, params, options:this.viewer.getViewerEnv()}, transferable)
   }
 
   errNotFound(err){
@@ -158,6 +124,12 @@ export class Viewer extends Jsx6 {
     this.sceneData.grid = makeGrid({color1: theme.grid1, color2: theme.grid2})
     this.updateScene()
   }
+
+  updateEntities (e){
+    this.lastEntities = e
+    this.updateScene()
+  }
+
   updateScene () {
     const items = []
     if(this.showAxes()) items.push({ id: 'axis', items: this.sceneData.axis})
@@ -165,6 +137,10 @@ export class Viewer extends Jsx6 {
     if(this.lastEntities) items.push({ id: 'entities', items: this.lastEntities.entities})
     console.log('new scene', items, this.lastEntities)
     this.viewer.setScene({items})  
+  }
+
+  getViewerEnv (){
+    return this.viewer.getViewerEnv()
   }
 
   initViewer(){
@@ -178,13 +154,6 @@ export class Viewer extends Jsx6 {
         this.viewer.destroy()
       }
       this.viewer = viewerFunction(this.el,{camera:this.camera, bg:this.theme().bg})
-      const cmdParams = {
-        alias: this.alias,
-        action: 'init',
-        baseURI: this.baseURI || document.baseURI
-      }
-      let cmdTransfer = []
-      this.worker.postMessage(cmdParams, cmdTransfer)
       this.updateView(this.theme())
     }
 

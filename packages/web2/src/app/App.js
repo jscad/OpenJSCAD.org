@@ -13,6 +13,8 @@ import Toggle from '../comp/Toggle'
 import { Viewer } from './Viewer'
 import { themes } from '../themes.js'
 import { SampleForm } from './sample.form'
+import { Params } from './Params'
+import { flatten } from '../util/flatten'
 
 const SETTINGS_KEY = 'jscad.settings'
 
@@ -44,14 +46,32 @@ const viewerMap = {
 const viewerName = v=>viewerMap[v]
 
 export class App extends Jsx6 {
+  worker
   cName = 'MainApp'
   value = 13
   state = { showDrop:false }
   
   init (state) {
+    this.worker = new Worker('./jscad-worker.js')
+    this.worker.onmessage = m=>{
+      m = m.data
+      if(m.action === 'entities'){
+        m.entities =  flatten([],m.entities)
+        console.log('entities from worker',m)
+        this.viewer.updateEntities(m)
+      }else if (m.action === 'parameterDefinitions'){
+        console.log('parameterDefinitions', m.data)
+        this.paramsUi.genParams({params: m.data, callback: p => {
+          console.log('params change',p)
+          this.worker.postMessage({action: 'updateParams', params: p})
+        }})
+      }else{
+        console.log('worker message', m)
+      }
+    }
     window.addEventListener('keydown',e=>{
       if(e.key.toLowerCase() === 's' && e.ctrlKey){
-        this.viewer.runScript(this.editor.getValue())
+        this.runScript(this.editor.getValue())
         e.preventDefault()
       }
     })
@@ -59,7 +79,7 @@ export class App extends Jsx6 {
     const dropHandler = (ev) => {
       ev.preventDefault()
       state.showDrop = false
-      this.viewer.fileDropped(ev)
+      this.fileDropped(ev)
     }
     
     const dragOverHandler = (ev) => {
@@ -80,7 +100,15 @@ export class App extends Jsx6 {
     })
     this.changeLanguage($s.language())
     setValue(this.opts, $s()())
-  }
+
+    const cmdParams = {
+      alias: this.alias || [],
+      action: 'init',
+      baseURI: this.baseURI || document.baseURI
+    }
+    let cmdTransfer = []
+    this.worker.postMessage(cmdParams, cmdTransfer)
+  } // END init
   
   changeLanguage (lang) {
     window.fetch(`locales/${lang}.json`).then(r => r.text()).then((json) => {
@@ -89,6 +117,15 @@ export class App extends Jsx6 {
     })
   }
   
+  fileDropped (ev){
+    const dataTransfer = {files:ev.dataTransfer.files}
+    this.worker.postMessage({action:'fileDropped', dataTransfer})
+  }
+
+  runScript (script, params, transferable) {
+    this.worker.postMessage({action:'runScript', script, params, options:this.viewer.getViewerEnv()}, transferable)
+  }
+
   tpl (h, state) {
     makeBinding(11, 'value', this, true);
     const $s = this.settings = makeState(settingsDefaults, true)
@@ -170,7 +207,7 @@ export class App extends Jsx6 {
     const menu = <div class="menu-area bg1">
     <div class="menu-buttons">
       <Toggle selected={$s.editorVisible}>{editIcon}</Toggle>
-      <button p="runButton" onclick={()=>this.viewer.runScript(this.editor.getValue())}>RUN</button>
+      <button p="runButton" onclick={()=>this.runScript(this.editor.getValue())}>RUN</button>
       <button p="settingsBt" class="g-focus-menu">
         <button onmousedown={markActive} onclick={()=>{if(wasActive) this.runButton.focus() }}>{gearIcon}</button>
         {settingsArea}
@@ -184,6 +221,7 @@ export class App extends Jsx6 {
         <button class="drop-handler" hidden={state.showDrop(NOT)}></button>
         <div class="fxs fx1">
           <JscadEditor p="editor" class="editor editor-area fx1 w50 owa" hidden={$s.editorVisible(NOT)}/>
+          <Params p="paramsUi" class="fx1" style="border: solid 1px red"/>
           <div class="viewer-area fxs fx1 w50">
             {menu}
             <Viewer p="viewer" class="viewer-area fxs fx1 owh" 

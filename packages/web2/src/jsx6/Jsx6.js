@@ -67,8 +67,7 @@ export class Jsx6 {
       this.el = [document.createTextNode('')]
     }else{
       this.el = insertHtml(null, null, { tag: this.tagName }, this);
-      if (this.cName)
-      this.classList.add(this.cName);
+      if (this.cName) this.classList.add(this.cName);
     }
     this.insertAttr(this.attr)
 		this.contentArea ||= this.el

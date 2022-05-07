@@ -1,0 +1,59 @@
+.Params{
+	padding: 20px;
+	color: black;
+	overflow: auto;
+    max-height: calc( 100% - 50px );
+    background: rgba(255,255,255,0.5);
+}
+	.Params .form-line label{
+		display: block;
+		min-width: 100px;
+		color: black;
+		font-family: Verdana;
+	}
+
+	.Params .form-line label i{
+		display: none;
+	}
+	.Params .form-line[type="color"] label i,
+	.Params .form-line[type="range"] label i,
+	.Params .form-line[type="slider"] label i{
+		display: inline-block;
+		padding: 0 5px;
+		margin-left: 5px;
+		border: solid 1px #eee;
+	}
+
+	.Params .form-line[type="group"]{
+		position: relative;
+	}
+
+	.Params .form-line[type="group"]:before{
+		position: absolute;
+		content: ">";
+		font-weight: bold;
+		left: -12px;
+		color: gray;
+		transform: rotate(90deg);
+	}
+	.Params .form-line[type="group"][closed="1"]:before{
+		transform: rotate(0deg);
+	}
+
+	.Params .form-line[type="group"] label{
+		font-weight: bold;
+		font-size: 1.1em;
+		cursor: pointer;
+	}
+	.Params .form-line:not([type="group"]){
+		padding-left: 10px;
+	}
+	.Params .form-line[closed="1"]:not([type="group"]){
+		display: none;
+	}
+	.Params .form-line[type="checkbox"] label{
+		display: inline-block;
+	}
+	.Params .form-line input[type="range"]{
+		width: 100%;
+	}

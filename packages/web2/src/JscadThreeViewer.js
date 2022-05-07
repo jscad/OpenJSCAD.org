@@ -160,7 +160,6 @@ export default function JscadThreeViewer (el, { camera: _camera = {}, bg } = {})
 
 function setScene (scene) {
   groups.forEach(group => {
-    console.log('remove', group)
     _scene.remove(group)
   })
   entities.forEach(ent => {
@@ -174,7 +173,6 @@ function setScene (scene) {
       const obj3d = csgConvert(obj)
       if (obj3d) {
         entities.push(obj3d)
-        console.log('obj3d', obj3d, obj)
         group.add(obj3d)
       } else console.error('could not conver to obj3d ', obj)
     })
