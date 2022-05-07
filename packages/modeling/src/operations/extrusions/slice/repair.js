@@ -4,7 +4,7 @@ const create = require('./create')
 /*
  * Mend gaps in a 2D slice to make it a closed polygon
  */
-const repairSlice = (slice) => {
+const repair = (slice) => {
   if (!slice.edges) return slice
   let edges = slice.edges
   const vertexMap = new Map() // string key to vertex map
@@ -46,7 +46,7 @@ const repairSlice = (slice) => {
         bestReplacement = v2
       }
     })
-    console.warn(`repairSlice: repairing vertex gap ${v1} to ${bestReplacement} distance ${bestDistance}`)
+    console.warn(`slice.repair: repairing vertex gap ${v1} to ${bestReplacement} distance ${bestDistance}`)
 
     // merge broken vertices
     edges = edges.map((edge) => {
@@ -59,4 +59,4 @@ const repairSlice = (slice) => {
   return create(edges)
 }
 
-module.exports = repairSlice
+module.exports = repair

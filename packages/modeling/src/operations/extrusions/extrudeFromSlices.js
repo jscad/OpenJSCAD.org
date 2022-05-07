@@ -5,7 +5,7 @@ const geom3 = require('../../geometries/geom3')
 const poly3 = require('../../geometries/poly3')
 
 const slice = require('./slice')
-const repairSlice = require('./slice/repairSlice')
+const repairSlice = require('./slice/repair')
 
 const extrudeWalls = require('./extrudeWalls')
 
@@ -59,7 +59,7 @@ const extrudeFromSlices = (options, base) => {
 
   // Repair gaps in the base slice
   if (repair) {
-    // note: base must be a slice, if base is geom2 this fails to repair
+    // note: base must be a slice, if base is geom2 this doesn't repair
     base = repairSlice(base)
   }
 
