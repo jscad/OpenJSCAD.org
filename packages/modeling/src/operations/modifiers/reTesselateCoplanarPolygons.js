@@ -308,7 +308,9 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
           const points2d = prevpolygon.outpolygon.rightpoints.concat(prevpolygon.outpolygon.leftpoints)
           const vertices3d = points2d.map((point2d) => orthobasis.to3D(point2d))
           const polygon = poly3.fromPointsAndPlane(vertices3d, plane) // TODO support shared
-          polygon.color = color
+          if(color) {
+            polygon.color = color
+          }
 
           // if we let empty polygon out, next retesselate will crash
           if (polygon.vertices.length) destpolygons.push(polygon)
