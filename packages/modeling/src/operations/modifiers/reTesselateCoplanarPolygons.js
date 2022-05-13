@@ -23,14 +23,13 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
   const orthobasis = new OrthoNormalBasis(plane)
   const polygonvertices2d = [] // array of array of Vector2D
   const polygontopvertexindexes = [] // array of indexes of topmost vertex per polygon
-  const topy2polygonindexes = {}
-  const ycoordinatetopolygonindexes = {}
-
-  const ycoordinatebins = {}
+  const topy2polygonindexes = new Map()
+  const ycoordinatetopolygonindexes = new Map()
 
   // convert all polygon vertices to 2D
   // Make a list of all encountered y coordinates
   // And build a map of all polygons that have a vertex at a certain y coordinate:
+  const ycoordinatebins = new Map()
   const ycoordinateBinningFactor = 10 / EPS
   for (let polygonindex = 0; polygonindex < numpolygons; polygonindex++) {
     const poly3d = sourcepolygons[polygonindex]
@@ -46,15 +45,15 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
         // close to each other, give them the same y coordinate:
         const ycoordinatebin = Math.floor(pos2d[1] * ycoordinateBinningFactor)
         let newy
-        if (ycoordinatebin in ycoordinatebins) {
-          newy = ycoordinatebins[ycoordinatebin]
-        } else if (ycoordinatebin + 1 in ycoordinatebins) {
-          newy = ycoordinatebins[ycoordinatebin + 1]
-        } else if (ycoordinatebin - 1 in ycoordinatebins) {
-          newy = ycoordinatebins[ycoordinatebin - 1]
+        if (ycoordinatebins.has(ycoordinatebin)) {
+          newy = ycoordinatebins.get(ycoordinatebin)
+        } else if (ycoordinatebins.has(ycoordinatebin + 1)) {
+          newy = ycoordinatebins.get(ycoordinatebin + 1)
+        } else if (ycoordinatebins.has(ycoordinatebin - 1)) {
+          newy = ycoordinatebins.get(ycoordinatebin - 1)
         } else {
           newy = pos2d[1]
-          ycoordinatebins[ycoordinatebin] = pos2d[1]
+          ycoordinatebins.set(ycoordinatebin, pos2d[1])
         }
         pos2d = vec2.fromValues(pos2d[0], newy)
         vertices2d.push(pos2d)
@@ -66,10 +65,12 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
         if ((i === 0) || (y > maxy)) {
           maxy = y
         }
-        if (!(y in ycoordinatetopolygonindexes)) {
-          ycoordinatetopolygonindexes[y] = {}
+        let polygonindexes = ycoordinatetopolygonindexes.get(y)
+        if (!polygonindexes) {
+          polygonindexes = {} // PERF
+          ycoordinatetopolygonindexes.set(y, polygonindexes)
         }
-        ycoordinatetopolygonindexes[y][polygonindex] = true
+        polygonindexes[polygonindex] = true
       }
       if (miny >= maxy) {
         // degenerate polygon, all vertices have same y coordinate. Just ignore it from now:
@@ -77,10 +78,12 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
         numvertices = 0
         minindex = -1
       } else {
-        if (!(miny in topy2polygonindexes)) {
-          topy2polygonindexes[miny] = []
+        let polygonindexes = topy2polygonindexes.get(miny)
+        if (!polygonindexes) {
+          polygonindexes = []
+          topy2polygonindexes.set(miny, polygonindexes)
         }
-        topy2polygonindexes[miny].push(polygonindex)
+        polygonindexes.push(polygonindex)
       }
     } // if(numvertices > 0)
     // reverse the vertex order:
@@ -89,8 +92,9 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
     polygonvertices2d.push(vertices2d)
     polygontopvertexindexes.push(minindex)
   }
+
   const ycoordinates = []
-  for (const ycoordinate in ycoordinatetopolygonindexes) ycoordinates.push(ycoordinate)
+  ycoordinatetopolygonindexes.forEach((polylist, y) => ycoordinates.push(y))
   ycoordinates.sort(fnNumberSort)
 
   // Now we will iterate over all y coordinates, from lowest to highest y coordinate
@@ -108,15 +112,14 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
   let prevoutpolygonrow = []
   for (let yindex = 0; yindex < ycoordinates.length; yindex++) {
     const newoutpolygonrow = []
-    const ycoordinateasstring = ycoordinates[yindex]
-    const ycoordinate = Number(ycoordinateasstring)
+    const ycoordinate = ycoordinates[yindex]
 
     // update activepolygons for this y coordinate:
     // - Remove any polygons that end at this y coordinate
     // - update leftvertexindex and rightvertexindex (which point to the current vertex index
     //   at the the left and right side of the polygon
     // Iterate over all polygons that have a corner at this y coordinate:
-    const polygonindexeswithcorner = ycoordinatetopolygonindexes[ycoordinateasstring]
+    const polygonindexeswithcorner = ycoordinatetopolygonindexes.get(ycoordinate)
     for (let activepolygonindex = 0; activepolygonindex < activepolygons.length; ++activepolygonindex) {
       const activepolygon = activepolygons[activepolygonindex]
       const polygonindex = activepolygon.polygonindex
@@ -166,7 +169,7 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
       nextycoordinate = Number(ycoordinates[yindex + 1])
       const middleycoordinate = 0.5 * (ycoordinate + nextycoordinate)
       // update activepolygons by adding any polygons that start here:
-      const startingpolygonindexes = topy2polygonindexes[ycoordinateasstring]
+      const startingpolygonindexes = topy2polygonindexes.get(ycoordinate)
       for (const polygonindexKey in startingpolygonindexes) {
         const polygonindex = startingpolygonindexes[polygonindexKey]
         const vertices2d = polygonvertices2d[polygonindex]
@@ -212,8 +215,6 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
         })
       } // for(let polygonindex in startingpolygonindexes)
     } //  yindex < ycoordinates.length-1
-    // if( (yindex === ycoordinates.length-1) || (nextycoordinate - ycoordinate > EPS) )
-    // FIXME : what ???
 
     // Now activepolygons is up to date
     // Build the output polygons for the next row in newoutpolygonrow:
@@ -252,19 +253,19 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
     } // for(activepolygon in activepolygons)
     if (yindex > 0) {
       // try to match the new polygons against the previous row:
-      const prevcontinuedindexes = {}
-      const matchedindexes = {}
+      const prevcontinuedindexes = new Set()
+      const matchedindexes = new Set()
       for (let i = 0; i < newoutpolygonrow.length; i++) {
         const thispolygon = newoutpolygonrow[i]
         for (let ii = 0; ii < prevoutpolygonrow.length; ii++) {
-          if (!matchedindexes[ii]) { // not already processed?
+          if (!matchedindexes.has(ii)) { // not already processed?
             // We have a match if the sidelines are equal or if the top coordinates
             // are on the sidelines of the previous polygon
             const prevpolygon = prevoutpolygonrow[ii]
             if (vec2.distance(prevpolygon.bottomleft, thispolygon.topleft) < EPS) {
               if (vec2.distance(prevpolygon.bottomright, thispolygon.topright) < EPS) {
                 // Yes, the top of this polygon matches the bottom of the previous:
-                matchedindexes[ii] = true
+                matchedindexes.add(ii)
                 // Now check if the joined polygon would remain convex:
                 const v1 = line2.direction(thispolygon.leftline)
                 const v2 = line2.direction(prevpolygon.leftline)
@@ -284,16 +285,16 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
                   thispolygon.outpolygon = prevpolygon.outpolygon
                   thispolygon.leftlinecontinues = leftlinecontinues
                   thispolygon.rightlinecontinues = rightlinecontinues
-                  prevcontinuedindexes[ii] = true
+                  prevcontinuedindexes.add(ii)
                 }
                 break
               }
             }
-          } // if(!prevcontinuedindexes[ii])
+          } // if(!prevcontinuedindexes.has(ii))
         } // for ii
       } // for i
       for (let ii = 0; ii < prevoutpolygonrow.length; ii++) {
-        if (!prevcontinuedindexes[ii]) {
+        if (!prevcontinuedindexes.has(ii)) {
           // polygon ends here
           // Finish the polygon with the last point(s):
           const prevpolygon = prevoutpolygonrow[ii]
