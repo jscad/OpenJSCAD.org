@@ -1,7 +1,3 @@
-const cross = require('../vec3/cross')
-const dot = require('../vec3/dot')
-const fromValues = require('../vec3/fromValues')
-
 /**
  * Determine whether the given matrix is a mirroring transformation.
  *
@@ -10,15 +6,19 @@ const fromValues = require('../vec3/fromValues')
  * @alias module:modeling/maths/mat4.isMirroring
  */
 const isMirroring = (matrix) => {
-  const u = fromValues(matrix[0], matrix[4], matrix[8])
-  const v = fromValues(matrix[1], matrix[5], matrix[9])
-  const w = fromValues(matrix[2], matrix[6], matrix[10])
+  // const xVector = [matrix[0], matrix[4], matrix[8]]
+  // const yVector = [matrix[1], matrix[5], matrix[9]]
+  // const zVector = [matrix[2], matrix[6], matrix[10]]
 
-  // for a true orthogonal, non-mirrored base, u.cross(v) == w
+  // for a true orthogonal, non-mirrored base, xVector.cross(yVector) == zVector
   // If they have an opposite direction then we are mirroring
-  const mirrorvalue = dot(cross(u, u, v), w)
-  const ismirror = (mirrorvalue < 0)
-  return ismirror
+  // calcuate xVector.cross(yVector)
+  const x = matrix[4] * matrix[9] - matrix[8] * matrix[5]
+  const y = matrix[8] * matrix[1] - matrix[0] * matrix[9]
+  const z = matrix[0] * matrix[5] - matrix[4] * matrix[1]
+  // calcualte dot(cross, zVector)
+  const d = x * matrix[2] + y * matrix[6] + z * matrix[10]
+  return (d < 0)
 }
 
 module.exports = isMirroring
