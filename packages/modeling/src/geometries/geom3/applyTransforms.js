@@ -14,9 +14,8 @@ const applyTransforms = (geometry) => {
   if (mat4.isIdentity(geometry.transforms)) return geometry
 
   // apply transforms to each polygon
-  // const isMirror = mat4.isMirroring(geometry.transforms)
-  // TBD if (isMirror) newvertices.reverse()
   geometry.polygons = geometry.polygons.map((polygon) => poly3.transform(geometry.transforms, polygon))
+  // reset transforms
   geometry.transforms = mat4.create()
   return geometry
 }
