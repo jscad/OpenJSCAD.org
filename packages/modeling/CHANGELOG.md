@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.9.3...@jscad/modeling@2.9.4) (2022-05-15)
+
+
+### Performance Improvements
+
+* **maths:** reworked mat4 isMirror to use pure math, eliminating vec3 creation ([#1088](https://github.com/jscad/OpenJSCAD.org/issues/1088)) ([db4f220](https://github.com/jscad/OpenJSCAD.org/commit/db4f220d000fd08c7e3adab16401a8ea3b06478a))
+* **modeling:** improved performance of reTesselateCoplanarPolygons by using maps or sets ([#1085](https://github.com/jscad/OpenJSCAD.org/issues/1085)) ([fc57103](https://github.com/jscad/OpenJSCAD.org/commit/fc57103f3183781dd3cf97600e9a33386da9a514))
+* **modeling:** use Map instead of {} for slice.repair ([#1083](https://github.com/jscad/OpenJSCAD.org/issues/1083)) ([05d2984](https://github.com/jscad/OpenJSCAD.org/commit/05d29849404193f2e4ed6e945a058aec2b124e3d))
+
+
+
+
+
 ## [2.9.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.9.2...@jscad/modeling@2.9.3) (2022-04-24)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.3.4...@jscad/examples@2.4.0) (2022-05-15)
+
+
+### Features
+
+* **examples:** new Nuts and Bolts example ([#1081](https://github.com/jscad/OpenJSCAD.org/issues/1081)) ([cd78003](https://github.com/jscad/OpenJSCAD.org/commit/cd7800351e56f7cd75f0add07cf068df328b7839))
+
+
+
+
+
 ## [2.3.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.3.3...@jscad/examples@2.3.4) (2022-04-24)
 
 **Note:** Version bump only for package @jscad/examples
