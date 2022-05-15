@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.5.9...@jscad/core@2.6.0) (2022-05-15)
+
+
+### Bug Fixes
+
+* **core:** catch and create create message from thrown objects (non-Error) ([2cdbbf1](https://github.com/jscad/OpenJSCAD.org/commit/2cdbbf108e0c48fc1a69e53da404968cea07142e))
+* **core:** corrected webRequire to catch errors from dynamic code evaluation, and rethrow with correct context ([ff06731](https://github.com/jscad/OpenJSCAD.org/commit/ff0673136f26b08116054e49fa179b8807b9ab3b))
+
+
+### Features
+
+* **core:** corrected rebuildGeometry to catch all errors, and callback with complete error information ([61dac1c](https://github.com/jscad/OpenJSCAD.org/commit/61dac1ca8a2bc849c1e5e304c75bc752b7ae2bac))
+
+
+
+
+
 ## [2.5.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.5.8...@jscad/core@2.5.9) (2022-04-24)
 
 **Note:** Version bump only for package @jscad/core
