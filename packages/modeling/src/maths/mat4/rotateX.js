@@ -1,3 +1,5 @@
+const { sin, cos } = require('../../utils/trigonometry')
+
 /**
  * Rotates a matrix by the given angle around the X axis.
  *
@@ -8,8 +10,8 @@
  * @alias module:modeling/maths/mat4.rotateX
  */
 const rotateX = (out, matrix, radians) => {
-  const s = Math.sin(radians)
-  const c = Math.cos(radians)
+  const s = sin(radians)
+  const c = cos(radians)
   const a10 = matrix[4]
   const a11 = matrix[5]
   const a12 = matrix[6]
