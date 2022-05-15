@@ -2,7 +2,7 @@ const test = require('ava')
 
 const { colors, geometries, primitives, transforms } = require('@jscad/modeling')
 
-const serializer = require('../index.js')
+const serializer = require('../src/index.js')
 
 test('serialize 3D geometry to X3D', (t) => {
   const geom1 = geometries.geom3.create()
