@@ -123,6 +123,13 @@ test('circle (options)', (t) => {
   t.deepEqual(pts.length, 6)
   t.true(comparePoints(pts, exp))
 
+  // test full rotation with non-zero startAngle
+  geometry = circle({ startAngle: 1, endAngle: 1 + 2 * Math.PI })
+  pts = geom2.toPoints(geometry)
+
+  t.notThrows(() => geom2.validate(geometry))
+  t.deepEqual(pts.length, 32)
+
   // test segments
   geometry = circle({ radius: 3.5, segments: 5 })
   pts = geom2.toPoints(geometry)

@@ -15,7 +15,6 @@ test('torus (defaults)', (t) => {
 
   const bounds = measureBoundingBox(obs)
   const expectedBounds = [[-5, -5, -1], [5, 5, 1]]
-  t.notThrows(() => geom3.validate(obs))
   t.true(comparePoints(bounds, expectedBounds), 'Bounding box was not as expected: ' + JSON.stringify(bounds))
 })
 
@@ -27,7 +26,6 @@ test('torus (simple options)', (t) => {
 
   const bounds = measureBoundingBox(obs)
   const expectedBounds = [[-5.5, -5.5, -0.5], [5.5, 5.5, 0.5]]
-  t.notThrows(() => geom3.validate(obs))
   t.true(comparePoints(bounds, expectedBounds), 'Bounding box was not as expected: ' + JSON.stringify(bounds))
 })
 
@@ -39,8 +37,14 @@ test('torus (complex options)', (t) => {
 
   const bounds = measureBoundingBox(obs)
   const expectedBounds = [[-6, 0, -1], [0, 6, 1]]
-  t.notThrows(() => geom3.validate(obs))
   t.true(comparePoints(bounds, expectedBounds), 'Bounding box was not as expected: ' + JSON.stringify(bounds))
+})
+
+test('torus (startAngle)', (t) => {
+  const obs = torus({ startAngle: 1, endAngle: 1 + 2 * Math.PI })
+  const pts = geom3.toPoints(obs)
+  t.notThrows(() => geom3.validate(obs))
+  t.is(pts.length, 2048)
 })
 
 test('torus (square by square)', (t) => {
