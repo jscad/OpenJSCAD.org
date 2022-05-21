@@ -1,3 +1,5 @@
+const { sin, cos } = require('../utils/trigonometry')
+
 /**
  * Creates a matrix from the given Tait–Bryan angles.
  *
@@ -15,12 +17,12 @@
  */
 const fromTaitBryanRotation = (out, yaw, pitch, roll) => {
   // precompute sines and cosines of Euler angles
-  const sy = Math.sin(yaw)
-  const cy = Math.cos(yaw)
-  const sp = Math.sin(pitch)
-  const cp = Math.cos(pitch)
-  const sr = Math.sin(roll)
-  const cr = Math.cos(roll)
+  const sy = sin(yaw)
+  const cy = cos(yaw)
+  const sp = sin(pitch)
+  const cp = cos(pitch)
+  const sr = sin(roll)
+  const cr = cos(roll)
 
   // create and populate rotation matrix
   // left-hand-rule rotation

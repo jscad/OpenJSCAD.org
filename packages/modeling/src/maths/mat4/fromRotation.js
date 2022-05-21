@@ -1,3 +1,5 @@
+const { sin, cos } = require('../utils/trigonometry')
+
 const identity = require('./identity')
 
 const { EPSILON } = require('./constants')
@@ -31,8 +33,8 @@ const fromRotation = (out, rad, axis) => {
   y *= len
   z *= len
 
-  const s = Math.sin(rad)
-  const c = Math.cos(rad)
+  const s = sin(rad)
+  const c = cos(rad)
   const t = 1 - c
 
   // Perform rotation-specific matrix multiplication

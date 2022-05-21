@@ -1,3 +1,5 @@
+const { sin, cos } = require('../utils/trigonometry')
+
 /**
  * Creates a matrix from the given angle around the Z axis.
  * This is equivalent to (but much faster than):
@@ -13,8 +15,8 @@
  * let matrix = fromZRotation(create(), Math.PI / 2)
  */
 const fromZRotation = (out, radians) => {
-  const s = Math.sin(radians)
-  const c = Math.cos(radians)
+  const s = sin(radians)
+  const c = cos(radians)
 
   // Perform axis-specific matrix multiplication
   out[0] = c

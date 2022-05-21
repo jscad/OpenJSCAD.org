@@ -5,7 +5,7 @@ const vec3 = require('../maths/vec3')
 const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
-const { sin, cos } = require('../utils/trigonometry')
+const { sin, cos } = require('../maths/utils/trigonometry')
 
 const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 
@@ -96,7 +96,9 @@ const cylinderElliptic = (options) => {
   const polygons = []
   for (let i = 0; i < slices; i++) {
     const t0 = i / slices
-    const t1 = (i + 1) / slices
+    let t1 = (i + 1) / slices
+    // fix rounding error when rotating 2 * PI radians
+    if (rotation === 2 * Math.PI && i === slices - 1) t1 = 0
 
     if (endRadius[0] === startRadius[0] && endRadius[1] === startRadius[1]) {
       polygons.push(fromPoints(start, point(0, t1, endRadius), point(0, t0, endRadius)))

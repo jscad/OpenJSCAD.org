@@ -137,7 +137,13 @@ test('cylinderElliptic (options)', (t) => {
 
   t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 28)
-  // t.true(comparePolygonsAsPoints(pts, exp))
+
+  // test startAngle and endAngle
+  obs = cylinderElliptic({ startAngle: 1, endAngle: 1 + 2 * Math.PI })
+  pts = geom3.toPoints(obs)
+
+  t.notThrows(() => geom3.validate(obs))
+  t.is(pts.length, 96)
 
   // test segments
   obs = cylinderElliptic({ segments: 8 })

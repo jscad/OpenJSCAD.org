@@ -1,3 +1,5 @@
+const { sin, cos } = require('../utils/trigonometry')
+
 const copy = require('./copy')
 
 /**
@@ -24,8 +26,8 @@ const rotate = (out, matrix, radians, axis) => {
   y *= len
   z *= len
 
-  const s = Math.sin(radians)
-  const c = Math.cos(radians)
+  const s = sin(radians)
+  const c = cos(radians)
   const t = 1 - c
 
   const a00 = matrix[0]
