@@ -27,6 +27,7 @@ TBD
  */
 
 const { geometries, modifiers } = require('@jscad/modeling')
+const { geom2, geom3, path2, poly2, poly3 } = geometries
 
 const { flatten, toArray } = require('@jscad/array-utils')
 
@@ -41,6 +42,10 @@ const mimeType = 'model/x3d+xml'
 /**
  * Serialize the give objects to X3D elements (XML).
  * @param {Object} options - options for serialization, REQUIRED
+ * @param {Array} [options.color=[0,0,1,1]] - default color for objects
+
+ * @param {Boolean} [options.metadata=true] - add metadata to 3MF contents, such at CreationDate
+
  * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
  * @param {Object|Array} objects - objects to serialize as X3D
@@ -52,23 +57,19 @@ const mimeType = 'model/x3d+xml'
  */
 const serialize = (options, ...objects) => {
   const defaults = {
-    unit: 'millimeter', // millimeter, inch, feet, meter or micrometer
     color: [0, 0, 1, 1.0], // default colorRGBA specification
     decimals: 1000,
+    metadata: true,
+    unit: 'millimeter', // millimeter, inch, feet, meter or micrometer
     statusCallback: null
   }
   options = Object.assign({}, defaults, options)
 
   objects = flatten(objects)
 
-  // convert only 3D geometries
-  let objects3d = objects.filter((object) => geometries.geom3.isA(object))
+  objects = objects.filter((object) => geom3.isA(object) || geom2.isA(object) || path2.isA(object))
 
-  if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to X3D')
-  if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to X3D')
-
-  // convert to triangles
-  objects3d = toArray(modifiers.generalize({ snap: true, triangulate: true }, objects3d))
+  if (objects.length === 0) throw new Error('only JSCAD geometries can be serialized to X3D')
 
   options.statusCallback && options.statusCallback({ progress: 0 })
 
@@ -76,15 +77,23 @@ const serialize = (options, ...objects) => {
   let body = ['X3D',
     {
       profile: 'Interchange',
-      version: '3.3',
+      version: '4.0',
       'xmlns:xsd': 'http://www.w3.org/2001/XMLSchema-instance',
-      'xsd:noNamespaceSchemaLocation': 'http://www.web3d.org/specifications/x3d-3.3.xsd'
-    },
-    ['head', {},
-      ['meta', { name: 'creator', content: 'Created by JSCAD' }]
-    ]
+      'xsd:noNamespaceSchemaLocation': 'http://www.web3d.org/specifications/x3d-4.0.xsd'
+    }
   ]
-  body = body.concat(convertObjects(objects3d, options))
+  if (options.metadata) {
+    body.push(['head', {},
+      ['meta', { name: 'creator', content: 'Created by JSCAD' }],
+      ['meta', { name: 'reference', content: 'https://www.openjscad.xyz' }],
+      ['meta', { name: 'created', content: new Date().toISOString()}]
+    ])
+  } else {
+    body.push(['head', {},
+      ['meta', { name: 'creator', content: 'Created by JSCAD' }],
+    ])
+  }
+  body = body.concat(convertObjects(objects, options))
 
   // convert the contents to X3D (XML) format
   const contents = `<?xml version="1.0" encoding="UTF-8"?>
@@ -101,20 +110,68 @@ const convertObjects = (objects, options) => {
   objects.forEach((object, i) => {
     options.statusCallback && options.statusCallback({ progress: 100 * i / objects.length })
 
-    if (geometries.geom3.isA(object)) {
-      const polygons = geometries.geom3.toPolygons(object)
+    if (geom3.isA(object)) {
+      // convert to triangles
+      object = modifiers.generalize({ snap: true, triangulate: true }, object)
+      const polygons = geom3.toPolygons(object)
       if (polygons.length > 0) {
-        // TODO object = ensureManifoldness(object)
-        shapes.push(convertShape(object, options))
+        shapes.push(convertGeom3(object, options))
       }
+    }
+    if (geom2.isA(object)) {
+      shapes.push(convertGeom2(object, options))
+    }
+    if (path2.isA(object)) {
+      shapes.push(convertPath2(object, options))
     }
   })
   scene = scene.concat(shapes)
   return [scene]
 }
 
-const convertShape = (object, options) => {
+const convertPath2 = (object, options) => {
+  const points = path2.toPoints(object).slice()
+  if (points.length > 1 && object.isClosed) points.push(points[0])
+  shape = ['Shape', {}, convertPolyline2D(poly2.create(points), options)]
+  if (object.color) {
+    shape.push(convertAppearance(object, options))
+  }
+  return shape
+}
+
+const convertGeom2 = (object, options) => {
+  const outlines = geom2.toOutlines(object)
+  const group = ['Group', {}]
+  outlines.forEach((outline) => {
+    if (outline.length > 1) outline.push(outline[0]) // close the outline for conversion
+    const shape = ['Shape', {}, convertPolyline2D(poly2.create(outline), options)]
+    if (object.color) {
+      shape.push(convertAppearance(object, options))
+    }
+    group.push(shape)
+  })
+  return group
+}
+
+/*
+ * Convert the given object (poly2) to X3D source
+ */
+const convertPolyline2D = (object, options) => {
+  const lineSegments = object.vertices.map((p) => `${p[0]} ${p[1]}`).join(' ')
+  return ['Polyline2D', {lineSegments}]
+}
+
+const convertAppearance = (object, options) => {
+  const diffuseColor = object.color.join(' ')
+  const emissiveColor = object.color.join(' ')
+  return ['Appearance', ['Material', {diffuseColor, emissiveColor}]]
+}
+
+const convertGeom3 = (object, options) => {
   const shape = ['Shape', {}, convertMesh(object, options)]
+  if (object.color) {
+    shape.push(convertAppearance(object, options))
+  }
   return shape
 }
 
@@ -130,18 +187,20 @@ const convertMesh = (object, options) => {
     'IndexedTriangleSet',
     { ccw: 'true', colorPerVertex: 'false', solid: 'false', index: indexList },
     ['Coordinate', { point: pointList }],
-    ['Color', { color: colorList }]
   ]
+  if (! object.color) {
+    faceset.push(['Color', { color: colorList }])
+  }
   return faceset
 }
 
 const convertToTriangles = (object, options) => {
   const triangles = []
-  const polygons = geometries.geom3.toPolygons(object)
+  const polygons = geom3.toPolygons(object)
   polygons.forEach((poly) => {
     const firstVertex = poly.vertices[0]
     for (let i = poly.vertices.length - 3; i >= 0; i--) {
-      const triangle = geometries.poly3.fromPoints([
+      const triangle = poly3.fromPoints([
         firstVertex,
         poly.vertices[i + 1],
         poly.vertices[i + 2]
