@@ -24,6 +24,7 @@ const shapesMapJscad = require('./shapesMapJscad')
 
 /**
  * Deserializer of SVG source data to JSCAD geometries.
+ * @see {@link https://github.com/jscad/OpenJSCAD.org/blob/master/packages/io/svg-deserializer/README.md|README} for supported conversion of SVG elements.
  * @module io/svg-deserializer
  * @example
  * const { deserializer, extension } = require('@jscad/svg-deserializer')

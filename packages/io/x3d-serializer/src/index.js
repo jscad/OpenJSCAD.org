@@ -3,24 +3,29 @@ JSCAD Object to X3D (XML) Format Serialization
 
 ## License
 
-Copyright (c) 2018 JSCAD Organization https://github.com/jscad
+Copyright (c) 2018-2022 JSCAD Organization https://github.com/jscad
 
 All code released under MIT license
 
 Notes:
 1) geom2 conversion to:
-     none
+     Polyline2D with lineSegment and Color
 2) geom3 conversion to:
      IndexedTriangleSet with Coordinates and Colors
 3) path2 conversion to:
-     none
-
-TBD
-1) gzipped is also possible; same mime type, with file extension .x3dz
+     Polyline2D with lineSegment and Color
 */
 
 /**
- * Serializer of JSCAD geometries to X3D elements.
+ * Serializer of JSCAD geometries to X3D source data (XML).
+ *
+ * The serialization of the following geometries are possible.
+ * - serialization of 3D geometries (geom3) to X3D IndexedTriangleSet (a unique mesh containing coordinates)
+ * - serialization of 2D geometries (geom2) to X3D Polyline2D
+ * - serialization of 2D paths (path2) to X3D Polyline2D
+ *
+ * Material (color) is added to X3D shapes when found on the geometry.
+ *
  * @module io/x3d-serializer
  * @example
  * const { serializer, mimeType } = require('@jscad/x3d-serializer')
@@ -43,9 +48,7 @@ const mimeType = 'model/x3d+xml'
  * Serialize the give objects to X3D elements (XML).
  * @param {Object} options - options for serialization, REQUIRED
  * @param {Array} [options.color=[0,0,1,1]] - default color for objects
-
  * @param {Boolean} [options.metadata=true] - add metadata to 3MF contents, such at CreationDate
-
  * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
  * @param {Object|Array} objects - objects to serialize as X3D
@@ -129,6 +132,9 @@ const convertObjects = (objects, options) => {
   return [scene]
 }
 
+/*
+ * Convert the given object (path2) to X3D source
+ */
 const convertPath2 = (object, options) => {
   const points = path2.toPoints(object).slice()
   if (points.length > 1 && object.isClosed) points.push(points[0])
@@ -139,6 +145,9 @@ const convertPath2 = (object, options) => {
   return shape
 }
 
+/*
+ * Convert the given object (geom2) to X3D source
+ */
 const convertGeom2 = (object, options) => {
   const outlines = geom2.toOutlines(object)
   const group = ['Group', {}]
@@ -167,6 +176,9 @@ const convertAppearance = (object, options) => {
   return ['Appearance', ['Material', {diffuseColor, emissiveColor}]]
 }
 
+/*
+ * Convert the given object (geom3) to X3D source
+ */
 const convertGeom3 = (object, options) => {
   const shape = ['Shape', {}, convertMesh(object, options)]
   if (object.color) {
@@ -224,7 +236,7 @@ const convertToColor = (polygon, options) => {
   return `${color[0]} ${color[1]} ${color[2]}`
 }
 
-/**
+/*
  * This function converts the given polygons into three lists
  * - indexList : index of each vertex in the triangle (tuples)
  * - pointList : coordinates of each vertex (X Y Z)

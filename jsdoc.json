@@ -39,6 +39,7 @@
       "packages/io/svg-deserializer/src",
       "packages/io/svg-serializer",
       "packages/io/x3d-deserializer/src",
+      "packages/io/x3d-serializer/src",
       "packages/io/3mf-serializer/src"
     ],
     "includePattern": ".+\\.js(doc|x)?$",
