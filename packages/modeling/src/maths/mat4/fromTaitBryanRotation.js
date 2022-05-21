@@ -1,4 +1,4 @@
-const { sin, cos } = require('../../utils/trigonometry')
+const { sin, cos } = require('../utils/trigonometry')
 
 /**
  * Creates a matrix from the given Tait–Bryan angles.

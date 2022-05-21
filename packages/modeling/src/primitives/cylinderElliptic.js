@@ -5,7 +5,7 @@ const vec3 = require('../maths/vec3')
 const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
-const { sin, cos } = require('../utils/trigonometry')
+const { sin, cos } = require('../maths/utils/trigonometry')
 
 const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 

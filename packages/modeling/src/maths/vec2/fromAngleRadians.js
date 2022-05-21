@@ -1,4 +1,4 @@
-const { sin, cos } = require('../../utils/trigonometry')
+const { sin, cos } = require('../utils/trigonometry')
 
 /**
  * Create a new vector in the direction of the given angle.

@@ -1,4 +1,4 @@
-const { sin, cos } = require('../../utils/trigonometry')
+const { sin, cos } = require('../utils/trigonometry')
 
 /**
  * Rotates a matrix by the given angle around the X axis.
