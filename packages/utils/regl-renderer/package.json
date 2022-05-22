@@ -41,7 +41,6 @@
     "browserify": "16.5.1",
     "budo": "11.6.4",
     "nyc": "15.1.0",
-    "typescript": "^4.0.0",
     "uglifyify": "5.0.2"
   },
   "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"
