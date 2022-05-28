@@ -72,7 +72,7 @@ const serialize = (options, ...objects) => {
 
   objects = objects.filter((object) => geom3.isA(object) || geom2.isA(object) || path2.isA(object))
 
-  if (objects.length === 0) throw new Error('only JSCAD geometries can be serialized to X3D')
+  if (objects.length === 0) throw new Error('expected one or more geom3/geom2/path2 objects')
 
   options.statusCallback && options.statusCallback({ progress: 0 })
 
