@@ -8,8 +8,10 @@ import { RGB, RGBA } from '../colors'
 // see https://github.com/jscad/OpenJSCAD.org/pull/726#issuecomment-724575265
 export type Geometry = Geom2 | Geom3 | Poly3 | Path2
 
-export type Colored = {
-  color?: RGB | RGBA
+export type Color = RGB | RGBA
+
+export interface Colored {
+  color: Color
 }
 
 export { default as Geom2 } from './geom2/type'
