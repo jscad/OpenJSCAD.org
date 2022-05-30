@@ -21,14 +21,14 @@ const { EPSILON } = require('./constants')
  */
 const fromRotation = (out, rad, axis) => {
   let [x, y, z] = axis
-  let len = Math.hypot(x, y, z)
+  const lengthSquared = x * x + y * y + z * z
 
-  if (Math.abs(len) < EPSILON) {
+  if (Math.abs(lengthSquared) < EPSILON) {
     // axis is 0,0,0 or almost
     return identity(out)
   }
 
-  len = 1 / len
+  const len = 1 / Math.sqrt(lengthSquared)
   x *= len
   y *= len
   z *= len

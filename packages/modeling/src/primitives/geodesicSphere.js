@@ -1,4 +1,5 @@
 const mat4 = require('../maths/mat4')
+const vec3 = require('../maths/vec3')
 
 const geom3 = require('../geometries/geom3')
 
@@ -79,7 +80,7 @@ const geodesicSphere = (options) => {
 
         // -- normalize
         for (let k = 0; k < 3; k++) {
-          const r = Math.hypot(q[k][0], q[k][1], q[k][2])
+          const r = vec3.length(q[k])
           for (let l = 0; l < 3; l++) {
             q[k][l] /= r
           }
@@ -95,7 +96,7 @@ const geodesicSphere = (options) => {
 
           // -- normalize
           for (let k = 0; k < 3; k++) {
-            const r = Math.hypot(q[k][0], q[k][1], q[k][2])
+            const r = vec3.length(q[k])
             for (let l = 0; l < 3; l++) {
               q[k][l] /= r
             }
