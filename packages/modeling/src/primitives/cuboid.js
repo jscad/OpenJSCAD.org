@@ -23,7 +23,10 @@ const cuboid = (options) => {
 
   if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
   if (!isNumberArray(size, 3)) throw new Error('size must be an array of width, depth and height values')
-  if (!size.every((n) => n > 0)) throw new Error('size values must be greater than zero')
+  if (!size.every((n) => n >= 0)) throw new Error('size values must be positive')
+
+  // if any size is zero return empty geometry
+  if (size[0] === 0 || size[1] === 0 || size[2] === 0) return geom3.create()
 
   const result = geom3.create(
     // adjust a basic shape to size

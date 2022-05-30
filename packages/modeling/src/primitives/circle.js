@@ -2,7 +2,7 @@ const { TAU } = require('../maths/constants')
 
 const ellipse = require('./ellipse')
 
-const { isGT } = require('./commonChecks')
+const { isGTE } = require('./commonChecks')
 
 /**
  * Construct a circle in two dimensional space where all points are at the same distance from the center.
@@ -28,7 +28,7 @@ const circle = (options) => {
   }
   let { center, radius, startAngle, endAngle, segments } = Object.assign({}, defaults, options)
 
-  if (!isGT(radius, 0)) throw new Error('radius must be greater than zero')
+  if (!isGTE(radius, 0)) throw new Error('radius must be positive')
 
   radius = [radius, radius]
 

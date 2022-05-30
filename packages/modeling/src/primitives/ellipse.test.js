@@ -137,3 +137,10 @@ test('ellipse (options)', (t) => {
   t.notThrows(() => geom2.validate(geometry))
   t.deepEqual(obs.length, 72)
 })
+
+test('ellipse (zero radius)', (t) => {
+  const geometry = ellipse({ radius: [1, 0] })
+  const obs = geom2.toPoints(geometry)
+  t.notThrows(() => geom2.validate(geometry))
+  t.is(obs.length, 0)
+})

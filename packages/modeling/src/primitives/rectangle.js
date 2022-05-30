@@ -24,7 +24,10 @@ const rectangle = (options) => {
 
   if (!isNumberArray(center, 2)) throw new Error('center must be an array of X and Y values')
   if (!isNumberArray(size, 2)) throw new Error('size must be an array of X and Y values')
-  if (!size.every((n) => n > 0)) throw new Error('size values must be greater than zero')
+  if (!size.every((n) => n >= 0)) throw new Error('size values must be positive')
+
+  // if any size is zero return empty geometry
+  if (size[0] === 0 || size[1] === 0) return geom2.create()
 
   const point = [size[0] / 2, size[1] / 2]
   const pswap = [point[0], -point[1]]

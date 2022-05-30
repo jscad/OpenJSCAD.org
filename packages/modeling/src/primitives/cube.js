@@ -1,6 +1,6 @@
 const cuboid = require('./cuboid')
 
-const { isGT } = require('./commonChecks')
+const { isGTE } = require('./commonChecks')
 
 /**
  * Construct an axis-aligned solid cube in three dimensional space with six square faces.
@@ -20,7 +20,7 @@ const cube = (options) => {
   }
   let { center, size } = Object.assign({}, defaults, options)
 
-  if (!isGT(size, 0)) throw new Error('size must be greater than zero')
+  if (!isGTE(size, 0)) throw new Error('size must be positive')
 
   size = [size, size, size]
 

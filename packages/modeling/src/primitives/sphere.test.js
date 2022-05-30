@@ -163,3 +163,10 @@ test('sphere (options)', (t) => {
   t.is(pts.length, 32)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
+
+test('sphere (zero radius)', (t) => {
+  const obs = sphere({ radius: 0 })
+  const pts = geom3.toPoints(obs)
+  t.notThrows(() => geom3.validate(obs))
+  t.is(pts.length, 0)
+})

@@ -55,3 +55,10 @@ test('cuboid (options)', (t) => {
   t.is(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
+
+test('cuboid (zero size)', (t) => {
+  const obs = cuboid({ size: [1, 1, 0] })
+  const pts = geom3.toPoints(obs)
+  t.notThrows(() => geom3.validate(obs))
+  t.is(pts.length, 0)
+})

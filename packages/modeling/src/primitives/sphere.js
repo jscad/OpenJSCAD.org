@@ -1,6 +1,6 @@
 const ellipsoid = require('./ellipsoid')
 
-const { isGT } = require('./commonChecks')
+const { isGTE } = require('./commonChecks')
 
 /**
  * Construct a sphere in three dimensional space where all points are at the same distance from the center.
@@ -25,7 +25,7 @@ const sphere = (options) => {
   }
   let { center, radius, segments, axes } = Object.assign({}, defaults, options)
 
-  if (!isGT(radius, 0)) throw new Error('radius must be greater than zero')
+  if (!isGTE(radius, 0)) throw new Error('radius must be positive')
 
   radius = [radius, radius, radius]
 
