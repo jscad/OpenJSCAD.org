@@ -1,7 +1,6 @@
 const { maths } = require('@jscad/modeling')
 
 const createTransform = (center, rotation, scale, scaleOrientation, translation) => {
-  // console.log('createTransform',center,rotation,scale,scaleOrientation,translation)
   const matrix = maths.mat4.create()
   const temp = maths.mat4.create()
   maths.mat4.multiply(matrix, matrix, maths.mat4.fromTranslation(temp, translation))
