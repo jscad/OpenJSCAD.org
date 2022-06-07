@@ -1,8 +1,8 @@
+const { EPS } = require('../constants')
+
 const { sin, cos } = require('../utils/trigonometry')
 
 const identity = require('./identity')
-
-const { EPSILON } = require('./constants')
 
 /**
  * Creates a matrix from a given angle around a given axis
@@ -23,7 +23,7 @@ const fromRotation = (out, rad, axis) => {
   let [x, y, z] = axis
   const lengthSquared = x * x + y * y + z * z
 
-  if (Math.abs(lengthSquared) < EPSILON) {
+  if (Math.abs(lengthSquared) < EPS) {
     // axis is 0,0,0 or almost
     return identity(out)
   }

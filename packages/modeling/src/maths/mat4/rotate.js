@@ -1,6 +1,7 @@
+const { EPS } = require('../constants')
+
 const { sin, cos } = require('../utils/trigonometry')
 
-const { EPSILON } = require('./constants')
 const copy = require('./copy')
 
 /**
@@ -17,7 +18,7 @@ const rotate = (out, matrix, radians, axis) => {
   let [x, y, z] = axis
   const lengthSquared = x * x + y * y + z * z
 
-  if (Math.abs(lengthSquared) < EPSILON) {
+  if (Math.abs(lengthSquared) < EPS) {
     // axis is 0,0,0 or almost
     return copy(out, matrix)
   }
