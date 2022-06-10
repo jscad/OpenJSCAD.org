@@ -40,7 +40,7 @@ const repair = (slice) => {
     let bestReplacement
     missingOut.forEach((key2) => {
       const v2 = vertexMap.get(key2)
-      const distance = Math.hypot(v1[0] - v2[0], v1[1] - v2[1])
+      const distance = vec3.distance(v1, v2)
       if (distance < bestDistance) {
         bestDistance = distance
         bestReplacement = v2
