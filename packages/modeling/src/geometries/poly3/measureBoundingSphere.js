@@ -1,5 +1,4 @@
 const vec3 = require('../../maths/vec3')
-const measureBoundingBox = require('./measureBoundingBox')
 
 const cache = new WeakMap()
 
@@ -10,19 +9,48 @@ const cache = new WeakMap()
  * @alias module:modeling/geometries/poly3.measureBoundingSphere
  */
 const measureBoundingSphere = (polygon) => {
-  let boundingBox = cache.get(polygon)
-  if (boundingBox) return boundingBox
+  let boundingSphere = cache.get(polygon)
+  if (boundingSphere) return boundingSphere
 
-  const box = measureBoundingBox(polygon)
+  const vertices = polygon.vertices
   const center = vec3.create()
-  vec3.add(center, box[0], box[1])
-  vec3.scale(center, center, 0.5)
-  const radius = vec3.distance(center, box[1])
 
-  boundingSphere = [center, radius]
-  cache.set(polygon, boundingSphere)
+  if (vertices.length === 0) {
+    center[0] = 0
+    center[1] = 0
+    center[2] = 0
+    return [center, 0]
+  }
 
-  return boundingSphere
+  // keep a list of min/max vertices by axis
+  let minx = vertices[0]
+  let miny = minx
+  let minz = minx
+  let maxx = minx
+  let maxy = minx
+  let maxz = minx
+
+  vertices.forEach((v) => {
+    if (minx[0] > v[0]) minx = v
+    if (miny[1] > v[1]) miny = v
+    if (minz[2] > v[2]) minz = v
+    if (maxx[0] < v[0]) maxx = v
+    if (maxy[1] < v[1]) maxy = v
+    if (maxz[2] < v[2]) maxz = v
+  })
+
+  center[0] = (minx[0] + maxx[0]) * 0.5 // center of sphere
+  center[1] = (miny[1] + maxy[1]) * 0.5
+  center[2] = (minz[2] + maxz[2]) * 0.5
+  const x = center[0] - maxx[0]
+  const y = center[1] - maxy[1]
+  const z = center[2] - maxz[2]
+  const radius = Math.sqrt(x * x + y * y + z * z) // radius of sphere
+
+  const out = [center, radius]
+  cache.set(polygon, out)
+
+  return out
 }
 
 module.exports = measureBoundingSphere
