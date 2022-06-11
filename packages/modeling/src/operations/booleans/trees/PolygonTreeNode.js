@@ -1,14 +1,11 @@
 const { EPS } = require('../../../maths/constants')
 
 const vec3 = require('../../../maths/vec3')
-const vec4 = require('../../../maths/vec4')
 
 const poly3 = require('../../../geometries/poly3')
 
 const splitPolygonByPlane = require('./splitPolygonByPlane')
 const measureBoundingSphere = require('./measureBoundingSphere')
-
-const sphere = vec4.create()
 
 // # class PolygonTreeNode
 // This class manages hierarchical splits of polygons.
@@ -135,7 +132,7 @@ class PolygonTreeNode {
   _splitByPlane (splane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes) {
     const polygon = this.polygon
     if (polygon) {
-      measureBoundingSphere(sphere, polygon)
+      const sphere = measureBoundingSphere(polygon)
       const sphereradius = sphere[3] + EPS // ensure radius is LARGER then polygon
       const spherecenter = sphere
       const d = vec3.dot(splane, spherecenter) - splane[3]
