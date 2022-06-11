@@ -3,28 +3,23 @@ const { measureBoundingSphere, create, fromPoints, transform } = require('./inde
 
 const mat4 = require('../../maths/mat4')
 
-const { compareVectors, nearlyEqual } = require('../../../test/helpers/index')
-
 test('poly3: measureBoundingSphere() should return correct values', (t) => {
   let ply1 = create()
-  let exp1 = [[0, 0, 0], 0]
+  let exp1 = [0, 0, 0, 0]
   let ret1 = measureBoundingSphere(ply1)
-  t.true(compareVectors(ret1[0], exp1[0]))
-  nearlyEqual(t, ret1[1], exp1[1], Number.EPSILON)
+  t.deepEqual(ret1, exp1)
 
   // simple triangle
   let ply2 = fromPoints([[0, 0, 0], [0, 10, 0], [0, 10, 10]])
-  let exp2 = [[0, 5, 5], 7.0710678118654755]
+  let exp2 = [0, 5, 5, 7.0710678118654755]
   let ret2 = measureBoundingSphere(ply2)
-  t.true(compareVectors(ret2[0], exp2[0]))
-  nearlyEqual(t, ret2[1], exp2[1], Number.EPSILON)
+  t.deepEqual(ret2, exp2)
 
   // simple square
   let ply3 = fromPoints([[0, 0, 0], [0, 10, 0], [0, 10, 10], [0, 0, 10]])
-  let exp3 = [[0, 5, 5], 7.0710678118654755]
+  let exp3 = [0, 5, 5, 7.0710678118654755]
   let ret3 = measureBoundingSphere(ply3)
-  t.true(compareVectors(ret3[0], exp3[0]))
-  nearlyEqual(t, ret3[1], exp3[1], Number.EPSILON)
+  t.deepEqual(ret3, exp3)
 
   // V-shape
   const points = [
@@ -40,10 +35,9 @@ test('poly3: measureBoundingSphere() should return correct values', (t) => {
     [0, 3, 3]
   ]
   let ply4 = fromPoints(points)
-  let exp4 = [[0, 4.5, 3], 4.6097722286464435]
+  let exp4 = [0, 4.5, 3, 4.6097722286464435]
   let ret4 = measureBoundingSphere(ply4)
-  t.true(compareVectors(ret4[0], exp4[0]))
-  nearlyEqual(t, ret4[1], exp4[1], Number.EPSILON)
+  t.deepEqual(ret4, exp4)
 
   // rotated to various angles
   const rotation = mat4.fromZRotation(mat4.create(), (45 * 0.017453292519943295))
@@ -55,16 +49,12 @@ test('poly3: measureBoundingSphere() should return correct values', (t) => {
   ret2 = measureBoundingSphere(ply2)
   ret3 = measureBoundingSphere(ply3)
   ret4 = measureBoundingSphere(ply4)
-  exp1 = [[0, 0, 0], 0]
-  t.true(compareVectors(ret1[0], exp1[0]))
-  nearlyEqual(t, ret1[1], exp1[1], Number.EPSILON)
-  exp2 = [[-3.5355339059327373, 3.5355339059327378, 5], 7.0710678118654755]
-  t.true(compareVectors(ret2[0], exp2[0]))
-  nearlyEqual(t, ret2[1], exp2[1], Number.EPSILON)
-  exp3 = [[-3.5355339059327373, 3.5355339059327378, 5], 7.0710678118654755]
-  t.true(compareVectors(ret3[0], exp3[0]))
-  nearlyEqual(t, ret3[1], exp3[1], Number.EPSILON)
-  exp4 = [[-3.181980515339464, 3.1819805153394642, 3], 4.6097722286464435]
-  t.true(compareVectors(ret4[0], exp4[0]))
-  nearlyEqual(t, ret4[1], exp4[1], Number.EPSILON)
+  exp1 = [0, 0, 0, 0]
+  t.deepEqual(ret1, exp1)
+  exp2 = [-3.5355339059327373, 3.5355339059327378, 5, 7.0710678118654755]
+  t.deepEqual(ret2, exp2)
+  exp3 = [-3.5355339059327373, 3.5355339059327378, 5, 7.0710678118654755]
+  t.deepEqual(ret3, exp3)
+  exp4 = [-3.181980515339464, 3.1819805153394642, 3, 4.6097722286464435]
+  t.deepEqual(ret4, exp4)
 })
