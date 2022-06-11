@@ -9,7 +9,7 @@ const length = (vector) => {
   const x = vector[0]
   const y = vector[1]
   const z = vector[2]
-  return Math.hypot(x, y, z)
+  return Math.sqrt(x * x + y * y + z * z)
 }
 
 module.exports = length
