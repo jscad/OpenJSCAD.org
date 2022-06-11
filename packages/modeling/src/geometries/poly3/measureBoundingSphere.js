@@ -1,11 +1,12 @@
 const vec3 = require('../../maths/vec3')
+const vec4 = require('../../maths/vec4')
 
 const cache = new WeakMap()
 
 /**
  * Measure the bounding sphere of the given polygon.
  * @param {poly3} polygon - the polygon to measure
- * @returns {Array} the computed bounding sphere; center point (3D) and radius
+ * @returns {vec4} the computed bounding sphere; center point (3D) and radius
  * @alias module:modeling/geometries/poly3.measureBoundingSphere
  */
 const measureBoundingSphere = (polygon) => {
@@ -13,13 +14,14 @@ const measureBoundingSphere = (polygon) => {
   if (boundingSphere) return boundingSphere
 
   const vertices = polygon.vertices
-  const center = vec3.create()
+  const out = vec4.create()
 
   if (vertices.length === 0) {
-    center[0] = 0
-    center[1] = 0
-    center[2] = 0
-    return [center, 0]
+    out[0] = 0
+    out[1] = 0
+    out[2] = 0
+    out[3] = 0
+    return out
   }
 
   // keep a list of min/max vertices by axis
@@ -39,15 +41,14 @@ const measureBoundingSphere = (polygon) => {
     if (maxz[2] < v[2]) maxz = v
   })
 
-  center[0] = (minx[0] + maxx[0]) * 0.5 // center of sphere
-  center[1] = (miny[1] + maxy[1]) * 0.5
-  center[2] = (minz[2] + maxz[2]) * 0.5
-  const x = center[0] - maxx[0]
-  const y = center[1] - maxy[1]
-  const z = center[2] - maxz[2]
-  const radius = Math.sqrt(x * x + y * y + z * z) // radius of sphere
+  out[0] = (minx[0] + maxx[0]) * 0.5 // center of sphere
+  out[1] = (miny[1] + maxy[1]) * 0.5
+  out[2] = (minz[2] + maxz[2]) * 0.5
+  const x = out[0] - maxx[0]
+  const y = out[1] - maxy[1]
+  const z = out[2] - maxz[2]
+  out[3] = Math.sqrt(x * x + y * y + z * z) // radius of sphere
 
-  const out = [center, radius]
   cache.set(polygon, out)
 
   return out
