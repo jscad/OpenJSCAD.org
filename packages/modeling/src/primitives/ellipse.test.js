@@ -123,6 +123,13 @@ test('ellipse (options)', (t) => {
   t.deepEqual(obs.length, 6)
   t.true(comparePoints(obs, exp))
 
+  // test full rotation with non-zero startAngle
+  geometry = ellipse({ startAngle: 1, endAngle: 1 + 2 * Math.PI })
+  obs = geom2.toPoints(geometry)
+
+  t.notThrows(() => geom2.validate(geometry))
+  t.deepEqual(obs.length, 32)
+
   // test segments
   geometry = ellipse({ segments: 72 })
   obs = geom2.toPoints(geometry)

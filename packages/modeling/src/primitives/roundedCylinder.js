@@ -5,7 +5,7 @@ const vec3 = require('../maths/vec3')
 const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
-const { sin, cos } = require('../utils/trigonometry')
+const { sin, cos } = require('../maths/utils/trigonometry')
 
 const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 
@@ -66,7 +66,7 @@ const roundedCylinder = (options) => {
   const fromPoints = (points) => {
     // adjust the points to center
     const newpoints = points.map((point) => vec3.add(point, point, center))
-    return poly3.fromPoints(newpoints)
+    return poly3.create(newpoints)
   }
 
   const polygons = []

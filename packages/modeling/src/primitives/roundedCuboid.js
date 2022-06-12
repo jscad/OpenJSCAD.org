@@ -6,12 +6,14 @@ const vec3 = require('../maths/vec3')
 const geom3 = require('../geometries/geom3')
 const poly3 = require('../geometries/poly3')
 
+const { sin, cos } = require('../maths/utils/trigonometry')
+
 const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 
 const createCorners = (center, size, radius, segments, slice, positive) => {
   const pitch = (Math.PI / 2) * slice / segments
-  const cospitch = Math.cos(pitch)
-  const sinpitch = Math.sin(pitch)
+  const cospitch = cos(pitch)
+  const sinpitch = sin(pitch)
 
   const layersegments = segments - slice
   let layerradius = radius * cospitch
@@ -57,10 +59,10 @@ const stitchCorners = (previousCorners, currentCorners) => {
     const previous = previousCorners[i]
     const current = currentCorners[i]
     for (let j = 0; j < (previous.length - 1); j++) {
-      polygons.push(poly3.fromPoints([previous[j], previous[j + 1], current[j]]))
+      polygons.push(poly3.create([previous[j], previous[j + 1], current[j]]))
 
       if (j < (current.length - 1)) {
-        polygons.push(poly3.fromPoints([current[j], previous[j + 1], current[j + 1]]))
+        polygons.push(poly3.create([current[j], previous[j + 1], current[j + 1]]))
       }
     }
   }
@@ -81,7 +83,7 @@ const stitchWalls = (previousCorners, currentCorners) => {
     const p1 = previous[0]
     const c1 = current[0]
 
-    polygons.push(poly3.fromPoints([p0, p1, c1, c0]))
+    polygons.push(poly3.create([p0, p1, c1, c0]))
   }
   return polygons
 }
@@ -104,7 +106,7 @@ const stitchSides = (bottomCorners, topCorners) => {
   const polygons = []
   for (let i = 0; i < topPoints.length; i++) {
     const j = (i + 1) % topPoints.length
-    polygons.push(poly3.fromPoints([bottomPoints[i], bottomPoints[j], topPoints[j], topPoints[i]]))
+    polygons.push(poly3.create([bottomPoints[i], bottomPoints[j], topPoints[j], topPoints[i]]))
   }
   return polygons
 }
@@ -168,10 +170,10 @@ const roundedCuboid = (options) => {
     if (slice === segments) {
       // add the top
       let points = cornersPos.map((corner) => corner[0])
-      polygons.push(poly3.fromPoints(points))
+      polygons.push(poly3.create(points))
       // add the bottom
       points = cornersNeg.map((corner) => corner[0])
-      polygons.push(poly3.fromPoints(points))
+      polygons.push(poly3.create(points))
     }
 
     prevCornersPos = cornersPos

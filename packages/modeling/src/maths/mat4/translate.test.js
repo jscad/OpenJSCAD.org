@@ -52,10 +52,9 @@ test('mat4: translate() called with three parameters should update a mat4 with c
   t.true(compareVectors(obs4, [1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 5, 0, 2, 9, 30, 1]))
   t.true(compareVectors(ret4, [1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 5, 0, 2, 9, 30, 1]))
 
-  const r = (90 * 0.017453292519943295)
   const rotateZMatrix = [
-    Math.cos(r), -Math.sin(r), 0, 0,
-    Math.sin(r), Math.cos(r), 0, 0,
+    0, -1, 0, 0,
+    1, 0, 0, 0,
     0, 0, 1, 0,
     0, 0, 0, 1
   ]

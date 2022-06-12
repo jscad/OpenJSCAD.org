@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.4.0...@jscad/examples@2.4.1) (2022-06-12)
+
+
+### Bug Fixes
+
+* **examples:** create uniform segments for involute gear example ([#1093](https://github.com/jscad/OpenJSCAD.org/issues/1093)) ([0b234f3](https://github.com/jscad/OpenJSCAD.org/commit/0b234f3f8ff6b39a967900089e2d939295163b68))
+
+
+
+
+
+# [2.4.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.3.4...@jscad/examples@2.4.0) (2022-05-15)
+
+
+### Features
+
+* **examples:** new Nuts and Bolts example ([#1081](https://github.com/jscad/OpenJSCAD.org/issues/1081)) ([cd78003](https://github.com/jscad/OpenJSCAD.org/commit/cd7800351e56f7cd75f0add07cf068df328b7839))
+
+
+
+
+
+## [2.3.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.3.3...@jscad/examples@2.3.4) (2022-04-24)
+
+**Note:** Version bump only for package @jscad/examples
+
+
+
+
+
 ## [2.3.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.3.2...@jscad/examples@2.3.3) (2022-04-03)
 
 **Note:** Version bump only for package @jscad/examples

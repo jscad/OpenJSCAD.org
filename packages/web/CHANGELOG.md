@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.11](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.10...@jscad/web@2.5.11) (2022-06-12)
+
+**Note:** Version bump only for package @jscad/web
+
+
+
+
+
+## [2.5.10](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.9...@jscad/web@2.5.10) (2022-05-15)
+
+
+### Bug Fixes
+
+* **web:** corrected messages from parameter runtime errors (missing types, etc) ([cf7d5f1](https://github.com/jscad/OpenJSCAD.org/commit/cf7d5f12f2b99d67167eb79f1e2f085f8ff297bc))
+* **web:** corrected status (error) message format and display ([abd02b1](https://github.com/jscad/OpenJSCAD.org/commit/abd02b14a64f88bbf63c36e7f9dc1cee76402f3f))
+* **web:** enhanced design state management to handle error messages ([1c15139](https://github.com/jscad/OpenJSCAD.org/commit/1c15139e6733b4157c730399d18a158fb44e38a9))
+
+
+
+
+
+## [2.5.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.8...@jscad/web@2.5.9) (2022-04-24)
+
+
+### Bug Fixes
+
+* **web:** remove unused file handling and storage path options ([#1071](https://github.com/jscad/OpenJSCAD.org/issues/1071)) ([02c740c](https://github.com/jscad/OpenJSCAD.org/commit/02c740ce56c04ffb7b83a5e48009abb111c64001))
+
+
+
+
+
 ## [2.5.8](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.7...@jscad/web@2.5.8) (2022-04-03)
 
 **Note:** Version bump only for package @jscad/web

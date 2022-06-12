@@ -16,6 +16,7 @@ All code released under MIT license
 
 /**
  * Deserializer of AMF source data (XML) to JSCAD geometries.
+ * @see {@link https://github.com/jscad/OpenJSCAD.org/blob/master/packages/io/amf-deserializer/README.md|README} for supported conversion of AMF objects.
  * @module io/amf-deserializer
  * @example
  * const { deserializer, extension } = require('@jscad/amf-serializer')

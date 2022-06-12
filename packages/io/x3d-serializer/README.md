@@ -23,7 +23,11 @@ This serializer outputs a 'blobable' array of data from one or more JSCAD geomet
 The array of data can either be used to create a Blob (`new Blob(blobable)`), or converted to a Node.js buffer.
 
 The serialization of the following geometries are possible.
-- serialization of 3D geometry (geom3) to X3D indexed triangle sets
+- serialization of 3D geometries (geom3) to X3D IndexedTriangleSet (a unique mesh containing coordinates)
+- serialization of 2D geometries (geom2) to X3D Polyline2D
+- serialization of 2D paths (path2) to X3D Polyline2D
+
+Material (color) is added to X3D shapes when found on the geometry.
 
 ## Table of Contents
 

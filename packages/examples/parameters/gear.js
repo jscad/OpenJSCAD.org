@@ -50,7 +50,7 @@ const createSingleToothPolygon = (maxAngle, baseRadius, angularToothWidthAtBase)
   const points = [[0, 0]]
   for (let i = 0; i <= toothCurveResolution; i++) {
     // first side of the tooth:
-    const angle = maxAngle * i / toothCurveResolution
+    const angle = maxAngle * Math.pow(i / toothCurveResolution, 2 / 3)
     const tanLength = angle * baseRadius
     let radiantVector = vec2.fromAngleRadians(vec2.create(), angle)
     let tangentVector = vec2.scale(vec2.create(), vec2.normal(vec2.create(), radiantVector), -tanLength)

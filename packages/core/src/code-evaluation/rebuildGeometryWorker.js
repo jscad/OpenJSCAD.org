@@ -13,7 +13,10 @@ const rebuildGeometryWorker = (self) => {
     if (event.data instanceof Object) {
       const { data } = event
       if (data.cmd === 'generate') {
-        rebuildGeometry(data, (err, message) => self.postMessage(message))
+        rebuildGeometry(data, (error, message) => {
+          if (message) self.postMessage(message)
+          if (error) self.postMessage(error)
+        })
       }
     }
   }

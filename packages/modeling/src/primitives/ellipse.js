@@ -4,7 +4,7 @@ const vec2 = require('../maths/vec2')
 
 const geom2 = require('../geometries/geom2')
 
-const { sin, cos } = require('../utils/trigonometry')
+const { sin, cos } = require('../maths/utils/trigonometry')
 
 const { isGTE, isNumberArray } = require('./commonChecks')
 

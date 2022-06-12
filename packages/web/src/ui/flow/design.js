@@ -50,9 +50,6 @@ const reducers = {
       // code
       instantUpdate: false,
       autoReload: false,
-      // if set to true, will overwrite existing code with the converted imput
-      // if set to false, will create a script with an import of the input
-      convertSupportedTypes: false,
       // parameters
       parameterDefinitions: [],
       parameterValues: {},
@@ -578,6 +575,17 @@ const actions = ({ sources }) => {
     .multicast()
     .delay(10) // needed , why ?
 
+  // errors retrieved from worker
+  const errorsFromWorker$ = sources.solidWorker
+    .filter((event) => event.data instanceof Object && event.data.type === 'errors')
+    .map(({ data }) => ({ error: data, origin: 'worker' }))
+
+  const reportErrorsFromWorker$ = most.mergeArray([
+    errorsFromWorker$
+  ])
+    .skipRepeatsWith(jsonCompare)
+    .tap((x) => console.log('errors', x))
+
   // ui/toggles
   const toggleAutoReload$ = most.mergeArray([
     sources.dom.select('#toggleAutoReload').events('click')
@@ -617,6 +625,8 @@ const actions = ({ sources }) => {
     setDesignSolids$,
     setDesignParameterDefinitions$,
     setDesignParameterValues$,
+
+    reportErrorsFromWorker$,
 
     requestGeometryRecompute$,
     timeoutGeometryRecompute$,

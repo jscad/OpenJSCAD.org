@@ -100,7 +100,7 @@ const formats = {
     mimetype: 'model/x3d+xml',
     deserializable: true,
     convertGeom3: true,
-    convertGeom2: false
+    convertGeom2: true
   },
   '3mf': {
     displayName: '3MF',

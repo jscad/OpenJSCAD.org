@@ -15,8 +15,8 @@ const angle = (a, b) => {
   const bx = b[0]
   const by = b[1]
   const bz = b[2]
-  const mag1 = Math.hypot(ax, ay, az)
-  const mag2 = Math.hypot(bx, by, bz)
+  const mag1 = Math.sqrt(ax * ax + ay * ay + az * az)
+  const mag2 = Math.sqrt(bx * bx + by * by + bz * bz)
   const mag = mag1 * mag2
   const cosine = mag && dot(a, b) / mag
   return Math.acos(Math.min(Math.max(cosine, -1), 1))

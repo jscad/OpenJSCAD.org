@@ -18,7 +18,7 @@ const fromPoints = (listofpoints) => {
 
   const polygons = listofpoints.map((points, index) => {
     // TODO catch the error, and rethrow with index
-    const polygon = poly3.fromPoints(points)
+    const polygon = poly3.create(points)
     return polygon
   })
   const result = create(polygons)

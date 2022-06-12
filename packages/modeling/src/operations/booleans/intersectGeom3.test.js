@@ -1,91 +1,20 @@
 const test = require('ava')
 
-const { comparePolygonsAsPoints, comparePoints } = require('../../../test/helpers')
+const { comparePolygonsAsPoints } = require('../../../test/helpers')
 
-const { geom2, geom3 } = require('../../geometries')
+const { geom3 } = require('../../geometries')
 
-const { circle, rectangle, sphere, cuboid } = require('../../primitives')
+const { sphere, cuboid } = require('../../primitives')
 
-const { subtract } = require('./index')
+const { intersect } = require('./index')
 
 const { center } = require('../transforms/center')
 
-// test('subtract: subtract of a path produces expected changes to points', (t) => {
-//   let geometry = path.fromPoints({}, [[0, 1, 0], [1, 0, 0]])
-//
-//   geometry = subtract({normal: [1, 0, 0]}, geometry)
-//   let obs = path.toPoints(geometry)
-//   let exp = []
-//
-//   t.deepEqual(obs, exp)
-// })
-
-test('subtract: subtract of one or more geom2 objects produces expected geometry', (t) => {
-  const geometry1 = circle({ radius: 2, segments: 8 })
-
-  // subtract of one object
-  const result1 = subtract(geometry1)
-  let obs = geom2.toPoints(result1)
-  let exp = [
-    [2, 0],
-    [1.4142000000000001, 1.4142000000000001],
-    [0, 2],
-    [-1.4142000000000001, 1.4142000000000001],
-    [-2, 0],
-    [-1.4142000000000001, -1.4142000000000001],
-    [0, -2],
-    [1.4142000000000001, -1.4142000000000001]
-  ]
-  t.notThrows(() => geom2.validate(result1))
-  t.is(obs.length, 8)
-  t.true(comparePoints(obs, exp))
-
-  // subtract of two non-overlapping objects
-  const geometry2 = center({ relativeTo: [10, 10, 0] }, rectangle({ size: [4, 4] }))
-
-  const result2 = subtract(geometry1, geometry2)
-  obs = geom2.toPoints(result2)
-  exp = [
-    [2, 0],
-    [1.4142000000000001, 1.4142000000000001],
-    [0, 2],
-    [-1.4142000000000001, 1.4142000000000001],
-    [-2, 0],
-    [-1.4142000000000001, -1.4142000000000001],
-    [0, -2],
-    [1.4142000000000001, -1.4142000000000001]
-  ]
-  t.notThrows(() => geom2.validate(result2))
-  t.is(obs.length, 8)
-  t.true(comparePoints(obs, exp))
-
-  // subtract of two partially overlapping objects
-  const geometry3 = rectangle({ size: [18, 18] })
-
-  const result3 = subtract(geometry2, geometry3)
-  obs = geom2.toPoints(result3)
-  exp = [
-    [12, 12], [9, 9], [8, 9], [8, 12], [9, 8], [12, 8]
-  ]
-  t.notThrows(() => geom2.validate(result3))
-  t.is(obs.length, 6)
-  t.true(comparePoints(obs, exp))
-
-  // subtract of two completely overlapping objects
-  const result4 = subtract(geometry1, geometry3)
-  obs = geom2.toPoints(result4)
-  exp = [
-  ]
-  t.notThrows(() => geom2.validate(result4))
-  t.is(obs.length, 0)
-  t.deepEqual(obs, exp)
-})
-
-test('subtract: subtract of one or more geom3 objects produces expected geometry', (t) => {
+test('intersect: intersect of one or more geom3 objects produces expected geometry', (t) => {
   const geometry1 = sphere({ radius: 2, segments: 8 })
 
-  // subtract of one object
-  const result1 = subtract(geometry1)
+  // intersect of one object
+  const result1 = intersect(geometry1)
   let obs = geom3.toPoints(result1)
   let exp = [
     [[2, 0, 0], [1.4142135623730951, -1.414213562373095, 0],
@@ -141,40 +70,47 @@ test('subtract: subtract of one or more geom3 objects produces expected geometry
   t.is(obs.length, 32)
   t.true(comparePolygonsAsPoints(obs, exp))
 
-  // subtract of two non-overlapping objects
+  // intersect of two non-overlapping objects
   const geometry2 = center({ relativeTo: [10, 10, 10] }, cuboid({ size: [4, 4, 4] }))
 
-  const result2 = subtract(geometry1, geometry2)
+  const result2 = intersect(geometry1, geometry2)
   obs = geom3.toPoints(result2)
-  t.notThrows.skip(() => geom3.validate(result2))
-  t.is(obs.length, 32)
+  t.notThrows(() => geom3.validate(result2))
+  t.is(obs.length, 0)
 
-  // subtract of two partially overlapping objects
+  // intersect of two partially overlapping objects
   const geometry3 = cuboid({ size: [18, 18, 18] })
 
-  const result3 = subtract(geometry2, geometry3)
+  const result3 = intersect(geometry2, geometry3)
   obs = geom3.toPoints(result3)
+
+  // the order changes based on the bestplane chosen in Node.js
+  /*
   exp = [
-    [[12, 8, 8], [12, 12, 8], [12, 12, 12], [12, 8, 12]],
-    [[8, 12, 8], [8, 12, 12], [12, 12, 12], [12, 12, 8]],
-    [[8, 8, 12], [12, 8, 12], [12, 12, 12], [8, 12, 12]],
-    [[9, 8, 8], [9, 8, 9], [9, 9, 9], [9, 9, 8]],
-    [[8, 9, 8], [9, 9, 8], [9, 9, 9], [8, 9, 9]],
-    [[8, 8, 9], [8, 9, 9], [9, 9, 9], [9, 8, 9]],
-    [[8, 12, 12], [8, 12, 9], [8, 8, 9], [8, 8, 12]],
-    [[8, 12, 9], [8, 12, 8], [8, 9, 8], [8, 9, 9]],
-    [[8, 8, 12], [8, 8, 9], [12, 8, 9], [12, 8, 12]],
-    [[9, 8, 9], [9, 8, 8], [12, 8, 8], [12, 8, 9]],
-    [[12, 12, 8], [12, 9, 8], [8, 9, 8], [8, 12, 8]],
-    [[12, 9, 8], [12, 8, 8], [9, 8, 8], [9, 9, 8]]
+    [[9, 9, 8], [9, 9, 9], [9, 8, 9], [9, 8, 8]],
+    [[8, 9, 9], [9, 9, 9], [9, 9, 8], [8, 9, 8]],
+    [[9, 8, 9], [9, 9, 9], [8, 9, 9], [8, 8, 9]],
+    [[8, 9, 9], [8, 9, 8], [8, 8, 8], [8, 8, 9]],
+    [[8, 8, 9], [8, 8, 8], [9, 8, 8], [9, 8, 9]],
+    [[9, 9, 8], [9, 8, 8], [8, 8, 8], [8, 9, 8]]
   ]
-  t.notThrows.skip(() => geom3.validate(result3))
-  t.is(obs.length, 12)
+*/
+  exp = [
+    [[9, 9, 8], [9, 9, 9], [9, 8, 9], [9, 8, 8]],
+    [[8, 9, 9], [9, 9, 9], [9, 9, 8], [8, 9, 8]],
+    [[9, 8, 9], [9, 9, 9], [8, 9, 9], [8, 8, 9]],
+    [[8, 9, 9], [8, 9, 8], [8, 8, 8], [8, 8, 9]],
+    [[8, 8, 9], [8, 8, 8], [9, 8, 8], [9, 8, 9]],
+    [[9, 8, 8], [8, 8, 8], [8, 9, 8], [9, 9, 8]]
+  ]
+
+  t.notThrows(() => geom3.validate(result3))
+  t.is(obs.length, 6)
   t.true(comparePolygonsAsPoints(obs, exp))
 
-  // subtract of two completely overlapping objects
-  const result4 = subtract(geometry1, geometry3)
+  // intersect of two completely overlapping objects
+  const result4 = intersect(geometry1, geometry3)
   obs = geom3.toPoints(result4)
-  t.notThrows(() => geom3.validate(result4))
-  t.is(obs.length, 0)
+  t.notThrows.skip(() => geom3.validate(result4))
+  t.is(obs.length, 32)
 })

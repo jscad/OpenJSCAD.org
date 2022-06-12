@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io@2.3.3...@jscad/io@2.4.0) (2022-06-12)
+
+
+### Features
+
+* **x3d-serializer:** enhanced to convert 2D geometry and path to X3D Polyline2D ([#1091](https://github.com/jscad/OpenJSCAD.org/issues/1091)) ([4f763a8](https://github.com/jscad/OpenJSCAD.org/commit/4f763a8def39f3b0454f2079f3c1fd7da52dd880))
+
+
+
+
+
+## [2.3.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io@2.3.2...@jscad/io@2.3.3) (2022-05-15)
+
+**Note:** Version bump only for package @jscad/io
+
+
+
+
+
+## [2.3.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io@2.3.1...@jscad/io@2.3.2) (2022-04-24)
+
+**Note:** Version bump only for package @jscad/io
+
+
+
+
+
 ## [2.3.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io@2.3.0...@jscad/io@2.3.1) (2022-04-03)
 
 **Note:** Version bump only for package @jscad/io

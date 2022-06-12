@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.6.0...@jscad/regl-renderer@2.6.1) (2022-06-12)
+
+**Note:** Version bump only for package @jscad/regl-renderer
+
+
+
+
+
+# [2.6.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.5.9...@jscad/regl-renderer@2.6.0) (2022-05-15)
+
+
+### Features
+
+* **regl-renderer:** added support for multicolor lines ([#1060](https://github.com/jscad/OpenJSCAD.org/issues/1060)) ([d5eb65b](https://github.com/jscad/OpenJSCAD.org/commit/d5eb65b298afcabd4231236c3aa5d5cc092db8d4))
+
+
+
+
+
+## [2.5.9](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.5.8...@jscad/regl-renderer@2.5.9) (2022-04-24)
+
+
+### Bug Fixes
+
+* **regl-render:** removed unnecessary preventDefault in demo.html ([#1068](https://github.com/jscad/OpenJSCAD.org/issues/1068)) ([b2ff7c3](https://github.com/jscad/OpenJSCAD.org/commit/b2ff7c33cd3a8a0fc242b42f5e4bb2690eaef081))
+
+
+### Performance Improvements
+
+* **modeling:** faster geom2.toOutlines ([#1064](https://github.com/jscad/OpenJSCAD.org/issues/1064)) ([5cb2f65](https://github.com/jscad/OpenJSCAD.org/commit/5cb2f652fa099593e6ec133fe879ecf8a09705e9))
+
+
+
+
+
 ## [2.5.8](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.5.7...@jscad/regl-renderer@2.5.8) (2022-04-03)
 
 **Note:** Version bump only for package @jscad/regl-renderer

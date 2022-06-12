@@ -1,6 +1,6 @@
 import Poly3 from './type'
-import Vec3 from '../../maths/vec3/type'
+import Vec4 from '../../maths/vec4/type'
 
 export default measureBoundingSphere
 
-declare function measureBoundingSphere(polygon: Poly3): [Vec3, Vec3]
+declare function measureBoundingSphere(polygon: Poly3): Vec4

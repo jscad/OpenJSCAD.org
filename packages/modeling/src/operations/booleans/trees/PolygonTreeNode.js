@@ -132,8 +132,8 @@ class PolygonTreeNode {
     const polygon = this.polygon
     if (polygon) {
       const bound = poly3.measureBoundingSphere(polygon)
-      const sphereradius = bound[1] + EPS // ensure radius is LARGER then polygon
-      const spherecenter = bound[0]
+      const sphereradius = bound[3] + EPS // ensure radius is LARGER then polygon
+      const spherecenter = bound
       const d = vec3.dot(splane, spherecenter) - splane[3]
       if (d > sphereradius) {
         frontnodes.push(this)

@@ -111,15 +111,31 @@ const makeWebRequire = (filesAndFolders, options) => {
         const matchingModule = {
           exports: {},
           _compile: (content, fileName) => {
-            const moduleMakerFunction = new Function('require', 'module', content) // eslint-disable-line no-new-func
-            moduleMakerFunction(_require.bind(null, entry.fullPath), matchingModule)
+            try {
+              const moduleMakerFunction = new Function('require', 'module', content) // eslint-disable-line no-new-func
+              moduleMakerFunction(_require.bind(null, entry.fullPath), matchingModule)
+            } catch (e) {
+              // catch errors and build a context specific error, with file name and stack trace
+              // the stack trace mimics the style of nodejs
+              const message = e.message
+              fileName = fileName.replace('/', '')
+              // NOTE: only firefox provides line and column numbers
+              const lineNumber = e.lineNumber ? e.lineNumber - 2 : 0 // the call to Function (above) adds two lines
+              const columnNumber = e.columnNumber ? e.columnNumber : 0
+              if (e.stack.startsWith('Object')) {
+                e.stack = `${e.stack}\nObject.<anonymous> (${fileName}:${lineNumber}:${columnNumber})`
+              } else {
+                e = new SyntaxError(message, fileName, lineNumber)
+                e.columnNumber = columnNumber
+                e.stack = `Object.<anonymous> (${fileName}:${lineNumber}:${columnNumber})`
+              }
+              throw e
+            }
 
             const paramDefFromSource = content.includes('@jscad-params') ? getParameterDefinitionsFromSource(content, fileName) : []
             const originalFunc = matchingModule.exports.getParameterDefinitions
             // replace getParameterDefinitions in the module, with version taht adds parsed definitions
             matchingModule.exports.getParameterDefinitions = () => combineParameterDefinitions(paramDefFromSource, originalFunc ? originalFunc() || [] : [])
-            // add to core to resolve later references
-            // FIXME coreModules[entry.fullPath] = matchingModule.exports
           }
         }
         extensions[baseExt](matchingModule, entry.fullPath)

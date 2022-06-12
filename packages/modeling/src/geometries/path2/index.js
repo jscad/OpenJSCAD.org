@@ -22,7 +22,6 @@ module.exports = {
   close: require('./close'),
   concat: require('./concat'),
   create: require('./create'),
-  eachPoint: require('./eachPoint'),
   equals: require('./equals'),
   fromPoints: require('./fromPoints'),
   fromCompactBinary: require('./fromCompactBinary'),

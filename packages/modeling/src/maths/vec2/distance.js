@@ -9,7 +9,7 @@
 const distance = (a, b) => {
   const x = b[0] - a[0]
   const y = b[1] - a[1]
-  return Math.hypot(x, y)
+  return Math.sqrt(x * x + y * y)
 }
 
 module.exports = distance

@@ -43,7 +43,7 @@ const cuboid = (options) => {
         ]
         return pos
       })
-      return poly3.fromPoints(points)
+      return poly3.create(points)
     })
   )
   return result
