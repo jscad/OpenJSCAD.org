@@ -5,25 +5,24 @@ const callBackToStream = require('../../most-utils/callbackToObservable')
 const makeWorkerEffect = (workerPath) => {
   const workerEventsCb = callBackToStream()
 
-  let _worker = WebWorkify(workerPath)
+  let _worker = WebWorkify(workerPath, {})
   _worker.onerror = (error) => workerEventsCb.callback({ error })
   _worker.onmessage = (message) => workerEventsCb.callback(message)
 
   const workerSink = (outToWorker$) => {
     // cancel whatever is going on in the worker by terminating it
     outToWorker$.filter(({ cmd }) => cmd === 'cancel')
-      .forEach((_) => _worker.terminate())
+      .forEach((task) => {
+        _worker.terminate()
+        _worker = WebWorkify(workerPath)
+        _worker.onerror = (error) => workerEventsCb.callback({ error })
+        _worker.onmessage = (message) => workerEventsCb.callback(message)
+      })
 
     // send other messages to the worker
     outToWorker$
       .filter(({ cmd }) => cmd !== 'cancel')
       .forEach((task) => {
-        // FIXME: sub optimal ! worker recreation is SLOW and should not be systematic
-        _worker.terminate()
-        _worker = WebWorkify(workerPath)
-        _worker.onerror = (error) => workerEventsCb.callback({ error })
-        _worker.onmessage = (message) => workerEventsCb.callback(message)
-        // do the task
         _worker.postMessage(task)
       })
   }
