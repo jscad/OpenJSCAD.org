@@ -28,15 +28,15 @@ const addSide = (sidemap, vertextag2sidestart, vertextag2sideend, vertex0, verte
   } else {
     sidemap.get(newsidetag).push(newsideobj)
   }
-  if (starttag in vertextag2sidestart) {
-    vertextag2sidestart[starttag].push(newsidetag)
+  if (vertextag2sidestart.has(starttag)) {
+    vertextag2sidestart.get(starttag).push(newsidetag)
   } else {
-    vertextag2sidestart[starttag] = [newsidetag]
+    vertextag2sidestart.set(starttag, [newsidetag])
   }
-  if (endtag in vertextag2sideend) {
-    vertextag2sideend[endtag].push(newsidetag)
+  if (vertextag2sideend.has(endtag)) {
+    vertextag2sideend.get(endtag).push(newsidetag)
   } else {
-    vertextag2sideend[endtag] = [newsidetag]
+    vertextag2sideend.set(endtag, [newsidetag])
   }
   return newsidetag
 }
@@ -67,18 +67,18 @@ const deleteSide = (sidemap, vertextag2sidestart, vertextag2sideend, vertex0, ve
   }
 
   // adjust start and end lists
-  idx = vertextag2sidestart[starttag].indexOf(sidetag)
+  idx = vertextag2sidestart.get(starttag).indexOf(sidetag)
   if (assert && idx < 0) throw new Error('assert failed')
-  vertextag2sidestart[starttag].splice(idx, 1)
-  if (vertextag2sidestart[starttag].length === 0) {
-    delete vertextag2sidestart[starttag]
+  vertextag2sidestart.get(starttag).splice(idx, 1)
+  if (vertextag2sidestart.get(starttag).length === 0) {
+    vertextag2sidestart.delete(starttag)
   }
 
-  idx = vertextag2sideend[endtag].indexOf(sidetag)
+  idx = vertextag2sideend.get(endtag).indexOf(sidetag)
   if (assert && idx < 0) throw new Error('assert failed')
-  vertextag2sideend[endtag].splice(idx, 1)
-  if (vertextag2sideend[endtag].length === 0) {
-    delete vertextag2sideend[endtag]
+  vertextag2sideend.get(endtag).splice(idx, 1)
+  if (vertextag2sideend.get(endtag).length === 0) {
+    vertextag2sideend.delete(endtag)
   }
 }
 
@@ -158,25 +158,24 @@ const insertTjunctions = (polygons) => {
   }
 
   if (sidemap.size > 0) {
-    // console.log('insertTjunctions',sidemap.size)
     // STEP 2 : create a list of starting sides and ending sides
-    const vertextag2sidestart = {}
-    const vertextag2sideend = {}
-    const sidestocheck = {}
+    const vertextag2sidestart = new Map()
+    const vertextag2sideend = new Map()
+    const sidesToCheck = new Map()
     for (const [sidetag, sideobjs] of sidemap) {
-      sidestocheck[sidetag] = true
+      sidesToCheck.set(sidetag, true)
       sideobjs.forEach((sideobj) => {
         const starttag = getTag(sideobj.vertex0)
         const endtag = getTag(sideobj.vertex1)
-        if (starttag in vertextag2sidestart) {
-          vertextag2sidestart[starttag].push(sidetag)
+        if (vertextag2sidestart.has(starttag)) {
+          vertextag2sidestart.get(starttag).push(sidetag)
         } else {
-          vertextag2sidestart[starttag] = [sidetag]
+          vertextag2sidestart.set(starttag, [sidetag])
         }
-        if (endtag in vertextag2sideend) {
-          vertextag2sideend[endtag].push(sidetag)
+        if (vertextag2sideend.has(endtag)) {
+          vertextag2sideend.get(endtag).push(sidetag)
         } else {
-          vertextag2sideend[endtag] = [sidetag]
+          vertextag2sideend.set(endtag, [sidetag])
         }
       })
     }
@@ -187,13 +186,13 @@ const insertTjunctions = (polygons) => {
       if (sidemap.size === 0) break
 
       for (const sidetag of sidemap.keys()) {
-        sidestocheck[sidetag] = true
+        sidesToCheck.set(sidetag, true)
       }
 
       let donesomething = false
       while (true) {
-        const sidetags = Object.keys(sidestocheck)
-        if (sidetags.length === 0) break // sidestocheck is empty, we're done!
+        const sidetags = Array.from(sidesToCheck.keys())
+        if (sidetags.length === 0) break // sidesToCheck is empty, we're done!
         const sidetagtocheck = sidetags[0]
         let donewithside = true
         if (sidemap.has(sidetagtocheck)) {
@@ -207,12 +206,12 @@ const insertTjunctions = (polygons) => {
             const endvertextag = getTag(endvertex)
             let matchingsides = []
             if (directionindex === 0) {
-              if (startvertextag in vertextag2sideend) {
-                matchingsides = vertextag2sideend[startvertextag]
+              if (vertextag2sideend.has(startvertextag)) {
+                matchingsides = vertextag2sideend.get(startvertextag)
               }
             } else {
-              if (startvertextag in vertextag2sidestart) {
-                matchingsides = vertextag2sidestart[startvertextag]
+              if (vertextag2sidestart.has(startvertextag)) {
+                matchingsides = vertextag2sidestart.get(startvertextag)
               }
             }
             for (let matchingsideindex = 0; matchingsideindex < matchingsides.length; matchingsideindex++) {
@@ -267,8 +266,8 @@ const insertTjunctions = (polygons) => {
                     deleteSide(sidemap, vertextag2sidestart, vertextag2sideend, matchingside.vertex0, matchingside.vertex1, polygonindex)
                     const newsidetag1 = addSide(sidemap, vertextag2sidestart, vertextag2sideend, matchingside.vertex0, endvertex, polygonindex)
                     const newsidetag2 = addSide(sidemap, vertextag2sidestart, vertextag2sideend, endvertex, matchingside.vertex1, polygonindex)
-                    if (newsidetag1 !== null) sidestocheck[newsidetag1] = true
-                    if (newsidetag2 !== null) sidestocheck[newsidetag2] = true
+                    if (newsidetag1 !== null) sidesToCheck.set(newsidetag1, true)
+                    if (newsidetag2 !== null) sidesToCheck.set(newsidetag2, true)
                     donewithside = false
                     directionindex = 2 // skip reverse direction check
                     donesomething = true
@@ -280,7 +279,7 @@ const insertTjunctions = (polygons) => {
           } // for directionindex
         } // if(sidetagtocheck in sidemap)
         if (donewithside) {
-          delete sidestocheck[sidetagtocheck]
+          sidesToCheck.delete(sidetagtocheck)
         }
       }
       if (!donesomething) break
