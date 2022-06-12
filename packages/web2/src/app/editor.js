@@ -1,9 +1,8 @@
-import { EditorState } from '@codemirror/state'
+import { Compartment, EditorState } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 import { } from '@codemirror/highlight'
-import { basicSetup } from '@codemirror/basic-setup'
-import { javascript } from '@codemirror/lang-javascript'
-import { Jsx6 } from '../jsx6'
+import { Jsx6 } from '@jsx6/jsx6'
+import { codeMirrorSetup } from './codeMirrorSetup'
 
 export class JscadEditor extends Jsx6 {
   init () {
@@ -54,7 +53,7 @@ function main({
 
 module.exports = { main } // eslint-disable-line      
       `,
-      extensions: [basicSetup, javascript()]
+      extensions: codeMirrorSetup
     })
     this.view = new EditorView({
       state: startState,

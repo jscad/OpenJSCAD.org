@@ -86,7 +86,7 @@ const handlers = {
           if (file.webkitGetAsEntry) file = file.webkitGetAsEntry()
           else if (file.getAsEntry) file = file.getAsEntry()
           else file = file.webkitGetAsFile()
-          console.log('... item file[' + i + '].name = ' + file.name)
+          console.log('... webkit file[' + i + '].name = ' + file.name)
           break
         }
       }

@@ -1,6 +1,6 @@
 
 import { line } from '@jscad/vtree/core/modeling/primitives'
-import { Jsx6, moveParams, copyBindings } from '../jsx6'
+import { Jsx6, moveParams, copyBindings } from '@jsx6/jsx6'
 
 const makeAxes = (len = 100, forceColors4) =>{
   const lines = Float32Array.of(
@@ -119,7 +119,7 @@ export class Viewer extends Jsx6 {
     this.updateView(theme)
   }
 
-  updateView(theme) {
+  updateView(theme={}) {
     this.sceneData.axis = [makeAxes(100)]
     this.sceneData.grid = makeGrid({color1: theme.grid1, color2: theme.grid2})
     this.updateScene()
@@ -153,7 +153,7 @@ export class Viewer extends Jsx6 {
         console.log(this.viewer.destroy, this.viewer, this.camera)
         this.viewer.destroy()
       }
-      this.viewer = viewerFunction(this.el,{camera:this.camera, bg:this.theme().bg})
+      this.viewer = viewerFunction(this.el,{camera:this.camera, bg:this.theme()?.bg})
       this.updateView(this.theme())
     }
 

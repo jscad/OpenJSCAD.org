@@ -1,4 +1,4 @@
-import { Jsx6, copyBinding } from '../jsx6'
+import { Jsx6, copyBinding } from '@jsx6/jsx6'
 
 export default class Toggle extends Jsx6 {
   tagName = 'button'

@@ -5,7 +5,7 @@ import { T, setTranslations, refreshTranslations,
   NOT,
   makeBinding,
   findParent,
-  insertBefore} from '../jsx6'
+  insertBefore} from '@jsx6/jsx6'
 import { JscadEditor } from './editor'
 import gearIcon from '../icons/gear'
 import editIcon from '../icons/edit'
@@ -49,8 +49,7 @@ export class App extends Jsx6 {
   worker
   cName = 'MainApp'
   value = 13
-  state = { showDrop:false }
-  
+
   init (state) {
     this.worker = new Worker('./jscad-worker.js')
     this.worker.onmessage = m=>{

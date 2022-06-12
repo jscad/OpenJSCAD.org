@@ -1,4 +1,4 @@
-import { eq, findParent, getValue, Jsx6, setSelected, setValue, setVisible, T } from '../jsx6'
+import { eq, findParent, getValue, Jsx6, setSelected, setValue, setVisible, T } from '@jsx6/jsx6'
 
 // class CustomInput extends Jsx6 {
 // }

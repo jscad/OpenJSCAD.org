@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { svg } from '../jsx6'
+import { svg } from '@jsx6/jsx6'
 // https://iconmonstr.com/note-23-svg/
 
 export default svg(h => (
