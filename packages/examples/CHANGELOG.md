@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.4.0...@jscad/examples@2.4.1) (2022-06-12)
+
+
+### Bug Fixes
+
+* **examples:** create uniform segments for involute gear example ([#1093](https://github.com/jscad/OpenJSCAD.org/issues/1093)) ([0b234f3](https://github.com/jscad/OpenJSCAD.org/commit/0b234f3f8ff6b39a967900089e2d939295163b68))
+
+
+
+
+
 # [2.4.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/examples@2.3.4...@jscad/examples@2.4.0) (2022-05-15)
 
 

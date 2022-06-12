@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.9.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.9.4...@jscad/modeling@2.9.5) (2022-06-12)
+
+
+### Bug Fixes
+
+* **modeling:** use special trig functions for rotations in maths and primitives ([#1090](https://github.com/jscad/OpenJSCAD.org/issues/1090)) ([42c2664](https://github.com/jscad/OpenJSCAD.org/commit/42c2664c088dd3cf1d53dcb26aa79524ac2958db))
+
+
+### Performance Improvements
+
+* **modeling:** optimize poly3.measureBoundingSphere and cache results for performance ([6ad02d5](https://github.com/jscad/OpenJSCAD.org/commit/6ad02d5514ac130b8867d51a090f5745115a278d))
+* **modeling:** replace Math.hypot with faster Math.sqrt()([#1099](https://github.com/jscad/OpenJSCAD.org/issues/1099)) ([1f71c5b](https://github.com/jscad/OpenJSCAD.org/commit/1f71c5b88d4132333458242d3461a91c5e637f88))
+
+
+
+
+
 ## [2.9.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.9.3...@jscad/modeling@2.9.4) (2022-05-15)
 
 

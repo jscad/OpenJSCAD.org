@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.4.12...@jscad/svg-deserializer@2.5.0) (2022-06-12)
+
+
+### Features
+
+* **x3d-serializer:** enhanced to convert 2D geometry and path to X3D Polyline2D ([#1091](https://github.com/jscad/OpenJSCAD.org/issues/1091)) ([4f763a8](https://github.com/jscad/OpenJSCAD.org/commit/4f763a8def39f3b0454f2079f3c1fd7da52dd880))
+
+
+
+
+
 ## [2.4.12](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.4.11...@jscad/svg-deserializer@2.4.12) (2022-05-15)
 
 **Note:** Version bump only for package @jscad/svg-deserializer
