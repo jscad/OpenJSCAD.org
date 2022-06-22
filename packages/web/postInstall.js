@@ -29,7 +29,6 @@ const processExamplesInDirectory = (dir, examples) => {
   files.forEach((fileName) => {
     const filePath = path.join(dir, fileName)
     if (fs.lstatSync(filePath).isDirectory()) {
-      if (fileName === 'old') return
       processExamplesInDirectory(filePath, examples)
     } else if (filePath.endsWith('.js')) {
       processExamplesFile(filePath, examples)
