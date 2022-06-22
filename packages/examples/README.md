@@ -63,9 +63,5 @@ See for more details
 (unless specified otherwise)
 
 Some content released under different licence:
-- thing_7-Zomboe.stl: CC-BY-NC-SA
 - 3d_sculpture-VernonBussler.stl: CC-BY-SA
 - frog-OwenCollins.stl: CC-BY-NC-SA
-- organic_flower-Bogoboy23.stl: CC-BY
-- treefrog-Jerrill.stl: CC-BY-NC-SA
-- yoda-RichRap.stl: CC-BY-SA
