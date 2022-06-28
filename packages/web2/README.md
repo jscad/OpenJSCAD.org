@@ -1,8 +1,9 @@
 # @jscad/web: NEW JSCAD Web experiment
 
-lerna should be isntalled globally
+lerna and esbuild should be installed globally
 ```
 npm i -g lerna
+npm i -g esbuild
 ```
 
 when downloading fresh copy of the branch follow the steps:
