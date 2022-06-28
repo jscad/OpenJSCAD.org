@@ -1,6 +1,21 @@
 # @jscad/web: NEW JSCAD Web experiment
-local web dev:
 
+
+when downloading fresh copy of the branch follow the steps:
+
+```
+git clone -b proto-web2 https://github.com/jscad/OpenJSCAD.org.git
+
+cd OpenJSCAD.org
+
+lerna bootstrap
+
+cd packages/web2
+
+npm install
+```
+
+Run local web dev
 ```
 npm run dev-live
 ```
