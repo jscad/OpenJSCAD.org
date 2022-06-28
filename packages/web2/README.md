@@ -1,5 +1,9 @@
 # @jscad/web: NEW JSCAD Web experiment
 
+lerna should be isntalled globally
+```
+npm i -g lerna
+```
 
 when downloading fresh copy of the branch follow the steps:
 
