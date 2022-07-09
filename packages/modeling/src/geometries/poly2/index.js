@@ -4,14 +4,19 @@
  * @module modeling/geometries/poly2
  *
  * @example
- * poly2.create([[0,0], [4,0], [4,3]])
- *
- * @example
- * {"vertices": [[0,0], [4,0], [4,3]]}
+ * const p0 = poly2.create()
+ * const p1 = poly2.create([[0,0], [4,0], [4,3]])
  */
 module.exports = {
   arePointsInside: require('./arePointsInside'),
+  clone: require('./clone'),
   create: require('./create'),
-  flip: require('./flip'),
-  measureArea: require('./measureArea')
+  isA: require('./isA'),
+  isConvex: require('./isConvex'),
+  measureArea: require('./measureArea'),
+  reverse: require('./reverse'),
+  toPoints: require('./toPoints'),
+  toString: require('./toString'),
+  transform: require('./transform'),
+  validate: require('./validate')
 }

@@ -1,5 +1,5 @@
 const measureArea = require('./measureArea')
-const flip = require('./flip')
+const reverse = require('./reverse')
 
 /**
  * Determine if the given points are inside the given polygon.
@@ -16,7 +16,7 @@ const arePointsInside = (points, polygon) => {
   if (vertices.length < 3) return 0 // nothing can be inside an empty polygon
 
   if (measureArea(polygon) < 0) {
-    polygon = flip(polygon) // CCW is required
+    polygon = reverse(polygon) // CCW is required
   }
 
   const sum = points.reduce((acc, point) => acc + isPointInside(point, vertices), 0)
