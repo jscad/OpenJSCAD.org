@@ -15,4 +15,3 @@ test('poly2: clone() should return a new poly2 with same values', (t) => {
   t.true(comparePolygons(ret2, org2))
   t.not(ret2, org2)
 })
-

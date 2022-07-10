@@ -9,8 +9,8 @@ test('validate: identifies polygons', (t) => {
   const ply2 = create([[0, 0], [1, 0], [1, 1]])
   t.notThrows(() => validate(ply2))
 
-  const string = toString(ply2)
-  const points = toPoints(ply2)
+  //const string = toString(ply2)
+  //const points = toPoints(ply2)
 
   // Clockwise
   const ply3 = create([[5, 5], [5, -5], [-5, -5], [-5, 5]])

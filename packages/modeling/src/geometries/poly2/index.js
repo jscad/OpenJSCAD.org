@@ -13,6 +13,7 @@ module.exports = {
   create: require('./create'),
   isA: require('./isA'),
   isConvex: require('./isConvex'),
+  isSimple: require('./isSimple'),
   measureArea: require('./measureArea'),
   reverse: require('./reverse'),
   toPoints: require('./toPoints'),

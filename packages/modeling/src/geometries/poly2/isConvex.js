@@ -12,7 +12,7 @@ const isConvex = (polygon) => {
     let curr = 0
     for (let i = 0; i < numvertices; i++) {
       curr = crossBetweenSegments(vertices[i], vertices[(i + 1) % numvertices], vertices[(i + 2) % numvertices])
-      if (curr != 0) {
+      if (curr !== 0) {
         // sum angle of crosses, looking for a change in direction
         if (curr * prev < 0) {
           return false
@@ -40,12 +40,12 @@ const crossBetweenSegments = (p1, p2, p3) => {
  * Calculate angle between two consecutive line segements; p1 -> p2, p2 -> p3.
  */
 const angleBetweenSegments = (p1, p2, p3) => {
-  var dx1 = p1[0] - p2[0]
-  var dy1 = p1[1] - p2[1]
-  var dx2 = p3[0] - p2[0]
-  var dy2 = p3[1] - p2[1]
-  var a1 = Math.atan2(dy1, dx1)
-  var a2 = Math.atan2(dy2, dx2)
+  const dx1 = p1[0] - p2[0]
+  const dy1 = p1[1] - p2[1]
+  const dx2 = p3[0] - p2[0]
+  const dy2 = p3[1] - p2[1]
+  const a1 = Math.atan2(dy1, dx1)
+  const a2 = Math.atan2(dy2, dx2)
   return a2 - a1
 }
 

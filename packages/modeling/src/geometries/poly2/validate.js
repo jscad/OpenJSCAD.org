@@ -1,7 +1,6 @@
 const vec2 = require('../../maths/vec2')
 
 const isA = require('./isA')
-const isConvex = require('./isConvex')
 const measureArea = require('./measureArea')
 
 /**
