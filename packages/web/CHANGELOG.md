@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.12](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.11...@jscad/web@2.5.12) (2022-07-17)
+
+
+### Performance Improvements
+
+* **web:** changed to retain webworker process ([#1110](https://github.com/jscad/OpenJSCAD.org/issues/1110)) ([80a85b0](https://github.com/jscad/OpenJSCAD.org/commit/80a85b018f39b837bfbb5278b180fd2568eef283))
+
+
+
+
+
 ## [2.5.11](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.10...@jscad/web@2.5.11) (2022-06-12)
 
 **Note:** Version bump only for package @jscad/web
