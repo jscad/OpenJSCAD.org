@@ -11,7 +11,7 @@
   "auto reload": "自动刷新",
   "storage": "存储",
   "export":"导出",
-  "load jscad project":"载入jscad项目",
+  "load jscad project":"载入JSCAD项目",
   "timeout for solids generation": "图形生成超时",
   "geometry generation": "生成几何图形",
   "experimental geometry caching":"开启图形缓存（实验性）",
