@@ -34,10 +34,10 @@
   "load project":"载入项目",
 
   "AMF (experimental)":"AMF（实验性）",
-  "DXF (ASCII)":"DXF (ascii)",
+  "DXF (ASCII)":"DXF (ASCII)",
   "json":"JSON",
   "STL (Binary)":"STL (二进制版)",
-  "STL (ASCII)":"STL (ascii)",
+  "STL (ASCII)":"STL (ASCII)",
 
   "update":"更新",
   "reset":"重置",
@@ -55,7 +55,7 @@
   "perspective":"透视",
   "orthographic":"正视",
 
-  "editorCommand":"Editor command",
+  "editorCommand":"编辑器命令",
   "reevaluate":"编译",
 
   "always":"永远"
