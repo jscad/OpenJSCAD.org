@@ -30,7 +30,7 @@ test('torus (simple options)', (t) => {
 })
 
 test('torus (complex options)', (t) => {
-  const obs = torus({ innerRadius: 1, outerRadius: 5, innerSegments: 32, outerSegments: 72, startAngle: Math.PI / 2, outerRotation: Math.PI / 2 })
+  const obs = torus({ innerRadius: 1, outerRadius: 5, innerSegments: 32, outerSegments: 72, startAngle: Math.TAU / 4, outerRotation: Math.TAU / 4 })
   const pts = geom3.toPoints(obs)
   t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 1212)
@@ -41,14 +41,14 @@ test('torus (complex options)', (t) => {
 })
 
 test('torus (startAngle)', (t) => {
-  const obs = torus({ startAngle: 1, endAngle: 1 + 2 * Math.PI })
+  const obs = torus({ startAngle: 1, endAngle: 1 + Math.TAU })
   const pts = geom3.toPoints(obs)
   t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 2048)
 })
 
 test('torus (square by square)', (t) => {
-  const obs = torus({ innerSegments: 4, outerSegments: 4, innerRotation: Math.PI / 2 })
+  const obs = torus({ innerSegments: 4, outerSegments: 4, innerRotation: Math.TAU / 4 })
 
   const bounds = measureBoundingBox(obs)
   const expectedBounds = [[-5, -5, -1], [5, 5, 1]]

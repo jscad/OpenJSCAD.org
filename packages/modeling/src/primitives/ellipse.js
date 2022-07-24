@@ -15,7 +15,7 @@ const { isGTE, isNumberArray } = require('./commonChecks')
  * @param {Array} [options.center=[0,0]] - center of ellipse
  * @param {Array} [options.radius=[1,1]] - radius of ellipse, along X and Y
  * @param {Number} [options.startAngle=0] - start angle of ellipse, in radians
- * @param {Number} [options.endAngle=(Math.PI * 2)] - end angle of ellipse, in radians
+ * @param {Number} [options.endAngle=Math.TAU] - end angle of ellipse, in radians
  * @param {Number} [options.segments=32] - number of segments to create per full rotation
  * @returns {geom2} new 2D geometry
  * @alias module:modeling/primitives.ellipse
@@ -27,7 +27,7 @@ const ellipse = (options) => {
     center: [0, 0],
     radius: [1, 1],
     startAngle: 0,
-    endAngle: (Math.PI * 2),
+    endAngle: Math.TAU,
     segments: 32
   }
   let { center, radius, startAngle, endAngle, segments } = Object.assign({}, defaults, options)
@@ -39,15 +39,15 @@ const ellipse = (options) => {
   if (!isGTE(endAngle, 0)) throw new Error('endAngle must be positive')
   if (!isGTE(segments, 3)) throw new Error('segments must be three or more')
 
-  startAngle = startAngle % (Math.PI * 2)
-  endAngle = endAngle % (Math.PI * 2)
+  startAngle = startAngle % Math.TAU
+  endAngle = endAngle % Math.TAU
 
-  let rotation = (Math.PI * 2)
+  let rotation = Math.TAU
   if (startAngle < endAngle) {
     rotation = endAngle - startAngle
   }
   if (startAngle > endAngle) {
-    rotation = endAngle + ((Math.PI * 2) - startAngle)
+    rotation = endAngle + (Math.TAU - startAngle)
   }
 
   const minradius = Math.min(radius[0], radius[1])
@@ -55,20 +55,20 @@ const ellipse = (options) => {
                             (2 * minradius * minradius))
   if (rotation < minangle) throw new Error('startAngle and endAngle do not define a significant rotation')
 
-  segments = Math.floor(segments * (rotation / (Math.PI * 2)))
+  segments = Math.floor(segments * (rotation / Math.TAU))
 
   const centerv = vec2.clone(center)
   const step = rotation / segments // radians per segment
 
   const points = []
-  segments = (rotation < Math.PI * 2) ? segments + 1 : segments
+  segments = (rotation < Math.TAU) ? segments + 1 : segments
   for (let i = 0; i < segments; i++) {
     const angle = (step * i) + startAngle
     const point = vec2.fromValues(radius[0] * cos(angle), radius[1] * sin(angle))
     vec2.add(point, centerv, point)
     points.push(point)
   }
-  if (rotation < Math.PI * 2) points.push(centerv)
+  if (rotation < Math.TAU) points.push(centerv)
   return geom2.fromPoints(points)
 }
 

@@ -12,7 +12,7 @@ const { isGT, isGTE, isNumberArray } = require('./commonChecks')
  * @param {Array} [options.center=[0,0]] - center of arc
  * @param {Number} [options.radius=1] - radius of arc
  * @param {Number} [options.startAngle=0] - starting angle of the arc, in radians
- * @param {Number} [options.endAngle=Math.PI*2] - ending angle of the arc, in radians
+ * @param {Number} [options.endAngle=Math.TAU] - ending angle of the arc, in radians
  * @param {Number} [options.segments=32] - number of segments to create per full rotation
  * @param {Boolean} [options.makeTangent=false] - adds line segments at both ends of the arc to ensure that the gradients at the edges are tangent
  * @returns {path2} new 2D path
@@ -23,7 +23,7 @@ const arc = (options) => {
     center: [0, 0],
     radius: 1,
     startAngle: 0,
-    endAngle: (Math.PI * 2),
+    endAngle: Math.TAU,
     makeTangent: false,
     segments: 32
   }
@@ -35,15 +35,15 @@ const arc = (options) => {
   if (!isGTE(endAngle, 0)) throw new Error('endAngle must be positive')
   if (!isGTE(segments, 4)) throw new Error('segments must be four or more')
 
-  startAngle = startAngle % (Math.PI * 2)
-  endAngle = endAngle % (Math.PI * 2)
+  startAngle = startAngle % Math.TAU
+  endAngle = endAngle % Math.TAU
 
-  let rotation = (Math.PI * 2)
+  let rotation = Math.TAU
   if (startAngle < endAngle) {
     rotation = endAngle - startAngle
   }
   if (startAngle > endAngle) {
-    rotation = endAngle + ((Math.PI * 2) - startAngle)
+    rotation = endAngle + (Math.TAU - startAngle)
   }
 
   const minangle = Math.acos(((radius * radius) + (radius * radius) - (EPS * EPS)) / (2 * radius * radius))
@@ -59,7 +59,7 @@ const arc = (options) => {
     pointArray.push(point)
   } else {
     // note: add one additional step to acheive full rotation
-    const numsteps = Math.max(1, Math.floor(segments * (rotation / (Math.PI * 2)))) + 1
+    const numsteps = Math.max(1, Math.floor(segments * (rotation / Math.TAU))) + 1
     let edgestepsize = numsteps * 0.5 / rotation // step size for half a degree
     if (edgestepsize > 0.25) edgestepsize = 0.25
 

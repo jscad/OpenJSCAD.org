@@ -36,7 +36,7 @@ test('triangle (options)', (t) => {
   t.true(comparePoints(obs, exp))
 
   // test AAA
-  geometry = triangle({ type: 'AAA', values: [Math.PI / 2, Math.PI / 4, Math.PI / 4] })
+  geometry = triangle({ type: 'AAA', values: [Math.TAU / 4, Math.TAU / 8, Math.TAU / 8] })
   obs = geom2.toPoints(geometry)
   exp = [
     [0, 0],

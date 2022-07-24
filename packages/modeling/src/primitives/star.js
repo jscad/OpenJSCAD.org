@@ -13,7 +13,7 @@ const getRadiusRatio = (vertices, density) => {
 }
 
 const getPoints = (vertices, radius, startAngle, center) => {
-  const a = (Math.PI * 2) / vertices
+  const a = Math.TAU / vertices
 
   const points = []
   for (let i = 0; i < vertices; i++) {
@@ -63,7 +63,7 @@ const star = (options) => {
   vertices = Math.floor(vertices)
   density = Math.floor(density)
 
-  startAngle = startAngle % (Math.PI * 2)
+  startAngle = startAngle % Math.TAU
 
   if (innerRadius === 0) {
     if (!isGTE(density, 2)) throw new Error('density must be two or more')

@@ -17,7 +17,7 @@ const { isGT, isGTE, isNumberArray } = require('./commonChecks')
  * @param {Array} [options.startRadius=[1,1]] - radius of rounded start, must be two dimensional array
  * @param {Number} [options.startAngle=0] - start angle of cylinder, in radians
  * @param {Array} [options.endRadius=[1,1]] - radius of rounded end, must be two dimensional array
- * @param {Number} [options.endAngle=(Math.PI * 2)] - end angle of cylinder, in radians
+ * @param {Number} [options.endAngle=Math.TAI] - end angle of cylinder, in radians
  * @param {Number} [options.segments=32] - number of segments to create per full rotation
  * @returns {geom3} new geometry
  * @alias module:modeling/primitives.cylinderElliptic
@@ -32,7 +32,7 @@ const cylinderElliptic = (options) => {
     startRadius: [1, 1],
     startAngle: 0,
     endRadius: [1, 1],
-    endAngle: (Math.PI * 2),
+    endAngle: Math.TAU,
     segments: 32
   }
   let { center, height, startRadius, startAngle, endRadius, endAngle, segments } = Object.assign({}, defaults, options)
@@ -48,15 +48,15 @@ const cylinderElliptic = (options) => {
   if (!isGTE(endAngle, 0)) throw new Error('endAngle must be positive')
   if (!isGTE(segments, 4)) throw new Error('segments must be four or more')
 
-  startAngle = startAngle % (Math.PI * 2)
-  endAngle = endAngle % (Math.PI * 2)
+  startAngle = startAngle % Math.TAU
+  endAngle = endAngle % Math.TAU
 
-  let rotation = (Math.PI * 2)
+  let rotation = Math.TAU
   if (startAngle < endAngle) {
     rotation = endAngle - startAngle
   }
   if (startAngle > endAngle) {
-    rotation = endAngle + ((Math.PI * 2) - startAngle)
+    rotation = endAngle + (Math.TAU - startAngle)
   }
 
   const minradius = Math.min(startRadius[0], startRadius[1], endRadius[0], endRadius[1])
@@ -64,7 +64,7 @@ const cylinderElliptic = (options) => {
                             (2 * minradius * minradius))
   if (rotation < minangle) throw new Error('startAngle and endAngle do not define a significant rotation')
 
-  const slices = Math.floor(segments * (rotation / (Math.PI * 2)))
+  const slices = Math.floor(segments * (rotation / Math.TAU))
 
   const start = vec3.fromValues(0, 0, -(height / 2))
   const end = vec3.fromValues(0, 0, height / 2)
@@ -97,8 +97,8 @@ const cylinderElliptic = (options) => {
   for (let i = 0; i < slices; i++) {
     const t0 = i / slices
     let t1 = (i + 1) / slices
-    // fix rounding error when rotating 2 * PI radians
-    if (rotation === 2 * Math.PI && i === slices - 1) t1 = 0
+    // fix rounding error when rotating TAU radians
+    if (rotation === Math.TAU && i === slices - 1) t1 = 0
 
     if (endRadius[0] === startRadius[0] && endRadius[1] === startRadius[1]) {
       polygons.push(fromPoints(start, point(0, t1, endRadius), point(0, t0, endRadius)))
@@ -119,7 +119,7 @@ const cylinderElliptic = (options) => {
       }
     }
   }
-  if (rotation < (Math.PI * 2)) {
+  if (rotation < Math.TAU) {
     polygons.push(fromPoints(start, point(0, 0, startRadius), end))
     polygons.push(fromPoints(point(0, 0, startRadius), point(1, 0, endRadius), end))
     polygons.push(fromPoints(start, end, point(0, 1, startRadius)))

@@ -74,7 +74,7 @@ const roundedCylinder = (options) => {
   const v2 = vec3.create()
   let prevcylinderpoint
   for (let slice1 = 0; slice1 <= segments; slice1++) {
-    const angle = 2 * Math.PI * slice1 / segments
+    const angle = Math.TAU * slice1 / segments
     const cylinderpoint = vec3.add(vec3.create(), vec3.scale(v1, xvector, cos(angle)), vec3.scale(v2, yvector, sin(angle)))
     if (slice1 > 0) {
       // cylinder wall
@@ -87,7 +87,7 @@ const roundedCylinder = (options) => {
 
       let prevcospitch, prevsinpitch
       for (let slice2 = 0; slice2 <= qsegments; slice2++) {
-        const pitch = 0.5 * Math.PI * slice2 / qsegments
+        const pitch = Math.TAU / 4 * slice2 / qsegments
         const cospitch = cos(pitch)
         const sinpitch = sin(pitch)
         if (slice2 > 0) {

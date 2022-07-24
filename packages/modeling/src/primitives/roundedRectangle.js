@@ -51,15 +51,15 @@ const roundedRectangle = (options) => {
   const corner2Points = []
   const corner3Points = []
   for (let i = 0; i <= cornersegments; i++) {
-    const radians = Math.PI / 2 * i / cornersegments
+    const radians = Math.TAU / 4 * i / cornersegments
     const point = vec2.fromAngleRadians(vec2.create(), radians)
     vec2.scale(point, point, roundRadius)
     corner0Points.push(vec2.add(vec2.create(), corner0, point))
-    vec2.rotate(point, point, vec2.create(), Math.PI / 2)
+    vec2.rotate(point, point, vec2.create(), Math.TAU / 4)
     corner1Points.push(vec2.add(vec2.create(), corner1, point))
-    vec2.rotate(point, point, vec2.create(), Math.PI / 2)
+    vec2.rotate(point, point, vec2.create(), Math.TAU / 4)
     corner2Points.push(vec2.add(vec2.create(), corner2, point))
-    vec2.rotate(point, point, vec2.create(), Math.PI / 2)
+    vec2.rotate(point, point, vec2.create(), Math.TAU / 4)
     corner3Points.push(vec2.add(vec2.create(), corner3, point))
   }
 

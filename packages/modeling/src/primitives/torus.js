@@ -14,7 +14,7 @@ const { isGT, isGTE } = require('./commonChecks')
  * @param {Integer} [options.innerSegments=32] - number of segments to create per rotation
  * @param {Integer} [options.outerSegments=32] - number of segments to create per rotation
  * @param {Integer} [options.innerRotation=0] - rotation of small (inner) circle in radians
- * @param {Number} [options.outerRotation=(PI * 2)] - rotation (outer) of the torus (RADIANS)
+ * @param {Number} [options.outerRotation=Math.TAU] - rotation (outer) of the torus (RADIANS)
  * @param {Number} [options.startAngle=0] - start angle of the torus (RADIANS)
  * @returns {geom3} new 3D geometry
  * @alias module:modeling/primitives.torus
@@ -30,7 +30,7 @@ const torus = (options) => {
     outerSegments: 32,
     innerRotation: 0,
     startAngle: 0,
-    outerRotation: Math.PI * 2
+    outerRotation: Math.TAU
   }
   const { innerRadius, innerSegments, outerRadius, outerSegments, innerRotation, startAngle, outerRotation } = Object.assign({}, defaults, options)
 

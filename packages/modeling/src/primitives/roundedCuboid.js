@@ -11,7 +11,7 @@ const { sin, cos } = require('../maths/utils/trigonometry')
 const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 
 const createCorners = (center, size, radius, segments, slice, positive) => {
-  const pitch = (Math.PI / 2) * slice / segments
+  const pitch = (Math.TAU / 4) * slice / segments
   const cospitch = cos(pitch)
   const sinpitch = sin(pitch)
 
@@ -31,16 +31,16 @@ const createCorners = (center, size, radius, segments, slice, positive) => {
   const corner2Points = []
   const corner3Points = []
   for (let i = 0; i <= layersegments; i++) {
-    const radians = layersegments > 0 ? Math.PI / 2 * i / layersegments : 0
+    const radians = layersegments > 0 ? Math.TAU / 4 * i / layersegments : 0
     const point2d = vec2.fromAngleRadians(vec2.create(), radians)
     vec2.scale(point2d, point2d, layerradius)
     const point3d = vec3.fromVec2(vec3.create(), point2d)
     corner0Points.push(vec3.add(vec3.create(), corner0, point3d))
-    vec3.rotateZ(point3d, point3d, [0, 0, 0], Math.PI / 2)
+    vec3.rotateZ(point3d, point3d, [0, 0, 0], Math.TAU / 4)
     corner1Points.push(vec3.add(vec3.create(), corner1, point3d))
-    vec3.rotateZ(point3d, point3d, [0, 0, 0], Math.PI / 2)
+    vec3.rotateZ(point3d, point3d, [0, 0, 0], Math.TAU / 4)
     corner2Points.push(vec3.add(vec3.create(), corner2, point3d))
-    vec3.rotateZ(point3d, point3d, [0, 0, 0], Math.PI / 2)
+    vec3.rotateZ(point3d, point3d, [0, 0, 0], Math.TAU / 4)
     corner3Points.push(vec3.add(vec3.create(), corner3, point3d))
   }
   if (!positive) {

@@ -86,7 +86,7 @@ test('arc (options)', (t) => {
     [0.9350162426854147, -0.35460488704253595],
     [1, -2.4492935982947064e-16]
   ]
-  geometry = arc({ startAngle: Math.PI / 2, segments: 16 })
+  geometry = arc({ startAngle: Math.TAU / 4, segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
@@ -102,7 +102,7 @@ test('arc (options)', (t) => {
     [0.30901699437494745, 0.9510565162951535],
     [6.123233995736766e-17, 1]
   ]
-  geometry = arc({ endAngle: Math.PI / 2, segments: 16 })
+  geometry = arc({ endAngle: Math.TAU / 4, segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
@@ -167,7 +167,7 @@ test('arc (rotations)', (t) => {
     [-0.9510565162951535, 0.3090169943749475],
     [-1, 1.2246467991473532e-16]
   ]
-  let geometry = arc({ startAngle: Math.PI / 2, endAngle: Math.PI, segments: 16 })
+  let geometry = arc({ startAngle: Math.TAU / 4, endAngle: Math.TAU / 2, segments: 16 })
   let obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
@@ -186,7 +186,7 @@ test('arc (rotations)', (t) => {
     [0.9396926207859084, -0.3420201433256686],
     [1, -2.4492935982947064e-16]
   ]
-  geometry = arc({ startAngle: Math.PI, endAngle: Math.PI * 2, segments: 16 })
+  geometry = arc({ startAngle: Math.TAU / 2, endAngle: Math.TAU, segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
@@ -205,7 +205,7 @@ test('arc (rotations)', (t) => {
     [0.34202014332566866, 0.9396926207859084],
     [3.061616997868383e-16, 1]
   ]
-  geometry = arc({ startAngle: Math.PI * 2 * 0.75, endAngle: Math.PI / 2, segments: 16 })
+  geometry = arc({ startAngle: Math.TAU * 0.75, endAngle: Math.TAU / 4, segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
@@ -213,7 +213,7 @@ test('arc (rotations)', (t) => {
   t.true(comparePoints(obs, exp))
 
   exp = [[-1.8369701987210297e-16, -1]]
-  geometry = arc({ startAngle: Math.PI * 2 * 0.75, endAngle: 270.000000005 * 0.017453292519943295, segments: 16 })
+  geometry = arc({ startAngle: Math.TAU * 0.75, endAngle: 270.000000005 * 0.017453292519943295, segments: 16 })
   obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))

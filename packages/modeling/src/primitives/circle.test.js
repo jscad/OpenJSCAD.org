@@ -84,7 +84,7 @@ test('circle (options)', (t) => {
   t.true(comparePoints(pts, exp))
 
   // test startAngle
-  geometry = circle({ radius: 3.5, startAngle: Math.PI / 2, segments: 16 })
+  geometry = circle({ radius: 3.5, startAngle: Math.TAU / 4, segments: 16 })
   pts = geom2.toPoints(geometry)
   exp = [
     [0, 3.5],
@@ -108,7 +108,7 @@ test('circle (options)', (t) => {
   t.true(comparePoints(pts, exp))
 
   // test endAngle
-  geometry = circle({ radius: 3.5, endAngle: Math.PI / 2, segments: 16 })
+  geometry = circle({ radius: 3.5, endAngle: Math.TAU / 4, segments: 16 })
   pts = geom2.toPoints(geometry)
   exp = [
     [3.5, 0],
@@ -124,7 +124,7 @@ test('circle (options)', (t) => {
   t.true(comparePoints(pts, exp))
 
   // test full rotation with non-zero startAngle
-  geometry = circle({ startAngle: 1, endAngle: 1 + 2 * Math.PI })
+  geometry = circle({ startAngle: 1, endAngle: 1 + Math.TAU })
   pts = geom2.toPoints(geometry)
 
   t.notThrows(() => geom2.validate(geometry))
