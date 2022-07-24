@@ -24,6 +24,15 @@ const NEPS = 1e-13
 // for comparing coplanar polygons, as provided by the sphere primitive at high
 // segmentation. NEPS is for 64 bit Number values.
 
+/**
+ * The Math.TAU property represents the ratio of the circumference of a circle to its radius.
+ * Approximately 6.28318530717958647692
+ * @alias module:modeling/maths.TAU
+ * @default
+ */
+Math.TAU = Math.PI * 2
+
+
 module.exports = {
   EPS,
   NEPS,
