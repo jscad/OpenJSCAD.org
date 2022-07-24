@@ -13,7 +13,7 @@
 
   "Generation":"生成几何图形",
   "enable geometry caching":"开启图形缓存（实验性）",
-  "timeout for generation":"超时停止生成图形时间（单位：毫秒）",
+  "timeout for generation":"超时停止生成时间（单位：毫秒）",
 
   "Shortcuts":"快捷键",
 
