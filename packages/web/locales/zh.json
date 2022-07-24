@@ -1,5 +1,5 @@
 {
-  "language":"中文",
+  "language":"chinese",
 
   "english":"英文",
   "german":"德文",
@@ -9,21 +9,21 @@
   "chinese":"中文",
   
   "Languages":"语言",
-  "Themes":"式样",
+  "Themes":"工场外观",
 
-  "Generation":"生成几何图案",
-  "enable geometry caching":"开启几何缓存（实验性）",
-  "timeout for generation":"生成图案超时时间（单位：毫秒）",
+  "Generation":"生成几何图形",
+  "enable geometry caching":"开启图形缓存（实验性）",
+  "timeout for generation":"超时停止生成图形时间（单位：毫秒）",
 
   "Shortcuts":"快捷键",
 
   "Command":"命令",
   "Key Binding":"快捷键绑定",
-  "When":"起效时机",
+  "When":"起效条件",
   "type and hit enter":"输入快捷键，按回车生效",
 
   "not settable":"(只读)",
-  "see":"see",
+  "see":"见",
 
   "grid":"显示网格",
   "axes":"显示坐标轴",
@@ -34,10 +34,10 @@
   "load project":"载入项目",
 
   "AMF (experimental)":"AMF（实验性）",
-  "DXF (ASCII)":"DXF (ASCII)",
+  "DXF (ASCII)":"DXF (字符版)",
   "json":"JSON",
   "STL (Binary)":"STL (二进制版)",
-  "STL (ASCII)":"STL (ASCII)",
+  "STL (ASCII)":"STL (字符版)",
 
   "update":"更新",
   "reset":"重置",
