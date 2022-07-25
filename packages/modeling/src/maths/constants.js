@@ -27,11 +27,11 @@ const NEPS = 1e-13
 /**
  * The Math.TAU property represents the ratio of the circumference of a circle to its radius.
  * Approximately 6.28318530717958647692
- * @alias module:modeling/maths.TAU
  * @default
  */
-Math.TAU = Math.PI * 2
-
+if ('TAU' in Math === false) {
+  Math.TAU = Math.PI * 2
+}
 
 module.exports = {
   EPS,
