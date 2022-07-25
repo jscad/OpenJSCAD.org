@@ -1,0 +1,62 @@
+{
+  "language":"chinese",
+
+  "english":"英文",
+  "german":"德文",
+  "french":"法文",
+  "japanese":"日文",
+  "croatian":"克罗地亚语",
+  "chinese":"中文",
+  
+  "Languages":"语言",
+  "Themes":"工场外观",
+
+  "Generation":"生成几何图形",
+  "enable geometry caching":"开启图形缓存（实验性）",
+  "timeout for generation":"超时停止生成时间（单位：毫秒）",
+
+  "Shortcuts":"快捷键",
+
+  "Command":"命令",
+  "Key Binding":"快捷键绑定",
+  "When":"起效条件",
+  "type and hit enter":"输入快捷键，按回车生效",
+
+  "not settable":"(只读)",
+  "see":"见",
+
+  "grid":"显示网格",
+  "axes":"显示坐标轴",
+  "auto rotate": "开启自动旋转",
+  "auto reload": "开启自动刷新",
+  "auto zoom": "开启自动缩放",
+  "export":"导出",
+  "load project":"载入项目",
+
+  "AMF (experimental)":"AMF（实验性）",
+  "DXF (ASCII)":"DXF (字符版)",
+  "json":"JSON",
+  "STL (Binary)":"STL (二进制版)",
+  "STL (ASCII)":"STL (字符版)",
+
+  "update":"更新",
+  "reset":"重置",
+  "instant update":"立即刷新",
+
+  "toPresetView":"重置视图",
+  "front":"前",
+  "back":"后",
+  "top":"上",
+  "bottom":"下",
+  "left":"左",
+  "right":"右",
+
+  "setProjectionType":"视图类型",
+  "perspective":"透视",
+  "orthographic":"正视",
+
+  "editorCommand":"编辑器命令",
+  "reevaluate":"编译",
+
+  "always":"永远"
+}
