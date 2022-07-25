@@ -17,7 +17,7 @@ const { isGT, isGTE, isNumberArray } = require('./commonChecks')
  * @param {Array} [options.startRadius=[1,1]] - radius of rounded start, must be two dimensional array
  * @param {Number} [options.startAngle=0] - start angle of cylinder, in radians
  * @param {Array} [options.endRadius=[1,1]] - radius of rounded end, must be two dimensional array
- * @param {Number} [options.endAngle=Math.TAI] - end angle of cylinder, in radians
+ * @param {Number} [options.endAngle=Math.TAU] - end angle of cylinder, in radians
  * @param {Number} [options.segments=32] - number of segments to create per full rotation
  * @returns {geom3} new geometry
  * @alias module:modeling/primitives.cylinderElliptic
