@@ -7,7 +7,8 @@ const longNames = {
   de: 'german',
   fr: 'french',
   ja: 'japanese',
-  hr: 'croatian'
+  hr: 'croatian',
+  zh: 'chinese'
 }
 
 const getDefaultLocale = () => {
