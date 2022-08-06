@@ -1,3 +1,4 @@
+const { TAU } = require('../maths/constants')
 const vec3 = require('../maths/vec3')
 
 const geom3 = require('../geometries/geom3')
@@ -44,12 +45,12 @@ const ellipsoid = (options) => {
   const p1 = vec3.create()
   const p2 = vec3.create()
   for (let slice1 = 0; slice1 <= segments; slice1++) {
-    const angle = Math.TAU * slice1 / segments
+    const angle = TAU * slice1 / segments
     const cylinderpoint = vec3.add(vec3.create(), vec3.scale(p1, xvector, cos(angle)), vec3.scale(p2, yvector, sin(angle)))
     if (slice1 > 0) {
       let prevcospitch, prevsinpitch
       for (let slice2 = 0; slice2 <= qsegments; slice2++) {
-        const pitch = Math.TAU / 4 * slice2 / qsegments
+        const pitch = TAU / 4 * slice2 / qsegments
         const cospitch = cos(pitch)
         const sinpitch = sin(pitch)
         if (slice2 > 0) {

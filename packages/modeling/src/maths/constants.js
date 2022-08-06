@@ -25,16 +25,15 @@ const NEPS = 1e-13
 // segmentation. NEPS is for 64 bit Number values.
 
 /**
- * The Math.TAU property represents the ratio of the circumference of a circle to its radius.
+ * The TAU property represents the ratio of the circumference of a circle to its radius.
  * Approximately 6.28318530717958647692
  * @default
  */
-if ('TAU' in Math === false) {
-  Math.TAU = Math.PI * 2
-}
+const TAU = Math.PI * 2
 
 module.exports = {
   EPS,
   NEPS,
+  TAU,
   spatialResolution
 }

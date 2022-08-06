@@ -1,10 +1,11 @@
 const test = require('ava')
 
-const { ellipse } = require('./index')
-
+const { TAU } = require('../maths/constants')
 const geom2 = require('../geometries/geom2')
 
 const comparePoints = require('../../test/helpers/comparePoints')
+
+const { ellipse } = require('./index')
 
 test('ellipse (defaults)', (t) => {
   const geometry = ellipse()
@@ -84,7 +85,7 @@ test('ellipse (options)', (t) => {
   t.true(comparePoints(obs, exp))
 
   // test startAngle
-  geometry = ellipse({ radius: [3, 5], startAngle: Math.TAU / 4, segments: 16 })
+  geometry = ellipse({ radius: [3, 5], startAngle: TAU / 4, segments: 16 })
   obs = geom2.toPoints(geometry)
   exp = [
     [0, 5],
@@ -108,7 +109,7 @@ test('ellipse (options)', (t) => {
   t.true(comparePoints(obs, exp))
 
   // test endAngle
-  geometry = ellipse({ radius: [3, 5], endAngle: Math.TAU / 4, segments: 16 })
+  geometry = ellipse({ radius: [3, 5], endAngle: TAU / 4, segments: 16 })
   obs = geom2.toPoints(geometry)
   exp = [
     [3, 0],
@@ -124,7 +125,7 @@ test('ellipse (options)', (t) => {
   t.true(comparePoints(obs, exp))
 
   // test full rotation with non-zero startAngle
-  geometry = ellipse({ startAngle: 1, endAngle: 1 + Math.TAU })
+  geometry = ellipse({ startAngle: 1, endAngle: 1 + TAU })
   obs = geom2.toPoints(geometry)
 
   t.notThrows(() => geom2.validate(geometry))
