@@ -1,3 +1,4 @@
+const { TAU } = require('../../maths/constants')
 const vec2 = require('../../maths/vec2')
 
 const fromPoints = require('./fromPoints')
@@ -111,15 +112,15 @@ const appendArc = (options, geometry) => {
     const theta1 = vec2.angleRadians(vector1)
     const theta2 = vec2.angleRadians(vector2)
     let deltatheta = theta2 - theta1
-    deltatheta = deltatheta % (2 * Math.PI)
+    deltatheta = deltatheta % TAU
     if ((!sweepFlag) && (deltatheta > 0)) {
-      deltatheta -= 2 * Math.PI
+      deltatheta -= TAU
     } else if ((sweepFlag) && (deltatheta < 0)) {
-      deltatheta += 2 * Math.PI
+      deltatheta += TAU
     }
 
     // Ok, we have the center point and angle range (from theta1, deltatheta radians) so we can create the ellipse
-    let numsteps = Math.ceil(Math.abs(deltatheta) / (2 * Math.PI) * segments) + 1
+    let numsteps = Math.ceil(Math.abs(deltatheta) / TAU * segments) + 1
     if (numsteps < 1) numsteps = 1
     for (let step = 1; step < numsteps; step++) {
       const theta = theta1 + step / numsteps * deltatheta

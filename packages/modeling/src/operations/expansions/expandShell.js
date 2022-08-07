@@ -1,4 +1,4 @@
-const { EPS } = require('../../maths/constants')
+const { EPS, TAU } = require('../../maths/constants')
 
 const mat4 = require('../../maths/mat4')
 const vec3 = require('../../maths/vec3')
@@ -120,7 +120,7 @@ const expandShell = (options, geometry) => {
 
     // first of all equally spaced around the cylinder:
     for (let i = 0; i < segments; i++) {
-      addUniqueAngle(angles, (i * Math.PI * 2 / segments))
+      addUniqueAngle(angles, (i * TAU / segments))
     }
 
     // and also at every normal of all touching planes:
@@ -130,10 +130,10 @@ const expandShell = (options, geometry) => {
       const co = vec3.dot(xbase, planenormal)
       let angle = Math.atan2(si, co)
 
-      if (angle < 0) angle += Math.PI * 2
+      if (angle < 0) angle += TAU
       addUniqueAngle(angles, angle)
       angle = Math.atan2(-si, -co)
-      if (angle < 0) angle += Math.PI * 2
+      if (angle < 0) angle += TAU
       addUniqueAngle(angles, angle)
     }
 

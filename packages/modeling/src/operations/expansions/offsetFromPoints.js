@@ -1,4 +1,4 @@
-const { EPS } = require('../../maths/constants')
+const { EPS, TAU } = require('../../maths/constants')
 
 const intersect = require('../../maths/utils/intersect')
 const line2 = require('../../maths/line2')
@@ -139,7 +139,7 @@ const offsetFromPoints = (options, points) => {
 
       if (rotation !== 0.0) {
         // generate the segments
-        cornersegments = Math.floor(segments * (Math.abs(rotation) / (2 * Math.PI)))
+        cornersegments = Math.floor(segments * (Math.abs(rotation) / TAU))
         const step = rotation / cornersegments
         const start = vec2.angle(vec2.subtract(v0, corner.s0[1], corner.c))
         const cornerpoints = []
