@@ -1,8 +1,11 @@
 const test = require('ava')
+
+const { TAU } = require('../constants')
+const vec3 = require('../vec3/index')
+
 const { create, invert, fromTranslation, fromXRotation } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
-const vec3 = require('../vec3/index')
 
 test('mat4: invert() translate ', (t) => {
   const matrix = fromTranslation(create(), [10, 10, 0])
@@ -17,7 +20,7 @@ test('mat4: invert() translate ', (t) => {
 })
 
 test('mat4: invert() rotate ', (t) => {
-  const matrix = fromXRotation(create(), Math.PI / 2)
+  const matrix = fromXRotation(create(), TAU / 4)
   const matrixInv = invert(create(), matrix)
 
   const vec1 = [10, 10, 10]

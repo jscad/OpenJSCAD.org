@@ -2,6 +2,8 @@ const test = require('ava')
 
 const comparePolygonsAsPoints = require('../../../test/helpers/comparePolygonsAsPoints')
 
+const { TAU } = require('../../maths/constants')
+
 const { geom2, geom3, path2 } = require('../../geometries')
 
 const { extrudeLinear } = require('./index')
@@ -77,7 +79,7 @@ test('extrudeLinear (no twist)', (t) => {
 test('extrudeLinear (twist)', (t) => {
   const geometry2 = geom2.fromPoints([[5, 5], [-5, 5], [-5, -5], [5, -5]])
 
-  let geometry3 = extrudeLinear({ height: 15, twistAngle: Math.PI / -4 }, geometry2)
+  let geometry3 = extrudeLinear({ height: 15, twistAngle: -TAU / 8 }, geometry2)
   let pts = geom3.toPoints(geometry3)
   let exp = [
     [[5, -5, 0], [5, 5, 0], [7.0710678118654755, 4.440892098500626e-16, 15]],
@@ -105,7 +107,7 @@ test('extrudeLinear (twist)', (t) => {
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 
-  geometry3 = extrudeLinear({ height: 15, twistAngle: Math.PI / 2, twistSteps: 3 }, geometry2)
+  geometry3 = extrudeLinear({ height: 15, twistAngle: TAU / 4, twistSteps: 3 }, geometry2)
   pts = geom3.toPoints(geometry3)
   exp = [
     [[5, -5, 0], [5, 5, 0], [1.830127018922194, 6.830127018922193, 5]],
@@ -140,7 +142,7 @@ test('extrudeLinear (twist)', (t) => {
   t.is(pts.length, 28)
   t.true(comparePolygonsAsPoints(pts, exp))
 
-  geometry3 = extrudeLinear({ height: 15, twistAngle: Math.PI / 2, twistSteps: 30 }, geometry2)
+  geometry3 = extrudeLinear({ height: 15, twistAngle: TAU / 2, twistSteps: 30 }, geometry2)
   pts = geom3.toPoints(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
   t.is(pts.length, 244)

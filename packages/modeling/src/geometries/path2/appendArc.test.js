@@ -1,5 +1,7 @@
 const test = require('ava')
 
+const { TAU } = require('../../maths/constants')
+
 const { appendArc, fromPoints, toPoints } = require('./index')
 
 const { comparePoints } = require('../../../test/helpers/')
@@ -48,7 +50,7 @@ test('appendArc: appending to a path produces a new path', (t) => {
   t.is(pts.length, 16)
 
   // test xaxisrotation
-  obs = appendArc({ endpoint: [12, -22], radius: [15, -20], xaxisrotation: Math.PI / 2 }, p2)
+  obs = appendArc({ endpoint: [12, -22], radius: [15, -20], xaxisrotation: TAU / 4 }, p2)
   pts = toPoints(obs)
   exp = [
     [27, -22],

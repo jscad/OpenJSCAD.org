@@ -1,5 +1,7 @@
 const test = require('ava')
 
+const { TAU } = require('../../maths/constants')
+
 const { geom2, geom3, path2 } = require('../../geometries')
 
 const { rotate, rotateX, rotateY, rotateZ } = require('./index')
@@ -10,7 +12,7 @@ test('rotate: rotating of a path2 produces expected changes to points', (t) => {
   const geometry = path2.fromPoints({}, [[1, 0], [0, 1], [-1, 0]])
 
   // rotate about Z
-  let rotated = rotate([0, 0, Math.PI / 2], geometry)
+  let rotated = rotate([0, 0, TAU / 4], geometry)
   let obs = path2.toPoints(rotated)
   const exp = [
     new Float32Array([0, 1]),
@@ -19,7 +21,7 @@ test('rotate: rotating of a path2 produces expected changes to points', (t) => {
   ]
   t.true(comparePoints(obs, exp))
 
-  rotated = rotateZ(Math.PI / 2, geometry)
+  rotated = rotateZ(TAU / 4, geometry)
   obs = path2.toPoints(rotated)
   t.notThrows(() => path2.validate(rotated))
   t.true(comparePoints(obs, exp))
@@ -29,7 +31,7 @@ test('rotate: rotating of a geom2 produces expected changes to points', (t) => {
   const geometry = geom2.fromPoints([[0, 0], [1, 0], [0, 1]])
 
   // rotate about Z
-  let rotated = rotate([0, 0, -Math.PI / 2], geometry)
+  let rotated = rotate([0, 0, -TAU / 4], geometry)
   let obs = geom2.toPoints(rotated)
   const exp = [
     new Float32Array([0, 0]),
@@ -39,7 +41,7 @@ test('rotate: rotating of a geom2 produces expected changes to points', (t) => {
   t.notThrows(() => geom2.validate(rotated))
   t.true(comparePoints(obs, exp))
 
-  rotated = rotateZ(-Math.PI / 2, geometry)
+  rotated = rotateZ(-TAU / 4, geometry)
   obs = geom2.toPoints(rotated)
   t.notThrows(() => geom2.validate(rotated))
   t.true(comparePoints(obs, exp))
@@ -57,7 +59,7 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', (t) =>
   const geometry = geom3.fromPoints(points)
 
   // rotate about X
-  let rotated = rotate([Math.PI / 2], geometry)
+  let rotated = rotate([TAU / 4], geometry)
   let obs = geom3.toPoints(rotated)
   let exp = [
     [[-2, 12, -7.000000000000001], [-2, -18, -6.999999999999999],
@@ -76,13 +78,13 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', (t) =>
   t.notThrows(() => geom3.validate(rotated))
   t.true(comparePolygonsAsPoints(obs, exp))
 
-  rotated = rotateX(Math.PI / 2, geometry)
+  rotated = rotateX(TAU / 4, geometry)
   obs = geom3.toPoints(rotated)
   t.notThrows(() => geom3.validate(rotated))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // rotate about Y
-  rotated = rotate([0, -Math.PI / 2], geometry)
+  rotated = rotate([0, -TAU / 4], geometry)
   obs = geom3.toPoints(rotated)
   exp = [
     [[12, -7, -2.000000000000001], [-18, -7, -1.999999999999999],
@@ -101,12 +103,12 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', (t) =>
   t.notThrows(() => geom3.validate(rotated))
   t.true(comparePolygonsAsPoints(obs, exp))
 
-  rotated = rotateY(-Math.PI / 2, geometry)
+  rotated = rotateY(-TAU / 4, geometry)
   obs = geom3.toPoints(rotated)
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // rotate about Z
-  rotated = rotate([0, 0, Math.PI], geometry)
+  rotated = rotate([0, 0, TAU / 2], geometry)
   obs = geom3.toPoints(rotated)
   exp = [
     [[2.000000000000001, 7, -12], [2.000000000000001, 7, 18],
@@ -125,7 +127,7 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', (t) =>
   t.notThrows(() => geom3.validate(rotated))
   t.true(comparePolygonsAsPoints(obs, exp))
 
-  rotated = rotateZ(Math.PI, geometry)
+  rotated = rotateZ(TAU / 2, geometry)
   obs = geom3.toPoints(rotated)
   t.notThrows(() => geom3.validate(rotated))
   t.true(comparePolygonsAsPoints(obs, exp))
@@ -136,7 +138,7 @@ test('rotate: rotating of multiple objects produces expected changes', (t) => {
   const geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
   const geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])
 
-  const rotated = rotate([0, 0, Math.PI / 2], junk, geometry1, geometry2)
+  const rotated = rotate([0, 0, TAU / 4], junk, geometry1, geometry2)
 
   t.is(rotated[0], junk)
 

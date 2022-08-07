@@ -1,10 +1,13 @@
 const test = require('ava')
+
+const { TAU } = require('../constants')
+
 const { rotateY, fromValues } = require('./index')
 
 const { compareVectors } = require('../../../test/helpers/index')
 
 test('vec3: rotateY() called with three parameters should update a vec3 with correct values', (t) => {
-  const radians = 90 * Math.PI / 180
+  const radians = TAU / 4
 
   const obs1 = fromValues(0, 0, 0)
   const ret1 = rotateY(obs1, [0, 0, 0], [0, 0, 0], 0)

@@ -2,15 +2,18 @@ const test = require('ava')
 
 const { compareVectors } = require('../../test/helpers/index')
 
-const { mat4, vec2, vec3 } = require('./index')
+const { constants, mat4, vec2, vec3 } = require('./index')
 
 // ALL POSITIVE ROTATIONS ARE CLOCKWISE
 // see https://webglfundamentals.org/webgl/lessons/webgl-3d-orthographic.html
 // IN A LEFT-HANDED COORDINATE SYSTEM
 
+// JSCAD IS RIGHT-HANDED COORDINATE SYSTEM
+// WHERE POSITIVE ROTATIONS ARE COUNTER-CLOCKWISE
+
 // identity matrices for comparisons
 
-const rad90 = Math.PI / 2
+const rad90 = constants.TAU / 4
 
 // +90 degree rotation about X
 const cwX90Matrix = [
