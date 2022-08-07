@@ -12,7 +12,7 @@ const toPoints = require('./toPoints')
  * @param {vec2} [options.radius=[0,0]] - radius of arc (X and Y)
  * @param {Number} [options.xaxisrotation=0] - rotation (RADIANS) of the X axis of the arc with respect to the X axis of the coordinate system
  * @param {Boolean} [options.clockwise=false] - draw an arc clockwise with respect to the center point
- * @param {Boolean} [options.large=false] - draw an arc longer than PI radians
+ * @param {Boolean} [options.large=false] - draw an arc longer than TAU / 2 radians
  * @param {Number} [options.segments=16] - number of segments per full rotation
  * @param {path2} geometry - the path of which to append the arc
  * @returns {path2} a new path with the appended points

@@ -12,7 +12,7 @@ const extrudeFromSlices = require('./extrudeFromSlices')
  * Rotate extrude the given geometry using the given options.
  *
  * @param {Object} options - options for extrusion
- * @param {Number} [options.angle=PI*2] - angle of the extrusion (RADIANS)
+ * @param {Number} [options.angle=TAU] - angle of the extrusion (RADIANS)
  * @param {Number} [options.startAngle=0] - start angle of the extrusion (RADIANS)
  * @param {String} [options.overflow='cap'] - what to do with points outside of bounds (+ / - x) :
  * defaults to capping those points to 0 (only supported behaviour for now)
@@ -22,7 +22,7 @@ const extrudeFromSlices = require('./extrudeFromSlices')
  * @alias module:modeling/extrusions.extrudeRotate
  *
  * @example
- * const myshape = extrudeRotate({segments: 8, angle: Math.PI}, circle({size: 3, center: [4, 0]}))
+ * const myshape = extrudeRotate({segments: 8, angle: TAU / 2}, circle({size: 3, center: [4, 0]}))
  */
 const extrudeRotate = (options, geometry) => {
   const defaults = {

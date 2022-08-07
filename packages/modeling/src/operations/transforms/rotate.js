@@ -14,7 +14,7 @@ const path2 = require('../../geometries/path2')
  * @alias module:modeling/transforms.rotate
  *
  * @example
- * const newsphere = rotate([Math.PI / 4, 0, 0], sphere())
+ * const newsphere = rotate([TAU / 8, 0, 0], sphere())
  */
 const rotate = (angles, ...objects) => {
   if (!Array.isArray(angles)) throw new Error('angles must be an array')

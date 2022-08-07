@@ -12,7 +12,7 @@ const { sin, cos } = require('../utils/trigonometry')
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.fromZRotation
  * @example
- * let matrix = fromZRotation(create(), Math.PI / 2)
+ * let matrix = fromZRotation(create(), TAU / 4)
  */
 const fromZRotation = (out, radians) => {
   const s = sin(radians)

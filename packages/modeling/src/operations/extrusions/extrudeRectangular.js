@@ -18,7 +18,7 @@ const extrudeRectangularGeom2 = require('./extrudeRectangularGeom2')
  *
  * @example
  * let mywalls = extrudeRectangular({size: 1, height: 3}, square({size: 20}))
- * let mywalls = extrudeRectangular({size: 1, height: 300, twistAngle: Math.PI}, square({size: 20}))
+ * let mywalls = extrudeRectangular({size: 1, height: 300, twistAngle: TAU / 2}, square({size: 20}))
  */
 const extrudeRectangular = (options, ...objects) => {
   const defaults = {

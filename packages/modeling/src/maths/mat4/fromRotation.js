@@ -17,7 +17,7 @@ const identity = require('./identity')
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.fromRotation
  * @example
- * let matrix = fromRotation(create(), Math.PI / 2, [0, 0, 3])
+ * let matrix = fromRotation(create(), TAU / 4, [0, 0, 3])
  */
 const fromRotation = (out, rad, axis) => {
   let [x, y, z] = axis
