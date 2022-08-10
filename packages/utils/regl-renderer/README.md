@@ -9,7 +9,7 @@
 [![License](https://img.shields.io/github/license/jscad/OpenJSCAD.org)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 
 [![User Group](https://img.shields.io/badge/maintained%20by-user%20group-blue)](https://openjscad.nodebb.com/)
-[![Lerna](https://img.shields.io/badge/maintained%20with-lerna-blue)](https://lernajs.io/)
+[![Lerna](https://img.shields.io/badge/maintained%20with-lerna-blue)](https://lerna.js.org/)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-blue)](https://standardjs.com)
 
 [![Backers](https://img.shields.io/opencollective/backers/openjscad)](https://opencollective.com/openjscad)
@@ -22,6 +22,20 @@
 - small, compact, and fast
 - works in all browsers
 - works in Node.js projects (headless rendering to PNG images)
+
+
+## Installation
+
+This package is published and available for download via [NPM](https://www.npmjs.com/org/jscad)
+```
+npm install @jscad/regl-renderer
+```
+
+In addition this package is hosted at [UNPKG](https://unpkg.com/), and can be imported directly into webpages.
+
+```
+<script language="javascript" src="https://unpkg.com/@jscad/regl-renderer"</script>
+```
 
 ## Usage
 

@@ -1,4 +1,6 @@
 /**
+ * Represents a 3D geometry consisting of a list of edges.
+ * @see {@link slice} for data structure information.
  * @module modeling/extrusions/slice
  */
 module.exports = {
