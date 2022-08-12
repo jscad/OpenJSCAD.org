@@ -1,3 +1,4 @@
+const { TAU } = require('../../maths/constants')
 const vec2 = require('../../maths/vec2')
 
 const fromPoints = require('./fromPoints')
@@ -12,7 +13,7 @@ const toPoints = require('./toPoints')
  * @param {vec2} [options.radius=[0,0]] - radius of arc (X and Y)
  * @param {Number} [options.xaxisrotation=0] - rotation (RADIANS) of the X axis of the arc with respect to the X axis of the coordinate system
  * @param {Boolean} [options.clockwise=false] - draw an arc clockwise with respect to the center point
- * @param {Boolean} [options.large=false] - draw an arc longer than PI radians
+ * @param {Boolean} [options.large=false] - draw an arc longer than TAU / 2 radians
  * @param {Number} [options.segments=16] - number of segments per full rotation
  * @param {path2} geometry - the path of which to append the arc
  * @returns {path2} a new path with the appended points
@@ -111,15 +112,15 @@ const appendArc = (options, geometry) => {
     const theta1 = vec2.angleRadians(vector1)
     const theta2 = vec2.angleRadians(vector2)
     let deltatheta = theta2 - theta1
-    deltatheta = deltatheta % (2 * Math.PI)
+    deltatheta = deltatheta % TAU
     if ((!sweepFlag) && (deltatheta > 0)) {
-      deltatheta -= 2 * Math.PI
+      deltatheta -= TAU
     } else if ((sweepFlag) && (deltatheta < 0)) {
-      deltatheta += 2 * Math.PI
+      deltatheta += TAU
     }
 
     // Ok, we have the center point and angle range (from theta1, deltatheta radians) so we can create the ellipse
-    let numsteps = Math.ceil(Math.abs(deltatheta) / (2 * Math.PI) * segments) + 1
+    let numsteps = Math.ceil(Math.abs(deltatheta) / TAU * segments) + 1
     if (numsteps < 1) numsteps = 1
     for (let step = 1; step < numsteps; step++) {
       const theta = theta1 + step / numsteps * deltatheta

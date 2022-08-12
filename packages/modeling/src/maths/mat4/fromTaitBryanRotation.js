@@ -13,7 +13,7 @@ const { sin, cos } = require('../utils/trigonometry')
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.fromTaitBryanRotation
  * @example
- * let matrix = fromTaitBryanRotation(create(), Math.PI / 2, 0, Math.PI)
+ * let matrix = fromTaitBryanRotation(create(), TAU / 4, 0, TAU / 2)
  */
 const fromTaitBryanRotation = (out, yaw, pitch, roll) => {
   // precompute sines and cosines of Euler angles

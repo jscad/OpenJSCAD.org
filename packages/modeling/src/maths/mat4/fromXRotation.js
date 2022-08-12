@@ -12,7 +12,7 @@ const { sin, cos } = require('../utils/trigonometry')
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.fromXRotation
  * @example
- * let matrix = fromXRotation(create(), Math.PI / 2)
+ * let matrix = fromXRotation(create(), TAU / 4)
  */
 const fromXRotation = (out, radians) => {
   const s = sin(radians)

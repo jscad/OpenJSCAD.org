@@ -1,3 +1,4 @@
+const { TAU } = require('../../maths/constants')
 const mat4 = require('../../maths/mat4')
 
 const { mirrorX } = require('../transforms/mirror')
@@ -12,7 +13,7 @@ const extrudeFromSlices = require('./extrudeFromSlices')
  * Rotate extrude the given geometry using the given options.
  *
  * @param {Object} options - options for extrusion
- * @param {Number} [options.angle=PI*2] - angle of the extrusion (RADIANS)
+ * @param {Number} [options.angle=TAU] - angle of the extrusion (RADIANS)
  * @param {Number} [options.startAngle=0] - start angle of the extrusion (RADIANS)
  * @param {String} [options.overflow='cap'] - what to do with points outside of bounds (+ / - x) :
  * defaults to capping those points to 0 (only supported behaviour for now)
@@ -22,24 +23,24 @@ const extrudeFromSlices = require('./extrudeFromSlices')
  * @alias module:modeling/extrusions.extrudeRotate
  *
  * @example
- * const myshape = extrudeRotate({segments: 8, angle: Math.PI}, circle({size: 3, center: [4, 0]}))
+ * const myshape = extrudeRotate({segments: 8, angle: TAU / 2}, circle({size: 3, center: [4, 0]}))
  */
 const extrudeRotate = (options, geometry) => {
   const defaults = {
     segments: 12,
     startAngle: 0,
-    angle: (Math.PI * 2),
+    angle: TAU,
     overflow: 'cap'
   }
   let { segments, startAngle, angle, overflow } = Object.assign({}, defaults, options)
 
   if (segments < 3) throw new Error('segments must be greater then 3')
 
-  startAngle = Math.abs(startAngle) > (Math.PI * 2) ? startAngle % (Math.PI * 2) : startAngle
-  angle = Math.abs(angle) > (Math.PI * 2) ? angle % (Math.PI * 2) : angle
+  startAngle = Math.abs(startAngle) > TAU ? startAngle % TAU : startAngle
+  angle = Math.abs(angle) > TAU ? angle % TAU : angle
 
   let endAngle = startAngle + angle
-  endAngle = Math.abs(endAngle) > (Math.PI * 2) ? endAngle % (Math.PI * 2) : endAngle
+  endAngle = Math.abs(endAngle) > TAU ? endAngle % TAU : endAngle
 
   if (endAngle < startAngle) {
     const x = startAngle
@@ -47,11 +48,11 @@ const extrudeRotate = (options, geometry) => {
     endAngle = x
   }
   let totalRotation = endAngle - startAngle
-  if (totalRotation <= 0.0) totalRotation = (Math.PI * 2)
+  if (totalRotation <= 0.0) totalRotation = TAU
 
-  if (Math.abs(totalRotation) < (Math.PI * 2)) {
+  if (Math.abs(totalRotation) < TAU) {
     // adjust the segments to achieve the total rotation requested
-    const anglePerSegment = (Math.PI * 2) / segments
+    const anglePerSegment = TAU / segments
     segments = Math.floor(Math.abs(totalRotation) / anglePerSegment)
     if (Math.abs(totalRotation) > (segments * anglePerSegment)) segments++
   }
@@ -108,18 +109,18 @@ const extrudeRotate = (options, geometry) => {
   }
 
   const rotationPerSlice = totalRotation / segments
-  const isCapped = Math.abs(totalRotation) < (Math.PI * 2)
+  const isCapped = Math.abs(totalRotation) < TAU
   const baseSlice = slice.fromSides(geom2.toSides(geometry))
   slice.reverse(baseSlice, baseSlice)
 
   const matrix = mat4.create()
   const createSlice = (progress, index, base) => {
     let Zrotation = rotationPerSlice * index + startAngle
-    // fix rounding error when rotating 2 * PI radians
-    if (totalRotation === Math.PI * 2 && index === segments) {
+    // fix rounding error when rotating TAU radians
+    if (totalRotation === TAU && index === segments) {
       Zrotation = startAngle
     }
-    mat4.multiply(matrix, mat4.fromZRotation(matrix, Zrotation), mat4.fromXRotation(mat4.create(), Math.PI / 2))
+    mat4.multiply(matrix, mat4.fromZRotation(matrix, Zrotation), mat4.fromXRotation(mat4.create(), TAU / 4))
 
     return slice.transform(matrix, base)
   }

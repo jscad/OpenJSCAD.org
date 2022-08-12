@@ -1,3 +1,5 @@
+const { TAU } = require('../constants')
+
 const create = require('./create')
 const rotate = require('./rotate')
 
@@ -10,6 +12,6 @@ const rotate = require('./rotate')
  * @returns {vec2} out
  * @alias module:modeling/maths/vec2.normal
  */
-const normal = (out, vector) => rotate(out, vector, create(), (Math.PI / 2))
+const normal = (out, vector) => rotate(out, vector, create(), (TAU / 4))
 
 module.exports = normal

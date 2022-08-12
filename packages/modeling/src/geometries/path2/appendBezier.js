@@ -1,3 +1,4 @@
+const { TAU } = require('../../maths/constants')
 const vec2 = require('../../maths/vec2')
 const vec3 = require('../../maths/vec2')
 
@@ -117,7 +118,7 @@ const appendBezier = (options, geometry) => {
 
   // subdivide each segment until the angle at each vertex becomes small enough:
   let subdivideBase = 1
-  const maxangle = Math.PI * 2 / segments
+  const maxangle = TAU / segments
   const maxsinangle = Math.sin(maxangle)
   while (subdivideBase < newpoints.length - 1) {
     const dir1 = vec2.subtract(v0, newpoints[subdivideBase], newpoints[subdivideBase - 1])

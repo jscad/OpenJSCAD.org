@@ -8,6 +8,6 @@ const fromAngleRadians = require('./fromAngleRadians')
  * @returns {vec2} out
  * @alias module:modeling/maths/vec2.fromAngleDegrees
  */
-const fromAngleDegrees = (out, degrees) => fromAngleRadians(out, Math.PI * degrees / 180)
+const fromAngleDegrees = (out, degrees) => fromAngleRadians(out, degrees * 0.017453292519943295)
 
 module.exports = fromAngleDegrees

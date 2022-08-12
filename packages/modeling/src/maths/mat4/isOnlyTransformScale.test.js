@@ -1,9 +1,11 @@
 const test = require('ava')
 
+const { TAU } = require('../constants')
+
 const { isOnlyTransformScale, create, fromTranslation, fromTaitBryanRotation, fromScaling, invert, multiply } = require('./index')
 
 test('mat4: isOnlyTransformScale() should return true for right angles', (t) => {
-  let someRotation = fromTaitBryanRotation(create(), Math.PI, 0, 0)
+  let someRotation = fromTaitBryanRotation(create(), TAU / 2, 0, 0)
   t.true(isOnlyTransformScale(someRotation))
   t.true(isOnlyTransformScale(invert(create(), someRotation)))
 
