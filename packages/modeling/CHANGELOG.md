@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.10.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.9.6...@jscad/modeling@2.10.0) (2022-08-21)
+
+
+### Bug Fixes
+
+* **modeling:** added TS definitions for modifiers ([33ae2c4](https://github.com/jscad/OpenJSCAD.org/commit/33ae2c4c07986218464d30d08147d248c50a8a0b))
+* **modeling:** export modifiers for TypeScript ([#1129](https://github.com/jscad/OpenJSCAD.org/issues/1129)) ([a936675](https://github.com/jscad/OpenJSCAD.org/commit/a93667515922ab99bcd4488f59ee0488dcac6ef4))
+
+
+### Features
+
+* **modeling:** added TAU constant to maths, and refactored code and documentation ([#1128](https://github.com/jscad/OpenJSCAD.org/issues/1128)) ([b8dd700](https://github.com/jscad/OpenJSCAD.org/commit/b8dd700d5641ec27b842dfdf4b6f9403a64084aa))
+
+
+
+
+
 ## [2.9.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.9.5...@jscad/modeling@2.9.6) (2022-07-17)
 
 

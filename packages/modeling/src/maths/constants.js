@@ -28,6 +28,8 @@ const NEPS = 1e-13
  * The TAU property represents the ratio of the circumference of a circle to its radius.
  * Approximately 6.28318530717958647692
  * @default
+ * @example
+ * const { TAU } = require('@jscad/modeling').maths.constants
  */
 const TAU = Math.PI * 2
 
