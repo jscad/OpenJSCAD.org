@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.12...@jscad/web@2.6.0) (2022-08-21)
+
+
+### Bug Fixes
+
+* **web:** added chinese language into other language locales ([63a7564](https://github.com/jscad/OpenJSCAD.org/commit/63a7564b7ead8d77c60a13b4e712d6f38196839c))
+
+
+### Features
+
+* **web:** added chinese translations to desktop/locales and web/locales ([#1123](https://github.com/jscad/OpenJSCAD.org/issues/1123)) ([6d529b0](https://github.com/jscad/OpenJSCAD.org/commit/6d529b028f3f368ed834bac914d7ae8926dd77d8))
+
+
+
+
+
 ## [2.5.12](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.5.11...@jscad/web@2.5.12) (2022-07-17)
 
 
