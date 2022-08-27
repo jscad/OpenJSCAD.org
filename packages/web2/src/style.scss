@@ -52,27 +52,38 @@ a {
 // flex
 .fx    { display: flex; }
 .fxi   { display: inline-flex; }
-.fx1   { flex: 1; }
+.fx1, .fxs1, .fxc1 { flex: 1; }
+.fx2 {flex: 2;} .fx3 {flex: 3;} .fx4 {flex: 4;} .fx5 {flex: 5;} .fx6 {flex: 6;}
+.fx7 {flex: 7;} .fx8 {flex: 8;} .fx9 {flex: 9;} .fx10 {flex: 10;} .fx11 {flex: 11;}  .fx12 {flex: 12;}
 // default is row, so class for column is needed
-.fx-col { display: flex; flex-flow: column;}
-// flex with everything stretched
-.fxc { display: flex; justify-content: center; align-items: center;}
-// flex with everything centered
-.fxs { display: flex; justify-content: stretch; align-items: stretch;}
-// flex justify tweaks
-.fx-jc { justify-content: center; }
-.fx-ac { align-items: center; }
-.fx-js { justify-content: flex-start; }
-.fx-as { align-items: flex-start; }
-.fx-je { justify-content: flex-end; }
-.fx-ae { align-items: flex-end; }
+.fxfc { display: flex; flex-flow: column;}
 
-// some very common sizes
+// STRETCH flex with everything stretched (fxs1 is with flex:1)
+.fxs, .fxs1 { display: flex; justify-content: stretch; align-items: stretch;}
+// CENTER flex with everything centered (fxc1 is with flex:1)
+.fxc, .fxc1 { display: flex; justify-content: center; align-items: center;}
+
+// flex justify tweaks
+.fxjc { justify-content: center; }
+.fxjs { justify-content: flex-start; }
+.fxje { justify-content: flex-end; }
+.fxsa { justify-content: space-around; }
+.fxsb { justify-content: space-between; }
+.fxse { justify-content: space-evenly; }
+
+// flex align tweaks
+.fxac { align-items: center; }
+.fxas { align-items: flex-start; }
+.fxae { align-items: flex-end; }
+
+// SIZE ... very common sizes
 .wa { width: auto; }
 .w100 { width: 100%; }
 .w50 { width: 50%; }
 .h100 { height: 100%; }
-// often needed owerflow
+.h50 { width: 50%; }
+
+// OVERFLOW common
 .owh{ overflow: hidden;}
 .owa{ overflow: auto;}
 
