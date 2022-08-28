@@ -1,0 +1,20 @@
+const vec2 = require('../../maths/vec2')
+
+/**
+ * @param {poly2} polygon - the polygon to measure
+ * @returns {Array} an array of two vectors (2D);  minimum and maximum coordinates
+ * @alias module:modeling/geometries/poly2.measureBoundingBox
+ */
+const measureBoundingBox = (polygon) => {
+  const vertices = polygon.vertices
+  const numvertices = vertices.length
+  const min = numvertices === 0 ? vec2.create() : vec2.clone(vertices[0])
+  const max = vec2.clone(min)
+  for (let i = 1; i < numvertices; i++) {
+    vec2.min(min, min, vertices[i])
+    vec2.max(max, max, vertices[i])
+  }
+  return [min, max]
+}
+
+module.exports = measureBoundingBox

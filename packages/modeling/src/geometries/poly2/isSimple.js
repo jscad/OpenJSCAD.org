@@ -11,14 +11,14 @@ const isSimple = (polygon) => {
   const numvertices = polygon.vertices.length
   if (numvertices < 3) return false // only polygons with an areas are simple
 
+  if (numvertices === 3) return true // triangles are simple
+
   const vertices = polygon.vertices
 
   // proof one: there are N unique vertices
   const found = new Set()
   vertices.forEach((v) => found.add(v.toString()))
   if (found.size !== numvertices) return false
-
-  if (numvertices === 3) return true // triangles are simple
 
   // proof two: line segments do not cross
   for (let i = 0; i < numvertices; i++) {

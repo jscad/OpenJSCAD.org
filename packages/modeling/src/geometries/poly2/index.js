@@ -15,6 +15,7 @@ module.exports = {
   isConvex: require('./isConvex'),
   isSimple: require('./isSimple'),
   measureArea: require('./measureArea'),
+  measureBoundingBox: require('./measureBoundingBox'),
   reverse: require('./reverse'),
   toPoints: require('./toPoints'),
   toString: require('./toString'),
