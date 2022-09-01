@@ -428,7 +428,6 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
 
     if (pc !== true && paths[pathName] && paths[pathName].isClosed) {
       let coNext = obj.commands[j + 1]
-
       if (!coNext || !isCloseCmd(coNext.c)) {
         if (pathSelfClosed === 'trim') {
           while (coNext && !isCloseCmd(coNext.c)) {
@@ -437,7 +436,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           }
         } else if (pathSelfClosed === 'split') {
           newPath()
-        } else {
+        } else if(coNext){ // allow self close in the last command #1135
           throw new Error(`Malformed svg path at ${obj.position[0]}:${co.pos}. Path closed itself with command #${j} ${co.c}${pts.join(' ')}`)
         }
       }
