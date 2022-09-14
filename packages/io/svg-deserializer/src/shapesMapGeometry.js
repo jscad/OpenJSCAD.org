@@ -428,8 +428,9 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
 
     if (pc !== true && paths[pathName] && paths[pathName].isClosed) {
       let coNext = obj.commands[j + 1]
-
-      if (!coNext || !isCloseCmd(coNext.c)) {
+      // allow self close in the last command #1135 (coNext is null or undefined)
+      // if do have a next command use pathSelfClosed to decide how to react to closing in the middle of a path 
+      if (coNext && !isCloseCmd(coNext.c)) {
         if (pathSelfClosed === 'trim') {
           while (coNext && !isCloseCmd(coNext.c)) {
             j++
@@ -437,7 +438,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           }
         } else if (pathSelfClosed === 'split') {
           newPath()
-        } else {
+        }else{ 
           throw new Error(`Malformed svg path at ${obj.position[0]}:${co.pos}. Path closed itself with command #${j} ${co.c}${pts.join(' ')}`)
         }
       }
