@@ -1,4 +1,4 @@
-import { eq, findParent, getValue, Jsx6, setSelected, setValue, setVisible, T } from '@jsx6/jsx6'
+import { findParent, getValue, Jsx6, setSelected, setValue, setVisible, T } from '@jsx6/jsx6'
 
 // class CustomInput extends Jsx6 {
 // }
@@ -14,7 +14,7 @@ export class SampleForm extends Jsx6 {
 
   tpl (h, state, $) {
     const btClick = evt => {
-      const target = findParent(evt.target, el => el.$key, eq(this.tabButtons))
+      const target = findParent(evt.target, el => el.$key, e => e === this.tabButtons)
       if (target) this.selectTab(target.$key)
     }
     return (

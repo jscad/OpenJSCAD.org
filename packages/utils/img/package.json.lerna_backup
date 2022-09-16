@@ -1,0 +1,24 @@
+{
+  "name": "@jscad/img-utils",
+  "version": "2.0.5",
+  "description": "Image Utilities for JSCAD",
+  "homepage": "https://openjscad.xyz/",
+  "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "main": "src/index.js",
+  "scripts": {},
+  "author": "Mark 'kaosat-dev' Moissette",
+  "keywords": [
+    "openjscad",
+    "jscad",
+    "utility",
+    "image"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "pngjs": "6.0.0"
+  },
+  "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"
+}

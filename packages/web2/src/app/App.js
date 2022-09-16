@@ -1,18 +1,15 @@
-import { T, setTranslations, refreshTranslations,
+import { T, addTranslations, refreshTranslations,
   Jsx6, makeState,
   setValue,
-  eq,
+  EQ,
   NOT,
-  makeBinding,
-  findParent,
-  insertBefore} from '@jsx6/jsx6'
+  findParent} from '@jsx6/jsx6'
 import { JscadEditor } from './editor'
 import gearIcon from '../icons/gear'
 import editIcon from '../icons/edit'
 import Toggle from '../comp/Toggle'
 import { Viewer } from './Viewer'
 import { themes } from '../themes.js'
-import { SampleForm } from './sample.form'
 import { Params } from './Params'
 import { flatten } from '../util/flatten'
 
@@ -88,7 +85,7 @@ export class App extends Jsx6 {
     this.el.ondrop = dropHandler;
     this.el.ondragover = dragOverHandler;
     
-    $s().addUpdater((state, old)=>{
+    $s().subscribe((state, old)=>{
       console.log('changed',state, old)
       localStorage.setItem(SETTINGS_KEY, JSON.stringify(state().getValue()))
       if (old.has('language')) this.changeLanguage(state.language() || 'en')
@@ -111,7 +108,7 @@ export class App extends Jsx6 {
   
   changeLanguage (lang) {
     window.fetch(`locales/${lang}.json`).then(r => r.text()).then((json) => {
-      setTranslations(JSON.parse(json))
+      addTranslations(JSON.parse(json))
       refreshTranslations()
     })
   }
@@ -125,13 +122,13 @@ export class App extends Jsx6 {
     this.worker.postMessage({action:'runScript', script, params, options:this.viewer.getViewerEnv()}, transferable)
   }
 
-  tpl (h, state) {
-    makeBinding(11, 'value', this, true);
+  tpl (h, ...rest) {
+    const state = this.$s
     const $s = this.settings = makeState(settingsDefaults, true)
     const str = localStorage.getItem(SETTINGS_KEY)
     if(str && str[0] === '{'){
       try {
-        $s().update(JSON.parse(str))
+        $s().set(JSON.parse(str))
       } catch (e) { console.log(e, 'str:',str)}
     }
 
@@ -168,7 +165,7 @@ export class App extends Jsx6 {
         {T`Languages`}
         <select onchange={(e) => $s.language(e.target.value)}>
           {Object.keys(langMap).map((l) => (
-            <option key={l} value={l} selected={$s.language(eq(l))}>
+            <option key={l} value={l} selected={$s.language(EQ(l))}>
               {T(langMap[l])}
             </option>
           ))}
@@ -178,7 +175,7 @@ export class App extends Jsx6 {
         {T`theme`}
         <select onchange={(e) => $s.theme(e.target.value)}>
           {Object.keys(themes).map((v) => (
-            <option key={v} value={v} selected={$s.theme(eq(v))}>
+            <option key={v} value={v} selected={$s.theme(EQ(v))}>
               {T(themes[v].name)}
             </option>
           ))}
@@ -188,7 +185,7 @@ export class App extends Jsx6 {
         {T`viewer`}
         <select onchange={(e) => $s.viewer(e.target.value)}>
           {Object.keys(viewerMap).map((v) => (
-            <option key={v} value={v} selected={$s.viewer(eq(v))}>
+            <option key={v} value={v} selected={$s.viewer(EQ(v))}>
               {T(viewerMap[v])}
             </option>
           ))}
@@ -201,7 +198,7 @@ export class App extends Jsx6 {
     // still focused. We check if menu is focused on mousedown event, but then use
     // this information to close the menu if needed
     let wasActive = false
-    const markActive = e=> wasActive = findParent(document.activeElement,eq(this.settingsBt))
+    const markActive = e=> wasActive = findParent(document.activeElement,EQ(this.settingsBt))
 
     const menu = <div class="menu-area bg1">
     <div class="menu-buttons">

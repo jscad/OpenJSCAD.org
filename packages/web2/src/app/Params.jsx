@@ -1,6 +1,6 @@
 import './Params.css'
 import { genParams } from './genParams'
-import { Jsx6, tpl } from '@jsx6/jsx6'
+import { Jsx6 } from '@jsx6/jsx6'
 
 export const getParameterDefinitions = () => {
   return [
