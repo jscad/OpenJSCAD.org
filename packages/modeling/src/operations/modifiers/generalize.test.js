@@ -2,6 +2,8 @@ const test = require('ava')
 
 const { comparePolygonsAsPoints } = require('../../../test/helpers')
 
+const { TAU } = require('../../maths/constants')
+
 const { geom3 } = require('../../geometries')
 
 const { cuboid } = require('../../primitives')
@@ -9,7 +11,7 @@ const { cuboid } = require('../../primitives')
 const { generalize } = require('./index')
 
 test('generalize: generalize of a geom3 produces an expected geom3', (t) => {
-  const geometry1 = cuboid({ size: [Math.PI, Math.PI / 2, Math.PI * 2] })
+  const geometry1 = cuboid({ size: [TAU / 2, TAU / 4, TAU] })
 
   // apply no modifications
   let result = generalize({}, geometry1)

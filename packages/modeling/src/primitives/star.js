@@ -1,3 +1,4 @@
+const { TAU } = require('../maths/constants')
 const vec2 = require('../maths/vec2')
 
 const geom2 = require('../geometries/geom2')
@@ -13,7 +14,7 @@ const getRadiusRatio = (vertices, density) => {
 }
 
 const getPoints = (vertices, radius, startAngle, center) => {
-  const a = (Math.PI * 2) / vertices
+  const a = TAU / vertices
 
   const points = []
   for (let i = 0; i < vertices; i++) {
@@ -63,7 +64,7 @@ const star = (options) => {
   vertices = Math.floor(vertices)
   density = Math.floor(density)
 
-  startAngle = startAngle % (Math.PI * 2)
+  startAngle = startAngle % TAU
 
   if (innerRadius === 0) {
     if (!isGTE(density, 2)) throw new Error('density must be two or more')

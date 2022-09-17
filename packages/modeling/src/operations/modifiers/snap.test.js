@@ -2,6 +2,8 @@ const test = require('ava')
 
 const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
 
+const { TAU } = require('../../maths/constants')
+
 const { geom2, geom3, path2 } = require('../../geometries')
 
 const { arc, rectangle, cuboid } = require('../../primitives')
@@ -12,7 +14,7 @@ test('snap: snap of a path2 produces an expected path2', (t) => {
   const geometry1 = path2.create()
   const geometry2 = arc({ radius: 1 / 2, segments: 8 })
   const geometry3 = arc({ radius: 1.3333333333333333 / 2, segments: 8 })
-  const geometry4 = arc({ radius: Math.PI * 1000 / 2, segments: 8 })
+  const geometry4 = arc({ radius: TAU / 4 * 1000, segments: 8 })
 
   const results = snap(geometry1, geometry2, geometry3, geometry4)
   t.is(results.length, 4)
@@ -56,7 +58,7 @@ test('snap: snap of a geom2 produces an expected geom2', (t) => {
   const geometry1 = geom2.create()
   const geometry2 = rectangle({ size: [1, 1, 1] })
   const geometry3 = rectangle({ size: [1.3333333333333333, 1.3333333333333333, 1.3333333333333333] })
-  const geometry4 = rectangle({ size: [Math.PI * 1000, Math.PI * 1000, Math.PI * 1000] })
+  const geometry4 = rectangle({ size: [TAU / 2 * 1000, TAU / 2 * 1000, TAU / 2 * 1000] })
 
   const results = snap(geometry1, geometry2, geometry3, geometry4)
   t.is(results.length, 4)
@@ -88,7 +90,7 @@ test('snap: snap of a geom3 produces an expected geom3', (t) => {
   const geometry1 = geom3.create()
   const geometry2 = cuboid({ size: [1, 1, 1] })
   const geometry3 = cuboid({ size: [1.3333333333333333, 1.3333333333333333, 1.3333333333333333] })
-  const geometry4 = cuboid({ size: [Math.PI * 1000, Math.PI * 1000, Math.PI * 1000] })
+  const geometry4 = cuboid({ size: [TAU / 2 * 1000, TAU / 2 * 1000, TAU / 2 * 1000] })
 
   const results = snap(geometry1, geometry2, geometry3, geometry4)
   t.is(results.length, 4)

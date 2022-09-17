@@ -10,7 +10,7 @@ const mat4 = require('../../maths/mat4')
  * @alias module:modeling/geometries/path2.transform
  *
  * @example
- * let newpath = transform(fromZRotation(Math.PI / 4), path)
+ * let newpath = transform(fromZRotation(TAU / 8), path)
  */
 const transform = (matrix, geometry) => {
   const transforms = mat4.multiply(mat4.create(), matrix, geometry.transforms)

@@ -12,7 +12,7 @@ const path2 = require('../../geometries/path2')
  * @alias module:modeling/transforms.transform
  *
  * @example
- * const newsphere = transform(mat4.rotateX(Math.PI/4), sphere())
+ * const newsphere = transform(mat4.rotateX(TAU / 8), sphere())
  */
 const transform = (matrix, ...objects) => {
   // TODO how to check that the matrix is REAL?

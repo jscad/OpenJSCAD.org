@@ -17,3 +17,4 @@ objects/
 
 # project ignores
 packages/web/examples/
+.history

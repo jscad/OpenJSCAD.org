@@ -6,14 +6,14 @@ There are many ways to use JSCAD:
 
 An [online version](https://openjscad.xyz/), [self hosteable web based ui](./packages/web), as [CLI](./packages/cli) (command-line interface) for server-side computations with Node.js, as well as an experimental [desktop app](./packages/desktop) or [individual Node.js packages](./packages/README.md)!!
 
-This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-the-wild-33c6eb246cb9) (container of multiple packages and tools) maintained with [Lerna](https://lernajs.io/)
+This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-the-wild-33c6eb246cb9) (container of multiple packages and tools) maintained with [Lerna](https://lerna.js.org/)
 
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
 [![Stability](https://img.shields.io/badge/stability-stable-success)](https://github.com/emersion/stability-badges#stable)
 [![All Dependencies](https://img.shields.io/librariesio/github/jscad/OpenJSCAD.org)](https://github.com/jscad/OpenJSCAD.org)
 
 [![User Group](https://img.shields.io/badge/maintained%20by-user%20group-blue)](https://openjscad.nodebb.com/)
-[![Lerna](https://img.shields.io/badge/maintained%20with-lerna-blue)](https://lernajs.io/)
+[![Lerna](https://img.shields.io/badge/maintained%20with-lerna-blue)](https://lerna.js.org/)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-blue)](https://standardjs.com)
 
 [![Backers](https://img.shields.io/opencollective/backers/openjscad)](https://opencollective.com/openjscad)
@@ -45,7 +45,7 @@ There are different 'flavors' of JSCAD that you can use based on your needs
 
 ### Immediate Use (no installation)
 
-Go to *[OpenJSCAD.xyz](https://openjscad.xyz)* (Tested browsers include Chrome, Firefox, Opera, Safari)
+Go to *[OpenJSCAD.xyz](https://openjscad.xyz)* (Tested browsers include Chrome, Edge, Firefox, Opera, Safari)
 
 ### Use within a Web Site (pre built files, from GitHub)
 
@@ -54,6 +54,10 @@ Please see [here for details](./packages/web/README.md)
 ### Use as Command Line Interface (CLI)
 
 Please see [here for details](./packages/cli/README.md)
+
+### Use of components and viewer in websites
+
+Please see [here for details](./packages/utils/regl-renderer/README.md)
 
 ### Use of the different modular components directly
 
@@ -98,8 +102,12 @@ A BIG THANKS to all the people who have already contributed to the JSCAD project
 
 ## Community
 
-See for more details
+Discuss designs or issues
 * [JSCAD User Group](https://openjscad.xyz/forum.html)
+
+Or chat with other users
+* [Discord Community](https://openjscad.xyz/discord.html)
+
 
 HUGE THANKS and SHOUTOUT to [nodeBB](https://nodebb.org/) for hosting our (awesome) forum for free ! Thanks a lot !
 

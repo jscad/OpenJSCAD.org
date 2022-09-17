@@ -1,309 +1,14 @@
-const path = require('path')
 const most = require('most')
 
 const { delayFromObservable, holdUntil, withLatestFrom } = require('../../most-utils')
 
-const { applyParameterDefinitions, getParameterValuesFromUIControls } = require('@jscad/core').parameters
-const { getDesignEntryPoint, getDesignName } = require('@jscad/core').loading.requireDesignUtilsFs
-const { makeFakeFs } = require('@jscad/core').loading
+const { getParameterValuesFromUIControls } = require('@jscad/core').parameters
 
-const { keep } = require('../../utils/object')
 const { fetchUriParams, getAllUriParams } = require('../../utils/urlUtils')
-const { availableExportFormatsFromSolids, exportFilePathFromFormatAndDesign } = require('../../core/io/exportUtils')
-const packageMetadata = require('../../../package.json')
+
+const reducers = require('./reducers')
 
 const jsonCompare = (first, second) => JSON.stringify(first) === JSON.stringify(second)
-
-// what fields should we check to determine if two designs are the same
-const designEqualityFields = [
-  'parameterDefinitions',
-  'parameterValues',
-  'mainPath',
-  'filesAndFolders',
-  'vtreeMode' // also trigger a recompute when vtree mode is enabled/ disabled
-]
-
-// what fields we want to de/serialize
-const serializableFields = [
-  'name',
-  'mainPath',
-  'origin',
-  'parameterValues',
-  'vtreeMode',
-  'autoReload',
-  'instantUpdate',
-  'solidsTimeOut'
-]
-
-const reducers = {
-  /** initialise the design's state
-   * @returns {Object} the default state for designs
-   */
-  initialize: (state) => {
-    const design = {
-      // metadata
-      name: '',
-      path: '',
-      mainPath: '',
-      origin: undefined, // where the design came from : http, local etc
-      filesAndFolders: [], // file tree, of sorts
-      // code
-      instantUpdate: false,
-      autoReload: false,
-      // parameters
-      parameterDefinitions: [],
-      parameterValues: {},
-      parameterDefaults: {},
-      // solids
-      solidsTimeOut: 80000,
-      solids: [],
-      // geometry caching
-      vtreeMode: false,
-      lookup: {},
-      lookupCounts: {},
-      debug: {
-        startTime: 0,
-        endTime: 0,
-        totalTime: 0
-      }
-    }
-    return { design }
-  },
-
-  /** reset the content of the design
-   * @param  {Object} state
-   * @param  {String} payload
-   * @returns {Object} the updated state
-   */
-  resetDesign: (state, origin) => {
-    // we reset only the given fields: mostly all except design specific things
-    const fieldsToReset = [
-      'name', 'path', 'mainPath', 'origin', 'filesAndFolders',
-      'parameterDefinitions', 'parameterValues', 'parameterDefaults',
-      'lookup', 'lookupCounts', 'debug', 'solids'
-    ]
-    const design = Object.assign({},
-      state.design, keep(fieldsToReset, reducers.initialize().design)
-    )
-    // ugh
-    design.origin = origin
-    return { design }
-  },
-
-  /** set the content of the design usually after a reset
-   * bulk of the data is set here
-   * @param  {Object} state
-   * @param  {String} payload
-   * @returns {Object} the updated state
-   */
-  setDesignContent: (state, payload) => {
-    // all our available data (specific to web)
-    const { filesAndFolders } = payload
-    const fakeFs = makeFakeFs(filesAndFolders)
-    const rootPath = filesAndFolders[0].fullPath
-    const mainPath = getDesignEntryPoint(fakeFs, rootPath)
-    const designName = getDesignName(fakeFs, rootPath)
-    const designPath = path.dirname(rootPath)
-
-    let design = state.design
-    // to track computation time
-    const debug = Object.assign({ }, state.design.debug, { startTime: new Date() })
-
-    design = Object.assign({}, design, {
-      name: designName,
-      path: designPath,
-      mainPath,
-      filesAndFolders,
-      debug
-    })
-
-    const appTitle = `jscad v ${packageMetadata.version}: ${state.design.name}`
-
-    // FIXME: this is the same as clear errors ?
-    const status = Object.assign({}, state.status, { busy: true, error: undefined })
-    return {
-      design,
-      appTitle,
-      status
-    }
-  },
-
-  /** set the solids (2d/ 3D /csg/cag data), and the geometry cache if applicable
-   * @param  {} state
-   * @param  {} {solids
-   * @param  {} lookup
-   * @param  {} lookupCounts}
-   * @returns {Object} the updated state
-   */
-  setDesignSolids: (state, { solids, lookup, lookupCounts }) => {
-    solids = solids || []
-    lookup = lookup || {}
-    lookupCounts = lookupCounts || {}
-
-    // should debug be part of status ?
-    const endTime = new Date()
-    const totalTime = endTime - state.design.debug.startTime
-    const debug = Object.assign({ }, state.design.debug, {
-      endTime,
-      totalTime
-    })
-    console.warn('total time for design regeneration', totalTime, new Date().getSeconds())
-
-    const design = Object.assign({}, state.design, {
-      solids,
-      lookup,
-      lookupCounts,
-      debug
-    })
-
-    // TODO: move this to IO ??
-    const { exportFormat, availableExportFormats } = availableExportFormatsFromSolids(solids)
-    const exportInfos = exportFilePathFromFormatAndDesign(design, exportFormat)
-    const io = {
-      exportFormat,
-      exportFilePath: exportInfos.exportFilePath, // default export file path
-      availableExportFormats
-    }
-
-    const status = Object.assign({}, state.status, { busy: false })
-
-    return {
-      design,
-      status,
-      io
-    }
-  },
-
-  setDesignParameterDefinitions: (state, data) => {
-    const parameterDefaults = data.parameterDefaults || state.design.parameterDefaults
-    const parameterDefinitions = data.parameterDefinitions || state.design.parameterDefinitions
-    const design = Object.assign({}, state.design, {
-      parameterDefaults,
-      parameterDefinitions,
-      parametersOrigin: data.origin
-    })
-    return { design }
-  },
-
-  /** set the parameters of this design
-   * @param  {Object} state
-   * @param  {} {parameterDefaults
-   * @param  {} parameterValues
-   * @param  {} parameterDefinitions}
-   * @returns {Object} the updated state
-   */
-  setDesignParameterValues: (state, data) => {
-    let parameterValues = data.parameterValues
-    // one of many ways of filtering out data from instantUpdates
-    if (data.origin === 'instantUpdate' && !state.design.instantUpdate) {
-      parameterValues = state.design.parameterValues
-    }
-    parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, state.design.parameterDefinitions) : parameterValues
-    parameterValues = Object.assign({}, state.design.parameterValues, parameterValues)
-
-    let design = Object.assign({}, state.design, {
-      parameterValues,
-      parametersOrigin: data.origin
-    })
-    // to track computation time
-    const debug = Object.assign({ }, state.design.debug, { startTime: new Date() })
-    design = Object.assign({}, design, { debug })
-
-    const status = Object.assign({}, state.status, { busy: true, error: undefined })
-
-    return {
-      design,
-      status
-    }
-  },
-
-  setSettings: (state, { data }) => {
-    const {
-      vtreeMode,
-      autoReload,
-      instantUpdate,
-      solidsTimeOut
-    } = data
-    // FIXME : clunky but needed to make sure we have no invalid settings
-    if (vtreeMode === undefined) {
-      return { design: state.design }
-    }
-    const design = Object.assign({}, state.design, { vtreeMode, autoReload, instantUpdate, solidsTimeOut })
-    return {
-      design
-    }
-  },
-
-  requestGeometryRecompute: ({ design }, _) => keep(['mainPath', 'parameterValues', 'filesAndFolders', 'vtreeMode', 'lookup', 'lookupCounts'], design),
-
-  timeoutGeometryRecompute: ({ status }, _) => {
-    if (status.isBusy) { // still computing... we can kill it
-      return Object.assign({}, status, {
-        busy: false,
-        error: new Error('Failed to generate design within an acceptable time, bailing out')
-      })
-    }
-    // no problem, just act as a no-op
-    return { status }
-  },
-
-  requestWriteCachedGeometry: ({ design }, cache) => {
-    const data = {}
-    Object.keys(cache).forEach((key) => {
-      data[key] = cache[key]
-    })
-    // we want to save the geometry cache under '.solidsCache'
-    return { path: '.solidsCache', options: { isRawData: true }, origin: design.origin }
-  },
-
-  // what do we want to save , return an object containing only that data?
-  requestSaveSettings: ({ design }) => keep(serializableFields, design),
-
-  // helpers
-  isDesignValid: (state) => (state.design && state.design.name && state.design.path !== ''),
-
-  // determine if a design has remained the same : does NOT include solids, as they are a result of all the other parameters
-  isDesignTheSame: (previousState, state) => {
-    if (!previousState.design) {
-      return false
-    }
-    const current = JSON.stringify(keep(designEqualityFields, state.design))
-    const previous = JSON.stringify(keep(designEqualityFields, previousState.design))
-    return previous === current
-  },
-
-  // same as above but with added fields for settings
-  isDesignTheSameForSerialization: (previousState, state) => {
-    if (!previousState.design) {
-      return false
-    }
-    // do a JSON compare of the previous & current fields to save if needed
-    const current = JSON.stringify(keep(serializableFields, state.design))
-    const previous = JSON.stringify(keep(serializableFields, previousState.design))
-    return previous === current
-  },
-
-  // ui/toggles
-  toggleAutoReload: (state, autoReload) => {
-    const design = Object.assign({}, state.design, { autoReload })
-    return { design }
-  },
-
-  toggleInstantUpdate: (state, instantUpdate) => {
-    const design = Object.assign({}, state.design, { instantUpdate })
-    return { design }
-  },
-
-  toggleVtreeMode: (state, vtreeMode) => {
-    const design = Object.assign({}, state.design, { vtreeMode })
-    return { design }
-  },
-
-  setSolidsTimeout: (state, solidsTimeOut) => {
-    const design = Object.assign({}, state.design, { solidsTimeOut })
-    return { design }
-  }
-} // end of reducers
 
 const actions = ({ sources }) => {
   const initialize$ = most.just({})
@@ -315,11 +20,11 @@ const actions = ({ sources }) => {
   const requestLoadSettings$ = initialize$
     .map((_) => ({ sink: 'store', key: 'design', type: 'read' }))
 
-  // starts emmiting to storage only AFTER initial settings have been loaded
+  // starts emitting to storage only AFTER initial settings have been loaded
   const requestSaveSettings$ = sources.state
     .filter(reducers.isDesignValid)
     .skipRepeatsWith(reducers.isDesignTheSameForSerialization)
-    // wait until we actualy have design data
+    // wait until we actually have design data
     .thru(holdUntil(sources.store.filter((reply) => reply.key === 'design' && reply.type === 'read')))
     .map(reducers.requestSaveSettings)
     .map((data) => Object.assign({}, { data }, { sink: 'store', key: 'design', type: 'write' }))
@@ -446,7 +151,7 @@ const actions = ({ sources }) => {
   const resetDesign$ = most.mergeArray([
     requestLoadDesignContent$.map(({ sink }) => sink)
   ])
-    // .thru(holdUntil(setDesignSettings$))// only after FIXME : this does not seem to work
+    // .thru(holdUntil(setDesignSettings$)) // only after FIXME : this does not seem to work
     .thru(withLatestFrom(reducers.resetDesign, sources.state))
     .map((data) => ({ type: 'resetDesign', state: data, sink: 'state' }))
     .multicast()
@@ -491,7 +196,7 @@ const actions = ({ sources }) => {
 
   // we also re-use the timeout to send a signal to the worker to terminate the current geometry generation
   const cancelGeometryRecompute$ = timeoutGeometryRecompute$
-    .filter(({ state }) => state.status.error !== undefined)// if there was no error , the timeout is irrelevant
+    .filter(({ state }) => state.status.error !== undefined) // if there was no error, the timeout is irrelevant
     .map((_) => Object.assign({}, { sink: 'geometryWorker', cmd: 'cancel' }))
     .multicast()
 
@@ -539,13 +244,13 @@ const actions = ({ sources }) => {
     .multicast()
     .debounce(10)
 
-  // parameter values etc retrived from local storage
+  // parameter values etc retrieved from local storage
   const parametersFromStore$ = sources.store
     .filter((reply) => reply.key === 'design' && reply.type === 'read' && reply.data.parameterValues !== undefined)
     .map(({ data }) => ({ parameterValues: data.parameterValues, origin: 'store' }))
     .multicast()
 
-  // parameter values retrived from titleBar
+  // parameter values retrieved from titleBar
   const parametersFromTitleBar$ = sources.titleBar
     .map((uri) => getAllUriParams(uri))
     .filter((params) => Object.keys(params).length > 0)
@@ -573,7 +278,7 @@ const actions = ({ sources }) => {
     .thru(withLatestFrom(reducers.setDesignParameterValues, sources.state))
     .map((data) => ({ type: 'setDesignParameterValues', state: data, sink: 'state' }))
     .multicast()
-    .delay(10) // needed , why ?
+    .delay(10) // needed, why?
 
   // errors retrieved from worker
   const errorsFromWorker$ = sources.solidWorker

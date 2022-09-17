@@ -4,6 +4,7 @@ const { triangle } = require('./index')
 
 const degToRad = require('../utils/degToRad')
 const geom2 = require('../geometries/geom2')
+const { TAU } = require('../maths/constants')
 
 const comparePoints = require('../../test/helpers/comparePoints')
 
@@ -36,7 +37,7 @@ test('triangle (options)', (t) => {
   t.true(comparePoints(obs, exp))
 
   // test AAA
-  geometry = triangle({ type: 'AAA', values: [Math.PI / 2, Math.PI / 4, Math.PI / 4] })
+  geometry = triangle({ type: 'AAA', values: [TAU / 4, TAU / 8, TAU / 8] })
   obs = geom2.toPoints(geometry)
   exp = [
     [0, 0],

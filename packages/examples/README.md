@@ -10,7 +10,7 @@ packages like @jscad/cli , @jscad/web, @jscad/desktop
 [![License](https://img.shields.io/github/license/jscad/OpenJSCAD.org)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 
 [![User Group](https://img.shields.io/badge/maintained%20by-user%20group-blue)](https://openjscad.nodebb.com/)
-[![Lerna](https://img.shields.io/badge/maintained%20with-lerna-blue)](https://lernajs.io/)
+[![Lerna](https://img.shields.io/badge/maintained%20with-lerna-blue)](https://lerna.js.org/)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-blue)](https://standardjs.com)
 
 [![Backers](https://img.shields.io/opencollective/backers/openjscad)](https://opencollective.com/openjscad)
@@ -63,9 +63,5 @@ See for more details
 (unless specified otherwise)
 
 Some content released under different licence:
-- thing_7-Zomboe.stl: CC-BY-NC-SA
 - 3d_sculpture-VernonBussler.stl: CC-BY-SA
 - frog-OwenCollins.stl: CC-BY-NC-SA
-- organic_flower-Bogoboy23.stl: CC-BY
-- treefrog-Jerrill.stl: CC-BY-NC-SA
-- yoda-RichRap.stl: CC-BY-SA
