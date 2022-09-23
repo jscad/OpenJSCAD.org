@@ -1,6 +1,6 @@
 {
   "name": "@jscad/io",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "Meta Package for JSCAD IO Packages",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
@@ -44,7 +44,7 @@
     "@jscad/obj-serializer": "2.1.12",
     "@jscad/stl-deserializer": "2.1.19",
     "@jscad/stl-serializer": "2.1.12",
-    "@jscad/svg-deserializer": "2.5.2",
+    "@jscad/svg-deserializer": "2.5.3",
     "@jscad/svg-serializer": "2.3.10",
     "@jscad/x3d-deserializer": "2.2.2",
     "@jscad/x3d-serializer": "2.4.2"
