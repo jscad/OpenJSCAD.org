@@ -63,9 +63,8 @@ Please see [here for details](./packages/utils/regl-renderer/README.md)
 
 From version 1.0.0 onwards, almost all the individual parts of this project are available
 directly as scoped NPM packages, and can be used independently from the main repository.
-The full list of these is available [here](./packages/README.md) and [here](https://www.npmjs.com/org/jscad)
+The full list of packages is available [here](./packages/README.md), as well as on NPM [here](https://www.npmjs.com/org/jscad),
 
-One example of what can be achieved with this can be found [here](https://esnextb.in/?gist=0a2ac2c4e189e27692ea964956a3a2e5)
 This means you can :
 - easily create your own renderer for the 3D and 2D geometries
 - create custom UIs
@@ -73,7 +72,7 @@ This means you can :
 - cherry pick formats you want to use for input/output without needing the dependencies of **all** packages
 - lots more !
 
-This will be expanded upon in the future, and is the backbone of the newer, modular JSCAD project.
+The available packages may change based on user demands, which is the backbone of the newer, modular JSCAD project.
 
 ## Documentation
 
@@ -115,18 +114,18 @@ HUGE THANKS and SHOUTOUT to [nodeBB](https://nodebb.org/) for hosting our (aweso
 
 JSCAD and all sub components are built upon great open source packages, and contributions.
 
-Early CSG Library by:
+Early CSG library by:
 - Evan Wallace,
 - Eduard Bespalov,
 - Joost Nieuwenhuijse,
 - Alexandre Girard
 
-XML parsing:
-- [sax](https://github.com/isaacs/sax-js)
+Portions of Matrix and Vector libraries by:
+- Brandon Jones
+- Colin MacKenzie IV
 
-Tooling:
-- [browserify](https://browserify.org/)
-- [babel](https://babeljs.io/)
+Quickhull library by:
+- Mauricio Poppe
 
 and many more!
 
