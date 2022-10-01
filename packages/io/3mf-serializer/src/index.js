@@ -34,7 +34,7 @@ Notes:
 const zipSync = require('fflate').zipSync
 const strToU8 = require('fflate').strToU8
 
-const stringify = require('onml/lib/stringify')
+const stringify = require('onml').stringify
 
 const { colors, geometries, modifiers } = require('@jscad/modeling')
 const { flatten, toArray } = require('@jscad/array-utils')

@@ -36,7 +36,7 @@ const { geom2, geom3, path2, poly2, poly3 } = geometries
 
 const { flatten, toArray } = require('@jscad/array-utils')
 
-const stringify = require('onml/lib/stringify')
+const stringify = require('onml').stringify
 
 // http://www.web3d.org/x3d/content/X3dTooltips.html
 // http://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Meshes

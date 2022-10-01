@@ -33,7 +33,7 @@ TBD
  * const { serializer, mimeType } = require('@jscad/amf-serializer')
  */
 
-const stringify = require('onml/lib/stringify')
+const stringify = require('onml').stringify
 
 const { geometries, modifiers } = require('@jscad/modeling')
 

@@ -33,7 +33,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@jscad/modeling": "2.10.0",
+    "@jscad/modeling": "workspace:2.10.0",
     "ava": "3.15.0",
     "nyc": "15.1.0"
   },
