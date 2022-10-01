@@ -1,0 +1,12 @@
+prefer-workspace-packages: true
+packages:
+  - "packages/cli"
+  - "packages/core"
+  - "packages/examples"
+  - "packages/io/**"
+  - "packages/modeling"
+  - "packages/utils/**"
+  - "packages/vtree"
+  - "packages/web"
+  - "!packages/io/gcode-deserializer"
+  - "!packages/io/scad-deserializer"

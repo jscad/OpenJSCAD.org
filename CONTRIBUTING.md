@@ -41,17 +41,20 @@ cd OpenJSCAD.org
 The next steps require [NPM](https://www.npmjs.com/) and [Node.js](https://nodejs.org).
 The JSCAD project always develops with the latest LTS releases, so install these versions.
 
+In addition, the packages included are maintained as a mono-repository using [PNPM](https://pnpm.io).
+If not already, install PNPM following the [installation directions](https://pnpm.io/installation).
+
 Next, try to run the test suites to verify the installation.
 ```
-npm install
-npm test
+pnpm install
+pnpm test
 ```
 
 This may take some time... relax... have some coffee.
 
 If the tests ran successfully then changes can be made to any package. See the 'packages' directory.
 
-NOTE: All packages and dependencies have been linked together by Lerna. No other magic is required.
+NOTE: All packages and dependencies have been linked together by PNPM. No other magic is required.
 
 If you intend to contribute changes back to JSCAD then please follow these guides.
 - follow the [JavaScript Standard Style](https://standardjs.com/index.html) when making changes

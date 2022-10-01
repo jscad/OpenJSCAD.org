@@ -1,13 +1,8 @@
 {
   "version": "independent",
+  "npmClient": "pnpm",
+  "useWorkspaces": true,
   "command": {
-    "bootstrap": {
-      "ignore": [
-        "@jscad/desktop",
-        "@jscad/gcode-deserializer",
-        "@jscad/scad-deserializer"
-      ]
-    },
     "version": {
       "allowBranch": "release",
       "conventionalCommits": true,
@@ -15,17 +10,6 @@
       "message": "chore(release): publish"
     }
   },
-  "packages": [
-    "packages/cli",
-    "packages/core",
-    "packages/desktop",
-    "packages/examples",
-    "packages/io/*",
-    "packages/modeling",
-    "packages/utils/*",
-    "packages/vtree",
-    "packages/web"
-  ],
   "ignoreChanges": [
     "**/*.md"
   ]
