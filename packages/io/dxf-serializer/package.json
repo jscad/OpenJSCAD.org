@@ -32,8 +32,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/array-utils": "2.1.4",
-    "@jscad/modeling": "2.10.0"
+    "@jscad/array-utils": "workspace:2.1.4",
+    "@jscad/modeling": "workspace:2.10.0"
   },
   "devDependencies": {
     "ava": "3.15.0",

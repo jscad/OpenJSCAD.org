@@ -33,7 +33,7 @@ Notes:
 
 const { geometries, maths, measurements, utils } = require('@jscad/modeling')
 
-const stringify = require('onml/lib/stringify')
+const stringify = require('onml').stringify
 
 const version = require('./package.json').version
 

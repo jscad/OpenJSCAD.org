@@ -28,15 +28,15 @@
   },
   "types": "types",
   "dependencies": {
-    "@jscad/array-utils": "2.1.4",
+    "@jscad/array-utils": "workspace:2.1.4",
     "camera-unproject": "1.0.1",
     "gl-mat4": "1.2.0",
     "gl-vec3": "1.1.3",
     "regl": "2.1.0"
   },
   "devDependencies": {
-    "@jscad/img-utils": "2.0.5",
-    "@jscad/modeling": "2.10.0",
+    "@jscad/img-utils": "workspace:2.0.5",
+    "@jscad/modeling": "workspace:2.10.0",
     "ava": "3.15.0",
     "browserify": "16.5.1",
     "budo": "11.6.4",
