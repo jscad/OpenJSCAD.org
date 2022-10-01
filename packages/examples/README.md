@@ -10,7 +10,7 @@ packages like @jscad/cli , @jscad/web, @jscad/desktop
 [![License](https://img.shields.io/github/license/jscad/OpenJSCAD.org)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
 
 [![User Group](https://img.shields.io/badge/maintained%20by-user%20group-blue)](https://openjscad.nodebb.com/)
-[![Lerna](https://img.shields.io/badge/maintained%20with-lerna-blue)](https://lerna.js.org/)
+[![lerna--lite](https://img.shields.io/badge/maintained%20with-lerna--lite-e137ff)](https://github.com/ghiscoding/lerna-lite)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-blue)](https://standardjs.com)
 
 [![Backers](https://img.shields.io/opencollective/backers/openjscad)](https://opencollective.com/openjscad)
