@@ -1,16 +1,24 @@
 {
   "version": "independent",
   "npmClient": "pnpm",
-  "useWorkspaces": true,
   "command": {
     "version": {
-      "allowBranch": "release",
+      "allowBranch": "v3-prerelease",
       "conventionalCommits": true,
       "exact": true,
-      "message": "chore(release): publish"
+      "message": "chore(release): publish",
+      "syncWorkspaceLock": true
     }
   },
   "ignoreChanges": [
     "**/*.md"
+  ],
+  "packages": [
+    "packages/cli",
+    "packages/core",
+    "packages/io/*",
+    "packages/modeling",
+    "packages/web",
+    "packages/utils/*"
   ]
 }
