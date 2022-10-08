@@ -38,7 +38,7 @@
     "@lerna-lite/changed": "^1.11.3",
     "@lerna-lite/cli": "^1.11.3",
     "@lerna-lite/run": "^1.11.3",
-    "ava": "3.15.0",
+    "ava": "4.3.3",
     "docdash": "1.2.0",
     "jsdoc": "3.6.11",
     "nyc": "15.1.0",
