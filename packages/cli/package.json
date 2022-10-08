@@ -41,7 +41,7 @@
     "@jscad/modeling": "workspace:2.10.0"
   },
   "devDependencies": {
-    "ava": "3.15.0",
+    "ava": "4.3.3",
     "nyc": "15.1.0"
   },
   "collective": {

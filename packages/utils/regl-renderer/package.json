@@ -37,7 +37,7 @@
   "devDependencies": {
     "@jscad/img-utils": "workspace:2.0.5",
     "@jscad/modeling": "workspace:2.10.0",
-    "ava": "3.15.0",
+    "ava": "4.3.3",
     "browserify": "16.5.1",
     "budo": "11.6.4",
     "nyc": "15.1.0",
