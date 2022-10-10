@@ -1,7 +1,7 @@
-const { TAU } = require('../constants')
+import { TAU } from '../constants.js'
 
-const create = require('./create')
-const rotate = require('./rotate')
+import create from './create.js'
+import rotate from './rotate.js'
 
 /**
  * Calculates the normal of the given vector.
@@ -12,6 +12,6 @@ const rotate = require('./rotate')
  * @returns {vec2} out
  * @alias module:modeling/maths/vec2.normal
  */
-const normal = (out, vector) => rotate(out, vector, create(), (TAU / 4))
+export const normal = (out, vector) => rotate(out, vector, create(), (TAU / 4))
 
-module.exports = normal
+export default normal

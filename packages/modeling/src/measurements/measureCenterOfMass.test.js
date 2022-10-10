@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { geom2, geom3, path2 } = require('../geometries')
+import { geom2, geom3, path2 } from '../geometries/index.js'
 
-const { ellipsoid, line, rectangle, cuboid } = require('../primitives')
+import { ellipsoid, line, rectangle, cuboid } from '../primitives/index.js'
 
-const { measureCenterOfMass } = require('./index')
+import { measureCenterOfMass } from './index.js'
 
 test('measureCenterOfMass (single objects)', (t) => {
   const aline = line([[10, 10], [15, 15]])

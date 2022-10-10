@@ -1,7 +1,9 @@
-const flatten = require('../../utils/flatten')
-const padArrayToLength = require('../../utils/padArrayToLength')
-const measureAggregateBoundingBox = require('../../measurements/measureAggregateBoundingBox')
-const { translate } = require('./translate')
+import flatten from '../../utils/flatten.js'
+import padArrayToLength from '../../utils/padArrayToLength.js'
+
+import measureAggregateBoundingBox from '../../measurements/measureAggregateBoundingBox.js'
+
+import { translate } from './translate.js'
 
 const validateOptions = (options) => {
   if (!Array.isArray(options.modes) || options.modes.length > 3) throw new Error('align(): modes must be an array of length <= 3')
@@ -61,7 +63,7 @@ const alignGeometries = (geometry, modes, relativeTo) => {
  * @example
  * let alignedGeometries = align({modes: ['min', 'center', 'none'], relativeTo: [10, null, 10], grouped: true }, geometries)
  */
-const align = (options, ...geometries) => {
+export const align = (options, ...geometries) => {
   const defaults = {
     modes: ['center', 'center', 'min'],
     relativeTo: [0, 0, 0],
@@ -86,4 +88,4 @@ const align = (options, ...geometries) => {
   return geometries.length === 1 ? geometries[0] : geometries
 }
 
-module.exports = align
+export default align

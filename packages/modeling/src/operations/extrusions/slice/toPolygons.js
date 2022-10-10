@@ -1,6 +1,7 @@
-const poly3 = require('../../../geometries/poly3')
-const earcut = require('../earcut')
-const PolygonHierarchy = require('../earcut/polygonHierarchy')
+import * as poly3 from '../../../geometries/poly3/index.js'
+
+import earcut from '../earcut/index.js'
+import PolygonHierarchy from '../earcut/polygonHierarchy.js'
 
 /**
  * Return a list of polygons which are enclosed by the slice.
@@ -8,7 +9,7 @@ const PolygonHierarchy = require('../earcut/polygonHierarchy')
  * @return {Array} a list of polygons (3D)
  * @alias module:modeling/extrusions/slice.toPolygons
  */
-const toPolygons = (slice) => {
+export const toPolygons = (slice) => {
   const hierarchy = new PolygonHierarchy(slice)
 
   const polygons = []
@@ -37,4 +38,4 @@ const toPolygons = (slice) => {
   return polygons
 }
 
-module.exports = toPolygons
+export default toPolygons

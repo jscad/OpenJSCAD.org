@@ -1,4 +1,4 @@
-const vec2 = require('../vec2')
+import * as vec2 from '../vec2/index.js'
 
 /**
  * Return the direction of the given line.
@@ -7,10 +7,10 @@ const vec2 = require('../vec2')
  * @return {vec2} a vector in the direction of the line
  * @alias module:modeling/maths/line2.direction
  */
-const direction = (line) => {
+export const direction = (line) => {
   const vector = vec2.normal(vec2.create(), line)
   vec2.negate(vector, vector)
   return vector
 }
 
-module.exports = direction
+export default direction

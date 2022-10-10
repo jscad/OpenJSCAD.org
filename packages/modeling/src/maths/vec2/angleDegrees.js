@@ -1,4 +1,4 @@
-const angleRadians = require('./angleRadians')
+import angleRadians from './angleRadians.js'
 
 /**
  * Calculate the angle of the given vector.
@@ -7,6 +7,6 @@ const angleRadians = require('./angleRadians')
  * @returns {Number} angle in degrees
  * @alias module:modeling/maths/vec2.angleDegrees
  */
-const angleDegrees = (vector) => angleRadians(vector) * 57.29577951308232
+export const angleDegrees = (vector) => angleRadians(vector) * 57.29577951308232
 
-module.exports = angleDegrees
+export default angleDegrees

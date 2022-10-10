@@ -1,16 +1,16 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const aboutEqualNormals = require('../../maths/utils/aboutEqualNormals')
-const plane = require('../../maths/plane')
-const mat4 = require('../../maths/mat4')
+import aboutEqualNormals from '../../maths/utils/aboutEqualNormals.js'
+import * as plane from '../../maths/plane/index.js'
+import * as mat4 from '../../maths/mat4/index.js'
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const poly3 = require('../../geometries/poly3')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as poly3 from '../../geometries/poly3/index.js'
 
-const measureEpsilon = require('../../measurements/measureEpsilon')
+import measureEpsilon from '../../measurements/measureEpsilon.js'
 
-const unionGeom2 = require('../booleans/unionGeom2')
+import unionGeom2 from '../booleans/unionGeom2.js'
 
 const projectGeom3 = (options, geometry) => {
   // create a plane from the options, and verify
@@ -64,7 +64,7 @@ const projectGeom3 = (options, geometry) => {
  * @example
  * let myshape = project({}, sphere({radius: 20, segments: 5}))
  */
-const project = (options, ...objects) => {
+export const project = (options, ...objects) => {
   const defaults = {
     axis: [0, 0, 1], // Z axis
     origin: [0, 0, 0]
@@ -85,4 +85,4 @@ const project = (options, ...objects) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = project
+export default project

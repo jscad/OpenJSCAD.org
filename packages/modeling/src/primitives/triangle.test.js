@@ -1,12 +1,14 @@
-const test = require('ava')
+import test from 'ava'
 
-const { triangle } = require('./index')
+import { TAU } from '../maths/constants.js'
 
-const degToRad = require('../utils/degToRad')
-const geom2 = require('../geometries/geom2')
-const { TAU } = require('../maths/constants')
+import { degToRad } from '../utils/index.js'
 
-const comparePoints = require('../../test/helpers/comparePoints')
+import { geom2 } from '../geometries/index.js'
+
+import { triangle } from './index.js'
+
+import { comparePoints } from '../../test/helpers/index.js'
 
 test('triangle (defaults)', (t) => {
   const geometry = triangle()

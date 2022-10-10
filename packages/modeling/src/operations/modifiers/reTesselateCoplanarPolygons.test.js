@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const mat4 = require('../../maths/mat4')
+import { mat4 } from '../../maths/index.js'
 
-const { poly3 } = require('../../geometries')
+import { poly3 } from '../../geometries/index.js'
 
-const reTesselateCoplanarPolygons = require('./reTesselateCoplanarPolygons')
+import reTesselateCoplanarPolygons from './reTesselateCoplanarPolygons.js'
 
 const translatePoly3 = (offsets, polygon) => {
   const matrix = mat4.fromTranslation(mat4.create(), offsets)

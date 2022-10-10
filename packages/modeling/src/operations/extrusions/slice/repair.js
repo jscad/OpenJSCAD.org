@@ -1,10 +1,11 @@
-const vec3 = require('../../../maths/vec3')
-const create = require('./create')
+import * as vec3 from '../../../maths/vec3/index.js'
+
+import create from './create.js'
 
 /*
  * Mend gaps in a 2D slice to make it a closed polygon
  */
-const repair = (slice) => {
+export const repair = (slice) => {
   if (!slice.edges) return slice
   let edges = slice.edges
   const vertexMap = new Map() // string key to vertex map
@@ -59,4 +60,4 @@ const repair = (slice) => {
   return create(edges)
 }
 
-module.exports = repair
+export default repair

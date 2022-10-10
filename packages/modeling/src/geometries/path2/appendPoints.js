@@ -1,5 +1,5 @@
-const concat = require('./concat')
-const create = require('./create')
+import concat from './concat.js'
+import create from './create.js'
 
 /**
  * Append the given list of points to the end of the given geometry.
@@ -10,6 +10,6 @@ const create = require('./create')
  * @example
  * let newpath = appendPoints([[3, 4], [4, 5]], oldpath)
  */
-const appendPoints = (points, geometry) => concat(geometry, create(points))
+export const appendPoints = (points, geometry) => concat(geometry, create(points))
 
-module.exports = appendPoints
+export default appendPoints

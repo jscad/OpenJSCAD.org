@@ -1,6 +1,6 @@
-const abs = require('./abs')
-const create = require('./create')
-const cross = require('./cross')
+import abs from './abs.js'
+import create from './create.js'
+import cross from './cross.js'
 
 /**
  * Create a new vector that is orthogonal to the given vector.
@@ -10,7 +10,7 @@ const cross = require('./cross')
  * @returns {vec3} out
  * @alias module:modeling/maths/vec3.orthogonal
  */
-const orthogonal = (out, vector) => {
+export const orthogonal = (out, vector) => {
   const bV = abs(create(), vector)
   const b0 = 0 + ((bV[0] < bV[1]) && (bV[0] < bV[2]))
   const b1 = 0 + ((bV[1] <= bV[0]) && (bV[1] < bV[2]))
@@ -19,4 +19,4 @@ const orthogonal = (out, vector) => {
   return cross(out, vector, [b0, b1, b2])
 }
 
-module.exports = orthogonal
+export default orthogonal

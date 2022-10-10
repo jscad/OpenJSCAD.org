@@ -12,10 +12,16 @@
  * @example
  * const { geom2, geom3, path2, poly2, poly3 } = require('@jscad/modeling').geometries
  */
-module.exports = {
-  geom2: require('./geom2'),
-  geom3: require('./geom3'),
-  path2: require('./path2'),
-  poly2: require('./poly2'),
-  poly3: require('./poly3')
+import * as geom2 from './geom2/index.js'
+import * as geom3 from './geom3/index.js'
+import * as path2 from './path2/index.js'
+import * as poly2 from './poly2/index.js'
+import * as poly3 from './poly3/index.js'
+
+export {
+  geom2,
+  geom3,
+  path2,
+  poly2,
+  poly3
 }

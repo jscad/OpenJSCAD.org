@@ -1,8 +1,8 @@
-const { EPS } = require('../constants')
+import { EPS } from '../constants.js'
 
-const { sin, cos } = require('../utils/trigonometry')
+import { sin, cos } from '../utils/trigonometry.js'
 
-const copy = require('./copy')
+import copy from './copy.js'
 
 /**
  * Rotates a matrix by the given angle about the given axis.
@@ -14,7 +14,7 @@ const copy = require('./copy')
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.rotate
  */
-const rotate = (out, matrix, radians, axis) => {
+export const rotate = (out, matrix, radians, axis) => {
   let [x, y, z] = axis
   const lengthSquared = x * x + y * y + z * z
 
@@ -79,4 +79,4 @@ const rotate = (out, matrix, radians, axis) => {
   return out
 }
 
-module.exports = rotate
+export default rotate

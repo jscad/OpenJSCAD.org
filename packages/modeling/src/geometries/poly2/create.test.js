@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { create } = require('./index')
+import { create } from './index.js'
 
 test('poly2: create() should return a poly2 with initial values', (t) => {
   let obs = create()

@@ -1,9 +1,9 @@
-const flatten = require('../utils/flatten')
+import flatten from '../utils/flatten.js'
 
-const geom2 = require('../geometries/geom2')
-const geom3 = require('../geometries/geom3')
-const path2 = require('../geometries/path2')
-const poly3 = require('../geometries/poly3')
+import * as geom2 from '../geometries/geom2/index.js'
+import * as geom3 from '../geometries/geom3/index.js'
+import * as path2 from '../geometries/path2/index.js'
+import * as poly3 from '../geometries/poly3/index.js'
 
 const cache = new WeakMap()
 
@@ -52,7 +52,7 @@ const measureVolumeOfGeom3 = (geometry) => {
  * @example
  * let volume = measureVolume(sphere())
  */
-const measureVolume = (...geometries) => {
+export const measureVolume = (...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('wrong number of arguments')
 
@@ -65,4 +65,4 @@ const measureVolume = (...geometries) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = measureVolume
+export default measureVolume

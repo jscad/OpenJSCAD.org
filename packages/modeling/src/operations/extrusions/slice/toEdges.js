@@ -8,6 +8,6 @@
  * @example
  * let sharededges = toEdges(slice)
  */
-const toEdges = (slice) => slice.edges
+export const toEdges = (slice) => slice.edges
 
-module.exports = toEdges
+export default toEdges

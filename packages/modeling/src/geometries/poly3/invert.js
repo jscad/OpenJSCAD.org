@@ -1,5 +1,6 @@
-const plane = require('../../maths/plane')
-const create = require('./create')
+import * as plane from '../../maths/plane/index.js'
+
+import create from './create.js'
 
 /**
  * Invert the give polygon to face the opposite direction.
@@ -8,7 +9,7 @@ const create = require('./create')
  * @returns {poly3} a new poly3
  * @alias module:modeling/geometries/poly3.invert
  */
-const invert = (polygon) => {
+export const invert = (polygon) => {
   const vertices = polygon.vertices.slice().reverse()
   const inverted = create(vertices)
   if (polygon.plane) {
@@ -18,4 +19,4 @@ const invert = (polygon) => {
   return inverted
 }
 
-module.exports = invert
+export default invert

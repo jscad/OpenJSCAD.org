@@ -1,11 +1,11 @@
-const flatten = require('../../utils/flatten')
-const areAllShapesTheSameType = require('../../utils/areAllShapesTheSameType')
+import flatten from '../../utils/flatten.js'
+import areAllShapesTheSameType from '../../utils/areAllShapesTheSameType.js'
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
 
-const intersectGeom2 = require('./intersectGeom2')
-const intersectGeom3 = require('./intersectGeom3')
+import intersectGeom2 from './intersectGeom2.js'
+import intersectGeom3 from './intersectGeom3.js'
 
 /**
  * Return a new geometry representing space in both the first geometry and
@@ -29,7 +29,7 @@ const intersectGeom3 = require('./intersectGeom3')
  *      |       |
  *      +-------+
  */
-const intersect = (...geometries) => {
+export const intersect = (...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('wrong number of arguments')
 
@@ -44,4 +44,4 @@ const intersect = (...geometries) => {
   return geometry
 }
 
-module.exports = intersect
+export default intersect

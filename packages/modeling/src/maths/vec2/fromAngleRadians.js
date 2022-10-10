@@ -1,4 +1,4 @@
-const { sin, cos } = require('../utils/trigonometry')
+import { sin, cos } from '../utils/trigonometry.js'
 
 /**
  * Create a new vector in the direction of the given angle.
@@ -8,10 +8,10 @@ const { sin, cos } = require('../utils/trigonometry')
  * @returns {vec2} out
  * @alias module:modeling/maths/vec2.fromAngleRadians
  */
-const fromAngleRadians = (out, radians) => {
+export const fromAngleRadians = (out, radians) => {
   out[0] = cos(radians)
   out[1] = sin(radians)
   return out
 }
 
-module.exports = fromAngleRadians
+export default fromAngleRadians

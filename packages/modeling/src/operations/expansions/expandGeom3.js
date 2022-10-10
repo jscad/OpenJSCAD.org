@@ -1,8 +1,8 @@
-const geom3 = require('../../geometries/geom3')
+import * as geom3 from '../../geometries/geom3/index.js'
 
-const union = require('../booleans/union')
+import union from '../booleans/union.js'
 
-const expandShell = require('./expandShell')
+import expandShell from './expandShell.js'
 
 /*
  * Expand the given geometry (geom3) using the given options (if any).
@@ -13,7 +13,7 @@ const expandShell = require('./expandShell')
  * @param {geom3} geometry - the geometry to expand
  * @returns {geom3} expanded geometry
  */
-const expandGeom3 = (options, geometry) => {
+export const expandGeom3 = (options, geometry) => {
   const defaults = {
     delta: 1,
     corners: 'round',
@@ -33,4 +33,4 @@ const expandGeom3 = (options, geometry) => {
   return union(geometry, expanded)
 }
 
-module.exports = expandGeom3
+export default expandGeom3

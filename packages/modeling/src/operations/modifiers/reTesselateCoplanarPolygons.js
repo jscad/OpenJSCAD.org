@@ -1,20 +1,20 @@
-const { EPS } = require('../../maths/constants')
+import { EPS } from '../../maths/constants.js'
+import interpolateBetween2DPointsForY from '../../maths/utils/interpolateBetween2DPointsForY.js'
+import OrthoNormalBasis from '../../maths/OrthoNormalBasis.js'
 
-const line2 = require('../../maths/line2')
-const vec2 = require('../../maths/vec2')
-const OrthoNormalBasis = require('../../maths/OrthoNormalBasis')
-const interpolateBetween2DPointsForY = require('../../maths/utils/interpolateBetween2DPointsForY')
+import * as line2 from '../../maths/line2/index.js'
+import * as vec2 from '../../maths/vec2/index.js'
 
-const { insertSorted, fnNumberSort } = require('../../utils')
+import { insertSorted, fnNumberSort } from '../../utils/index.js'
 
-const poly3 = require('../../geometries/poly3')
+import * as poly3 from '../../geometries/poly3/index.js'
 
 /*
  * Retesselation for a set of COPLANAR polygons.
  * @param {poly3[]} sourcepolygons - list of polygons
  * @returns {poly3[]} new set of polygons
  */
-const reTesselateCoplanarPolygons = (sourcepolygons) => {
+export const reTesselateCoplanarPolygons = (sourcepolygons) => {
   if (sourcepolygons.length < 2) return sourcepolygons
 
   const destpolygons = []
@@ -342,4 +342,4 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
   return destpolygons
 }
 
-module.exports = reTesselateCoplanarPolygons
+export default reTesselateCoplanarPolygons

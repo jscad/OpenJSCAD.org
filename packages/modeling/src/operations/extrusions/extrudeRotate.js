@@ -1,13 +1,13 @@
-const { TAU } = require('../../maths/constants')
-const mat4 = require('../../maths/mat4')
+import { TAU } from '../../maths/constants.js'
+import * as mat4 from '../../maths/mat4/index.js'
 
-const { mirrorX } = require('../transforms/mirror')
+import { mirrorX } from '../transforms/mirror.js'
 
-const geom2 = require('../../geometries/geom2')
+import * as geom2 from '../../geometries/geom2/index.js'
 
-const slice = require('./slice')
+import * as slice from './slice/index.js'
 
-const extrudeFromSlices = require('./extrudeFromSlices')
+import extrudeFromSlices from './extrudeFromSlices.js'
 
 /**
  * Rotate extrude the given geometry using the given options.
@@ -25,7 +25,7 @@ const extrudeFromSlices = require('./extrudeFromSlices')
  * @example
  * const myshape = extrudeRotate({segments: 8, angle: TAU / 2}, circle({size: 3, center: [4, 0]}))
  */
-const extrudeRotate = (options, geometry) => {
+export const extrudeRotate = (options, geometry) => {
   const defaults = {
     segments: 12,
     startAngle: 0,
@@ -135,4 +135,4 @@ const extrudeRotate = (options, geometry) => {
   return extrudeFromSlices(options, baseSlice)
 }
 
-module.exports = extrudeRotate
+export default extrudeRotate

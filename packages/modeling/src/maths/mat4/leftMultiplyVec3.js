@@ -1,4 +1,4 @@
-const fromValues = require('../vec3/fromValues')
+import fromValues from '../vec3/fromValues.js'
 
 /*
  * Multiply the input matrix by a Vector3 (interpreted as 3 column, 1 row)
@@ -26,4 +26,4 @@ const leftMultiplyVec3 = (vector, matrix) => {
   return fromValues(x, y, z)
 }
 
-module.exports = leftMultiplyVec3
+export default leftMultiplyVec3

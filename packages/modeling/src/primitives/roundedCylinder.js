@@ -1,13 +1,12 @@
-const { EPS, TAU } = require('../maths/constants')
+import { EPS, TAU } from '../maths/constants.js'
+import { sin, cos } from '../maths/utils/trigonometry.js'
 
-const vec3 = require('../maths/vec3')
+import * as vec3 from '../maths/vec3/index.js'
 
-const geom3 = require('../geometries/geom3')
-const poly3 = require('../geometries/poly3')
+import * as geom3 from '../geometries/geom3/index.js'
+import * as poly3 from '../geometries/poly3/index.js'
 
-const { sin, cos } = require('../maths/utils/trigonometry')
-
-const { isGT, isGTE, isNumberArray } = require('./commonChecks')
+import { isGT, isGTE, isNumberArray } from './commonChecks.js'
 
 /**
  * Construct a Z axis-aligned solid cylinder in three dimensional space with rounded ends.
@@ -23,7 +22,7 @@ const { isGT, isGTE, isNumberArray } = require('./commonChecks')
  * @example
  * let myshape = roundedCylinder({ height: 10, radius: 2, roundRadius: 0.5 })
  */
-const roundedCylinder = (options) => {
+export const roundedCylinder = (options) => {
   const defaults = {
     center: [0, 0, 0],
     height: 2,
@@ -137,4 +136,4 @@ const roundedCylinder = (options) => {
   return result
 }
 
-module.exports = roundedCylinder
+export default roundedCylinder

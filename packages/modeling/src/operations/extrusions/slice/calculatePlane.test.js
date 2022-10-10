@@ -1,11 +1,11 @@
-const test = require('ava')
+import test from 'ava'
 
-const { TAU } = require('../../../maths/constants')
-const { mat4 } = require('../../../maths')
+import { TAU } from '../../../maths/constants.js'
+import { mat4 } from '../../../maths/index.js'
 
-const { calculatePlane, fromPoints, transform } = require('./index')
+import { calculatePlane, fromPoints, transform } from './index.js'
 
-const { compareVectors } = require('../../../../test/helpers/index')
+import { compareVectors } from '../../../../test/helpers/index.js'
 
 test('slice: calculatePlane() returns correct plans for various slices', (t) => {
   // do not do this... it's an error

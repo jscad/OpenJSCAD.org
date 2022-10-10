@@ -1,14 +1,14 @@
 // list of supported geometries
-const geom2 = require('../geometries/geom2')
-const geom3 = require('../geometries/geom3')
-const path2 = require('../geometries/path2')
+import * as geom2 from '../geometries/geom2/index.js'
+import * as geom3 from '../geometries/geom3/index.js'
+import * as path2 from '../geometries/path2/index.js'
 
 /**
  * @param {Array} shapes - list of shapes to compare
  * @returns {Boolean} true if the given shapes are of the same type
  * @alias module:modeling/utils.areAllShapesTheSameType
  */
-const areAllShapesTheSameType = (shapes) => {
+export const areAllShapesTheSameType = (shapes) => {
   let previousType
   for (const shape of shapes) {
     let currentType = 0
@@ -22,4 +22,4 @@ const areAllShapesTheSameType = (shapes) => {
   return true
 }
 
-module.exports = areAllShapesTheSameType
+export default areAllShapesTheSameType

@@ -1,13 +1,13 @@
-const flatten = require('../../utils/flatten')
-const areAllShapesTheSameType = require('../../utils/areAllShapesTheSameType')
+import flatten from '../../utils/flatten.js'
+import areAllShapesTheSameType from '../../utils/areAllShapesTheSameType.js'
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
-const hullPath2 = require('./hullPath2')
-const hullGeom2 = require('./hullGeom2')
-const hullGeom3 = require('./hullGeom3')
+import hullPath2 from './hullPath2.js'
+import hullGeom2 from './hullGeom2.js'
+import hullGeom3 from './hullGeom3.js'
 
 /**
  * Create a convex hull of the given geometries.
@@ -32,7 +32,7 @@ const hullGeom3 = require('./hullGeom3')
  *       |       |          \        |
  *       +-------+           +-------+
  */
-const hull = (...geometries) => {
+export const hull = (...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('wrong number of arguments')
 
@@ -49,4 +49,4 @@ const hull = (...geometries) => {
   return geometry
 }
 
-module.exports = hull
+export default hull

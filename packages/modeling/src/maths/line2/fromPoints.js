@@ -1,4 +1,4 @@
-const vec2 = require('../vec2')
+import * as vec2 from '../vec2/index.js'
 
 /**
  * Create a new line that passes through the given points.
@@ -9,7 +9,7 @@ const vec2 = require('../vec2')
  * @returns {line2} a new unbounded line
  * @alias module:modeling/maths/line2.fromPoints
  */
-const fromPoints = (out, point1, point2) => {
+export const fromPoints = (out, point1, point2) => {
   const vector = vec2.subtract(vec2.create(), point2, point1) // directional vector
 
   vec2.normal(vector, vector)
@@ -23,4 +23,4 @@ const fromPoints = (out, point1, point2) => {
   return out
 }
 
-module.exports = fromPoints
+export default fromPoints

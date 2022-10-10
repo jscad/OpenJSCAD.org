@@ -1,12 +1,4 @@
 /**
- * The resolution of space, currently one hundred nanometers.
- * This should be 1 / EPS.
- * @alias module:modeling/maths.spatialResolution
- * @default
- */
-const spatialResolution = 1e5
-
-/**
  * Epsilon used during determination of near zero distances.
  * This should be 1 / spacialResolution.
  * @default
@@ -33,9 +25,8 @@ const NEPS = 1e-13
  */
 const TAU = Math.PI * 2
 
-module.exports = {
+export {
   EPS,
   NEPS,
-  TAU,
-  spatialResolution
+  TAU
 }

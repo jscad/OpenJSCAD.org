@@ -1,4 +1,4 @@
-const vec3 = require('../vec3')
+import * as vec3 from '../vec3/index.js'
 
 /**
  * Create a line from the given point (origin) and direction.
@@ -14,7 +14,7 @@ const vec3 = require('../vec3')
  * @returns {line3} out
  * @alias module:modeling/maths/line3.fromPointAndDirection
  */
-const fromPointAndDirection = (out, point, direction) => {
+export const fromPointAndDirection = (out, point, direction) => {
   const unit = vec3.normalize(vec3.create(), direction)
 
   vec3.copy(out[0], point)
@@ -22,4 +22,4 @@ const fromPointAndDirection = (out, point, direction) => {
   return out
 }
 
-module.exports = fromPointAndDirection
+export default fromPointAndDirection

@@ -9,21 +9,19 @@
  * @example
  * {"vertices": [[0,0,0], [4,0,0], [4,3,12]]}
  */
-module.exports = {
-  clone: require('./clone'),
-  create: require('./create'),
-  fromPoints: require('./fromPoints'),
-  fromPointsAndPlane: require('./fromPointsAndPlane'),
-  invert: require('./invert'),
-  isA: require('./isA'),
-  isConvex: require('./isConvex'),
-  measureArea: require('./measureArea'),
-  measureBoundingBox: require('./measureBoundingBox'),
-  measureBoundingSphere: require('./measureBoundingSphere'),
-  measureSignedVolume: require('./measureSignedVolume'),
-  plane: require('./plane'),
-  toPoints: require('./toPoints'),
-  toString: require('./toString'),
-  transform: require('./transform'),
-  validate: require('./validate')
-}
+export { clone } from './clone.js'
+export { create } from './create.js'
+export { fromPoints } from './fromPoints.js'
+export { fromPointsAndPlane } from './fromPointsAndPlane.js'
+export { invert } from './invert.js'
+export { isA } from './isA.js'
+export { isConvex } from './isConvex.js'
+export { measureArea } from './measureArea.js'
+export { measureBoundingBox } from './measureBoundingBox.js'
+export { measureBoundingSphere } from './measureBoundingSphere.js'
+export { measureSignedVolume } from './measureSignedVolume.js'
+export { plane } from './plane.js'
+export { toPoints } from './toPoints.js'
+export { toString } from './toString.js'
+export { transform } from './transform.js'
+export { validate } from './validate.js'

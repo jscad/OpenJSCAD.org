@@ -1,8 +1,8 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const retessellate = require('../modifiers/retessellate')
+import retessellate from '../modifiers/retessellate.js'
 
-const intersectSub = require('./intersectGeom3Sub')
+import intersectSub from './intersectGeom3Sub.js'
 
 /*
  * Return a new 3D geometry representing space in both the first geometry and
@@ -10,7 +10,7 @@ const intersectSub = require('./intersectGeom3Sub')
  * @param {...geom3} geometries - list of 3D geometries
  * @returns {geom3} new 3D geometry
  */
-const intersect = (...geometries) => {
+export const intersectGeom3 = (...geometries) => {
   geometries = flatten(geometries)
 
   let newgeometry = geometries.shift()
@@ -22,4 +22,4 @@ const intersect = (...geometries) => {
   return newgeometry
 }
 
-module.exports = intersect
+export default intersectGeom3

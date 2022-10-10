@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { close, create, fromPoints } = require('./index')
+import { close, create, fromPoints } from './index.js'
 
 test('close: closes an empty path', (t) => {
   const p1 = create()

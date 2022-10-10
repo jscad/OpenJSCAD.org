@@ -1,4 +1,4 @@
-const vec3 = require('../maths/vec3')
+import * as vec3 from '../maths/vec3/index.js'
 
 /**
  * Create a new connector.
@@ -18,6 +18,6 @@ const vec3 = require('../maths/vec3')
  * @example
  * let myconnector = create()
  */
-const create = () => ({ point: vec3.create(), axis: vec3.clone([0, 0, 1]), normal: vec3.clone([1, 0, 0]) })
+export const create = () => ({ point: vec3.create(), axis: vec3.clone([0, 0, 1]), normal: vec3.clone([1, 0, 0]) })
 
-module.exports = create
+export default create

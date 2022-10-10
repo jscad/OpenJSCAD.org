@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { TAU } = require('../constants')
+import { TAU } from '../constants.js'
 
-const { isOnlyTransformScale, create, fromTranslation, fromTaitBryanRotation, fromScaling, invert, multiply } = require('./index')
+import { isOnlyTransformScale, create, fromTranslation, fromTaitBryanRotation, fromScaling, invert, multiply } from './index.js'
 
 test('mat4: isOnlyTransformScale() should return true for right angles', (t) => {
   let someRotation = fromTaitBryanRotation(create(), TAU / 2, 0, 0)

@@ -1,15 +1,15 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const retessellate = require('../modifiers/retessellate')
+import retessellate from '../modifiers/retessellate.js'
 
-const unionSub = require('./unionGeom3Sub')
+import unionSub from './unionGeom3Sub.js'
 
 /*
  * Return a new 3D geometry representing the space in the given 3D geometries.
  * @param {...objects} geometries - list of geometries to union
  * @returns {geom3} new 3D geometry
  */
-const union = (...geometries) => {
+export const unionGeom3 = (...geometries) => {
   geometries = flatten(geometries)
 
   // combine geometries in a way that forms a balanced binary tree pattern
@@ -22,4 +22,4 @@ const union = (...geometries) => {
   return newgeometry
 }
 
-module.exports = union
+export default unionGeom3

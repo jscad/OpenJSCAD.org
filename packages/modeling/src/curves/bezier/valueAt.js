@@ -13,7 +13,7 @@
  * @returns {array | number} the value at the requested position.
  * @alias module:modeling/curves/bezier.valueAt
  */
-const valueAt = (t, bezier) => {
+export const valueAt = (t, bezier) => {
   if (t < 0 || t > 1) {
     throw new Error('Bezier valueAt() input must be between 0 and 1')
   }
@@ -41,4 +41,4 @@ const bezierFunction = function (bezier, p, t) {
   return result
 }
 
-module.exports = valueAt
+export default valueAt

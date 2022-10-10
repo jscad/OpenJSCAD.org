@@ -6,7 +6,7 @@
  * @returns {vec3} out
  * @alias module:modeling/maths/vec3.normalize
  */
-const normalize = (out, vector) => {
+export const normalize = (out, vector) => {
   const x = vector[0]
   const y = vector[1]
   const z = vector[2]
@@ -20,4 +20,4 @@ const normalize = (out, vector) => {
   return out
 }
 
-module.exports = normalize
+export default normalize

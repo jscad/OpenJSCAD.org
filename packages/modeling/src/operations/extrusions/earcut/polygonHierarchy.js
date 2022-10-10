@@ -1,16 +1,19 @@
-const geom2 = require('../../../geometries/geom2')
-const plane = require('../../../maths/plane')
-const vec2 = require('../../../maths/vec2')
-const vec3 = require('../../../maths/vec3')
-const calculatePlane = require('../slice/calculatePlane')
-const assignHoles = require('./assignHoles')
+import * as plane from '../../../maths/plane/index.js'
+import * as vec2 from '../../../maths/vec2/index.js'
+import * as vec3 from '../../../maths/vec3/index.js'
+
+import * as geom2 from '../../../geometries/geom2/index.js'
+
+import calculatePlane from '../slice/calculatePlane.js'
+
+import assignHoles from './assignHoles.js'
 
 /*
  * Constructs a polygon hierarchy which associates holes with their outer solids.
  * This class maps a 3D polygon onto a 2D space using an orthonormal basis.
  * It tracks the mapping so that points can be reversed back to 3D losslessly.
  */
-class PolygonHierarchy {
+export class PolygonHierarchy {
   constructor (slice) {
     this.plane = calculatePlane(slice)
 
@@ -61,4 +64,4 @@ class PolygonHierarchy {
   }
 }
 
-module.exports = PolygonHierarchy
+export default PolygonHierarchy

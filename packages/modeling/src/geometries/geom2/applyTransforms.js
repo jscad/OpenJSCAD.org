@@ -1,5 +1,5 @@
-const mat4 = require('../../maths/mat4')
-const vec2 = require('../../maths/vec2')
+import * as mat4 from '../../maths/mat4/index.js'
+import * as vec2 from '../../maths/vec2/index.js'
 
 /*
  * Apply the transforms of the given geometry.
@@ -10,7 +10,7 @@ const vec2 = require('../../maths/vec2')
  * @example
  * geometry = applyTransforms(geometry)
  */
-const applyTransforms = (geometry) => {
+export const applyTransforms = (geometry) => {
   if (mat4.isIdentity(geometry.transforms)) return geometry
 
   // apply transforms to each side
@@ -23,4 +23,4 @@ const applyTransforms = (geometry) => {
   return geometry
 }
 
-module.exports = applyTransforms
+export default applyTransforms

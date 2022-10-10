@@ -1,7 +1,8 @@
-const test = require('ava')
-const { fromNormalAndPoint, create } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { fromNormalAndPoint, create } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('plane: fromNormalAndPoint() should return a new plant with correct values', (t) => {
   const obs1 = fromNormalAndPoint(create(), [5, 0, 0], [0, 0, 0])

@@ -1,14 +1,14 @@
-const test = require('ava')
+import test from 'ava'
 
-const { geom2, geom3, path2 } = require('../../geometries')
+import { geom2, geom3, path2 } from '../../geometries/index.js'
 
-const { sphere, cuboid, ellipsoid } = require('../../primitives')
+import { sphere, cuboid, ellipsoid } from '../../primitives/index.js'
 
-const { center } = require('../transforms/center')
+import { center } from '../transforms/index.js'
 
-const { hull } = require('./index')
+import { hull } from './index.js'
 
-const comparePolygonsAsPoints = require('../../../test/helpers/comparePolygonsAsPoints')
+import comparePolygonsAsPoints from '../../../test/helpers/comparePolygonsAsPoints.js'
 
 test('hull (single, geom2)', (t) => {
   let geometry = geom2.create()

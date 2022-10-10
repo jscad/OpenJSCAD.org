@@ -1,6 +1,6 @@
-const create = require('./create')
+import * as vec3 from '../../../maths/vec3/index.js'
 
-const vec3 = require('../../../maths/vec3')
+import create from './create.js'
 
 /**
  * Create a deep clone of the given slice.
@@ -10,7 +10,7 @@ const vec3 = require('../../../maths/vec3')
  * @returns {slice} a new slice
  * @alias module:modeling/extrusions/slice.clone
  */
-const clone = (...params) => {
+export const clone = (...params) => {
   let out
   let slice
   if (params.length === 1) {
@@ -25,4 +25,4 @@ const clone = (...params) => {
   return out
 }
 
-module.exports = clone
+export default clone

@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
+import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
-const { geom2, geom3, path2 } = require('../../geometries')
+import { geom2, geom3, path2 } from '../../geometries/index.js'
 
-const { translate, translateX, translateY, translateZ } = require('./index')
+import { translate, translateX, translateY, translateZ } from './index.js'
 
 test('translate: translating of a path2 produces expected changes to points', (t) => {
   const line = path2.fromPoints({}, [[0, 0], [1, 0]])

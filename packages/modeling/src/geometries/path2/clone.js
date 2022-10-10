@@ -4,6 +4,6 @@
  * @returns {path2} a new path
  * @alias module:modeling/geometries/path2.clone
  */
-const clone = (geometry) => Object.assign({}, geometry)
+export const clone = (geometry) => Object.assign({}, geometry)
 
-module.exports = clone
+export default clone

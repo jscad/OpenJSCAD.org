@@ -1,7 +1,8 @@
-const test = require('ava')
-const { create, flip } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { create, flip } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('plane: flip() called with two parameters should update a plane with correct values', (t) => {
   const org1 = create()

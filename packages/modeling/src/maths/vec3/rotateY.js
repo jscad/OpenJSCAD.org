@@ -8,7 +8,7 @@
  * @returns {vec3} out
  * @alias module:modeling/maths/vec3.rotateY
  */
-const rotateY = (out, vector, origin, radians) => {
+export const rotateY = (out, vector, origin, radians) => {
   const p = []
   const r = []
 
@@ -30,4 +30,4 @@ const rotateY = (out, vector, origin, radians) => {
   return out
 }
 
-module.exports = rotateY
+export default rotateY

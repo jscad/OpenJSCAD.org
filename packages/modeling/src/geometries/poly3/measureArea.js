@@ -1,4 +1,4 @@
-const plane = require('./plane')
+import plane from './plane.js'
 
 /**
  * Measure the area of the given polygon.
@@ -7,7 +7,7 @@ const plane = require('./plane')
  * @return {Number} area of the polygon
  * @alias module:modeling/geometries/poly3.measureArea
  */
-const measureArea = (polygon) => {
+export const measureArea = (polygon) => {
   const n = polygon.vertices.length
   if (n < 3) {
     return 0 // degenerate polygon
@@ -80,4 +80,4 @@ const measureArea = (polygon) => {
   return area
 }
 
-module.exports = measureArea
+export default measureArea

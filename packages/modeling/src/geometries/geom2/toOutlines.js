@@ -1,6 +1,6 @@
-const vec2 = require('../../maths/vec2')
+import * as vec2 from '../../maths/vec2/index.js'
 
-const toSides = require('./toSides')
+import toSides from './toSides.js'
 
 /*
  * Create a list of edges which SHARE vertices.
@@ -49,7 +49,7 @@ const toVertexMap = (sides) => {
  * let geometry = subtract(rectangle({size: [5, 5]}), rectangle({size: [3, 3]}))
  * let outlines = toOutlines(geometry) // returns two outlines
  */
-const toOutlines = (geometry) => {
+export const toOutlines = (geometry) => {
   const vertexMap = toVertexMap(toSides(geometry)) // {vertex: [edges]}
   const outlines = []
   while (true) {
@@ -116,4 +116,4 @@ const popNextSide = (startSide, nextSides) => {
   return nextSide
 }
 
-module.exports = toOutlines
+export default toOutlines

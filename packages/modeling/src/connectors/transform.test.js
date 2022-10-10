@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { transform, create, fromPointAxisNormal } = require('./index')
+import { transform, create, fromPointAxisNormal } from './index.js'
 
-const { compareVectors } = require('../../test/helpers/')
+import { compareVectors } from '../../test/helpers/index.js'
 
 test('connector: transform() should return a connector with correct values', (t) => {
   const connector1 = create()

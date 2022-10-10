@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { clone, create, fromPoints } = require('./index')
+import { clone, create, fromPoints } from './index.js'
 
-const { comparePolygons, compareVectors } = require('../../../test/helpers/')
+import { comparePolygons, compareVectors } from '../../../test/helpers/index.js'
 
 test('clone: Creates a clone on an empty geom3', (t) => {
   const expected = {

@@ -1,5 +1,4 @@
-const vec3 = require('../../maths/vec3')
-const vec4 = require('../../maths/vec4')
+import * as vec4 from '../../maths/vec4/index.js'
 
 const cache = new WeakMap()
 
@@ -9,8 +8,8 @@ const cache = new WeakMap()
  * @returns {vec4} the computed bounding sphere; center point (3D) and radius
  * @alias module:modeling/geometries/poly3.measureBoundingSphere
  */
-const measureBoundingSphere = (polygon) => {
-  let boundingSphere = cache.get(polygon)
+export const measureBoundingSphere = (polygon) => {
+  const boundingSphere = cache.get(polygon)
   if (boundingSphere) return boundingSphere
 
   const vertices = polygon.vertices
@@ -54,4 +53,4 @@ const measureBoundingSphere = (polygon) => {
   return out
 }
 
-module.exports = measureBoundingSphere
+export default measureBoundingSphere

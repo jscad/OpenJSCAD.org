@@ -25,7 +25,7 @@
  * @returns {bezier} a new bezier data object
  * @alias module:modeling/curves/bezier.create
  */
-const create = (points) => {
+export const create = (points) => {
   if (!Array.isArray(points)) throw new Error('Bezier points must be a valid array/')
   if (points.length < 2) throw new Error('Bezier points must contain at least 2 values.')
   const pointType = getPointType(points)
@@ -78,4 +78,4 @@ const factorial = function (b) {
   return out
 }
 
-module.exports = create
+export default create

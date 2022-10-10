@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { rectangle } = require('./index')
+import { geom2 } from '../geometries/index.js'
 
-const geom2 = require('../geometries/geom2')
+import { rectangle } from './index.js'
 
-const comparePoints = require('../../test/helpers/comparePoints')
+import { comparePoints } from '../../test/helpers/index.js'
 
 test('rectangle (defaults)', (t) => {
   const geometry = rectangle()

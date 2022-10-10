@@ -1,13 +1,13 @@
-const { EPS, TAU } = require('../maths/constants')
+import { EPS, TAU } from '../maths/constants.js'
 
-const vec3 = require('../maths/vec3')
+import * as vec3 from '../maths/vec3/index.js'
 
-const geom3 = require('../geometries/geom3')
-const poly3 = require('../geometries/poly3')
+import * as geom3 from '../geometries/geom3/index.js'
+import * as poly3 from '../geometries/poly3/index.js'
 
-const { sin, cos } = require('../maths/utils/trigonometry')
+import { sin, cos } from '../maths/utils/trigonometry.js'
 
-const { isGT, isGTE, isNumberArray } = require('./commonChecks')
+import { isGT, isGTE, isNumberArray } from './commonChecks.js'
 
 /**
  * Construct a Z axis-aligned elliptic cylinder in three dimensional space.
@@ -25,7 +25,7 @@ const { isGT, isGTE, isNumberArray } = require('./commonChecks')
  * @example
  * let myshape = cylinderElliptic({height: 2, startRadius: [10,5], endRadius: [8,3]})
  */
-const cylinderElliptic = (options) => {
+export const cylinderElliptic = (options) => {
   const defaults = {
     center: [0, 0, 0],
     height: 2,
@@ -129,4 +129,4 @@ const cylinderElliptic = (options) => {
   return result
 }
 
-module.exports = cylinderElliptic
+export default cylinderElliptic

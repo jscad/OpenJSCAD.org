@@ -1,6 +1,6 @@
-const cross = require('../../../maths/vec3/cross')
-const subtract = require('../../../maths/vec3/subtract')
-const squaredLength = require('../../../maths/vec3/squaredLength')
+import cross from '../../../maths/vec3/cross.js'
+import subtract from '../../../maths/vec3/subtract.js'
+import squaredLength from '../../../maths/vec3/squaredLength.js'
 
 /*
  * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)
@@ -37,6 +37,4 @@ const distanceSquared = (p, a, b) => {
   return area / s
 }
 
-const pointLineDistance = (point, a, b) => Math.sqrt(distanceSquared(point, a, b))
-
-module.exports = pointLineDistance
+export const pointLineDistance = (point, a, b) => Math.sqrt(distanceSquared(point, a, b))

@@ -1,7 +1,8 @@
-const test = require('ava')
-const { fromPoints, create } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { fromPoints, create } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('line3: fromPoints() should return a new line3 with correct values', (t) => {
   let obs = fromPoints(create(), [0, 0, 0], [1, 0, 0])

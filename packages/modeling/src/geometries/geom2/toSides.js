@@ -1,4 +1,4 @@
-const applyTransforms = require('./applyTransforms')
+import applyTransforms from './applyTransforms.js'
 
 /**
  * Produces an array of sides from the given geometry.
@@ -11,6 +11,6 @@ const applyTransforms = require('./applyTransforms')
  * @example
  * let sharedsides = toSides(geometry)
  */
-const toSides = (geometry) => applyTransforms(geometry).sides
+export const toSides = (geometry) => applyTransforms(geometry).sides
 
-module.exports = toSides
+export default toSides

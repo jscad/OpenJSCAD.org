@@ -1,4 +1,4 @@
-const mat4 = require('../../maths/mat4')
+import * as mat4 from '../../maths/mat4/index.js'
 
 /**
  * Represents a 3D geometry consisting of a list of polygons.
@@ -13,7 +13,7 @@ const mat4 = require('../../maths/mat4')
  * @returns {geom3} a new geometry
  * @alias module:modeling/geometries/geom3.create
  */
-const create = (polygons) => {
+export const create = (polygons) => {
   if (polygons === undefined) {
     polygons = [] // empty contents
   }
@@ -23,4 +23,4 @@ const create = (polygons) => {
   }
 }
 
-module.exports = create
+export default create

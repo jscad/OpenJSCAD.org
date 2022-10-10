@@ -1,12 +1,12 @@
-const flatten = require('../utils/flatten')
+import flatten from '../utils/flatten.js'
 
-const vec2 = require('../maths/vec2')
-const vec3 = require('../maths/vec3')
+import * as vec2 from '../maths/vec2/index.js'
+import * as vec3 from '../maths/vec3/index.js'
 
-const geom2 = require('../geometries/geom2')
-const geom3 = require('../geometries/geom3')
-const path2 = require('../geometries/path2')
-const poly3 = require('../geometries/poly3')
+import * as geom2 from '../geometries/geom2/index.js'
+import * as geom3 from '../geometries/geom3/index.js'
+import * as path2 from '../geometries/path2/index.js'
+import * as poly3 from '../geometries/poly3/index.js'
 
 const cache = new WeakMap()
 
@@ -118,7 +118,7 @@ const measureBoundingBoxOfGeom3 = (geometry) => {
  * @example
  * let bounds = measureBoundingBox(sphere())
  */
-const measureBoundingBox = (...geometries) => {
+export const measureBoundingBox = (...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('wrong number of arguments')
 
@@ -131,4 +131,4 @@ const measureBoundingBox = (...geometries) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = measureBoundingBox
+export default measureBoundingBox

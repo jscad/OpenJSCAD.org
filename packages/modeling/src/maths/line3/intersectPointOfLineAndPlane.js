@@ -1,4 +1,4 @@
-const vec3 = require('../vec3')
+import * as vec3 from '../vec3/index.js'
 
 /**
  * Determine the closest point on the given plane to the given line.
@@ -11,7 +11,7 @@ const vec3 = require('../vec3')
  * @returns {vec3} a point on the line
  * @alias module:modeling/maths/line3.intersectPointOfLineAndPlane
  */
-const intersectToPlane = (line, plane) => {
+export const intersectPointOfLineAndPlane = (line, plane) => {
   // plane: plane.normal * p = plane.w
   const pnormal = plane
   const pw = plane[3]
@@ -26,4 +26,4 @@ const intersectToPlane = (line, plane) => {
   return point
 }
 
-module.exports = intersectToPlane
+export default intersectPointOfLineAndPlane

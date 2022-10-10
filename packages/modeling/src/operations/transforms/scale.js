@@ -1,10 +1,10 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const mat4 = require('../../maths/mat4')
+import * as mat4 from '../../maths/mat4/index.js'
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
 /**
  * Scale the given objects using the given options.
@@ -16,7 +16,7 @@ const path2 = require('../../geometries/path2')
  * @example
  * let myshape = scale([5, 0, 10], sphere())
  */
-const scale = (factors, ...objects) => {
+export const scale = (factors, ...objects) => {
   if (!Array.isArray(factors)) throw new Error('factors must be an array')
 
   objects = flatten(objects)
@@ -46,7 +46,7 @@ const scale = (factors, ...objects) => {
  * @return {Object|Array} the scaled object, or a list of scaled objects
  * @alias module:modeling/transforms.scaleX
  */
-const scaleX = (factor, ...objects) => scale([factor, 1, 1], objects)
+export const scaleX = (factor, ...objects) => scale([factor, 1, 1], objects)
 
 /**
  * Scale the given objects about the Y axis using the given options.
@@ -55,7 +55,7 @@ const scaleX = (factor, ...objects) => scale([factor, 1, 1], objects)
  * @return {Object|Array} the scaled object, or a list of scaled objects
  * @alias module:modeling/transforms.scaleY
  */
-const scaleY = (factor, ...objects) => scale([1, factor, 1], objects)
+export const scaleY = (factor, ...objects) => scale([1, factor, 1], objects)
 
 /**
  * Scale the given objects about the Z axis using the given options.
@@ -64,11 +64,4 @@ const scaleY = (factor, ...objects) => scale([1, factor, 1], objects)
  * @return {Object|Array} the scaled object, or a list of scaled objects
  * @alias module:modeling/transforms.scaleZ
  */
-const scaleZ = (factor, ...objects) => scale([1, 1, factor], objects)
-
-module.exports = {
-  scale,
-  scaleX,
-  scaleY,
-  scaleZ
-}
+export const scaleZ = (factor, ...objects) => scale([1, 1, factor], objects)

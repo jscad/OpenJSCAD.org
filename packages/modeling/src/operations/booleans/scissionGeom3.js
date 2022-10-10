@@ -1,7 +1,8 @@
-const vec3 = require('../../maths/vec3')
-const measureEpsilon = require('../../measurements/measureEpsilon')
+import * as vec3 from '../../maths/vec3/index.js'
 
-const geom3 = require('../../geometries/geom3')
+import measureEpsilon from '../../measurements/measureEpsilon.js'
+
+import * as geom3 from '../../geometries/geom3/index.js'
 
 // returns array numerically sorted and duplicates removed
 const sortNb = (array) => array.sort((a, b) => a - b).filter((item, pos, ary) => !pos || item !== ary[pos - 1])
@@ -21,7 +22,7 @@ const findMapping = (map, point) => {
   return map.get(key)
 }
 
-const scissionGeom3 = (geometry) => {
+export const scissionGeom3 = (geometry) => {
   // construit table de correspondance entre polygones
   // build polygons lookup table
   const eps = measureEpsilon(geometry)
@@ -90,4 +91,4 @@ const scissionGeom3 = (geometry) => {
   return newgeometries
 }
 
-module.exports = scissionGeom3
+export default scissionGeom3

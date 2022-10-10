@@ -1,7 +1,8 @@
-const test = require('ava')
-const { identity } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { identity } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('mat4: identity() called with one parameters should update a mat4 with correct values', (t) => {
   const obs1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

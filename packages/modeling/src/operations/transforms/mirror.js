@@ -1,11 +1,11 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const mat4 = require('../../maths/mat4')
-const plane = require('../../maths/plane')
+import * as mat4 from '../../maths/mat4/index.js'
+import * as plane from '../../maths/plane/index.js'
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
 /**
  * Mirror the given objects using the given options.
@@ -19,7 +19,7 @@ const path2 = require('../../geometries/path2')
  * @example
  * let myshape = mirror({normal: [0,0,10]}, cube({center: [0,0,15], radius: [20, 25, 5]}))
  */
-const mirror = (options, ...objects) => {
+export const mirror = (options, ...objects) => {
   const defaults = {
     origin: [0, 0, 0],
     normal: [0, 0, 1] // Z axis
@@ -52,7 +52,7 @@ const mirror = (options, ...objects) => {
  * @return {Object|Array} the mirrored object, or a list of mirrored objects
  * @alias module:modeling/transforms.mirrorX
  */
-const mirrorX = (...objects) => mirror({ normal: [1, 0, 0] }, objects)
+export const mirrorX = (...objects) => mirror({ normal: [1, 0, 0] }, objects)
 
 /**
  * Mirror the given objects about the Y axis.
@@ -60,7 +60,7 @@ const mirrorX = (...objects) => mirror({ normal: [1, 0, 0] }, objects)
  * @return {Object|Array} the mirrored object, or a list of mirrored objects
  * @alias module:modeling/transforms.mirrorY
  */
-const mirrorY = (...objects) => mirror({ normal: [0, 1, 0] }, objects)
+export const mirrorY = (...objects) => mirror({ normal: [0, 1, 0] }, objects)
 
 /**
  * Mirror the given objects about the Z axis.
@@ -68,11 +68,4 @@ const mirrorY = (...objects) => mirror({ normal: [0, 1, 0] }, objects)
  * @return {Object|Array} the mirrored object, or a list of mirrored objects
  * @alias module:modeling/transforms.mirrorZ
  */
-const mirrorZ = (...objects) => mirror({ normal: [0, 0, 1] }, objects)
-
-module.exports = {
-  mirror,
-  mirrorX,
-  mirrorY,
-  mirrorZ
-}
+export const mirrorZ = (...objects) => mirror({ normal: [0, 0, 1] }, objects)

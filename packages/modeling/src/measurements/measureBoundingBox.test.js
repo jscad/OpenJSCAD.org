@@ -1,12 +1,12 @@
-const test = require('ava')
+import test from 'ava'
 
-const { geom2, geom3, path2 } = require('../geometries')
+import { geom2, geom3, path2 } from '../geometries/index.js'
 
-const { line, rectangle, cuboid } = require('../primitives')
+import { line, rectangle, cuboid } from '../primitives/index.js'
 
-const { mirror } = require('../operations/transforms')
+import { mirror } from '../operations/transforms/index.js'
 
-const { measureBoundingBox } = require('./index')
+import { measureBoundingBox } from './index.js'
 
 test('measureBoundingBox (single objects)', (t) => {
   const aline = line([[10, 10], [15, 15]])

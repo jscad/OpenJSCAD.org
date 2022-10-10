@@ -1,11 +1,11 @@
-const mat4 = require('../../maths/mat4')
-const vec3 = require('../../maths/vec3')
+import * as mat4 from '../../maths/mat4/index.js'
+import * as vec3 from '../../maths/vec3/index.js'
 
-const geom2 = require('../../geometries/geom2')
+import * as geom2 from '../../geometries/geom2/index.js'
 
-const slice = require('./slice')
+import * as slice from './slice/index.js'
 
-const extrudeFromSlices = require('./extrudeFromSlices')
+import extrudeFromSlices from './extrudeFromSlices.js'
 
 /*
  * Extrude the given geometry using the given options.
@@ -18,7 +18,7 @@ const extrudeFromSlices = require('./extrudeFromSlices')
  * @param {geom2} geometry - the geometry to extrude
  * @returns {geom3} the extruded 3D geometry
 */
-const extrudeGeom2 = (options, geometry) => {
+export const extrudeGeom2 = (options, geometry) => {
   const defaults = {
     offset: [0, 0, 1],
     twistAngle: 0,
@@ -61,4 +61,4 @@ const extrudeGeom2 = (options, geometry) => {
   return extrudeFromSlices(options, baseSlice)
 }
 
-module.exports = extrudeGeom2
+export default extrudeGeom2

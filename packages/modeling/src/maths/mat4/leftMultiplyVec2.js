@@ -1,4 +1,4 @@
-const fromValues = require('../vec2/fromValues')
+import fromValues from '../vec2/fromValues.js'
 
 /*
  * Multiply the input matrix by a Vector2 (interpreted as 2 column, 1 row)
@@ -8,7 +8,7 @@ const fromValues = require('../vec2/fromValues')
  * @param {mat4} matrix the input matrix
  * @returns {vec2} output
  */
-const leftMultiplyVec2 = (vector, matrix) => {
+export const leftMultiplyVec2 = (vector, matrix) => {
   const [v0, v1] = vector
   const v2 = 0
   const v3 = 1
@@ -25,4 +25,4 @@ const leftMultiplyVec2 = (vector, matrix) => {
   return fromValues(x, y)
 }
 
-module.exports = leftMultiplyVec2
+export default leftMultiplyVec2

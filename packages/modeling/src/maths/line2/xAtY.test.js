@@ -1,8 +1,10 @@
-const test = require('ava')
-const { xAtY, create, fromPoints } = require('./index')
+import test from 'ava'
 
-const { nearlyEqual } = require('../../../test/helpers/index')
-const { EPS } = require('../constants')
+import { EPS } from '../constants.js'
+
+import { xAtY, create, fromPoints } from './index.js'
+
+import { nearlyEqual } from '../../../test/helpers/index.js'
 
 test('line2: xAtY() should return proper values', (t) => {
   const line1 = create()

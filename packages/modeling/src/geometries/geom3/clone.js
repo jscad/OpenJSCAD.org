@@ -4,6 +4,6 @@
  * @returns {geom3} a new geometry
  * @alias module:modeling/geometries/geom3.clone
  */
-const clone = (geometry) => Object.assign({}, geometry)
+export const clone = (geometry) => Object.assign({}, geometry)
 
-module.exports = clone
+export default clone

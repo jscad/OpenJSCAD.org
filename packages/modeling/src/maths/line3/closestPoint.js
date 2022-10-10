@@ -1,4 +1,4 @@
-const vec3 = require('../vec3')
+import * as vec3 from '../vec3/index.js'
 
 /**
  * Determine the closest point on the given line to the given point.
@@ -8,7 +8,7 @@ const vec3 = require('../vec3')
  * @returns {vec3} a point
  * @alias module:modeling/maths/line3.closestPoint
  */
-const closestPoint = (line, point) => {
+export const closestPoint = (line, point) => {
   const lpoint = line[0]
   const ldirection = line[1]
 
@@ -21,4 +21,4 @@ const closestPoint = (line, point) => {
   return closestpoint
 }
 
-module.exports = closestPoint
+export default closestPoint

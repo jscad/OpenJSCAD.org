@@ -1,3 +1,1 @@
-module.exports = {
-  Tree: require('./Tree')
-}
+export { Tree } from './Tree.js'

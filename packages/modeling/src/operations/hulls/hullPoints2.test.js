@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const hullPoints2 = require('./hullPoints2')
+import hullPoints2 from './hullPoints2.js'
 
 test('hullPoints2 bug #114 2 circles with 18 segments', (t) => {
   const points = [

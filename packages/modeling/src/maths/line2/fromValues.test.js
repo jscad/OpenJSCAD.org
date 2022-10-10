@@ -1,7 +1,8 @@
-const test = require('ava')
-const { fromValues } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { fromValues } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('line2: fromValues() should return a new line2 with correct values', (t) => {
   const obs1 = fromValues(0, 0, 0)

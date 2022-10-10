@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { geom2, geom3 } = require('../../geometries')
+import { geom2, geom3 } from '../../geometries/index.js'
 
-const { hullChain } = require('./index')
+import { hullChain } from './index.js'
 
 test('hullChain (two, geom2)', (t) => {
   const geometry1 = geom2.fromPoints([[6, 6], [3, 6], [3, 3], [6, 3]])

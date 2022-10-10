@@ -1,6 +1,6 @@
-const vec2 = require('../../maths/vec2')
+import * as vec2 from '../../maths/vec2/index.js'
 
-const toPoints = require('./toPoints')
+import toPoints from './toPoints.js'
 
 /**
   * Determine if the given paths are equal.
@@ -10,7 +10,7 @@ const toPoints = require('./toPoints')
   * @returns {Boolean}
   * @alias module:modeling/geometries/path2.equals
   */
-const equals = (a, b) => {
+export const equals = (a, b) => {
   if (a.isClosed !== b.isClosed) {
     return false
   }
@@ -44,4 +44,4 @@ const equals = (a, b) => {
   return false
 }
 
-module.exports = equals
+export default equals

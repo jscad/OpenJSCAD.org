@@ -1,12 +1,12 @@
-const test = require('ava')
+import test from 'ava'
 
-const { TAU } = require('../../maths/constants')
+import { TAU } from '../../maths/constants.js'
 
-const { geom2, geom3, path2 } = require('../../geometries')
+import { geom2, geom3, path2 } from '../../geometries/index.js'
 
-const { rotate, rotateX, rotateY, rotateZ } = require('./index')
+import { rotate, rotateX, rotateY, rotateZ } from './index.js'
 
-const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
+import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
 test('rotate: rotating of a path2 produces expected changes to points', (t) => {
   const geometry = path2.fromPoints({}, [[1, 0], [0, 1], [-1, 0]])

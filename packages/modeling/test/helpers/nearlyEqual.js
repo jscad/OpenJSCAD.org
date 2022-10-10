@@ -1,6 +1,6 @@
 // Compare two numeric values for near equality.
 // the given test is fails if the numeric values are outside the given epsilon
-const nearlyEqual = (t, a, b, epsilon, failMessage) => {
+export const nearlyEqual = (t, a, b, epsilon, failMessage) => {
   if (typeof t !== 'object') {
     throw new Error('first argument must be a test object')
   }
@@ -30,5 +30,4 @@ const nearlyEqual = (t, a, b, epsilon, failMessage) => {
     t.fail(failMessage + '(' + a + ',' + b + ')')
   }
 }
-
-module.exports = nearlyEqual
+export default nearlyEqual

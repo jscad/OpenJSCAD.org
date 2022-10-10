@@ -1,10 +1,10 @@
-const { EPS } = require('../../../maths/constants')
+import { EPS } from '../../../maths/constants.js'
 
-const vec3 = require('../../../maths/vec3')
+import * as vec3 from '../../../maths/vec3/index.js'
 
-const poly3 = require('../../../geometries/poly3')
+import * as poly3 from '../../../geometries/poly3/index.js'
 
-const splitPolygonByPlane = require('./splitPolygonByPlane')
+import { splitPolygonByPlane } from './splitPolygonByPlane.js'
 
 // # class PolygonTreeNode
 // This class manages hierarchical splits of polygons.
@@ -19,13 +19,13 @@ const splitPolygonByPlane = require('./splitPolygonByPlane')
 // getPolygons() will return the original unsplit polygon instead of the fragments.
 // remove() removes a polygon from the tree. Once a polygon is removed, the parent polygons are invalidated
 // since they are no longer intact.
-class PolygonTreeNode {
+export class PolygonTreeNode {
   // constructor creates the root node
   constructor (parent, polygon) {
     this.parent = parent
     this.children = []
     this.polygon = polygon
-    this.removed = false  // state of branch or leaf
+    this.removed = false // state of branch or leaf
   }
 
   // fill the tree with polygons. Should be called on the root node only; child nodes must
@@ -257,5 +257,3 @@ class PolygonTreeNode {
     return result
   }
 }
-
-module.exports = PolygonTreeNode

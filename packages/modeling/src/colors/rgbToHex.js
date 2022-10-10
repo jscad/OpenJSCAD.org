@@ -1,4 +1,4 @@
-const flatten = require('../utils/flatten')
+import flatten from '../utils/flatten.js'
 
 /**
  * Convert the given RGB color values to CSS color notation (string)
@@ -7,7 +7,7 @@ const flatten = require('../utils/flatten')
  * @return {String} CSS color notation
  * @alias module:modeling/colors.rgbToHex
  */
-const rgbToHex = (...values) => {
+export const rgbToHex = (...values) => {
   values = flatten(values)
   if (values.length < 3) throw new Error('values must contain R, G and B values')
 
@@ -24,4 +24,4 @@ const rgbToHex = (...values) => {
   return s
 }
 
-module.exports = rgbToHex
+export default rgbToHex

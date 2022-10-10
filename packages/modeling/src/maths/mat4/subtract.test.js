@@ -1,7 +1,8 @@
-const test = require('ava')
-const { subtract } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { subtract } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('mat4: subtract() called with out parameter should return a new mat4 with correct values', (t) => {
   const obs1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

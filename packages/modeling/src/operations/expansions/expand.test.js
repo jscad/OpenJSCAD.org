@@ -1,14 +1,14 @@
-const test = require('ava')
+import test from 'ava'
 
-const { comparePoints, nearlyEqual } = require('../../../test/helpers')
+import { comparePoints, nearlyEqual } from '../../../test/helpers/index.js'
 
-const { geom2, geom3, path2 } = require('../../geometries')
-const measureBoundingBox = require('../../measurements/measureBoundingBox')
-const area = require('../../maths/utils/area')
-const { TAU } = require('../../maths/constants')
-const sphere = require('../../primitives/sphere')
+import { geom2, geom3, path2 } from '../../geometries/index.js'
+import { measureBoundingBox } from '../../measurements/index.js'
+import { area } from '../../maths/utils/index.js'
+import { TAU } from '../../maths/constants.js'
+import { sphere } from '../../primitives/index.js'
 
-const { expand } = require('./index')
+import { expand } from './index.js'
 
 test('expand: edge-expanding a straight line produces rectangle', (t) => {
   const points = [[0, 0], [0, 10]]
@@ -53,7 +53,7 @@ test('expand: round-expanding a bent line produces expected geometry', (t) => {
   const expandedPoints = geom2.toPoints(expandedPathGeom2)
 
   t.notThrows(() => geom2.validate(expandedPathGeom2))
-  const expectedArea = 56 + TAU  * delta * 1.25 // shape will have 1 and 1/4 circles
+  const expectedArea = 56 + TAU * delta * 1.25 // shape will have 1 and 1/4 circles
   nearlyEqual(t, area(expandedPoints), expectedArea, 0.01, 'Measured area should be pretty close')
   const boundingBox = measureBoundingBox(expandedPathGeom2)
   t.true(comparePoints(boundingBox, [[-7, -2, 0], [2, 12, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))

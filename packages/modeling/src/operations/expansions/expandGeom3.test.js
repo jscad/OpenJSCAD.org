@@ -1,7 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { geom3, poly3 } = require('../../geometries')
-const expandGeom3 = require('./expandGeom3')
+import { geom3, poly3 } from '../../geometries/index.js'
+
+import expandGeom3 from './expandGeom3.js'
 
 test('expandGeom3: expand completes properly, issue 876', async (t) => {
   setTimeout(() => t.fail(), 1000)

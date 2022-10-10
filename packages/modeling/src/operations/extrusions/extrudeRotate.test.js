@@ -1,12 +1,12 @@
-const test = require('ava')
+import test from 'ava'
 
-const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
+import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
-const { TAU } = require('../../maths/constants')
+import { TAU } from '../../maths/constants.js'
 
-const { geom2, geom3 } = require('../../geometries')
+import { geom2, geom3 } from '../../geometries/index.js'
 
-const { extrudeRotate } = require('./index')
+import { extrudeRotate } from './index.js'
 
 test('extrudeRotate: (defaults) extruding of a geom2 produces an expected geom3', (t) => {
   const geometry2 = geom2.fromPoints([[10, 8], [10, -8], [26, -8], [26, 8]])

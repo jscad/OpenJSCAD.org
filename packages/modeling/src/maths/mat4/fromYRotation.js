@@ -1,4 +1,4 @@
-const { sin, cos } = require('../utils/trigonometry')
+import { sin, cos } from '../utils/trigonometry.js'
 
 /**
  * Creates a matrix from the given angle around the Y axis.
@@ -14,7 +14,7 @@ const { sin, cos } = require('../utils/trigonometry')
  * @example
  * let matrix = fromYRotation(create(), TAU / 4)
  */
-const fromYRotation = (out, radians) => {
+export const fromYRotation = (out, radians) => {
   const s = sin(radians)
   const c = cos(radians)
 
@@ -38,4 +38,4 @@ const fromYRotation = (out, radians) => {
   return out
 }
 
-module.exports = fromYRotation
+export default fromYRotation

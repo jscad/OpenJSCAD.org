@@ -1,7 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { EPS } = require('../maths/constants')
-const calculateEpsilonFromBounds = require('./calculateEpsilonFromBounds')
+import { EPS } from '../maths/constants.js'
+
+import calculateEpsilonFromBounds from './calculateEpsilonFromBounds.js'
 
 test('calculateEpsilonFromBounds: 2 dimension', (t) => {
   const bounds = [[-10, -100], [100, 10]]

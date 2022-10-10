@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { hsvToRgb } = require('./index')
+import { hsvToRgb } from './index.js'
 
 test('hsvToRgb (HSV values)', (t) => {
   let obs = hsvToRgb([0, 0.2, 0])

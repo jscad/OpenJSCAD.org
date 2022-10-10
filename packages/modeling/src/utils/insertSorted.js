@@ -2,7 +2,7 @@
  * Insert the given element into the give array using the compareFunction.
  * @alias module:modeling/utils.insertSorted
  */
-const insertSorted = (array, element, comparefunc) => {
+export const insertSorted = (array, element, comparefunc) => {
   let leftbound = 0
   let rightbound = array.length
   while (rightbound > leftbound) {
@@ -18,4 +18,4 @@ const insertSorted = (array, element, comparefunc) => {
   array.splice(leftbound, 0, element)
 }
 
-module.exports = insertSorted
+export default insertSorted

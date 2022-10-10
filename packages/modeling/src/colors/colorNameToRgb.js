@@ -1,4 +1,4 @@
-const cssColors = require('./cssColors')
+import cssColors from './cssColors.js'
 
 /**
  * Converts a CSS color name to RGB color.
@@ -9,6 +9,6 @@ const cssColors = require('./cssColors')
  * @example
  * let mysphere = colorize(colorNameToRgb('lightblue'), sphere())
  */
-const colorNameToRgb = (s) => cssColors[s.toLowerCase()]
+export const colorNameToRgb = (s) => cssColors[s.toLowerCase()]
 
-module.exports = colorNameToRgb
+export default colorNameToRgb

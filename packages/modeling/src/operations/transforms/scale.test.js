@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
+import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
-const { geom2, geom3, path2 } = require('../../geometries')
+import { geom2, geom3, path2 } from '../../geometries/index.js'
 
-const { scale, scaleX, scaleY, scaleZ } = require('./index')
+import { scale, scaleX, scaleY, scaleZ } from './index.js'
 
 test('scale: scaling of a path2 produces expected changes to points', (t) => {
   const geometry = path2.fromPoints({}, [[0, 4], [1, 0]])

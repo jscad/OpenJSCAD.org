@@ -1,4 +1,4 @@
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Reverse the edges of the given slice.
@@ -8,7 +8,7 @@ const create = require('./create')
  * @returns {slice} reverse of the slice
  * @alias module:modeling/extrusions/slice.reverse
  */
-const reverse = (...params) => {
+export const reverse = (...params) => {
   let out
   let slice
   if (params.length === 1) {
@@ -23,4 +23,4 @@ const reverse = (...params) => {
   return out
 }
 
-module.exports = reverse
+export default reverse

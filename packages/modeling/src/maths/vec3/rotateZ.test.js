@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { TAU } = require('../constants')
+import { TAU } from '../constants.js'
 
-const { rotateZ, fromValues } = require('./index')
+import { rotateZ, fromValues } from './index.js'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('vec3: rotateZ() called with four parameters should update a vec3 with correct values', (t) => {
   const radians = TAU / 4

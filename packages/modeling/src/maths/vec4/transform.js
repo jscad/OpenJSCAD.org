@@ -7,7 +7,7 @@
  * @returns {vec4} out
  * @alias module:modeling/maths/vec4.transform
  */
-const transform = (out, vector, matrix) => {
+export const transform = (out, vector, matrix) => {
   const [x, y, z, w] = vector
 
   out[0] = matrix[0] * x + matrix[4] * y + matrix[8] * z + matrix[12] * w
@@ -17,4 +17,4 @@ const transform = (out, vector, matrix) => {
   return out
 }
 
-module.exports = transform
+export default transform

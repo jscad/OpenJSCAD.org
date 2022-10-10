@@ -1,5 +1,5 @@
-const vectorChar = require('./vectorChar')
-const vectorParams = require('./vectorParams')
+import vectorChar from './vectorChar.js'
+import vectorParams from './vectorParams.js'
 
 // translate text line
 const translateLine = (options, line) => {
@@ -42,7 +42,7 @@ const translateLine = (options, line) => {
  * or
  * let textSegments = vectorText({ yOffset: -80, input: 'OpenJSCAD' })
  */
-const vectorText = (options, text) => {
+export const vectorText = (options, text) => {
   const {
     xOffset, yOffset, input, font, height, align, extrudeOffset, lineSpacing, letterSpacing
   } = vectorParams(options, text)
@@ -92,4 +92,4 @@ const vectorText = (options, text) => {
   return output
 }
 
-module.exports = vectorText
+export default vectorText

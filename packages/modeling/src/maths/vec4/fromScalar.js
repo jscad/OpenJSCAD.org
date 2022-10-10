@@ -6,7 +6,7 @@
  * @returns {vec4} out
  * @alias module:modeling/maths/vec4.fromScalar
  */
-const fromScalar = (out, scalar) => {
+export const fromScalar = (out, scalar) => {
   out[0] = scalar
   out[1] = scalar
   out[2] = scalar
@@ -14,4 +14,4 @@ const fromScalar = (out, scalar) => {
   return out
 }
 
-module.exports = fromScalar
+export default fromScalar

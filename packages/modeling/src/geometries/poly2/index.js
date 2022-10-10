@@ -9,9 +9,7 @@
  * @example
  * {"vertices": [[0,0], [4,0], [4,3]]}
  */
-module.exports = {
-  arePointsInside: require('./arePointsInside'),
-  create: require('./create'),
-  flip: require('./flip'),
-  measureArea: require('./measureArea')
-}
+export { arePointsInside } from './arePointsInside.js'
+export { create } from './create.js'
+export { flip } from './flip.js'
+export { measureArea } from './measureArea.js'

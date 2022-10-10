@@ -1,6 +1,6 @@
-const vec3 = require('../vec3')
+import * as vec3 from '../vec3/index.js'
 
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Create a clone of the given line.
@@ -9,11 +9,11 @@ const create = require('./create')
  * @returns {line3} a new unbounded line
  * @alias module:modeling/maths/line3.clone
  */
-const clone = (line) => {
+export const clone = (line) => {
   const out = create()
   vec3.copy(out[0], line[0])
   vec3.copy(out[1], line[1])
   return out
 }
 
-module.exports = clone
+export default clone

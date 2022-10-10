@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { cube } = require('../primitives')
-const measureAggregateBoundingBox = require('./measureAggregateBoundingBox')
-const measureBoundingBox = require('./measureBoundingBox')
+import { cube } from '../primitives/index.js'
+
+import { measureAggregateBoundingBox, measureBoundingBox } from './index.js'
 
 test('measureAggregateBoundingBox (single objects)', (t) => {
   const aCube = cube({ size: 4, center: [4, 10, 20] })

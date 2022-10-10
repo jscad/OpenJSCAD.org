@@ -1,7 +1,8 @@
-const test = require('ava')
-const { create, copy, fromValues } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { create, copy, fromValues } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('plane: copy() with two params should update a plane with same values', (t) => {
   const org1 = create()

@@ -1,4 +1,4 @@
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Create a polygon from the given vertices and plane.
@@ -8,10 +8,10 @@ const create = require('./create')
  * @returns {poly3} a new polygon
  * @alias module:modeling/geometries/poly3.fromPointsAndPlane
  */
-const fromPointsAndPlane = (vertices, plane) => {
+export const fromPointsAndPlane = (vertices, plane) => {
   const poly = create(vertices)
   poly.plane = plane // retain the plane for later use
   return poly
 }
 
-module.exports = fromPointsAndPlane
+export default fromPointsAndPlane

@@ -1,7 +1,8 @@
-const test = require('ava')
-const { fromRotation, create } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { fromRotation, create } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('mat4: fromRotation() should return a mat4 with correct values', (t) => {
   const rotation = 90 * 0.017453292519943295

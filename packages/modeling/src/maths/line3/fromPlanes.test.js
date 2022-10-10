@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const plane = require('../plane/')
+import { plane } from '../index.js'
 
-const { fromPlanes, create } = require('./index')
+import { fromPlanes, create } from './index.js'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('line3: fromPlanes() should return a new line3 with correct values', (t) => {
   const planeXY = plane.fromPoints(plane.create(), [0, 0, 0], [1, 0, 0], [1, 1, 0]) // flat on XY

@@ -1,6 +1,6 @@
-const create = require('./create')
+import * as vec3 from '../../maths/vec3/index.js'
 
-const vec3 = require('../../maths/vec3')
+import create from './create.js'
 
 /**
  * Create a deep clone of the given polygon
@@ -10,7 +10,7 @@ const vec3 = require('../../maths/vec3')
  * @returns {poly3} a new polygon
  * @alias module:modeling/geometries/poly3.clone
  */
-const clone = (...params) => {
+export const clone = (...params) => {
   let out
   let poly3
   if (params.length === 1) {
@@ -25,4 +25,4 @@ const clone = (...params) => {
   return out
 }
 
-module.exports = clone
+export default clone

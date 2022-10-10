@@ -1,11 +1,11 @@
-const Node = require('./Node')
-const PolygonTreeNode = require('./PolygonTreeNode')
+import { Node } from './Node.js'
+import { PolygonTreeNode } from './PolygonTreeNode.js'
 
 // # class Tree
 // This is the root of a BSP tree.
 // This separate class for the root of the tree in order to hold the PolygonTreeNode root.
 // The actual tree is kept in this.rootnode
-class Tree {
+export class Tree {
   constructor (polygons) {
     this.polygonTree = new PolygonTreeNode()
     this.rootnode = new Node(null)
@@ -46,5 +46,3 @@ class Tree {
     return result
   }
 }
-
-module.exports = Tree

@@ -1,4 +1,4 @@
-const { NEPS } = require('../constants')
+import { NEPS } from '../constants.js'
 
 /*
  * Returns zero if n is within epsilon of zero, otherwise return n
@@ -31,4 +31,7 @@ const sin = (radians) => rezero(Math.sin(radians))
  */
 const cos = (radians) => rezero(Math.cos(radians))
 
-module.exports = { sin, cos }
+export {
+  cos,
+  sin
+}

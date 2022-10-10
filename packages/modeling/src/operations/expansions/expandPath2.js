@@ -1,11 +1,11 @@
-const area = require('../../maths/utils/area')
+import area from '../../maths/utils/area.js'
 
-const vec2 = require('../../maths/vec2')
+import * as vec2 from '../../maths/vec2/index.js'
 
-const geom2 = require('../../geometries/geom2')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
-const offsetFromPoints = require('./offsetFromPoints')
+import offsetFromPoints from './offsetFromPoints.js'
 
 const createGeometryFromClosedOffsets = (paths) => {
   let { external, internal } = paths
@@ -63,7 +63,7 @@ const createGeometryFromExpandedOpenPath = (paths, segments, corners, delta) => 
  * @param {path2} geometry - the geometry to expand
  * @returns {geom2} expanded geometry
  */
-const expandPath2 = (options, geometry) => {
+export const expandPath2 = (options, geometry) => {
   const defaults = {
     delta: 1,
     corners: 'edge',
@@ -96,4 +96,4 @@ const expandPath2 = (options, geometry) => {
   }
 }
 
-module.exports = expandPath2
+export default expandPath2

@@ -1,8 +1,8 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const retessellate = require('../modifiers/retessellate')
+import retessellate from '../modifiers/retessellate.js'
 
-const subtractSub = require('./subtractGeom3Sub')
+import subtractSub from './subtractGeom3Sub.js'
 
 /*
  * Return a new 3D geometry representing space in this geometry but not in the given geometries.
@@ -10,7 +10,7 @@ const subtractSub = require('./subtractGeom3Sub')
  * @param {...geom3} geometries - list of geometries
  * @returns {geom3} new 3D geometry
  */
-const subtract = (...geometries) => {
+export const subtractGeom3 = (...geometries) => {
   geometries = flatten(geometries)
 
   let newgeometry = geometries.shift()
@@ -22,4 +22,4 @@ const subtract = (...geometries) => {
   return newgeometry
 }
 
-module.exports = subtract
+export default subtractGeom3

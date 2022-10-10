@@ -1,7 +1,8 @@
-const test = require('ava')
-const { divide, fromValues } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { divide, fromValues } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('vec2: divide() called with three parameters should update a vec2 with correct values', (t) => {
   const obs1 = fromValues(0, 0)

@@ -3,35 +3,45 @@
  * In all cases, the function returns the results, and never changes the original shapes.
  * @module modeling/transforms
  * @example
- * const { center, rotateX, translate } = require('@jscad/modeling').transforms
+ * import { center, rotateX, translate } from '@jscad/modeling/transforms'
  */
-module.exports = {
-  align: require('./align'),
+import { align } from './align.js'
 
-  center: require('./center').center,
-  centerX: require('./center').centerX,
-  centerY: require('./center').centerY,
-  centerZ: require('./center').centerZ,
+import { center, centerX, centerY, centerZ } from './center.js'
+import { mirror, mirrorX, mirrorY, mirrorZ } from './mirror.js'
+import { rotate, rotateX, rotateY, rotateZ } from './rotate.js'
+import { scale, scaleX, scaleY, scaleZ } from './scale.js'
+import { translate, translateX, translateY, translateZ } from './translate.js'
 
-  mirror: require('./mirror').mirror,
-  mirrorX: require('./mirror').mirrorX,
-  mirrorY: require('./mirror').mirrorY,
-  mirrorZ: require('./mirror').mirrorZ,
+import { transform } from './transform.js'
 
-  rotate: require('./rotate').rotate,
-  rotateX: require('./rotate').rotateX,
-  rotateY: require('./rotate').rotateY,
-  rotateZ: require('./rotate').rotateZ,
+export {
+  align,
 
-  scale: require('./scale').scale,
-  scaleX: require('./scale').scaleX,
-  scaleY: require('./scale').scaleY,
-  scaleZ: require('./scale').scaleZ,
+  center,
+  centerX,
+  centerY,
+  centerZ,
 
-  transform: require('./transform'),
+  mirror,
+  mirrorX,
+  mirrorY,
+  mirrorZ,
 
-  translate: require('./translate').translate,
-  translateX: require('./translate').translateX,
-  translateY: require('./translate').translateY,
-  translateZ: require('./translate').translateZ
+  rotate,
+  rotateX,
+  rotateY,
+  rotateZ,
+
+  scale,
+  scaleX,
+  scaleY,
+  scaleZ,
+
+  translate,
+  translateX,
+  translateY,
+  translateZ,
+
+  transform
 }

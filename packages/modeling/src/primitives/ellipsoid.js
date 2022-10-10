@@ -1,12 +1,11 @@
-const { TAU } = require('../maths/constants')
-const vec3 = require('../maths/vec3')
+import { TAU } from '../maths/constants.js'
+import { sin, cos } from '../maths/utils/trigonometry.js'
+import * as vec3 from '../maths/vec3/index.js'
 
-const geom3 = require('../geometries/geom3')
-const poly3 = require('../geometries/poly3')
+import * as geom3 from '../geometries/geom3/index.js'
+import * as poly3 from '../geometries/poly3/index.js'
 
-const { sin, cos } = require('../maths/utils/trigonometry')
-
-const { isGTE, isNumberArray } = require('./commonChecks')
+import { isGTE, isNumberArray } from './commonChecks.js'
 
 /**
  * Construct an axis-aligned ellipsoid in three dimensional space.
@@ -21,7 +20,7 @@ const { isGTE, isNumberArray } = require('./commonChecks')
  * @example
  * let myshape = ellipsoid({radius: [5, 10, 20]})
 */
-const ellipsoid = (options) => {
+export const ellipsoid = (options) => {
   const defaults = {
     center: [0, 0, 0],
     radius: [1, 1, 1],
@@ -93,4 +92,4 @@ const ellipsoid = (options) => {
   return geom3.create(polygons)
 }
 
-module.exports = ellipsoid
+export default ellipsoid

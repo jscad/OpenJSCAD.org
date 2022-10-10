@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { polyhedron } = require('./index')
+import { geom3 } from '../geometries/index.js'
 
-const geom3 = require('../geometries/geom3')
+import { polyhedron } from './index.js'
 
-const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoints')
+import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
 
 test('polyhedron (points and faces)', (t) => {
   // points and faces form a cube

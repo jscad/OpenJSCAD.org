@@ -1,14 +1,14 @@
-const test = require('ava')
+import test from 'ava'
 
-const { comparePoints } = require('../../../test/helpers')
+import { comparePoints } from '../../../test/helpers/index.js'
 
-const { geom2 } = require('../../geometries')
+import { geom2 } from '../../geometries/index.js'
 
-const { circle, rectangle } = require('../../primitives')
+import { circle, rectangle } from '../../primitives/index.js'
 
-const { subtract } = require('./index')
+import { center } from '../transforms/center.js'
 
-const { center } = require('../transforms/center')
+import { subtract } from './index.js'
 
 test('subtract: subtract of one or more geom2 objects produces expected geometry', (t) => {
   const geometry1 = circle({ radius: 2, segments: 8 })

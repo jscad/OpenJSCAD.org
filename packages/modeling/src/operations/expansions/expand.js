@@ -1,12 +1,12 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
-const expandGeom2 = require('./expandGeom2')
-const expandGeom3 = require('./expandGeom3')
-const expandPath2 = require('./expandPath2')
+import expandGeom2 from './expandGeom2.js'
+import expandGeom3 from './expandGeom3.js'
+import expandPath2 from './expandPath2.js'
 
 /**
  * Expand the given geometry using the given options.
@@ -26,7 +26,7 @@ const expandPath2 = require('./expandPath2')
  * let newsquare = expand({delta: 5, corners: 'chamfer'}, square({size: 30}))
  * let newsphere = expand({delta: 2, corners: 'round'}, cuboid({size: [20, 25, 5]}))
  */
-const expand = (options, ...objects) => {
+export const expand = (options, ...objects) => {
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')
 
@@ -39,4 +39,4 @@ const expand = (options, ...objects) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = expand
+export default expand

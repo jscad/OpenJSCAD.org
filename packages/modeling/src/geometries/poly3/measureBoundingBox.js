@@ -1,11 +1,11 @@
-const vec3 = require('../../maths/vec3')
+import * as vec3 from '../../maths/vec3/index.js'
 
 /**
  * @param {poly3} polygon - the polygon to measure
  * @returns {Array} an array of two vectors (3D);  minimum and maximum coordinates
  * @alias module:modeling/geometries/poly3.measureBoundingBox
  */
-const measureBoundingBox = (polygon) => {
+export const measureBoundingBox = (polygon) => {
   const vertices = polygon.vertices
   const numvertices = vertices.length
   const min = numvertices === 0 ? vec3.create() : vec3.clone(vertices[0])
@@ -17,4 +17,4 @@ const measureBoundingBox = (polygon) => {
   return [min, max]
 }
 
-module.exports = measureBoundingBox
+export default measureBoundingBox

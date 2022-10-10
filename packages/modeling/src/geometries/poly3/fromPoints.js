@@ -1,6 +1,6 @@
-const vec3 = require('../../maths/vec3')
+import * as vec3 from '../../maths/vec3/index.js'
 
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Create a polygon from the given points.
@@ -17,9 +17,9 @@ const create = require('./create')
  * ]
  * const polygon = fromPoints(points)
  */
-const fromPoints = (points) => {
+export const fromPoints = (points) => {
   const vertices = points.map((point) => vec3.clone(point))
   return create(vertices)
 }
 
-module.exports = fromPoints
+export default fromPoints

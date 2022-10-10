@@ -1,7 +1,8 @@
-const test = require('ava')
-const { add } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { add } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('mat4: add() with three parameters should return a new mat4 with correct values', (t) => {
   const obs1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { fromPoints } = require('./index')
+import { fromPoints } from './index.js'
 
-const applyTransforms = require('./applyTransforms')
+import applyTransforms from './applyTransforms.js'
 
 test('applyTransforms: Updates a populated geom2 with transformed sides', (t) => {
   const points = [[0, 0], [1, 0], [0, 1]]

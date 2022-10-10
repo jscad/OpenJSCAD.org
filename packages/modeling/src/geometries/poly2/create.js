@@ -14,11 +14,11 @@
  * @example
  * let polygon = create()
  */
-const create = (vertices) => {
+export const create = (vertices) => {
   if (vertices === undefined || vertices.length < 3) {
     vertices = [] // empty contents
   }
   return { vertices: vertices }
 }
 
-module.exports = create
+export default create

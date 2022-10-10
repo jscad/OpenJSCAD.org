@@ -1,4 +1,4 @@
-const flatten = require('../utils/flatten')
+import flatten from '../utils/flatten.js'
 
 /**
  * Converts HSV color values to RGB color values.
@@ -11,7 +11,7 @@ const flatten = require('../utils/flatten')
  * @example
  * let mysphere = colorize(hsvToRgb([0.9166666666666666, 1, 1]), sphere())
  */
-const hsvToRgb = (...values) => {
+export const hsvToRgb = (...values) => {
   values = flatten(values)
   if (values.length < 3) throw new Error('values must contain H, S and V values')
 
@@ -70,4 +70,4 @@ const hsvToRgb = (...values) => {
   return [r, g, b]
 }
 
-module.exports = hsvToRgb
+export default hsvToRgb

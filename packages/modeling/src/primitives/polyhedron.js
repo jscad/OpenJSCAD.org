@@ -1,7 +1,7 @@
-const geom3 = require('../geometries/geom3')
-const poly3 = require('../geometries/poly3')
+import * as geom3 from '../geometries/geom3/index.js'
+import * as poly3 from '../geometries/poly3/index.js'
 
-const { isNumberArray } = require('./commonChecks')
+import { isNumberArray } from './commonChecks.js'
 
 /**
  * Construct a polyhedron in three dimensional space from the given set of 3D points and faces.
@@ -20,7 +20,7 @@ const { isNumberArray } = require('./commonChecks')
  * let myfaces = [ [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4], [1, 0, 3], [2, 1, 3] ]
  * let myshape = polyhedron({points: mypoint, faces: myfaces, orientation: 'inward'})
  */
-const polyhedron = (options) => {
+export const polyhedron = (options) => {
   const defaults = {
     points: [],
     faces: [],
@@ -68,4 +68,4 @@ const polyhedron = (options) => {
   return geom3.create(polygons)
 }
 
-module.exports = polyhedron
+export default polyhedron

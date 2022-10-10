@@ -8,7 +8,7 @@
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.invert
  */
-const invert = (out, matrix) => {
+export const invert = (out, matrix) => {
   const a00 = matrix[0]
   const a01 = matrix[1]
   const a02 = matrix[2]
@@ -68,4 +68,4 @@ const invert = (out, matrix) => {
   return out
 }
 
-module.exports = invert
+export default invert

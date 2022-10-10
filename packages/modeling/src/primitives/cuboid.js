@@ -1,7 +1,7 @@
-const geom3 = require('../geometries/geom3')
-const poly3 = require('../geometries/poly3')
+import * as geom3 from '../geometries/geom3/index.js'
+import * as poly3 from '../geometries/poly3/index.js'
 
-const { isNumberArray } = require('./commonChecks')
+import { isNumberArray } from './commonChecks.js'
 
 /**
  * Construct an axis-aligned solid cuboid in three dimensional space.
@@ -14,7 +14,7 @@ const { isNumberArray } = require('./commonChecks')
  * @example
  * let myshape = cuboid(size: [5, 10, 5]})
  */
-const cuboid = (options) => {
+export const cuboid = (options) => {
   const defaults = {
     center: [0, 0, 0],
     size: [2, 2, 2]
@@ -49,4 +49,4 @@ const cuboid = (options) => {
   return result
 }
 
-module.exports = cuboid
+export default cuboid

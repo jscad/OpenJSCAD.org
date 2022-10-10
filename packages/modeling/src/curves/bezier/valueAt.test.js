@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { bezier } = require('../index')
+import { bezier } from '../index.js'
 
 test('Linear bezier (straight line between two points)', (t) => {
   const straightLine = bezier.create([10, 20])

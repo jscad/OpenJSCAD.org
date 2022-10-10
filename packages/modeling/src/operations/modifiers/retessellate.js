@@ -1,9 +1,9 @@
-const geom3 = require('../../geometries/geom3')
-const poly3 = require('../../geometries/poly3')
+import aboutEqualNormals from '../../maths/utils/aboutEqualNormals.js'
 
-const aboutEqualNormals = require('../../maths/utils/aboutEqualNormals')
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as poly3 from '../../geometries/poly3/index.js'
 
-const reTesselateCoplanarPolygons = require('./reTesselateCoplanarPolygons')
+import reTesselateCoplanarPolygons from './reTesselateCoplanarPolygons.js'
 
 const coplanar = (plane1, plane2) => {
   // expect the same distance from the origin, within tolerance
@@ -21,7 +21,7 @@ const coplanar = (plane1, plane2) => {
   Polygons are split at each sweep line, and the fragments are joined horizontally and vertically into larger polygons
   (making sure that we will end up with convex polygons).
 */
-const retessellate = (geometry) => {
+export const retessellate = (geometry) => {
   if (geometry.isRetesselated) {
     return geometry
   }
@@ -51,4 +51,4 @@ const retessellate = (geometry) => {
   return result
 }
 
-module.exports = retessellate
+export default retessellate

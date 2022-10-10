@@ -1,6 +1,6 @@
-const vec3 = require('../../maths/vec3')
+import * as vec3 from '../../maths/vec3/index.js'
 
-const poly3 = require('../../geometries/poly3')
+import * as poly3 from '../../geometries/poly3/index.js'
 
 const isValidPoly3 = (epsilon, polygon) => {
   const area = Math.abs(poly3.measureArea(polygon))
@@ -10,7 +10,7 @@ const isValidPoly3 = (epsilon, polygon) => {
 /*
  * Snap the given list of polygons to the epsilon.
  */
-const snapPolygons = (epsilon, polygons) => {
+export const snapPolygons = (epsilon, polygons) => {
   let newpolygons = polygons.map((polygon) => {
     const snapvertices = polygon.vertices.map((vertice) => vec3.snap(vec3.create(), vertice, epsilon))
     // only retain unique vertices
@@ -29,4 +29,4 @@ const snapPolygons = (epsilon, polygons) => {
   return newpolygons
 }
 
-module.exports = snapPolygons
+export default snapPolygons

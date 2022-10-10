@@ -1,10 +1,10 @@
-const { EPS, TAU } = require('../maths/constants')
+import { EPS, TAU } from '../maths/constants.js'
 
-const vec2 = require('../maths/vec2')
+import * as vec2 from '../maths/vec2/index.js'
 
-const geom2 = require('../geometries/geom2')
+import * as geom2 from '../geometries/geom2/index.js'
 
-const { isGT, isGTE, isNumberArray } = require('./commonChecks')
+import { isGT, isGTE, isNumberArray } from './commonChecks.js'
 
 /**
  * Construct an axis-aligned rectangle in two dimensional space with rounded corners.
@@ -19,7 +19,7 @@ const { isGT, isGTE, isNumberArray } = require('./commonChecks')
  * @example
  * let myshape = roundedRectangle({size: [10, 20], roundRadius: 2})
  */
-const roundedRectangle = (options) => {
+export const roundedRectangle = (options) => {
   const defaults = {
     center: [0, 0],
     size: [2, 2],
@@ -66,4 +66,4 @@ const roundedRectangle = (options) => {
   return geom2.fromPoints(corner0Points.concat(corner1Points, corner2Points, corner3Points))
 }
 
-module.exports = roundedRectangle
+export default roundedRectangle

@@ -1,7 +1,7 @@
-const mat4 = require('../../maths/mat4')
-const vec3 = require('../../maths/vec3')
+import * as mat4 from '../../maths/mat4/index.js'
+import * as vec3 from '../../maths/vec3/index.js'
 
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Transform the given polygon using the given matrix.
@@ -10,7 +10,7 @@ const create = require('./create')
  * @returns {poly3} a new polygon
  * @alias module:modeling/geometries/poly3.transform
  */
-const transform = (matrix, polygon) => {
+export const transform = (matrix, polygon) => {
   const vertices = polygon.vertices.map((vertex) => vec3.transform(vec3.create(), vertex, matrix))
   if (mat4.isMirroring(matrix)) {
     // reverse the order to preserve the orientation
@@ -19,4 +19,4 @@ const transform = (matrix, polygon) => {
   return create(vertices)
 }
 
-module.exports = transform
+export default transform

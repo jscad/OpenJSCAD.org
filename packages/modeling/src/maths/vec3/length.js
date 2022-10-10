@@ -5,11 +5,11 @@
  * @returns {Number} length
  * @alias module:modeling/maths/vec3.length
  */
-const length = (vector) => {
+export const length = (vector) => {
   const x = vector[0]
   const y = vector[1]
   const z = vector[2]
   return Math.sqrt(x * x + y * y + z * z)
 }
 
-module.exports = length
+export default length

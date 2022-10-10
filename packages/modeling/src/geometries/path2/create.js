@@ -1,4 +1,4 @@
-const mat4 = require('../../maths/mat4')
+import * as mat4 from '../../maths/mat4/index.js'
 
 /**
  * Represents a 2D geometry consisting of a list of ordered points.
@@ -16,7 +16,7 @@ const mat4 = require('../../maths/mat4')
  * @example
  * let newpath = create()
  */
-const create = (points) => {
+export const create = (points) => {
   if (points === undefined) {
     points = []
   }
@@ -27,4 +27,4 @@ const create = (points) => {
   }
 }
 
-module.exports = create
+export default create

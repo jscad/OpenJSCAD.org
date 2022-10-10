@@ -1,7 +1,8 @@
-const test = require('ava')
-const { direction, create, fromPoints } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { direction, create, fromPoints } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('line3: direction() should return proper direction', (t) => {
   const line1 = create()

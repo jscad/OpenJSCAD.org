@@ -1,7 +1,7 @@
-const mat4 = require('../../maths/mat4')
-const vec2 = require('../../maths/vec2')
+import * as mat4 from '../../maths/mat4/index.js'
+import * as vec2 from '../../maths/vec2/index.js'
 
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Create a new path from the given compact binary data.
@@ -9,7 +9,7 @@ const create = require('./create')
  * @returns {path2} a new path
  * @alias module:modeling/geometries/path2.fromCompactBinary
  */
-const fromCompactBinary = (data) => {
+export const fromCompactBinary = (data) => {
   if (data[0] !== 2) throw new Error('invalid compact binary data')
 
   const created = create()
@@ -30,4 +30,4 @@ const fromCompactBinary = (data) => {
   return created
 }
 
-module.exports = fromCompactBinary
+export default fromCompactBinary

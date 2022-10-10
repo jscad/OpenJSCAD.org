@@ -1,7 +1,7 @@
-const eliminateHoles = require('./eliminateHoles')
-const { removeNode, sortLinked } = require('./linkedList')
-const { cureLocalIntersections, filterPoints, isValidDiagonal, linkedPolygon, splitPolygon } = require('./linkedPolygon')
-const { area, pointInTriangle } = require('./triangle')
+import eliminateHoles from './eliminateHoles.js'
+import { removeNode, sortLinked } from './linkedList.js'
+import { cureLocalIntersections, filterPoints, isValidDiagonal, linkedPolygon, splitPolygon } from './linkedPolygon.js'
+import { area, pointInTriangle } from './triangle.js'
 
 /*
  * An implementation of the earcut polygon triangulation algorithm.
@@ -13,7 +13,7 @@ const { area, pointInTriangle } = require('./triangle')
  * @param {holeIndices} An array of hole indices if any.
  * @param {dim} The number of coordinates per vertex in the input array.
  */
-const triangulate = (data, holeIndices, dim = 2) => {
+export const triangulate = (data, holeIndices, dim = 2) => {
   const hasHoles = holeIndices && holeIndices.length
   const outerLen = hasHoles ? holeIndices[0] * dim : data.length
   let outerNode = linkedPolygon(data, 0, outerLen, dim, true)
@@ -249,4 +249,4 @@ const zOrder = (x, y, minX, minY, invSize) => {
   return x | (y << 1)
 }
 
-module.exports = triangulate
+export default triangulate

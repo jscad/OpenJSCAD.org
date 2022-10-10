@@ -1,9 +1,9 @@
-const { NEPS } = require('../maths/constants')
-const vec2 = require('../maths/vec2')
+import { NEPS } from '../maths/constants.js'
+import * as vec2 from '../maths/vec2/index.js'
 
-const geom2 = require('../geometries/geom2')
+import * as geom2 from '../geometries/geom2/index.js'
 
-const { isNumberArray } = require('./commonChecks')
+import { isNumberArray } from './commonChecks.js'
 
 // returns angle C
 const solveAngleFromSSS = (a, b, c) => Math.acos(((a * a) + (b * b) - (c * c)) / (2 * a * b))
@@ -126,7 +126,7 @@ const createTriangle = (A, B, C, a, b, c) => {
  * @example
  * let myshape = triangle({type: 'AAS', values: [degToRad(62), degToRad(35), 7]})
  */
-const triangle = (options) => {
+export const triangle = (options) => {
   const defaults = {
     type: 'SSS',
     values: [1, 1, 1]
@@ -160,4 +160,4 @@ const triangle = (options) => {
   }
 }
 
-module.exports = triangle
+export default triangle

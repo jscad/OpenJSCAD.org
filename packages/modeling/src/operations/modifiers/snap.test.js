@@ -1,14 +1,14 @@
-const test = require('ava')
+import test from 'ava'
 
-const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
+import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
-const { TAU } = require('../../maths/constants')
+import { TAU } from '../../maths/constants.js'
 
-const { geom2, geom3, path2 } = require('../../geometries')
+import { geom2, geom3, path2 } from '../../geometries/index.js'
 
-const { arc, rectangle, cuboid } = require('../../primitives')
+import { arc, rectangle, cuboid } from '../../primitives/index.js'
 
-const { snap } = require('./index')
+import { snap } from './index.js'
 
 test('snap: snap of a path2 produces an expected path2', (t) => {
   const geometry1 = path2.create()

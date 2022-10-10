@@ -1,5 +1,5 @@
-const { Node, insertNode, removeNode } = require('./linkedList')
-const { area } = require('./triangle')
+import { Node, insertNode, removeNode } from './linkedList.js'
+import { area } from './triangle.js'
 
 /*
  * create a circular doubly linked list from polygon points in the specified winding order
@@ -194,4 +194,11 @@ const signedArea = (data, start, end, dim) => {
  */
 const equals = (p1, p2) => p1.x === p2.x && p1.y === p2.y
 
-module.exports = { cureLocalIntersections, filterPoints, isValidDiagonal, linkedPolygon, locallyInside, splitPolygon }
+export {
+  cureLocalIntersections,
+  filterPoints,
+  isValidDiagonal,
+  linkedPolygon,
+  locallyInside,
+  splitPolygon
+}

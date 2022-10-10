@@ -1,4 +1,4 @@
-const fromAngleRadians = require('./fromAngleRadians')
+import fromAngleRadians from './fromAngleRadians.js'
 
 /**
  * Create a new vector in the direction of the given angle.
@@ -8,6 +8,6 @@ const fromAngleRadians = require('./fromAngleRadians')
  * @returns {vec2} out
  * @alias module:modeling/maths/vec2.fromAngleDegrees
  */
-const fromAngleDegrees = (out, degrees) => fromAngleRadians(out, degrees * 0.017453292519943295)
+export const fromAngleDegrees = (out, degrees) => fromAngleRadians(out, degrees * 0.017453292519943295)
 
-module.exports = fromAngleDegrees
+export default fromAngleDegrees

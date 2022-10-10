@@ -6,10 +6,10 @@
  * @returns {vec2} out
  * @alias module:modeling/maths/vec2.abs
  */
-const abs = (out, vector) => {
+export const abs = (out, vector) => {
   out[0] = Math.abs(vector[0])
   out[1] = Math.abs(vector[1])
   return out
 }
 
-module.exports = abs
+export default abs

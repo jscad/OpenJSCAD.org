@@ -1,4 +1,4 @@
-const flatten = require('../utils/flatten')
+import flatten from '../utils/flatten.js'
 
 /**
  * Converts an RGB color value to HSL.
@@ -9,7 +9,7 @@ const flatten = require('../utils/flatten')
  * @return {Array} HSL or HSLA color values
  * @alias module:modeling/colors.rgbToHsl
  */
-const rgbToHsl = (...values) => {
+export const rgbToHsl = (...values) => {
   values = flatten(values)
   if (values.length < 3) throw new Error('values must contain R, G and B values')
 
@@ -50,4 +50,4 @@ const rgbToHsl = (...values) => {
   return [h, s, l]
 }
 
-module.exports = rgbToHsl
+export default rgbToHsl

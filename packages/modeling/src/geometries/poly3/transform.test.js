@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { transform, fromPoints } = require('./index')
+import { transform, fromPoints } from './index.js'
 
-const { comparePolygons } = require('../../../test/helpers/index')
+import { comparePolygons } from '../../../test/helpers/index.js'
 
 test('poly3: transform() should return a new poly3 with correct values', (t) => {
   const identityMatrix = [

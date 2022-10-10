@@ -1,6 +1,6 @@
-const poly3 = require('../poly3')
+import * as poly3 from '../poly3/index.js'
 
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Construct a new 3D geometry from a list of points.
@@ -11,7 +11,7 @@ const create = require('./create')
  * @returns {geom3} a new geometry
  * @alias module:modeling/geometries/geom3.fromPoints
  */
-const fromPoints = (listofpoints) => {
+export const fromPoints = (listofpoints) => {
   if (!Array.isArray(listofpoints)) {
     throw new Error('the given points must be an array')
   }
@@ -25,4 +25,4 @@ const fromPoints = (listofpoints) => {
   return result
 }
 
-module.exports = fromPoints
+export default fromPoints

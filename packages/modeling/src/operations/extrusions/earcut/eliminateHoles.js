@@ -1,5 +1,5 @@
-const { filterPoints, linkedPolygon, locallyInside, splitPolygon } = require('./linkedPolygon')
-const { area, pointInTriangle } = require('./triangle')
+import { filterPoints, linkedPolygon, locallyInside, splitPolygon } from './linkedPolygon.js'
+import { area, pointInTriangle } from './triangle.js'
 
 /*
  * link every hole into the outer loop, producing a single-ring polygon without holes
@@ -7,7 +7,7 @@ const { area, pointInTriangle } = require('./triangle')
  * Original source from https://github.com/mapbox/earcut
  * Copyright (c) 2016 Mapbox
  */
-const eliminateHoles = (data, holeIndices, outerNode, dim) => {
+export const eliminateHoles = (data, holeIndices, outerNode, dim) => {
   const queue = []
 
   for (let i = 0, len = holeIndices.length; i < len; i++) {
@@ -128,4 +128,4 @@ const getLeftmost = (start) => {
   return leftmost
 }
 
-module.exports = eliminateHoles
+export default eliminateHoles

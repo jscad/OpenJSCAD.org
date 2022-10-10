@@ -1,8 +1,8 @@
-const { TAU } = require('../maths/constants')
+import { TAU } from '../maths/constants.js'
 
-const ellipse = require('./ellipse')
+import ellipse from './ellipse.js'
 
-const { isGT } = require('./commonChecks')
+import { isGT } from './commonChecks.js'
 
 /**
  * Construct a circle in two dimensional space where all points are at the same distance from the center.
@@ -18,7 +18,7 @@ const { isGT } = require('./commonChecks')
  * @example
  * let myshape = circle({radius: 10})
  */
-const circle = (options) => {
+export const circle = (options) => {
   const defaults = {
     center: [0, 0],
     radius: 1,
@@ -35,4 +35,4 @@ const circle = (options) => {
   return ellipse({ center, radius, startAngle, endAngle, segments })
 }
 
-module.exports = circle
+export default circle

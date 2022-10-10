@@ -1,14 +1,13 @@
-const { EPS, TAU } = require('../maths/constants')
+import { EPS, TAU } from '../maths/constants.js'
+import { sin, cos } from '../maths/utils/trigonometry.js'
 
-const vec2 = require('../maths/vec2')
-const vec3 = require('../maths/vec3')
+import * as vec2 from '../maths/vec2/index.js'
+import * as vec3 from '../maths/vec3/index.js'
 
-const geom3 = require('../geometries/geom3')
-const poly3 = require('../geometries/poly3')
+import * as geom3 from '../geometries/geom3/index.js'
+import * as poly3 from '../geometries/poly3/index.js'
 
-const { sin, cos } = require('../maths/utils/trigonometry')
-
-const { isGT, isGTE, isNumberArray } = require('./commonChecks')
+import { isGT, isGTE, isNumberArray } from './commonChecks.js'
 
 const createCorners = (center, size, radius, segments, slice, positive) => {
   const pitch = (TAU / 4) * slice / segments
@@ -124,7 +123,7 @@ const stitchSides = (bottomCorners, topCorners) => {
  * @example
  * let mycube = roundedCuboid({size: [10, 20, 10], roundRadius: 2, segments: 16})
  */
-const roundedCuboid = (options) => {
+export const roundedCuboid = (options) => {
   const defaults = {
     center: [0, 0, 0],
     size: [2, 2, 2],
@@ -183,4 +182,4 @@ const roundedCuboid = (options) => {
   return geom3.create(polygons)
 }
 
-module.exports = roundedCuboid
+export default roundedCuboid

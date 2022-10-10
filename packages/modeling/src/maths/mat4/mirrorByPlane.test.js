@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const plane = require('../plane')
+import { plane } from '../index.js'
 
-const { mirrorByPlane, create } = require('./index')
+import { mirrorByPlane, create } from './index.js'
 
-const { compareVectors } = require('../../../test/helpers')
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('mat4: mirrorByPlane() called with out parameter should return a new mat4 with correct values', (t) => {
   const planeX = plane.fromPoints(plane.create(), [0, 0, 0], [0, 1, 1], [0, 1, 0])

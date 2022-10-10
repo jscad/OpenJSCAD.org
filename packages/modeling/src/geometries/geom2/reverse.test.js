@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { reverse, fromPoints } = require('./index')
+import { reverse, fromPoints } from './index.js'
 
-const { comparePoints, compareVectors } = require('../../../test/helpers/')
+import { comparePoints, compareVectors } from '../../../test/helpers/index.js'
 
 test('reverse: Reverses a populated geom2', (t) => {
   const points = [[0, 0], [1, 0], [0, 1]]

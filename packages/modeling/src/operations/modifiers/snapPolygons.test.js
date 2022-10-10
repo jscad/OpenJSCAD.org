@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { poly3 } = require('../../geometries')
+import { poly3 } from '../../geometries/index.js'
 
-const snapPolygons = require('./snapPolygons')
+import snapPolygons from './snapPolygons.js'
 
 test('snapPolygons: snap of polygons produces expected results', (t) => {
   const polygons = [

@@ -1,6 +1,6 @@
-const cylinderElliptic = require('./cylinderElliptic')
+import cylinderElliptic from './cylinderElliptic.js'
 
-const { isGT } = require('./commonChecks')
+import { isGT } from './commonChecks.js'
 
 /**
  * Construct a Z axis-aligned cylinder in three dimensional space.
@@ -16,7 +16,7 @@ const { isGT } = require('./commonChecks')
  * @example
  * let myshape = cylinder({height: 2, radius: 10})
  */
-const cylinder = (options) => {
+export const cylinder = (options) => {
   const defaults = {
     center: [0, 0, 0],
     height: 2,
@@ -38,4 +38,4 @@ const cylinder = (options) => {
   return cylinderElliptic(newoptions)
 }
 
-module.exports = cylinder
+export default cylinder

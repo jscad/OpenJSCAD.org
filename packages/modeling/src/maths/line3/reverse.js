@@ -1,6 +1,6 @@
-const vec3 = require('../vec3')
+import * as vec3 from '../vec3/index.js'
 
-const fromPointAndDirection = require('./fromPointAndDirection')
+import fromPointAndDirection from './fromPointAndDirection.js'
 
 /**
  * Create a line in the opposite direction as the given.
@@ -10,10 +10,10 @@ const fromPointAndDirection = require('./fromPointAndDirection')
  * @returns {line3} out
  * @alias module:modeling/maths/line3.reverse
  */
-const reverse = (out, line) => {
+export const reverse = (out, line) => {
   const point = vec3.clone(line[0])
   const direction = vec3.negate(vec3.create(), line[1])
   return fromPointAndDirection(out, point, direction)
 }
 
-module.exports = reverse
+export default reverse

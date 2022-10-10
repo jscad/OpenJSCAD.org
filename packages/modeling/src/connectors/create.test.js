@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { create } = require('./index')
+import { create } from './index.js'
 
-const { compareVectors } = require('../../test/helpers')
+import { compareVectors } from '../../test/helpers/index.js'
 
 test('connector: create() should return a connector with initial values', (t) => {
   const obs = create()

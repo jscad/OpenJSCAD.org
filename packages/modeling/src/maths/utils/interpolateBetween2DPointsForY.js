@@ -7,7 +7,7 @@
  * @return {Array} X and Y of interpolated point
  * @alias module:modeling/maths/utils.interpolateBetween2DPointsForY
  */
-const interpolateBetween2DPointsForY = (point1, point2, y) => {
+export const interpolateBetween2DPointsForY = (point1, point2, y) => {
   let f1 = y - point1[1]
   let f2 = point2[1] - point1[1]
   if (f2 < 0) {
@@ -28,4 +28,4 @@ const interpolateBetween2DPointsForY = (point1, point2, y) => {
   return result
 }
 
-module.exports = interpolateBetween2DPointsForY
+export default interpolateBetween2DPointsForY

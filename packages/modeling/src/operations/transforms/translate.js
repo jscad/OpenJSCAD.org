@@ -1,10 +1,10 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const mat4 = require('../../maths/mat4')
+import * as mat4 from '../../maths/mat4/index.js'
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
 /**
  * Translate the given objects using the given options.
@@ -16,7 +16,7 @@ const path2 = require('../../geometries/path2')
  * @example
  * const newsphere = translate([5, 0, 10], sphere())
  */
-const translate = (offset, ...objects) => {
+export const translate = (offset, ...objects) => {
   if (!Array.isArray(offset)) throw new Error('offset must be an array')
 
   objects = flatten(objects)
@@ -44,7 +44,7 @@ const translate = (offset, ...objects) => {
  * @return {Object|Array} the translated object, or a list of translated objects
  * @alias module:modeling/transforms.translateX
  */
-const translateX = (offset, ...objects) => translate([offset, 0, 0], objects)
+export const translateX = (offset, ...objects) => translate([offset, 0, 0], objects)
 
 /**
  * Translate the given objects along the Y axis using the given options.
@@ -53,7 +53,7 @@ const translateX = (offset, ...objects) => translate([offset, 0, 0], objects)
  * @return {Object|Array} the translated object, or a list of translated objects
  * @alias module:modeling/transforms.translateY
  */
-const translateY = (offset, ...objects) => translate([0, offset, 0], objects)
+export const translateY = (offset, ...objects) => translate([0, offset, 0], objects)
 
 /**
  * Translate the given objects along the Z axis using the given options.
@@ -62,11 +62,4 @@ const translateY = (offset, ...objects) => translate([0, offset, 0], objects)
  * @return {Object|Array} the translated object, or a list of translated objects
  * @alias module:modeling/transforms.translateZ
  */
-const translateZ = (offset, ...objects) => translate([0, 0, offset], objects)
-
-module.exports = {
-  translate,
-  translateX,
-  translateY,
-  translateZ
-}
+export const translateZ = (offset, ...objects) => translate([0, 0, offset], objects)

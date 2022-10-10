@@ -1,11 +1,12 @@
-const test = require('ava')
+import test from 'ava'
 
-const { TAU } = require('../constants')
-const vec3 = require('../vec3/index')
+import { TAU } from '../constants.js'
 
-const { create, invert, fromTranslation, fromXRotation } = require('./index')
+import { vec3 } from '../index.js'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { create, invert, fromTranslation, fromXRotation } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('mat4: invert() translate ', (t) => {
   const matrix = fromTranslation(create(), [10, 10, 0])

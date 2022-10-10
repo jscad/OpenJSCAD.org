@@ -1,8 +1,8 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
 /**
  * Transform the given objects using the given matrix.
@@ -14,7 +14,7 @@ const path2 = require('../../geometries/path2')
  * @example
  * const newsphere = transform(mat4.rotateX(TAU / 8), sphere())
  */
-const transform = (matrix, ...objects) => {
+export const transform = (matrix, ...objects) => {
   // TODO how to check that the matrix is REAL?
 
   objects = flatten(objects)
@@ -29,4 +29,4 @@ const transform = (matrix, ...objects) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = transform
+export default transform

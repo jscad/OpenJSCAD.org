@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { equals, fromPoints } = require('./index')
+import { equals, fromPoints } from './index.js'
 
 test('slice: equals() should return proper value', (t) => {
   const sliceA = fromPoints([[0, 0], [1, 0], [1, 1]])

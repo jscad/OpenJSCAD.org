@@ -4,7 +4,7 @@
  * @returns {Boolean} true if the object matches a slice
  * @alias module:modeling/extrusions/slice.isA
  */
-const isA = (object) => {
+export const isA = (object) => {
   if (object && typeof object === 'object') {
     if ('edges' in object) {
       if (Array.isArray(object.edges)) {
@@ -15,4 +15,4 @@ const isA = (object) => {
   return false
 }
 
-module.exports = isA
+export default isA

@@ -5,8 +5,8 @@
  * @return {Number} the area of the polygon
  * @alias module:modeling/geometries/poly2.measureArea
  */
-const area = require('../../maths/utils/area')
+import area from '../../maths/utils/area.js'
 
-const measureArea = (polygon) => area(polygon.vertices)
+export const measureArea = (polygon) => area(polygon.vertices)
 
-module.exports = measureArea
+export default measureArea

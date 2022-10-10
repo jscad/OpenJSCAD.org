@@ -1,15 +1,14 @@
-const test = require('ava')
+import test from 'ava'
 
-const { comparePoints } = require('../../../test/helpers')
+import { comparePoints } from '../../../test/helpers/index.js'
 
-const { geom2 } = require('../../geometries')
+import { geom2 } from '../../geometries/index.js'
 
-const { circle, rectangle } = require('../../primitives')
+import { circle, rectangle } from '../../primitives/index.js'
 
-const { union } = require('./index')
+import { center, translate } from '../transforms/index.js'
 
-const { center } = require('../transforms/center')
-const { translate } = require('../transforms/translate')
+import { union } from './index.js'
 
 test('union of one or more geom2 objects produces expected geometry', (t) => {
   const geometry1 = circle({ radius: 2, segments: 8 })

@@ -1,7 +1,8 @@
-const test = require('ava')
-const { create, orthogonal } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { create, orthogonal } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('vec3: orthogonal() with two params should update a vec3 with correct values', (t) => {
   const org1 = create()

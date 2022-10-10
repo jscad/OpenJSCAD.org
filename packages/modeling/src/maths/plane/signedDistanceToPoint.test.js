@@ -1,5 +1,6 @@
-const test = require('ava')
-const { signedDistanceToPoint, fromValues } = require('./index')
+import test from 'ava'
+
+import { signedDistanceToPoint, fromValues } from './index.js'
 
 test('plane: signedDistanceToPoint() should return correct values', (t) => {
   const plane1 = fromValues(0, 0, 0, 0)

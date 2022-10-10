@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { invert, create, fromPoints } = require('./index')
+import { invert, create, fromPoints } from './index.js'
 
-const { comparePolygons, compareVectors } = require('../../../test/helpers/')
+import { comparePolygons, compareVectors } from '../../../test/helpers/index.js'
 
 test('invert: Creates a invert on an empty geom3', (t) => {
   const expected = {

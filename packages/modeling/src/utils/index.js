@@ -2,14 +2,13 @@
  * Utility functions of various sorts.
  * @module modeling/utils
  * @example
- * const { flatten, insertSorted } = require('@jscad/modeling').utils
+ * import { flatten, insertSorted } from '@jscad/modeling/utils'
  */
-module.exports = {
-  areAllShapesTheSameType: require('./areAllShapesTheSameType'),
-  degToRad: require('./degToRad'),
-  flatten: require('./flatten'),
-  fnNumberSort: require('./fnNumberSort'),
-  insertSorted: require('./insertSorted'),
-  radiusToSegments: require('./radiusToSegments'),
-  radToDeg: require('./radToDeg')
-}
+export { areAllShapesTheSameType } from './areAllShapesTheSameType.js'
+export { degToRad } from './degToRad.js'
+export { flatten } from './flatten.js'
+export { fnNumberSort } from './fnNumberSort.js'
+export { insertSorted } from './insertSorted.js'
+export { padArrayToLength } from './padArrayToLength.js'
+export { radiusToSegments } from './radiusToSegments.js'
+export { radToDeg } from './radToDeg.js'

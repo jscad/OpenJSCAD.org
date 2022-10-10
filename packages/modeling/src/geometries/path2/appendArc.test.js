@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { TAU } = require('../../maths/constants')
+import { TAU } from '../../maths/constants.js'
 
-const { appendArc, fromPoints, toPoints } = require('./index')
+import { appendArc, fromPoints, toPoints } from './index.js'
 
-const { comparePoints } = require('../../../test/helpers/')
+import { comparePoints } from '../../../test/helpers/index.js'
 
 test('appendArc: appending to an empty path produces an error', (t) => {
   const p1 = fromPoints({}, [])

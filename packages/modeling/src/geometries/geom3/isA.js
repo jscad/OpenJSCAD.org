@@ -4,7 +4,7 @@
  * @returns {Boolean} true if the object matches a geom3
  * @alias module:modeling/geometries/geom3.isA
  */
-const isA = (object) => {
+export const isA = (object) => {
   if (object && typeof object === 'object') {
     if ('polygons' in object && 'transforms' in object) {
       if (Array.isArray(object.polygons) && 'length' in object.transforms) {
@@ -15,4 +15,4 @@ const isA = (object) => {
   return false
 }
 
-module.exports = isA
+export default isA

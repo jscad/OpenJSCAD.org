@@ -6,7 +6,7 @@
  * @return {Number} color component
  * @alias module:modeling/colors.hueToColorComponent
  */
-const hueToColorComponent = (p, q, t) => {
+export const hueToColorComponent = (p, q, t) => {
   if (t < 0) t += 1
   if (t > 1) t -= 1
   if (t < 1 / 6) return p + (q - p) * 6 * t
@@ -15,4 +15,4 @@ const hueToColorComponent = (p, q, t) => {
   return p
 }
 
-module.exports = hueToColorComponent
+export default hueToColorComponent

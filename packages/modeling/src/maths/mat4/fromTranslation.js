@@ -12,7 +12,7 @@
  * @example
  * let matrix = fromTranslation(create(), [1, 2, 3])
  */
-const fromTranslation = (out, vector) => {
+export const fromTranslation = (out, vector) => {
   out[0] = 1
   out[1] = 0
   out[2] = 0
@@ -32,4 +32,4 @@ const fromTranslation = (out, vector) => {
   return out
 }
 
-module.exports = fromTranslation
+export default fromTranslation

@@ -1,7 +1,7 @@
-const geom2 = require('../../geometries/geom2')
-const poly2 = require('../../geometries/poly2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as poly2 from '../../geometries/poly2/index.js'
 
-const offsetFromPoints = require('./offsetFromPoints')
+import offsetFromPoints from './offsetFromPoints.js'
 
 /*
  * Create a offset geometry from the given geom2 using the given options (if any).
@@ -12,7 +12,7 @@ const offsetFromPoints = require('./offsetFromPoints')
  * @param {geom2} geometry - geometry from which to create the offset
  * @returns {geom2} offset geometry, plus rounded corners
  */
-const offsetGeom2 = (options, geometry) => {
+export const offsetGeom2 = (options, geometry) => {
   const defaults = {
     delta: 1,
     corners: 'edge',
@@ -44,4 +44,4 @@ const offsetGeom2 = (options, geometry) => {
   return geom2.create(allsides)
 }
 
-module.exports = offsetGeom2
+export default offsetGeom2

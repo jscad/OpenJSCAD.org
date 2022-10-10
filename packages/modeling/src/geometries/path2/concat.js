@@ -1,7 +1,7 @@
-const fromPoints = require('./fromPoints')
-const toPoints = require('./toPoints')
+import equals from '../../maths/vec2/equals.js'
 
-const { equals } = require('../../maths/vec2')
+import fromPoints from './fromPoints.js'
+import toPoints from './toPoints.js'
 
 /**
  * Concatenate the given paths.
@@ -17,7 +17,7 @@ const { equals } = require('../../maths/vec2')
  * @example
  * let newpath = concat(fromPoints({}, [[1, 2]]), fromPoints({}, [[3, 4]]))
  */
-const concat = (...paths) => {
+export const concat = (...paths) => {
   // Only the last path can be closed, producing a closed path.
   let isClosed = false
   let newpoints = []
@@ -33,4 +33,4 @@ const concat = (...paths) => {
   return fromPoints({ closed: isClosed }, newpoints)
 }
 
-module.exports = concat
+export default concat

@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { colorNameToRgb } = require('./index')
+import { colorNameToRgb } from './index.js'
 
 test('colorNameToRgb', (t) => {
   let obs = colorNameToRgb('bad')

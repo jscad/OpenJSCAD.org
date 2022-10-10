@@ -1,6 +1,6 @@
-const flatten = require('../utils/flatten')
+import flatten from '../utils/flatten.js'
 
-const measureBoundingBox = require('./measureBoundingBox')
+import measureBoundingBox from './measureBoundingBox.js'
 
 /**
  * Measure the dimensions of the given geometries.
@@ -11,7 +11,7 @@ const measureBoundingBox = require('./measureBoundingBox')
  * @example
  * let dimensions = measureDimensions(sphere())
  */
-const measureDimensions = (...geometries) => {
+export const measureDimensions = (...geometries) => {
   geometries = flatten(geometries)
 
   const results = geometries.map((geometry) => {
@@ -25,4 +25,4 @@ const measureDimensions = (...geometries) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = measureDimensions
+export default measureDimensions

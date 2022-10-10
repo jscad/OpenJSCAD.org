@@ -1,17 +1,17 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const geom3 = require('../../geometries/geom3')
-const poly3 = require('../../geometries/poly3')
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as poly3 from '../../geometries/poly3/index.js'
 
-const quickhull = require('./quickhull')
-const toUniquePoints = require('./toUniquePoints')
+import runner from './quickhull/index.js'
+import toUniquePoints from './toUniquePoints.js'
 
 /*
  * Create a convex hull of the given geometries (geom3).
  * @param {...geometries} geometries - list of geom3 geometries
  * @returns {geom3} new geometry
  */
-const hullGeom3 = (...geometries) => {
+export const hullGeom3 = (...geometries) => {
   geometries = flatten(geometries)
 
   if (geometries.length === 1) return geometries[0]
@@ -19,7 +19,7 @@ const hullGeom3 = (...geometries) => {
   // extract the unique vertices from the geometries
   const unique = toUniquePoints(geometries)
 
-  const faces = quickhull(unique, { skipTriangulation: true })
+  const faces = runner(unique, { skipTriangulation: true })
 
   const polygons = faces.map((face) => {
     const vertices = face.map((index) => unique[index])
@@ -29,4 +29,4 @@ const hullGeom3 = (...geometries) => {
   return geom3.create(polygons)
 }
 
-module.exports = hullGeom3
+export default hullGeom3

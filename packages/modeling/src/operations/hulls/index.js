@@ -6,7 +6,5 @@
  * @example
  * const { hull, hullChain } = require('@jscad/modeling').hulls
  */
-module.exports = {
-  hull: require('./hull'),
-  hullChain: require('./hullChain')
-}
+export { hull } from './hull.js'
+export { hullChain } from './hullChain.js'

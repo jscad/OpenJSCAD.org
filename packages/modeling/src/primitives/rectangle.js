@@ -1,8 +1,8 @@
-const vec2 = require('../maths/vec2')
+import * as vec2 from '../maths/vec2/index.js'
 
-const geom2 = require('../geometries/geom2')
+import * as geom2 from '../geometries/geom2/index.js'
 
-const { isNumberArray } = require('./commonChecks')
+import { isNumberArray } from './commonChecks.js'
 
 /**
  * Construct an axis-aligned rectangle in two dimensional space with four sides at right angles.
@@ -15,7 +15,7 @@ const { isNumberArray } = require('./commonChecks')
  * @example
  * let myshape = rectangle({size: [10, 20]})
  */
-const rectangle = (options) => {
+export const rectangle = (options) => {
   const defaults = {
     center: [0, 0],
     size: [2, 2]
@@ -38,4 +38,4 @@ const rectangle = (options) => {
   return geom2.fromPoints(points)
 }
 
-module.exports = rectangle
+export default rectangle

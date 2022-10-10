@@ -1,7 +1,8 @@
-const test = require('ava')
-const { create, copy, fromPointAndDirection } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { create, copy, fromPointAndDirection } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('line3: copy() with two params should update a line3 with same values', (t) => {
   const line1 = create()

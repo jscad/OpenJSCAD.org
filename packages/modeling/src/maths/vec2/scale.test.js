@@ -1,7 +1,8 @@
-const test = require('ava')
-const { scale, create } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { scale, create } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('vec2: scale() with two params should update a vec2 with positive values', (t) => {
   const vec1 = create()

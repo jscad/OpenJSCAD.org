@@ -1,6 +1,6 @@
-const { EPS } = require('../maths/constants')
+import { EPS } from '../maths/constants.js'
 
-const calculateEpsilonFromBounds = (bounds, dimensions) => {
+export const calculateEpsilonFromBounds = (bounds, dimensions) => {
   let total = 0
   for (let i = 0; i < dimensions; i++) {
     total += bounds[1][i] - bounds[0][i]
@@ -8,4 +8,4 @@ const calculateEpsilonFromBounds = (bounds, dimensions) => {
   return EPS * total / dimensions
 }
 
-module.exports = calculateEpsilonFromBounds
+export default calculateEpsilonFromBounds

@@ -1,6 +1,6 @@
-const { area } = require('../../../maths/utils')
-const { toOutlines } = require('../../../geometries/geom2')
-const { arePointsInside } = require('../../../geometries/poly2')
+import area from '../../../maths/utils/area.js'
+import toOutlines from '../../../geometries/geom2/toOutlines.js'
+import arePointsInside from '../../../geometries/poly2/arePointsInside.js'
 
 /*
  * Constructs a polygon hierarchy of solids and holes.
@@ -19,7 +19,7 @@ const { arePointsInside } = require('../../../geometries/poly2')
  *   "holes": [[[-1.5,1.5],[1.5,1.5],[1.5,-1.5],[-1.5,-1.5]]]
  * }]
  */
-const assignHoles = (geometry) => {
+export const assignHoles = (geometry) => {
   const outlines = toOutlines(geometry)
   const solids = [] // solid indices
   const holes = [] // hole indices
@@ -88,4 +88,4 @@ const minIndex = (list, score) => {
   return bestIndex
 }
 
-module.exports = assignHoles
+export default assignHoles

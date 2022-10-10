@@ -1,11 +1,12 @@
-const test = require('ava')
+import test from 'ava'
 
-const { TAU } = require('../maths/constants')
-const geom2 = require('../geometries/geom2')
+import { TAU } from '../maths/constants.js'
 
-const comparePoints = require('../../test/helpers/comparePoints')
+import { geom2 } from '../geometries/index.js'
 
-const { ellipse } = require('./index')
+import { comparePoints } from '../../test/helpers/index.js'
+
+import { ellipse } from './index.js'
 
 test('ellipse (defaults)', (t) => {
   const geometry = ellipse()

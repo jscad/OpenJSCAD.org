@@ -1,5 +1,5 @@
-const plane = require('../../../maths/plane')
-const vec3 = require('../../../maths/vec3')
+import * as plane from '../../../maths/plane/index.js'
+import * as vec3 from '../../../maths/vec3/index.js'
 
 /**
  * Calculate the plane of the given slice.
@@ -11,7 +11,7 @@ const vec3 = require('../../../maths/vec3')
  * @example
  * let myplane = calculatePlane(slice)
  */
-const calculatePlane = (slice) => {
+export const calculatePlane = (slice) => {
   const edges = slice.edges
   if (edges.length < 3) throw new Error('slices must have 3 or more edges to calculate a plane')
 
@@ -38,4 +38,4 @@ const calculatePlane = (slice) => {
   return plane.fromPoints(plane.create(), beforeEdge[0], farthestEdge[0], farthestEdge[1])
 }
 
-module.exports = calculatePlane
+export default calculatePlane

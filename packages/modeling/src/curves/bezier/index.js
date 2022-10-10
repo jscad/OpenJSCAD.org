@@ -3,8 +3,6 @@
  * @see {@link bezier} for data structure information.
  * @module modeling/curves/bezier
  */
-module.exports = {
-  create: require('./create'),
-  valueAt: require('./valueAt'),
-  tangentAt: require('./tangentAt')
-}
+export { create } from './create.js'
+export { valueAt } from './valueAt.js'
+export { tangentAt } from './tangentAt.js'

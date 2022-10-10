@@ -1,9 +1,9 @@
-const flatten = require('../utils/flatten')
+import flatten from '../utils/flatten.js'
 
-const vec3 = require('../maths/vec3')
+import * as vec3 from '../maths/vec3/index.js'
 
-const geom2 = require('../geometries/geom2')
-const geom3 = require('../geometries/geom3')
+import * as geom2 from '../geometries/geom2/index.js'
+import * as geom3 from '../geometries/geom3/index.js'
 
 const cacheOfCenterOfMass = new WeakMap()
 
@@ -91,7 +91,7 @@ const measureCenterOfMassGeom3 = (geometry) => {
  * @example
  * let center = measureCenterOfMass(sphere())
  */
-const measureCenterOfMass = (...geometries) => {
+export const measureCenterOfMass = (...geometries) => {
   geometries = flatten(geometries)
 
   const results = geometries.map((geometry) => {
@@ -103,4 +103,4 @@ const measureCenterOfMass = (...geometries) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = measureCenterOfMass
+export default measureCenterOfMass

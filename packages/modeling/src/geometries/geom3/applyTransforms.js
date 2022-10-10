@@ -1,6 +1,6 @@
-const mat4 = require('../../maths/mat4')
+import * as mat4 from '../../maths/mat4/index.js'
 
-const poly3 = require('../poly3')
+import * as poly3 from '../poly3/index.js'
 
 /*
  * Apply the transforms of the given geometry.
@@ -10,7 +10,7 @@ const poly3 = require('../poly3')
  * @example
  * geometry = applyTransforms(geometry)
  */
-const applyTransforms = (geometry) => {
+export const applyTransforms = (geometry) => {
   if (mat4.isIdentity(geometry.transforms)) return geometry
 
   // apply transforms to each polygon
@@ -20,4 +20,4 @@ const applyTransforms = (geometry) => {
   return geometry
 }
 
-module.exports = applyTransforms
+export default applyTransforms

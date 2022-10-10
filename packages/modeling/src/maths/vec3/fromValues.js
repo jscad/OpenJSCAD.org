@@ -1,4 +1,4 @@
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Creates a new vector initialized with the given values.
@@ -9,7 +9,7 @@ const create = require('./create')
  * @returns {vec3} a new vector
  * @alias module:modeling/maths/vec3.fromValues
  */
-const fromValues = (x, y, z) => {
+export const fromValues = (x, y, z) => {
   const out = create()
   out[0] = x
   out[1] = y
@@ -17,4 +17,4 @@ const fromValues = (x, y, z) => {
   return out
 }
 
-module.exports = fromValues
+export default fromValues

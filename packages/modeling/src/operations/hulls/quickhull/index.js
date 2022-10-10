@@ -1,4 +1,4 @@
-const QuickHull = require('./QuickHull')
+import { QuickHull } from './QuickHull.js'
 
 /*
  * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)
@@ -7,10 +7,10 @@ const QuickHull = require('./QuickHull')
  * Adapted to JSCAD by Jeff Gay
  */
 
-const runner = (points, options = {}) => {
+export const runner = (points, options = {}) => {
   const instance = new QuickHull(points)
   instance.build()
   return instance.collectFaces(options.skipTriangulation)
 }
 
-module.exports = runner
+export default runner

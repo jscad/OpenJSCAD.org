@@ -1,8 +1,8 @@
-const { EPS } = require('../constants')
+import { EPS } from '../constants.js'
 
-const { sin, cos } = require('../utils/trigonometry')
+import { sin, cos } from '../utils/trigonometry.js'
 
-const identity = require('./identity')
+import identity from './identity.js'
 
 /**
  * Creates a matrix from a given angle around a given axis
@@ -19,7 +19,7 @@ const identity = require('./identity')
  * @example
  * let matrix = fromRotation(create(), TAU / 4, [0, 0, 3])
  */
-const fromRotation = (out, rad, axis) => {
+export const fromRotation = (out, rad, axis) => {
   let [x, y, z] = axis
   const lengthSquared = x * x + y * y + z * z
 
@@ -57,4 +57,4 @@ const fromRotation = (out, rad, axis) => {
   return out
 }
 
-module.exports = fromRotation
+export default fromRotation

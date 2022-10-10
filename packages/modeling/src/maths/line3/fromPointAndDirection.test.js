@@ -1,7 +1,8 @@
-const test = require('ava')
-const { fromPointAndDirection, create } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { fromPointAndDirection, create } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('line3: fromPointAndDirection() should return a new line3 with correct values', (t) => {
   let obs = fromPointAndDirection(create(), [0, 0, 0], [1, 0, 0])

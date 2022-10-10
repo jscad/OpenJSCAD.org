@@ -1,8 +1,8 @@
-const { TAU } = require('../../maths/constants')
-const vec2 = require('../../maths/vec2')
+import { TAU } from '../../maths/constants.js'
+import * as vec2 from '../../maths/vec2/index.js'
 
-const fromPoints = require('./fromPoints')
-const toPoints = require('./toPoints')
+import fromPoints from './fromPoints.js'
+import toPoints from './toPoints.js'
 
 /**
  * Append a series of points to the given geometry that represent an arc.
@@ -24,7 +24,7 @@ const toPoints = require('./toPoints')
  * p1 = path2.appendPoints([[27.5,-3.28125]], p1);
  * p1 = path2.appendArc({endpoint: [12.5, -22.96875], radius: [15, -19.6875]}, p1);
  */
-const appendArc = (options, geometry) => {
+export const appendArc = (options, geometry) => {
   const defaults = {
     radius: [0, 0], // X and Y radius
     xaxisrotation: 0,
@@ -139,4 +139,4 @@ const appendArc = (options, geometry) => {
   return result
 }
 
-module.exports = appendArc
+export default appendArc

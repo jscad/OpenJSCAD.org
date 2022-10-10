@@ -6,7 +6,7 @@
  * @returns {vec2} out
  * @alias module:modeling/maths/vec2.normalize
  */
-const normalize = (out, vector) => {
+export const normalize = (out, vector) => {
   const x = vector[0]
   const y = vector[1]
   let len = x * x + y * y
@@ -18,6 +18,4 @@ const normalize = (out, vector) => {
   return out
 }
 
-// old this.dividedBy(this.length())
-
-module.exports = normalize
+export default normalize

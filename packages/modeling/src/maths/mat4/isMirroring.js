@@ -5,7 +5,7 @@
  * @returns {Boolean} true if matrix is a mirroring transformation
  * @alias module:modeling/maths/mat4.isMirroring
  */
-const isMirroring = (matrix) => {
+export const isMirroring = (matrix) => {
   // const xVector = [matrix[0], matrix[4], matrix[8]]
   // const yVector = [matrix[1], matrix[5], matrix[9]]
   // const zVector = [matrix[2], matrix[6], matrix[10]]
@@ -21,4 +21,4 @@ const isMirroring = (matrix) => {
   return (d < 0)
 }
 
-module.exports = isMirroring
+export default isMirroring

@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { toPoints, create, fromPoints, toString } = require('./index')
+import { toPoints, create, fromPoints, toString } from './index.js'
 
-const { comparePoints } = require('../../../test/helpers/')
+import { comparePoints } from '../../../test/helpers/index.js'
 
 test('toPoints: creates an empty array of points from a unpopulated geom2', (t) => {
   const geometry = create()

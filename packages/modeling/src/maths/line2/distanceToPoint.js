@@ -1,4 +1,4 @@
-const vec2 = require('../vec2')
+import * as vec2 from '../vec2/index.js'
 
 /**
  * Calculate the distance (positive) between the given point and line.
@@ -8,10 +8,10 @@ const vec2 = require('../vec2')
  * @return {Number} distance between line and point
  * @alias module:modeling/maths/line2.distanceToPoint
  */
-const distanceToPoint = (line, point) => {
+export const distanceToPoint = (line, point) => {
   let distance = vec2.dot(point, line)
   distance = Math.abs(distance - line[2])
   return distance
 }
 
-module.exports = distanceToPoint
+export default distanceToPoint

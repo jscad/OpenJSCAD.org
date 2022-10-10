@@ -1,7 +1,8 @@
-const test = require('ava')
-const { abs, create } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { abs, create } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('vec3: abs() with two params should update a vec3 with correct values', (t) => {
   const org1 = create()

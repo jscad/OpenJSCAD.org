@@ -1,7 +1,9 @@
-const flatten = require('../utils/flatten')
-const measureAggregateBoundingBox = require('./measureAggregateBoundingBox')
-const calculateEpsilonFromBounds = require('./calculateEpsilonFromBounds')
-const { geom2, geom3, path2 } = require('../geometries')
+import flatten from '../utils/flatten.js'
+
+import { geom2, geom3, path2 } from '../geometries/index.js'
+
+import measureAggregateBoundingBox from './measureAggregateBoundingBox.js'
+import calculateEpsilonFromBounds from './calculateEpsilonFromBounds.js'
 
 /**
  * Measure the aggregated Epsilon for the given geometries.
@@ -12,7 +14,7 @@ const { geom2, geom3, path2 } = require('../geometries')
  * @example
  * let groupEpsilon = measureAggregateEpsilon(sphere(),cube())
  */
-const measureAggregateEpsilon = (...geometries) => {
+export const measureAggregateEpsilon = (...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('measureAggregateEpsilon: no geometries supplied')
   const bounds = measureAggregateBoundingBox(geometries)
@@ -26,4 +28,4 @@ const measureAggregateEpsilon = (...geometries) => {
   return calculateEpsilonFromBounds(bounds, dimensions)
 }
 
-module.exports = measureAggregateEpsilon
+export default measureAggregateEpsilon

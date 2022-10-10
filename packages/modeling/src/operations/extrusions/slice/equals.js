@@ -1,4 +1,4 @@
-const vec3 = require('../../../maths/vec3')
+import * as vec3 from '../../../maths/vec3/index.js'
 
 /**
  * Determine if the given slices have the same edges.
@@ -7,7 +7,7 @@ const vec3 = require('../../../maths/vec3')
  * @returns {Boolean} true if the slices are equal
  * @alias module:modeling/extrusions/slice.equals
  */
-const equals = (a, b) => {
+export const equals = (a, b) => {
   const aedges = a.edges
   const bedges = b.edges
 
@@ -24,4 +24,4 @@ const equals = (a, b) => {
   return isEqual
 }
 
-module.exports = equals
+export default equals

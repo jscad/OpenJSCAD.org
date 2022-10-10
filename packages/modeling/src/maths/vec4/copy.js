@@ -6,7 +6,7 @@
  * @returns {vec4} out
  * @alias module:modeling/maths/vec4.copy
  */
-const copy = (out, vector) => {
+export const copy = (out, vector) => {
   out[0] = vector[0]
   out[1] = vector[1]
   out[2] = vector[2]
@@ -14,4 +14,4 @@ const copy = (out, vector) => {
   return out
 }
 
-module.exports = copy
+export default copy

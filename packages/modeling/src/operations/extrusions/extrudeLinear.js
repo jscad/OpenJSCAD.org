@@ -1,10 +1,10 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const geom2 = require('../../geometries/geom2')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
-const extrudeLinearGeom2 = require('./extrudeLinearGeom2')
-const extrudeLinearPath2 = require('./extrudeLinearPath2')
+import extrudeLinearGeom2 from './extrudeLinearGeom2.js'
+import extrudeLinearPath2 from './extrudeLinearPath2.js'
 
 /**
  * Extrude the given geometry in an upward linear direction using the given options.
@@ -21,7 +21,7 @@ const extrudeLinearPath2 = require('./extrudeLinearPath2')
  * @example
  * let myshape = extrudeLinear({height: 10}, rectangle({size: [20, 25]}))
  */
-const extrudeLinear = (options, ...objects) => {
+export const extrudeLinear = (options, ...objects) => {
   const defaults = {
     height: 1,
     twistAngle: 0,
@@ -44,4 +44,4 @@ const extrudeLinear = (options, ...objects) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = extrudeLinear
+export default extrudeLinear

@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { fromPointAxisNormal } = require('./index')
+import { fromPointAxisNormal } from './index.js'
 
-const { compareVectors } = require('../../test/helpers/')
+import { compareVectors } from '../../test/helpers/index.js'
 
 test('connector: fromPointAxisNormal() should return a new connector with correct values', (t) => {
   let obs = fromPointAxisNormal([0, 0, 0], [1, 0, 0], [0, 1, 0])

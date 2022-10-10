@@ -5,6 +5,6 @@
  * @return {Array} list of points (3D)
  * @alias module:modeling/geometries/poly3.toPoints
  */
-const toPoints = (polygon) => polygon.vertices
+export const toPoints = (polygon) => polygon.vertices
 
-module.exports = toPoints
+export default toPoints

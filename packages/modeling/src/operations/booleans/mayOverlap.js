@@ -1,6 +1,6 @@
-const { EPS } = require('../../maths/constants')
+import { EPS } from '../../maths/constants.js'
 
-const measureBoundingBox = require('../../measurements/measureBoundingBox')
+import measureBoundingBox from '../../measurements/measureBoundingBox.js'
 
 /*
  * Determine if the given geometries overlap by comparing min and max bounds.
@@ -9,7 +9,7 @@ const measureBoundingBox = require('../../measurements/measureBoundingBox')
  * @param {geom3} geometry2 - geometry for comparison
  * @returns {boolean} true if the geometries overlap
  */
-const mayOverlap = (geometry1, geometry2) => {
+export const mayOverlap = (geometry1, geometry2) => {
   // FIXME accessing the data structure of the geometry should not be allowed
   if ((geometry1.polygons.length === 0) || (geometry2.polygons.length === 0)) {
     return false
@@ -32,4 +32,4 @@ const mayOverlap = (geometry1, geometry2) => {
   return true
 }
 
-module.exports = mayOverlap
+export default mayOverlap

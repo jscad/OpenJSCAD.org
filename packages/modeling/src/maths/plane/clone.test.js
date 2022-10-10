@@ -1,7 +1,8 @@
-const test = require('ava')
-const { clone, fromValues } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { clone, fromValues } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('plane: clone() with one param should update a new plane with same values', (t) => {
   const plane1 = fromValues(0, 0, 0, 0)

@@ -1,1 +1,1 @@
-module.exports = require('./angleRadians')
+export { angleRadians as angle } from './angleRadians.js'

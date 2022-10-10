@@ -1,9 +1,11 @@
-const test = require('ava')
+import test from 'ava'
 
-const { geom2, path2 } = require('../../geometries')
-const { offset } = require('./index')
-const { comparePoints } = require('../../../test/helpers')
-const measureBoundingBox = require('../../measurements/measureBoundingBox')
+import { geom2, path2 } from '../../geometries/index.js'
+import { measureBoundingBox } from '../../measurements/index.js'
+
+import { offset } from './index.js'
+
+import { comparePoints } from '../../../test/helpers/index.js'
 
 test('offset: offsetting a straight line produces expected geometry', (t) => {
   const points = [[0, 0], [0, 10]]

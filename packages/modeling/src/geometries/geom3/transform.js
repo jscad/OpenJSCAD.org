@@ -1,4 +1,4 @@
-const mat4 = require('../../maths/mat4')
+import * as mat4 from '../../maths/mat4/index.js'
 
 /**
  * Transform the given geometry using the given matrix.
@@ -12,9 +12,9 @@ const mat4 = require('../../maths/mat4')
  * @example
  * let newgeometry = transform(fromXRotation(degToRad(90)), geometry)
  */
-const transform = (matrix, geometry) => {
+export const transform = (matrix, geometry) => {
   const transforms = mat4.multiply(mat4.create(), matrix, geometry.transforms)
   return Object.assign({}, geometry, { transforms })
 }
 
-module.exports = transform
+export default transform

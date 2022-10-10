@@ -1,8 +1,11 @@
-const flatten = require('../utils/flatten')
-const { geom2, geom3, path2 } = require('../geometries')
+import flatten from '../utils/flatten.js'
 
-const calculateEpsilonFromBounds = require('./calculateEpsilonFromBounds')
-const measureBoundingBox = require('./measureBoundingBox')
+import * as geom2 from '../geometries/geom2/index.js'
+import * as geom3 from '../geometries/geom3/index.js'
+import * as path2 from '../geometries/path2/index.js'
+
+import calculateEpsilonFromBounds from './calculateEpsilonFromBounds.js'
+import measureBoundingBox from './measureBoundingBox.js'
 
 /*
  * Measure the epsilon of the given (path2) geometry.
@@ -32,7 +35,7 @@ const measureEpsilonOfGeom3 = (geometry) => calculateEpsilonFromBounds(measureBo
  * @example
  * let epsilon = measureEpsilon(sphere())
  */
-const measureEpsilon = (...geometries) => {
+export const measureEpsilon = (...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('wrong number of arguments')
 
@@ -45,4 +48,4 @@ const measureEpsilon = (...geometries) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = measureEpsilon
+export default measureEpsilon

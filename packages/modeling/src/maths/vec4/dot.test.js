@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { dot, fromValues } = require('./index')
+import { dot, fromValues } from './index.js'
 
 test('vec4: dot() should return proper values', (t) => {
   const vecA = fromValues(1, 2, 3, 4)

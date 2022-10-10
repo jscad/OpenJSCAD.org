@@ -1,8 +1,9 @@
-const test = require('ava')
+import test from 'ava'
 
-const { subtract, union } = require('../../../operations/booleans')
-const square = require('../../../primitives/square')
-const assignHoles = require('./assignHoles')
+import { subtract, union } from '../../../operations/booleans/index.js'
+import { square } from '../../../primitives/index.js'
+
+import assignHoles from './assignHoles.js'
 
 test('slice: assignHoles() should return a polygon hierarchy', (t) => {
   const exp1 = [{

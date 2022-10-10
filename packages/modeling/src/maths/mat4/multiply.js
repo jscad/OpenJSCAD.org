@@ -7,7 +7,7 @@
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.multiply
  */
-const multiply = (out, a, b) => {
+export const multiply = (out, a, b) => {
   const a00 = a[0]
   const a01 = a[1]
   const a02 = a[2]
@@ -64,4 +64,4 @@ const multiply = (out, a, b) => {
   return out
 }
 
-module.exports = multiply
+export default multiply

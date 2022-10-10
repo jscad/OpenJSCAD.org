@@ -6,10 +6,10 @@
  * @returns {vec2} out
  * @alias module:modeling/maths/vec2.negate
  */
-const negate = (out, vector) => {
+export const negate = (out, vector) => {
   out[0] = -vector[0]
   out[1] = -vector[1]
   return out
 }
 
-module.exports = negate
+export default negate
