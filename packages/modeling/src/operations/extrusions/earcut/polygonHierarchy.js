@@ -57,7 +57,7 @@ export class PolygonHierarchy {
       const v1 = vec3.scale(vec3.create(), this.u, vector2[0])
       const v2 = vec3.scale(vec3.create(), this.v, vector2[1])
 
-      const planeOrigin = vec3.scale(vec3.create(), plane, plane[3])
+      const planeOrigin = vec3.scale(vec3.create(), this.plane, this.plane[3])
       const v3 = vec3.add(v1, v1, planeOrigin)
       return vec3.add(v2, v2, v3)
     }
