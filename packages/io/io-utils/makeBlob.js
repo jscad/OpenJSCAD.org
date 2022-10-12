@@ -1,4 +1,4 @@
-const nodeBlob = require('./Blob.js')
+import nodeBlob from './Blob.js'
 
 /**
  * Make a constructor for Blob objects.
@@ -8,9 +8,9 @@ const nodeBlob = require('./Blob.js')
  * const Blob = makeBlob()
  * const ablob = new Blob(data, { type: mimeType })
  */
-const makeBlob = () => {
+export const makeBlob = () => {
   const blob = typeof window !== 'undefined' ? window.Blob : nodeBlob
   return blob
 }
 
-module.exports = makeBlob
+export default makeBlob

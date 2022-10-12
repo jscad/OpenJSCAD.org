@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { makeBlob } = require('./index')
+import { makeBlob } from './index.js'
 
 const Blob = makeBlob()
 

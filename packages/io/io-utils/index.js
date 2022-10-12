@@ -4,9 +4,7 @@
  * @example
  * const { BinaryReader } = require('@jscad/io-utils')
  */
-module.exports = {
-  convertToBlob: require('./convertToBlob'),
-  makeBlob: require('./makeBlob'),
-  BinaryReader: require('./BinaryReader'),
-  Blob: require('./Blob')
-}
+export { convertToBlob } from './convertToBlob.js'
+export { makeBlob } from './makeBlob.js'
+export { BinaryReader } from './BinaryReader.js'
+export { Blob } from './Blob.js'

@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { convertToBlob } = require('./index')
+import { convertToBlob } from './index.js'
 
 test('convert strings', (t) => {
   let ablob = convertToBlob({ data: ['test'], mimeType: 'test1' })

@@ -7,7 +7,7 @@
 // + Jonas Raoni Soares Silva
 // @ http://jsfromhell.com/classes/binary-deserializer [rev. #1]
 
-class BinaryReader {
+export class BinaryReader {
   /*
    * Construct a BinaryReader from the given data.
    * The data is a string created from the specified sequence of UTF-16 code units.
@@ -129,4 +129,4 @@ class BinaryReader {
   }
 }
 
-module.exports = BinaryReader
+export default BinaryReader
