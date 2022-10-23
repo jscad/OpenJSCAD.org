@@ -1,4 +1,4 @@
-const { maths, geometries } = require('@jscad/modeling')
+import { maths, geometries } from '@jscad/modeling'
 
 let lastmaterial
 
@@ -47,7 +47,7 @@ const findColorByMaterial = (materials, id) => {
 }
 
 // convert all objects to CSG based code
-const createObject = (obj, index, data, options) => {
+export const createObject = (obj, index, data, options) => {
   const vertices = [] // [x,y,z]
   const faces = [] // [v1,v2,v3]
   const colors = [] // [r,g,b,a]
@@ -195,4 +195,4 @@ const createObject${obj.id} = () => {
   return code
 }
 
-module.exports = createObject
+export default createObject

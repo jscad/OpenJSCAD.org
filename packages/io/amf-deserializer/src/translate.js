@@ -1,17 +1,16 @@
-const createObject = require('./objectBuilder')
-const parse = require('./parse')
+import createObject from './objectBuilder.js'
+import parse from './parse.js'
 
-const translate = (options, src) => {
+export const translate = (options, src) => {
   const defaults = {
-    pxPmm: require('./constants').pxPmm
   }
   options = Object.assign({}, defaults, options)
-  const { version, pxPmm, addMetaData, filename } = options
+  const { version, addMetaData, filename } = options
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 
   // parse the AMF source
-  const { amfObj, amfMaterials, amfTextures, amfConstels } = parse(src, pxPmm)
+  const { amfObj, amfMaterials, amfTextures, amfConstels } = parse(src)
 
   // convert the internal objects to JSCAD code
   let code = addMetaData
@@ -92,4 +91,4 @@ const main = () => {
   return code
 }
 
-module.exports = translate
+export default translate

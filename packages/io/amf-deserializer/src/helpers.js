@@ -1,4 +1,3 @@
-
 const amfMesh = (element) => {
   const obj = { type: 'mesh' }
   obj.objects = []
@@ -105,7 +104,7 @@ const amfU1 = (element) => ({ type: 'u1', value: '0' })
 const amfU2 = (element) => ({ type: 'u2', value: '0' })
 const amfU3 = (element) => ({ type: 'u3', value: '0' })
 
-module.exports = {
+export {
   amfMesh,
   amfVertices,
   amfCoordinates,

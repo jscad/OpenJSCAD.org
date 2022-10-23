@@ -22,9 +22,10 @@ All code released under MIT license
  * const { deserializer, extension } = require('@jscad/amf-serializer')
  */
 
-const version = require('../package.json').version
-const translate = require('./translate')
-const instantiate = require('./deserialize')
+import translate from './translate.js'
+import instantiate from './deserialize.js'
+
+const version = '[VI]{version}[/VI]' // version is injected by rollup
 
 /**
  * Deserialize the given AMF source (XML) into either a script or an array of geometry
@@ -53,7 +54,7 @@ const deserialize = (options, input) => {
 
 const extension = 'amf'
 
-module.exports = {
+export {
   deserialize,
   extension
 }

@@ -1,18 +1,14 @@
+import createObject from './objectBuilder.js'
 
-const createObject = require('./objectBuilder')
+import parse from './parse.js'
 
-const parse = require('./parse')
-
-const instantiate = (options, src) => {
+export const instantiate = (options, src) => {
   const defaults = {
-    pxPmm: require('./constants').pxPmm
   }
   options = Object.assign({}, defaults, options)
 
-  const { pxPmm } = options
-
   // parse the AMF data
-  const { amfObj, amfMaterials, amfTextures, amfConstels } = parse(src, pxPmm)
+  const { amfObj, amfMaterials, amfTextures, amfConstels } = parse(src)
   if (!amfObj) {
     throw new Error('AMF parsing failed, no valid AMF data retrieved')
   }
@@ -25,4 +21,4 @@ const objectify = (amf, data) => {
   return objects.map((object, index) => createObject(object, index, data, { amf, instantiate: true }))
 }
 
-module.exports = instantiate
+export default instantiate
