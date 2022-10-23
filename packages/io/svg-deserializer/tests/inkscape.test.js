@@ -1,10 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const countOf = require('../../test/helpers/countOf')
+import countOf from '../../test/helpers/countOf.js'
 
-const deserializer = require('../src/index.js')
-
-// deserializer
+import { deserialize } from '../src/index.js'
 
 test('deserialize : translate svg produced by inkscape to script', (t) => {
   const sourceSvg = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -52,13 +50,13 @@ test('deserialize : translate svg produced by inkscape to script', (t) => {
 </svg>
 `
 
-  let obs = deserializer.deserialize({ filename: 'inkscape', output: 'script', target: 'path', addMetaData: false }, sourceSvg)
+  let obs = deserialize({ filename: 'inkscape', output: 'script', target: 'path', addMetaData: false }, sourceSvg)
   t.is(typeof obs, 'string')
   t.is(countOf('path2.fromPoints', obs), 2)
   t.is(countOf('path2.close', obs), 2)
   t.is(countOf('color', obs), 5)
 
-  obs = deserializer.deserialize({ filename: 'inkscape', output: 'script', target: 'geom2', addMetaData: false }, sourceSvg)
+  obs = deserialize({ filename: 'inkscape', output: 'script', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(countOf('path2.fromPoints', obs), 2)
   t.is(countOf('path2.close', obs), 2)
   t.is(countOf('color', obs), 5)

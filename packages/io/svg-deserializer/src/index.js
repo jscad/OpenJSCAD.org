@@ -10,17 +10,18 @@ have been very kindly sponsored by [Copenhagen Fabrication / Stykka](https://www
 All code released under MIT license
 */
 
-const saxes = require('saxes')
+import saxes from 'saxes'
 
-const { colors, transforms } = require('@jscad/modeling')
-const { toArray } = require('@jscad/array-utils')
+import { colors, transforms } from '@jscad/modeling'
+import { toArray } from '@jscad/array-utils'
 
-const version = require('../package.json').version
+import { pxPmm } from './constants.js'
+import { cagLengthX, cagLengthY, svgColorForTarget } from './helpers.js'
+import { svgSvg, svgRect, svgCircle, svgGroup, svgLine, svgPath, svgEllipse, svgPolygon, svgPolyline, svgUse } from './svgElementHelpers.js'
+import shapesMapGeometry from './shapesMapGeometry.js'
+import shapesMapJscad from './shapesMapJscad.js'
 
-const { cagLengthX, cagLengthY, svgColorForTarget } = require('./helpers')
-const { svgSvg, svgRect, svgCircle, svgGroup, svgLine, svgPath, svgEllipse, svgPolygon, svgPolyline, svgUse } = require('./svgElementHelpers')
-const shapesMapGeometry = require('./shapesMapGeometry')
-const shapesMapJscad = require('./shapesMapJscad')
+const version = '[VI]{version}[/VI]' // version is injected by rollup
 
 /**
  * Deserializer of SVG source data to JSCAD geometries.
@@ -51,7 +52,7 @@ const deserialize = (options, input) => {
     addMetaData: true,
     filename: 'svg',
     output: 'script',
-    pxPmm: require('./constants').pxPmm,
+    pxPmm,
     segments: 32,
     target: 'path', // target - 'geom2' or 'path'
     pathSelfClosed: 'error',
@@ -444,7 +445,7 @@ const createSvgParser = (src, pxPmm) => {
 
 const extension = 'svg'
 
-module.exports = {
+export {
   deserialize,
   extension
 }

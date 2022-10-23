@@ -1,6 +1,6 @@
-const { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect } = require('./helpers')
+import { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect } from './helpers.js'
 
-const shapesMap = (obj, codify, params) => {
+export const shapesMap = (obj, codify, params) => {
   const { level, indent, on, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, target, segments } = params
 
   const types = {
@@ -115,8 +115,6 @@ const shapesMap = (obj, codify, params) => {
 
   return types[obj.type](obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGroups, segments)
 }
-
-module.exports = shapesMap
 
 // const getStrokeWidth = (obj, svgUnitsPmm, svgUnitsV, svgGroups) => {
 //   let r = cssPxUnit // default
@@ -387,3 +385,5 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
   tmpCode += `${indent}${on} = parts\n`
   return tmpCode
 }
+
+export default shapesMap

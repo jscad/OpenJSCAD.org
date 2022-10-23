@@ -1,4 +1,4 @@
-const { inchMM, ptMM, pcMM, svgColors } = require('./constants')
+import { inchMM, ptMM, pcMM, svgColors } from './constants.js'
 
 // Calculate the CAG length/size from the given SVG value (float)
 const svg2cagX = (v, svgUnitsPmm) => (v / svgUnitsPmm[0])
@@ -185,7 +185,7 @@ const svgColorForTarget = (target, svgObject) => {
   return color
 }
 
-module.exports = {
+export {
   svg2cagX,
   svg2cagY,
   cagLengthX,
