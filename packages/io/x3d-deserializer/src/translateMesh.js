@@ -1,6 +1,6 @@
-const { pointsToString } = require('./translateHelpers')
+import { pointsToString } from './translateHelpers.js'
 
-const { convertMesh } = require('./instantiateMesh')
+import { convertMesh } from './instantiateMesh.js'
 
 const translateToPolyhedron = (type, points, faces, colors, orientation) => {
   const colorsCode = Array.isArray(colors) ? pointsToString(colors) : 'null'
@@ -19,7 +19,7 @@ const translateToPolyhedron = (type, points, faces, colors, orientation) => {
  * Translate the given objects into mesh (polyhedron).
  * @return { primitive, code }
  */
-const translateMesh = (options, objects) => {
+export const translateMesh = (options, objects) => {
   const components = convertMesh(options, objects)
   if (components) {
     const { type, points, faces, colors, orientation } = components
@@ -28,4 +28,4 @@ const translateMesh = (options, objects) => {
   return null
 }
 
-module.exports = translateMesh
+export default translateMesh

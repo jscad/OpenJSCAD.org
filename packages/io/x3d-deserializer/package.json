@@ -4,6 +4,7 @@
   "description": "X3D Deserializer for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org/",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava --verbose --timeout 2m 'tests/**/*.test.js'"

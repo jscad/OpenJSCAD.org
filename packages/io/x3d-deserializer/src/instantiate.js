@@ -1,20 +1,18 @@
-const { flatten } = require('@jscad/array-utils')
+import { flatten } from '@jscad/array-utils'
 
-const parse = require('./parse')
-const instantiateDefinitions = require('./instantiateDefinitions')
-const { x3dTypes } = require('./objects')
+import parse from './parse.js'
+import instantiateDefinitions from './instantiateDefinitions.js'
+import { x3dTypes } from './objects.js'
 
-const instantiate = (options, src) => {
+export const instantiate = (options, src) => {
   const defaults = {
-    pxPmm: require('./constants').pxPmm
   }
   options = Object.assign({}, defaults, options)
-  const { pxPmm } = options
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 
   // parse the X3D source
-  const { x3dObj } = parse(src, pxPmm)
+  const { x3dObj } = parse(src)
 
   if (x3dObj.definition !== x3dTypes.X3D || (!x3dObj.objects)) throw new Error('X3D malformed')
   if (x3dObj.objects.length < 1 || x3dObj.objects[0].definition !== x3dTypes.SCENE) throw new Error('X3D did not define a SCENE')
@@ -33,4 +31,4 @@ const instantiate = (options, src) => {
   return geometries
 }
 
-module.exports = instantiate
+export default instantiate

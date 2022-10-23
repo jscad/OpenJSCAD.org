@@ -1,11 +1,11 @@
-const { booleans, geometries, primitives, transforms } = require('@jscad/modeling')
+import { booleans, geometries, primitives, transforms } from '@jscad/modeling'
 
-const { x3dTypes } = require('./objects')
-const { findNode } = require('./translateHelpers')
+import { x3dTypes } from './objects.js'
+import { findNode } from './translateHelpers.js'
 
-const extrudeX3D = require('./extrudeX3D')
+import extrudeX3D from './extrudeX3D.js'
 
-const instantiatePrimitive = (options, objects) => {
+export const instantiatePrimitive = (options, objects) => {
   let geometry
 
   // 3D primitives
@@ -117,4 +117,4 @@ const instantiatePrimitive = (options, objects) => {
   return geometry
 }
 
-module.exports = instantiatePrimitive
+export default instantiatePrimitive

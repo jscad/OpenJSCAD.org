@@ -1,19 +1,17 @@
-const translateDefinitions = require('./translateDefinitions')
+import translateDefinitions from './translateDefinitions.js'
+import { x3dTypes } from './objects.js'
+import parse from './parse.js'
 
-const { x3dTypes } = require('./objects')
-const parse = require('./parse')
-
-const translate = (options, src) => {
+export const translate = (options, src) => {
   const defaults = {
-    pxPmm: require('./constants').pxPmm
   }
   options = Object.assign({}, defaults, options)
-  const { version, pxPmm, addMetaData, filename } = options
+  const { version, addMetaData, filename } = options
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 
   // parse the X3D source
-  const { x3dObj, x3dMaterials, x3dTextures } = parse(src, pxPmm)
+  const { x3dObj, x3dMaterials, x3dTextures } = parse(src)
 
   // convert the internal objects to JSCAD code
   let code = addMetaData
@@ -92,4 +90,4 @@ const main = () => {
   return code
 }
 
-module.exports = translate
+export default translate

@@ -1,7 +1,7 @@
-const jscad = require('@jscad/modeling')
+import { colors, primitives } from '@jscad/modeling'
 
-const { createColors, findNode } = require('./translateHelpers')
-const { x3dTypes } = require('./objects')
+import { createColors, findNode } from './translateHelpers.js'
+import { x3dTypes } from './objects.js'
 
 const convertLine = (options, objects) => {
   let shape = findNode(x3dTypes.INDEXEDLINESET, objects)
@@ -76,13 +76,13 @@ const instantiateLine = (options, objects) => {
 
   const components = convertLine(options, objects)
   if (components) {
-    const { pointsSet, colors } = components
+    const { pointsSet, segColors } = components
     geometry = pointsSet.map((points, i) => {
       let line
-      if (colors) {
-        line = jscad.colors.colorize(colors[i], jscad.primitives.line(points))
+      if (segColors) {
+        line = colors.colorize(segColors[i], primitives.line(points))
       } else {
-        line = jscad.primitives.line(points)
+        line = primitives.line(points)
       }
       return line
     })
@@ -91,7 +91,7 @@ const instantiateLine = (options, objects) => {
   return geometry
 }
 
-module.exports = {
+export {
   convertLine,
   instantiateLine
 }

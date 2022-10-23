@@ -1,4 +1,4 @@
-const { x3dTypes } = require('./objects')
+import { x3dTypes } from './objects.js'
 
 const findNode = (x3dtype, objects) => objects.find((object) => object.definition === x3dtype)
 
@@ -79,7 +79,7 @@ const createColors = (shape, color) => {
   return colors
 }
 
-module.exports = {
+export {
   findNode,
   findColor,
 

@@ -21,10 +21,10 @@ All code released under MIT license
  * const { deserializer, extension } = require('@jscad/x3d-deserializer')
  */
 
-const version = require('../package.json').version
+import translate from './translate.js'
+import instantiate from './instantiate.js'
 
-const translate = require('./translate')
-const instantiate = require('./instantiate')
+const version = '[VI]{version}[/VI]' // version is injected by rollup
 
 /**
  * Deserialize the given X3D source (XML Encoding) into either a script or an array of geometry
@@ -54,7 +54,7 @@ const deserialize = (options, input) => {
 
 const extension = 'x3d'
 
-module.exports = {
+export {
   deserialize,
   extension
 }

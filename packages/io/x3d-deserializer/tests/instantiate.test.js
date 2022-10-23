@@ -1,17 +1,16 @@
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
 
-const test = require('ava')
+import test from 'ava'
 
-const { geometries } = require('@jscad/modeling')
+import { geometries } from '@jscad/modeling'
 
-const deserializer = require('../src/index')
+import { deserialize } from '../src/index.js'
 
-// const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
 const samplesPath = path.dirname('tests/')
 
 test('deserialize simple X3D to JSCAD geometry', (t) => {
-  const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, example01)
+  const observed = deserialize({ output: 'geometry', addMetaData: false }, example01)
   t.true(Array.isArray(observed))
   t.is(observed.length, 2)
   t.true(geometries.geom3.isA(observed[0]))
@@ -22,7 +21,7 @@ test('deserialize X3D 2D components to JSCAD geometry', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/Geometry2dComponents.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
-  const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
+  const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 11)
   t.true(geometries.geom2.isA(observed[0]))
@@ -42,7 +41,7 @@ test('deserialize X3D 3D components to JSCAD geometry', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/Geometry3dComponents.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
-  const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
+  const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 5)
   t.true(geometries.geom3.isA(observed[0]))
@@ -56,7 +55,7 @@ test('deserialize X3D line sets to JSCAD geometry', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/LineSets.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
-  const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
+  const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 32)
   t.true(geometries.path2.isA(observed[0]))
@@ -70,7 +69,7 @@ test('deserialize X3D elevation grids to JSCAD geometry', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/ElevationGrids.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
-  const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
+  const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 4)
   t.true(geometries.geom3.isA(observed[0]))
@@ -83,7 +82,7 @@ test('deserialize X3D 3D triangle sets to JSCAD geometry', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/TriangleSets.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
-  const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
+  const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 4)
   t.true(geometries.geom3.isA(observed[0]))
@@ -96,7 +95,7 @@ test('deserialize X3D 3D transforms to JSCAD geometry', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/Transforms.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
-  const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
+  const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 4)
   t.true(geometries.geom3.isA(observed[0]))
@@ -109,7 +108,7 @@ test('deserialize X3D 3D indexed triangle sets to JSCAD geometry', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/IndexedTriangleSets.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
-  const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
+  const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 6)
   t.true(geometries.geom3.isA(observed[0]))
@@ -124,7 +123,7 @@ test('deserialize X3D 3D groups to JSCAD geometry', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/Groups.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
-  const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
+  const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 7)
   t.true(geometries.geom3.isA(observed[0]))
