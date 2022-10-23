@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { fnNumberSort, insertSorted } = require('./index')
+import { fnNumberSort, insertSorted } from './index.js'
 
 test('array-utils: insertSorted() should insert elements properly', (t) => {
   const numbers = []

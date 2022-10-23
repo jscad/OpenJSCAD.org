@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { toArray } = require('./index')
+import { toArray } from './index.js'
 
 test('array-utils: toArray() should return arrays', (t) => {
   let obs = toArray()

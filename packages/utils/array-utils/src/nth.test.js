@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { nth } = require('./index')
+import { nth } from './index.js'
 
 test('array-utils: nth() should return undefined', (t) => {
   let obs = nth()

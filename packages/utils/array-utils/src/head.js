@@ -6,11 +6,11 @@
  * @example
  * let element = head([1, 2])
  */
-const head = (array) => {
+export const head = (array) => {
   if (!Array.isArray(array) || array.length === 0) {
     return undefined
   }
   return array[0]
 }
 
-module.exports = head
+export default head
