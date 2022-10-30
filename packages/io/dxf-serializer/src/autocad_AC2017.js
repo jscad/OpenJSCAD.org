@@ -3108,7 +3108,7 @@ ENDSEC`
   return content
 }
 
-module.exports = {
+export {
   dxfHeaders,
   dxfClasses,
   dxfTables,

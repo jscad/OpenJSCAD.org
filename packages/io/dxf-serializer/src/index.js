@@ -21,13 +21,13 @@ TBD
 2) add color conversion
 */
 
-const { geometries, modifiers } = require('@jscad/modeling')
+import { geometries, modifiers } from '@jscad/modeling'
 const { geom3, geom2, path2 } = geometries
 
-const { flatten, toArray } = require('@jscad/array-utils')
+import { flatten, toArray } from '@jscad/array-utils'
 
-const { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } = require('./autocad_AC2017')
-const colorindex2017 = require('./colorindex2017')
+import { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } from './autocad_AC2017.js'
+import colorindex2017 from './colorindex2017.js'
 
 const mimeType = 'application/dxf'
 
@@ -475,7 +475,7 @@ const getColorNumber = (object, options) => {
   return colorNumber
 }
 
-module.exports = {
+export {
   serialize,
   mimeType
 }
