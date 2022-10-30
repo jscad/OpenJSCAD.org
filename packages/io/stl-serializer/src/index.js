@@ -23,12 +23,12 @@ Notes:
  * const { serializer, mimeType } = require('@jscad/stl-serializer')
  */
 
-const { geometries, modifiers } = require('@jscad/modeling')
+import { geometries, modifiers } from '@jscad/modeling'
 
-const { flatten, toArray } = require('@jscad/array-utils')
+import { flatten, toArray } from '@jscad/array-utils'
 
-const { serializeBinary } = require('./CSGToStlb')
-const { serializeText } = require('./CSGToStla')
+import { serializeBinary } from './serializeBinary.js'
+import { serializeText } from './serializeText.js'
 
 const mimeType = 'application/sla'
 
@@ -65,7 +65,7 @@ const serialize = (options, ...objects) => {
   return options.binary ? serializeBinary(objects3d, options) : serializeText(objects3d, options)
 }
 
-module.exports = {
+export {
   mimeType,
   serialize
 }

@@ -1,9 +1,9 @@
-const { geometries } = require('@jscad/modeling')
+import { geometries } from '@jscad/modeling'
 
 // see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
 
 // objects must be an array of 3D geometries
-const serializeBinary = (objects, options) => {
+export const serializeBinary = (objects, options) => {
   options.statusCallback && options.statusCallback({ progress: 0 })
 
   // first check if the host is little-endian:
@@ -83,6 +83,4 @@ const serializeBinary = (objects, options) => {
   return [headerarray.buffer, ar1.buffer, allTrianglesBuffer] // 'blobable array'
 }
 
-module.exports = {
-  serializeBinary
-}
+export default serializeBinary
