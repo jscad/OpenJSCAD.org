@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { primitives } = require('@jscad/modeling')
+import { primitives } from '@jscad/modeling'
 
-const { serialize } = require('../index.js')
+import { serialize } from '../src/index.js'
 
 const countOf = (search, string) => {
   let count = 0
