@@ -1,12 +1,12 @@
-const fs = require('fs')
-const path = require('path')
-const test = require('ava')
+import fs from 'fs'
+import path from 'path'
+import test from 'ava'
 
-const { geometries } = require('@jscad/modeling')
+import { geometries } from '@jscad/modeling'
 
-const { deserialize } = require('../index')
+import { deserialize } from '../src/index.js'
 
-const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
+const samplesPath = '../../../node_modules/@jscad/sample-files'
 
 //
 // Test suite for DXF deserialization (import)

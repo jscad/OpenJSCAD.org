@@ -7,7 +7,7 @@ All code released under MIT license
 
 */
 
-const { BYBLOCK, BYLAYER } = require('./autocad')
+import { BYBLOCK, BYLAYER } from './autocad.js'
 
 //
 // find the layer referenced by the given object
@@ -59,7 +59,7 @@ const getColor = (index, colorindex) => {
   return rgba
 }
 
-module.exports = {
+export {
   findLayer,
   getColor,
   getColorNumber

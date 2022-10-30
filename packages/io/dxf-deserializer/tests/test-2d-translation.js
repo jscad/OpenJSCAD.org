@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { deserialize } = require('../index')
+import { deserialize } from '../src/index.js'
 
 //
 // Test suite for DXF deserialization (import)

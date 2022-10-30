@@ -6,10 +6,10 @@ Copyright (c) 2017 Z3 Development https://github.com/z3dev
 All code released under MIT license
 
 */
-const { geometries, maths, primitives } = require('@jscad/modeling')
+import { geometries, maths, primitives } from '@jscad/modeling'
 const EPS = 1e-5 // FIXME
 
-const { getColor, getColorNumber } = require('./helpers')
+import { getColor, getColorNumber } from './helpers.js'
 
 //
 // instantiate the given object (3dface) as a polygon
@@ -495,7 +495,7 @@ const instantiateAsciiDxf = (reader, options) => {
   return objects
 }
 
-module.exports = {
+export {
   instantiatePolygon,
   instantiateVector,
   instantiateAsciiDxf
