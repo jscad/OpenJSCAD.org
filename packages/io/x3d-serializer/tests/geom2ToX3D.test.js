@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const countOf = require('../../test/helpers/countOf')
+import countOf from '../../test/helpers/countOf.js'
 
-const { colors, geometries, primitives } = require('@jscad/modeling')
+import { colors, geometries, primitives } from '@jscad/modeling'
 
-const { serialize } = require('../src/index.js')
+import { serialize } from '../src/index.js'
 
 test('serialize 2D geometry to X3D Polyline2D', (t) => {
   const shape1 = geometries.geom2.create()
