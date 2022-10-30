@@ -28,9 +28,9 @@ Notes:
  * const { serializer, mimeType } = require('@jscad/obj-serializer')
  */
 
-const { colors, geometries, modifiers } = require('@jscad/modeling')
+import { colors, geometries, modifiers } from '@jscad/modeling'
 
-const { flatten, toArray } = require('@jscad/array-utils')
+import { flatten, toArray } from '@jscad/array-utils'
 
 const mimeType = 'application/object'
 
@@ -144,7 +144,7 @@ const getColorName = (object) => {
   return colorName
 }
 
-module.exports = {
+export {
   serialize,
   mimeType
 }
