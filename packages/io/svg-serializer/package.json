@@ -34,8 +34,7 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/io-utils": "workspace:^2.0.22",
-    "@jscad/modeling": "workspace:2.10.0",
-    "onml": "2.1.0"
+    "@jscad/modeling": "workspace:2.10.0"
   },
   "devDependencies": {
     "ava": "4.3.3",
