@@ -5,6 +5,7 @@
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "coverage": "nyc --reporter=html --reporter=text npm test",
     "test": "ava --concurrency 3 --verbose --timeout 40000 './tests/*.test.js'"
@@ -28,9 +29,9 @@
   },
   "dependencies": {
     "@jscad/array-utils": "workspace:2.1.4",
+    "@jscad/io-utils": "workspace:^2.0.22",
     "@jscad/modeling": "workspace:2.10.0",
-    "fflate": "0.7.3",
-    "onml": "2.1.0"
+    "fflate": "0.7.3"
   },
   "devDependencies": {
     "ava": "4.3.3",

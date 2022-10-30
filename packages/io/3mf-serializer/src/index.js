@@ -31,13 +31,13 @@ Notes:
  */
 
 
-const zipSync = require('fflate').zipSync
-const strToU8 = require('fflate').strToU8
+import { zipSync } from 'fflate'
+import { strToU8 } from 'fflate'
 
-const stringify = require('onml').stringify
+import { stringify } from '@jscad/io-utils'
 
-const { colors, geometries, modifiers } = require('@jscad/modeling')
-const { flatten, toArray } = require('@jscad/array-utils')
+import { colors, geometries, modifiers } from '@jscad/modeling'
+import { flatten, toArray } from '@jscad/array-utils'
 
 
 const mimeType = 'model/3mf'
@@ -249,7 +249,7 @@ const convertToTriangles = (polygon, index) => {
   return contents
 }
 
-module.exports = {
+export {
   serialize,
   mimeType,
   fileExtension

@@ -1,25 +1,25 @@
-const test = require('ava')
+import test from 'ava'
 
-const { colors, geometries, primitives } = require('@jscad/modeling')
+import { colors, geometries, primitives } from '@jscad/modeling'
 
-const serializer = require('../src/index.js')
+import { serialize } from '../src/index.js'
 
 test('serialize (empty)', (t) => {
   const emptyShape = geometries.geom3.create()
-  const buffer = serializer.serialize({ metadata: false, compress: false }, emptyShape)
+  const buffer = serialize({ metadata: false, compress: false }, emptyShape)
   t.deepEqual(buffer, expected1)
 })
 
 test('serialize (single)', (t) => {
   const cube1 = primitives.cube()
-  const buffer = serializer.serialize({ metadata: false, compress: false }, cube1)
+  const buffer = serialize({ metadata: false, compress: false }, cube1)
   t.deepEqual(buffer, expected2)
 })
 
 test('serialize (single, color)', (t) => {
   let cube1 = primitives.cube()
   cube1 = colors.colorize([1.0, 0.0, 0.5, 0.8], cube1)
-  const buffer = serializer.serialize({ metadata: false, compress: false, unit: 'inch' }, cube1)
+  const buffer = serialize({ metadata: false, compress: false, unit: 'inch' }, cube1)
   t.deepEqual(buffer, expected3)
 })
 
@@ -29,7 +29,7 @@ test('serialize (multiple, color)', (t) => {
   cube1.name = "CUBE A"
   const cube2 = primitives.cube()
   cube2.name = "CUBE B"
-  const buffer = serializer.serialize({ metadata: false, compress: false, defaultcolor: [1, 0, 0, 1] }, cube1, cube2)
+  const buffer = serialize({ metadata: false, compress: false, defaultcolor: [1, 0, 0, 1] }, cube1, cube2)
   t.deepEqual(buffer, expected4)
 })
 
@@ -39,7 +39,7 @@ test('serialize (multiple, compress)', (t) => {
   const cube2 = primitives.cuboid({ size: [4, 5, 6], center: [5, 5, 5] })
   cube2.name = "CUBE B"
 
-  const results = serializer.serialize({ compress: true }, cube1, cube2)
+  const results = serialize({ compress: true }, cube1, cube2)
   t.is(results.length, 1)
   const len = results[0].byteLength
   t.true(len > 1600)
