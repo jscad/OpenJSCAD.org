@@ -1,8 +1,8 @@
-const { maths, primitives } = require('@jscad/modeling')
+import { maths, primitives } from '@jscad/modeling'
 
-const { BinaryReader } = require('@jscad/io-utils')
+import { BinaryReader } from '@jscad/io-utils'
 
-const packageVersion = require('./package.json').version
+const pkgversion = '[VI]{version}[/VI]' // version is injected by rollup
 
 // STL function from http://jsfiddle.net/Riham/yzvGD/35/
 // CC BY-SA by Riham
@@ -33,7 +33,7 @@ const packageVersion = require('./package.json').version
 const deserialize = (options, stl) => {
   const defaults = {
     filename: 'stl',
-    version: packageVersion,
+    version: pkgversion,
     addMetaData: true,
     output: 'script'
   }
@@ -412,7 +412,7 @@ const solid${index} = () => {
 
 const extension = 'stl'
 
-module.exports = {
+export {
   deserialize,
   extension
 }
