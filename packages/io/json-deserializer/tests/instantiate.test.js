@@ -1,31 +1,31 @@
-const test = require('ava')
+import test from 'ava'
 
-const deserializer = require('../index.js')
+import { geometries } from '@jscad/modeling'
 
-const { geometries } = require('@jscad/modeling')
+import { deserialize } from '../src/index.js'
 
 test('instantiate JSON notation to JSCAD geometries', (t) => {
-  let observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, json1)
+  let observed = deserialize({ output: 'geometry', addMetaData: false }, json1)
   t.is(observed.length, 1)
 
-  observed = deserializer.deserialize({ filename: 'json2', output: 'geometry' }, json2)
+  observed = deserialize({ filename: 'json2', output: 'geometry' }, json2)
   t.is(observed.length, 1)
   t.true(geometries.geom3.isA(observed[0]))
 
-  observed = deserializer.deserialize({ filename: 'json3', output: 'geometry' }, json3)
+  observed = deserialize({ filename: 'json3', output: 'geometry' }, json3)
   t.is(observed.length, 1)
   t.true(geometries.geom2.isA(observed[0]))
 
-  observed = deserializer.deserialize({ filename: 'json4', output: 'geometry' }, json4)
+  observed = deserialize({ filename: 'json4', output: 'geometry' }, json4)
   t.is(observed.length, 1)
   t.true(geometries.path2.isA(observed[0]))
 
-  observed = deserializer.deserialize({ filename: 'json5', output: 'geometry' }, json5)
+  observed = deserialize({ filename: 'json5', output: 'geometry' }, json5)
   t.is(observed.length, 2)
   t.true(geometries.geom2.isA(observed[0]))
   t.true(geometries.path2.isA(observed[1]))
 
-  observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, json6)
+  observed = deserialize({ output: 'geometry', addMetaData: false }, json6)
   t.is(observed.length, 1)
 })
 

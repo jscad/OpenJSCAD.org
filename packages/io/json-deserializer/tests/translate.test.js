@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const deserializer = require('../index.js')
+import { deserialize } from '../src/index.js'
 
 const countOf = (search, string) => {
   let count = 0
@@ -13,27 +13,27 @@ const countOf = (search, string) => {
 }
 
 test('translate JSON notation to JSCAD script', (t) => {
-  let observed = deserializer.deserialize({ output: 'script', addMetaData: false }, json1)
+  let observed = deserialize({ output: 'script', addMetaData: false }, json1)
   t.is(countOf('main', observed), 2)
   t.is(countOf('const json', observed), 1)
 
-  observed = deserializer.deserialize({ filename: 'json2', output: 'script', addMetaData: true }, json2)
+  observed = deserialize({ filename: 'json2', output: 'script', addMetaData: true }, json2)
   t.is(countOf('main', observed), 2)
   t.is(countOf('const json', observed), 1)
 
-  observed = deserializer.deserialize({ filename: 'json3', output: 'script', addMetaData: true }, json3)
+  observed = deserialize({ filename: 'json3', output: 'script', addMetaData: true }, json3)
   t.is(countOf('main', observed), 2)
   t.is(countOf('const json', observed), 1)
 
-  observed = deserializer.deserialize({ filename: 'json4', output: 'script', addMetaData: true }, json4)
+  observed = deserialize({ filename: 'json4', output: 'script', addMetaData: true }, json4)
   t.is(countOf('main', observed), 2)
   t.is(countOf('const json', observed), 1)
 
-  observed = deserializer.deserialize({ filename: 'json5', output: 'script', addMetaData: false }, json5)
+  observed = deserialize({ filename: 'json5', output: 'script', addMetaData: false }, json5)
   t.is(countOf('main', observed), 2)
   t.is(countOf('const json', observed), 2)
 
-  observed = deserializer.deserialize({ filename: 'json6', output: 'script', addMetaData: false }, json6)
+  observed = deserialize({ filename: 'json6', output: 'script', addMetaData: false }, json6)
   t.is(countOf('main', observed), 2)
   t.is(countOf('const json', observed), 1)
 })
