@@ -1,18 +1,18 @@
-const test = require('ava')
+import test from 'ava'
 
-const countOf = require('../../test/helpers/countOf')
+import countOf from '../../test/helpers/countOf.js'
 
-const { colors, geometries, primitives } = require('@jscad/modeling')
+import { colors, geometries, primitives } from '@jscad/modeling'
 
-const serializer = require('../index.js')
+import { serialize } from '../src/index.js'
 
 test('serialize 3D geometry to amf', (t) => {
   const emptyShape = geometries.geom3.create()
-  const observed1 = serializer.serialize({}, emptyShape)
+  const observed1 = serialize({}, emptyShape)
   t.deepEqual(observed1, expected1)
 
   const testCube = primitives.cube()
-  const observed2 = serializer.serialize({}, testCube)
+  const observed2 = serialize({}, testCube)
   t.is(observed2.length, 1)
   const xml2 = observed2[0]
   t.is(countOf('amf', xml2), 2)
@@ -33,7 +33,7 @@ test('serialize 3D geometry to amf', (t) => {
 
   const coloredCube = colors.colorize([1.0, 0.0, 0.5, 0.8], testCube)
   coloredCube.polygons[0].color = [1, 0, 0, 1]
-  const observed3 = serializer.serialize({ unit: 'inch' }, coloredCube)
+  const observed3 = serialize({ unit: 'inch' }, coloredCube)
   const xml3 = observed3[0]
   t.is(countOf('amf', xml3), 2)
   t.is(countOf('metadata', xml3), 2)
