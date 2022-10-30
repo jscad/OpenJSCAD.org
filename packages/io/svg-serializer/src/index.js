@@ -31,11 +31,11 @@ Notes:
  * const { serializer, mimeType } = require('@jscad/svg-serializer')
  */
 
-const { geometries, maths, measurements, utils } = require('@jscad/modeling')
+import { geometries, maths, measurements, utils } from '@jscad/modeling'
 
-const stringify = require('onml').stringify
+import { stringify } from '@jscad/io-utils'
 
-const version = require('./package.json').version
+const version = '[VI]{version}[/VI]' // version is injected by rollup
 
 const mimeType = 'image/svg+xml'
 
@@ -205,7 +205,7 @@ const convertPath = (path, offsets, options) => {
 
 const convertColor = (color) => `rgb(${color[0] * 255},${color[1] * 255},${color[2] * 255},${color[3] * 255})`
 
-module.exports = {
+export {
   serialize,
   mimeType
 }
