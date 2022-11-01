@@ -11,7 +11,7 @@ const deserializer = require('../src/index.js')
 test('deserialize : translate svg (rect) to script', (t) => {
   const sourceSvg = `<svg pxpmm="10" width="500" height="500">
   <rect x="80" y="60" width="250" height="250" color="red"/>
-  <rect x="140" y="120" width="250" height="250" rx="40" color="rgb(0,255,0)"/>
+  <rect x="140" y="120" width="250" height="250" rx="40" color="rgba(0,255,0)"/>
   <rect x="140" y="120" width="250" height="250" ry="40" color="blue"/>
   <rect x="40" y="20" width="250" height="250" rx="40" ry="40"/>
 </svg>`
@@ -20,14 +20,14 @@ test('deserialize : translate svg (rect) to script', (t) => {
   t.is(typeof obs, 'string')
   t.is(countOf('rectangle', obs), 1)
   t.is(countOf('roundedRectangle', obs), 3)
-  t.is(countOf('colors.colorize', obs), 3) // color
+  t.is(countOf('colors.colorize', obs), 2) // color
   t.is(countOf('path2.fromPoints', obs), 4)
 
   obs = deserializer.deserialize({ output: 'script', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(typeof obs, 'string')
   t.is(countOf('rectangle', obs), 1)
   t.is(countOf('roundedRectangle', obs), 3)
-  t.is(countOf('colors.colorize', obs), 3) // color
+  t.is(countOf('colors.colorize', obs), 2) // color
   t.is(countOf('path2.fromPoints', obs), 0)
 })
 
