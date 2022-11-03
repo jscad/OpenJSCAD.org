@@ -1,16 +1,17 @@
+import { toArray } from '@jscad/array-utils'
 
-const { toArray } = require('@jscad/array-utils')
-const { formats } = require('./formats')
-const amfSerializer = require('@jscad/amf-serializer')
-const dxfSerializer = require('@jscad/dxf-serializer')
-const jsonSerializer = require('@jscad/json-serializer')
-const objSerializer = require('@jscad/obj-serializer')
-const stlSerializer = require('@jscad/stl-serializer')
-const svgSerializer = require('@jscad/svg-serializer')
-const x3dSerializer = require('@jscad/x3d-serializer')
-const m3fSerializer = require('@jscad/3mf-serializer') // UG javascript doesn't allow names with leading #
+import * as amfSerializer from '@jscad/amf-serializer'
+import * as dxfSerializer from '@jscad/dxf-serializer'
+import * as jsonSerializer from '@jscad/json-serializer'
+import * as objSerializer from '@jscad/obj-serializer'
+import * as stlSerializer from '@jscad/stl-serializer'
+import * as svgSerializer from '@jscad/svg-serializer'
+import * as x3dSerializer from '@jscad/x3d-serializer'
+import * as m3fSerializer from '@jscad/3mf-serializer' // UG javascript doesn't allow names with leading #
 
-const prepareOutput = (objects, params) => {
+import { supportedFormats } from './formats.js'
+
+export const prepareOutput = (objects, params) => {
   const defaults = {
     format: undefined,
     version: '0.0.0'
@@ -38,11 +39,11 @@ const prepareOutput = (objects, params) => {
     '3mf': m3fSerializer, // Geom3 to 3MF
     json: jsonSerializer, // Geom3 or Geom2 to JSON
     js: {
-      mimeType: formats.js.mimetype,
+      mimeType: supportedFormats.js.mimetype,
       serialize: (options, objects) => toArray(objects) // js , pass through
     },
     jscad: {
-      mimeType: formats.jscad.mimetype,
+      mimeType: supportedFormats.jscad.mimetype,
       serialize: (options, objects) => toArray(objects) // jscad , pass through
     },
     undefined: () => {
@@ -55,4 +56,4 @@ const prepareOutput = (objects, params) => {
   return { data, mimeType }
 }
 
-module.exports = prepareOutput
+export default prepareOutput
