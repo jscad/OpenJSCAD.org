@@ -7,7 +7,7 @@ export default function Toggle (attr, children, parent) {
   const out = <button {...attr}>{children}</button>
 
   out.onclick = e => {
-    valueBinding.set(!valueBinding())
+    valueBinding(!valueBinding())
   }
 
   return out

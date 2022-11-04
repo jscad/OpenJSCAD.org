@@ -44,7 +44,7 @@
     "@jscad/modeling": "2.5.3",
     "@jscad/regl-renderer": "2.4.1",
     "@jscad/vtree": "2.0.9",
-    "@jsx6/jsx6": "^1.5.4",
+    "@jsx6/jsx6": "^1.5.14",
     "file-saver": "2.0.2",
     "is-electron": "2.2.0",
     "webworkify": "1.5.0"

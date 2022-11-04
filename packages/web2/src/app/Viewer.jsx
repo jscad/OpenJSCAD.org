@@ -103,7 +103,6 @@ export class Viewer extends Jsx6 {
         required: false
       }
     }, attr, this, true)
-  
   }
 
   errNotFound(err){
@@ -115,6 +114,7 @@ export class Viewer extends Jsx6 {
   }
 
   setTheme (theme){
+    if(!this.viewer) return; // called too soon
     this.viewer.setBg(theme.bg)
     this.updateView(theme)
   }
@@ -131,6 +131,7 @@ export class Viewer extends Jsx6 {
   }
 
   updateScene () {
+    if(!this.viewer) return; // called too soon
     const items = []
     if(this.showAxes()) items.push({ id: 'axis', items: this.sceneData.axis})
     if(this.showGrid()) items.push({ id: 'grid', items: this.sceneData.grid})
@@ -144,6 +145,7 @@ export class Viewer extends Jsx6 {
   }
 
   initViewer(){
+    if(!this.viewerClass) return; // called too soon
     let viewerName = this.viewerClass()
     let viewerFunction = window[viewerName]
 

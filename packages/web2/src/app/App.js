@@ -3,7 +3,10 @@ import { T, addTranslations, refreshTranslations,
   setValue,
   EQ,
   NOT,
-  findParent} from '@jsx6/jsx6'
+  findParent,
+  $R,
+  observe,
+  t} from '@jsx6/jsx6'
 import { JscadEditor } from './editor'
 import gearIcon from '../icons/gear'
 import editIcon from '../icons/edit'
@@ -85,17 +88,19 @@ export class App extends Jsx6 {
     this.el.ondrop = dropHandler;
     this.el.ondragover = dragOverHandler;
     
-    $s().subscribe((state, old)=>{
-      console.log('changed',state, old)
-      localStorage.setItem(SETTINGS_KEY, JSON.stringify(state().getValue()))
-      if (old.has('language')) this.changeLanguage(state.language() || 'en')
+    observe($s, state =>{
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(state))
     })
-    $s.darkMode.sync(v=>{
+    observe($s.language, language =>{
+      console.log('changed',language)
+      this.changeLanguage(language || 'en')
+    })
+    observe($s.darkMode, v=>{
       console.log('dark mode', v)
       document.documentElement.setAttribute('data-theme', v ? 'dark':'light')
     })
     this.changeLanguage($s.language())
-    setValue(this.opts, $s()())
+    setValue(this.opts, $s())
 
     const cmdParams = {
       alias: this.alias || [],
@@ -124,11 +129,11 @@ export class App extends Jsx6 {
 
   tpl (h, ...rest) {
     const state = this.$s
-    const $s = this.settings = makeState(settingsDefaults, true)
+    const $s = this.settings = makeState(settingsDefaults)
     const str = localStorage.getItem(SETTINGS_KEY)
     if(str && str[0] === '{'){
       try {
-        $s().set(JSON.parse(str))
+        $s(JSON.parse(str))
       } catch (e) { console.log(e, 'str:',str)}
     }
 
@@ -165,7 +170,7 @@ export class App extends Jsx6 {
         {T`Languages`}
         <select onchange={(e) => $s.language(e.target.value)}>
           {Object.keys(langMap).map((l) => (
-            <option key={l} value={l} selected={$s.language(EQ(l))}>
+            <option key={l} value={l} selected={$R(EQ(l), $s.language)}>
               {T(langMap[l])}
             </option>
           ))}
@@ -175,7 +180,7 @@ export class App extends Jsx6 {
         {T`theme`}
         <select onchange={(e) => $s.theme(e.target.value)}>
           {Object.keys(themes).map((v) => (
-            <option key={v} value={v} selected={$s.theme(EQ(v))}>
+            <option key={v} value={v} selected={$R(EQ(v),$s.theme)}>
               {T(themes[v].name)}
             </option>
           ))}
@@ -184,8 +189,8 @@ export class App extends Jsx6 {
       <div class="f-r">
         {T`viewer`}
         <select onchange={(e) => $s.viewer(e.target.value)}>
-          {Object.keys(viewerMap).map((v) => (
-            <option key={v} value={v} selected={$s.viewer(EQ(v))}>
+          {Object.keys(viewerMap).map(v => (
+            <option key={v} value={v} selected={$R(EQ(v),$s.viewer)}>
               {T(viewerMap[v])}
             </option>
           ))}
@@ -208,21 +213,21 @@ export class App extends Jsx6 {
         <button onmousedown={markActive} onclick={()=>{if(wasActive) this.runButton.focus() }}>{gearIcon}</button>
         {settingsArea}
       </button>
-      <span>{this.settings.viewer(viewerName)}</span>
+      <span>{$R(viewerName, this.settings.viewer)}</span>
     </div>
   </div>
     // LAYOUT
     return (
       <>
-        <button class="drop-handler" hidden={state.showDrop(NOT)}></button>
+        <button class="drop-handler" hidden={$R(NOT,state.showDrop)}></button>
         <div class="fxs fx1">
-          <JscadEditor p="editor" class="editor editor-area fx1 w50 owa" hidden={$s.editorVisible(NOT)}/>
+          <JscadEditor p="editor" class="editor editor-area fx1 w50 owa" hidden={$R(NOT,$s.editorVisible)}/>
           <Params p="paramsUi" class="fx1" style="border: solid 1px red"/>
           <div class="viewer-area fxs fx1 w50">
             {menu}
             <Viewer p="viewer" class="viewer-area fxs fx1 owh" 
               viewerClass={this.settings.viewer} 
-              theme={this.settings.theme(code=>themes[code])} 
+              theme={$R(code=>themes[code],this.settings.theme)} 
               showAxes={$s.showAxes} 
               showGrid={$s.showGrid} />
           </div>
