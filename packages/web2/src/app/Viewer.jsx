@@ -1,6 +1,7 @@
 
 import { line } from '@jscad/vtree/core/modeling/primitives'
 import { Jsx6, moveParams, copyBindings } from '@jsx6/jsx6'
+import { observeResize } from '@jsx6/dom-observer'
 
 const makeAxes = (len = 100, forceColors4) =>{
   const lines = Float32Array.of(
@@ -103,6 +104,12 @@ export class Viewer extends Jsx6 {
         required: false
       }
     }, attr, this, true)
+
+    observeResize(this.el, evt=>{
+      const rect = evt.contentRect
+      this.viewer?.resize(rect)
+      this.sizeRect = rect
+    }) 
   }
 
   errNotFound(err){
@@ -156,6 +163,7 @@ export class Viewer extends Jsx6 {
         this.viewer.destroy()
       }
       this.viewer = viewerFunction(this.el,{camera:this.camera, bg:this.theme()?.bg})
+      this.viewer.resize(this.sizeRect)
       this.updateView(this.theme())
     }
 

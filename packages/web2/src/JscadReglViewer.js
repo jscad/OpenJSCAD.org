@@ -231,12 +231,6 @@ export default function JscadReglViewer (el, { camera = {}, bg = [1, 1, 1] } = {
     canvas.onpointerdown = downHandler
     canvas.onpointerup = upHandler
     canvas.onwheel = wheelHandler
-
-    const resizeObserver = new ResizeObserver(entries => {// eslint-disable-line
-      const rect = entries[0].contentRect
-      resize(rect)
-    })
-    resizeObserver.observe(el)
   } catch (error) {
     destroy()
     throw error
@@ -273,5 +267,5 @@ export default function JscadReglViewer (el, { camera = {}, bg = [1, 1, 1] } = {
     })
     updateView()
   }
-  return { sendCmd, destroy, state, getCamera, setCamera, setBg: handlers.setBg, getViewerEnv , setScene }
+  return { sendCmd, resize, destroy, state, getCamera, setCamera, setBg: handlers.setBg, getViewerEnv, setScene }
 }

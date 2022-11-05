@@ -88,11 +88,6 @@ export default function JscadBabylonViewer (el, { camera: _camera = {}, bg } = {
     canvas.addEventListener('wheel', e => {
       e.preventDefault()
     })
-    const resizeObserver = new ResizeObserver(entries => {
-      const rect = entries[0].contentRect
-      resize(rect)
-    })
-    resizeObserver.observe(el)
   } catch (error) {
     destroy()
     throw error
@@ -114,7 +109,7 @@ export default function JscadBabylonViewer (el, { camera: _camera = {}, bg } = {
     useInstances: false
   })
 
-  return { sendCmd, destroy, getCamera, setCamera, setBg: handlers.setBg, setScene, getViewerEnv }
+  return { sendCmd, resize, destroy, getCamera, setCamera, setBg: handlers.setBg, setScene, getViewerEnv }
 }
 
 function setScene (scene) {

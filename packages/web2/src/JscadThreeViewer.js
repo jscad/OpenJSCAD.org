@@ -137,12 +137,6 @@ export default function JscadThreeViewer (el, { camera: _camera = {}, bg } = {})
 
   try {
     startRenderer({ canvas, bg, cameraPosition: _camera.position, cameraTarget: _camera.target })
-
-    const resizeObserver = new ResizeObserver(entries => {
-      const rect = entries[0].contentRect
-      resize(rect)
-    })
-    resizeObserver.observe(el)
   } catch (error) {
     destroy()
     throw error
@@ -155,7 +149,7 @@ export default function JscadThreeViewer (el, { camera: _camera = {}, bg } = {})
     useInstances: false
   })
 
-  return { sendCmd, destroy, getCamera, setCamera, camera: _camera, setBg: setBg, setScene, getViewerEnv }
+  return { sendCmd, resize, destroy, getCamera, setCamera, camera: _camera, setBg: setBg, setScene, getViewerEnv }
 }
 
 function setScene (scene) {
