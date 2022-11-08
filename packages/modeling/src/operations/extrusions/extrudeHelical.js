@@ -10,7 +10,7 @@ const geom2 = require('../../geometries/geom2')
  * @param {Object} options - options for extrusion
  * @param {Number} [options.angle=TAU] - angle of the extrusion (RADIANS) positive for right-hand rotation, negative for left-hand
  * @param {Number} [options.pitch=10] - elevation gain for each turn
- * @param {Number} [options.endRadiusOffset=0] - number of segments of the extrusion
+ * @param {Number} [options.endRadiusOffset=0] - offset the final radius of the extrusion, allowing for tapered helix, and or spiral
  * @param {Number} [options.segments=32] - number of segments of the extrusion
  * @param {geom2} geometry - the geometry to extrude
  * @returns {geom3} the extruded geometry
