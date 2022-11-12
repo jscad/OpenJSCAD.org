@@ -1,10 +1,13 @@
-const fs = require('fs')
-const { isAbsolute, resolve } = require('path')
+import fs from 'fs'
+import path from 'path'
+import { createRequire } from "module"
 
-const { deserializers, solidsAsBlob } = require('@jscad/io')
+import { deserializers, solidsAsBlob } from '@jscad/io'
 
-const { rebuildGeometryCli } = require('@jscad/core').evaluation
-const { registerAllExtensions } = require('@jscad/core').io
+import { evaluation, io } from '@jscad/core'
+
+const { rebuildGeometryCli } = evaluation
+const { registerAllExtensions } = io
 
 /**
  * generate output data from source
@@ -13,7 +16,7 @@ const { registerAllExtensions } = require('@jscad/core').io
  * @param {String} options
  * @return a Promise with the output data
  */
-const generateOutputData = (source, params, options) => {
+export const generateOutputData = (source, params, options) => {
   const defaults = {
     outputFile: undefined,
     outputFormat: 'stl',
@@ -26,9 +29,14 @@ const generateOutputData = (source, params, options) => {
 
   options.filename = inputFile // for deserializers
 
-  const inputPath = isAbsolute(inputFile) ? inputFile : resolve(process.cwd(), inputFile)
+  const inputPath = path.isAbsolute(inputFile) ? inputFile : path.resolve(process.cwd(), inputFile)
 
   // setup support for require-ing files with .jscad, .stl etc extensions
+  // HACK create the require function if necessary
+  if (typeof self === 'undefined') {
+    // create require via Node API
+    var require = createRequire(import.meta.url)
+  }
   registerAllExtensions(fs, require)
 
   return new Promise((resolve, reject) => {
@@ -66,4 +74,4 @@ const generateOutputData = (source, params, options) => {
     })
 }
 
-module.exports = generateOutputData
+export default generateOutputData

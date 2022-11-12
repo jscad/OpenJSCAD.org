@@ -21,15 +21,18 @@
 //   openjscad test.jscad -of stl
 //   openjscad name_plate.jscad --name "Just Me" --title "CEO" -o amf test.amf
 //
-const fs = require('fs')
+import fs from 'fs'
 
-const { formats } = require('@jscad/io/formats')
+import { formats } from '@jscad/io'
 
-const version = require('./package.json').version
-const generateOutputData = require('./src/generateOutputData')
-const determineOutputNameAndFormat = require('./src/determineOutputNameAndFormat')
-const writeOutput = require('./src/writeOutput')
-const parseArgs = require('./src/parseArgs')
+const { supportedFormats } = formats
+
+import generateOutputData from './src/generateOutputData.js'
+import determineOutputNameAndFormat from './src/determineOutputNameAndFormat.js'
+import writeOutput from './src/writeOutput.js'
+import parseArgs from './src/parseArgs.js'
+
+const version = '[VI]{version}[/VI]' // version is injected by rollup
 
 // handle arguments (inputs, outputs, etc)
 const args = process.argv.splice(2)
@@ -50,7 +53,7 @@ const clicolors = {
 
 console.log(`${clicolors.blue}JSCAD: generating output ${clicolors.red}
  from: ${clicolors.green} ${inputFile} ${clicolors.red}
- to: ${clicolors.green} ${outputFile} ${clicolors.yellow}(${formats[outputFormat].description}) ${clicolors.black}
+ to: ${clicolors.green} ${outputFile} ${clicolors.yellow}(${supportedFormats[outputFormat].description}) ${clicolors.black}
 `)
 
 // read input data

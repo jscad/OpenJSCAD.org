@@ -1,6 +1,6 @@
-const version = require('../package.json').version
+const version = '[VI]{version}[/VI]' // version is injected by rollup
 
-const env = () => {
+export const env = () => {
   let env = 'OpenJSCAD ' + version
   if (typeof document !== 'undefined') {
     const w = document.defaultView
@@ -14,4 +14,4 @@ const env = () => {
   console.log(env)
 }
 
-module.exports = env
+export default env
