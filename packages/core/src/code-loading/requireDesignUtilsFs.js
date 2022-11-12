@@ -1,5 +1,6 @@
-const path = require('path')
-const { toArray } = require('@jscad/array-utils')
+import path from 'path'
+
+import { toArray } from '@jscad/array-utils'
 
 // NOTE/ path.parse is NOT included by browserify & co , hence this function ...
 // https://github.com/substack/path-browserify/pull/3
@@ -106,7 +107,7 @@ const getDesignName = (fs, paths) => {
   }
 }
 
-module.exports = {
+export {
   getDesignEntryPoint,
   getDesignName
 }

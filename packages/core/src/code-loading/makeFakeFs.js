@@ -1,4 +1,4 @@
-const makeFakeFs = (filesAndFolders) => {
+export const makeFakeFs = (filesAndFolders) => {
   const findMatch = (path, inputs = filesAndFolders) => {
     for (let i = 0; i < inputs.length; i++) {
       const entry = inputs[i]
@@ -22,6 +22,7 @@ const makeFakeFs = (filesAndFolders) => {
       isDirectory: (_) => (entry && (!('source' in entry) && ('children' in entry)))
     }
   }
+
   const fakeFs = {
     statSync,
     existsSync: (path) => {
@@ -62,4 +63,4 @@ const makeFakeFs = (filesAndFolders) => {
   return fakeFs
 }
 
-module.exports = makeFakeFs
+export default makeFakeFs

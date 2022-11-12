@@ -1,4 +1,3 @@
-
 /**
  * evaluate script & rebuild solids, in seperate thread/webworker
  * @param {String} script the script
@@ -7,8 +6,9 @@
  * @param {Object} callback the callback to call once evaluation is done /failed
  * @param {Object} options the settings to use when rebuilding the solid
  */
-const rebuildGeometryWorker = (self) => {
-  const rebuildGeometry = require('./rebuildGeometry')
+import rebuildGeometry from './rebuildGeometry.js'
+
+export const rebuildGeometryWorker = (self) => {
   self.onmessage = function (event) {
     if (event.data instanceof Object) {
       const { data } = event
@@ -22,4 +22,4 @@ const rebuildGeometryWorker = (self) => {
   }
 }
 
-module.exports = rebuildGeometryWorker
+export default rebuildGeometryWorker

@@ -1,8 +1,9 @@
-/** transform an old type 'implicit imports' jscad script into one with explicit imports
+/**
+ * Transform an old type 'implicit imports' jscad script into one with explicit imports
  * @param  {} source
  * @param  {} apiMainPath
  */
-const modulifySource = (source, apiMainPath) => {
+export const modulifySource = (source, apiMainPath) => {
   const getParamsString = source.includes('getParameterDefinitions')
     ? 'module.exports.getParameterDefinitions = getParameterDefinitions'
     : ''
@@ -34,4 +35,4 @@ const modulifySource = (source, apiMainPath) => {
   return updatedSource
 }
 
-module.exports = modulifySource
+export default modulifySource

@@ -1,4 +1,4 @@
-const JSON5 = require('json5')
+import JSON5 from 'json5'
 
 /* Count leading spaces in a line.
 This helps provide more descriptive comments after the parameter.
@@ -8,11 +8,11 @@ When comment line is indented more than parameter(incl. parameter name)
 it is considered as description of previous parameter and not a group definition.
 
 */
-const countSpaces = (l) => {
+const countSpaces = (line) => {
   let count = 0
-  for (let i = 0; i < l.length; i++) {
-    if (l[i] === ' ') count++
-    else if (l[i] === '\t') count += 2
+  for (let i = 0; i < line.length; i++) {
+    if (line[i] === ' ') count++
+    else if (line[i] === '\t') count += 2
     else break
   }
   return count
@@ -191,4 +191,10 @@ const combineParameterDefinitions = (paramDefFromSource, extraDef) => {
   return def
 }
 
-module.exports = { getParameterDefinitionsFromSource, parseOne, parseComment, parseDef, combineParameterDefinitions }
+export {
+  getParameterDefinitionsFromSource,
+  parseOne,
+  parseComment,
+  parseDef,
+  combineParameterDefinitions
+}

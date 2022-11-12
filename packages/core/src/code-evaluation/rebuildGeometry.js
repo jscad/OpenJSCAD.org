@@ -1,6 +1,6 @@
-const loadDesign = require('../code-loading/loadDesign')
-const instanciateDesign = require('./instanciateDesign')
-const applyParameterDefinitions = require('../parameters/applyParameterDefinitions')
+import loadDesign from '../code-loading/loadDesign.js'
+import instanciateDesign from './instanciateDesign.js'
+import applyParameterDefinitions from '../parameters/applyParameterDefinitions.js'
 
 /**
  * Rebuild JSCAD solids from the given filesAndFolders.
@@ -26,7 +26,7 @@ const applyParameterDefinitions = require('../parameters/applyParameterDefinitio
  * Everything is together in a single function, because this is usually run in the context of a web worker
  * And transfering data back & forth is both complex (see transferables) and costly (time)
  **/
-const rebuildSolids = (data, callback) => {
+export const rebuildGeometry = (data, callback) => {
   const defaults = {
     mainPath: '',
     apiMainPath: '@jscad/modeling',
@@ -84,4 +84,4 @@ const rebuildSolids = (data, callback) => {
   }
 }
 
-module.exports = rebuildSolids
+export default rebuildGeometry

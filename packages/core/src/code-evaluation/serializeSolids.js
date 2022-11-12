@@ -1,11 +1,12 @@
-const { geom2, geom3, path2 } = require('@jscad/modeling').geometries
+import { geometries } from '@jscad/modeling'
+const { geom2, geom3, path2 } = geometries
 
 /*
  * Serialize the given solids/objects into web worker message content.
  * @param {Array} solids - list of solids to serialize
  * @return {Array} web worker message contents
  */
-const serializeSolids = (solids) => {
+export const serializeSolids = (solids) => {
   // NOTE: the use of compactBinary formats was removed due to
   // that lack of support for additional attributes, as well as
   // imcomplete support for transfering objects via web workers
@@ -23,4 +24,4 @@ const serializeSolids = (solids) => {
   return solids
 }
 
-module.exports = serializeSolids
+export default serializeSolids

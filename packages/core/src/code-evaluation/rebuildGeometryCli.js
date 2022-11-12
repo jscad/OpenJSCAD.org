@@ -1,17 +1,19 @@
+import path from 'path'
+import { createRequire } from "module"
 
-const path = require('path')
-const { toArray } = require('@jscad/array-utils')
-const requireDesignFromModule = require('../code-loading/requireDesignFromModule')
-const getAllParameterDefintionsAndValues = require('../parameters/getParameterDefinitionsAndValues')
-const makeWebRequire = require('../code-loading/webRequire')
+import { toArray } from '@jscad/array-utils'
 
-const rebuildSolids = (data) => {
+import requireDesignFromModule from '../code-loading/requireDesignFromModule.js'
+import getAllParameterDefintionsAndValues from '../parameters/getParameterDefinitionsAndValues.js'
+import makeWebRequire from '../code-loading/webRequire.js'
+
+export const rebuildGeometryCli = (data) => {
   const defaults = {
     apiMainPath: '@jscad/modeling'
   }
   let { apiMainPath, mainPath, parameterValues, useFakeFs } = Object.assign({}, defaults, data)
   // we need to update the source for our module
-  let requireFn = require
+  let requireFn = createRequire(import.meta.url)
 
   // source came from conversion, i.e. not from file system
   if (useFakeFs) {
@@ -41,4 +43,4 @@ const rebuildSolids = (data) => {
   return rawResults
 }
 
-module.exports = rebuildSolids
+export default rebuildGeometryCli

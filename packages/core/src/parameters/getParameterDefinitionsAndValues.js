@@ -1,5 +1,5 @@
-const getParameterValuesFromParameters = require('./getParameterValuesFromParameters')
-const applyParameterDefinitions = require('./applyParameterDefinitions')
+import getParameterValuesFromParameters from './getParameterValuesFromParameters.js'
+import applyParameterDefinitions from './applyParameterDefinitions.js'
 
 const doesModuleExportParameterDefiniitions = (moduleToCheck) => moduleToCheck && 'getParameterDefinitions' in moduleToCheck
 
@@ -13,7 +13,8 @@ const getRawParameterDefinitionsAndValues = (rootModule, overrides) => {
   return { parameterDefinitions, parameterValues }
 }
 
-/** given the root/main module and optional parameter value overrides,
+/*
+ * given the root/main module and optional parameter value overrides,
  * returns parameterDefinitions & 'default' parameter values
  * the overrides are passed for to enable the parameter definitions to access the PREVIOUS
  * version of the parameter values
@@ -22,7 +23,7 @@ const getRawParameterDefinitionsAndValues = (rootModule, overrides) => {
  * @param  {Object} overrides an object containing parameter values, used as overrides
  * @returns {Object} { parameterValues, parameterDefinitions }
  */
-const getAllParameterDefintionsAndValues = (rootModule, overrides) => {
+export const getParameterDefinitionsAndValues = (rootModule, overrides) => {
   let { parameterDefinitions, parameterValues } = getRawParameterDefinitionsAndValues(rootModule, overrides)
   parameterValues = Object.assign({}, parameterValues, overrides)
   parameterValues = parameterValues ? applyParameterDefinitions(parameterValues, parameterDefinitions) : parameterValues
@@ -30,4 +31,4 @@ const getAllParameterDefintionsAndValues = (rootModule, overrides) => {
   return { parameterValues, parameterDefinitions }
 }
 
-module.exports = getAllParameterDefintionsAndValues
+export default getParameterDefinitionsAndValues

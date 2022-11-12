@@ -1,10 +1,11 @@
-const isGeom2 = require('@jscad/modeling').geometries.geom2.isA
-const isGeom3 = require('@jscad/modeling').geometries.geom3.isA
-const isPath2 = require('@jscad/modeling').geometries.path2.isA
+import { geometries } from '@jscad/modeling'
+const isGeom2 = geometries.geom2.isA
+const isGeom3 = geometries.geom3.isA
+const isPath2 = geometries.path2.isA
 
-const { flatten, toArray } = require('@jscad/array-utils')
+import { flatten, toArray } from '@jscad/array-utils'
 
-const serializeSolids = require('./serializeSolids')
+import serializeSolids from './serializeSolids.js'
 
 /*
  * determine if the given results contain valid geometry
@@ -16,7 +17,7 @@ const isResultGeometry = (results) => {
   return false
 }
 
-const instanciateDesign = (rootModule, parameterValues, options) => {
+export const instanciateDesign = (rootModule, parameterValues, options) => {
   const { serialize } = options
   // deal with the actual solids generation
   let solids
@@ -30,4 +31,4 @@ const instanciateDesign = (rootModule, parameterValues, options) => {
   }
 }
 
-module.exports = instanciateDesign
+export default instanciateDesign

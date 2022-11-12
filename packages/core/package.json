@@ -5,6 +5,7 @@
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
+  "type": "module",
   "unpkg": "dist/jscad-core.min.js",
   "scripts": {
     "build": "browserify src/index.js -o dist/jscad-core.min.js -g uglifyify --standalone jscadCore",

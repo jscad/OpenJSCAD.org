@@ -1,4 +1,2 @@
-module.exports = {
-  getFileExtensionFromString: require('./getFileExtensionFromString'),
-  version: require('./version')
-}
+export { getFileExtensionFromString } from './getFileExtensionFromString.js'
+export { version } from './version.js'

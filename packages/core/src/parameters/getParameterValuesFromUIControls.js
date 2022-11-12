@@ -1,10 +1,10 @@
-/**
+/*
  * extracts the parameter
  * @param {Array} paramControls
  * @param {Boolean} onlyChanged
  * @returns {Object} the parameter values, as an object
  */
-const getParameterValuesFromUIControls = (paramControls, parameterDefinitions, onlyChanged) => {
+export const getParameterValuesFromUIControls = (paramControls, parameterDefinitions, onlyChanged) => {
   const parameterValues = {}
   let value
   for (let i = 0; i < paramControls.length; i++) {
@@ -59,4 +59,4 @@ const getParameterValuesFromUIControls = (paramControls, parameterDefinitions, o
   return parameterValues
 }
 
-module.exports = getParameterValuesFromUIControls
+export default getParameterValuesFromUIControls

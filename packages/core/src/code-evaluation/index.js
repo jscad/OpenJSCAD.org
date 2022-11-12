@@ -1,6 +1,4 @@
-module.exports = {
-  rebuildGeometry: require('./rebuildGeometry'),
-  rebuildGeometryCli: require('./rebuildGeometryCli'),
-  rebuildGeometryWorker: require('./rebuildGeometryWorker'),
-  serializeSolids: require('./serializeSolids')
-}
+export { rebuildGeometry } from './rebuildGeometry.js'
+export { rebuildGeometryCli } from './rebuildGeometryCli.js'
+export { rebuildGeometryWorker } from './rebuildGeometryWorker.js'
+export { serializeSolids } from './serializeSolids.js'
