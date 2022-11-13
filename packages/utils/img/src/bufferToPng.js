@@ -1,7 +1,7 @@
-const fs = require('fs')
-const png = require('pngjs')
+import fs from 'fs'
+import png from 'pngjs'
 
-const bufferToPng = (buffer, width, height, fileName) => {
+export const bufferToPng = (buffer, width, height, fileName) => {
   const genOutput = (inBuf, width, height) => {
     const pngImg = new png.PNG({ width, height })
 
@@ -30,4 +30,4 @@ const bufferToPng = (buffer, width, height, fileName) => {
   genOutput(buffer, width, height)
 }
 
-module.exports = bufferToPng
+export default bufferToPng

@@ -4,6 +4,7 @@
   "description": "Image Utilities for JSCAD",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "type": "module",
   "main": "src/index.js",
   "scripts": {},
   "author": "Mark 'kaosat-dev' Moissette",

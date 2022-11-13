@@ -1,4 +1,4 @@
-const bufferToPng = require('./bufferToPng')
+import bufferToPng from './bufferToPng.js'
 
 const contextToBuffer = (gl, width, height, depth = 4) => {
   const buffer = new Uint8Array(width * height * depth)
@@ -15,4 +15,4 @@ const writeContextToFile = (context, width, height, depth, path = './test.png') 
   writeBufferToFile(buffer, width, height, path)
 }
 
-module.exports = { contextToBuffer, writeBufferToFile, writeContextToFile }
+export { contextToBuffer, writeBufferToFile, writeContextToFile }

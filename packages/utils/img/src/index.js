@@ -1,9 +1,11 @@
+import { contextToBuffer, writeBufferToFile, writeContextToFile } from './imgUtils.js'
+import bufferToPng from './bufferToPng.js'
+import * as colorConversions from './colorConversions.js'
 
-const { contextToBuffer, writeBufferToFile, writeContextToFile } = require('./imgUtils')
-module.exports = {
+export {
   contextToBuffer,
   writeBufferToFile,
   writeContextToFile,
-  bufferToPng: require('./bufferToPng'),
-  colorConversions: require('./colorConversions')
+  bufferToPng,
+  colorConversions,
 }
