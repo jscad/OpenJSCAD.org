@@ -1,5 +1,3 @@
-module.exports = {
-  camera: require('./camera'),
-  orthographic: require('./orthographicCamera'),
-  perspective: require('./perspectiveCamera')
-}
+export camera from './camera.js'
+export orthographic from './orthographicCamera.js'
+export perspective from './perspectiveCamera.js'

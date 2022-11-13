@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const geom3ToGeometries = require('./geom3ToGeometries')
+import geom3ToGeometries from './geom3ToGeometries.js'
 
 const defaultTransforms = Float32Array.from([
   1, 0, 0, 0,

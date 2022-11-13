@@ -1,10 +1,10 @@
-const makeDrawAxis = require('../drawAxis')
-const makeDrawMesh = require('../drawMeshNoNormals')
-const makeArcGeometry = require('./arcGeo')
+import mat4 from 'gl-mat4'
 
-const mat4 = require('gl-mat4')
+import makeDrawAxis from '../drawAxis.js'
+import makeDrawMesh from '../drawMeshNoNormals.js'
+import makeArcGeometry from './arcGeo.js'
 
-const drawConnector = (regl, params) => {
+export const drawConnector = (regl, params) => {
   const argGeometry = makeArcGeometry({ innerRadius: 9, outerRadius: 10, startRadian: 0, endRadian: Math.PI * 2 })
   const drawAxis = makeDrawAxis(regl, { alwaysVisible: false })
   const drawArc = makeDrawMesh(regl, { geometry: argGeometry })
@@ -28,4 +28,4 @@ const drawConnector = (regl, params) => {
   }
 }
 
-module.exports = drawConnector
+export default drawConnector

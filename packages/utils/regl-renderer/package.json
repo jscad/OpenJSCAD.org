@@ -4,6 +4,7 @@
   "description": "Renderer for JSCAD Geometries",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "type": "module",
   "main": "src/index.js",
   "unpkg": "dist/jscad-regl-renderer.min.js",
   "scripts": {

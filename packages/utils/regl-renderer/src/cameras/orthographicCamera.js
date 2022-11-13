@@ -1,4 +1,4 @@
-const mat4 = require('gl-mat4')
+import mat4 from 'gl-mat4'
 
 const cameraState = {
   view: mat4.identity(new Float32Array(16)),
@@ -36,4 +36,8 @@ const setProjection = (camera, input) => {
   return { projection, aspect, viewport }
 }
 
-module.exports = { cameraState, cameraProps, setProjection }
+export {
+  cameraState,
+  cameraProps,
+  setProjection
+}

@@ -1,4 +1,4 @@
-const mat4 = require('gl-mat4')
+import mat4 from 'gl-mat4'
 
 // The only data types accepted by WebGL (and OpenGL ES 2.0) for indices are unsigned bytes and unsigned shorts.
 // Since an unsigned short has a range of 0-65535, this means that gl.DrawElements can only reference 65k vertices per draw call.
@@ -11,7 +11,7 @@ const maxIndex = Math.floor(65535 / 2) - 2 // two vertices per segment, less clo
  * @param {path2} solid - the solid to convert
  * @return {Array} list of new geometries
  */
-const path2ToGeometries = (options, solid) => {
+export const path2ToGeometries = (options, solid) => {
   let { color } = options
 
   const points = solid.points
@@ -55,4 +55,4 @@ const path2ToGeometries = (options, solid) => {
   return geometries
 }
 
-module.exports = path2ToGeometries
+export default path2ToGeometries

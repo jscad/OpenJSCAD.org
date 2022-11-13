@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const path2ToGeometries = require('./path2ToGeometries')
+import path2ToGeometries from './path2ToGeometries.js'
 
 const defaultTransforms = Float32Array.from([
   1, 0, 0, 0,

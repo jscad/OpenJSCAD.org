@@ -1,12 +1,15 @@
-const vec3 = require('gl-vec3')
-const mat4 = require('gl-mat4')
+import vec3 from 'gl-vec3'
+import mat4 from 'gl-mat4'
+
+import * as orthographicCamera from './orthographicCamera.js'
+import * as perspectiveCamera from './perspectiveCamera.js'
 
 const fromOrthographicToPerspective = (orthographicCamera) => {
   const { near, far, fov, zoom } = orthographicCamera
   // recompute projection matrix to use perspective camera projection matrix
   const { viewport } = orthographicCamera
-  const projection = require('./perspectiveCamera').setProjection(orthographicCamera, { width: viewport[2], height: viewport[3] })
-  const { projectionType } = require('./perspectiveCamera').cameraState
+  const projection = perspectiveCamera.setProjection(orthographicCamera, { width: viewport[2], height: viewport[3] })
+  const { projectionType } = perspectiveCamera.cameraState
   return Object.assign({}, orthographicCamera, projection, { projectionType }, { near, far, fov })
 }
 
@@ -23,8 +26,8 @@ const fromPerspectiveToOrthographic = (perspectiveCamera) => {
   // we re-use near, far, & projection matrix of orthographicCamera
   const { near, far, viewport } = perspectiveCamera
   const fCam = { zoom: 1, near, far }
-  const orthographicCamera = require('./orthographicCamera').cameraState
-  const projection = require('./orthographicCamera').setProjection(fCam, { width, height })
+  const orthographicCamera = orthographicCamera.cameraState
+  const projection = orthographicCamera.setProjection(fCam, { width, height })
   return Object.assign({}, orthographicCamera, perspectiveCamera, projection, { projectionType: orthographicCamera.projectionType, viewport })
 }
 
@@ -58,7 +61,7 @@ const toPresetView = (viewName, { camera }) => {
   return { view, position }
 }
 
-module.exports = {
+export {
   toPerspectiveView,
   toPresetView,
   fromOrthographicToPerspective,

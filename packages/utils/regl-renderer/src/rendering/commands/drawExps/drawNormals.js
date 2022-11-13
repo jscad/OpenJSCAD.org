@@ -1,6 +1,6 @@
-const mat4 = require('gl-mat4')
+import mat4 from 'gl-mat4'
 
-const drawNormals = (regl, params) => {
+export const drawNormals = (regl, params) => {
   const defaults = {
     size: 20,
     lineWidth: 5, // FIXME/ linewidth has been "deprecated" in multiple browsers etc, need a workaround,
@@ -73,4 +73,4 @@ const drawNormals = (regl, params) => {
   return () => singleNormal(normaLines)
 }
 
-module.exports = drawNormals
+export default drawNormals

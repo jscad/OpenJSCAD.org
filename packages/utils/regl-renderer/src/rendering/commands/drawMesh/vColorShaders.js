@@ -1,4 +1,4 @@
-const vColorVert = `
+const vert = `
 precision mediump float;
 
 uniform float camNear, camFar;
@@ -30,7 +30,7 @@ void main() {
   //gl_Position = zBufferAdjust(glPosition, camNear, camFar);
 }
 `
-const vColorFrag = `
+const frag = `
 precision mediump float;
 varying vec3 surfaceNormal, surfacePosition;
 
@@ -73,4 +73,4 @@ void main () {
 }
 `
 
-module.exports = { frag: vColorFrag, vert: vColorVert }
+export { frag, vert }

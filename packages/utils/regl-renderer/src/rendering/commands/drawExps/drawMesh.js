@@ -1,6 +1,6 @@
-const mat4 = require('gl-mat4')
+import mat4 from 'gl-mat4'
 
-const drawMesh = (regl, params) => {
+export const drawMesh = (regl, params) => {
   const mesh = params.geometry
   return regl({
     vert: `
@@ -59,4 +59,4 @@ const drawMesh = (regl, params) => {
   })
 }
 
-module.exports = drawMesh
+export default drawMesh

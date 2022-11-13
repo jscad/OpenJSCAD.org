@@ -1,4 +1,4 @@
-const cagToGeometries = (cags, options) => {
+export const cagToGeometries = (cags, options) => {
   const defaults = {
     color: [1, 0.4, 0, 1]// default color
   }
@@ -49,4 +49,4 @@ const cagToPointsArray = (input) => {
   return points
 }
 
-module.exports = cagToGeometries
+export default cagToGeometries

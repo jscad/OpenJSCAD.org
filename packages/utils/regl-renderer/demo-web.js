@@ -1,10 +1,12 @@
-const { prepareRender, drawCommands, cameras, entitiesFromSolids } = require('./src')
+import { prepareRender, drawCommands, cameras, entitiesFromSolids } from './src/index.js'
+
+import { colors, primitives, booleans } from '@jscad/modeling'
 
 // setup demo solids data
 const demoSolids = (parameters) => {
-  const { colorize } = require('@jscad/modeling').colors
-  const { cube, cuboid, line, sphere, star } = require('@jscad/modeling').primitives
-  const { intersect, subtract } = require('@jscad/modeling').booleans
+  const { colorize } = colors
+  const { cube, cuboid, line, sphere, star } = primitives
+  const { intersect, subtract } = booleans
 
   const logo = [
     colorize([1.0, 0.4, 1.0], subtract(

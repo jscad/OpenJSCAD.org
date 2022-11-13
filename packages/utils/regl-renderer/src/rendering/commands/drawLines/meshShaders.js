@@ -1,4 +1,4 @@
-const meshVert = `
+const vert = `
 precision mediump float;
 
 uniform float camNear, camFar;
@@ -24,7 +24,7 @@ void main() {
 }
 `
 
-const meshFrag = `
+const frag = `
 precision mediump float;
 varying vec3 surfaceNormal;
 uniform float ambientLightAmount;
@@ -55,4 +55,4 @@ void main () {
   gl_FragColor = vec4((ambient + diffuse + diffuse2 * v), endColor.a);
 }`
 
-module.exports = { vert: meshVert, frag: meshFrag }
+export { vert, frag }

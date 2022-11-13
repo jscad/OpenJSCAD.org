@@ -1,5 +1,6 @@
-const { squaredDistance, vec3 } = require('gl-vec3')
-const boundingBox = require('./boundingBox')
+import { squaredDistance, vec3 } from 'gl-vec3'
+
+import boundingBox from './boundingBox.js'
 
 /*
  * compute diameter of the bounding sphere for the given (geometry) positions
@@ -7,7 +8,7 @@ const boundingBox = require('./boundingBox')
  * @param {array} positions - the array/typed array of positions.
  * for now loosely based on three.js implementation
  */
-const boundingSphere = (center, positions) => {
+export const boundingSphere = (center, positions) => {
   if (positions.length === 0) {
     return null
   }
@@ -34,4 +35,4 @@ const boundingSphere = (center, positions) => {
   return Math.sqrt(maxRadiusSq)
 }
 
-module.exports = boundingSphere
+export default boundingSphere

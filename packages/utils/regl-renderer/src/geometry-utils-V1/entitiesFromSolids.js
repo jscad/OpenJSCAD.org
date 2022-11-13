@@ -1,10 +1,12 @@
-const mat4 = require('gl-mat4')
-const { flatten, toArray } = require('@jscad/array-utils')
-const csgToGeometries = require('./csgToGeometries')
-const cagToGeometries = require('./cagToGeometries')
-const computeBounds = require('../bound-utils/computeBounds')
+import mat4 from 'gl-mat4'
 
-const entitiesFromSolids = (params, solids) => {
+import { flatten, toArray } from '@jscad/array-utils'
+
+import csgToGeometries from './csgToGeometries.js'
+import cagToGeometries from './cagToGeometries.js'
+import computeBounds from '../bound-utils/computeBounds.js'
+
+export const entitiesFromSolids = (params, solids) => {
   const defaults = {
     meshColor: [0, 0.6, 1, 1],
     smoothNormals: true
@@ -72,4 +74,4 @@ const entitiesFromSolids = (params, solids) => {
   return entities
 }
 
-module.exports = entitiesFromSolids
+export default entitiesFromSolids

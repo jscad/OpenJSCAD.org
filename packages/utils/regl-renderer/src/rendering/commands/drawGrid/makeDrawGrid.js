@@ -1,6 +1,6 @@
-const mat4 = require('gl-mat4')
+import mat4 from 'gl-mat4'
 
-const makeDrawGrid = (regl, params = {}) => {
+export const makeDrawGrid = (regl, params = {}) => {
   const positions = []
   const defaults = {
     visuals: {
@@ -139,4 +139,4 @@ const makeDrawGrid = (regl, params = {}) => {
   })
 }
 
-module.exports = makeDrawGrid
+export default makeDrawGrid

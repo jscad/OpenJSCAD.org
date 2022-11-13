@@ -1,11 +1,12 @@
-/** kinda, sorta like a nested object.assign, so that nested object values
+/**
+ * kinda, sorta like a nested object.assign, so that nested object values
  * do not get lost
  * note : this is NOT actually making anything immutable !
  * @param  {} output={}
  * @param  {} currentState
  * @param  {} options
  */
-const merge = (output = {}, currentState, options) => {
+export const merge = (output = {}, currentState, options) => {
   output = currentState // JSON.parse(JSON.stringify(currentState))
   Object.keys(options).forEach((key) => {
     const item = options[key]
@@ -29,6 +30,4 @@ const merge = (output = {}, currentState, options) => {
   return output
 }
 
-module.exports = {
-  merge
-}
+export default merge

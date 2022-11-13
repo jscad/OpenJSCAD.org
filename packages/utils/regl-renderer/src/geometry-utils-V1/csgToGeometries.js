@@ -1,6 +1,6 @@
-const vec3 = require('gl-vec3')
+import vec3 from 'gl-vec3'
 
-const { toArray } = require('@jscad/array-utils')
+import { toArray } from '@jscad/array-utils'
 
 /**
  * convert a CSG from csg.js to an array of geometries with positions, normals, colors & indices
@@ -13,7 +13,7 @@ const { toArray } = require('@jscad/array-utils')
  * @param {String} options.faceColor='#FF000' hex color
  * @returns {Object} {indices, positions, normals, colors}
  */
-const csgToGeometries = (csgs, options) => {
+export const csgToGeometries = (csgs, options) => {
   const defaults = {
     smoothLighting: false, // set to true if we want to use interpolated vertex normals this creates nice round spheres but does not represent the shape of the actual model
     normalThreshold: 0.349066, // 20 deg
@@ -217,4 +217,4 @@ const fuzyNormalAndPositionLookup = (normalPositionLookup, toCompare, normalThre
   return undefined
 }
 
-module.exports = csgToGeometries
+export default csgToGeometries

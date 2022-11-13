@@ -1,7 +1,9 @@
-const renderContext = require('./renderContext')
-const renderDefaults = require('./renderDefaults')
+import regl from 'regl'
 
-const prepareRender = (params) => {
+import renderContext from './renderContext.js'
+import * as renderDefaults from './renderDefaults.js'
+
+export const prepareRender = (params) => {
   const defaults = {
   // extensions:['oes_element_index_uint']
   }
@@ -20,7 +22,7 @@ const prepareRender = (params) => {
     }
   )
   // setup regl
-  const regl = require('regl')(options)// , (width, height))
+  const base = regl(options)  // , (width, height))
   // setup draw command cache
   // const drawCache = {}
   const drawCache2 = new Map()
@@ -30,8 +32,8 @@ const prepareRender = (params) => {
     props.rendering = Object.assign({}, renderDefaults, props.rendering)
 
     // props is the first parameter, the second one is a function, doing the actual rendering
-    renderContext(regl)(props, (context) => {
-      regl.clear({
+    renderContext(base)(props, (context) => {
+      base.clear({
         color: props.rendering.background,
         depth: 1
       })
@@ -54,7 +56,9 @@ const prepareRender = (params) => {
                 drawCmd = drawCache2.get(visuals.cacheId)
               } else {
                 visuals.cacheId = drawCache2.size
-                drawCmd = props.drawCommands[visuals.drawCmd](regl, entity)
+console.log(visuals.drawCmd)
+console.log(context)
+                drawCmd = props.drawCommands[visuals.drawCmd](base, entity)
                 drawCache2.set(visuals.cacheId, drawCmd)
               }
               const drawParams = { // FIXME: horrible, tidy up !!: what is needed/should be passed to render pass ?
@@ -71,10 +75,10 @@ const prepareRender = (params) => {
   // actual render function
   return function render (data) {
     // important for stats, correct resizing etc
-    regl.poll()
+    base.poll()
     command(data)// meh ??
     // tick += 0.01
   }
 }
 
-module.exports = prepareRender
+export default prepareRender
