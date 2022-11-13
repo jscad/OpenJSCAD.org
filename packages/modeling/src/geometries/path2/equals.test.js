@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { equals, fromPoints } = require('./index')
+import { equals, fromPoints } from './index.js'
 
 test('equals: two paths with different points are not equal', (t) => {
   const p1 = fromPoints({ closed: false }, [[0, 0], [2, 0], [2, 1]])

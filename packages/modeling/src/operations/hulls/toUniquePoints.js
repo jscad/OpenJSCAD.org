@@ -1,11 +1,11 @@
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
 /*
  * Return the unique vertices of a geometry
  */
-const toUniquePoints = (geometries) => {
+export const toUniquePoints = (geometries) => {
   const found = new Set()
   const uniquePoints = []
 
@@ -31,4 +31,4 @@ const toUniquePoints = (geometries) => {
   return uniquePoints
 }
 
-module.exports = toUniquePoints
+export default toUniquePoints

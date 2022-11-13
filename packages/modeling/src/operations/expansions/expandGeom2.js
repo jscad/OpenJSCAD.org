@@ -1,6 +1,6 @@
-const geom2 = require('../../geometries/geom2')
+import * as geom2 from '../../geometries/geom2/index.js'
 
-const offsetFromPoints = require('./offsetFromPoints')
+import offsetFromPoints from './offsetFromPoints.js'
 
 /*
  * Expand the given geometry (geom2) using the given options (if any).
@@ -11,7 +11,7 @@ const offsetFromPoints = require('./offsetFromPoints')
  * @param {geom2} geometry - the geometry to expand
  * @returns {geom2} expanded geometry
  */
-const expandGeom2 = (options, geometry) => {
+export const expandGeom2 = (options, geometry) => {
   const defaults = {
     delta: 1,
     corners: 'edge',
@@ -40,4 +40,4 @@ const expandGeom2 = (options, geometry) => {
   return geom2.create(allsides)
 }
 
-module.exports = expandGeom2
+export default expandGeom2

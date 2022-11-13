@@ -1,11 +1,12 @@
-const { toPolygons } = require('../../src/core/CSGToOther')
+import { toPolygons } from '../../src/core/CSGToOther.js'
+
 // Compare two polygons together.
 // They are identical if they are composed with the same vertices in the same
 // relative order
 // todo: could be part of csg.js
 // todo: should simplify colinear vertices
 // @return true if both polygons are identical
-const comparePolygons = (a, b) => {
+export const comparePolygons = (a, b) => {
   // First find one matching vertice
   // We try to find the first vertice of a inside b
   // If there is no such vertice, then a != b
@@ -35,7 +36,7 @@ const comparePolygons = (a, b) => {
   return true
 }
 
-const assertSameGeometry = (t, observed, expected, failMessage) => {
+export const assertSameGeometry = (t, observed, expected, failMessage) => {
   if (!containsCSG(observed, expected) || !containsCSG(observed, expected)) {
     failMessage = failMessage === undefined ? 'CSG do not have the same geometry' : failMessage
     t.fail(failMessage)
@@ -43,7 +44,7 @@ const assertSameGeometry = (t, observed, expected, failMessage) => {
 }
 
 // a contains b if b polygons are also found in a
-const containsCSG = (observed, expected) => {
+export const containsCSG = (observed, expected) => {
   console.log('Observed: ', observed)
   console.log('Expected: ', expected)
 
@@ -60,18 +61,18 @@ const containsCSG = (observed, expected) => {
   }).reduce((observed, expected) => observed && expected)
 }
 
-const simplifiedPolygon = (polygon) => {
+export const simplifiedPolygon = (polygon) => {
   const vertices = polygon.vertices.map((vertex) => [vertex.pos._x, vertex.pos._y, vertex.pos._z])
   const plane = { normal: [polygon.plane.normal._x, polygon.plane.normal._y, polygon.plane.normal._z], w: polygon.plane.w }
   return { positions: vertices, plane, shared: polygon.shared }
 }
 
-const simplifieSides = (cag) => {
+export const simplifieSides = (cag) => {
   const sides = cag.sides.map((side) => [side.vertex0.pos._x, side.vertex0.pos._y, side.vertex1.pos._x, side.vertex1.pos._y])
   return sides.sort()
 }
 
-const nearlyEquals = (a, b, epsilon = 1) => {
+export const nearlyEquals = (a, b, epsilon = 1) => {
   if (a === b) { // shortcut, also handles infinities and NaNs
     return true
   }
@@ -96,7 +97,7 @@ const nearlyEquals = (a, b, epsilon = 1) => {
   return true
 }
 
-const CAGNearlyEquals = (observed, expected, precision) => {
+export const CAGNearlyEquals = (observed, expected, precision) => {
   if (observed.sides.length !== expected.sides.length) {
     return false
   }
@@ -115,12 +116,4 @@ const CAGNearlyEquals = (observed, expected, precision) => {
   }
 
   return true
-}
-
-module.exports = {
-  assertSameGeometry,
-  comparePolygons,
-  simplifiedPolygon,
-  simplifieSides,
-  CAGNearlyEquals
 }

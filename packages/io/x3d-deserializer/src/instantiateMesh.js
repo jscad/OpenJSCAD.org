@@ -1,7 +1,7 @@
-const { primitives } = require('@jscad/modeling')
+import { primitives } from '@jscad/modeling'
 
-const { x3dTypes } = require('./objects')
-const { findNode, createColors } = require('./translateHelpers')
+import { x3dTypes } from './objects.js'
+import { findNode, createColors } from './translateHelpers.js'
 
 const convertMesh = (options, objects) => {
   let shape = findNode(x3dTypes.TRIANGLESET, objects)
@@ -287,7 +287,7 @@ const instantiateMesh = (options, objects) => {
   return geometry
 }
 
-module.exports = {
+export {
   convertMesh,
   instantiateMesh
 }

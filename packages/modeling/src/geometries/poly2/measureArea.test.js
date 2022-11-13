@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { measureArea, create } = require('./index')
+import { measureArea, create } from './index.js'
 
 test('poly2: measureArea() should return correct values', (t) => {
   const ply1 = create()

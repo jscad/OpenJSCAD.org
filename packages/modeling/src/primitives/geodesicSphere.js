@@ -1,11 +1,11 @@
-const mat4 = require('../maths/mat4')
-const vec3 = require('../maths/vec3')
+import * as mat4 from '../maths/mat4/index.js'
+import * as vec3 from '../maths/vec3/index.js'
 
-const geom3 = require('../geometries/geom3')
+import * as geom3 from '../geometries/geom3/index.js'
 
-const polyhedron = require('./polyhedron')
+import polyhedron from './polyhedron.js'
 
-const { isGT, isGTE } = require('./commonChecks')
+import { isGT, isGTE } from './commonChecks.js'
 
 /**
  * Construct a geodesic sphere based on icosahedron symmetry.
@@ -18,7 +18,7 @@ const { isGT, isGTE } = require('./commonChecks')
  * @example
  * let myshape = geodesicSphere({radius: 15, frequency: 18})
  */
-const geodesicSphere = (options) => {
+export const geodesicSphere = (options) => {
   const defaults = {
     radius: 1,
     frequency: 6
@@ -134,4 +134,4 @@ const geodesicSphere = (options) => {
   return geometry
 }
 
-module.exports = geodesicSphere
+export default geodesicSphere

@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { transformationBetween, create, fromPointAxisNormal } = require('./index')
+import { transformationBetween, create, fromPointAxisNormal } from './index.js'
 
-const { compareVectors } = require('../../test/helpers')
+import { compareVectors } from '../../test/helpers/index.js'
 
 test('connector: transformationBetween() should return correct transform matrices', (t) => {
   const connector1 = create()

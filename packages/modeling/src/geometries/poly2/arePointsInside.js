@@ -1,5 +1,5 @@
-const measureArea = require('./measureArea')
-const flip = require('./flip')
+import measureArea from './measureArea.js'
+import flip from './flip.js'
 
 /**
  * Determine if the given points are inside the given polygon.
@@ -9,7 +9,7 @@ const flip = require('./flip')
  * @return {Integer} 1 if all points are inside, 0 if some or none are inside
  * @alias module:modeling/geometries/poly2.arePointsInside
  */
-const arePointsInside = (points, polygon) => {
+export const arePointsInside = (points, polygon) => {
   if (points.length === 0) return 0 // nothing to check
 
   const vertices = polygon.vertices
@@ -87,4 +87,4 @@ const isPointInside = (point, polygon) => {
  */
 const isLeft = (p0, p1, p2) => (p1[0] - p0[0]) * (p2[1] - p0[1]) - (p2[0] - p0[0]) * (p1[1] - p0[1])
 
-module.exports = arePointsInside
+export default arePointsInside

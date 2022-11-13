@@ -1,11 +1,11 @@
-const { EPS } = require('../../../maths/constants')
+import { EPS } from '../../../maths/constants.js'
 
-const plane = require('../../../maths/plane')
-const vec3 = require('../../../maths/vec3')
+import * as plane from '../../../maths/plane/index.js'
+import * as vec3 from '../../../maths/vec3/index.js'
 
-const poly3 = require('../../../geometries/poly3')
+import * as poly3 from '../../../geometries/poly3/index.js'
 
-const splitLineSegmentByPlane = require('./splitLineSegmentByPlane')
+import { splitLineSegmentByPlane } from './splitLineSegmentByPlane.js'
 
 // Returns object:
 // .type:
@@ -17,7 +17,7 @@ const splitLineSegmentByPlane = require('./splitLineSegmentByPlane')
 // In case the polygon is spanning, returns:
 // .front: a Polygon3 of the front part
 // .back: a Polygon3 of the back part
-const splitPolygonByPlane = (splane, polygon) => {
+export const splitPolygonByPlane = (splane, polygon) => {
   const result = {
     type: null,
     front: null,
@@ -117,5 +117,4 @@ const splitPolygonByPlane = (splane, polygon) => {
   }
   return result
 }
-
-module.exports = splitPolygonByPlane
+export default splitPolygonByPlane

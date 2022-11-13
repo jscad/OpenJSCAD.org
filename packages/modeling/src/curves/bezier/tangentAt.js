@@ -12,7 +12,7 @@
  * @return {array | number} the tangent at the requested position.
  * @alias module:modeling/curves/bezier.tangentAt
  */
-const tangentAt = (t, bezier) => {
+export const tangentAt = (t, bezier) => {
   if (t < 0 || t > 1) {
     throw new Error('Bezier tangentAt() input must be between 0 and 1')
   }
@@ -42,4 +42,4 @@ const bezierTangent = function (bezier, p, t) {
   return result
 }
 
-module.exports = tangentAt
+export default tangentAt

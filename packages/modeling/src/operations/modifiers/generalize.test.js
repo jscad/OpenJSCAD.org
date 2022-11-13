@@ -1,14 +1,14 @@
-const test = require('ava')
+import test from 'ava'
 
-const { comparePolygonsAsPoints } = require('../../../test/helpers')
+import { comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
-const { TAU } = require('../../maths/constants')
+import { TAU } from '../../maths/constants.js'
 
-const { geom3 } = require('../../geometries')
+import { geom3 } from '../../geometries/index.js'
 
-const { cuboid } = require('../../primitives')
+import { cuboid } from '../../primitives/index.js'
 
-const { generalize } = require('./index')
+import { generalize } from './index.js'
 
 test('generalize: generalize of a geom3 produces an expected geom3', (t) => {
   const geometry1 = cuboid({ size: [TAU / 2, TAU / 4, TAU] })

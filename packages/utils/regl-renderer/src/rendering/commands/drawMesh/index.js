@@ -1,8 +1,11 @@
-const mat4 = require('gl-mat4')
+import mat4 from 'gl-mat4'
 
-const { meshColor } = require('../../renderDefaults')
+import * as vColorShaders from './vColorShaders.js'
+import * as meshShaders from './meshShaders.js'
 
-const drawMesh = (regl, params = { extras: {} }) => {
+import { meshColor } from '../../renderDefaults.js'
+
+export const drawMesh = (regl, params = { extras: {} }) => {
   const defaults = {
     useVertexColors: true,
     dynamicCulling: true,
@@ -24,8 +27,8 @@ const drawMesh = (regl, params = { extras: {} }) => {
     ? (flip ? 'front' : 'back')
     : 'back'
 
-  const vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
-  const frag = hasVertexColors ? require('./vColorShaders').frag : require('./meshShaders').frag
+  const vert = hasVertexColors ? vColorShaders.vert : meshShaders.vert
+  const frag = hasVertexColors ? vColorShaders.frag : meshShaders.frag
   const modelMatrixInv = mat4.invert(mat4.create(), transforms)
 
   let commandParams = {
@@ -88,4 +91,4 @@ const drawMesh = (regl, params = { extras: {} }) => {
   return regl(commandParams)
 }
 
-module.exports = drawMesh
+export default drawMesh

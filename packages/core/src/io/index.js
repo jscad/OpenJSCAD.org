@@ -1,4 +1,2 @@
-module.exports = {
-  registerAllExtensions: require('./registerExtensions').registerAllExtensions,
-  unRegisterAllExtensions: require('./registerExtensions').unRegisterAllExtensions
-}
+export { registerAllExtensions } from './registerExtensions.js'
+export { unRegisterAllExtensions } from './registerExtensions.js'

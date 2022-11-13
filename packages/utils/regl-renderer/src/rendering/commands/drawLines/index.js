@@ -1,8 +1,12 @@
-const mat4 = require('gl-mat4')
+import mat4 from 'gl-mat4'
 
-const { meshColor } = require('../../renderDefaults')
+import * as vColorShaders from './vColorShaders.js'
+import * as meshShaders from './meshShaders.js'
+import * as colorOnlyShaders from './colorOnlyShaders.js'
 
-const drawLines = (regl, params = {}) => {
+import { meshColor } from '../../renderDefaults.js'
+
+export const drawLines = (regl, params = {}) => {
   const defaults = {
     color: meshColor,
     geometry: undefined
@@ -15,8 +19,8 @@ const drawLines = (regl, params = {}) => {
   const hasNormals = !!(geometry.normals && geometry.normals.length > 0)
   const hasVertexColors = !!(geometry.colors && geometry.colors.length > 0)
 
-  const vert = hasVertexColors ? require('./vColorShaders').vert : require('./meshShaders').vert
-  const frag = hasVertexColors ? require('./vColorShaders').frag : require('./colorOnlyShaders').frag
+  const vert = hasVertexColors ? vColorShaders.vert : meshShaders.vert
+  const frag = hasVertexColors ? vColorShaders.frag : colorOnlyShaders.frag
 
   const commandParams = {
     primitive: 'lines',
@@ -57,4 +61,4 @@ const drawLines = (regl, params = {}) => {
   return regl(commandParams)
 }
 
-module.exports = drawLines
+export default drawLines

@@ -1,11 +1,15 @@
-const fs = require('fs')
+import fs from 'fs'
+import path from 'path'
 
-const { getDesignEntryPoint } = require('@jscad/core').loading.requireDesignUtilsFs
-const { supportedInputExtensions, supportedOutputExtensions, supportedOutputFormats } = require('@jscad/io/formats')
+import { loading } from '@jscad/core'
+const { getDesignEntryPoint } = loading
 
-const env = require('./env')
+import { formats } from '@jscad/io'
+const { supportedInputExtensions, supportedOutputExtensions, supportedOutputFormats } = formats
 
-const parseArgs = (args) => {
+import env from './env.js'
+
+export const parseArgs = (args) => {
   const inputExtensions = supportedInputExtensions()
   const outputExtensions = supportedOutputExtensions()
   const outputFormats = supportedOutputFormats()
@@ -72,7 +76,7 @@ const parseArgs = (args) => {
           console.log('Verify main or index exists')
           process.exit(1)
         }
-        inputFormat = require('path').extname(inputFile).substring(1)
+        inputFormat = path.extname(inputFile).substring(1)
       } else {
         console.log('ERROR: invalid file name or argument <' + args[i] + '>')
         console.log("Type 'openjscad' for a list of supported types")
@@ -98,4 +102,4 @@ const parseArgs = (args) => {
   }
 }
 
-module.exports = parseArgs
+export default parseArgs

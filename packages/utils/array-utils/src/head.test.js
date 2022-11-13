@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { head } = require('./index')
+import { head } from './index.js'
 
 test('array-utils: head() should return undefined', (t) => {
   let obs = head()

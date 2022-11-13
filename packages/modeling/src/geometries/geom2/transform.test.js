@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const mat4 = require('../../maths/mat4')
+import { mat4 } from '../../maths/index.js'
 
-const { transform, fromPoints, toSides } = require('./index')
+import { transform, fromPoints, toSides } from './index.js'
 
-const { comparePoints, compareVectors } = require('../../../test/helpers/')
+import { comparePoints, compareVectors } from '../../../test/helpers/index.js'
 
 test('transform: adjusts the transforms of geom2', (t) => {
   const points = [[0, 0], [1, 0], [0, 1]]

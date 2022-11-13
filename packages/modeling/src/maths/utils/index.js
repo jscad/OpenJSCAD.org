@@ -2,14 +2,16 @@
  * Utility functions for maths.
  * @module modeling/maths/utils
  * @example
- * const { area, solve2Linear } = require('@jscad/maths').utils
+ * import { area, solve2Linear } from '@jscad/maths/utils'
  */
-module.exports = {
-  aboutEqualNormals: require('./aboutEqualNormals'),
-  area: require('./area'),
-  cos: require('./trigonometry').cos,
-  interpolateBetween2DPointsForY: require('./interpolateBetween2DPointsForY'),
-  intersect: require('./intersect'),
-  sin: require('./trigonometry').sin,
-  solve2Linear: require('./solve2Linear')
+import { cos, sin } from './trigonometry.js'
+export {
+  cos,
+  sin
 }
+
+export { aboutEqualNormals } from './aboutEqualNormals.js'
+export { area } from './area.js'
+export { interpolateBetween2DPointsForY } from './interpolateBetween2DPointsForY.js'
+export { intersect } from './intersect.js'
+export { solve2Linear } from './solve2Linear.js'

@@ -33,11 +33,11 @@ TBD
  * const { serializer, mimeType } = require('@jscad/amf-serializer')
  */
 
-const stringify = require('onml').stringify
+import { stringify } from '@jscad/io-utils'
 
-const { geometries, modifiers } = require('@jscad/modeling')
+import { geometries, modifiers } from '@jscad/modeling'
 
-const { flatten, toArray } = require('@jscad/array-utils')
+import { flatten, toArray } from '@jscad/array-utils'
 
 const mimeType = 'application/amf+xml'
 
@@ -204,7 +204,7 @@ const convertToTriangles = (polygon, index, options) => {
   return contents
 }
 
-module.exports = {
+export {
   serialize,
   mimeType
 }

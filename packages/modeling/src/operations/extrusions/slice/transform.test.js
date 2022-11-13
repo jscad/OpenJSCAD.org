@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { transform, fromPoints, toEdges } = require('./index')
+import { transform, fromPoints, toEdges } from './index.js'
 
 test('slice: transform() should return a new slice with correct values', (t) => {
   const identityMatrix = [

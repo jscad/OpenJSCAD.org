@@ -1,7 +1,7 @@
 /*
  * Normalize the given design module for internal use.
  */
-const normalizeDesignModule = (rootModule) => {
+export const normalizeDesignModule = (rootModule) => {
   if (!rootModule) {
     throw new Error('no root module found, please check the project structure')
   }
@@ -18,4 +18,4 @@ const normalizeDesignModule = (rootModule) => {
   return rootModule
 }
 
-module.exports = normalizeDesignModule
+export default normalizeDesignModule

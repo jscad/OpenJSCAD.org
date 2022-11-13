@@ -1,10 +1,10 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const geom2 = require('../../geometries/geom2')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
-const extrudeRectangularPath2 = require('./extrudeRectangularPath2')
-const extrudeRectangularGeom2 = require('./extrudeRectangularGeom2')
+import extrudeRectangularPath2 from './extrudeRectangularPath2.js'
+import extrudeRectangularGeom2 from './extrudeRectangularGeom2.js'
 
 /**
  * Extrude the given geometry by following the outline(s) with a rectangle.
@@ -20,7 +20,7 @@ const extrudeRectangularGeom2 = require('./extrudeRectangularGeom2')
  * let mywalls = extrudeRectangular({size: 1, height: 3}, square({size: 20}))
  * let mywalls = extrudeRectangular({size: 1, height: 300, twistAngle: TAU / 2}, square({size: 20}))
  */
-const extrudeRectangular = (options, ...objects) => {
+export const extrudeRectangular = (options, ...objects) => {
   const defaults = {
     size: 1,
     height: 1
@@ -42,4 +42,4 @@ const extrudeRectangular = (options, ...objects) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = extrudeRectangular
+export default extrudeRectangular

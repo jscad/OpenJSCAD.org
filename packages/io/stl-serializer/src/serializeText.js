@@ -1,7 +1,7 @@
-const { geometries } = require('@jscad/modeling')
+import { geometries } from '@jscad/modeling'
 
 // objects must be an array of 3D geomertries (with polygons)
-const serializeText = (objects, options) => {
+export const serializeText = (objects, options) => {
   options.statusCallback && options.statusCallback({ progress: 0 })
 
   const result = `solid JSCAD
@@ -53,6 +53,4 @@ endfacet`
   return result.join('\n')
 }
 
-module.exports = {
-  serializeText
-}
+export default serializeText

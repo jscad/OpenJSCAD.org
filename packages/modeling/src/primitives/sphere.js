@@ -1,6 +1,6 @@
-const ellipsoid = require('./ellipsoid')
+import ellipsoid from './ellipsoid.js'
 
-const { isGT } = require('./commonChecks')
+import { isGT } from './commonChecks.js'
 
 /**
  * Construct a sphere in three dimensional space where all points are at the same distance from the center.
@@ -16,7 +16,7 @@ const { isGT } = require('./commonChecks')
  * @example
  * let myshape = sphere({radius: 5})
  */
-const sphere = (options) => {
+export const sphere = (options) => {
   const defaults = {
     center: [0, 0, 0],
     radius: 1,
@@ -32,4 +32,4 @@ const sphere = (options) => {
   return ellipsoid({ center, radius, segments, axes })
 }
 
-module.exports = sphere
+export default sphere

@@ -1,5 +1,6 @@
-const vec2 = require('../../maths/vec2')
-const isA = require('./isA')
+import * as vec2 from '../../maths/vec2/index.js'
+
+import isA from './isA.js'
 
 /**
  * Determine if the given object is a valid path2.
@@ -11,7 +12,7 @@ const isA = require('./isA')
  * @throws {Error} error if the geometry is not valid
  * @alias module:modeling/geometries/path2.validate
  */
-const validate = (object) => {
+export const validate = (object) => {
   if (!isA(object)) {
     throw new Error('invalid path2 structure')
   }
@@ -38,4 +39,4 @@ const validate = (object) => {
   }
 }
 
-module.exports = validate
+export default validate

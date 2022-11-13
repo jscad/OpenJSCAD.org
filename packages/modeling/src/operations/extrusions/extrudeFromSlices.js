@@ -1,13 +1,13 @@
-const mat4 = require('../../maths/mat4')
+import * as mat4 from '../../maths/mat4/index.js'
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const poly3 = require('../../geometries/poly3')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as poly3 from '../../geometries/poly3/index.js'
 
-const slice = require('./slice')
-const repairSlice = require('./slice/repair')
+import * as slice from './slice/index.js'
+import repairSlice from './slice/repair.js'
 
-const extrudeWalls = require('./extrudeWalls')
+import extrudeWalls from './extrudeWalls.js'
 
 const defaultCallback = (progress, index, base) => {
   let baseSlice = null
@@ -44,7 +44,7 @@ const defaultCallback = (progress, index, base) => {
  *   return slice
  * }
  */
-const extrudeFromSlices = (options, base) => {
+export const extrudeFromSlices = (options, base) => {
   const defaults = {
     numberOfSlices: 2,
     capStart: true,
@@ -111,4 +111,4 @@ const extrudeFromSlices = (options, base) => {
   return geom3.create(polygons)
 }
 
-module.exports = extrudeFromSlices
+export default extrudeFromSlices

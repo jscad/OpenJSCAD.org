@@ -8,7 +8,7 @@
  * const numbers = [1, 5]
  * const result = insertSorted(numbers, 3, fnNumberSort)
  */
-const insertSorted = (array, element, compareFunction) => {
+export const insertSorted = (array, element, compareFunction) => {
   let leftbound = 0
   let rightbound = array.length
   while (rightbound > leftbound) {
@@ -25,4 +25,4 @@ const insertSorted = (array, element, compareFunction) => {
   return array
 }
 
-module.exports = insertSorted
+export default insertSorted

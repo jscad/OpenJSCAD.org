@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const vec2 = require('../../maths/vec2')
+import { vec2 } from '../../maths/index.js'
 
-const { toPoints, fromPoints } = require('./index')
+import { toPoints, fromPoints } from './index.js'
 
 test('toPoints: An empty path produces an empty point array', (t) => {
   t.deepEqual(toPoints(fromPoints({}, [])), [])

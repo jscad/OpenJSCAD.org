@@ -1,4 +1,4 @@
-const vec3 = require('../../maths/vec3')
+import * as vec3 from '../../maths/vec3/index.js'
 
 /**
  * Measure the signed volume of the given polygon, which must be convex.
@@ -9,7 +9,7 @@ const vec3 = require('../../maths/vec3')
  * @return {Number} volume of the polygon
  * @alias module:modeling/geometries/poly3.measureSignedVolume
  */
-const measureSignedVolume = (polygon) => {
+export const measureSignedVolume = (polygon) => {
   let signedVolume = 0
   const vertices = polygon.vertices
   // calculate based on triangular polygons
@@ -22,4 +22,4 @@ const measureSignedVolume = (polygon) => {
   return signedVolume
 }
 
-module.exports = measureSignedVolume
+export default measureSignedVolume

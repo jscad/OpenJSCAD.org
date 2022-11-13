@@ -1,5 +1,5 @@
-const create = require('./create')
-const toSides = require('./toSides')
+import create from './create.js'
+import toSides from './toSides.js'
 
 /**
  * Reverses the given geometry so that the sides are flipped in the opposite order.
@@ -11,7 +11,7 @@ const toSides = require('./toSides')
  * @example
  * let newgeometry = reverse(geometry)
  */
-const reverse = (geometry) => {
+export const reverse = (geometry) => {
   const oldsides = toSides(geometry)
 
   const newsides = oldsides.map((side) => [side[1], side[0]])
@@ -19,4 +19,4 @@ const reverse = (geometry) => {
   return create(newsides)
 }
 
-module.exports = reverse
+export default reverse

@@ -1,13 +1,13 @@
-const { colors, transforms } = require('@jscad/modeling')
+import { colors, transforms } from '@jscad/modeling'
 
-const createTransform = require('./createTransform')
+import createTransform from './createTransform.js'
 
-const { x3dTypes } = require('./objects')
-const { findColor } = require('./translateHelpers')
+import { x3dTypes } from './objects.js'
+import { findColor } from './translateHelpers.js'
 
-const instantiatePrimitive = require('./instantiatePrimitive')
-const { instantiateLine } = require('./instantiateLine')
-const { instantiateMesh } = require('./instantiateMesh')
+import instantiatePrimitive from './instantiatePrimitive.js'
+import { instantiateLine } from './instantiateLine.js'
+import { instantiateMesh } from './instantiateMesh.js'
 
 const instantiatedList = new Map()
 
@@ -69,7 +69,7 @@ const instantiateDefinition = (options, object) => {
   return geometry
 }
 
-const instantiateDefinitions = (options, objects) => {
+export const instantiateDefinitions = (options, objects) => {
   const geometries = objects.map((object) => instantiateDefinition(options, object)).filter((g) => g != null)
 
   instantiatedList.clear()
@@ -77,4 +77,4 @@ const instantiateDefinitions = (options, objects) => {
   return geometries
 }
 
-module.exports = instantiateDefinitions
+export default instantiateDefinitions

@@ -3,34 +3,32 @@
  * @see {@link mat4} for data structure information.
  * @module modeling/maths/mat4
  */
-module.exports = {
-  add: require('./add'),
-  clone: require('./clone'),
-  copy: require('./copy'),
-  create: require('./create'),
-  invert: require('./invert'),
-  equals: require('./equals'),
-  fromRotation: require('./fromRotation'),
-  fromScaling: require('./fromScaling'),
-  fromTaitBryanRotation: require('./fromTaitBryanRotation'),
-  fromTranslation: require('./fromTranslation'),
-  fromValues: require('./fromValues'),
-  fromVectorRotation: require('./fromVectorRotation'),
-  fromXRotation: require('./fromXRotation'),
-  fromYRotation: require('./fromYRotation'),
-  fromZRotation: require('./fromZRotation'),
-  identity: require('./identity'),
-  isIdentity: require('./isIdentity'),
-  isOnlyTransformScale: require('./isOnlyTransformScale'),
-  isMirroring: require('./isMirroring'),
-  mirrorByPlane: require('./mirrorByPlane'),
-  multiply: require('./multiply'),
-  rotate: require('./rotate'),
-  rotateX: require('./rotateX'),
-  rotateY: require('./rotateY'),
-  rotateZ: require('./rotateZ'),
-  scale: require('./scale'),
-  subtract: require('./subtract'),
-  toString: require('./toString'),
-  translate: require('./translate')
-}
+export { add } from './add.js'
+export { clone } from './clone.js'
+export { copy } from './copy.js'
+export { create } from './create.js'
+export { invert } from './invert.js'
+export { equals } from './equals.js'
+export { fromRotation } from './fromRotation.js'
+export { fromScaling } from './fromScaling.js'
+export { fromTaitBryanRotation } from './fromTaitBryanRotation.js'
+export { fromTranslation } from './fromTranslation.js'
+export { fromValues } from './fromValues.js'
+export { fromVectorRotation } from './fromVectorRotation.js'
+export { fromXRotation } from './fromXRotation.js'
+export { fromYRotation } from './fromYRotation.js'
+export { fromZRotation } from './fromZRotation.js'
+export { identity } from './identity.js'
+export { isIdentity } from './isIdentity.js'
+export { isOnlyTransformScale } from './isOnlyTransformScale.js'
+export { isMirroring } from './isMirroring.js'
+export { mirrorByPlane } from './mirrorByPlane.js'
+export { multiply } from './multiply.js'
+export { rotate } from './rotate.js'
+export { rotateX } from './rotateX.js'
+export { rotateY } from './rotateY.js'
+export { rotateZ } from './rotateZ.js'
+export { scale } from './scale.js'
+export { subtract } from './subtract.js'
+export { toString } from './toString.js'
+export { translate } from './translate.js'

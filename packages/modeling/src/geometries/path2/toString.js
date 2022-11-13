@@ -1,6 +1,6 @@
-const vec2 = require('../../maths/vec2')
+import * as vec2 from '../../maths/vec2/index.js'
 
-const toPoints = require('./toPoints')
+import toPoints from './toPoints.js'
 
 /**
  * Create a string representing the contents of the given path.
@@ -11,7 +11,7 @@ const toPoints = require('./toPoints')
  * @example
  * console.out(toString(path))
  */
-const toString = (geometry) => {
+export const toString = (geometry) => {
   const points = toPoints(geometry)
   let result = 'path (' + points.length + ' points, ' + geometry.isClosed + '):\n[\n'
   points.forEach((point) => {
@@ -21,4 +21,4 @@ const toString = (geometry) => {
   return result
 }
 
-module.exports = toString
+export default toString

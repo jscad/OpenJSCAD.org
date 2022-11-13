@@ -1,4 +1,4 @@
-const fromValues = require('../vec3/fromValues')
+import fromValues from '../vec3/fromValues.js'
 
 /**
  * Multiply a 3D vector by a matrix (interpreted as 3 row, 1 column)
@@ -9,7 +9,7 @@ const fromValues = require('../vec3/fromValues')
  * @returns {vec3} a new vector
  * @alias module:modeling/maths/mat4.rightMultiplyVec3
  */
-const rightMultiplyVec3 = (vector, matrix) => {
+export const rightMultiplyVec3 = (vector, matrix) => {
   const [v0, v1, v2] = vector
   const v3 = 1
   let x = v0 * matrix[0] + v1 * matrix[1] + v2 * matrix[2] + v3 * matrix[3]
@@ -27,4 +27,4 @@ const rightMultiplyVec3 = (vector, matrix) => {
   return fromValues(x, y, z)
 }
 
-module.exports = rightMultiplyVec3
+export default rightMultiplyVec3

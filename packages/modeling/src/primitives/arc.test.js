@@ -1,11 +1,12 @@
-const test = require('ava')
+import test from 'ava'
 
-const { TAU } = require('../maths/constants')
-const path2 = require('../geometries/path2')
+import { TAU } from '../maths/constants.js'
 
-const comparePoints = require('../../test/helpers/comparePoints')
+import { path2 } from '../geometries/index.js'
 
-const { arc } = require('./index')
+import { arc } from './index.js'
+
+import { comparePoints } from '../../test/helpers/index.js'
 
 test('arc (defaults)', (t) => {
   const geometry = arc()

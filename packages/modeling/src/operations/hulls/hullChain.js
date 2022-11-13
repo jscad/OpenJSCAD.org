@@ -1,8 +1,8 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const union = require('../booleans/union')
+import union from '../booleans/union.js'
 
-const hull = require('./hull')
+import hull from './hull.js'
 
 /**
  * Create a chain of hulled geometries from the given geometries.
@@ -29,7 +29,7 @@ const hull = require('./hull')
  *       |       |               \         /
  *       +-------+                +-------+
  */
-const hullChain = (...geometries) => {
+export const hullChain = (...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length < 2) throw new Error('wrong number of arguments')
 
@@ -40,4 +40,4 @@ const hullChain = (...geometries) => {
   return union(hulls)
 }
 
-module.exports = hullChain
+export default hullChain

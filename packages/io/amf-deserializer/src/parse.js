@@ -1,6 +1,6 @@
-const saxes = require('saxes')
+import saxes from 'saxes'
 
-const {
+import {
   amfMesh, amfVertices, amfCoordinates,
   amfX, amfY, amfZ, amfNormal,
   amfVolume, amfTriangle, amfV1,
@@ -8,8 +8,9 @@ const {
   amfMetadata, amfMaterial, amfColor,
   amfR, amfG, amfB, amfA, amfMap,
   amfU1, amfU2, amfU3
-} = require('./helpers')
-const { inchMM } = require('./constants')
+} from './helpers.js'
+
+import { inchMM } from './constants.js'
 
 let amfLast = null // last object found
 let amfDefinition = 0 // definitions beinging created
@@ -59,7 +60,7 @@ const amfObject = (element) => {
   return obj
 }
 
-const createAmfParser = (src, pxPmm) => {
+const createAmfParser = (src) => {
   // create a parser for the XML
   const parser = new saxes.SaxesParser()
 
@@ -275,9 +276,9 @@ const createAmfParser = (src, pxPmm) => {
   parser.write(src).close()
 }
 
-const parse = (src, pxPmm) => {
-  createAmfParser(src, pxPmm)
+export const parse = (src) => {
+  createAmfParser(src)
   return { amfObj, amfMaterials, amfTextures, amfConstels }
 }
 
-module.exports = parse
+export default parse

@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { appendBezier, fromPoints, toPoints } = require('./index')
+import { appendBezier, fromPoints, toPoints } from './index.js'
 
-const { comparePoints } = require('../../../test/helpers/')
+import { comparePoints } from '../../../test/helpers/index.js'
 
 test('appendBezier: appending to an empty path produces an error', (t) => {
   const p1 = fromPoints({}, [])

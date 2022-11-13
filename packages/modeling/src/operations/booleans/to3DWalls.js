@@ -1,8 +1,8 @@
-const vec3 = require('../../maths/vec3')
+import * as vec3 from '../../maths/vec3/index.js'
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const poly3 = require('../../geometries/poly3')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as poly3 from '../../geometries/poly3/index.js'
 
 /*
  * Create a polygon (wall) from the given Z values and side.
@@ -24,7 +24,7 @@ const to3DWall = (z0, z1, side) => {
  * @param {geom2} geometry - geometry used as base of walls
  * @return {geom3} the new geometry
  */
-const to3DWalls = (options, geometry) => {
+export const to3DWalls = (options, geometry) => {
   const sides = geom2.toSides(geometry)
 
   const polygons = sides.map((side) => to3DWall(options.z0, options.z1, side))
@@ -33,4 +33,4 @@ const to3DWalls = (options, geometry) => {
   return result
 }
 
-module.exports = to3DWalls
+export default to3DWalls

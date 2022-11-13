@@ -156,7 +156,7 @@ const svgColors = {
   yellowgreen: [154, 205, 50]
 }
 
-module.exports = {
+export {
   pxPmm,
   inchMM,
   ptMM,

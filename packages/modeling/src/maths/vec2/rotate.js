@@ -8,7 +8,7 @@
  * @returns {vec2} out
  * @alias module:modeling/maths/vec2.rotate
  */
-const rotate = (out, vector, origin, radians) => {
+export const rotate = (out, vector, origin, radians) => {
   const x = vector[0] - origin[0]
   const y = vector[1] - origin[1]
   const c = Math.cos(radians)
@@ -20,4 +20,4 @@ const rotate = (out, vector, origin, radians) => {
   return out
 }
 
-module.exports = rotate
+export default rotate

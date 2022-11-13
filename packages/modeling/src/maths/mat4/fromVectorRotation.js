@@ -1,6 +1,6 @@
-const vec3 = require('../vec3')
+import * as vec3 from '../vec3/index.js'
 
-const fromRotation = require('./fromRotation')
+import fromRotation from './fromRotation.js'
 
 /**
  * Create a matrix that rotates the given source to the given target vector.
@@ -15,7 +15,7 @@ const fromRotation = require('./fromRotation')
  * @example
  * let matrix = fromVectorRotation(mat4.create(), [1, 2, 2], [-3, 3, 12])
  */
-const fromVectorRotation = (out, source, target) => {
+export const fromVectorRotation = (out, source, target) => {
   const sourceNormal = vec3.normalize(vec3.create(), source)
   const targetNormal = vec3.normalize(vec3.create(), target)
 
@@ -46,4 +46,4 @@ const fromVectorRotation = (out, source, target) => {
   return out
 }
 
-module.exports = fromVectorRotation
+export default fromVectorRotation

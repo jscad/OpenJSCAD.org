@@ -10,11 +10,11 @@
  * @returns {slice} a new slice
  * @alias module:modeling/extrusions/slice.create
  */
-const create = (edges) => {
+export const create = (edges) => {
   if (!edges) {
     edges = []
   }
   return { edges }
 }
 
-module.exports = create
+export default create

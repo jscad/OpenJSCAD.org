@@ -1,6 +1,6 @@
-const path2 = require('../../geometries/path2')
+import * as path2 from '../../geometries/path2/index.js'
 
-const offsetFromPoints = require('./offsetFromPoints')
+import offsetFromPoints from './offsetFromPoints.js'
 
 /*
  * Create a offset geometry from the given path using the given options (if any).
@@ -11,7 +11,7 @@ const offsetFromPoints = require('./offsetFromPoints')
  * @param {path2} geometry - geometry from which to create the offset
  * @returns {path2} offset geometry, plus rounded corners
  */
-const offsetPath2 = (options, geometry) => {
+export const offsetPath2 = (options, geometry) => {
   const defaults = {
     delta: 1,
     corners: 'edge',
@@ -29,4 +29,4 @@ const offsetPath2 = (options, geometry) => {
   return path2.fromPoints({ closed: closed }, newpoints)
 }
 
-module.exports = offsetPath2
+export default offsetPath2

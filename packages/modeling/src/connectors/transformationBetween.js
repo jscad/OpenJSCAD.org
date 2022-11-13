@@ -1,11 +1,11 @@
-const mat4 = require('../maths/mat4')
-const plane = require('../maths/plane')
-const vec2 = require('../maths/vec2')
-const vec3 = require('../maths/vec3')
+import * as mat4 from '../maths/mat4/index.js'
+import * as plane from '../maths/plane/index.js'
+import * as vec2 from '../maths/vec2/index.js'
+import * as vec3 from '../maths/vec3/index.js'
 
-const OrthoNormalBasis = require('../maths/OrthoNormalBasis')
+import OrthoNormalBasis from '../maths/OrthoNormalBasis.js'
 
-const transform = require('./transform')
+import transform from './transform.js'
 
 /**
  * Get the transformation matrix that connects the given connectors.
@@ -18,7 +18,7 @@ const transform = require('./transform')
  * @returns {mat4} - the matrix that transforms (connects) one connector to another
  * @alias module:modeling/connectors.transformationBetween
  */
-const transformationBetween = (options, from, to) => {
+export const transformationBetween = (options, from, to) => {
   const defaults = {
     mirror: false,
     normalRotation: 0
@@ -65,4 +65,4 @@ const transformationBetween = (options, from, to) => {
   return matrix
 }
 
-module.exports = transformationBetween
+export default transformationBetween

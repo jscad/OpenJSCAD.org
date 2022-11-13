@@ -1,8 +1,8 @@
-const { geometries } = require('@jscad/modeling')
+import { geometries } from '@jscad/modeling'
 
 // handled format descriptions
 // note: order is important as regular expressions are created from extentions
-const formats = {
+const supportedFormats = {
   stl: {
     displayName: 'STL (Binary)',
     description: 'STereoLithography, Binary',
@@ -137,12 +137,12 @@ const supportedFormatsForObjects = (objects) => {
     if (geometries.geom3.isA(objects[i])) { found3Dsolid = true }
     if (geometries.geom2.isA(objects[i]) || geometries.path2.isA(objects[i])) { found2Dsolid = true }
   }
-  for (const format in formats) {
-    if (found3Dsolid && formats[format].convertGeom3 === true) {
+  for (const format in supportedFormats) {
+    if (found3Dsolid && supportedFormats[format].convertGeom3 === true) {
       objectFormats[objectFormats.length] = format
       continue // only add once
     }
-    if (found2Dsolid && formats[format].convertGeom2 === true) {
+    if (found2Dsolid && supportedFormats[format].convertGeom2 === true) {
       objectFormats[objectFormats.length] = format
     }
   }
@@ -152,10 +152,10 @@ const supportedFormatsForObjects = (objects) => {
 // Return a list of extensions as used by the serializers
 const supportedOutputExtensions = () => {
   const supported = []
-  for (const format in formats) {
-    if (formats[format].convertGeom3 === true || formats[format].convertGeom2 === true) {
-      if (supported.indexOf(formats[format].extension) < 0) {
-        supported.push(formats[format].extension)
+  for (const format in supportedFormats) {
+    if (supportedFormats[format].convertGeom3 === true || supportedFormats[format].convertGeom2 === true) {
+      if (supported.indexOf(supportedFormats[format].extension) < 0) {
+        supported.push(supportedFormats[format].extension)
       }
     }
   }
@@ -165,8 +165,8 @@ const supportedOutputExtensions = () => {
 // Return a list of formats as used by the serializers
 const supportedOutputFormats = () => {
   const supported = []
-  for (const format in formats) {
-    if (formats[format].convertGeom3 === true || formats[format].convertGeom2 === true) {
+  for (const format in supportedFormats) {
+    if (supportedFormats[format].convertGeom3 === true || supportedFormats[format].convertGeom2 === true) {
       supported.push(format)
     }
   }
@@ -177,16 +177,16 @@ const supportedOutputFormats = () => {
 // See also code-loading/transfromSources.js
 const supportedInputExtensions = () => {
   const supported = []
-  for (const format in formats) {
-    if (formats[format].deserializable === true) {
-      supported.push(formats[format].extension)
+  for (const format in supportedFormats) {
+    if (supportedFormats[format].deserializable === true) {
+      supported.push(supportedFormats[format].extension)
     }
   }
   return supported
 }
 
-module.exports = {
-  formats,
+export {
+  supportedFormats,
   conversionFormats,
   supportedInputExtensions,
   supportedOutputExtensions,

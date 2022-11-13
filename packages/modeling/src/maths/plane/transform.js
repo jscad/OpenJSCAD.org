@@ -1,8 +1,8 @@
-const mat4 = require('../mat4')
-const vec3 = require('../vec3')
+import * as mat4 from '../mat4/index.js'
+import * as vec3 from '../vec3/index.js'
 
-const fromPoints = require('./fromPoints')
-const flip = require('./flip')
+import fromPoints from './fromPoints.js'
+import flip from './flip.js'
 
 /**
  * Transform the given plane using the given matrix
@@ -13,7 +13,7 @@ const flip = require('./flip')
  * @return {plane} out
  * @alias module:modeling/maths/plane.transform
  */
-const transform = (out, plane, matrix) => {
+export const transform = (out, plane, matrix) => {
   const ismirror = mat4.isMirroring(matrix)
   // get two vectors in the plane:
   const r = vec3.orthogonal(vec3.create(), plane)
@@ -37,4 +37,4 @@ const transform = (out, plane, matrix) => {
   return out
 }
 
-module.exports = transform
+export default transform

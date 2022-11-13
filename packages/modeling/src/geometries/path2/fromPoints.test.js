@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const vec2 = require('../../maths/vec2')
+import { vec2 } from '../../maths/index.js'
 
-const { fromPoints, toPoints, toString } = require('./index')
+import { fromPoints, toPoints, toString } from './index.js'
 
 test('fromPoints: creating a path from no points produces an open, empty non-canonical path', (t) => {
   const created = fromPoints({}, [])

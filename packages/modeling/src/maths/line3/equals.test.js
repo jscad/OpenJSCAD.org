@@ -1,5 +1,6 @@
-const test = require('ava')
-const { equals, fromPointAndDirection, create } = require('./index')
+import test from 'ava'
+
+import { equals, fromPointAndDirection, create } from './index.js'
 
 test('line3: equals() should return correct booleans', (t) => {
   const line0 = fromPointAndDirection(create(), [0, 0, 0], [1, 1, 1])

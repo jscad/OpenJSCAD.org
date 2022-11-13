@@ -2,19 +2,17 @@
  * All shapes (primitives or the results of operations) can be measured, e.g. calculate volume, etc.
  * @module modeling/measurements
  * @example
- * const { measureArea, measureBoundingBox, measureVolume } = require('@jscad/modeling').measurements
+ * import { measureArea, measureBoundingBox, measureVolume } from '@jscad/modeling/measurements')
  */
-module.exports = {
-  measureAggregateArea: require('./measureAggregateArea'),
-  measureAggregateBoundingBox: require('./measureAggregateBoundingBox'),
-  measureAggregateEpsilon: require('./measureAggregateEpsilon'),
-  measureAggregateVolume: require('./measureAggregateVolume'),
-  measureArea: require('./measureArea'),
-  measureBoundingBox: require('./measureBoundingBox'),
-  measureBoundingSphere: require('./measureBoundingSphere'),
-  measureCenter: require('./measureCenter'),
-  measureCenterOfMass: require('./measureCenterOfMass'),
-  measureDimensions: require('./measureDimensions'),
-  measureEpsilon: require('./measureEpsilon'),
-  measureVolume: require('./measureVolume')
-}
+export { measureAggregateArea } from './measureAggregateArea.js'
+export { measureAggregateBoundingBox } from './measureAggregateBoundingBox.js'
+export { measureAggregateEpsilon } from './measureAggregateEpsilon.js'
+export { measureAggregateVolume } from './measureAggregateVolume.js'
+export { measureArea } from './measureArea.js'
+export { measureBoundingBox } from './measureBoundingBox.js'
+export { measureBoundingSphere } from './measureBoundingSphere.js'
+export { measureCenter } from './measureCenter.js'
+export { measureCenterOfMass } from './measureCenterOfMass.js'
+export { measureDimensions } from './measureDimensions.js'
+export { measureEpsilon } from './measureEpsilon.js'
+export { measureVolume } from './measureVolume.js'

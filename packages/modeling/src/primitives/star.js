@@ -1,9 +1,9 @@
-const { TAU } = require('../maths/constants')
-const vec2 = require('../maths/vec2')
+import { TAU } from '../maths/constants.js'
+import * as vec2 from '../maths/vec2/index.js'
 
-const geom2 = require('../geometries/geom2')
+import * as geom2 from '../geometries/geom2/index.js'
 
-const { isGT, isGTE, isNumberArray } = require('./commonChecks')
+import { isGT, isGTE, isNumberArray } from './commonChecks.js'
 
 // @see http://www.jdawiseman.com/papers/easymath/surds_star_inner_radius.html
 const getRadiusRatio = (vertices, density) => {
@@ -43,7 +43,7 @@ const getPoints = (vertices, radius, startAngle, center) => {
  * let star1 = star({vertices: 8, outerRadius: 10}) // star with 8/2 density
  * let star2 = star({vertices: 12, outerRadius: 40, innerRadius: 20}) // star with given radius
  */
-const star = (options) => {
+export const star = (options) => {
   const defaults = {
     center: [0, 0],
     vertices: 5,
@@ -85,4 +85,4 @@ const star = (options) => {
   return geom2.fromPoints(allPoints)
 }
 
-module.exports = star
+export default star

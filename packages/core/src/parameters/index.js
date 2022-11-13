@@ -1,6 +1,4 @@
-module.exports = {
-  applyParameterDefinitions: require('./applyParameterDefinitions'),
-  getParameterDefinitionsAndValues: require('./getParameterDefinitionsAndValues'),
-  getParameterValuesFromParameters: require('./getParameterValuesFromParameters'),
-  getParameterValuesFromUIControls: require('./getParameterValuesFromUIControls')
-}
+export { applyParameterDefinitions } from './applyParameterDefinitions.js'
+export { getParameterDefinitionsAndValues } from './getParameterDefinitionsAndValues.js'
+export { getParameterValuesFromParameters } from './getParameterValuesFromParameters.js'
+export { getParameterValuesFromUIControls } from './getParameterValuesFromUIControls.js'

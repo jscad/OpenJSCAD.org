@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { create } = require('./index')
+import { create } from './index.js'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('line2: create() should return a line2 with initial values', (t) => {
   const obs = create()

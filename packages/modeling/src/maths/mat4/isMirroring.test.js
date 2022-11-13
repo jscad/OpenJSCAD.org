@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const plane = require('../plane')
+import { plane } from '../index.js'
 
-const { isMirroring, fromScaling, create, mirrorByPlane, rotate, scale, translate } = require('./index')
+import { isMirroring, fromScaling, create, mirrorByPlane, rotate, scale, translate } from './index.js'
 
 test('mat4: isMirroring() should determine correctly', (t) => {
   let matrix = create()

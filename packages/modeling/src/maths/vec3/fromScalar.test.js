@@ -1,7 +1,8 @@
-const test = require('ava')
-const { fromScalar, create } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { fromScalar, create } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('vec3: fromScalar() should return a new vec3 with correct values', (t) => {
   const obs1 = fromScalar(create(), 0)

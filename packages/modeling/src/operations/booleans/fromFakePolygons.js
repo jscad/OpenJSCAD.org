@@ -1,6 +1,6 @@
-const vec2 = require('../../maths/vec2')
+import * as vec2 from '../../maths/vec2/index.js'
 
-const geom2 = require('../../geometries/geom2')
+import * as geom2 from '../../geometries/geom2/index.js'
 
 const fromFakePolygon = (epsilon, polygon) => {
   // this can happen based on union, seems to be residuals -
@@ -44,9 +44,9 @@ const fromFakePolygon = (epsilon, polygon) => {
  * Convert the given polygons to a list of sides.
  * The polygons must have only z coordinates +1 and -1, as constructed by to3DWalls().
  */
-const fromFakePolygons = (epsilon, polygons) => {
+export const fromFakePolygons = (epsilon, polygons) => {
   const sides = polygons.map((polygon) => fromFakePolygon(epsilon, polygon)).filter((polygon) => (polygon !== null))
   return geom2.create(sides)
 }
 
-module.exports = fromFakePolygons
+export default fromFakePolygons

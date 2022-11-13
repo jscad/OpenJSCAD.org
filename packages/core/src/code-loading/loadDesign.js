@@ -1,10 +1,10 @@
-const { registerAllExtensions } = require('../io/registerExtensions')
+import { registerAllExtensions } from '../io/registerExtensions.js'
 
-const transformSources = require('./transformSources')
-const makeFakeFs = require('./makeFakeFs')
-const makeWebRequire = require('./webRequire')
-const normalizeDesignModule = require('./normalizeDesignModule')
-const getAllParameterDefintionsAndValues = require('../parameters/getParameterDefinitionsAndValues')
+import transformSources from './transformSources.js'
+import makeFakeFs from './makeFakeFs.js'
+import makeWebRequire from './webRequire.js'
+import normalizeDesignModule from './normalizeDesignModule.js'
+import getAllParameterDefintionsAndValues from '../parameters/getParameterDefinitionsAndValues.js'
 
 /**
  * load a jscad script, injecting the basic dependencies if necessary
@@ -14,7 +14,7 @@ const getAllParameterDefintionsAndValues = require('../parameters/getParameterDe
  * @param {Array} filesAndFolders - array of files and folders to use
  * @param {Object} parameterValuesOverride - the values to use to override the defaults for the current design
  */
-const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverride) => {
+export const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverride) => {
   // transform the source if passed non-javascript content, i.e. stl
   filesAndFolders = transformSources({ apiMainPath }, filesAndFolders)
 
@@ -50,4 +50,4 @@ const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValuesOverr
   return { rootModule, ...parameters }
 }
 
-module.exports = loadDesign
+export default loadDesign

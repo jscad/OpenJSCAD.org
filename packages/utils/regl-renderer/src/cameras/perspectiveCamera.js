@@ -1,5 +1,5 @@
-const mat4 = require('gl-mat4')
-const vec3 = require('gl-vec3')
+import mat4 from 'gl-mat4'
+import vec3 from 'gl-vec3'
 
 const cameraState = {
   view: mat4.identity(new Float32Array(16)),
@@ -55,4 +55,10 @@ const update = (output, camera) => {
   return out
 }
 
-module.exports = { cameraState, cameraProps, defaults, setProjection, update }
+export {
+  cameraState,
+  cameraProps,
+  defaults,
+  setProjection,
+  update
+}

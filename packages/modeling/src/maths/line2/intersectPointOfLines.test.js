@@ -1,7 +1,8 @@
-const test = require('ava')
-const { intersectPointOfLines, create, fromPoints } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { intersectPointOfLines, create, fromPoints } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('line2: intersectPointOfLines() should return proper points', (t) => {
   const line1 = create()

@@ -9,7 +9,7 @@
  * @returns {vec2} intersection point of the two line segments, or undefined
  * @alias module:modeling/maths/utils.intersect
  */
-const intersect = (p1, p2, p3, p4) => {
+export const intersect = (p1, p2, p3, p4) => {
   // Check if none of the lines are of length 0
   if ((p1[0] === p2[0] && p1[1] === p2[1]) || (p3[0] === p4[0] && p3[1] === p4[1])) {
     return undefined
@@ -37,4 +37,4 @@ const intersect = (p1, p2, p3, p4) => {
   return [x, y]
 }
 
-module.exports = intersect
+export default intersect

@@ -1,11 +1,11 @@
-const dot = require('../../../maths/vec3/dot')
+import dot from '../../../maths/vec3/dot.js'
 
-const pointLineDistance = require('./point-line-distance')
-const getPlaneNormal = require('./get-plane-normal')
+import { pointLineDistance } from './point-line-distance.js'
+import { getPlaneNormal } from './get-plane-normal.js'
 
-const VertexList = require('./VertexList')
-const Vertex = require('./Vertex')
-const { Face, VISIBLE, NON_CONVEX, DELETED } = require('./Face')
+import { VertexList } from './VertexList.js'
+import { Vertex } from './Vertex.js'
+import { Face, VISIBLE, NON_CONVEX, DELETED } from './Face.js'
 
 /*
  * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)
@@ -19,7 +19,7 @@ const { Face, VISIBLE, NON_CONVEX, DELETED } = require('./Face')
 const MERGE_NON_CONVEX_WRT_LARGER_FACE = 1
 const MERGE_NON_CONVEX = 2
 
-class QuickHull {
+export class QuickHull {
   constructor (points) {
     if (!Array.isArray(points)) {
       throw TypeError('input is not a valid array')
@@ -750,5 +750,3 @@ class QuickHull {
     this.reindexFaceAndVertices()
   }
 }
-
-module.exports = QuickHull

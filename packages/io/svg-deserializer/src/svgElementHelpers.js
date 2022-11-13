@@ -1,5 +1,5 @@
-const { cagColor, cssStyle, css2cag } = require('./helpers')
-const { pxPmm } = require('./constants')
+import { cagColor, cssStyle, css2cag } from './helpers.js'
+import { pxPmm } from './constants.js'
 
 const svgCore = (obj, element) => {
   if ('id' in element) { obj.id = element.id }
@@ -448,7 +448,7 @@ const svgUse = (element, { svgObjects }) => {
   return obj
 }
 
-module.exports = {
+export {
   svgCore,
   svgPresentation,
   svgSvg,

@@ -1,4 +1,4 @@
-const mat4 = require('gl-mat4')
+import mat4 from 'gl-mat4'
 
 const maxIndex = Math.floor(65535 / 2) // two vertices per segment
 
@@ -9,7 +9,7 @@ const maxIndex = Math.floor(65535 / 2) // two vertices per segment
  * @param {geom2} solid - the solid to convert
  * @return {Array} list of new geometries
  */
-const geom2ToGeometries = (options, solid) => {
+export const geom2ToGeometries = (options, solid) => {
   let { color } = options
 
   const sides = solid.sides
@@ -63,4 +63,4 @@ const geom2ToGeometries = (options, solid) => {
   return geometries
 }
 
-module.exports = geom2ToGeometries
+export default geom2ToGeometries

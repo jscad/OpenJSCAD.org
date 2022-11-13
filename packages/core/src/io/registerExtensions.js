@@ -1,8 +1,9 @@
-const { deserializers } = require('@jscad/io')
+import stripBom from 'strip-bom'
+
+import { deserializers } from '@jscad/io'
 
 // FIXME: the unregistering does not work, look into it
 const registerJscadExtension = (fs, _require) => {
-  const stripBom = require('strip-bom')
   _require.extensions['.jscad'] = (module, filename) => {
     const content = fs.readFileSync(filename, 'utf8')
     module._compile(stripBom(content), filename)
@@ -42,7 +43,7 @@ const unRegisterAllExtensions = (fs, _require) => {
   }
 }
 
-module.exports = {
+export {
   registerAllExtensions,
   unRegisterAllExtensions
 }

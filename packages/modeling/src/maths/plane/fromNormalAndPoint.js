@@ -1,4 +1,4 @@
-const vec3 = require('../vec3')
+import * as vec3 from '../vec3/index.js'
 
 /**
  * Represents a plane in 3D coordinate space as determined by a normal (perpendicular to the plane)
@@ -18,7 +18,7 @@ const vec3 = require('../vec3')
  * @returns {plane} out
  * @alias module:modeling/maths/plane.fromNormalAndPoint
  */
-const fromNormalAndPoint = (out, normal, point) => {
+export const fromNormalAndPoint = (out, normal, point) => {
   const u = vec3.normalize(vec3.create(), normal)
   const w = vec3.dot(point, u)
 
@@ -29,4 +29,4 @@ const fromNormalAndPoint = (out, normal, point) => {
   return out
 }
 
-module.exports = fromNormalAndPoint
+export default fromNormalAndPoint

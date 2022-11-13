@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { isIdentity, create, fromTranslation } = require('./index')
+import { isIdentity, create, fromTranslation } from './index.js'
 
 test('mat4: isIdentity() should return correct values', (t) => {
   const identity = create() // identity matrix

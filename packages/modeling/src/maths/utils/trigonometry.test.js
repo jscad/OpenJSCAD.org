@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { TAU } = require('../constants')
+import { TAU } from '../constants.js'
 
-const { cos, sin } = require('./trigonometry')
+import { cos, sin } from './index.js'
 
 test('utils: sin() should return rounded values', (t) => {
   t.is(sin(0), 0)

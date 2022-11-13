@@ -1,16 +1,16 @@
-const { geometries } = require('@jscad/modeling')
+import { geometries } from '@jscad/modeling'
 
 const { geom3, poly3 } = geometries
 
-const extrudeX3D = require('./extrudeX3D')
+import extrudeX3D from './extrudeX3D.js'
 
-const { x3dTypes } = require('./objects')
-const { findNode, findColor, pointsToString } = require('./translateHelpers')
+import { x3dTypes } from './objects.js'
+import { findNode, findColor, pointsToString } from './translateHelpers.js'
 
-const translateLine = require('./translateLine')
-const translateMesh = require('./translateMesh')
+import translateLine from './translateLine.js'
+import translateMesh from './translateMesh.js'
 
-const translateShape = (options, object) => {
+export const translateShape = (options, object) => {
   let code = `
 // shape
 const createObjects${object.id} = (options) => {
@@ -152,4 +152,4 @@ const createObjects${object.id} = (options) => {
   return code
 }
 
-module.exports = translateShape
+export default translateShape

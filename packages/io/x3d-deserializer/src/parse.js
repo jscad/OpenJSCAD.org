@@ -1,6 +1,6 @@
-const saxes = require('saxes')
+import saxes from 'saxes'
 
-const {
+import {
   x3dTypes,
 
   x3dX3D,
@@ -43,7 +43,7 @@ const {
 
   x3dAppearance,
   x3dMaterial
-} = require('./objects')
+} from './objects.js'
 
 let x3dLast = null // last object found
 let x3dDefinition = x3dTypes.X3D // what kind of object beinging created
@@ -107,7 +107,7 @@ const nodeToObjectMap = {
 let objectId = 1
 const getObjectId = () => ('0000' + objectId++).slice(-4)
 
-const createX3DParser = (src, pxPmm) => {
+const createX3DParser = (src) => {
   // create a parser for the XML
   const parser = new saxes.SaxesParser()
 
@@ -333,10 +333,10 @@ const createX3DParser = (src, pxPmm) => {
   parser.write(src).close()
 }
 
-const parse = (src, pxPmm) => {
-  createX3DParser(src, pxPmm)
+export const parse = (src) => {
+  createX3DParser(src)
   // console.log(JSON.stringify(x3dObj))
   return { x3dObj, x3dMaterials, x3dTextures }
 }
 
-module.exports = parse
+export default parse

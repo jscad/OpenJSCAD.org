@@ -6,10 +6,10 @@
  * @example
  * const array = toArray(1) // [1]
  */
-const toArray = (array) => {
+export const toArray = (array) => {
   if (Array.isArray(array)) return array
   if (array === undefined || array === null) return []
   return [array]
 }
 
-module.exports = toArray
+export default toArray

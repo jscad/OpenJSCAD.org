@@ -1,9 +1,9 @@
-const { TAU } = require('../../maths/constants')
-const vec2 = require('../../maths/vec2')
-const vec3 = require('../../maths/vec2')
+import { TAU } from '../../maths/constants.js'
+import * as vec2 from '../../maths/vec2/index.js'
+import * as vec3 from '../../maths/vec3/index.js' // FIXME why vec3?
 
-const appendPoints = require('./appendPoints')
-const toPoints = require('./toPoints')
+import appendPoints from './appendPoints.js'
+import toPoints from './toPoints.js'
 
 /**
  * Append a series of points to the given geometry that represent a Bezier curve.
@@ -24,7 +24,7 @@ const toPoints = require('./toPoints')
  * p5 = path2.appendBezier({controlPoints: [[10,-10],[25,-10],[25,-20]]}, p5);
  * p5 = path2.appendBezier({controlPoints: [null, [25,-30],[40,-30],[40,-20]]}, p5)
  */
-const appendBezier = (options, geometry) => {
+export const appendBezier = (options, geometry) => {
   const defaults = {
     segments: 16
   }
@@ -153,4 +153,4 @@ const appendBezier = (options, geometry) => {
   return result
 }
 
-module.exports = appendBezier
+export default appendBezier

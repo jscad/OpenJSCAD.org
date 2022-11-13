@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { isConvex, create, fromPoints } = require('./index')
+import { isConvex, create, fromPoints } from './index.js'
 
 test('poly3: isConvex() should return correct values', (t) => {
   const ply1 = create()

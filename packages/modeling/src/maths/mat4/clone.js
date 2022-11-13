@@ -1,4 +1,4 @@
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Creates a clone of the given matrix.
@@ -7,7 +7,7 @@ const create = require('./create')
  * @returns {mat4} a new matrix
  * @alias module:modeling/maths/mat4.clone
  */
-const clone = (matrix) => {
+export const clone = (matrix) => {
   const out = create()
   out[0] = matrix[0]
   out[1] = matrix[1]
@@ -28,4 +28,4 @@ const clone = (matrix) => {
   return out
 }
 
-module.exports = clone
+export default clone

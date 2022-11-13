@@ -1,4 +1,4 @@
-const { extrusions, geometries, maths } = require('@jscad/modeling')
+import { extrusions, geometries, maths } from '@jscad/modeling'
 
 const { mat4, vec3, utils } = maths
 const { extrudeFromSlices, slice } = extrusions
@@ -128,7 +128,7 @@ const rotationMatrixFromSCP = (out, xaxis, yaxis, zaxis) => {
   return out
 }
 
-const extrudeX3D = (x3dshape) => {
+export const extrudeX3D = (x3dshape) => {
   // console.log(x3dshape)
   let { beginCap, endCap, crossSection, orientations, scales, spine } = Object.assign({}, x3dshape)
 
@@ -213,4 +213,4 @@ const extrudeX3D = (x3dshape) => {
   }, initialSlice)
 }
 
-module.exports = extrudeX3D
+export default extrudeX3D

@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { TAU } = require('../maths/constants')
+import { TAU } from '../maths/constants.js'
 
-const { radToDeg } = require('./index')
+import { radToDeg } from './index.js'
 
 test('utils: radToDeg() should return correct values', (t) => {
   const obs1 = radToDeg(0)

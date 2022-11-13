@@ -67,7 +67,7 @@ const drawingUnits = [
 const BYBLOCK = 0
 const BYLAYER = 256
 
-module.exports = {
+export {
   drawingUnits,
   BYBLOCK,
   BYLAYER,

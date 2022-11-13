@@ -1,4 +1,3 @@
-
 /**
  * casts the parameters/ get their correct values based on the
  * raw parameters (passed into the CLI tool for example) and the
@@ -7,7 +6,7 @@
  * @param {Array} parameterDefinitions
  * @returns {Object} the parameter values, as an object
  */
-const applyParameterDefinitions = (inputParameters, parameterDefinitions, throwOnNoDefinition = false) => {
+export const applyParameterDefinitions = (inputParameters, parameterDefinitions, throwOnNoDefinition = false) => {
   const values = Object.keys(inputParameters).reduce((paramValues, paramName) => {
     let value = inputParameters[paramName]
 
@@ -72,4 +71,4 @@ const valueForChoices = (inputValue, definition) => {
   return value
 }
 
-module.exports = applyParameterDefinitions
+export default applyParameterDefinitions

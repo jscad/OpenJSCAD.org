@@ -1,4 +1,4 @@
-const toSides = require('./toSides')
+import toSides from './toSides.js'
 
 /**
  * Produces an array of points from the given geometry.
@@ -11,7 +11,7 @@ const toSides = require('./toSides')
  * @example
  * let sharedpoints = toPoints(geometry)
  */
-const toPoints = (geometry) => {
+export const toPoints = (geometry) => {
   const sides = toSides(geometry)
   const points = sides.map((side) => side[0])
   // due to the logic of fromPoints()
@@ -22,4 +22,4 @@ const toPoints = (geometry) => {
   return points
 }
 
-module.exports = toPoints
+export default toPoints

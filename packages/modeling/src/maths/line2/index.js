@@ -3,20 +3,18 @@
  * @see {@link line2} for data structure information.
  * @module modeling/maths/line2
  */
-module.exports = {
-  clone: require('./clone'),
-  closestPoint: require('./closestPoint'),
-  copy: require('./copy'),
-  create: require('./create'),
-  direction: require('./direction'),
-  distanceToPoint: require('./distanceToPoint'),
-  equals: require('./equals'),
-  fromPoints: require('./fromPoints'),
-  fromValues: require('./fromValues'),
-  intersectPointOfLines: require('./intersectPointOfLines'),
-  origin: require('./origin'),
-  reverse: require('./reverse'),
-  toString: require('./toString'),
-  transform: require('./transform'),
-  xAtY: require('./xAtY')
-}
+export { clone } from './clone.js'
+export { closestPoint } from './closestPoint.js'
+export { copy } from './copy.js'
+export { create } from './create.js'
+export { direction } from './direction.js'
+export { distanceToPoint } from './distanceToPoint.js'
+export { equals } from './equals.js'
+export { fromPoints } from './fromPoints.js'
+export { fromValues } from './fromValues.js'
+export { intersectPointOfLines } from './intersectPointOfLines.js'
+export { origin } from './origin.js'
+export { reverse } from './reverse.js'
+export { toString } from './toString.js'
+export { transform } from './transform.js'
+export { xAtY } from './xAtY.js'

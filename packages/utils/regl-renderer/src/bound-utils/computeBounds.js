@@ -1,8 +1,8 @@
-const vec3 = require('gl-vec3')
+import vec3 from 'gl-vec3'
 
-const { flatten } = require('@jscad/array-utils')
+import { flatten } from '@jscad/array-utils'
 
-const boundingBox = require('./boundingBox')
+import boundingBox from './boundingBox.js'
 
 /*
  * Compute the bounds of the given geometries.
@@ -17,7 +17,7 @@ const boundingBox = require('./boundingBox')
  *   size: [6,20,4]
  * }
  */
-const computeBounds = (...geometries) => {
+export const computeBounds = (...geometries) => {
   geometries = flatten(geometries)
 
   let bbox // min and max
@@ -51,4 +51,4 @@ const computeBounds = (...geometries) => {
   return bounds
 }
 
-module.exports = computeBounds
+export default computeBounds

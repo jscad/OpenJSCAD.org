@@ -1,6 +1,7 @@
-const constants = require('../../maths/constants')
-const vec3 = require('../../maths/vec3')
-const poly3 = require('../../geometries/poly3')
+import { EPS } from '../../maths/constants.js'
+import * as vec3 from '../../maths/vec3/index.js'
+
+import * as poly3 from '../../geometries/poly3/index.js'
 
 const assert = false
 
@@ -109,7 +110,7 @@ const deleteSide = (sidemap, vertextag2sidestart, vertextag2sideend, vertex0, ve
  * @param {Array} polygons - the original polygons which may or may not have T junctions
  * @return original polygons (if no T junctions found) or new polygons with updated vertices
  */
-const insertTjunctions = (polygons) => {
+export const insertTjunctions = (polygons) => {
   // STEP 1 : build a map of 'unmatched' sides from the polygons
   // i.e. side AB in one polygon does not have a matching side BA in another polygon
   const sidemap = new Map()
@@ -241,7 +242,7 @@ const insertTjunctions = (polygons) => {
                   const closestpoint = vec3.scale(vec3.create(), direction, t)
                   vec3.add(closestpoint, closestpoint, startpos)
                   const distancesquared = vec3.squaredDistance(closestpoint, endpos)
-                  if (distancesquared < (constants.EPS * constants.EPS)) {
+                  if (distancesquared < (EPS * EPS)) {
                     // Yes it's a t-junction! We need to split matchingside in two:
                     const polygonindex = matchingside.polygonindex
                     const polygon = newpolygons[polygonindex]
@@ -291,4 +292,4 @@ const insertTjunctions = (polygons) => {
   return polygons
 }
 
-module.exports = insertTjunctions
+export default insertTjunctions

@@ -1,6 +1,6 @@
-const { maths } = require('@jscad/modeling')
+import { maths } from '@jscad/modeling'
 
-const createTransform = (center, rotation, scale, scaleOrientation, translation) => {
+export const createTransform = (center, rotation, scale, scaleOrientation, translation) => {
   const matrix = maths.mat4.create()
   const temp = maths.mat4.create()
   maths.mat4.multiply(matrix, matrix, maths.mat4.fromTranslation(temp, translation))
@@ -14,4 +14,4 @@ const createTransform = (center, rotation, scale, scaleOrientation, translation)
   return matrix
 }
 
-module.exports = createTransform
+export default createTransform

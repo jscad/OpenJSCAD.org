@@ -1,24 +1,24 @@
-const test = require('ava')
+import test from 'ava'
 
-const { colors, geometries, primitives, transforms } = require('@jscad/modeling')
+import { colors, geometries, primitives, transforms } from '@jscad/modeling'
 
-const serializer = require('../index.js')
+import { serialize } from '../src/index.js'
 
 test('serialize 2D geometries (simple) to svg', (t) => {
   const cag1 = geometries.geom2.create()
 
-  const observed1 = serializer.serialize({}, cag1)
+  const observed1 = serialize({}, cag1)
   t.deepEqual([expected1], observed1)
 
   const cag2 = primitives.rectangle({ size: [10, 20] })
 
-  const observed2 = serializer.serialize({}, cag2)
+  const observed2 = serialize({}, cag2)
   t.deepEqual([expected2], observed2)
 
   const cag3 = transforms.center({ relativeTo: [-30, -30, 0] }, primitives.rectangle({ size: [10, 20] }))
   const cag4 = transforms.center({ relativeTo: [30, 30, 0] }, primitives.rectangle({ size: [10, 20] }))
 
-  const observed3 = serializer.serialize({}, cag3, cag4)
+  const observed3 = serialize({}, cag3, cag4)
   t.deepEqual([expected3], observed3)
 })
 
@@ -28,7 +28,7 @@ test('serialize 2D geometries (color) to svg', (t) => {
   cag2.id = 'r2'
   cag2.class = 'gray-rect'
 
-  const observed2 = serializer.serialize({}, cag2)
+  const observed2 = serialize({}, cag2)
   t.deepEqual([expected4], observed2)
 })
 
@@ -57,7 +57,7 @@ test('serialize 2D geometries (complex) to svg', (t) => {
   ])
   shape = colors.colorize([0.5, 0.5, 0.5, 0.5], shape)
 
-  const observed = serializer.serialize({}, shape)
+  const observed = serialize({}, shape)
   t.deepEqual([expected5], observed)
 })
 

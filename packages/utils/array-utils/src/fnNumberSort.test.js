@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { fnNumberSort } = require('./index')
+import { fnNumberSort } from './index.js'
 
 test('array-utils: fnNumberSort() should sort numbers', (t) => {
   const positive = [2, 1, 4, 3, 6, 5, 8, 7, 9, 0]

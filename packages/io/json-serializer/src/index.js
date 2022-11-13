@@ -23,7 +23,7 @@ Notes:
  * const { serializer, mimeType } = require('@jscad/json-serializer')
  */
 
-const { utils } = require('@jscad/modeling')
+import { utils } from '@jscad/modeling'
 
 // Replace all typed arrays in geometries with standard Arrays
 // NOTE: 'this' in replacer is the object in which key was found
@@ -72,7 +72,7 @@ const serialize = (options, ...objects) => {
 
 const mimeType = 'application/json'
 
-module.exports = {
+export {
   serialize,
   mimeType
 }

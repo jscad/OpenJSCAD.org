@@ -1,8 +1,8 @@
-const vec2 = require('../vec2')
+import * as vec2 from '../vec2/index.js'
 
-const fromPoints = require('./fromPoints')
-const origin = require('./origin')
-const direction = require('./direction')
+import fromPoints from './fromPoints.js'
+import origin from './origin.js'
+import direction from './direction.js'
 
 /**
  * Transforms the given line using the given matrix.
@@ -13,7 +13,7 @@ const direction = require('./direction')
  * @returns {line2} out
  * @alias module:modeling/maths/line2.transform
  */
-const transform = (out, line, matrix) => {
+export const transform = (out, line, matrix) => {
   const org = origin(line)
   const dir = direction(line)
 
@@ -23,4 +23,4 @@ const transform = (out, line, matrix) => {
   return fromPoints(out, org, dir)
 }
 
-module.exports = transform
+export default transform

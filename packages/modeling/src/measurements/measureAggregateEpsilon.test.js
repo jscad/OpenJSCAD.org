@@ -1,8 +1,10 @@
-const test = require('ava')
-const { EPS } = require('../maths/constants')
+import test from 'ava'
 
-const { cube, square } = require('../primitives')
-const measureAggregateEpsilon = require('./measureAggregateEpsilon')
+import { EPS } from '../maths/constants.js'
+
+import { cube, square } from '../primitives/index.js'
+
+import { measureAggregateEpsilon } from './index.js'
 
 test('measureAggregateEpsilon (single objects)', (t) => {
   const aCube = cube({ size: 4, center: [4, 10, 20] })

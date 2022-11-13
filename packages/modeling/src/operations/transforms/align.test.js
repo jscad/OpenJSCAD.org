@@ -1,11 +1,12 @@
-const test = require('ava')
+import test from 'ava'
 
-const { comparePoints } = require('../../../test/helpers')
-const { geom3 } = require('../../geometries')
-const { measureBoundingBox, measureAggregateBoundingBox } = require('../../measurements')
-const { cube } = require('../../primitives')
+import { comparePoints } from '../../../test/helpers/index.js'
 
-const { align } = require('./index')
+import { geom3 } from '../../geometries/index.js'
+import { measureBoundingBox, measureAggregateBoundingBox } from '../../measurements/index.js'
+import { cube } from '../../primitives/index.js'
+
+import { align } from './index.js'
 
 test('align: single object returns geometry unchanged if all axes are none', (t) => {
   const original = cube({ size: 4, center: [10, 10, 10] })

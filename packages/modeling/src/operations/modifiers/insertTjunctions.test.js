@@ -1,12 +1,12 @@
-const test = require('ava')
+import test from 'ava'
 
-const { comparePolygonLists } = require('../../../test/helpers')
+import { comparePolygonLists } from '../../../test/helpers/index.js'
 
-const { geom3, poly3 } = require('../../geometries')
+import { geom3, poly3 } from '../../geometries/index.js'
 
-const { cuboid } = require('../../primitives')
+import { cuboid } from '../../primitives/index.js'
 
-const insertTjunctions = require('./insertTjunctions')
+import insertTjunctions from './insertTjunctions.js'
 
 test('insertTjunctions: insertTjunctions produces expected polygons', (t) => {
   const geometry1 = geom3.create()

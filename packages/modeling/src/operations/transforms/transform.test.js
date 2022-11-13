@@ -1,12 +1,12 @@
-const test = require('ava')
+import test from 'ava'
 
-const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
+import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
-const mat4 = require('../../maths/mat4')
+import { mat4 } from '../../maths/index.js'
 
-const { geom2, geom3, path2 } = require('../../geometries')
+import { geom2, geom3, path2 } from '../../geometries/index.js'
 
-const { transform } = require('./index')
+import { transform } from './index.js'
 
 test('transform: transforming of a path2 produces expected changes to points', (t) => {
   const matrix = mat4.fromTranslation(mat4.create(), [2, 2, 0])

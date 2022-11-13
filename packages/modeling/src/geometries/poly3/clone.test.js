@@ -1,7 +1,8 @@
-const test = require('ava')
-const { create, clone, fromPoints } = require('./index')
+import test from 'ava'
 
-const { comparePolygons } = require('../../../test/helpers/index')
+import { create, clone, fromPoints } from './index.js'
+
+import { comparePolygons } from '../../../test/helpers/index.js'
 
 test('poly3: clone() should return a new poly3 with same values', (t) => {
   const org1 = create()

@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { TAU } = require('../maths/constants')
+import { TAU } from '../maths/constants.js'
 
-const { radiusToSegments } = require('./index')
+import { radiusToSegments } from './index.js'
 
 test('utils: radiusToSegments() should return correct values', (t) => {
   // test defaults

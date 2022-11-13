@@ -1,8 +1,10 @@
-const test = require('ava')
-const { angleRadians } = require('./index')
+import test from 'ava'
 
-const { nearlyEqual } = require('../../../test/helpers/index')
-const { EPS } = require('../constants')
+import { EPS } from '../constants.js'
+
+import { angleRadians } from './index.js'
+
+import { nearlyEqual } from '../../../test/helpers/index.js'
 
 test('vec2: angleRadians() should return correct values', (t) => {
   const distance1 = angleRadians([0, 0])

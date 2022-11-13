@@ -1,3 +1,1 @@
-module.exports = {
-  walkFileTree: require('./walkFileTree')
-}
+export { walkFileTree } from './walkFileTree.js'

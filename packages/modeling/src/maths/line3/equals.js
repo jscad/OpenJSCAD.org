@@ -1,4 +1,4 @@
-const vec3 = require('../vec3')
+import * as vec3 from '../vec3/index.js'
 
 /**
  * Compare the given lines for equality.
@@ -8,7 +8,7 @@ const vec3 = require('../vec3')
  * @return {Boolean} true if lines are equal
  * @alias module:modeling/maths/line3.equals
  */
-const equals = (line1, line2) => {
+export const equals = (line1, line2) => {
   // compare directions (unit vectors)
   if (!vec3.equals(line1[1], line2[1])) return false
 
@@ -22,4 +22,4 @@ const equals = (line1, line2) => {
   return true
 }
 
-module.exports = equals
+export default equals

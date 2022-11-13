@@ -8,7 +8,7 @@
  * @returns {vec2} out
  * @alias module:modeling/maths/vec2.lerp
  */
-const lerp = (out, a, b, t) => {
+export const lerp = (out, a, b, t) => {
   const ax = a[0]
   const ay = a[1]
   out[0] = ax + t * (b[0] - ax)
@@ -16,4 +16,4 @@ const lerp = (out, a, b, t) => {
   return out
 }
 
-module.exports = lerp
+export default lerp

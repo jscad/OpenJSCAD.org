@@ -1,4 +1,2 @@
-module.exports = {
-  makeFakeFs: require('./makeFakeFs.js'),
-  requireDesignUtilsFs: require('./requireDesignUtilsFs')
-}
+export { makeFakeFs } from './makeFakeFs.js'
+export { getDesignEntryPoint, getDesignName } from './requireDesignUtilsFs.js'

@@ -1,4 +1,4 @@
-const geom2 = require('../geometries/geom2')
+import * as geom2 from '../geometries/geom2/index.js'
 
 /**
  * Construct a polygon in two dimensional space from a list of points, or a list of points and paths.
@@ -21,7 +21,7 @@ const geom2 = require('../geometries/geom2')
  * or
  * let poly = polygon({ points: [roof, wall], paths: [[0, 1, 2], [3, 4, 5, 6]] })
  */
-const polygon = (options) => {
+export const polygon = (options) => {
   const defaults = {
     points: [],
     paths: []
@@ -67,4 +67,4 @@ const polygon = (options) => {
   return geom2.create(sides)
 }
 
-module.exports = polygon
+export default polygon

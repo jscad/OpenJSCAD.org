@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { roundedRectangle } = require('./index')
+import { geom2 } from '../geometries/index.js'
 
-const geom2 = require('../geometries/geom2')
+import { roundedRectangle } from './index.js'
 
-const comparePoints = require('../../test/helpers/comparePoints')
+import { comparePoints } from '../../test/helpers/index.js'
 
 test('roundedRectangle (defaults)', (t) => {
   const geometry = roundedRectangle()

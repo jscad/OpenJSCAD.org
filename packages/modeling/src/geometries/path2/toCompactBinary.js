@@ -4,7 +4,7 @@
  * @returns {TypedArray} compact binary representation
  * @alias module:modeling/geometries/path2.toCompactBinary
  */
-const toCompactBinary = (geometry) => {
+export const toCompactBinary = (geometry) => {
   const points = geometry.points
   const transforms = geometry.transforms
   let color = [-1, -1, -1, -1]
@@ -49,4 +49,4 @@ const toCompactBinary = (geometry) => {
   return compacted
 }
 
-module.exports = toCompactBinary
+export default toCompactBinary

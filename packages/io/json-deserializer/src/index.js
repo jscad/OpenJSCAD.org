@@ -20,9 +20,9 @@ All code released under MIT license
  * const { deserializer, extension } = require('@jscad/json-deserializer')
  */
 
-const { flatten, toArray } = require('@jscad/array-utils')
+import { flatten, toArray } from '@jscad/array-utils'
 
-const version = require('./package.json').version
+const version = '[VI]{version}[/VI]' // version is injected by rollup
 
 /**
  * Deserialize the given JSON notation (string) into either a script or an array of geometry.
@@ -95,7 +95,7 @@ const translateToObject = (object, index) => `const json${index} = ${JSON.string
 
 const extension = 'json'
 
-module.exports = {
+export {
   deserialize,
   extension
 }

@@ -1,9 +1,10 @@
-const test = require('ava')
-const { measureBoundingBox, create, fromPoints, transform } = require('./index')
+import test from 'ava'
 
-const mat4 = require('../../maths/mat4')
+import { mat4 } from '../../maths/index.js'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { measureBoundingBox, create, fromPoints, transform } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('poly3: measureBoundingBox() should return correct values', (t) => {
   let ply1 = create()

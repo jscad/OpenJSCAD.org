@@ -1,7 +1,8 @@
-const test = require('ava')
-const { fromScaling, create } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { fromScaling, create } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('mat4: fromScaling() should return a new mat4 with correct values', (t) => {
   const obs1 = fromScaling(create(), [2, 4, 6])

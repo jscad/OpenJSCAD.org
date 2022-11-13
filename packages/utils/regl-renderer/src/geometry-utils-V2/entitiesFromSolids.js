@@ -1,10 +1,10 @@
-const { flatten, toArray } = require('@jscad/array-utils')
+import { flatten, toArray } from '@jscad/array-utils'
 
-const { meshColor } = require('../rendering/renderDefaults')
+import { meshColor } from '../rendering/renderDefaults.js'
 
-const geom2ToGeometries = require('./geom2ToGeometries')
-const geom3ToGeometries = require('./geom3ToGeometries')
-const path2ToGeometries = require('./path2ToGeometries')
+import geom2ToGeometries from './geom2ToGeometries.js'
+import geom3ToGeometries from './geom3ToGeometries.js'
+import path2ToGeometries from './path2ToGeometries.js'
 
 /*
  * Assemble a set of renderable entities from the given geometries.
@@ -35,7 +35,7 @@ const assembleEntities = (geometries) => {
  * @param {Boolean} [options.smoothNormals=true] - smooth the normals of 3d solids, rendering a smooth surface
  * @returns {Array} an array of renderable entities
  */
-const entitiesFromSolids = (options, ...solids) => {
+export const entitiesFromSolids = (options, ...solids) => {
   const defaults = {
     color: meshColor,
     smoothNormals: true
@@ -64,4 +64,4 @@ const entitiesFromSolids = (options, ...solids) => {
   return entities
 }
 
-module.exports = entitiesFromSolids
+export default entitiesFromSolids

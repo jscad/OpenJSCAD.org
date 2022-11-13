@@ -1,6 +1,6 @@
 // Compare two numeric values for near equality.
 // the given test is fails if the numeric values are outside the given epsilon
-const nearlyEqual = (t, a, b, epsilon, failMessage) => {
+export const nearlyEqual = (t, a, b, epsilon, failMessage) => {
   if (a === b) { // shortcut, also handles infinities and NaNs
     return true
   }
@@ -27,6 +27,4 @@ const nearlyEqual = (t, a, b, epsilon, failMessage) => {
   }
 }
 
-module.exports = {
-  nearlyEqual: nearlyEqual
-}
+export default nearlyEqual

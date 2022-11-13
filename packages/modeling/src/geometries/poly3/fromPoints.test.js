@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { fromPoints } = require('./index')
+import { fromPoints } from './index.js'
 
-const { comparePolygons } = require('../../../test/helpers/index')
+import { comparePolygons } from '../../../test/helpers/index.js'
 
 test('poly3: fromPoints() should return a new poly3 with correct values', (t) => {
   const exp1 = { vertices: [[0, 0, 0], [1, 0, 0], [1, 1, 0]] }

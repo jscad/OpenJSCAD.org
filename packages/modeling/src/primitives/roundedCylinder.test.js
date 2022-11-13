@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const geom3 = require('../geometries/geom3')
+import { geom3 } from '../geometries/index.js'
 
-const { roundedCylinder } = require('./index')
+import { roundedCylinder } from './index.js'
 
-const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoints')
+import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
 
 test('roundedCylinder (defaults)', (t) => {
   const obs = roundedCylinder()

@@ -5,16 +5,25 @@
  * @module modeling/maths
  * @example
  * const { constants, line2, mat4, vec2, vec3 } = require('@jscad/modeling').maths
-
  */
-module.exports = {
-  constants: require('./constants'),
-  line2: require('./line2'),
-  line3: require('./line3'),
-  mat4: require('./mat4'),
-  plane: require('./plane'),
-  utils: require('./utils'),
-  vec2: require('./vec2'),
-  vec3: require('./vec3'),
-  vec4: require('./vec4')
+import * as constants from './constants.js'
+import * as line2 from './line2/index.js'
+import * as line3 from './line3/index.js'
+import * as mat4 from './mat4/index.js'
+import * as plane from './plane/index.js'
+import * as utils from './utils/index.js'
+import * as vec2 from './vec2/index.js'
+import * as vec3 from './vec3/index.js'
+import * as vec4 from './vec4/index.js'
+
+export {
+  constants,
+  line2,
+  line3,
+  mat4,
+  plane,
+  utils,
+  vec2,
+  vec3,
+  vec4
 }

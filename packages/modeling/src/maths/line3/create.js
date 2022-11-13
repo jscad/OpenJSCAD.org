@@ -1,4 +1,4 @@
-const vec3 = require('../vec3')
+import * as vec3 from '../vec3/index.js'
 
 /**
  * Represents a unbounded line in 3D space, positioned at a point of origin.
@@ -15,9 +15,9 @@ const vec3 = require('../vec3')
  * @returns {line3} a new unbounded line
  * @alias module:modeling/maths/line3.create
  */
-const create = () => [
+export const create = () => [
   vec3.fromValues(0, 0, 0), // origin
   vec3.fromValues(0, 0, 1) // direction
 ]
 
-module.exports = create
+export default create

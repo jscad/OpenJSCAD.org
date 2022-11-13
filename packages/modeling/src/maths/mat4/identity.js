@@ -5,7 +5,7 @@
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.identity
  */
-const identity = (out) => {
+export const identity = (out) => {
   out[0] = 1
   out[1] = 0
   out[2] = 0
@@ -25,4 +25,4 @@ const identity = (out) => {
   return out
 }
 
-module.exports = identity
+export default identity

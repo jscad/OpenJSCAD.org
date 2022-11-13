@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const geom2 = require('../geometries/geom2')
+import { geom2 } from '../geometries/index.js'
 
-const { polygon } = require('./index')
+import { polygon } from './index.js'
 
-const comparePoints = require('../../test/helpers/comparePoints')
+import { comparePoints } from '../../test/helpers/index.js'
 
 test('polygon: providing only object.points creates expected geometry', (t) => {
   let geometry = polygon({ points: [[0, 0], [100, 0], [130, 50], [30, 50]] })

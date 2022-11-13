@@ -1,4 +1,3 @@
-
 /**
  * Represents a convex 3D polygon. The vertices used to initialize a polygon must
  * be coplanar and form a convex shape. The vertices do not have to be `vec3`
@@ -14,11 +13,11 @@
  * @returns {poly3} a new polygon
  * @alias module:modeling/geometries/poly3.create
  */
-const create = (vertices) => {
+export const create = (vertices) => {
   if (vertices === undefined || vertices.length < 3) {
     vertices = [] // empty contents
   }
   return { vertices }
 }
 
-module.exports = create
+export default create

@@ -5,6 +5,6 @@
  * @returns {String} string representation
  * @alias module:modeling/maths/vec2.toString
  */
-const toString = (vector) => `[${vector[0].toFixed(7)}, ${vector[1].toFixed(7)}]`
+export const toString = (vector) => `[${vector[0].toFixed(7)}, ${vector[1].toFixed(7)}]`
 
-module.exports = toString
+export default toString

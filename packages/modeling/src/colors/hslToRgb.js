@@ -1,6 +1,6 @@
-const flatten = require('../utils/flatten')
+import flatten from '../utils/flatten.js'
 
-const hueToColorComponent = require('./hueToColorComponent')
+import hueToColorComponent from './hueToColorComponent.js'
 
 /**
  * Converts HSL color values to RGB color values.
@@ -13,7 +13,7 @@ const hueToColorComponent = require('./hueToColorComponent')
  * @example
  * let mysphere = colorize(hslToRgb([0.9166666666666666, 1, 0.5]), sphere())
  */
-const hslToRgb = (...values) => {
+export const hslToRgb = (...values) => {
   values = flatten(values)
   if (values.length < 3) throw new Error('values must contain H, S and L values')
 
@@ -41,4 +41,4 @@ const hslToRgb = (...values) => {
   return [r, g, b]
 }
 
-module.exports = hslToRgb
+export default hslToRgb

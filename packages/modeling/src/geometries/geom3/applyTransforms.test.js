@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { fromPoints } = require('./index')
+import { fromPoints } from './index.js'
 
-const applyTransforms = require('./applyTransforms')
+import applyTransforms from './applyTransforms.js'
 
-const { comparePolygons, compareVectors } = require('../../../test/helpers/')
+import { comparePolygons, compareVectors } from '../../../test/helpers/index.js'
 
 test('applyTransforms: Updates a geom3 with transformed polygons', (t) => {
   const points = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]

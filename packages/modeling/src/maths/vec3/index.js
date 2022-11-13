@@ -3,37 +3,35 @@
  * @see {@link vec3} for data structure information.
  * @module modeling/maths/vec3
  */
-module.exports = {
-  abs: require('./abs'),
-  add: require('./add'),
-  angle: require('./angle'),
-  clone: require('./clone'),
-  copy: require('./copy'),
-  create: require('./create'),
-  cross: require('./cross'),
-  distance: require('./distance'),
-  divide: require('./divide'),
-  dot: require('./dot'),
-  equals: require('./equals'),
-  fromScalar: require('./fromScalar'),
-  fromValues: require('./fromValues'),
-  fromVec2: require('./fromVec2'),
-  length: require('./length'),
-  lerp: require('./lerp'),
-  max: require('./max'),
-  min: require('./min'),
-  multiply: require('./multiply'),
-  negate: require('./negate'),
-  normalize: require('./normalize'),
-  orthogonal: require('./orthogonal'),
-  rotateX: require('./rotateX'),
-  rotateY: require('./rotateY'),
-  rotateZ: require('./rotateZ'),
-  scale: require('./scale'),
-  snap: require('./snap'),
-  squaredDistance: require('./squaredDistance'),
-  squaredLength: require('./squaredLength'),
-  subtract: require('./subtract'),
-  toString: require('./toString'),
-  transform: require('./transform')
-}
+export { abs } from './abs.js'
+export { add } from './add.js'
+export { angle } from './angle.js'
+export { clone } from './clone.js'
+export { copy } from './copy.js'
+export { create } from './create.js'
+export { cross } from './cross.js'
+export { distance } from './distance.js'
+export { divide } from './divide.js'
+export { dot } from './dot.js'
+export { equals } from './equals.js'
+export { fromScalar } from './fromScalar.js'
+export { fromValues } from './fromValues.js'
+export { fromVec2 } from './fromVec2.js'
+export { length } from './length.js'
+export { lerp } from './lerp.js'
+export { max } from './max.js'
+export { min } from './min.js'
+export { multiply } from './multiply.js'
+export { negate } from './negate.js'
+export { normalize } from './normalize.js'
+export { orthogonal } from './orthogonal.js'
+export { rotateX } from './rotateX.js'
+export { rotateY } from './rotateY.js'
+export { rotateZ } from './rotateZ.js'
+export { scale } from './scale.js'
+export { snap } from './snap.js'
+export { squaredDistance } from './squaredDistance.js'
+export { squaredLength } from './squaredLength.js'
+export { subtract } from './subtract.js'
+export { toString } from './toString.js'
+export { transform } from './transform.js'

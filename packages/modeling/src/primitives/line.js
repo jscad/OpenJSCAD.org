@@ -1,4 +1,4 @@
-const path2 = require('../geometries/path2')
+import * as path2 from '../geometries/path2/index.js'
 
 /**
  * Construct a new line in two dimensional space from the given points.
@@ -10,10 +10,10 @@ const path2 = require('../geometries/path2')
  * @example
  * let myshape = line([[10, 10], [-10, 10]])
  */
-const line = (points) => {
+export const line = (points) => {
   if (!Array.isArray(points)) throw new Error('points must be an array')
 
   return path2.fromPoints({}, points)
 }
 
-module.exports = line
+export default line

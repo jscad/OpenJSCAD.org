@@ -1,6 +1,6 @@
-const vec2 = require('../../maths/vec2')
+import * as vec2 from '../../maths/vec2/index.js'
 
-const toSides = require('./toSides')
+import toSides from './toSides.js'
 
 /**
  * Create a string representing the contents of the given geometry.
@@ -11,7 +11,7 @@ const toSides = require('./toSides')
  * @example
  * console.out(toString(geometry))
  */
-const toString = (geometry) => {
+export const toString = (geometry) => {
   const sides = toSides(geometry)
   let result = 'geom2 (' + sides.length + ' sides):\n[\n'
   sides.forEach((side) => {
@@ -21,4 +21,4 @@ const toString = (geometry) => {
   return result
 }
 
-module.exports = toString
+export default toString

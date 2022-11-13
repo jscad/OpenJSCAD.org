@@ -1,4 +1,4 @@
-const solve2Linear = (a, b, c, d, u, v) => {
+export const solve2Linear = (a, b, c, d, u, v) => {
   const det = a * d - b * c
   const invdet = 1.0 / det
   let x = u * d - b * v
@@ -8,4 +8,4 @@ const solve2Linear = (a, b, c, d, u, v) => {
   return [x, y]
 }
 
-module.exports = solve2Linear
+export default solve2Linear

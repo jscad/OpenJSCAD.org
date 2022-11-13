@@ -1,6 +1,6 @@
-const mat4 = require('gl-mat4')
+import mat4 from 'gl-mat4'
 
-const drawAxis = (regl, params) => {
+export const drawAxis = (regl, params) => {
   const defaults = {
     xColor: [1, 0, 0, 1],
     yColor: [0, 1, 0, 1],
@@ -66,4 +66,4 @@ const drawAxis = (regl, params) => {
   }
 }
 
-module.exports = drawAxis
+export default drawAxis

@@ -1,4 +1,4 @@
-const poly3 = require('../poly3')
+import * as poly3 from '../poly3/index.js'
 
 /**
  * Return the given geometry in compact binary representation.
@@ -6,7 +6,7 @@ const poly3 = require('../poly3')
  * @return {TypedArray} compact binary representation
  * @alias module:modeling/geometries/geom3.toCompactBinary
  */
-const toCompactBinary = (geometry) => {
+export const toCompactBinary = (geometry) => {
   const polygons = geometry.polygons
   const transforms = geometry.transforms
 
@@ -65,4 +65,4 @@ const toCompactBinary = (geometry) => {
   return compacted
 }
 
-module.exports = toCompactBinary
+export default toCompactBinary

@@ -4,8 +4,7 @@
  *
  * Adapted to JSCAD by Jeff Gay
  */
-
-class VertexList {
+export class VertexList {
   constructor () {
     this.head = null
     this.tail = null
@@ -142,5 +141,3 @@ class VertexList {
     return !this.head
   }
 }
-
-module.exports = VertexList

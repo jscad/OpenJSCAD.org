@@ -1,15 +1,15 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const measureEpsilon = require('../../measurements/measureEpsilon')
+import measureEpsilon from '../../measurements/measureEpsilon.js'
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
-const snapPolygons = require('./snapPolygons')
-const mergePolygons = require('./mergePolygons')
-const insertTjunctions = require('./insertTjunctions')
-const triangulatePolygons = require('./triangulatePolygons')
+import snapPolygons from './snapPolygons.js'
+import mergePolygons from './mergePolygons.js'
+import insertTjunctions from './insertTjunctions.js'
+import triangulatePolygons from './triangulatePolygons.js'
 
 /*
  */
@@ -66,7 +66,7 @@ const generalizeGeom3 = (options, geometry) => {
  * @return {Object|Array} the modified geometry, or a list of modified geometries
  * @alias module:modeling/modifiers.generalize
  */
-const generalize = (options, ...geometries) => {
+export const generalize = (options, ...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('wrong number of arguments')
 
@@ -79,4 +79,4 @@ const generalize = (options, ...geometries) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = generalize
+export default generalize

@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { measureSignedVolume, create, invert, fromPoints, transform } = require('./index')
+import { mat4 } from '../../maths/index.js'
 
-const mat4 = require('../../maths/mat4')
+import { measureSignedVolume, create, invert, fromPoints, transform } from './index.js'
 
-const { nearlyEqual } = require('../../../test/helpers/index')
+import { nearlyEqual } from '../../../test/helpers/index.js'
 
 test('poly3: measureSignedVolume() should return correct values', (t) => {
   let ply1 = create()

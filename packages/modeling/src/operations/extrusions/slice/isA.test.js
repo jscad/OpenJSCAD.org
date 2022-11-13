@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { isA, create, fromPoints } = require('./index')
+import { isA, create, fromPoints } from './index.js'
 
 test('isA: identifies created slice', (t) => {
   const p1 = create()

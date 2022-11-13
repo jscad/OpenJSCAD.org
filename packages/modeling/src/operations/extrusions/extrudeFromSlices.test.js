@@ -1,15 +1,15 @@
-const test = require('ava')
+import test from 'ava'
 
-const comparePolygonsAsPoints = require('../../../test/helpers/comparePolygonsAsPoints')
+import { comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
-const { TAU } = require('../../maths/constants')
-const mat4 = require('../../maths/mat4')
+import { TAU } from '../../maths/constants.js'
+import { mat4 } from '../../maths/index.js'
 
-const { geom2, geom3, poly3 } = require('../../geometries')
+import { geom2, geom3, poly3 } from '../../geometries/index.js'
 
-const { circle } = require('../../primitives')
+import { circle } from '../../primitives/index.js'
 
-const { extrudeFromSlices, slice } = require('./index')
+import { extrudeFromSlices, slice } from './index.js'
 
 test('extrudeFromSlices (defaults)', (t) => {
   const geometry2 = geom2.fromPoints([[10, 10], [-10, 10], [-10, -10], [10, -10]])

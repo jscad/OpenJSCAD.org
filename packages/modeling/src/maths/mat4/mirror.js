@@ -7,7 +7,7 @@
  * @param {mat4} matrix - the matrix to mirror
  * @returns {mat4} out
  */
-const mirror = (out, vector, matrix) => {
+export const mirror = (out, vector, matrix) => {
   const x = vector[0]
   const y = vector[1]
   const z = vector[2]
@@ -31,4 +31,4 @@ const mirror = (out, vector, matrix) => {
   return out
 }
 
-module.exports = mirror
+export default mirror

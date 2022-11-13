@@ -4,28 +4,26 @@
  * Primitives can be logically combined, transformed, extruded, etc.
  * @module modeling/primitives
  * @example
- * const { cube, ellipse, star } = require('@jscad/modeling').primitives
+ * import { cube, ellipse, star } = require('@jscad/modeling/primitives')
  */
-module.exports = {
-  arc: require('./arc'),
-  circle: require('./circle'),
-  cube: require('./cube'),
-  cuboid: require('./cuboid'),
-  cylinder: require('./cylinder'),
-  cylinderElliptic: require('./cylinderElliptic'),
-  ellipse: require('./ellipse'),
-  ellipsoid: require('./ellipsoid'),
-  geodesicSphere: require('./geodesicSphere'),
-  line: require('./line'),
-  polygon: require('./polygon'),
-  polyhedron: require('./polyhedron'),
-  rectangle: require('./rectangle'),
-  roundedCuboid: require('./roundedCuboid'),
-  roundedCylinder: require('./roundedCylinder'),
-  roundedRectangle: require('./roundedRectangle'),
-  sphere: require('./sphere'),
-  square: require('./square'),
-  star: require('./star'),
-  torus: require('./torus'),
-  triangle: require('./triangle')
-}
+export { arc } from './arc.js'
+export { circle } from './circle.js'
+export { cube } from './cube.js'
+export { cuboid } from './cuboid.js'
+export { cylinder } from './cylinder.js'
+export { cylinderElliptic } from './cylinderElliptic.js'
+export { ellipse } from './ellipse.js'
+export { ellipsoid } from './ellipsoid.js'
+export { geodesicSphere } from './geodesicSphere.js'
+export { line } from './line.js'
+export { polygon } from './polygon.js'
+export { polyhedron } from './polyhedron.js'
+export { rectangle } from './rectangle.js'
+export { roundedCuboid } from './roundedCuboid.js'
+export { roundedCylinder } from './roundedCylinder.js'
+export { roundedRectangle } from './roundedRectangle.js'
+export { sphere } from './sphere.js'
+export { square } from './square.js'
+export { star } from './star.js'
+export { torus } from './torus.js'
+export { triangle } from './triangle.js'

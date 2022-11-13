@@ -7,12 +7,13 @@ All code released under MIT license
 
 */
 
-const version = require('./package.json').version
-const { BYLAYER, getTLA } = require('./autocad')
-const colorIndex = require('./colorindex2017')
-const dxf = require('./DxfReader')
-const { instantiateAsciiDxf } = require('./instantiate')
-const translateAsciiDxf = require('./translate')
+import { BYLAYER, getTLA } from './autocad.js'
+import colorIndex from './colorindex2017.js'
+import { DxfReader } from './DxfReader.js'
+import { instantiateAsciiDxf } from './instantiate.js'
+import translateAsciiDxf from './translate.js'
+
+const version = '[VI]{version}[/VI]' // version is injected by rollup
 
 // //////////////////////////////////////////
 //
@@ -490,64 +491,66 @@ const handleName = (reader, group, value) => {
 //
 const createReader = (src, options) => {
   // create a reader for the DXF
-  const reader = dxf.reader(options)
+  //const dxfreader = reader(options)
+  const dxfreader = new DxfReader(options)
 
   // setup event handling from the reader
-  reader.on('error', handleError)
-  reader.on('start', handleStart)
-  reader.on('end', handleEnd)
+  dxfreader.on('error', handleError)
+  dxfreader.on('start', handleStart)
+  dxfreader.on('end', handleEnd)
 
   // setup group handling
-  reader.absorb(0, handleEntity)
-  reader.absorb(1, handleString)
-  reader.absorb(2, handleName)
-  reader.absorb(3, handleName)
-  reader.absorb(6, handleString)
-  reader.absorb(7, handleString)
-  reader.absorb(8, handleString)
-  reader.absorb(9, handleVariable)
-  reader.absorb(10, handleXcoord)
-  reader.absorb(11, handleDouble)
-  reader.absorb(12, handleDouble)
-  reader.absorb(13, handleDouble)
-  reader.absorb(20, handleYcoord)
-  reader.absorb(21, handleDouble)
-  reader.absorb(22, handleDouble)
-  reader.absorb(23, handleDouble)
-  reader.absorb(30, handleZcoord)
-  reader.absorb(31, handleDouble)
-  reader.absorb(32, handleDouble)
-  reader.absorb(33, handleDouble)
-  reader.absorb(39, handleDouble)
-  reader.absorb(40, handleDouble)
-  reader.absorb(41, handleDouble)
-  reader.absorb(42, handleBulge)
-  reader.absorb(50, handleDouble)
-  reader.absorb(51, handleDouble)
-  reader.absorb(62, handleInt)
-  reader.absorb(70, handleInt)
-  reader.absorb(71, handleInt)
-  reader.absorb(72, handleInt)
-  reader.absorb(73, handleInt)
-  reader.absorb(74, handleInt)
-  reader.absorb(75, handleInt)
-  reader.absorb(90, handleValue)
-  reader.absorb(91, handleLen) // MESH
-  reader.absorb(92, handleLen) // MESH
-  reader.absorb(93, handleLen) // MESH
-  reader.absorb(94, handleLen) // MESH
-  reader.absorb(95, handleLen) // MESH
-  reader.absorb(210, handleInt)
-  reader.absorb(220, handleInt)
-  reader.absorb(230, handleInt)
+  dxfreader.absorb(0, handleEntity)
+  dxfreader.absorb(1, handleString)
+  dxfreader.absorb(2, handleName)
+  dxfreader.absorb(3, handleName)
+  dxfreader.absorb(6, handleString)
+  dxfreader.absorb(7, handleString)
+  dxfreader.absorb(8, handleString)
+  dxfreader.absorb(9, handleVariable)
+  dxfreader.absorb(10, handleXcoord)
+  dxfreader.absorb(11, handleDouble)
+  dxfreader.absorb(12, handleDouble)
+  dxfreader.absorb(13, handleDouble)
+  dxfreader.absorb(20, handleYcoord)
+  dxfreader.absorb(21, handleDouble)
+  dxfreader.absorb(22, handleDouble)
+  dxfreader.absorb(23, handleDouble)
+  dxfreader.absorb(30, handleZcoord)
+  dxfreader.absorb(31, handleDouble)
+  dxfreader.absorb(32, handleDouble)
+  dxfreader.absorb(33, handleDouble)
+  dxfreader.absorb(39, handleDouble)
+  dxfreader.absorb(40, handleDouble)
+  dxfreader.absorb(41, handleDouble)
+  dxfreader.absorb(42, handleBulge)
+  dxfreader.absorb(50, handleDouble)
+  dxfreader.absorb(51, handleDouble)
+  dxfreader.absorb(62, handleInt)
+  dxfreader.absorb(70, handleInt)
+  dxfreader.absorb(71, handleInt)
+  dxfreader.absorb(72, handleInt)
+  dxfreader.absorb(73, handleInt)
+  dxfreader.absorb(74, handleInt)
+  dxfreader.absorb(75, handleInt)
+  dxfreader.absorb(90, handleValue)
+  dxfreader.absorb(91, handleLen) // MESH
+  dxfreader.absorb(92, handleLen) // MESH
+  dxfreader.absorb(93, handleLen) // MESH
+  dxfreader.absorb(94, handleLen) // MESH
+  dxfreader.absorb(95, handleLen) // MESH
+  dxfreader.absorb(210, handleInt)
+  dxfreader.absorb(220, handleInt)
+  dxfreader.absorb(230, handleInt)
 
   // initial state
-  reader.objstack = []
-  reader.objstack.push({ type: 'dxf' })
+  dxfreader.objstack = []
+  dxfreader.objstack.push({ type: 'dxf' })
 
   // start the reader
-  reader.write(src).close()
-  return reader
+  dxfreader.write(src)
+  dxfreader.close()
+  return dxfreader
 }
 
 //
@@ -605,7 +608,7 @@ const deserialize = (options, src) => {
 
 const extension = 'dxf'
 
-module.exports = {
+export {
   deserialize,
   extension
 }

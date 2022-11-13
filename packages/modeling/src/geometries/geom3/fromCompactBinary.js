@@ -1,9 +1,9 @@
-const vec3 = require('../../maths/vec3')
-const mat4 = require('../../maths/mat4')
+import * as vec3 from '../../maths/vec3/index.js'
+import * as mat4 from '../../maths/mat4/index.js'
 
-const poly3 = require('../poly3')
+import * as poly3 from '../poly3/index.js'
 
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Construct a new 3D geometry from the given compact binary data.
@@ -11,7 +11,7 @@ const create = require('./create')
  * @returns {geom3} a new geometry
  * @alias module:modeling/geometries/geom3.fromCompactBinary
  */
-const fromCompactBinary = (data) => {
+export const fromCompactBinary = (data) => {
   if (data[0] !== 1) throw new Error('invalid compact binary data')
 
   const created = create()
@@ -41,4 +41,4 @@ const fromCompactBinary = (data) => {
   return created
 }
 
-module.exports = fromCompactBinary
+export default fromCompactBinary

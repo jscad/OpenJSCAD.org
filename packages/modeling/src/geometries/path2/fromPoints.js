@@ -1,9 +1,9 @@
-const { EPS } = require('../../maths/constants')
+import { EPS } from '../../maths/constants.js'
 
-const vec2 = require('../../maths/vec2')
+import * as vec2 from '../../maths/vec2/index.js'
 
-const close = require('./close')
-const create = require('./create')
+import close from './close.js'
+import create from './create.js'
 
 /**
  * Create a new path from the given points.
@@ -18,7 +18,7 @@ const create = require('./create')
  * @example:
  * my newpath = fromPoints({closed: true}, [[10, 10], [-10, 10]])
  */
-const fromPoints = (options, points) => {
+export const fromPoints = (options, points) => {
   const defaults = { closed: false }
   let { closed } = Object.assign({}, defaults, options)
 
@@ -39,4 +39,4 @@ const fromPoints = (options, points) => {
   return created
 }
 
-module.exports = fromPoints
+export default fromPoints

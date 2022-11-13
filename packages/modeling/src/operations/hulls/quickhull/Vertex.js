@@ -5,7 +5,7 @@
  * Adapted to JSCAD by Jeff Gay
  */
 
-class Vertex {
+export class Vertex {
   constructor (point, index) {
     this.point = point
     // index in the input array
@@ -17,5 +17,3 @@ class Vertex {
     this.face = null
   }
 }
-
-module.exports = Vertex

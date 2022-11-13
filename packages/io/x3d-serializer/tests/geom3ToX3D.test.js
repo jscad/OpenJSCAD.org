@@ -1,15 +1,15 @@
-const test = require('ava')
+import test from 'ava'
 
-const countOf = require('../../test/helpers/countOf')
+import countOf from '../../test/helpers/countOf.js'
 
-const { colors, geometries, primitives, transforms } = require('@jscad/modeling')
+import { colors, geometries, primitives, transforms } from '@jscad/modeling'
 
-const serializer = require('../src/index.js')
+import { serialize } from '../src/index.js'
 
 test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   const geom1 = geometries.geom3.create()
 
-  let results = serializer.serialize({}, geom1)
+  let results = serialize({}, geom1)
   t.is(results.length, 1)
 
   let obs = results[0]
@@ -23,7 +23,7 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
 
   const geom2 = primitives.cube()
 
-  results = serializer.serialize({metadata: false}, geom2)
+  results = serialize({metadata: false}, geom2)
   t.is(results.length, 1)
 
   obs = results[0]
@@ -42,7 +42,7 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
 
   const geom3 = colors.colorize([0.5, 1, 0.5, 1.0], transforms.center({ relativeTo: [5, 5, 5] }, primitives.cube()))
 
-  results = serializer.serialize({metadata: false}, geom2, geom3)
+  results = serialize({metadata: false}, geom2, geom3)
   t.is(results.length, 1)
 
   obs = results[0]

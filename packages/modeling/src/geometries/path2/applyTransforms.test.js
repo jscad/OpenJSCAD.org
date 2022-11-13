@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { fromPoints } = require('./index')
+import { fromPoints } from './index.js'
 
-const applyTransforms = require('./applyTransforms')
+import applyTransforms from './applyTransforms.js'
 
-const { comparePoints, compareVectors } = require('../../../test/helpers/')
+import { comparePoints, compareVectors } from '../../../test/helpers/index.js'
 
 test('applyTransforms: Updates a populated path with transformed points', (t) => {
   const points = [[0, 0], [1, 0], [0, 1]]

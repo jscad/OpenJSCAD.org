@@ -1,4 +1,4 @@
-const vec3 = require('../vec3')
+import * as vec3 from '../vec3/index.js'
 
 /**
  * Project the given point on to the given plane.
@@ -8,7 +8,7 @@ const vec3 = require('../vec3')
  * @return {vec3} projected point on plane
  * @alias module:modeling/maths/plane.projectionOfPoint
  */
-const projectionOfPoint = (plane, point) => {
+export const projectionOfPoint = (plane, point) => {
   const a = point[0] * plane[0] + point[1] * plane[1] + point[2] * plane[2] - plane[3]
   const x = point[0] - a * plane[0]
   const y = point[1] - a * plane[1]
@@ -16,4 +16,4 @@ const projectionOfPoint = (plane, point) => {
   return vec3.fromValues(x, y, z)
 }
 
-module.exports = projectionOfPoint
+export default projectionOfPoint

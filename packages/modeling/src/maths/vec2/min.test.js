@@ -1,7 +1,8 @@
-const test = require('ava')
-const { min, fromValues } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { min, fromValues } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('vec2: min() called with three parameters should update a vec2 with correct values', (t) => {
   const obs1 = fromValues(0, 0)

@@ -1,7 +1,8 @@
-const test = require('ava')
-const { transform, fromValues } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { transform, fromValues } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('vec3: transform() called with three parameters should update a vec3 with correct values', (t) => {
   const identityMatrix = [

@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { compareVectors } = require('../../test/helpers/index')
+import { compareVectors } from '../../test/helpers/index.js'
 
-const { constants, mat4, vec2, vec3 } = require('./index')
+import { constants, mat4, vec2, vec3 } from './index.js'
 
 // ALL POSITIVE ROTATIONS ARE CLOCKWISE
 // see https://webglfundamentals.org/webgl/lessons/webgl-3d-orthographic.html

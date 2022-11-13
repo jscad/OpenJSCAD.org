@@ -7,10 +7,10 @@
  * @returns {vec2} out
  * @alias module:modeling/maths/vec2.subtract
  */
-const subtract = (out, a, b) => {
+export const subtract = (out, a, b) => {
   out[0] = a[0] - b[0]
   out[1] = a[1] - b[1]
   return out
 }
 
-module.exports = subtract
+export default subtract

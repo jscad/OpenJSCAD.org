@@ -1,16 +1,17 @@
-const fs = require('fs')
-const path = require('path')
-const test = require('ava')
+import fs from 'fs'
+import path from 'path'
 
-const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
+import test from 'ava'
 
-const deserializer = require('../index.js')
+import { deserialize } from '../src/index.js'
+
+const samplesPath = '../../../node_modules/@jscad/sample-files'
 
 test('translate simple obj file to jscad script', (t) => {
   const inputPath = path.resolve(samplesPath, 'obj/cube.obj')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
-  const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, inputFile)
+  const observed = deserialize({ output: 'script', addMetaData: false }, inputFile)
   const expected = `const {primitives} = require('@jscad/modeling')
 
 // groups: 1
@@ -82,7 +83,7 @@ f 5 1 4 8
 f 5 6 2 1
 f 2 6 7 3
 `
-  const observed = deserializer.deserialize({ filename: 'absolute', output: 'script', addMetaData: false }, data)
+  const observed = deserialize({ filename: 'absolute', output: 'script', addMetaData: false }, data)
   const expected = `const {primitives} = require('@jscad/modeling')
 
 // groups: 1
@@ -168,7 +169,7 @@ v 2.000000 0.000000 0.000000
 v 2.000000 0.000000 2.000000
 f -4 -3 -2 -1
 `
-  const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, data)
+  const observed = deserialize({ output: 'script', addMetaData: false }, data)
   const expected = `const {primitives} = require('@jscad/modeling')
 
 // groups: 1

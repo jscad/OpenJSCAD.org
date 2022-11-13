@@ -1,10 +1,11 @@
-const fs = require('fs')
-const path = require('path')
-const test = require('ava')
+import fs from 'fs'
+import path from 'path'
 
-const deserializer = require('../index.js')
+import test from 'ava'
 
-const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
+import { deserialize } from '../src/index.js'
+
+const samplesPath = '../../../node_modules/@jscad/sample-files'
 
 const countOf = (search, string) => {
   let count = 0
@@ -89,7 +90,7 @@ const main = () => {
 module.exports = {main}
 `
 
-  const observed = deserializer.deserialize({ filename: 'ascii', output: 'script', addMetaData: false }, inputFile)
+  const observed = deserialize({ filename: 'ascii', output: 'script', addMetaData: false }, inputFile)
   t.deepEqual(observed, expected)
 })
 
@@ -166,7 +167,7 @@ const main = () => {
 module.exports = {main}
 `
 
-  const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, inputFile)
+  const observed = deserialize({ output: 'script', addMetaData: false }, inputFile)
   t.deepEqual(observed, expected)
 })
 
@@ -174,7 +175,7 @@ test('translate stl with colors to jscad script', (t) => {
   const inputPath = path.resolve(samplesPath, 'stl/colors.stl')
   const inputFile = fs.readFileSync(inputPath)
 
-  const observed = deserializer.deserialize({ output: 'script', addMetaData: false }, inputFile)
+  const observed = deserialize({ output: 'script', addMetaData: false }, inputFile)
   t.is(countOf('points', observed), 3) // comment, definition, useage
   t.is(countOf('faces', observed), 3)
   t.is(countOf('colors', observed), 3)

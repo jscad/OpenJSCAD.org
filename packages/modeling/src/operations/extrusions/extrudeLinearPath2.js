@@ -1,7 +1,7 @@
-const geom2 = require('../../geometries/geom2')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
-const extrudeLinearGeom2 = require('./extrudeLinearGeom2')
+import extrudeLinearGeom2 from './extrudeLinearGeom2.js'
 
 /*
  * Extrude the given geometry using the given options.
@@ -13,7 +13,7 @@ const extrudeLinearGeom2 = require('./extrudeLinearGeom2')
  * @param {path2} geometry - the geometry to extrude
  * @returns {geom3} the extruded 3D geometry
 */
-const extrudePath2 = (options, geometry) => {
+export const extrudePath2 = (options, geometry) => {
   if (!geometry.isClosed) throw new Error('extruded path must be closed')
   // Convert path2 to geom2
   const points = path2.toPoints(geometry)
@@ -21,4 +21,4 @@ const extrudePath2 = (options, geometry) => {
   return extrudeLinearGeom2(options, geometry2)
 }
 
-module.exports = extrudePath2
+export default extrudePath2

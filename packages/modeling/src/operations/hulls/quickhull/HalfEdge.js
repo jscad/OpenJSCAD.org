@@ -1,5 +1,5 @@
-const distance = require('../../../maths/vec3/distance')
-const squaredDistance = require('../../../maths/vec3/squaredDistance')
+import distance from '../../../maths/vec3/distance.js'
+import squaredDistance from '../../../maths/vec3/squaredDistance.js'
 
 /*
  * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)
@@ -8,7 +8,7 @@ const squaredDistance = require('../../../maths/vec3/squaredDistance')
  * Adapted to JSCAD by Jeff Gay
  */
 
-class HalfEdge {
+export class HalfEdge {
   constructor (vertex, face) {
     this.vertex = vertex
     this.face = face
@@ -52,5 +52,3 @@ class HalfEdge {
     edge.opposite = this
   }
 }
-
-module.exports = HalfEdge

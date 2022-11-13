@@ -1,8 +1,12 @@
-const vec3 = require('gl-vec3')
-const mat4 = require('gl-mat4')
+import vec3 from 'gl-vec3'
+import mat4 from 'gl-mat4'
+
+import unproject from 'camera-unproject'
+
 const { max, min, sqrt, PI, sin, cos, atan2 } = Math
 
-const computeBounds = require('../bound-utils/computeBounds')
+import computeBounds from '../bound-utils/computeBounds.js'
+import { setProjection } from '../cameras/orthographicCamera.js'
 
 // TODO: make it more data driven ?
 /*
@@ -207,7 +211,7 @@ const zoom = ({ controls, camera, speed = 1 }, zoomDelta = 0) => {
       const width = Math.tan(camera.fov) * distance * camera.aspect
       const height = Math.tan(camera.fov) * distance
 
-      const projection = require('../cameras/orthographicCamera').setProjection(camera, { width, height })
+      const projection = setProjection(camera, { width, height })
       camera = projection
     }
 
@@ -228,7 +232,6 @@ const zoom = ({ controls, camera, speed = 1 }, zoomDelta = 0) => {
   * @return {Object} the updated camera data/state
 */
 const pan = ({ controls, camera, speed = 1 }, delta) => {
-  const unproject = require('camera-unproject')
   const { projection, view, viewport } = camera
   const combinedProjView = mat4.multiply([], projection, view)
   const invProjView = mat4.invert([], combinedProjView)
@@ -324,7 +327,7 @@ const reset = ({ controls, camera }, desiredState) => {
   return options
 }
 
-module.exports = {
+export {
   controlsProps,
   controlsState,
   defaults,

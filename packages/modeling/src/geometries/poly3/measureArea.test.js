@@ -1,9 +1,10 @@
-const test = require('ava')
-const { measureArea, create, invert, fromPoints, transform } = require('./index')
+import test from 'ava'
 
-const mat4 = require('../../maths/mat4')
+import { mat4 } from '../../maths/index.js'
 
-const { nearlyEqual } = require('../../../test/helpers/index')
+import { measureArea, create, invert, fromPoints, transform } from './index.js'
+
+import { nearlyEqual } from '../../../test/helpers/index.js'
 
 test('poly3: measureArea() should return correct values', (t) => {
   let ply1 = create()

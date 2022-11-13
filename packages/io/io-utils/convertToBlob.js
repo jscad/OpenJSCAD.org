@@ -1,4 +1,4 @@
-const makeBlob = require('./makeBlob')
+import makeBlob from './makeBlob.js'
 
 const Blob = makeBlob()
 
@@ -13,10 +13,10 @@ const Blob = makeBlob()
  * const blob1 = convertToBlob({ data: ['test'], mimeType: 'text/plain' })
  * const blob2 = convertToBlob({ data: [Int32Array.from('12345').buffer], mimeType: 'application/mine' })
  */
-const convertToBlob = (input) => {
+export const convertToBlob = (input) => {
   const { data, mimeType } = input
   const blob = new Blob(data, { type: mimeType })
   return blob
 }
 
-module.exports = convertToBlob
+export default convertToBlob

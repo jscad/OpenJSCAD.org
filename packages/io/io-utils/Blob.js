@@ -20,7 +20,7 @@
  * The Blob object represents a blob, which is a file-like object of immutable, raw data; they can be read as text or binary data.
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Blob
  */
-class Blob {
+export class Blob {
   /**
    * Returns a newly created Blob object which contains a concatenation of all of the data in the given contents.
    * @param {Array} contents - an array of ArrayBuffer, or String objects that will be put inside the Blob.
@@ -137,4 +137,4 @@ class Blob {
   }
 }
 
-module.exports = Blob
+export default Blob

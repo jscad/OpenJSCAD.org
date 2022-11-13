@@ -1,9 +1,8 @@
-const vec3 = require('../vec3')
-const { solve2Linear } = require('../utils')
+import * as vec3 from '../vec3/index.js'
+import solve2Linear from '../utils/solve2Linear.js'
+import { EPS } from '../constants.js'
 
-const { EPS } = require('../constants')
-
-const fromPointAndDirection = require('./fromPointAndDirection')
+import fromPointAndDirection from './fromPointAndDirection.js'
 
 /**
  * Create a line the intersection of the given planes.
@@ -14,7 +13,7 @@ const fromPointAndDirection = require('./fromPointAndDirection')
  * @returns {line3} out
  * @alias module:modeling/maths/line3.fromPlanes
  */
-const fromPlanes = (out, plane1, plane2) => {
+export const fromPlanes = (out, plane1, plane2) => {
   let direction = vec3.cross(vec3.create(), plane1, plane2)
   let length = vec3.length(direction)
   if (length < EPS) {
@@ -44,4 +43,4 @@ const fromPlanes = (out, plane1, plane2) => {
   return fromPointAndDirection(out, origin, direction)
 }
 
-module.exports = fromPlanes
+export default fromPlanes

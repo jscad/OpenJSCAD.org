@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const entitiesFromSolids = require('./entitiesFromSolids')
+import entitiesFromSolids from './entitiesFromSolids.js'
 
 test('entitiesFromSolids (various solids)', (t) => {
   const solids = [

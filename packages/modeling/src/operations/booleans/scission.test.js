@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { geom3 } = require('../../geometries')
+import { geom3 } from '../../geometries/index.js'
 
-const { cube, torus } = require('../../primitives')
+import { cube, torus } from '../../primitives/index.js'
 
-const { scission, union } = require('./index')
+import { scission, union } from './index.js'
 
 test('scission: scission of one or more geom3 objects produces expected geometry', (t) => {
   const geometry1 = geom3.create()

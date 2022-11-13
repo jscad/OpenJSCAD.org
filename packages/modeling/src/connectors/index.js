@@ -1,12 +1,10 @@
 /**
  * @module modeling/connectors
  */
-module.exports = {
-  create: require('./create'),
-  // extends: require('./extends'),
-  fromPointAxisNormal: require('./fromPointAxisNormal'),
-  // normalize: require('./normalize'),
-  toString: require('./toString'),
-  transform: require('./transform'),
-  transformationBetween: require('./transformationBetween')
-}
+export { create } from './create.js'
+// extends: require('./extends.js'),
+export { fromPointAxisNormal } from './fromPointAxisNormal.js'
+// normalize: require('./normalize.js'),
+export { toString } from './toString.js'
+export { transform } from './transform.js'
+export { transformationBetween } from './transformationBetween.js'

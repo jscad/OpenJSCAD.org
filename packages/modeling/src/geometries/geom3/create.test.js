@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const poly3 = require('../poly3')
+import { poly3 } from '../index.js'
 
-const { create } = require('./index')
+import { create } from './index.js'
 
 test('create: Creates an empty geom3', (t) => {
   const expected = {

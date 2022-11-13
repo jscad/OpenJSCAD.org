@@ -1,7 +1,8 @@
-const test = require('ava')
-const { fromValues } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { fromValues } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('mat4: fromValues() should return a new mat4 with correct values', (t) => {
   const obs1 = fromValues(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)

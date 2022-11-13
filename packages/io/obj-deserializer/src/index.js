@@ -1,6 +1,6 @@
-const { colors, primitives } = require('@jscad/modeling')
+import { colors, primitives } from '@jscad/modeling'
 
-const version = require('./package.json').version
+const version = '[VI]{version}[/VI]' // version is injected by rollup
 
 /**
  * Deserializer of OBJ data to JSCAD geometries.
@@ -216,7 +216,7 @@ module.exports = {main}
 
 const extension = 'obj'
 
-module.exports = {
+export {
   deserialize,
   extension
 }

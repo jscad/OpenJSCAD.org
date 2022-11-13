@@ -1,6 +1,6 @@
-const poly3 = require('../poly3')
+import * as poly3 from '../poly3/index.js'
 
-const toPolygons = require('./toPolygons')
+import toPolygons from './toPolygons.js'
 
 /**
  * Create a string representing the contents of the given geometry.
@@ -11,7 +11,7 @@ const toPolygons = require('./toPolygons')
  * @example
  * console.out(toString(geometry))
  */
-const toString = (geometry) => {
+export const toString = (geometry) => {
   const polygons = toPolygons(geometry)
   let result = 'geom3 (' + polygons.length + ' polygons):\n'
   polygons.forEach((polygon) => {
@@ -20,4 +20,4 @@ const toString = (geometry) => {
   return result
 }
 
-module.exports = toString
+export default toString

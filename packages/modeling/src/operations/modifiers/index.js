@@ -3,9 +3,7 @@
  * In all cases, these functions returns the results, and never changes the original geometry.
  * @module modeling/modifiers
  * @example
- * const { snap } = require('@jscad/modeling').modifiers
+ * import { generalize, snap } from '@jscad/modeling/modifiers'
  */
-module.exports = {
-  generalize: require('./generalize'),
-  snap: require('./snap')
-}
+export { generalize } from './generalize.js'
+export { snap } from './snap.js'

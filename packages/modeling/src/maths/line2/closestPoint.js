@@ -1,7 +1,7 @@
-const vec2 = require('../vec2')
+import * as vec2 from '../vec2/index.js'
 
-const direction = require('./direction')
-const origin = require('./origin')
+import direction from './direction.js'
+import origin from './origin.js'
 
 /**
  * Determine the closest point on the given line to the given point.
@@ -11,7 +11,7 @@ const origin = require('./origin')
  * @returns {vec2} closest point
  * @alias module:modeling/maths/line2.closestPoint
  */
-const closestPoint = (line, point) => {
+export const closestPoint = (line, point) => {
   // linear function of AB
   const a = origin(line)
   const b = direction(line)
@@ -28,4 +28,4 @@ const closestPoint = (line, point) => {
   return closest
 }
 
-module.exports = closestPoint
+export default closestPoint

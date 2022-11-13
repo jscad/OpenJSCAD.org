@@ -1,12 +1,12 @@
-const { TAU } = require('../maths/constants')
+import { TAU } from '../maths/constants.js'
 
-const extrudeRotate = require('../operations/extrusions/extrudeRotate')
-const { rotate } = require('../operations/transforms/rotate')
-const { translate } = require('../operations/transforms/translate')
+import extrudeRotate from '../operations/extrusions/extrudeRotate.js'
+import { rotate } from '../operations/transforms/rotate.js'
+import { translate } from '../operations/transforms/translate.js'
 
-const circle = require('./circle')
+import circle from './circle.js'
 
-const { isGT, isGTE } = require('./commonChecks')
+import { isGT, isGTE } from './commonChecks.js'
 
 /**
  * Construct a torus by revolving a small circle (inner) about the circumference of a large (outer) circle.
@@ -24,7 +24,7 @@ const { isGT, isGTE } = require('./commonChecks')
  * @example
  * let myshape = torus({ innerRadius: 10, outerRadius: 100 })
  */
-const torus = (options) => {
+export const torus = (options) => {
   const defaults = {
     innerRadius: 1,
     innerSegments: 32,
@@ -61,4 +61,4 @@ const torus = (options) => {
   return extrudeRotate(extrudeOptions, innerCircle)
 }
 
-module.exports = torus
+export default torus

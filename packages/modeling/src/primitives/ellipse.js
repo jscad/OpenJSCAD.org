@@ -1,12 +1,12 @@
-const { EPS, TAU } = require('../maths/constants')
+import { EPS, TAU } from '../maths/constants.js'
 
-const vec2 = require('../maths/vec2')
+import * as vec2 from '../maths/vec2/index.js'
 
-const geom2 = require('../geometries/geom2')
+import * as geom2 from '../geometries/geom2/index.js'
 
-const { sin, cos } = require('../maths/utils/trigonometry')
+import { sin, cos } from '../maths/utils/trigonometry.js'
 
-const { isGTE, isNumberArray } = require('./commonChecks')
+import { isGTE, isNumberArray } from './commonChecks.js'
 
 /**
  * Construct an axis-aligned ellipse in two dimensional space.
@@ -22,7 +22,7 @@ const { isGTE, isNumberArray } = require('./commonChecks')
  * @example
  * let myshape = ellipse({radius: [5,10]})
  */
-const ellipse = (options) => {
+export const ellipse = (options) => {
   const defaults = {
     center: [0, 0],
     radius: [1, 1],
@@ -72,4 +72,4 @@ const ellipse = (options) => {
   return geom2.fromPoints(points)
 }
 
-module.exports = ellipse
+export default ellipse

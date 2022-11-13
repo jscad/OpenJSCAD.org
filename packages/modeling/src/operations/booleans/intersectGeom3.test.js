@@ -1,14 +1,14 @@
-const test = require('ava')
+import test from 'ava'
 
-const { comparePolygonsAsPoints } = require('../../../test/helpers')
+import { comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
-const { geom3 } = require('../../geometries')
+import { geom3 } from '../../geometries/index.js'
 
-const { sphere, cuboid } = require('../../primitives')
+import { sphere, cuboid } from '../../primitives/index.js'
 
-const { intersect } = require('./index')
+import { intersect } from './index.js'
 
-const { center } = require('../transforms/center')
+import { center } from '../transforms/center.js'
 
 test('intersect: intersect of one or more geom3 objects produces expected geometry', (t) => {
   const geometry1 = sphere({ radius: 2, segments: 8 })

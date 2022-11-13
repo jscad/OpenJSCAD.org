@@ -1,8 +1,8 @@
-const { EPS } = require('../../maths/constants')
+import { EPS } from '../../maths/constants.js'
 
-const vec2 = require('../../maths/vec2')
+import * as vec2 from '../../maths/vec2/index.js'
 
-const clone = require('./clone')
+import clone from './clone.js'
 
 /**
  * Close the given geometry.
@@ -10,7 +10,7 @@ const clone = require('./clone')
  * @returns {path2} a new path
  * @alias module:modeling/geometries/path2.close
  */
-const close = (geometry) => {
+export const close = (geometry) => {
   if (geometry.isClosed) return geometry
 
   const cloned = clone(geometry)
@@ -30,4 +30,4 @@ const close = (geometry) => {
   return cloned
 }
 
-module.exports = close
+export default close

@@ -1,4 +1,4 @@
-const { sin, cos } = require('../utils/trigonometry')
+import { sin, cos } from '../utils/trigonometry.js'
 
 /**
  * Creates a matrix from the given Tait–Bryan angles.
@@ -15,7 +15,7 @@ const { sin, cos } = require('../utils/trigonometry')
  * @example
  * let matrix = fromTaitBryanRotation(create(), TAU / 4, 0, TAU / 2)
  */
-const fromTaitBryanRotation = (out, yaw, pitch, roll) => {
+export const fromTaitBryanRotation = (out, yaw, pitch, roll) => {
   // precompute sines and cosines of Euler angles
   const sy = sin(yaw)
   const cy = cos(yaw)
@@ -52,4 +52,4 @@ const fromTaitBryanRotation = (out, yaw, pitch, roll) => {
   return out
 }
 
-module.exports = fromTaitBryanRotation
+export default fromTaitBryanRotation

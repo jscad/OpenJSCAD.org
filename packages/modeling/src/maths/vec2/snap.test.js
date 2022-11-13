@@ -1,7 +1,8 @@
-const test = require('ava')
-const { snap, create } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { snap, create } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('vec2: snap() should return vec2 with correct values', (t) => {
   const output = create()

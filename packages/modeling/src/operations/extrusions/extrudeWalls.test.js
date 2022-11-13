@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { mat4 } = require('../../maths')
+import { mat4 } from '../../maths/index.js'
 
-const slice = require('./slice')
+import { slice } from './index.js'
 
-const extrudeWalls = require('./extrudeWalls')
+import extrudeWalls from './extrudeWalls.js'
 
 test('extrudeWalls (same shapes)', (t) => {
   const matrix = mat4.fromTranslation(mat4.create(), [0, 0, 10])

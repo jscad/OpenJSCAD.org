@@ -1,8 +1,10 @@
-const { flatten } = require('@jscad/array-utils')
+import path from 'path'
 
-const { formats } = require('@jscad/io/formats')
+import { flatten } from '@jscad/array-utils'
 
-const getFileExtensionFromString = require('../utils/getFileExtensionFromString')
+import { formats } from '@jscad/io'
+
+import getFileExtensionFromString from '../utils/getFileExtensionFromString.js'
 
 const binaryMimetypes = {
   bmp: 'image/bmp',
@@ -161,7 +163,6 @@ const processDirectory = (directory) => {
  * Transform the flat list of files (from HTML input) to a heiarchy of files (from drag-n-drop).
  */
 const transformFileList = (fileList) => {
-  const path = require('path')
 
   if (fileList.length === 1) {
     const file = fileList[0]
@@ -228,7 +229,7 @@ const transformFileList = (fileList) => {
 //    1) walk the tree
 //    2) read the files (readFileAsync)
 //    3) return a flattened list of promises containing all file entries
-const walkFileTree = (fileList) => {
+export const walkFileTree = (fileList) => {
   let items = fileList
   if (fileList.length && (fileList[0] instanceof File)) {
     // transform the flat list of File entries
@@ -237,4 +238,4 @@ const walkFileTree = (fileList) => {
   return processEntries(items)
 }
 
-module.exports = walkFileTree
+export default walkFileTree

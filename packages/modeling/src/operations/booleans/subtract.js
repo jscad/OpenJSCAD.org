@@ -1,11 +1,11 @@
-const flatten = require('../../utils/flatten')
-const areAllShapesTheSameType = require('../../utils/areAllShapesTheSameType')
+import flatten from '../../utils/flatten.js'
+import areAllShapesTheSameType from '../../utils/areAllShapesTheSameType.js'
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
 
-const subtractGeom2 = require('./subtractGeom2')
-const subtractGeom3 = require('./subtractGeom3')
+import subtractGeom2 from './subtractGeom2.js'
+import subtractGeom3 from './subtractGeom3.js'
 
 /**
  * Return a new geometry representing space in the first geometry but
@@ -29,7 +29,7 @@ const subtractGeom3 = require('./subtractGeom3')
  *      |       |
  *      +-------+
  */
-const subtract = (...geometries) => {
+export const subtract = (...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('wrong number of arguments')
 
@@ -44,4 +44,4 @@ const subtract = (...geometries) => {
   return geometry
 }
 
-module.exports = subtract
+export default subtract

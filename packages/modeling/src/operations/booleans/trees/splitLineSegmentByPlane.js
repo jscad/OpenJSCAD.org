@@ -1,6 +1,6 @@
-const vec3 = require('../../../maths/vec3')
+import * as vec3 from '../../../maths/vec3/index.js'
 
-const splitLineSegmentByPlane = (plane, p1, p2) => {
+export const splitLineSegmentByPlane = (plane, p1, p2) => {
   const direction = vec3.subtract(vec3.create(), p2, p1)
   let lambda = (plane[3] - vec3.dot(plane, p1)) / vec3.dot(plane, direction)
   if (Number.isNaN(lambda)) lambda = 0
@@ -11,5 +11,3 @@ const splitLineSegmentByPlane = (plane, p1, p2) => {
   vec3.add(direction, p1, direction)
   return direction
 }
-
-module.exports = splitLineSegmentByPlane

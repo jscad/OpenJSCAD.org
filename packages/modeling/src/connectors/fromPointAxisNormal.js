@@ -1,6 +1,6 @@
-const vec3 = require('../maths/vec3')
+import * as vec3 from '../maths/vec3/index.js'
 
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Create a connector from the given point, axis and normal.
@@ -10,7 +10,7 @@ const create = require('./create')
  * @returns {connector} a new connector
  * @alias module:modeling/connectors.fromPointsAxisNormal
  */
-const fromPointAxisNormal = (point, axis, normal) => {
+export const fromPointAxisNormal = (point, axis, normal) => {
   const connector = create()
   connector.point = vec3.clone(point)
   connector.axis = vec3.normalize(vec3.create(), axis)
@@ -18,4 +18,4 @@ const fromPointAxisNormal = (point, axis, normal) => {
   return connector
 }
 
-module.exports = fromPointAxisNormal
+export default fromPointAxisNormal

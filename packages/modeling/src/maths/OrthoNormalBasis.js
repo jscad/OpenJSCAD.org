@@ -1,7 +1,7 @@
-const mat4 = require('./mat4')
+import * as mat4 from './mat4/index.js'
 
-const vec2 = require('./vec2')
-const vec3 = require('./vec3')
+import * as vec2 from './vec2/index.js'
+import * as vec3 from './vec3/index.js'
 
 /*
  * Class OrthoNormalBasis
@@ -204,4 +204,4 @@ OrthoNormalBasis.prototype = {
   }
 }
 
-module.exports = OrthoNormalBasis
+export default OrthoNormalBasis

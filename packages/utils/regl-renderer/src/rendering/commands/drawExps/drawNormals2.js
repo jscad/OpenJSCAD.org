@@ -1,6 +1,6 @@
-const mat4 = require('gl-mat4')
+import mat4 from 'gl-mat4'
 
-const drawNormals = (regl, params) => {
+export const drawNormals = (regl, params) => {
   const defaults = {
     xColor: [1, 0, 0, 1],
     // yColor: [0, 1, 0, 1],
@@ -70,4 +70,4 @@ const drawNormals = (regl, params) => {
   return () => singleNormal(foo)
 }
 
-module.exports = drawNormals
+export default drawNormals

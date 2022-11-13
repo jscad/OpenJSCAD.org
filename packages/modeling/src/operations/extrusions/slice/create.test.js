@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { create } = require('./index')
+import { create } from './index.js'
 
 test('slice: create() should return a slice with initial values', (t) => {
   const obs = create()

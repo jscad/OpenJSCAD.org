@@ -1,7 +1,8 @@
-const test = require('ava')
-const { fromPoints, create } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { fromPoints, create } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('plane: fromPoints() should return a new plane with correct values', (t) => {
   const obs1 = fromPoints(create(), [0, 0, 0], [1, 0, 0], [1, 1, 0])

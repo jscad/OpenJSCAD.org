@@ -1,8 +1,8 @@
-const path2 = require('../../geometries/path2')
+import * as path2 from '../../geometries/path2/index.js'
 
-const expand = require('../expansions/expand')
+import expand from '../expansions/expand.js'
 
-const extrudeLinearGeom2 = require('./extrudeLinearGeom2')
+import extrudeLinearGeom2 from './extrudeLinearGeom2.js'
 
 /*
  * Expand and extrude the given geometry (path2).
@@ -13,7 +13,7 @@ const extrudeLinearGeom2 = require('./extrudeLinearGeom2')
  * @param {path2} geometry - the geometry to extrude
  * @return {geom3} the extruded geometry
  */
-const extrudeRectangularPath2 = (options, geometry) => {
+export const extrudeRectangularPath2 = (options, geometry) => {
   const defaults = {
     size: 1,
     height: 1
@@ -30,4 +30,4 @@ const extrudeRectangularPath2 = (options, geometry) => {
   return extrudeLinearGeom2(options, newgeometry)
 }
 
-module.exports = extrudeRectangularPath2
+export default extrudeRectangularPath2

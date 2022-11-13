@@ -1,4 +1,4 @@
-const { maths } = require('@jscad/modeling')
+import { maths } from '@jscad/modeling'
 
 const x3dTypes = {
   X3D: 0,
@@ -657,7 +657,7 @@ const x3dGroup = (element) => {
   return obj
 }
 
-module.exports = {
+export {
   x3dTypes,
 
   x3dX3D,

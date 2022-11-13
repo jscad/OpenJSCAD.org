@@ -1,11 +1,11 @@
-const test = require('ava')
+import test from 'ava'
 
-const comparePoints = require('../../../test/helpers/comparePoints')
+import { comparePoints } from '../../../test/helpers/index.js'
 
-const { geom2, geom3 } = require('../../geometries')
-const { cube, torus } = require('../../primitives')
+import { geom2, geom3 } from '../../geometries/index.js'
+import { cube, torus } from '../../primitives/index.js'
 
-const { project } = require('./index')
+import { project } from './index.js'
 
 test('project (defaults)', (t) => {
   const geometry0 = geom3.create()

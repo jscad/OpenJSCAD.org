@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const createTransform = require('../src/createTransform')
+import createTransform from '../src/createTransform.js'
 
 test('createTransform returns expected transform matrix', (t) => {
   // X3D defaults

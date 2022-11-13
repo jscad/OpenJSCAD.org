@@ -1,7 +1,7 @@
 /*
  * Count the number of search in the given string.
  */
-const countOf = (search, string) => {
+export const countOf = (search, string) => {
   let count = 0
   let index = string.indexOf(search)
   while (index !== -1) {
@@ -11,4 +11,4 @@ const countOf = (search, string) => {
   return count
 }
 
-module.exports = countOf
+export default countOf

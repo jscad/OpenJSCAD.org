@@ -1,6 +1,6 @@
-const flatten = require('../utils/flatten')
+import flatten from '../utils/flatten.js'
 
-const measureBoundingBox = require('./measureBoundingBox')
+import measureBoundingBox from './measureBoundingBox.js'
 
 /**
  * Measure the center of the given geometries.
@@ -11,7 +11,7 @@ const measureBoundingBox = require('./measureBoundingBox')
  * @example
  * let center = measureCenter(sphere())
  */
-const measureCenter = (...geometries) => {
+export const measureCenter = (...geometries) => {
   geometries = flatten(geometries)
 
   const results = geometries.map((geometry) => {
@@ -25,4 +25,4 @@ const measureCenter = (...geometries) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = measureCenter
+export default measureCenter

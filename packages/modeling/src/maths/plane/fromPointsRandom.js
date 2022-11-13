@@ -1,6 +1,6 @@
-const { EPS } = require('../constants')
+import { EPS } from '../constants.js'
 
-const vec3 = require('../vec3')
+import * as vec3 from '../vec3/index.js'
 
 /**
  * Create a new plane from the given points like fromPoints,
@@ -14,7 +14,7 @@ const vec3 = require('../vec3')
  * @returns {plane} out
  * @alias module:modeling/maths/plane.fromPointsRandom
  */
-const fromPointsRandom = (out, a, b, c) => {
+export const fromPointsRandom = (out, a, b, c) => {
   let ba = vec3.subtract(vec3.create(), b, a)
   let ca = vec3.subtract(vec3.create(), c, a)
   if (vec3.length(ba) < EPS) {
@@ -39,4 +39,4 @@ const fromPointsRandom = (out, a, b, c) => {
   return out
 }
 
-module.exports = fromPointsRandom
+export default fromPointsRandom

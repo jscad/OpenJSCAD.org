@@ -1,6 +1,6 @@
-const flatten = require('../utils/flatten')
+import flatten from '../utils/flatten.js'
 
-const measureArea = require('./measureArea')
+import measureArea from './measureArea.js'
 
 /**
  * Measure the total (aggregate) area for the given geometries.
@@ -12,7 +12,7 @@ const measureArea = require('./measureArea')
  * @example
  * let totalArea = measureAggregateArea(sphere(),cube())
  */
-const measureAggregateArea = (...geometries) => {
+export const measureAggregateArea = (...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('measureAggregateArea: no geometries supplied')
   const areas = measureArea(geometries)
@@ -23,4 +23,4 @@ const measureAggregateArea = (...geometries) => {
   return areas.reduce((result, area) => result + area, result)
 }
 
-module.exports = measureAggregateArea
+export default measureAggregateArea

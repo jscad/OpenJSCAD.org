@@ -1,6 +1,6 @@
-const vec3 = require('../../../maths/vec3')
+import * as vec3 from '../../../maths/vec3/index.js'
 
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Create a slice from the given sides (see geom2).
@@ -13,7 +13,7 @@ const create = require('./create')
  * const myshape = circle({radius: 10})
  * const slice = fromSides(geom2.toSides(myshape))
  */
-const fromSides = (sides) => {
+export const fromSides = (sides) => {
   if (!Array.isArray(sides)) throw new Error('the given sides must be an array')
 
   // create a list of edges from the sides
@@ -24,4 +24,4 @@ const fromSides = (sides) => {
   return create(edges)
 }
 
-module.exports = fromSides
+export default fromSides

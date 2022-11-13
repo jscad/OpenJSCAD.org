@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { primitives } = require('@jscad/modeling')
+import { primitives } from '@jscad/modeling'
 
-const serializer = require('../index.js')
+import { serialize } from '../src/index.js'
 
 test('progress status callback', (t) => {
   const input = primitives.cube()
@@ -10,7 +10,7 @@ test('progress status callback', (t) => {
   const statusCallback = (statusObj) => {
     progresses.push(statusObj.progress)
   }
-  const observed = serializer.serialize({ statusCallback: statusCallback }, input)
+  const observed = serialize({ statusCallback: statusCallback }, input)
 
   t.is(observed.length, 3)
   t.deepEqual(0, progresses[0])

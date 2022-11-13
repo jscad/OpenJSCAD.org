@@ -1,10 +1,11 @@
-const fs = require('fs')
-const path = require('path')
-const test = require('ava')
+import fs from 'fs'
+import path from 'path'
 
-const dxf = require('../DxfReader')
+import test from 'ava'
 
-const samplesPath = path.dirname(require.resolve('@jscad/sample-files/package.json'))
+import { reader } from '../src/DxfReader.js'
+
+const samplesPath = '../../../node_modules/@jscad/sample-files'
 
 //
 // Test suite for DXF reader
@@ -14,7 +15,7 @@ test('DXF Reader', (t) => {
   t.deepEqual(true, fs.existsSync(dxfPath))
 
   const src = fs.readFileSync(dxfPath, 'UTF8')
-  const reader = dxf.reader(src)
+  const dxfreader = reader(src)
 
-  t.is(typeof reader, 'object')
+  t.is(typeof dxfreader, 'object')
 })

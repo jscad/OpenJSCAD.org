@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { geom2, geom3, path2, poly3 } = require('../geometries')
+import { geom2, geom3, path2, poly3 } from '../geometries/index.js'
 
-const { colorize } = require('./index')
+import { colorize } from './index.js'
 
 test('color (rgb on objects)', (t) => {
   const obj1 = {}

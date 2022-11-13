@@ -5,7 +5,7 @@
  * @example
  * let newshape = colorize(cssColors.red, oldshape)
  */
-const cssColors = {
+export const cssColors = {
   // basic color keywords
   black: [0 / 255, 0 / 255, 0 / 255],
   silver: [192 / 255, 192 / 255, 192 / 255],
@@ -173,4 +173,4 @@ const cssColors = {
   yellowgreen: [154 / 255, 205 / 255, 50 / 255]
 }
 
-module.exports = cssColors
+export default cssColors

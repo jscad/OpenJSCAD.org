@@ -1,6 +1,6 @@
-const vec3 = require('../maths/vec3')
+import * as vec3 from '../maths/vec3/index.js'
 
-const fromPointAxisNormal = require('./fromPointAxisNormal')
+import fromPointAxisNormal from './fromPointAxisNormal.js'
 
 /**
  * Transform the give connector using the given matrix.
@@ -9,7 +9,7 @@ const fromPointAxisNormal = require('./fromPointAxisNormal')
  * @returns {connector} a new connector
  * @alias module:modeling/connectors.transform
  */
-const transform = (matrix, connector) => {
+export const transform = (matrix, connector) => {
   // OPTIMIZE
   const newpoint = vec3.transform(vec3.create(), connector.point, matrix)
   const newaxis = vec3.subtract(
@@ -25,4 +25,4 @@ const transform = (matrix, connector) => {
   return fromPointAxisNormal(newpoint, newaxis, newnormal)
 }
 
-module.exports = transform
+export default transform

@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { arePointsInside, create } = require('./index')
+import { arePointsInside, create } from './index.js'
 
 test('poly2: arePointsInside() should return proper values', (t) => {
   let polygon = create()

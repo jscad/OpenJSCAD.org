@@ -1,14 +1,11 @@
-
-const validateDesignModule = require('./validateDesignModule')
-const normalizeDesignModule = require('./normalizeDesignModule')
+import validateDesignModule from './validateDesignModule.js'
+import normalizeDesignModule from './normalizeDesignModule.js'
 
 /** load a jscad script, injecting the basic dependencies if necessary
  * @param  {string} filePath
- * @param  {function} requireFn : the 'require' function to use: defaults to the standard 'require' under node.js
+ * @param  {function} requireFn : the 'require' function to use; Node require or webRequire
  */
-const requireDesignFromModule = (filePath, requireFn = require) => {
-  // const requireUncached = require('../code-loading/requireUncached')
-  // TODO: only uncache when needed
+export const requireDesignFromModule = (filePath, requireFn) => {
   // requireUncached(mainPath)
   const designRootModule = requireFn(filePath)
   // make sure everything is ok
@@ -16,4 +13,4 @@ const requireDesignFromModule = (filePath, requireFn = require) => {
   return normalizeDesignModule(designRootModule)
 }
 
-module.exports = requireDesignFromModule
+export default requireDesignFromModule

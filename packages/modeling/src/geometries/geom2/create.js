@@ -1,4 +1,4 @@
-const mat4 = require('../../maths/mat4')
+import * as mat4 from '../../maths/mat4/index.js'
 
 /**
  * Represents a 2D geometry consisting of a list of sides.
@@ -13,7 +13,7 @@ const mat4 = require('../../maths/mat4')
  * @returns {geom2} a new geometry
  * @alias module:modeling/geometries/geom2.create
  */
-const create = (sides) => {
+export const create = (sides) => {
   if (sides === undefined) {
     sides = [] // empty contents
   }
@@ -23,4 +23,4 @@ const create = (sides) => {
   }
 }
 
-module.exports = create
+export default create

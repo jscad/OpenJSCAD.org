@@ -4,6 +4,6 @@
  * @returns {Number} angle in radians
  * @alias module:modeling/utils.degToRad
  */
-const degToRad = (degrees) => degrees * 0.017453292519943295
+export const degToRad = (degrees) => degrees * 0.017453292519943295
 
-module.exports = degToRad
+export default degToRad

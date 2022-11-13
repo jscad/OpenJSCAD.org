@@ -1,5 +1,6 @@
-const test = require('ava')
-const { equals, fromValues } = require('./index')
+import test from 'ava'
+
+import { equals, fromValues } from './index.js'
 
 test('plane: equals() should return correct booleans', (t) => {
   const plane0 = fromValues(0, 0, 0, 0)

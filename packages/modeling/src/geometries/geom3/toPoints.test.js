@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { toPoints, fromPoints, toString } = require('./index')
+import { toPoints, fromPoints, toString } from './index.js'
 
-const { comparePolygonsAsPoints } = require('../../../test/helpers/')
+import { comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
 test('toPoints: Creates an array of points from a populated geom3', (t) => {
   const points = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]

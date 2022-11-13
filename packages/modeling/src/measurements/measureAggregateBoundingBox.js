@@ -1,8 +1,8 @@
-const flatten = require('../utils/flatten')
-const vec3min = require('../maths/vec3/min')
-const vec3max = require('../maths/vec3/max')
+import flatten from '../utils/flatten.js'
+import vec3min from '../maths/vec3/min.js'
+import vec3max from '../maths/vec3/max.js'
 
-const measureBoundingBox = require('./measureBoundingBox')
+import measureBoundingBox from './measureBoundingBox.js'
 
 /**
  * Measure the aggregated minimum and maximum bounds for the given geometries.
@@ -13,7 +13,7 @@ const measureBoundingBox = require('./measureBoundingBox')
  * @example
  * let bounds = measureAggregateBoundingBox(sphere(),cube())
  */
-const measureAggregateBoundingBox = (...geometries) => {
+export const measureAggregateBoundingBox = (...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('measureAggregateBoundingBox: no geometries supplied')
   const bounds = measureBoundingBox(geometries)
@@ -27,4 +27,4 @@ const measureAggregateBoundingBox = (...geometries) => {
   }, result)
 }
 
-module.exports = measureAggregateBoundingBox
+export default measureAggregateBoundingBox

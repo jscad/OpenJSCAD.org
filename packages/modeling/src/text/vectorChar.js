@@ -1,4 +1,4 @@
-const vectorParams = require('./vectorParams')
+import vectorParams from './vectorParams.js'
 
 /**
  * Represents a character as a list of segments
@@ -29,7 +29,7 @@ const vectorParams = require('./vectorParams')
 * or
 * let vectorCharObject = vectorChar({ xOffset: 78, input: '!' })
 */
-const vectorChar = (options, char) => {
+export const vectorChar = (options, char) => {
   const {
     xOffset, yOffset, input, font, height, extrudeOffset
   } = vectorParams(options, char)
@@ -60,4 +60,4 @@ const vectorChar = (options, char) => {
   return { width, height, segments }
 }
 
-module.exports = vectorChar
+export default vectorChar

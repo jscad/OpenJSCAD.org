@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { TAU } = require('../constants')
+import { TAU } from '../constants.js'
 
-const { fromAngleRadians, create } = require('./index')
+import { fromAngleRadians, create } from './index.js'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('vec2: fromAngleRadians() should return a new vec2 with correct values', (t) => {
   const obs1 = fromAngleRadians(create(), 0)

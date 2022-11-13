@@ -1,7 +1,8 @@
-const test = require('ava')
-const { measureBoundingSphere, create, fromPoints, transform } = require('./index')
+import test from 'ava'
 
-const mat4 = require('../../maths/mat4')
+import { mat4 } from '../../maths/index.js'
+
+import { measureBoundingSphere, create, fromPoints, transform } from './index.js'
 
 test('poly3: measureBoundingSphere() should return correct values', (t) => {
   let ply1 = create()

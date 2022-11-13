@@ -1,5 +1,6 @@
-const plane = require('../../../maths/plane')
-const poly3 = require('../../../geometries/poly3')
+import * as plane from '../../../maths/plane/index.js'
+
+import * as poly3 from '../../../geometries/poly3/index.js'
 
 // # class Node
 // Holds a node in a BSP tree.
@@ -7,7 +8,7 @@ const poly3 = require('../../../geometries/poly3')
 // Polygons are not stored directly in the tree, but in PolygonTreeNodes, stored in this.polygontreenodes.
 // Those PolygonTreeNodes are children of the owning Tree.polygonTree.
 // This is not a leafy BSP tree since there is no distinction between internal and leaf nodes.
-class Node {
+export class Node {
   constructor (parent) {
     this.plane = null
     this.front = null
@@ -140,5 +141,3 @@ class Node {
     } while (current !== undefined)
   }
 }
-
-module.exports = Node

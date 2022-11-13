@@ -4,6 +4,7 @@
   "description": "Command Line Interface (CLI) for JSCAD",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "type": "module",
   "bin": {
     "jscad": "./cli.js"
   },

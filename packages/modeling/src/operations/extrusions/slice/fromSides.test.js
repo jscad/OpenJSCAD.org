@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { fromSides } = require('./index')
+import { fromSides } from './index.js'
 
 test('slice: fromSides() should return a new slice with correct values', (t) => {
   const exp1 = {

@@ -1,4 +1,4 @@
-const dot = require('./dot')
+import dot from './dot.js'
 
 /**
  * Calculate the angle between two vectors.
@@ -8,7 +8,7 @@ const dot = require('./dot')
  * @returns {Number} angle (radians)
  * @alias module:modeling/maths/vec3.angle
  */
-const angle = (a, b) => {
+export const angle = (a, b) => {
   const ax = a[0]
   const ay = a[1]
   const az = a[2]
@@ -22,4 +22,4 @@ const angle = (a, b) => {
   return Math.acos(Math.min(Math.max(cosine, -1), 1))
 }
 
-module.exports = angle
+export default angle

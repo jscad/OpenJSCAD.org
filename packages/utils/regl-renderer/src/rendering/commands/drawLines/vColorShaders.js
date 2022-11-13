@@ -1,4 +1,4 @@
-const vColorVert = `
+const vert = `
 precision mediump float;
 
 uniform float camNear, camFar;
@@ -24,7 +24,7 @@ void main() {
 }
 `
 
-const vColorFrag = `
+const frag = `
 precision mediump float;
 varying vec4 vColor;
 
@@ -32,4 +32,4 @@ void main () {
   gl_FragColor = vColor;
 }
 `
-module.exports = { frag: vColorFrag, vert: vColorVert }
+export { frag, vert }

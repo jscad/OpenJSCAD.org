@@ -1,14 +1,14 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const vec2 = require('../../maths/vec2')
+import * as vec2 from '../../maths/vec2/index.js'
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
-const measureEpsilon = require('../../measurements/measureEpsilon')
+import measureEpsilon from '../../measurements/measureEpsilon.js'
 
-const snapPolygons = require('./snapPolygons')
+import snapPolygons from './snapPolygons.js'
 
 const snapPath2 = (geometry) => {
   const epsilon = measureEpsilon(geometry)
@@ -41,7 +41,7 @@ const snapGeom3 = (geometry) => {
  * @return {Object|Array} the snapped geometry, or a list of snapped geometries
  * @alias module:modeling/modifiers.snap
  */
-const snap = (...geometries) => {
+export const snap = (...geometries) => {
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('wrong number of arguments')
 
@@ -54,4 +54,4 @@ const snap = (...geometries) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = snap
+export default snap

@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { reverse, equals, fromPoints } = require('./index')
+import { reverse, equals, fromPoints } from './index.js'
 
 test('reverse: The reverse of a path has reversed points', (t) => {
   const pointArray = [[0, 0], [1, 1]]

@@ -1,10 +1,17 @@
-const path = require('path')
+import path from 'path'
+import { createRequire } from "module"
 
 // use posix versions of path, even in the browser
 const posix = path.posix ? path.posix : path
 
-const getFileExtensionFromString = require('../utils/getFileExtensionFromString')
-const { combineParameterDefinitions, getParameterDefinitionsFromSource } = require('../parameters/getParameterDefinitionsFromSource')
+import stripBom from 'strip-bom'
+
+import * as jscadModule from '@jscad/modeling'
+
+import getFileExtensionFromString from '../utils/getFileExtensionFromString.js'
+import { combineParameterDefinitions, getParameterDefinitionsFromSource } from '../parameters/getParameterDefinitionsFromSource.js'
+
+import * as fsModule from './makeFakeFs.js'
 
 /* find matching path in inputs
  * @param  {} path
@@ -27,7 +34,6 @@ const findMatch = (path, inputs) => {
 }
 
 const registerJsExtension = (fs, _require) => {
-  const stripBom = require('strip-bom')
   _require.extensions['.js'] = (module, filename) => {
     const content = fs.readFileSync(filename, 'utf8')
     module._compile(stripBom(content), filename)
@@ -41,31 +47,43 @@ const registerJsonExtension = (fs, _require) => {
   }
 }
 
-/* Make require callback functions based on the given file system.
+/*
+ * Make require callback functions based on the given file system.
  */
-const makeWebRequire = (filesAndFolders, options) => {
+export const makeWebRequire = (filesAndFolders, options) => {
   const defaults = {
     apiMainPath: '@jscad/modeling',
-    fakeFs: require('./makeFakeFs')(filesAndFolders)
+    fakeFs: null
   }
   const { apiMainPath, fakeFs } = Object.assign({}, defaults, options)
-  const apiModule = apiMainPath === '@jscad/modeling' ? require('@jscad/modeling') : require(apiMainPath)
+
+  // HACK create the require function if necessary
+  if (typeof self === 'undefined') {
+    // create require via Node API
+    var require = createRequire(import.meta.url)
+  }
+
+  const { makeFakeFs } = fsModule
+
+  // FIXME const apiModule = apiMainPath === '@jscad/modeling' ? jscadModule : require(apiMainPath)
+  const apiModule = apiMainPath === '@jscad/modeling' ? jscadModule : import(apiMainPath)
+  //const fsModule = fakeFs ? fakeFs : makeFakeFs
 
   // preset core modules
   // FIXME this list of modules should be an option, replacing apiMainPath
   const coreModules = {
-    '@jscad/io': {
-      exports: require('@jscad/io')
-    },
-    '@jscad/array-utils': {
-      exports: require('@jscad/array-utils')
-    },
+    // '@jscad/io': {
+    //   exports: require('@jscad/io')
+    // },
+    // '@jscad/array-utils': {
+    //   exports: require('@jscad/array-utils')
+    // },
     '@jscad/modeling': {
       exports: apiModule
     },
     // expose the fake fs module
     fs: {
-      exports: fakeFs
+      exports: fsModule
     }
   }
 
@@ -250,9 +268,9 @@ const makeWebRequire = (filesAndFolders, options) => {
   req.extensions = extensions
   req.resolve = () => {}
 
-  registerJsExtension(fakeFs, req)
-  registerJsonExtension(fakeFs, req)
+  registerJsExtension(makeFakeFs(filesAndFolders), req)
+  registerJsonExtension(makeFakeFs(filesAndFolders), req)
   return req
 }
 
-module.exports = makeWebRequire
+export default makeWebRequire

@@ -1,4 +1,4 @@
-const { deserializers } = require('@jscad/io')
+import { deserializers } from '@jscad/io'
 
 /*
  * Transform the entry into a ready-to-use module.
@@ -21,7 +21,7 @@ const createJscadEntry = (entry, source) => {
  * Transforms are only applied to single files as current deserializers create source with a main() function. Only one.
  * Transforms are NOT applied to projects.
  */
-const transformSources = (options, filesAndFolders) => {
+export const transformSources = (options, filesAndFolders) => {
   if (filesAndFolders && filesAndFolders.length > 1) return filesAndFolders // skip projects
 
   const codeTransforms = {
@@ -52,4 +52,4 @@ const transformSources = (options, filesAndFolders) => {
   return filesAndFolders
 }
 
-module.exports = transformSources
+export default transformSources

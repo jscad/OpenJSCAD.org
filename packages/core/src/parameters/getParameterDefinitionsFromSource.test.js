@@ -1,7 +1,6 @@
-'use strict'
-const test = require('ava')
+import test from 'ava'
 
-const { getParameterDefinitionsFromSource, parseOne, parseComment, parseDef } = require('./getParameterDefinitionsFromSource.js')
+import { getParameterDefinitionsFromSource, parseOne, parseComment, parseDef } from './getParameterDefinitionsFromSource.js'
 
 const sampleParams = [
   { name: 'width', caption: 'Width', type: 'int', initial: 145 },

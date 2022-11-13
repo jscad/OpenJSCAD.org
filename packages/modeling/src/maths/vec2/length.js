@@ -5,6 +5,6 @@
  * @returns {Number} length
  * @alias module:modeling/maths/vec2.length
  */
-const length = (vector) => Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1])
+export const length = (vector) => Math.sqrt(vector[0] * vector[0] + vector[1] * vector[1])
 
-module.exports = length
+export default length

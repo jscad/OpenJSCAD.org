@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { line } = require('./index')
+import { path2 } from '../geometries/index.js'
 
-const path2 = require('../geometries/path2')
+import { line } from './index.js'
 
-const comparePoints = require('../../test/helpers/comparePoints')
+import { comparePoints } from '../../test/helpers/index.js'
 
 test('line (defaults)', (t) => {
   const exp = [[0, 0], [1, 1], [-3, 3]]

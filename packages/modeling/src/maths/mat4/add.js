@@ -7,7 +7,7 @@
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.add
  */
-const add = (out, a, b) => {
+export const add = (out, a, b) => {
   out[0] = a[0] + b[0]
   out[1] = a[1] + b[1]
   out[2] = a[2] + b[2]
@@ -27,4 +27,4 @@ const add = (out, a, b) => {
   return out
 }
 
-module.exports = add
+export default add

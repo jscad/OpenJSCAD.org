@@ -1,7 +1,6 @@
-
 // Simon Tatham's linked list merge sort algorithm
 // https://www.chiark.greenend.org.uk/~sgtatham/algorithms/listsort.html
-const sortLinked = (list, fn) => {
+export const sortLinked = (list, fn) => {
   let i, p, q, e, numMerges
   let inSize = 1
 
@@ -51,4 +50,4 @@ const sortLinked = (list, fn) => {
   return list
 }
 
-module.exports = sortLinked
+export default sortLinked

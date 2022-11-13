@@ -1,7 +1,8 @@
-const aboutEqualNormals = require('../../maths/utils/aboutEqualNormals')
-const vec3 = require('../../maths/vec3')
+import aboutEqualNormals from '../../maths/utils/aboutEqualNormals.js'
 
-const poly3 = require('../../geometries/poly3')
+import * as vec3 from '../../maths/vec3/index.js'
+
+import * as poly3 from '../../geometries/poly3/index.js'
 
 // create a set of edges from the given polygon, and link the edges as well
 const createEdges = (polygon) => {
@@ -89,7 +90,7 @@ const createPolygonAnd = (edge) => {
  * @param {poly3[]} sourcepolygons - list of polygons
  * @returns {poly3[]} new set of polygons
  */
-const mergeCoplanarPolygons = (sourcepolygons) => {
+export const mergeCoplanarPolygons = (sourcepolygons) => {
   if (sourcepolygons.length < 2) return sourcepolygons
 
   const normal = sourcepolygons[0].plane
@@ -205,4 +206,4 @@ const mergePolygons = (epsilon, polygons) => {
   return destpolygons
 }
 
-module.exports = mergePolygons
+export default mergePolygons

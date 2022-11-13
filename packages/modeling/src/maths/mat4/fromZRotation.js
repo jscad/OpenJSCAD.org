@@ -1,4 +1,4 @@
-const { sin, cos } = require('../utils/trigonometry')
+import { sin, cos } from '../utils/trigonometry.js'
 
 /**
  * Creates a matrix from the given angle around the Z axis.
@@ -14,7 +14,7 @@ const { sin, cos } = require('../utils/trigonometry')
  * @example
  * let matrix = fromZRotation(create(), TAU / 4)
  */
-const fromZRotation = (out, radians) => {
+export const fromZRotation = (out, radians) => {
   const s = sin(radians)
   const c = cos(radians)
 
@@ -38,4 +38,4 @@ const fromZRotation = (out, radians) => {
   return out
 }
 
-module.exports = fromZRotation
+export default fromZRotation

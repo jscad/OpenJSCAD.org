@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { create, clone, fromPoints, toEdges } = require('./index')
+import { create, clone, fromPoints, toEdges } from './index.js'
 
 test('slice: clone() should return a new slice with same values', (t) => {
   const org1 = create()

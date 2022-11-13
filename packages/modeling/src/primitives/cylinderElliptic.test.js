@@ -1,11 +1,12 @@
-const test = require('ava')
+import test from 'ava'
 
-const { TAU } = require('../maths/constants')
-const geom3 = require('../geometries/geom3')
+import { TAU } from '../maths/constants.js'
 
-const { cylinderElliptic } = require('./index')
+import { geom3 } from '../geometries/index.js'
 
-const comparePolygonsAsPoints = require('../../test/helpers/comparePolygonsAsPoints')
+import { cylinderElliptic } from './index.js'
+
+import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
 
 test('cylinderElliptic (defaults)', (t) => {
   const obs = cylinderElliptic()

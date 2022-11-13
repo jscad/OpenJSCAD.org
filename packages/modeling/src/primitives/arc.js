@@ -1,10 +1,10 @@
-const { EPS, TAU } = require('../maths/constants')
+import { EPS, TAU } from '../maths/constants.js'
 
-const vec2 = require('../maths/vec2')
+import * as vec2 from '../maths/vec2/index.js'
 
-const path2 = require('../geometries/path2')
+import * as path2 from '../geometries/path2/index.js'
 
-const { isGT, isGTE, isNumberArray } = require('./commonChecks')
+import { isGT, isGTE, isNumberArray } from './commonChecks.js'
 
 /**
  * Construct an arc in two dimensional space where all points are at the same distance from the center.
@@ -18,7 +18,7 @@ const { isGT, isGTE, isNumberArray } = require('./commonChecks')
  * @returns {path2} new 2D path
  * @alias module:modeling/primitives.arc
  */
-const arc = (options) => {
+export const arc = (options) => {
   const defaults = {
     center: [0, 0],
     radius: 1,
@@ -81,4 +81,4 @@ const arc = (options) => {
   return path2.fromPoints({ closed: false }, pointArray)
 }
 
-module.exports = arc
+export default arc

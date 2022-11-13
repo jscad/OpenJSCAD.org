@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { path2 } = require('../../geometries')
+import { path2 } from '../../geometries/index.js'
 
-const hullPath2 = require('./hullPath2')
+import hullPath2 from './hullPath2.js'
 
 test('hullPath2', (t) => {
   const closed = true

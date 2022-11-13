@@ -1,7 +1,8 @@
-const geom3 = require('../../geometries/geom3')
+import * as geom3 from '../../geometries/geom3/index.js'
 
-const mayOverlap = require('./mayOverlap')
-const { Tree } = require('./trees')
+import { Tree } from './trees/index.js'
+
+import mayOverlap from './mayOverlap.js'
 
 /*
  * Return a new 3D geometry representing the space in the first geometry but not
@@ -10,7 +11,7 @@ const { Tree } = require('./trees')
  * @param {geom3} geometry2 - a geometry
  * @returns {geom3} new 3D geometry
  */
-const subtractGeom3Sub = (geometry1, geometry2) => {
+export const subtractGeom3Sub = (geometry1, geometry2) => {
   if (!mayOverlap(geometry1, geometry2)) {
     return geom3.clone(geometry1)
   }
@@ -28,4 +29,4 @@ const subtractGeom3Sub = (geometry1, geometry2) => {
   return geom3.create(newpolygons)
 }
 
-module.exports = subtractGeom3Sub
+export default subtractGeom3Sub

@@ -1,10 +1,10 @@
-const mplane = require('../../maths/plane/')
+import * as mplane from '../../maths/plane/index.js'
 
-const plane = (polygon) => {
+export const plane = (polygon) => {
   if (!polygon.plane) {
     polygon.plane = mplane.fromPoints(mplane.create(), ...polygon.vertices)
   }
   return polygon.plane
 }
 
-module.exports = plane
+export default plane

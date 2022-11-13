@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
+import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
-const { geom2, geom3, path2 } = require('../../geometries')
+import { geom2, geom3, path2 } from '../../geometries/index.js'
 
-const { mirror, mirrorX, mirrorY, mirrorZ } = require('./index')
+import { mirror, mirrorX, mirrorY, mirrorZ } from './index.js'
 
 test('mirror: mirroring of path2 about X/Y produces expected changes to points', (t) => {
   const geometry = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])

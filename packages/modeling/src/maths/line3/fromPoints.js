@@ -1,6 +1,6 @@
-const vec3 = require('../vec3')
+import * as vec3 from '../vec3/index.js'
 
-const fromPointAndDirection = require('./fromPointAndDirection')
+import fromPointAndDirection from './fromPointAndDirection.js'
 
 /**
  * Create a line that passes through the given points.
@@ -11,9 +11,9 @@ const fromPointAndDirection = require('./fromPointAndDirection')
  * @returns {line3} out
  * @alias module:modeling/maths/line3.fromPoints
  */
-const fromPoints = (out, point1, point2) => {
+export const fromPoints = (out, point1, point2) => {
   const direction = vec3.subtract(vec3.create(), point2, point1)
   return fromPointAndDirection(out, point1, direction)
 }
 
-module.exports = fromPoints
+export default fromPoints

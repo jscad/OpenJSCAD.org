@@ -1,4 +1,4 @@
-const applyTransforms = require('./applyTransforms')
+import applyTransforms from './applyTransforms.js'
 
 /**
  * Produces an array of points from the given geometry.
@@ -10,6 +10,6 @@ const applyTransforms = require('./applyTransforms')
  * @example
  * let sharedpoints = toPoints(geometry)
  */
-const toPoints = (geometry) => applyTransforms(geometry).points
+export const toPoints = (geometry) => applyTransforms(geometry).points
 
-module.exports = toPoints
+export default toPoints

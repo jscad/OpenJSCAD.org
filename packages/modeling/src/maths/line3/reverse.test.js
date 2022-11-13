@@ -1,7 +1,8 @@
-const test = require('ava')
-const { reverse, create, fromPoints } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { reverse, create, fromPoints } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('line3: reverse() called with two parameters should update a line3 with proper values', (t) => {
   const line1 = create()

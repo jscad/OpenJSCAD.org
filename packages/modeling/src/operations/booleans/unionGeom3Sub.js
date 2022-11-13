@@ -1,7 +1,8 @@
-const geom3 = require('../../geometries/geom3')
+import * as geom3 from '../../geometries/geom3/index.js'
 
-const mayOverlap = require('./mayOverlap')
-const { Tree } = require('./trees')
+import { Tree } from './trees/index.js'
+
+import mayOverlap from './mayOverlap.js'
 
 /*
  * Return a new 3D geometry representing the space in the given geometries.
@@ -9,7 +10,7 @@ const { Tree } = require('./trees')
  * @param {geom3} geometry2 - geometry to union
  * @returns {geom3} new 3D geometry
  */
-const unionSub = (geometry1, geometry2) => {
+export const unionGeom3Sub = (geometry1, geometry2) => {
   if (!mayOverlap(geometry1, geometry2)) {
     return unionForNonIntersecting(geometry1, geometry2)
   }
@@ -37,4 +38,4 @@ const unionForNonIntersecting = (geometry1, geometry2) => {
   return geom3.create(newpolygons)
 }
 
-module.exports = unionSub
+export default unionGeom3Sub

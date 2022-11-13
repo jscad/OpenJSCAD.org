@@ -2,38 +2,36 @@
  * Represents a two dimensional vector.
  * @module modeling/maths/vec2
  */
-module.exports = {
-  abs: require('./abs'),
-  add: require('./add'),
-  angle: require('./angle'),
-  angleDegrees: require('./angleDegrees'),
-  angleRadians: require('./angleRadians'),
-  clone: require('./clone'),
-  copy: require('./copy'),
-  create: require('./create'),
-  cross: require('./cross'),
-  distance: require('./distance'),
-  divide: require('./divide'),
-  dot: require('./dot'),
-  equals: require('./equals'),
-  fromAngleDegrees: require('./fromAngleDegrees'),
-  fromAngleRadians: require('./fromAngleRadians'),
-  fromScalar: require('./fromScalar'),
-  fromValues: require('./fromValues'),
-  length: require('./length'),
-  lerp: require('./lerp'),
-  max: require('./max'),
-  min: require('./min'),
-  multiply: require('./multiply'),
-  negate: require('./negate'),
-  normal: require('./normal'),
-  normalize: require('./normalize'),
-  rotate: require('./rotate'),
-  scale: require('./scale'),
-  snap: require('./snap'),
-  squaredDistance: require('./squaredDistance'),
-  squaredLength: require('./squaredLength'),
-  subtract: require('./subtract'),
-  toString: require('./toString'),
-  transform: require('./transform')
-}
+export { abs } from './abs.js'
+export { add } from './add.js'
+export { angle } from './angle.js'
+export { angleDegrees } from './angleDegrees.js'
+export { angleRadians } from './angleRadians.js'
+export { clone } from './clone.js'
+export { copy } from './copy.js'
+export { create } from './create.js'
+export { cross } from './cross.js'
+export { distance } from './distance.js'
+export { divide } from './divide.js'
+export { dot } from './dot.js'
+export { equals } from './equals.js'
+export { fromAngleDegrees } from './fromAngleDegrees.js'
+export { fromAngleRadians } from './fromAngleRadians.js'
+export { fromScalar } from './fromScalar.js'
+export { fromValues } from './fromValues.js'
+export { length } from './length.js'
+export { lerp } from './lerp.js'
+export { max } from './max.js'
+export { min } from './min.js'
+export { multiply } from './multiply.js'
+export { negate } from './negate.js'
+export { normal } from './normal.js'
+export { normalize } from './normalize.js'
+export { rotate } from './rotate.js'
+export { scale } from './scale.js'
+export { snap } from './snap.js'
+export { squaredDistance } from './squaredDistance.js'
+export { squaredLength } from './squaredLength.js'
+export { subtract } from './subtract.js'
+export { toString } from './toString.js'
+export { transform } from './transform.js'

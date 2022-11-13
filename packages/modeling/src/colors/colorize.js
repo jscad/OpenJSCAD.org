@@ -1,9 +1,9 @@
-const flatten = require('../utils/flatten')
+import flatten from '../utils/flatten.js'
 
-const geom2 = require('../geometries/geom2')
-const geom3 = require('../geometries/geom3')
-const path2 = require('../geometries/path2')
-const poly3 = require('../geometries/poly3')
+import * as geom2 from '../geometries/geom2/index.js'
+import * as geom3 from '../geometries/geom3/index.js'
+import * as path2 from '../geometries/path2/index.js'
+import * as poly3 from '../geometries/poly3/index.js'
 
 const colorGeom2 = (color, object) => {
   const newgeom2 = geom2.clone(object)
@@ -42,7 +42,7 @@ const colorPoly3 = (color, object) => {
  * let blueArc = colorize([0,0,1], arc()) // blue
  * let wildcylinder = colorize(colorNameToRgb('fuchsia'), cylinder()) // CSS color
  */
-const colorize = (color, ...objects) => {
+export const colorize = (color, ...objects) => {
   if (!Array.isArray(color)) throw new Error('color must be an array')
   if (color.length < 3) throw new Error('color must contain R, G and B values')
   if (color.length === 3) color = [color[0], color[1], color[2], 1.0] // add alpha
@@ -62,4 +62,4 @@ const colorize = (color, ...objects) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = colorize
+export default colorize

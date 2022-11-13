@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { concat, equals, fromPoints } = require('./index')
+import { concat, equals, fromPoints } from './index.js'
 
 test('concat: No paths produces an empty open path', (t) => {
   t.true(equals(concat(), fromPoints({ closed: false }, [])))

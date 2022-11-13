@@ -1,12 +1,12 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const geom3 = require('../../geometries/geom3')
+import * as geom3 from '../../geometries/geom3/index.js'
 
-const measureEpsilon = require('../../measurements/measureEpsilon')
+import measureEpsilon from '../../measurements/measureEpsilon.js'
 
-const fromFakePolygons = require('./fromFakePolygons')
-const to3DWalls = require('./to3DWalls')
-const subtractGeom3 = require('./subtractGeom3')
+import fromFakePolygons from './fromFakePolygons.js'
+import to3DWalls from './to3DWalls.js'
+import subtractGeom3 from './subtractGeom3.js'
 
 /*
  * Return a new 2D geometry representing space in the first geometry but
@@ -14,7 +14,7 @@ const subtractGeom3 = require('./subtractGeom3')
  * @param {...geom2} geometries - list of geometries
  * @returns {geom2} new 2D geometry
  */
-const subtract = (...geometries) => {
+export const subtractGeom2 = (...geometries) => {
   geometries = flatten(geometries)
   const newgeometries = geometries.map((geometry) => to3DWalls({ z0: -1, z1: 1 }, geometry))
 
@@ -24,4 +24,4 @@ const subtract = (...geometries) => {
   return fromFakePolygons(epsilon, geom3.toPolygons(newgeom3))
 }
 
-module.exports = subtract
+export default subtractGeom2

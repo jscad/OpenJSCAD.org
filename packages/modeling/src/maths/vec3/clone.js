@@ -1,4 +1,4 @@
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Create a clone of the given vector.
@@ -7,7 +7,7 @@ const create = require('./create')
  * @returns {vec3} a new vector
  * @alias module:modeling/maths/vec3.clone
  */
-const clone = (vector) => {
+export const clone = (vector) => {
   const out = create()
   out[0] = vector[0]
   out[1] = vector[1]
@@ -15,4 +15,4 @@ const clone = (vector) => {
   return out
 }
 
-module.exports = clone
+export default clone

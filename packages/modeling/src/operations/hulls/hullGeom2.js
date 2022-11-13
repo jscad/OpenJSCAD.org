@@ -1,16 +1,16 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const geom2 = require('../../geometries/geom2')
+import * as geom2 from '../../geometries/geom2/index.js'
 
-const hullPoints2 = require('./hullPoints2')
-const toUniquePoints = require('./toUniquePoints')
+import hullPoints2 from './hullPoints2.js'
+import toUniquePoints from './toUniquePoints.js'
 
 /*
  * Create a convex hull of the given geom2 geometries.
  * @param {...geometries} geometries - list of geom2 geometries
  * @returns {geom2} new geometry
  */
-const hullGeom2 = (...geometries) => {
+export const hullGeom2 = (...geometries) => {
   geometries = flatten(geometries)
 
   // extract the unique points from the geometries
@@ -25,4 +25,4 @@ const hullGeom2 = (...geometries) => {
   return geom2.fromPoints(hullPoints)
 }
 
-module.exports = hullGeom2
+export default hullGeom2

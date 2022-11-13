@@ -31,12 +31,12 @@ Notes:
  * const { serializer, mimeType } = require('@jscad/x3d-serializer')
  */
 
-const { geometries, modifiers } = require('@jscad/modeling')
+import { geometries, modifiers } from '@jscad/modeling'
 const { geom2, geom3, path2, poly2, poly3 } = geometries
 
-const { flatten, toArray } = require('@jscad/array-utils')
+import { flatten, toArray } from '@jscad/array-utils'
 
-const stringify = require('onml').stringify
+import { stringify } from '@jscad/io-utils'
 
 // http://www.web3d.org/x3d/content/X3dTooltips.html
 // http://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Meshes
@@ -138,7 +138,7 @@ const convertObjects = (objects, options) => {
 const convertPath2 = (object, options) => {
   const points = path2.toPoints(object).slice()
   if (points.length > 1 && object.isClosed) points.push(points[0])
-  shape = ['Shape', {}, convertPolyline2D(poly2.create(points), options)]
+  const shape = ['Shape', {}, convertPolyline2D(poly2.create(points), options)]
   if (object.color) {
     shape.push(convertAppearance(object, options))
   }
@@ -274,7 +274,7 @@ const polygons2coordinates = (polygons, options) => {
   return [indexList, pointList, colorList]
 }
 
-module.exports = {
+export {
   serialize,
   mimeType
 }

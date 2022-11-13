@@ -1,5 +1,5 @@
-const vec3 = require('gl-vec3')
-const mat4 = require('gl-mat4')
+import vec3 from 'gl-vec3'
+import mat4 from 'gl-mat4'
 
 const maxIndex = 65535
 
@@ -12,7 +12,7 @@ const maxIndex = 65535
  * @param {geom3} solid - the solid to convert
  * @return {Array} list of new geometries
  */
-const geom3ToGeometries = (options, solid) => {
+export const geom3ToGeometries = (options, solid) => {
   let { color, smoothLighting } = options
 
   if ('color' in solid) color = solid.color
@@ -214,4 +214,4 @@ const fuzyNormalAndPositionLookup = (normalPositionLookup, toCompare, normalThre
   return undefined
 }
 
-module.exports = geom3ToGeometries
+export default geom3ToGeometries

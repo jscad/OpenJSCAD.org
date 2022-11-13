@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { compareVectors } from '../../../test/helpers/index.js'
 
-const { projectionOfPoint, create, fromNormalAndPoint } = require('./index')
+import { projectionOfPoint, create, fromNormalAndPoint } from './index.js'
 
 test('plane: projectionOfPoint() should return correct values', (t) => {
   const temp = create()

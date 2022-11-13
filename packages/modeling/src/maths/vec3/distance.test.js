@@ -1,8 +1,10 @@
-const test = require('ava')
-const { distance, fromValues } = require('./index')
+import test from 'ava'
 
-const { nearlyEqual } = require('../../../test/helpers/index')
-const { EPS } = require('../constants')
+import { EPS } from '../constants.js'
+
+import { distance, fromValues } from './index.js'
+
+import { nearlyEqual } from '../../../test/helpers/index.js'
 
 test('vec3: distance() should return correct values', (t) => {
   const vec0 = fromValues(0, 0, 0)

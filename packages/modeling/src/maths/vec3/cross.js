@@ -7,7 +7,7 @@
  * @returns {vec3} out
  * @alias module:modeling/maths/vec3.cross
  */
-const cross = (out, a, b) => {
+export const cross = (out, a, b) => {
   const ax = a[0]
   const ay = a[1]
   const az = a[2]
@@ -21,4 +21,4 @@ const cross = (out, a, b) => {
   return out
 }
 
-module.exports = cross
+export default cross

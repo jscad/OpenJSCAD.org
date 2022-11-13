@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { cube, square } = require('../primitives')
+import { cube, square } from '../primitives/index.js'
 
-const { areAllShapesTheSameType } = require('./index')
+import { areAllShapesTheSameType } from './index.js'
 
 test('utils: areAllShapesTheSameType() should return correct values', (t) => {
   const geometry2 = square()

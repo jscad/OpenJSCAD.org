@@ -5,6 +5,4 @@
  * const { bezier } = require('@jscad/modeling').curves
 
  */
-module.exports = {
-  bezier: require('./bezier')
-}
+export * as bezier from './bezier/index.js'

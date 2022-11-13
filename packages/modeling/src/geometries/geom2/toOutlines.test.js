@@ -1,10 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { create } = require('./index')
+import { create, toOutlines } from './index.js'
 
-const { comparePoints } = require('../../../test/helpers')
-
-const toOutlines = require('./toOutlines')
+import { comparePoints } from '../../../test/helpers/index.js'
 
 test('geom2: toOutlines() should return no outlines for empty geom2', (t) => {
   const shp1 = create()

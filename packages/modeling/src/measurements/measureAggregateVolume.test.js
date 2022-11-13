@@ -1,7 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { cube, cuboid } = require('../primitives')
-const measureAggregateVolume = require('./measureAggregateVolume')
+import { cube, cuboid } from '../primitives/index.js'
+
+import { measureAggregateVolume } from './index.js'
 
 test('measureAggregateVolume (single objects)', (t) => {
   const aCube = cube({ size: 4, center: [4, 10, 20] })

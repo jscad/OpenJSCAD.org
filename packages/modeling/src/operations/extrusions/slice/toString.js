@@ -1,4 +1,4 @@
-const vec3 = require('../../../maths/vec3')
+import * as vec3 from '../../../maths/vec3/index.js'
 
 const edgesToString = (edges) =>
   edges.reduce((result, edge) => (
@@ -10,6 +10,6 @@ const edgesToString = (edges) =>
  * @return {String} the string representation
  * @alias module:modeling/extrusions/slice.toString
  */
-const toString = (slice) => `[${edgesToString(slice.edges)}]`
+export const toString = (slice) => `[${edgesToString(slice.edges)}]`
 
-module.exports = toString
+export default toString

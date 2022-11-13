@@ -1,6 +1,6 @@
-const cuboid = require('./cuboid')
+import cuboid from './cuboid.js'
 
-const { isGT } = require('./commonChecks')
+import { isGT } from './commonChecks.js'
 
 /**
  * Construct an axis-aligned solid cube in three dimensional space with six square faces.
@@ -13,7 +13,7 @@ const { isGT } = require('./commonChecks')
  * @example
  * let myshape = cube({size: 10})
  */
-const cube = (options) => {
+export const cube = (options) => {
   const defaults = {
     center: [0, 0, 0],
     size: 2
@@ -27,4 +27,4 @@ const cube = (options) => {
   return cuboid({ center, size })
 }
 
-module.exports = cube
+export default cube

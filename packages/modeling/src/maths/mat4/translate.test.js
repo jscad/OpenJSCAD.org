@@ -1,7 +1,8 @@
-const test = require('ava')
-const { translate, create } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { translate, create } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('mat4: translate() called with three parameters should update a mat4 with correct values', (t) => {
   const identityMatrix = [

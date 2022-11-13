@@ -1,6 +1,6 @@
-const vec3 = require('../../../maths/vec3')
+import * as vec3 from '../../../maths/vec3/index.js'
 
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Transform the given slice using the given matrix.
@@ -13,9 +13,9 @@ const create = require('./create')
  * let matrix = mat4.fromTranslation([1, 2, 3])
  * let newslice = transform(matrix, oldslice)
  */
-const transform = (matrix, slice) => {
+export const transform = (matrix, slice) => {
   const edges = slice.edges.map((edge) => [vec3.transform(vec3.create(), edge[0], matrix), vec3.transform(vec3.create(), edge[1], matrix)])
   return create(edges)
 }
 
-module.exports = transform
+export default transform

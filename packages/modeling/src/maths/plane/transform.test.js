@@ -1,7 +1,8 @@
-const test = require('ava')
-const { transform, create, fromValues } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { transform, create, fromValues } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('plane: transform() called with three parameters should return a plane with correct values', (t) => {
   const identityMatrix = [

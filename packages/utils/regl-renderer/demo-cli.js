@@ -1,12 +1,16 @@
-const { writeContextToFile } = require('@jscad/img-utils')
+import gl from 'gl'
 
-const { prepareRender, drawCommands, cameras, entitiesFromSolids } = require('./src') // replace this with the correct import
+import { colors, primitives, booleans } from '@jscad/modeling'
+
+import { writeContextToFile } from '@jscad/img-utils'
+
+import { prepareRender, commands, cameras, entitiesFromSolids } from './src/index.js'
 
 // setup demo solids data
 const demoSolids = (parameters) => {
-  const { colorize } = require('@jscad/modeling').colors
-  const { cube, cuboid, line, sphere, star } = require('@jscad/modeling').primitives
-  const { intersect, subtract } = require('@jscad/modeling').booleans
+  const { colorize } = colors
+  const { cube, cuboid, line, sphere, star } = primitives
+  const { intersect, subtract } = booleans
 
   const logo = [
     colorize([1.0, 0.4, 1.0], subtract(
@@ -45,7 +49,7 @@ const params = {
 const { width, height } = params
 
 // create webgl context
-const gl = require('gl')(width, height)
+const context = gl(width, height)
 
 // process entities and inject extras
 const entities = entitiesFromSolids({}, demoSolids({ scale: 1 }))
@@ -57,14 +61,14 @@ perspectiveCamera.setProjection(camera, camera, { width, height })
 perspectiveCamera.update(camera, camera)
 
 const options = {
-  glOptions: { gl },
+  glOptions: { gl: context },
   camera,
   drawCommands: {
     // draw commands bootstrap themselves the first time they are run
-    drawAxis: drawCommands.drawAxis,
-    drawGrid: drawCommands.drawGrid,
-    drawLines: drawCommands.drawLines,
-    drawMesh: drawCommands.drawMesh
+    drawAxis: commands.drawAxis,
+    drawGrid: commands.drawGrid,
+    drawLines: commands.drawLines,
+    drawMesh: commands.drawMesh
   },
   rendering: {
     background: [1, 1, 1, 1],
@@ -114,4 +118,4 @@ const render = prepareRender(options)
 // do the actual render
 render(options)
 // output to file
-writeContextToFile(gl, width, height, 4, './test.png')
+writeContextToFile(context, width, height, 4, './test.png')

@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const countOf = require('../../test/helpers/countOf')
+import countOf from '../../test/helpers/countOf.js'
 
-const { deserialize } = require('../index')
+import { deserialize } from '../src/index.js'
 
 //
 // Test suite for DXF deserialization (import)

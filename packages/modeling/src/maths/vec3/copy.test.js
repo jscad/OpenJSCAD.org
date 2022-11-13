@@ -1,7 +1,8 @@
-const test = require('ava')
-const { create, copy, fromValues } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { create, copy, fromValues } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('vec3: copy() with two params should update a vec3 with same values', (t) => {
   const vec1 = create()

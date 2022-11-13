@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const padArrayToLength = require('./padArrayToLength')
+import { padArrayToLength } from './index.js'
 
 test('padArrayToLength: test an array of the proper length is unchanged.', (t) => {
   const srcArray = [2, 3, 4]

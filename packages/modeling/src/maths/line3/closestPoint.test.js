@@ -1,7 +1,8 @@
-const test = require('ava')
-const { closestPoint, create, fromPoints } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { closestPoint, create, fromPoints } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('line3: closestPoint() should return proper values', (t) => {
   const line1 = create() // line follows X axis

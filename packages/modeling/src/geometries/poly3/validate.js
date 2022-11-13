@@ -1,10 +1,11 @@
-const signedDistanceToPoint = require('../../maths/plane/signedDistanceToPoint')
-const { NEPS } = require('../../maths/constants')
-const vec3 = require('../../maths/vec3')
-const isA = require('./isA')
-const isConvex = require('./isConvex')
-const measureArea = require('./measureArea')
-const plane = require('./plane')
+import signedDistanceToPoint from '../../maths/plane/signedDistanceToPoint.js'
+import { NEPS } from '../../maths/constants.js'
+import * as vec3 from '../../maths/vec3/index.js'
+
+import isA from './isA.js'
+import isConvex from './isConvex.js'
+import measureArea from './measureArea.js'
+import plane from './plane.js'
 
 /**
  * Determine if the given object is a valid polygon.
@@ -16,7 +17,7 @@ const plane = require('./plane')
  * @throws {Error} error if the geometry is not valid
  * @alias module:modeling/geometries/poly3.validate
  */
-const validate = (object) => {
+export const validate = (object) => {
   if (!isA(object)) {
     throw new Error('invalid poly3 structure')
   }
@@ -61,4 +62,4 @@ const validate = (object) => {
   }
 }
 
-module.exports = validate
+export default validate

@@ -1,9 +1,9 @@
-const { EPS } = require('../../maths/constants')
-const vec3 = require('../../maths/vec3')
+import { EPS } from '../../maths/constants.js'
+import * as vec3 from '../../maths/vec3/index.js'
 
-const poly3 = require('../../geometries/poly3')
+import * as poly3 from '../../geometries/poly3/index.js'
 
-const slice = require('./slice')
+import * as slice from './slice/index.js'
 
 // https://en.wikipedia.org/wiki/Greatest_common_divisor#Using_Euclid's_algorithm
 const gcd = (a, b) => {
@@ -49,7 +49,7 @@ const EPSAREA = (EPS * EPS / 2) * Math.sin(Math.PI / 3)
  * Extrude (build) walls between the given slices.
  * Each wall consists of two triangles, which may be invalid if slices are overlapping.
  */
-const extrudeWalls = (slice0, slice1) => {
+export const extrudeWalls = (slice0, slice1) => {
   let edges0 = slice.toEdges(slice0)
   let edges1 = slice.toEdges(slice1)
 
@@ -75,4 +75,4 @@ const extrudeWalls = (slice0, slice1) => {
   return walls
 }
 
-module.exports = extrudeWalls
+export default extrudeWalls

@@ -6,7 +6,7 @@
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.copy
  */
-const copy = (out, matrix) => {
+export const copy = (out, matrix) => {
   out[0] = matrix[0]
   out[1] = matrix[1]
   out[2] = matrix[2]
@@ -26,4 +26,4 @@ const copy = (out, matrix) => {
   return out
 }
 
-module.exports = copy
+export default copy

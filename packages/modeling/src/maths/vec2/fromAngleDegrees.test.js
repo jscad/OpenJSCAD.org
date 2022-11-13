@@ -1,7 +1,8 @@
-const test = require('ava')
-const { fromAngleDegrees, create } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { fromAngleDegrees, create } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('vec2: fromAngleDegrees() should return a new vec2 with correct values', (t) => {
   const obs1 = fromAngleDegrees(create(), 0)

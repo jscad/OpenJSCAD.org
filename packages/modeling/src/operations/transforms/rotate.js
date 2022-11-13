@@ -1,10 +1,10 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const mat4 = require('../../maths/mat4')
+import * as mat4 from '../../maths/mat4/index.js'
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
 /**
  * Rotate the given objects using the given options.
@@ -16,7 +16,7 @@ const path2 = require('../../geometries/path2')
  * @example
  * const newsphere = rotate([TAU / 8, 0, 0], sphere())
  */
-const rotate = (angles, ...objects) => {
+export const rotate = (angles, ...objects) => {
   if (!Array.isArray(angles)) throw new Error('angles must be an array')
 
   objects = flatten(objects)
@@ -48,7 +48,7 @@ const rotate = (angles, ...objects) => {
  * @return {Object|Array} the rotated object, or a list of rotated objects
  * @alias module:modeling/transforms.rotateX
  */
-const rotateX = (angle, ...objects) => rotate([angle, 0, 0], objects)
+export const rotateX = (angle, ...objects) => rotate([angle, 0, 0], objects)
 
 /**
  * Rotate the given objects about the Y axis, using the given options.
@@ -57,7 +57,7 @@ const rotateX = (angle, ...objects) => rotate([angle, 0, 0], objects)
  * @return {Object|Array} the rotated object, or a list of rotated objects
  * @alias module:modeling/transforms.rotateY
  */
-const rotateY = (angle, ...objects) => rotate([0, angle, 0], objects)
+export const rotateY = (angle, ...objects) => rotate([0, angle, 0], objects)
 
 /**
  * Rotate the given objects about the Z axis, using the given options.
@@ -66,11 +66,4 @@ const rotateY = (angle, ...objects) => rotate([0, angle, 0], objects)
  * @return {Object|Array} the rotated object, or a list of rotated objects
  * @alias module:modeling/transforms.rotateZ
  */
-const rotateZ = (angle, ...objects) => rotate([0, 0, angle], objects)
-
-module.exports = {
-  rotate,
-  rotateX,
-  rotateY,
-  rotateZ
-}
+export const rotateZ = (angle, ...objects) => rotate([0, 0, angle], objects)

@@ -13,18 +13,16 @@
  *   "color": [0.5,0,1,1]
  * }
  */
-module.exports = {
-  clone: require('./clone'),
-  create: require('./create'),
-  fromPoints: require('./fromPoints'),
-  fromCompactBinary: require('./fromCompactBinary'),
-  isA: require('./isA'),
-  reverse: require('./reverse'),
-  toOutlines: require('./toOutlines'),
-  toPoints: require('./toPoints'),
-  toSides: require('./toSides'),
-  toString: require('./toString'),
-  toCompactBinary: require('./toCompactBinary'),
-  transform: require('./transform'),
-  validate: require('./validate')
-}
+export { clone } from './clone.js'
+export { create } from './create.js'
+export { fromPoints } from './fromPoints.js'
+export { fromCompactBinary } from './fromCompactBinary.js'
+export { isA } from './isA.js'
+export { reverse } from './reverse.js'
+export { toOutlines } from './toOutlines.js'
+export { toPoints } from './toPoints.js'
+export { toSides } from './toSides.js'
+export { toString } from './toString.js'
+export { toCompactBinary } from './toCompactBinary.js'
+export { transform } from './transform.js'
+export { validate } from './validate.js'

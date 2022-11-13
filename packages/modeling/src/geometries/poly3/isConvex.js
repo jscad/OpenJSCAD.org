@@ -1,5 +1,5 @@
-const plane = require('../../maths/plane')
-const vec3 = require('../../maths/vec3')
+import * as plane from '../../maths/plane/index.js'
+import * as vec3 from '../../maths/vec3/index.js'
 
 /**
  * Check whether the given polygon is convex.
@@ -7,7 +7,7 @@ const vec3 = require('../../maths/vec3')
  * @returns {Boolean} true if convex
  * @alias module:modeling/geometries/poly3.isConvex
  */
-const isConvex = (polygon) => areVerticesConvex(polygon.vertices)
+export const isConvex = (polygon) => areVerticesConvex(polygon.vertices)
 
 const areVerticesConvex = (vertices) => {
   const numvertices = vertices.length
@@ -41,4 +41,4 @@ const isConvexPoint = (prevpoint, point, nextpoint, normal) => {
   return crossdotnormal >= 0
 }
 
-module.exports = isConvex
+export default isConvex

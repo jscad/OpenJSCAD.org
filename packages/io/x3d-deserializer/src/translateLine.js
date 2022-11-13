@@ -1,8 +1,8 @@
-const { pointsToString } = require('./translateHelpers')
+import { pointsToString } from './translateHelpers.js'
 
-const { convertLine } = require('./instantiateLine')
+import { convertLine } from './instantiateLine.js'
 
-const translateLine = (options, objects) => {
+export const translateLine = (options, objects) => {
   const components = convertLine(options, objects)
   if (components) {
     const { pointsSet, colors } = components
@@ -25,4 +25,4 @@ const translateLine = (options, objects) => {
   return null
 }
 
-module.exports = translateLine
+export default translateLine

@@ -1,6 +1,6 @@
-const fs = require('fs')
+import fs from 'fs'
 
-const writeOutputDataToFile = (outputFile, outputData) => {
+export const writeOutputDataToFile = (outputFile, outputData) => {
   fs.writeFile(outputFile, outputData.asBuffer(),
     (err) => {
       if (err) {
@@ -12,4 +12,4 @@ const writeOutputDataToFile = (outputFile, outputData) => {
   )
 }
 
-module.exports = writeOutputDataToFile
+export default writeOutputDataToFile

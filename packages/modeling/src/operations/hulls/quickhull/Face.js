@@ -1,11 +1,11 @@
-const add = require('../../../maths/vec3/add')
-const copy = require('../../../maths/vec3/copy')
-const cross = require('../../../maths/vec3/cross')
-const dot = require('../../../maths/vec3/dot')
-const length = require('../../../maths/vec3/length')
-const normalize = require('../../../maths/vec3/normalize')
-const scale = require('../../../maths/vec3/scale')
-const subtract = require('../../../maths/vec3/subtract')
+import add from '../../../maths/vec3/add.js'
+import copy from '../../../maths/vec3/copy.js'
+import cross from '../../../maths/vec3/cross.js'
+import dot from '../../../maths/vec3/dot.js'
+import length from '../../../maths/vec3/length.js'
+import normalize from '../../../maths/vec3/normalize.js'
+import scale from '../../../maths/vec3/scale.js'
+import subtract from '../../../maths/vec3/subtract.js'
 
 /*
  * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)
@@ -14,7 +14,7 @@ const subtract = require('../../../maths/vec3/subtract')
  * Adapted to JSCAD by Jeff Gay
  */
 
-const HalfEdge = require('./HalfEdge')
+import { HalfEdge } from './HalfEdge.js'
 
 const VISIBLE = 0
 const NON_CONVEX = 1
@@ -326,9 +326,10 @@ class Face {
   }
 }
 
-module.exports = {
+export {
   VISIBLE,
   NON_CONVEX,
   DELETED,
+
   Face
 }

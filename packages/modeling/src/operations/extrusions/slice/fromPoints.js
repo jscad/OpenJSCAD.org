@@ -1,6 +1,6 @@
-const vec3 = require('../../../maths/vec3')
+import * as vec3 from '../../../maths/vec3/index.js'
 
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Create a slice from the given points.
@@ -17,7 +17,7 @@ const create = require('./create')
  * ]
  * const slice = fromPoints(points)
  */
-const fromPoints = (points) => {
+export const fromPoints = (points) => {
   if (!Array.isArray(points)) throw new Error('the given points must be an array')
   if (points.length < 3) throw new Error('the given points must contain THREE or more points')
 
@@ -32,4 +32,4 @@ const fromPoints = (points) => {
   return create(edges)
 }
 
-module.exports = fromPoints
+export default fromPoints

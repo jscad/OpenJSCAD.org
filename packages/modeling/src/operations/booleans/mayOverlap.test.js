@@ -1,14 +1,14 @@
-const test = require('ava')
+import test from 'ava'
 
-const { EPS } = require('../../maths/constants')
+import { EPS } from '../../maths/constants.js'
 
-const { geom3 } = require('../../geometries')
+import { geom3 } from '../../geometries/index.js'
 
-const { cuboid } = require('../../primitives')
+import { cuboid } from '../../primitives/index.js'
 
-const mayOverlap = require('./mayOverlap')
+import { center } from '../transforms/center.js'
 
-const { center } = require('../transforms/center')
+import mayOverlap from './mayOverlap.js'
 
 test.only('mayOverlap: determination of overlap is reliable', (t) => {
   const geometry1 = center({ relativeTo: [0, 0, 0] }, cuboid({ size: [4, 4, 4] }))

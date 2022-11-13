@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { fromVec2, create } = require('./index')
+import { fromVec2, create } from './index.js'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('vec3: fromVec2() should return a new vec3 with correct values', (t) => {
   const obs1 = fromVec2(create(), [0, 0])

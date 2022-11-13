@@ -1,10 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const deserializer = require('../src/index.js')
-
-// deserializer
-
-// ################################
+import { deserialize } from '../src/index.js'
 
 test('deserialize issue 885', (t) => {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="5.791015625" height="11.71875">
@@ -12,12 +8,12 @@ test('deserialize issue 885', (t) => {
   </svg>`
 
   t.throws(() => {
-    deserializer.deserialize({ output: 'geometry' }, svg)
+    deserialize({ output: 'geometry' }, svg)
   }, { instanceOf: Error }, 'Malformed svg path at 2:445. Path closed itself with command #29: "Q2.12 -3.54 1.84 -3.17". to avoid this error use pathSelfClosed:\'split\' or pathSelfClosed:\'trim\' option')
 
-  let shapes = deserializer.deserialize({ output: 'geometry', pathSelfClosed: 'split' }, svg)
+  let shapes = deserialize({ output: 'geometry', pathSelfClosed: 'split' }, svg)
   t.is(shapes.length, 2)
 
-  shapes = deserializer.deserialize({ output: 'geometry', pathSelfClosed: 'trim' }, svg)
+  shapes = deserialize({ output: 'geometry', pathSelfClosed: 'trim' }, svg)
   t.is(shapes.length, 1)
 })

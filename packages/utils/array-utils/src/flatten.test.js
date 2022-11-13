@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { flatten } = require('./index')
+import { flatten } from './index.js'
 
 test('array-utils: flatten() should flatten arrays into an array', (t) => {
   let obs = flatten([1, 2, 3, 4])

@@ -3,9 +3,7 @@
  * In all cases, the function returns the results, and never changes the original shapes.
  * @module modeling/expansions
  * @example
- * const { expand, offset } = require('@jscad/modeling').expansions
+ * import { expand, offset } from '@jscad/modeling/expansions'
  */
-module.exports = {
-  expand: require('./expand'),
-  offset: require('./offset')
-}
+export { expand } from './expand.js'
+export { offset } from './offset.js'

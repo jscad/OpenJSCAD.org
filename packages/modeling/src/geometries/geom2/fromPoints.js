@@ -1,6 +1,6 @@
-const vec2 = require('../../maths/vec2')
+import * as vec2 from '../../maths/vec2/index.js'
 
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Create a new 2D geometry from the given points.
@@ -11,7 +11,7 @@ const create = require('./create')
  * @returns {geom2} a new geometry
  * @alias module:modeling/geometries/geom2.fromPoints
  */
-const fromPoints = (points) => {
+export const fromPoints = (points) => {
   if (!Array.isArray(points)) {
     throw new Error('the given points must be an array')
   }
@@ -32,4 +32,4 @@ const fromPoints = (points) => {
   return create(sides)
 }
 
-module.exports = fromPoints
+export default fromPoints

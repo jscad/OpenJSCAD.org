@@ -4,9 +4,7 @@
  * Note: Only ASCII characters are supported.
  * @module modeling/text
  * @example
- * const { vectorChar, vectorText } = require('@jscad/modeling').text
+ * import { vectorChar, vectorText } from '@jscad/modeling/text'
  */
-module.exports = {
-  vectorChar: require('./vectorChar'),
-  vectorText: require('./vectorText')
-}
+export { vectorChar } from './vectorChar.js'
+export { vectorText } from './vectorText.js'

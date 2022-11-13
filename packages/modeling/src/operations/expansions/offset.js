@@ -1,10 +1,10 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const geom2 = require('../../geometries/geom2')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
-const offsetGeom2 = require('./offsetGeom2')
-const offsetPath2 = require('./offsetPath2')
+import offsetGeom2 from './offsetGeom2.js'
+import offsetPath2 from './offsetPath2.js'
 
 /**
  * Create offset geometry from the given geometry using the given options.
@@ -20,7 +20,7 @@ const offsetPath2 = require('./offsetPath2')
  * @example
  * let small = offset({ delta: -4, corners: 'chamfer' }, square({size: 40})) // contract
  */
-const offset = (options, ...objects) => {
+export const offset = (options, ...objects) => {
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')
 
@@ -33,4 +33,4 @@ const offset = (options, ...objects) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = offset
+export default offset

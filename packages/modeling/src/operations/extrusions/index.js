@@ -3,13 +3,11 @@
  * In all cases, the function returns the results, and never changes the original shapes.
  * @module modeling/extrusions
  * @example
- * const { extrudeLinear, extrudeRectangular, extrudeRotate } = require('@jscad/modeling').extrusions
+ * import { extrudeLinear, extrudeRectangular, extrudeRotate } from '@jscad/modeling/extrusions'
  */
-module.exports = {
-  extrudeFromSlices: require('./extrudeFromSlices'),
-  extrudeLinear: require('./extrudeLinear'),
-  extrudeRectangular: require('./extrudeRectangular'),
-  extrudeRotate: require('./extrudeRotate'),
-  project: require('./project'),
-  slice: require('./slice')
-}
+export { extrudeFromSlices } from './extrudeFromSlices.js'
+export { extrudeLinear } from './extrudeLinear.js'
+export { extrudeRectangular } from './extrudeRectangular.js'
+export { extrudeRotate } from './extrudeRotate.js'
+export { project } from './project.js'
+export * as slice from './slice/index.js'

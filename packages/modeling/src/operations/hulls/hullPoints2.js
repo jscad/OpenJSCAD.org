@@ -1,4 +1,4 @@
-const vec2 = require('../../maths/vec2')
+import * as vec2 from '../../maths/vec2/index.js'
 
 /*
  * Create a convex hull of the given set of points, where each point is an array of [x,y].
@@ -6,7 +6,7 @@ const vec2 = require('../../maths/vec2')
  * @param {Array} uniquePoints - list of UNIQUE points from which to create a hull
  * @returns {Array} a list of points that form the hull
  */
-const hullPoints2 = (uniquePoints) => {
+export const hullPoints2 = (uniquePoints) => {
   // find min point
   let min = vec2.fromValues(Infinity, Infinity)
   uniquePoints.forEach((point) => {
@@ -56,4 +56,4 @@ const fakeAtan2 = (y, x) => {
   }
 }
 
-module.exports = hullPoints2
+export default hullPoints2

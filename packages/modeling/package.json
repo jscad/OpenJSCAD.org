@@ -4,11 +4,13 @@
   "description": "Constructive Solid Geometry (CSG) Library for JSCAD",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "type": "module",
   "main": "src/index.js",
   "types": "src/index.d.ts",
   "unpkg": "dist/jscad-modeling.min.js",
+  "module": "dist/jscad-modeling.es.js",
   "scripts": {
-    "build": "browserify src/index.js -o dist/jscad-modeling.min.js -g uglifyify --standalone jscadModeling",
+    "build": "rollup --config",
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
     "test:tsd": "tsd",
@@ -57,9 +59,9 @@
   },
   "devDependencies": {
     "ava": "4.3.3",
-    "browserify": "16.5.1",
     "nyc": "15.1.0",
-    "uglifyify": "5.0.2"
+    "rollup": "2.79.1",
+    "rollup-plugin-banner": "^0.2.1"
   },
   "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"
 }

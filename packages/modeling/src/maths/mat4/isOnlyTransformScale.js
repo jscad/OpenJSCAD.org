@@ -7,7 +7,7 @@
  * @returns {Boolean} true if matrix is for translate and/or scale
  * @alias module:modeling/maths/mat4.isOnlyTransformScale
  */
-const isOnlyTransformScale = (matrix) => (
+export const isOnlyTransformScale = (matrix) => (
 
   // TODO check if it is worth the effort to add recognition of 90 deg rotations
 
@@ -19,4 +19,4 @@ const isOnlyTransformScale = (matrix) => (
 
 const isZero = (num) => Math.abs(num) < Number.EPSILON
 
-module.exports = isOnlyTransformScale
+export default isOnlyTransformScale

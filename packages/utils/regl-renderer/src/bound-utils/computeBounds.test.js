@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const computeBounds = require('./computeBounds')
+import computeBounds from './computeBounds.js'
 
 test('computeBounds (geometry only)', (t) => {
   const input = {

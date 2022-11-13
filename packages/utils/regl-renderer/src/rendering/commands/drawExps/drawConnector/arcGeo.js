@@ -1,5 +1,5 @@
 
-const geoArc = (options) => {
+export const geoArc = (options) => {
   const geo = {
     positions: [],
     cells: [],
@@ -110,4 +110,4 @@ const createGeometry = (options, positions, cells, uvs) => {
   }
 }
 
-module.exports = geoArc
+export default geoArc

@@ -1,11 +1,11 @@
-const mat4 = require('gl-mat4')
+import mat4 from 'gl-mat4'
 
 /** function that injects most of the uniforms into the regl context:
  * ie keeps track of all regl global state.
  * @param  {} regl
  * @param  {} params={}
  */
-const renderWrapper = (regl, params = {}) => {
+export const renderWrapper = (regl, params = {}) => {
   const { fbo } = params
 
   const commandParams = {
@@ -45,4 +45,4 @@ const renderWrapper = (regl, params = {}) => {
   return regl(Object.assign({}, commandParams, params.extras))
 }
 
-module.exports = renderWrapper
+export default renderWrapper

@@ -1,6 +1,6 @@
-const rectangle = require('./rectangle')
+import rectangle from './rectangle.js'
 
-const { isGT } = require('./commonChecks')
+import { isGT } from './commonChecks.js'
 
 /**
  * Construct an axis-aligned square in two dimensional space with four equal sides at right angles.
@@ -14,7 +14,7 @@ const { isGT } = require('./commonChecks')
  * @example
  * let myshape = square({size: 10})
  */
-const square = (options) => {
+export const square = (options) => {
   const defaults = {
     center: [0, 0],
     size: 2
@@ -28,4 +28,4 @@ const square = (options) => {
   return rectangle({ center, size })
 }
 
-module.exports = square
+export default square

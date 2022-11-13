@@ -1,4 +1,4 @@
-const clone = require('./clone')
+import clone from './clone.js'
 
 /**
  * Reverses the path so that the points are in the opposite order.
@@ -10,11 +10,11 @@ const clone = require('./clone')
  * @example
  * let newpath = reverse(mypath)
  */
-const reverse = (geometry) => {
+export const reverse = (geometry) => {
   // NOTE: this only updates the order of the points
   const cloned = clone(geometry)
   cloned.points = geometry.points.slice().reverse()
   return cloned
 }
 
-module.exports = reverse
+export default reverse

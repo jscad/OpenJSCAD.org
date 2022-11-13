@@ -10,11 +10,11 @@
  * @returns {mat4} a new matrix
  * @alias module:modeling/maths/mat4.create
  */
-const create = () => [
+export const create = () => [
   1, 0, 0, 0,
   0, 1, 0, 0,
   0, 0, 1, 0,
   0, 0, 0, 1
 ]
 
-module.exports = create
+export default create

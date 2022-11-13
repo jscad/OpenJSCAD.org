@@ -1,7 +1,7 @@
-const vec2 = require('../vec2')
+import * as vec2 from '../vec2/index.js'
 
-const copy = require('./copy')
-const fromValues = require('./fromValues')
+import copy from './copy.js'
+import fromValues from './fromValues.js'
 
 /**
  * Create a new line in the opposite direction as the given.
@@ -11,10 +11,10 @@ const fromValues = require('./fromValues')
  * @returns {line2} out
  * @alias module:modeling/maths/line2.reverse
  */
-const reverse = (out, line) => {
+export const reverse = (out, line) => {
   const normal = vec2.negate(vec2.create(), line)
   const distance = -line[2]
   return copy(out, fromValues(normal[0], normal[1], distance))
 }
 
-module.exports = reverse
+export default reverse

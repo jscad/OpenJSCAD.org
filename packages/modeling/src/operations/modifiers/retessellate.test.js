@@ -1,10 +1,10 @@
-const test = require('ava')
+import test from 'ava'
 
-const { geom3 } = require('../../geometries')
+import { geom3 } from '../../geometries/index.js'
 
-const retessellate = require('./retessellate')
+import retessellate from './retessellate.js'
 
-const { comparePolygonsAsPoints } = require('../../../test/helpers')
+import { comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
 test('geom3: retessellate() should create proper geometry from empty geometries', (t) => {
   const obj1 = geom3.create()

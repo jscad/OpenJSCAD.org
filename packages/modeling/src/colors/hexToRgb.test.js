@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { hexToRgb } = require('./index')
+import { hexToRgb } from './index.js'
 
 test('hexToRgb (RGB notations)', (t) => {
   let obs = hexToRgb('#ff007f')

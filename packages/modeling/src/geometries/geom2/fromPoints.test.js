@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { fromPoints } = require('./index')
+import { fromPoints } from './index.js'
 
 test('fromPoints: creates populated geom2', (t) => {
   const points = [[0, 0], [1, 0], [0, 1]]

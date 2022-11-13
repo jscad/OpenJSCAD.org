@@ -1,12 +1,12 @@
-const test = require('ava')
+import test from 'ava'
 
-const { TAU } = require('../../maths/constants')
+import { TAU } from '../../maths/constants.js'
 
-const { geom2, geom3 } = require('../../geometries')
+import { geom2, geom3 } from '../../geometries/index.js'
 
-const { arc, rectangle } = require('../../primitives')
+import { arc, rectangle } from '../../primitives/index.js'
 
-const { extrudeRectangular } = require('./index')
+import { extrudeRectangular } from './index.js'
 
 test('extrudeRectangular (defaults)', (t) => {
   const geometry1 = arc({ radius: 5, endAngle: TAU / 4, segments: 16 })

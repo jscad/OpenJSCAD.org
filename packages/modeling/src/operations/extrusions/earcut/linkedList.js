@@ -1,4 +1,4 @@
-const sortLinked = require('./linkedListSort')
+import sortLinked from './linkedListSort.js'
 
 class Node {
   constructor (i, x, y) {
@@ -55,4 +55,9 @@ const removeNode = (p) => {
   if (p.nextZ) p.nextZ.prevZ = p.prevZ
 }
 
-module.exports = { Node, insertNode, removeNode, sortLinked }
+export {
+  Node,
+  insertNode,
+  removeNode,
+  sortLinked
+}

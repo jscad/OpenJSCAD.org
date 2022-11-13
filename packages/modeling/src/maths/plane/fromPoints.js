@@ -1,4 +1,4 @@
-const vec3 = require('../vec3')
+import * as vec3 from '../vec3/index.js'
 
 /**
  * Create a plane from the given points.
@@ -8,7 +8,7 @@ const vec3 = require('../vec3')
  * @returns {plane} out
  * @alias module:modeling/maths/plane.fromPoints
  */
-const fromPoints = (out, ...vertices) => {
+export const fromPoints = (out, ...vertices) => {
   const len = vertices.length
 
   // Calculate normal vector for a single vertex
@@ -44,4 +44,4 @@ const fromPoints = (out, ...vertices) => {
   return out
 }
 
-module.exports = fromPoints
+export default fromPoints

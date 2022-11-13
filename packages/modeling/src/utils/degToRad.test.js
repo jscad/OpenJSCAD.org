@@ -1,8 +1,8 @@
-const test = require('ava')
+import test from 'ava'
 
-const { TAU } = require('../maths/constants')
+import { TAU } from '../maths/constants.js'
 
-const { degToRad } = require('./index')
+import { degToRad } from './index.js'
 
 test('utils: degToRad() should return correct values', (t) => {
   const obs1 = degToRad(0)

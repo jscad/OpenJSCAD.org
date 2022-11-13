@@ -1,6 +1,6 @@
-const vec3 = require('../vec3')
+import * as vec3 from '../vec3/index.js'
 
-const fromPointAndDirection = require('./fromPointAndDirection')
+import fromPointAndDirection from './fromPointAndDirection.js'
 
 /**
  * Transforms the given line using the given matrix.
@@ -11,7 +11,7 @@ const fromPointAndDirection = require('./fromPointAndDirection')
  * @returns {line3} a new unbounded line
  * @alias module:modeling/maths/line3.transform
  */
-const transform = (out, line, matrix) => {
+export const transform = (out, line, matrix) => {
   const point = line[0]
   const direction = line[1]
   const pointPlusDirection = vec3.add(vec3.create(), point, direction)
@@ -23,4 +23,4 @@ const transform = (out, line, matrix) => {
   return fromPointAndDirection(out, newpoint, newdirection)
 }
 
-module.exports = transform
+export default transform

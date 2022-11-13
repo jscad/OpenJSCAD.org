@@ -6,11 +6,11 @@ Copyright (c) 2017-2019 Z3 Development https://github.com/z3dev
 All code released under MIT license
 
 */
-const { maths, geometries } = require('@jscad/modeling')
+import { maths, geometries } from '@jscad/modeling'
 
-const { instantiatePolygon, instantiateVector } = require('./instantiate')
+import { instantiatePolygon, instantiateVector } from './instantiate.js'
 
-const { findLayer, getColor, getColorNumber } = require('./helpers')
+import { findLayer, getColor, getColorNumber } from './helpers.js'
 
 //
 // translate the give 2D vector to JSCAD script
@@ -685,7 +685,7 @@ const saveVariable = (obj, options) => {
   }
 }
 
-const translateAsciiDxf = (reader, options) => {
+export const translateAsciiDxf = (reader, options) => {
   // console.log('**************************************************')
   // console.log(JSON.stringify(reader.objstack))
   // console.log('**************************************************')
@@ -867,4 +867,4 @@ function createPolygon(listofpoints, color) {
   return script
 }
 
-module.exports = translateAsciiDxf
+export default translateAsciiDxf

@@ -1,4 +1,4 @@
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Creates a new line initialized with the given values.
@@ -9,7 +9,7 @@ const create = require('./create')
  * @returns {line2} a new unbounded line
  * @alias module:modeling/maths/line2.fromValues
  */
-const fromValues = (x, y, d) => {
+export const fromValues = (x, y, d) => {
   const out = create()
   out[0] = x
   out[1] = y
@@ -17,4 +17,4 @@ const fromValues = (x, y, d) => {
   return out
 }
 
-module.exports = fromValues
+export default fromValues

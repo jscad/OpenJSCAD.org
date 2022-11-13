@@ -10,6 +10,6 @@
  * @returns {vec4} a new vector
  * @alias module:modeling/maths/vec4.create
  */
-const create = () => [0, 0, 0, 0]
+export const create = () => [0, 0, 0, 0]
 
-module.exports = create
+export default create

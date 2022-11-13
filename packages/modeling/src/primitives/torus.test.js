@@ -1,12 +1,14 @@
-const test = require('ava')
+import test from 'ava'
 
-const geom3 = require('../geometries/geom3')
-const measureBoundingBox = require('../measurements/measureBoundingBox')
-const { TAU } = require('../maths/constants')
+import { TAU } from '../maths/constants.js'
 
-const comparePoints = require('../../test/helpers/comparePoints')
+import { geom3 } from '../geometries/index.js'
 
-const { torus } = require('./index')
+import { measureBoundingBox } from '../measurements/index.js'
+
+import { torus } from './index.js'
+
+import { comparePoints } from '../../test/helpers/index.js'
 
 test('torus (defaults)', (t) => {
   const obs = torus()

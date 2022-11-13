@@ -1,12 +1,12 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
-const path2 = require('../../geometries/path2')
+import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
+import * as path2 from '../../geometries/path2/index.js'
 
-const measureBoundingBox = require('../../measurements/measureBoundingBox')
+import measureBoundingBox from '../../measurements/measureBoundingBox.js'
 
-const { translate } = require('./translate')
+import { translate } from './translate.js'
 
 const centerGeometry = (options, object) => {
   const defaults = {
@@ -35,7 +35,7 @@ const centerGeometry = (options, object) => {
  * @example
  * let myshape = center({axes: [true,false,false]}, sphere()) // center about the X axis
  */
-const center = (options, ...objects) => {
+export const center = (options, ...objects) => {
   const defaults = {
     axes: [true, true, true],
     relativeTo: [0, 0, 0]
@@ -64,7 +64,7 @@ const center = (options, ...objects) => {
  * @return {Object|Array} the centered object, or a list of centered objects
  * @alias module:modeling/transforms.centerX
  */
-const centerX = (...objects) => center({ axes: [true, false, false] }, objects)
+export const centerX = (...objects) => center({ axes: [true, false, false] }, objects)
 
 /**
  * Center the given objects about the Y axis.
@@ -72,7 +72,7 @@ const centerX = (...objects) => center({ axes: [true, false, false] }, objects)
  * @return {Object|Array} the centered object, or a list of centered objects
  * @alias module:modeling/transforms.centerY
  */
-const centerY = (...objects) => center({ axes: [false, true, false] }, objects)
+export const centerY = (...objects) => center({ axes: [false, true, false] }, objects)
 
 /**
  * Center the given objects about the Z axis.
@@ -80,11 +80,4 @@ const centerY = (...objects) => center({ axes: [false, true, false] }, objects)
  * @return {Object|Array} the centered object, or a list of centered objects
  * @alias module:modeling/transforms.centerZ
  */
-const centerZ = (...objects) => center({ axes: [false, false, true] }, objects)
-
-module.exports = {
-  center,
-  centerX,
-  centerY,
-  centerZ
-}
+export const centerZ = (...objects) => center({ axes: [false, false, true] }, objects)

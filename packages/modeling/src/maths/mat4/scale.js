@@ -7,7 +7,7 @@
  * @returns {mat4} out
  * @alias module:modeling/maths/mat4.scale
  */
-const scale = (out, matrix, dimensions) => {
+export const scale = (out, matrix, dimensions) => {
   const x = dimensions[0]
   const y = dimensions[1]
   const z = dimensions[2]
@@ -31,4 +31,4 @@ const scale = (out, matrix, dimensions) => {
   return out
 }
 
-module.exports = scale
+export default scale

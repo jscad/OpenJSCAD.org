@@ -1,7 +1,8 @@
-const test = require('ava')
-const { scale, fromValues } = require('./index')
+import test from 'ava'
 
-const { compareVectors } = require('../../../test/helpers/index')
+import { scale, fromValues } from './index.js'
+
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('vec3: scale() called with three parameters should update a vec3 with correct values', (t) => {
   const obs1 = fromValues(0, 0, 0)

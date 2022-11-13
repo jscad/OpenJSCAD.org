@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { clone, create, fromPoints } = require('./index')
+import { clone, create, fromPoints } from './index.js'
 
 test('clone: Creates a clone on an empty geom2', (t) => {
   const expected = {

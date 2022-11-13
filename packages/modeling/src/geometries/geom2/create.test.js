@@ -1,6 +1,6 @@
-const test = require('ava')
+import test from 'ava'
 
-const { create } = require('./index')
+import { create } from './index.js'
 
 test('create: Creates an empty geom2', (t) => {
   const expected = {

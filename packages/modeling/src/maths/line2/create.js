@@ -15,6 +15,6 @@
  * @returns {line2} a new unbounded line
  * @alias module:modeling/maths/line2.create
  */
-const create = () => [0, 1, 0] // normal and distance
+export const create = () => [0, 1, 0] // normal and distance
 
-module.exports = create
+export default create

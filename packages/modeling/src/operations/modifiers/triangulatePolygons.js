@@ -1,5 +1,6 @@
-const vec3 = require('../../maths/vec3')
-const poly3 = require('../../geometries/poly3')
+import * as vec3 from '../../maths/vec3/index.js'
+
+import * as poly3 from '../../geometries/poly3/index.js'
 
 const triangulatePolygon = (epsilon, polygon, triangles) => {
   const nv = polygon.vertices.length
@@ -34,7 +35,7 @@ const triangulatePolygon = (epsilon, polygon, triangles) => {
  * Convert the given polygons into a list of triangles (polygons with 3 vertices).
  * NOTE: this is possible because poly3 is CONVEX by definition
  */
-const triangulatePolygons = (epsilon, polygons) => {
+export const triangulatePolygons = (epsilon, polygons) => {
   const triangles = []
   polygons.forEach((polygon) => {
     triangulatePolygon(epsilon, polygon, triangles)
@@ -42,4 +43,4 @@ const triangulatePolygons = (epsilon, polygons) => {
   return triangles
 }
 
-module.exports = triangulatePolygons
+export default triangulatePolygons

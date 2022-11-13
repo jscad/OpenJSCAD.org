@@ -1,9 +1,8 @@
-const { geometries, primitives } = require('@jscad/modeling')
+import { geometries, primitives } from '@jscad/modeling'
 
-const { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect } = require('./helpers')
-// const { cssPxUnit } = require('./constants')
+import { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect } from './helpers.js'
 
-const shapesMapGeometry = (obj, objectify, params) => {
+export const shapesMapGeometry = (obj, objectify, params) => {
   const { svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, target, segments, pathSelfClosed } = params
 
   const types = {
@@ -149,8 +148,6 @@ const shapesMapGeometry = (obj, objectify, params) => {
 
   return types[obj.type](obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, segments)
 }
-
-module.exports = shapesMapGeometry
 
 const appendPoints = (points, geometry) => {
   if (geometry) return geometries.path2.appendPoints(points, geometry)
@@ -446,3 +443,5 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
   }
   return paths
 }
+
+export default shapesMapGeometry

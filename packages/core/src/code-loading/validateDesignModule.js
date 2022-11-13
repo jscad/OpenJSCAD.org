@@ -1,4 +1,4 @@
-const validateDesignModule = (scriptRootModule) => {
+export const validateDesignModule = (scriptRootModule) => {
   if (!scriptRootModule) {
     throw new Error('undefined root module passed !')
   }
@@ -10,4 +10,4 @@ const validateDesignModule = (scriptRootModule) => {
   }
 }
 
-module.exports = validateDesignModule
+export default validateDesignModule

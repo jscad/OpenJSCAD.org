@@ -1,5 +1,6 @@
-const poly3 = require('../poly3')
-const isA = require('./isA')
+import * as poly3 from '../poly3/index.js'
+
+import isA from './isA.js'
 
 /**
  * Determine if the given object is a valid 3D geometry.
@@ -11,7 +12,7 @@ const isA = require('./isA')
  * @throws {Error} error if the geometry is not valid
  * @alias module:modeling/geometries/geom3.validate
  */
-const validate = (object) => {
+export const validate = (object) => {
   if (!isA(object)) {
     throw new Error('invalid geom3 structure')
   }
@@ -59,4 +60,4 @@ const validateManifold = (object) => {
   }
 }
 
-module.exports = validate
+export default validate

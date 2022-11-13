@@ -2,7 +2,7 @@
  * AutoCAD 2017 2018 Color Index (1-255) as RGB + ALPHA colors
  */
 
-const colorIndex = [
+export const colorIndex = [
   [0, 0, 0, 255], // index 0, added for easy maintenance
   // 1
   [255, 0, 0, 255],
@@ -287,4 +287,4 @@ const colorIndex = [
   [255, 255, 255, 255]
 ]
 
-module.exports = colorIndex
+export default colorIndex

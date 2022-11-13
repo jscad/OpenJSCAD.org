@@ -1,4 +1,4 @@
-const defaultFont = require('./fonts/single-line/hershey/simplex.js')
+import defaultFont from './fonts/single-line/hershey/simplex.js'
 
 const defaultsVectorParams = {
   xOffset: 0,
@@ -13,7 +13,7 @@ const defaultsVectorParams = {
 }
 
 // vectorsXXX parameters handler
-const vectorParams = (options, input) => {
+export const vectorParams = (options, input) => {
   if (!input && typeof options === 'string') {
     options = { input: options }
   }
@@ -23,4 +23,4 @@ const vectorParams = (options, input) => {
   return params
 }
 
-module.exports = vectorParams
+export default vectorParams

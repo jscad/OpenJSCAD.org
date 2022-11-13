@@ -1,10 +1,10 @@
-const flatten = require('../../utils/flatten')
+import flatten from '../../utils/flatten.js'
 
-// const geom2 = require('../../geometries/geom2')
-const geom3 = require('../../geometries/geom3')
+// import geom2 from '../../geometries/geom2'
+import * as geom3 from '../../geometries/geom3/index.js'
 
-// const scissionGeom2 = require('./scissionGeom2')
-const scissionGeom3 = require('./scissionGeom3')
+// import scissionGeom2 from './scissionGeom2'
+import scissionGeom3 from './scissionGeom3.js'
 
 /**
  * Scission (divide) the given geometry into the component pieces.
@@ -14,7 +14,7 @@ const scissionGeom3 = require('./scissionGeom3')
  * @alias module:modeling/booleans.scission
  *
  * @example
- * let figure = require('./my.stl')
+ * let figure = use('./my.stl')
  * let pieces = scission(figure)
  *
  * @example
@@ -27,7 +27,7 @@ const scissionGeom3 = require('./scissionGeom3')
  *      |       |            |    B  |
  *      +-------+            +-------+
  */
-const scission = (...objects) => {
+export const scission = (...objects) => {
   objects = flatten(objects)
   if (objects.length === 0) throw new Error('wrong number of arguments')
 
@@ -40,4 +40,4 @@ const scission = (...objects) => {
   return results.length === 1 ? results[0] : results
 }
 
-module.exports = scission
+export default scission
