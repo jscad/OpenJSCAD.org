@@ -9,6 +9,7 @@ const geom2 = require('../../geometries/geom2')
  *
  * @param {Object} options - options for extrusion
  * @param {Number} [options.angle=TAU] - angle of the extrusion (RADIANS) positive for right-hand rotation, negative for left-hand
+ * @param {Number} [options.startAngle=0] - start angle of the extrusion (RADIANS)
  * @param {Number} [options.pitch=10] - elevation gain for each turn
  * @param {Number} [options.endRadiusOffset=0] - offset the final radius of the extrusion, allowing for tapered helix, and or spiral
  * @param {Number} [options.segments=32] - number of segments of the extrusion
@@ -29,6 +30,7 @@ const geom2 = require('../../geometries/geom2')
 const extrudeHelical = (options, geometry) => {
   const defaults = {
     angle: TAU,
+    startAngle: 0,
     pitch: 10,
     endRadiusOffset: 0,
     segments: 32
@@ -40,9 +42,9 @@ const extrudeHelical = (options, geometry) => {
   const baseSlice = slice.fromSides(geom2.toSides(geometry))
 
   const sliceCallback = (progress, index, base) => {
-    const zRotation = angle / segments * index
+    const zRotation = startAngle + angle / segments * index
     const xOffset = endRadiusOffset / segments * index
-    const zOffset = zRotation / TAU * pitch
+    const zOffset = (zRotation - startAngle) / TAU * pitch
 
     // TODO: check for valid geometry after translations
     // ie all the points have to be either x > -xOffset or x < -xOffset
