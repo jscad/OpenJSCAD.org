@@ -11,6 +11,7 @@ const geom2 = require('../../geometries/geom2')
  * @param {Number} [options.angle=TAU] - angle of the extrusion (RADIANS) positive for right-hand rotation, negative for left-hand
  * @param {Number} [options.startAngle=0] - start angle of the extrusion (RADIANS)
  * @param {Number} [options.pitch=10] - elevation gain for each turn
+ * @param {Number} [options.height] - total height of the helix path. Ignored if pitch is set.
  * @param {Number} [options.endRadiusOffset=0] - offset the final radius of the extrusion, allowing for tapered helix, and or spiral
  * @param {Number} [options.segments=32] - number of segments of the extrusion
  * @param {geom2} geometry - the geometry to extrude
@@ -35,7 +36,15 @@ const extrudeHelical = (options, geometry) => {
     endRadiusOffset: 0,
     segments: 32
   }
-  const { angle, pitch, endRadiusOffset, segments } = Object.assign({}, defaults, options)
+  const { angle, endRadiusOffset, segments, startAngle } = Object.assign({}, defaults, options)
+
+  let pitch
+  // ignore height if pitch is set
+  if(!options.pitch && options.height) {
+    pitch = options.height / (angle / TAU)
+  } else {
+    pitch = options.pitch ? options.pitch : defaults.pitch
+  }
 
   if (segments < 2) throw new Error('segments must be greater than 1')
 
