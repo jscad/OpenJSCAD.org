@@ -35,6 +35,8 @@ const extrudeHelical = (options, geometry) => {
   }
   const { angle, pitch, endRadiusOffset, segments } = Object.assign({}, defaults, options)
 
+  if (segments < 2) throw new Error('segments must be greater than 1')
+
   const baseSlice = slice.fromSides(geom2.toSides(geometry))
 
   const sliceCallback = (progress, index, base) => {
