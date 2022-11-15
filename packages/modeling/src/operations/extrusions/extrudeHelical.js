@@ -27,55 +27,55 @@ const geom2 = require('../../geometries/geom2')
  * )
  */
 const extrudeHelical = (options, geometry) => {
-    const defaults = {
-        angle: TAU,
-        pitch: 10,
-        endRadiusOffset: 0,
-        segments: 32
-    }
-    const { angle, pitch, endRadiusOffset, segments } = Object.assign({}, defaults, options)
+  const defaults = {
+    angle: TAU,
+    pitch: 10,
+    endRadiusOffset: 0,
+    segments: 32
+  }
+  const { angle, pitch, endRadiusOffset, segments } = Object.assign({}, defaults, options)
 
-    const baseSlice = slice.fromSides(geom2.toSides(geometry))
+  const baseSlice = slice.fromSides(geom2.toSides(geometry))
 
-    const sliceCallback = (progress, index, base) => {
-        const zRotation = angle / segments * index
-        const xOffset = endRadiusOffset / segments * index
-        const zOffset = zRotation / TAU * pitch
+  const sliceCallback = (progress, index, base) => {
+    const zRotation = angle / segments * index
+    const xOffset = endRadiusOffset / segments * index
+    const zOffset = zRotation / TAU * pitch
 
-        // TODO: check for valid geometry after translations
-        // ie all the points have to be either x > -xOffset or x < -xOffset
-        // this would have to be checked for every transform, and handled
-        //
-        // not implementing, as this currently doesn't break anything,
-        // only creates inside-out polygons
+    // TODO: check for valid geometry after translations
+    // ie all the points have to be either x > -xOffset or x < -xOffset
+    // this would have to be checked for every transform, and handled
+    //
+    // not implementing, as this currently doesn't break anything,
+    // only creates inside-out polygons
 
-        // create transformation matrix
-        const step1 = mat4.create()
-        mat4.multiply(
-            step1,
-            // then apply offsets
-            mat4.fromTranslation(mat4.create(), [xOffset, 0, zOffset]),
-            // first rotate "flat" 2D shape from XY to XZ plane
-            mat4.fromXRotation(mat4.create(), -TAU / 4) // putting TAU/4 here creates inside-out polygon
-        )
-        
-        const matrix = mat4.create()
-        mat4.multiply(
-            matrix,
-            // finally rotate around Z axis
-            mat4.fromZRotation(mat4.create(), zRotation),
-            step1
-        )
-        return slice.transform(matrix, base)
-    }
-
-    return extrudeFromSlices(
-        {
-            numberOfSlices: segments,
-            callback: sliceCallback
-        },
-        baseSlice
+    // create transformation matrix
+    const step1 = mat4.create()
+    mat4.multiply(
+      step1,
+      // then apply offsets
+      mat4.fromTranslation(mat4.create(), [xOffset, 0, zOffset]),
+      // first rotate "flat" 2D shape from XY to XZ plane
+      mat4.fromXRotation(mat4.create(), -TAU / 4) // putting TAU/4 here creates inside-out polygon
     )
+
+    const matrix = mat4.create()
+    mat4.multiply(
+      matrix,
+      // finally rotate around Z axis
+      mat4.fromZRotation(mat4.create(), zRotation),
+      step1
+    )
+    return slice.transform(matrix, base)
+  }
+
+  return extrudeFromSlices(
+    {
+      numberOfSlices: segments,
+      callback: sliceCallback
+    },
+    baseSlice
+  )
 }
 
 module.exports = extrudeHelical
