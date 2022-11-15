@@ -12,7 +12,6 @@ test('extrudeHelical: (defaults) extruding of a geom2 produces an expected geom3
     const geometry3 = extrudeHelical({}, geometry2)
     const pts = geom3.toPoints(geometry3)
     t.notThrows(() => geom3.validate(geometry3))
-    t.is(pts.length, 252)
 })
 
 test('extrudeHelical: (defaults) extruding of a circle produces an expected geom3', (t) => {
