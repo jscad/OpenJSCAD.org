@@ -71,7 +71,8 @@ const extrudeHelical = (options, geometry) => {
 
   return extrudeFromSlices(
     {
-      numberOfSlices: segments,
+      // "base" slice is counted as segment, so add one for complete final rotation
+      numberOfSlices: segments + 1,
       callback: sliceCallback
     },
     baseSlice
