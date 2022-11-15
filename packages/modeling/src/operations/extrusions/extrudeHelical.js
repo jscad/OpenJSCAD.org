@@ -12,7 +12,7 @@ const geom2 = require('../../geometries/geom2')
  * @param {Number} [options.startAngle=0] - start angle of the extrusion (RADIANS)
  * @param {Number} [options.pitch=10] - elevation gain for each turn
  * @param {Number} [options.height] - total height of the helix path. Ignored if pitch is set.
- * @param {Number} [options.endRadiusOffset=0] - offset the final radius of the extrusion, allowing for tapered helix, and or spiral
+ * @param {Number} [options.endOffset=0] - offset the final radius of the extrusion, allowing for tapered helix, and or spiral
  * @param {Number} [options.segments=32] - number of segments of the extrusion
  * @param {geom2} geometry - the geometry to extrude
  * @returns {geom3} the extruded geometry
@@ -33,10 +33,10 @@ const extrudeHelical = (options, geometry) => {
     angle: TAU,
     startAngle: 0,
     pitch: 10,
-    endRadiusOffset: 0,
+    endOffset: 0,
     segments: 32
   }
-  const { angle, endRadiusOffset, segments, startAngle } = Object.assign({}, defaults, options)
+  const { angle, endOffset, segments, startAngle } = Object.assign({}, defaults, options)
 
   let pitch
   // ignore height if pitch is set
@@ -52,7 +52,7 @@ const extrudeHelical = (options, geometry) => {
 
   const sliceCallback = (progress, index, base) => {
     const zRotation = startAngle + angle / segments * index
-    const xOffset = endRadiusOffset / segments * index
+    const xOffset = endOffset / segments * index
     const zOffset = (zRotation - startAngle) / TAU * pitch
 
     // TODO: check for valid geometry after translations
