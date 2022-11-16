@@ -52,7 +52,7 @@ test('extrudeHelical: (endRadiusOffset) extruding of a circle produces an expect
 })
 
 test('extrudeHelical: (segments) extruding of a circle produces an expected geom3', (t) => {
-    const startSegments = 2
+    const startSegments = 3
     const geometry2 = circle({ size: 3, center: [10, 0] })
     for (const index of [...Array(30).keys()]) {
         // also test negative pitches
