@@ -46,7 +46,11 @@ const extrudeHelical = (options, geometry) => {
     pitch = options.pitch ? options.pitch : defaults.pitch
   }
 
-  if (segments < 2) throw new Error('segments must be greater than 1')
+  // needs at least 3 segments for each revolution
+  const minNumberOfSegments = Math.ceil(angle / TAU) * 3
+
+  if (segments < minNumberOfSegments)
+    throw new Error(`For a rotation of ${angle - startAngle} radians there need to be at least ${minNumberOfSegments} segments.`)
 
   const baseSlice = slice.fromSides(geom2.toSides(geometry))
 
