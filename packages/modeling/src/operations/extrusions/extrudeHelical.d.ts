@@ -4,8 +4,10 @@ export default extrudeHelical
 
 export interface ExtrudeHelicalOptions {
   angle?: number
+  startAngle?: number
   pitch?: number
-  endRadiusOffset?: number
+  height?: number
+  endOffset?: number
   segments?: number
 }
 
