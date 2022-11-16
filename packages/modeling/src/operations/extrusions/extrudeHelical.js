@@ -50,6 +50,10 @@ const extrudeHelical = (options, geometry) => {
 
   const baseSlice = slice.fromSides(geom2.toSides(geometry))
 
+
+  // define transform matrix variables for performance increase
+  let step1
+  let matrix
   const sliceCallback = (progress, index, base) => {
     const zRotation = startAngle + angle / segments * index
     const xOffset = endOffset / segments * index
@@ -63,7 +67,7 @@ const extrudeHelical = (options, geometry) => {
     // only creates inside-out polygons
 
     // create transformation matrix
-    const step1 = mat4.create()
+    step1 = mat4.create()
     mat4.multiply(
       step1,
       // then apply offsets
@@ -72,7 +76,7 @@ const extrudeHelical = (options, geometry) => {
       mat4.fromXRotation(mat4.create(), -TAU / 4) // putting TAU/4 here creates inside-out polygon
     )
 
-    const matrix = mat4.create()
+    matrix = mat4.create()
     mat4.multiply(
       matrix,
       // finally rotate around Z axis
