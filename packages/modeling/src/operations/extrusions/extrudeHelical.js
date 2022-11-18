@@ -53,8 +53,18 @@ const extrudeHelical = (options, geometry) => {
     throw new Error(`For a rotation of ${angle - startAngle} radians there need to be at least ${minNumberOfSegments} segments.
   Only ${segments} segments were specified.`)
 
-  const baseSlice = slice.fromSides(geom2.toSides(geometry))
+  let shapeSides = geom2.toSides(geometry)
+  if (shapeSides.length === 0) throw new Error('the given geometry cannot be empty')
 
+  // const pointsWithNegativeX = shapeSides.filter((s) => (s[0][0] < 0))
+  const pointsWithPositiveX = shapeSides.filter((s) => (s[0][0] >= 0))
+  
+  let baseSlice = slice.fromSides(shapeSides)
+  
+  if(pointsWithPositiveX.length === 0) {
+    // only points in negative x plane, reverse
+    baseSlice = slice.reverse(baseSlice)
+  }
 
   // define transform matrix variables for performance increase
   let step1
