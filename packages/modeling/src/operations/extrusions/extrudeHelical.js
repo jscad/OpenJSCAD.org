@@ -76,7 +76,7 @@ const extrudeHelical = (options, geometry) => {
     mat4.multiply(
       step1,
       // then apply offsets
-      mat4.fromTranslation(mat4.create(), [xOffset, 0, zOffset]),
+      mat4.fromTranslation(mat4.create(), [xOffset, 0, zOffset * Math.sign(angle)]),
       // first rotate "flat" 2D shape from XY to XZ plane
       mat4.fromXRotation(mat4.create(), -TAU / 4 * Math.sign(angle)) // rotate the slice correctly to not create inside-out polygon
     )
