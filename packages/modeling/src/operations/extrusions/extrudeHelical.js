@@ -13,7 +13,7 @@ const geom2 = require('../../geometries/geom2')
  * @param {Number} [options.pitch=10] - elevation gain for each turn
  * @param {Number} [options.height] - total height of the helix path. Ignored if pitch is set.
  * @param {Number} [options.endOffset=0] - offset the final radius of the extrusion, allowing for tapered helix, and or spiral
- * @param {Number} [options.segmentsPerRotation=32] - number of segments of the extrusion
+ * @param {Number} [options.segmentsPerRotation=32] - number of segments per full rotation of the extrusion
  * @param {geom2} geometry - the geometry to extrude
  * @returns {geom3} the extruded geometry
  * @alias module:modeling/extrusions.extrudeHelical
