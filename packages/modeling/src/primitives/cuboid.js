@@ -12,7 +12,7 @@ const { isNumberArray } = require('./commonChecks')
  * @alias module:modeling/primitives.cuboid
  *
  * @example
- * let myshape = cuboid(size: [5, 10, 5]})
+ * let myshape = cuboid({size: [5, 10, 5]})
  */
 const cuboid = (options) => {
   const defaults = {
