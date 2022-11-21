@@ -23,7 +23,7 @@ const geom2 = require('../../geometries/geom2')
  *  {
  *      angle: Math.PI * 4,
  *      pitch: 10,
- *      segments: 64
+ *      segmentsPerRotation: 64
  *  },
  *  circle({size: 3, center: [10, 0]})
  * )
