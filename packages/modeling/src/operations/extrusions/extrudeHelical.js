@@ -13,7 +13,7 @@ const geom2 = require('../../geometries/geom2')
  * @param {Number} [options.pitch=10] - elevation gain for each turn
  * @param {Number} [options.height] - total height of the helix path. Ignored if pitch is set.
  * @param {Number} [options.endOffset=0] - offset the final radius of the extrusion, allowing for tapered helix, and or spiral
- * @param {Number} [options.segments=32] - number of segments of the extrusion
+ * @param {Number} [options.segmentsPerRotation=32] - number of segments of the extrusion
  * @param {geom2} geometry - the geometry to extrude
  * @returns {geom3} the extruded geometry
  * @alias module:modeling/extrusions.extrudeHelical
@@ -34,9 +34,9 @@ const extrudeHelical = (options, geometry) => {
     startAngle: 0,
     pitch: 10,
     endOffset: 0,
-    segments: 32
+    segmentsPerRotation: 32
   }
-  const { angle, endOffset, segments, startAngle } = Object.assign({}, defaults, options)
+  const { angle, endOffset, segmentsPerRotation, startAngle } = Object.assign({}, defaults, options)
 
   let pitch
   // ignore height if pitch is set
@@ -47,11 +47,10 @@ const extrudeHelical = (options, geometry) => {
   }
 
   // needs at least 3 segments for each revolution
-  const minNumberOfSegments = Math.ceil(Math.abs(angle) / TAU) * 3
+  const minNumberOfSegments = 3
 
-  if (segments < minNumberOfSegments)
-    throw new Error(`For a rotation of ${angle - startAngle} radians there need to be at least ${minNumberOfSegments} segments.
-  Only ${segments} segments were specified.`)
+  if (segmentsPerRotation < minNumberOfSegments)
+    throw new Error(`The number of segments per rotation needs to be at least 3.`)
 
   let shapeSides = geom2.toSides(geometry)
   if (shapeSides.length === 0) throw new Error('the given geometry cannot be empty')
@@ -66,6 +65,8 @@ const extrudeHelical = (options, geometry) => {
     baseSlice = slice.reverse(baseSlice)
   }
 
+  const calculatedSegments = Math.round(segmentsPerRotation / TAU * Math.abs(angle))
+  const segments = calculatedSegments >= 2 ? calculatedSegments : 2
   // define transform matrix variables for performance increase
   let step1
   let matrix
