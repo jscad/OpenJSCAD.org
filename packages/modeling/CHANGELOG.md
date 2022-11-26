@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.11.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.10.0...@jscad/modeling@2.11.0) (2022-11-26)
+
+
+### Bug Fixes
+
+* **modeling:** added TS definitions for missing measurement functions ([acf79ca](https://github.com/jscad/OpenJSCAD.org/commit/acf79ca17223e37f49048b9960c9282dfdf72327))
+
+
+### Features
+
+* **modeling:** added extrudeHelical ([#1164](https://github.com/jscad/OpenJSCAD.org/issues/1164)) ([a202bc9](https://github.com/jscad/OpenJSCAD.org/commit/a202bc94e4e79ac1d1034dc0d9d1854ff19de84d))
+
+
+
+
+
 # [2.10.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.9.6...@jscad/modeling@2.10.0) (2022-08-21)
 
 

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.6.3...@jscad/regl-renderer@2.6.4) (2022-11-26)
+
+**Note:** Version bump only for package @jscad/regl-renderer
+
+
+
+
+
 ## [2.6.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.6.2...@jscad/regl-renderer@2.6.3) (2022-08-21)
 
 **Note:** Version bump only for package @jscad/regl-renderer
