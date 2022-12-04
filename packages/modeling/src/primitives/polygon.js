@@ -58,13 +58,13 @@ export const polygon = (options) => {
   const allpoints = []
   listofpolys.forEach((list) => list.forEach((point) => allpoints.push(point)))
 
-  let sides = []
+  let outlines = []
   listofpaths.forEach((path) => {
     const setofpoints = path.map((index) => allpoints[index])
     const geometry = geom2.fromPoints(setofpoints)
-    sides = sides.concat(geom2.toSides(geometry))
+    outlines = outlines.concat(geometry.outlines)
   })
-  return geom2.create(sides)
+  return geom2.create(outlines)
 }
 
 export default polygon

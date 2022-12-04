@@ -5,13 +5,18 @@
  * @alias module:modeling/geometries/geom2.toCompactBinary
  */
 export const toCompactBinary = (geometry) => {
-  const sides = geometry.sides
   const transforms = geometry.transforms
   let color = [-1, -1, -1, -1]
   if (geometry.color) color = geometry.color
 
+  // Compute array size
+  let size = 21
+  geometry.outlines.forEach((outline) => {
+    size += 2 * outline.length + 1
+  })
+
   // FIXME why Float32Array?
-  const compacted = new Float32Array(1 + 16 + 4 + (sides.length * 4)) // type + transforms + color + sides data
+  const compacted = new Float32Array(size) // type + transforms + color + vertex data
 
   compacted[0] = 0 // type code: 0 => geom2, 1 => geom3 , 2 => path2
 
@@ -37,15 +42,15 @@ export const toCompactBinary = (geometry) => {
   compacted[19] = color[2]
   compacted[20] = color[3]
 
-  for (let i = 0; i < sides.length; i++) {
-    const ci = i * 4 + 21
-    const point0 = sides[i][0]
-    const point1 = sides[i][1]
-    compacted[ci + 0] = point0[0]
-    compacted[ci + 1] = point0[1]
-    compacted[ci + 2] = point1[0]
-    compacted[ci + 3] = point1[1]
-  }
+  let index = 21
+  geometry.outlines.forEach((outline) => {
+    compacted[index++] = outline.length
+    outline.forEach((point) => {
+      compacted[index++] = point[0]
+      compacted[index++] = point[1]
+    })
+  })
+
   // TODO: how about custom properties or fields ?
   return compacted
 }

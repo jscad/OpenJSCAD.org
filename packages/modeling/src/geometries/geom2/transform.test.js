@@ -15,39 +15,32 @@ test('transform: adjusts the transforms of geom2', (t) => {
 
   // expect lazy transform, i.e. only the transforms change
   const expected = {
-    sides: [[[0, 1], [0, 0]], [[0, 0], [1, 0]], [[1, 0], [0, 1]]],
+    outlines: [[[0, 0], [1, 0], [0, 1]]],
     transforms: [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   const geometry = fromPoints(points)
   let another = transform(rotate90, geometry)
   t.not(geometry, another)
-  t.true(comparePoints(another.sides[0], expected.sides[0]))
-  t.true(comparePoints(another.sides[1], expected.sides[1]))
-  t.true(comparePoints(another.sides[2], expected.sides[2]))
+  t.true(comparePoints(another.outlines[0], expected.outlines[0]))
   t.true(compareVectors(another.transforms, expected.transforms))
 
   // expect lazy transform, i.e. only the transforms change
   expected.transforms = [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 5, 10, 15, 1]
   another = transform(mat4.fromTranslation(mat4.create(), [5, 10, 15]), another)
-  t.true(comparePoints(another.sides[0], expected.sides[0]))
-  t.true(comparePoints(another.sides[1], expected.sides[1]))
-  t.true(comparePoints(another.sides[2], expected.sides[2]))
+  t.true(comparePoints(another.outlines[0], expected.outlines[0]))
   t.true(compareVectors(another.transforms, expected.transforms))
 
   // expect application of the transforms to the sides
-  expected.sides = [[[4, 10], [5, 10]], [[5, 10], [5, 11]], [[5, 11], [4, 10]]]
-  expected.transforms = mat4.create()
-  toSides(another)
-  t.true(comparePoints(another.sides[0], expected.sides[0]))
-  t.true(comparePoints(another.sides[1], expected.sides[1]))
-  t.true(comparePoints(another.sides[2], expected.sides[2]))
-  t.true(compareVectors(another.transforms, expected.transforms))
+  expectedSides = [[[5, 10], [5, 11]], [[5, 11], [4, 10]], [[4, 10], [5, 10]]]
+  const sides = toSides(another)
+  t.true(comparePoints(sides[0], expectedSides[0]))
+  t.true(comparePoints(sides[1], expectedSides[1]))
+  t.true(comparePoints(sides[2], expectedSides[2]))
 
   // expect lazy transform, i.e. only the transforms change
   expected.transforms = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 10, 15, 1]
+  another.outlines = [[[0, 0], [1, 0], [0, 1]]]
   another = transform(mat4.fromTranslation(mat4.create(), [5, 10, 15]), another)
-  t.true(comparePoints(another.sides[0], expected.sides[0]))
-  t.true(comparePoints(another.sides[1], expected.sides[1]))
-  t.true(comparePoints(another.sides[2], expected.sides[2]))
+  t.true(comparePoints(another.outlines[0], expected.outlines[0]))
   t.true(compareVectors(another.transforms, expected.transforms))
 })

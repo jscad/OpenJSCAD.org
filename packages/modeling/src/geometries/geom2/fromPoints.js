@@ -20,16 +20,9 @@ export const fromPoints = (points) => {
     throw new Error('the given points must define a closed geometry with three or more points')
   }
   // adjust length if the given points are closed by the same point
-  if (vec2.equals(points[0], points[length - 1])) --length
+  if (vec2.equals(points[0], points[length - 1])) points.length--
 
-  const sides = []
-  let prevpoint = points[length - 1]
-  for (let i = 0; i < length; i++) {
-    const point = points[i]
-    sides.push([vec2.clone(prevpoint), vec2.clone(point)])
-    prevpoint = point
-  }
-  return create(sides)
+  return create([points])
 }
 
 export default fromPoints

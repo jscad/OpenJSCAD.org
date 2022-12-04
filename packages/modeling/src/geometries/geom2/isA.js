@@ -6,8 +6,8 @@
  */
 export const isA = (object) => {
   if (object && typeof object === 'object') {
-    if ('sides' in object && 'transforms' in object) {
-      if (Array.isArray(object.sides) && 'length' in object.transforms) {
+    if ('outlines' in object && 'transforms' in object) {
+      if (Array.isArray(object.outlines) && 'length' in object.transforms) {
         return true
       }
     }

@@ -4,7 +4,7 @@ import { clone, create, fromPoints } from './index.js'
 
 test('clone: Creates a clone on an empty geom2', (t) => {
   const expected = {
-    sides: [],
+    outlines: [],
     transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   const geometry = create()
@@ -16,7 +16,7 @@ test('clone: Creates a clone on an empty geom2', (t) => {
 test('clone: Creates a clone of a complete geom2', (t) => {
   const points = [[0, 0], [1, 0], [0, 1]]
   const expected = {
-    sides: [[[0, 1], [0, 0]], [[0, 0], [1, 0]], [[1, 0], [0, 1]]],
+    outlines: [[[0, 0], [1, 0], [0, 1]]],
     transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   const geometry = fromPoints(points)

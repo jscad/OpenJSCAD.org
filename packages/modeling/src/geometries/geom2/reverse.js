@@ -1,5 +1,4 @@
-import create from './create.js'
-import toSides from './toSides.js'
+import clone from './clone.js'
 
 /**
  * Reverses the given geometry so that the sides are flipped in the opposite order.
@@ -12,11 +11,9 @@ import toSides from './toSides.js'
  * let newgeometry = reverse(geometry)
  */
 export const reverse = (geometry) => {
-  const oldsides = toSides(geometry)
-
-  const newsides = oldsides.map((side) => [side[1], side[0]])
-  newsides.reverse() // is this required?
-  return create(newsides)
+  const reversed = clone(geometry)
+  reversed.outlines.forEach((outline) => outline.reverse())
+  return reversed
 }
 
 export default reverse
