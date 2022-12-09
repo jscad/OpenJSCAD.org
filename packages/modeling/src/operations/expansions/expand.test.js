@@ -78,7 +78,6 @@ test('expand: expanding of a geom2 produces expected changes to points', (t) => 
   const obs = expand({ delta: 2, corners: 'round', segments: 8 }, geometry)
   const pts = geom2.toPoints(obs)
   const exp = [
-    [-9.414213562373096, -9.414213562373096],
     [-8, -10],
     [8, -10],
     [9.414213562373096, -9.414213562373096],
@@ -89,7 +88,8 @@ test('expand: expanding of a geom2 produces expected changes to points', (t) => 
     [-8, 10],
     [-9.414213562373096, 9.414213562373096],
     [-10, 8],
-    [-10, -8]
+    [-10, -8],
+    [-9.414213562373096, -9.414213562373096]
   ]
   t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 12)
@@ -134,7 +134,7 @@ test('expand: expanding of a geom3 produces expected changes to polygons', (t) =
 })
 
 test('expand (options): offsetting of a complex geom2 produces expected offset geom2', (t) => {
-  const geometry = geom2.create([
+  const geometry = geom2.fromSides([
     [[-75, 75], [-75, -75]],
     [[-75, -75], [75, -75]],
     [[75, -75], [75, 75]],
@@ -161,26 +161,26 @@ test('expand (options): offsetting of a complex geom2 produces expected offset g
   const obs = expand({ delta: 2, corners: 'edge' }, geometry)
   const pts = geom2.toPoints(obs)
   const exp = [
-    [77, -77],
     [77, 77],
     [38, 77],
     [38, 2],
     [-38, 2],
     [-37.99999999999999, 77],
     [-77, 77],
-    [16.999999999999996, -42],
-    [6, -42],
+    [-77, -77],
+    [77, -77],
     [6, -27],
     [-6, -27],
     [-6.000000000000001, -42],
     [-17, -42],
     [-16.999999999999996, -8],
     [17, -8.000000000000004],
-    [-4, -21],
-    [3.9999999999999996, -21],
+    [16.999999999999996, -42],
+    [6, -42],
     [4, -13],
     [-4, -13],
-    [-77, -77]
+    [-4, -21],
+    [3.9999999999999996, -21]
   ]
   t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 20)

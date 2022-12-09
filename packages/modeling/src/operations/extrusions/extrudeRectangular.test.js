@@ -55,14 +55,8 @@ test('extrudeRectangular (segments = 8, round)', (t) => {
 
 test('extrudeRectangular (holes)', (t) => {
   const geometry2 = geom2.create([
-    [[15, 15], [-15, 15]],
-    [[-15, 15], [-15, -15]],
-    [[-15, -15], [15, -15]],
-    [[15, -15], [15, 15]],
-    [[-5, 5], [5, 5]],
-    [[5, 5], [5, -5]],
-    [[5, -5], [-5, -5]],
-    [[-5, -5], [-5, 5]]
+    [[-15, 15], [-15, -15], [15, -15], [15, 15]],
+    [[5, 5], [5, -5], [-5, -5], [-5, 5]]
   ])
 
   const obs = extrudeRectangular({ size: 2, height: 15, segments: 16, corners: 'round' }, geometry2)

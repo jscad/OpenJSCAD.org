@@ -23,7 +23,7 @@ export const validate = (object) => {
     for (let i = 0; i < outline.length; i++) {
       const j = (i + 1) % outline.length
       if (vec2.equals(outline[i], outline[j])) {
-        throw new Error(`geom2 self-edge ${side[0]}`)
+        throw new Error(`geom2 self-edge ${outline[i]}`)
       }
     }
   })

@@ -9,7 +9,7 @@ import { geom2, geom3, path2 } from '../../geometries/index.js'
 import { extrudeLinear } from './index.js'
 
 test('extrudeLinear (defaults)', (t) => {
-  const geometry2 = geom2.fromPoints([[5, 5], [-5, 5], [-5, -5], [5, -5]])
+  const geometry2 = geom2.fromPoints([[5, -5], [5, 5], [-5, 5], [-5, -5]])
 
   const geometry3 = extrudeLinear({ }, geometry2)
   const pts = geom3.toPoints(geometry3)
@@ -33,7 +33,7 @@ test('extrudeLinear (defaults)', (t) => {
 })
 
 test('extrudeLinear (no twist)', (t) => {
-  const geometry2 = geom2.fromPoints([[5, 5], [-5, 5], [-5, -5], [5, -5]])
+  const geometry2 = geom2.fromPoints([[5, -5], [5, 5], [-5, 5], [-5, -5]])
 
   let geometry3 = extrudeLinear({ height: 15 }, geometry2)
   let pts = geom3.toPoints(geometry3)
@@ -77,7 +77,7 @@ test('extrudeLinear (no twist)', (t) => {
 })
 
 test('extrudeLinear (twist)', (t) => {
-  const geometry2 = geom2.fromPoints([[5, 5], [-5, 5], [-5, -5], [5, -5]])
+  const geometry2 = geom2.fromPoints([[5, -5], [5, 5], [-5, 5], [-5, -5]])
 
   let geometry3 = extrudeLinear({ height: 15, twistAngle: -TAU / 8 }, geometry2)
   let pts = geom3.toPoints(geometry3)
@@ -150,14 +150,8 @@ test('extrudeLinear (twist)', (t) => {
 
 test('extrudeLinear (holes)', (t) => {
   const geometry2 = geom2.create([
-    [[-5, 5], [-5, -5]],
-    [[-5, -5], [5, -5]],
-    [[5, -5], [5, 5]],
-    [[5, 5], [-5, 5]],
-    [[-2, -2], [-2, 2]],
-    [[2, -2], [-2, -2]],
-    [[2, 2], [2, -2]],
-    [[-2, 2], [2, 2]]
+    [[-5, 5], [-5, -5], [5, -5], [5, 5]],
+    [[-2, -2], [-2, 2], [2, 2], [2, -2]]
   ])
   const geometry3 = extrudeLinear({ height: 15 }, geometry2)
   const pts = geom3.toPoints(geometry3)
@@ -172,12 +166,12 @@ test('extrudeLinear (holes)', (t) => {
     [[5, 5, 0], [-5, 5, 15], [5, 5, 15]],
     [[-2, -2, 0], [-2, 2, 0], [-2, 2, 15]],
     [[-2, -2, 0], [-2, 2, 15], [-2, -2, 15]],
-    [[2, -2, 0], [-2, -2, 0], [-2, -2, 15]],
-    [[2, -2, 0], [-2, -2, 15], [2, -2, 15]],
-    [[2, 2, 0], [2, -2, 0], [2, -2, 15]],
-    [[2, 2, 0], [2, -2, 15], [2, 2, 15]],
     [[-2, 2, 0], [2, 2, 0], [2, 2, 15]],
     [[-2, 2, 0], [2, 2, 15], [-2, 2, 15]],
+    [[2, 2, 0], [2, -2, 0], [2, -2, 15]],
+    [[2, 2, 0], [2, -2, 15], [2, 2, 15]],
+    [[2, -2, 0], [-2, -2, 0], [-2, -2, 15]],
+    [[2, -2, 0], [-2, -2, 15], [2, -2, 15]],
     [[5, -5, 15], [5, 5, 15], [2, 2, 15]],
     [[-2, 2, 15], [2, 2, 15], [5, 5, 15]],
     [[5, -5, 15], [2, 2, 15], [2, -2, 15]],
@@ -201,7 +195,7 @@ test('extrudeLinear (holes)', (t) => {
 })
 
 test('extrudeLinear (path2)', (t) => {
-  const geometry2 = path2.fromPoints({ closed: true }, [[0, 0], [12, 0], [6, 10]])
+  const geometry2 = path2.fromPoints({ closed: true }, [[6, 10], [0, 0], [12, 0]])
   const geometry3 = extrudeLinear({ height: 15 }, geometry2)
   t.notThrows(() => geom3.validate(geometry3))
   const pts = geom3.toPoints(geometry3)

@@ -20,7 +20,7 @@ const createGeometryFromClosedOffsets = (paths) => {
   const externalSides = geom2.toSides(geom2.fromPoints(path2.toPoints(externalPath)))
   const internalSides = geom2.toSides(geom2.fromPoints(path2.toPoints(internalPath)))
   externalSides.push(...internalSides)
-  return geom2.create(externalSides)
+  return geom2.fromSides(externalSides)
 }
 
 const createGeometryFromExpandedOpenPath = (paths, segments, corners, delta) => {

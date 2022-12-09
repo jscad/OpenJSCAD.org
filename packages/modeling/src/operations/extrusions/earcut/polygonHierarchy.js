@@ -31,7 +31,7 @@ export class PolygonHierarchy {
     const projected = slice.edges.map((e) => e.map((v) => this.to2D(v)))
 
     // compute polygon hierarchies, assign holes to solids
-    const geometry = geom2.create(projected)
+    const geometry = geom2.fromSides(projected)
     this.roots = assignHoles(geometry)
   }
 

@@ -1,3 +1,4 @@
+import toOutlines from './toOutlines.js'
 
 /**
  * Produces an array of points from the given geometry.
@@ -12,7 +13,7 @@
  */
 export const toPoints = (geometry) => {
   const points = []
-  geometry.outlines.forEach((outline) => {
+  toOutlines(geometry).forEach((outline) => {
     outline.forEach((point) => {
       points.push(point)
     })

@@ -24,7 +24,7 @@ const snapGeom2 = (geometry) => {
   let newsides = sides.map((side) => [vec2.snap(vec2.create(), side[0], epsilon), vec2.snap(vec2.create(), side[1], epsilon)])
   // snap can produce sides with zero (0) length, remove those
   newsides = newsides.filter((side) => !vec2.equals(side[0], side[1]))
-  return geom2.create(newsides)
+  return geom2.fromSides(newsides)
 }
 
 const snapGeom3 = (geometry) => {

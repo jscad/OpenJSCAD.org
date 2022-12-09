@@ -38,7 +38,7 @@ const trivialOperation = (subject, clipping, operation) => {
   if (result === EMPTY) {
     return geom2.create()
   } else if (result) {
-    return geom2.fromOutlines(result.flat())
+    return fromOutlines(result.flat())
   } else {
     return null
   }
@@ -66,7 +66,7 @@ const compareBBoxes = (subject, clipping, sbbox, cbbox, operation) => {
   if (result === EMPTY) {
     return geom2.create()
   } else if (result) {
-    return geom2.fromOutlines(result.flat())
+    return fromOutlines(result.flat())
   } else {
     return null
   }
@@ -82,6 +82,16 @@ const toMartinez = (geometry) => {
     outline.push(outline[0])
   })
   return [outlines]
+}
+
+/*
+ * Convert martinez data structure to geom2
+ */
+const fromOutlines = (outlines) => {
+  outlines.forEach((outline) => {
+    outline.pop() // first == last point
+  })
+  return geom2.create(outlines)
 }
 
 export default function boolean (subjectGeom, clippingGeom, operation) {
@@ -134,7 +144,7 @@ export default function boolean (subjectGeom, clippingGeom, operation) {
   }
 
   if (polygons) {
-    return geom2.fromOutlines(polygons.flat())
+    return fromOutlines(polygons.flat())
   } else {
     return geom2.create()
   }
