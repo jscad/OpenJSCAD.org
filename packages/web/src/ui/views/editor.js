@@ -34,7 +34,11 @@ const createWrapper = (state, callbackToStream) => {
   if (!wrapper) {
     wrapper = html`
     <section class='popup-menu' id='editor' key='editor' style='visibility:${state.activeTool === 'editor' ? 'visible' : 'hidden'}'>
-      <textarea></textarea>
+    <textarea>
+    </textarea>
+    <p style='position:absolute;top:0rem;right:1rem;color:gray;user-select:none'>
+      Press 'shift + enter' to render!
+    </p>
     </section>
     `
     wrapper.onkeydown = (e) => e.stopPropagation()
