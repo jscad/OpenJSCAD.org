@@ -18,13 +18,13 @@ test('intersect: intersect of one or more geom2 objects produces expected geomet
   let obs = geom2.toPoints(result1)
   let exp = [
     [2, 0],
-    [1.4142000000000001, 1.4142000000000001],
+    [1.4142135623730951, 1.414213562373095],
     [0, 2],
-    [-1.4142000000000001, 1.4142000000000001],
+    [-1.414213562373095, 1.4142135623730951],
     [-2, 0],
-    [-1.4142000000000001, -1.4142000000000001],
+    [-1.4142135623730954, -1.414213562373095],
     [0, -2],
-    [1.4142000000000001, -1.4142000000000001]
+    [1.4142135623730947, -1.4142135623730954]
   ]
   t.notThrows(() => geom2.validate(result1))
   t.is(obs.length, 8)
@@ -44,7 +44,7 @@ test('intersect: intersect of one or more geom2 objects produces expected geomet
   const result3 = intersect(geometry2, geometry3)
   obs = geom2.toPoints(result3)
   exp = [
-    [9, 9], [8, 9], [8, 8], [9, 8]
+    [8, 8], [9, 8], [9, 9], [8, 9]
   ]
   t.notThrows(() => geom2.validate(result3))
   t.is(obs.length, 4)
@@ -54,14 +54,14 @@ test('intersect: intersect of one or more geom2 objects produces expected geomet
   const result4 = intersect(geometry1, geometry3)
   obs = geom2.toPoints(result4)
   exp = [
-    [2, 0],
-    [1.4142000000000001, 1.4142000000000001],
-    [0, 2],
-    [-1.4142000000000001, 1.4142000000000001],
     [-2, 0],
-    [-1.4142000000000001, -1.4142000000000001],
+    [-1.4142135623730954, -1.414213562373095],
     [0, -2],
-    [1.4142000000000001, -1.4142000000000001]
+    [1.4142135623730947, -1.4142135623730954],
+    [2, 0],
+    [1.4142135623730951, 1.414213562373095],
+    [0, 2],
+    [-1.414213562373095, 1.4142135623730951]
   ]
   t.notThrows(() => geom2.validate(result4))
   t.is(obs.length, 8)

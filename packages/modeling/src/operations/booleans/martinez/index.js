@@ -6,23 +6,39 @@ import {
   UNION
 } from './operation.js'
 
+const toMartinez = (geometry) => {
+  const outlines = geom2.toOutlines(geometry)
+  outlines.forEach((outline) => {
+    outline.push(outline[0])
+  })
+  return outlines
+}
+
+const fromMartinez = (outlines) => {
+  if (outlines) {
+    return geom2.fromOutlines(outlines.flat())
+  } else {
+    return geom2.create()
+  }
+}
+
 export const union = (subject, clipping) => {
-  const g1 = geom2.toOutlines(subject)
-  const g2 = geom2.toOutlines(clipping)
+  const g1 = toMartinez(subject)
+  const g2 = toMartinez(clipping)
   const out = boolean(g1, g2, UNION)
-  return geom2.fromOutlines(out[0])
+  return fromMartinez(out)
 }
 
 export const diff = (subject, clipping) => {
-  const g1 = geom2.toOutlines(subject)
-  const g2 = geom2.toOutlines(clipping)
+  const g1 = toMartinez(subject)
+  const g2 = toMartinez(clipping)
   const out = boolean(g1, g2, DIFFERENCE)
-  return geom2.fromOutlines(out[0])
+  return fromMartinez(out)
 }
 
 export const intersection = (subject, clipping) => {
-  const g1 = geom2.toOutlines(subject)
-  const g2 = geom2.toOutlines(clipping)
+  const g1 = toMartinez(subject)
+  const g2 = toMartinez(clipping)
   const out = boolean(g1, g2, INTERSECTION)
-  return geom2.fromOutlines(out[0])
+  return fromMartinez(out)
 }
