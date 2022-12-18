@@ -1,12 +1,12 @@
-import divideSegment from './divide_segment'
-import intersection from './segment_intersection'
-import equals from './equals'
-import compareEvents from './compare_events'
+import divideSegment from './divide_segment.js'
+import intersection from './segment_intersection.js'
+import equals from '../../../maths/vec2/equals.js'
+import compareEvents from './compare_events.js'
 import {
   NON_CONTRIBUTING,
   SAME_TRANSITION,
   DIFFERENT_TRANSITION
-} from './edge_type'
+} from './edge_type.js'
 
 /**
  * @param  {SweepEvent} se1
@@ -18,7 +18,7 @@ export default function possibleIntersection (se1, se2, queue) {
   // that disallows self-intersecting polygons,
   // did cost us half a day, so I'll leave it
   // out of respect
-  // if (se1.isSubject === se2.isSubject) return;
+  // if (se1.isSubject === se2.isSubject) return
   const inter = intersection(
     se1.point, se1.otherEvent.point,
     se2.point, se2.otherEvent.point
@@ -37,9 +37,9 @@ export default function possibleIntersection (se1, se2, queue) {
   if (nintersections === 2 && se1.isSubject === se2.isSubject) {
     // if(se1.contourId === se2.contourId){
     // console.warn('Edges of the same polygon overlap',
-    //   se1.point, se1.otherEvent.point, se2.point, se2.otherEvent.point);
+    //   se1.point, se1.otherEvent.point, se2.point, se2.otherEvent.point)
     // }
-    // throw new Error('Edges of the same polygon overlap');
+    // throw new Error('Edges of the same polygon overlap')
     return 0
   }
 

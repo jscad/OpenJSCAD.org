@@ -1,5 +1,5 @@
-import compareEvents from './compare_events'
-import Contour from './contour'
+import compareEvents from './compare_events.js'
+import Contour from './contour.js'
 
 /**
  * @param  {Array.<SweepEvent>} sortedEvents

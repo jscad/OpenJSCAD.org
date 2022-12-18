@@ -1,7 +1,7 @@
-import Queue from 'tinyqueue'
-import SweepEvent from './sweep_event'
-import compareEvents from './compare_events'
-import { DIFFERENCE } from './operation'
+import Queue from './tinyqueue.js'
+import SweepEvent from './sweep_event.js'
+import compareEvents from './compare_events.js'
+import { DIFFERENCE } from './operation.js'
 
 const max = Math.max
 const min = Math.min
@@ -32,7 +32,8 @@ const processPolygon = (contourOrHole, isSubject, depth, Q, bbox, isExteriorRing
       e1.left = true
     }
 
-    const x = s1[0]; const y = s1[1]
+    const x = s1[0]
+    const y = s1[1]
     bbox[0] = min(bbox[0], x)
     bbox[1] = min(bbox[1], y)
     bbox[2] = max(bbox[2], x)
@@ -46,8 +47,8 @@ const processPolygon = (contourOrHole, isSubject, depth, Q, bbox, isExteriorRing
 }
 
 export default function fillQueue (subject, clipping, sbbox, cbbox, operation) {
-  const eventQueue = new Queue(null, compareEvents)
-  let polygonSet, isExteriorRing, i, ii, j, jj //, k, kk;
+  const eventQueue = new Queue([], compareEvents)
+  let polygonSet, isExteriorRing, i, ii, j, jj //, k, kk
 
   for (i = 0, ii = subject.length; i < ii; i++) {
     polygonSet = subject[i]

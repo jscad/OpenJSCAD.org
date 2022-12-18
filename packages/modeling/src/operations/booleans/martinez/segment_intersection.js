@@ -1,4 +1,3 @@
-// const EPS = 1e-9;
 
 /**
  * Finds the magnitude of the cross product of two vectors (if we pretend
@@ -67,7 +66,7 @@ export default function (a1, a2, b1, b2, noEndpointTouch) {
   let kross = crossProduct(va, vb)
   let sqrKross = kross * kross
   const sqrLenA = dotProduct(va, va)
-  // const sqrLenB  = dotProduct(vb, vb);
+  // const sqrLenB  = dotProduct(vb, vb)
 
   // Check for line intersection. This works because of the properties of the
   // cross product -- specifically, two vectors are parallel if and only if the
@@ -105,7 +104,7 @@ export default function (a1, a2, b1, b2, noEndpointTouch) {
   // the (vector) difference between the two initial points. If this is parallel
   // with the line itself, then the two lines are the same line, and there will
   // be overlap.
-  // const sqrLenE = dotProduct(e, e);
+  // const sqrLenE = dotProduct(e, e)
   kross = crossProduct(e, va)
   sqrKross = kross * kross
 

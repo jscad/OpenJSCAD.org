@@ -1,6 +1,6 @@
-import SweepEvent from './sweep_event'
-import equals from './equals'
-import compareEvents from './compare_events'
+import SweepEvent from './sweep_event.js'
+import equals from '../../../maths/vec2/equals.js'
+import compareEvents from './compare_events.js'
 
 /**
  * @param  {SweepEvent} se

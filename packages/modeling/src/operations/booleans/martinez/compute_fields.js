@@ -3,13 +3,13 @@ import {
   SAME_TRANSITION,
   DIFFERENT_TRANSITION,
   NON_CONTRIBUTING
-} from './edge_type'
+} from './edge_type.js'
 import {
   INTERSECTION,
   UNION,
   DIFFERENCE,
   XOR
-} from './operation'
+} from './operation.js'
 
 /**
  * @param  {SweepEvent} event
@@ -60,7 +60,7 @@ const inResult = (event, operation) => {
           return event.otherInOut
         case DIFFERENCE:
           // return (event.isSubject && !event.otherInOut) ||
-          //         (!event.isSubject && event.otherInOut);
+          //         (!event.isSubject && event.otherInOut)
           return (event.isSubject && event.otherInOut) ||
                   (!event.isSubject && !event.otherInOut)
         case XOR:

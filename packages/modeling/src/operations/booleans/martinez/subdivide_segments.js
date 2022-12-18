@@ -1,11 +1,11 @@
-import Tree from 'splaytree'
-import computeFields from './compute_fields'
-import possibleIntersection from './possible_intersection'
-import compareSegments from './compare_segments'
+import Tree from './splaytree.js'
+import computeFields from './compute_fields.js'
+import possibleIntersection from './possible_intersection.js'
+import compareSegments from './compare_segments.js'
 import {
   INTERSECTION,
   DIFFERENCE
-} from './operation'
+} from './operation.js'
 
 export default function subdivide (eventQueue, subject, clipping, sbbox, cbbox, operation) {
   const sweepLine = new Tree(compareSegments)

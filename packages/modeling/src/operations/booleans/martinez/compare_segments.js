@@ -1,6 +1,6 @@
-import signedArea from './signed_area'
-import compareEvents from './compare_events'
-import equals from './equals'
+import signedArea from './signed_area.js'
+import compareEvents from './compare_events.js'
+import equals from '../../../maths/vec2/equals.js'
 
 /**
  * @param  {SweepEvent} le1
@@ -29,7 +29,8 @@ export default function compareSegments (le1, le2) {
   }
 
   if (le1.isSubject === le2.isSubject) { // same polygon
-    let p1 = le1.point; let p2 = le2.point
+    let p1 = le1.point
+    let p2 = le2.point
     if (p1[0] === p2[0] && p1[1] === p2[1]/* equals(le1.point, le2.point) */) {
       p1 = le1.otherEvent.point
       p2 = le2.otherEvent.point

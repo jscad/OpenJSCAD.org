@@ -1,4 +1,5 @@
-import { orient2d } from 'robust-predicates'
+
+const orient2d = (ax, ay, bx, by, cx, cy) => (ay - cy) * (bx - cx) - (ax - cx) * (by - cy)
 
 /**
  * Signed area of the triangle (p0, p1, p2)

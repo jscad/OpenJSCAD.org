@@ -1,4 +1,4 @@
-import { NORMAL } from './edge_type'
+import { NORMAL } from './edge_type.js'
 
 export default class SweepEvent {
   /**
@@ -84,12 +84,13 @@ export default class SweepEvent {
    * @return {Boolean}
    */
   isBelow (p) {
-    const p0 = this.point; const p1 = this.otherEvent.point
+    const p0 = this.point
+    const p1 = this.otherEvent.point
     return this.left
       ? (p0[0] - p[0]) * (p1[1] - p[1]) - (p1[0] - p[0]) * (p0[1] - p[1]) > 0
       // signedArea(this.point, this.otherEvent.point, p) > 0 :
       : (p1[0] - p[0]) * (p0[1] - p[1]) - (p0[0] - p[0]) * (p1[1] - p[1]) > 0
-    // signedArea(this.otherEvent.point, this.point, p) > 0;
+    // signedArea(this.otherEvent.point, this.point, p) > 0
   }
 
   /**
