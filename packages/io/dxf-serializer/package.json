@@ -6,6 +6,8 @@
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
   "type": "module",
+  "unpkg": "dist/jscad-dxf-serializer.min.js",
+  "module": "dist/jscad-dxf-serializer.es.js",
   "scripts": {
     "build": "rollup --config",
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
