@@ -1,3 +1,9 @@
+/*
+ * Implementation of the Martinez 2D polygon clipping algorithm
+ * Copyright (c) 2018 Alexander Milevski
+ * https://github.com/w8r/martinez
+ */
+
 import subdivideSegments from './subdivide_segments.js'
 import connectEdges from './connect_edges.js'
 import fillQueue from './fill_queue.js'
@@ -73,7 +79,7 @@ export default function boolean (subject, clipping, operation) {
   const contours = connectEdges(sortedEvents, operation)
   // console.timeEnd('connect vertices')
 
-  // Convert contours to polygons
+  // Convert contours to geom2
   const polygons = []
   for (let i = 0; i < contours.length; i++) {
     const contour = contours[i]
@@ -83,7 +89,12 @@ export default function boolean (subject, clipping, operation) {
       // Followed by holes if any
       for (let j = 0; j < contour.holeIds.length; j++) {
         const holeId = contour.holeIds[j]
-        rings.push(contours[holeId].points)
+        const holePoints = contours[holeId].points
+        const hole = []
+        for (let i = holePoints.length - 2; i >= 0; i--) {
+          hole.push(holePoints[i])
+        }
+        rings.push(hole)
       }
       polygons.push(rings)
     }

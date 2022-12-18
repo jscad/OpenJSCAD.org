@@ -1,6 +1,6 @@
-const vec2 = require('../../maths/vec2')
+import * as vec2 from '../../maths/vec2/index.js'
 
-const create = require('./create')
+import create from './create.js'
 
 /**
  * Create a new 2D geometry from the given outlines.
@@ -9,7 +9,7 @@ const create = require('./create')
  * @returns {geom2} a new geometry
  * @alias module:modeling/geometries/geom2.fromOutlines
  */
-const fromOutlines = (outlines) => {
+export const fromOutlines = (outlines) => {
   if (!Array.isArray(outlines)) {
     throw new Error('the given outlines must be an array')
   }
@@ -33,4 +33,4 @@ const fromOutlines = (outlines) => {
   return create(sides)
 }
 
-module.exports = fromOutlines
+export default fromOutlines

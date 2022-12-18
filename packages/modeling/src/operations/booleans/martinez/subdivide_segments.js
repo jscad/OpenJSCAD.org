@@ -1,3 +1,9 @@
+/*
+ * Implementation of the Martinez 2D polygon clipping algorithm
+ * Copyright (c) 2018 Alexander Milevski
+ * https://github.com/w8r/martinez
+ */
+
 import Tree from './splaytree.js'
 import computeFields from './compute_fields.js'
 import possibleIntersection from './possible_intersection.js'

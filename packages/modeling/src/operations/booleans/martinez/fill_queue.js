@@ -1,3 +1,9 @@
+/*
+ * Implementation of the Martinez 2D polygon clipping algorithm
+ * Copyright (c) 2018 Alexander Milevski
+ * https://github.com/w8r/martinez
+ */
+
 import Queue from './tinyqueue.js'
 import SweepEvent from './sweep_event.js'
 import compareEvents from './compare_events.js'

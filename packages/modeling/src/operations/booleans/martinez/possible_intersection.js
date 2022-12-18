@@ -1,3 +1,9 @@
+/*
+ * Implementation of the Martinez 2D polygon clipping algorithm
+ * Copyright (c) 2018 Alexander Milevski
+ * https://github.com/w8r/martinez
+ */
+
 import divideSegment from './divide_segment.js'
 import intersection from './segment_intersection.js'
 import equals from '../../../maths/vec2/equals.js'

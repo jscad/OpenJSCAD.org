@@ -1,5 +1,9 @@
-/* follows "An implementation of top-down splaying"
+/*
+ * Follows "An implementation of top-down splaying"
  * by D. Sleator <sleator@cs.cmu.edu> March 1992
+ *
+ * Copyright (c) 2018 Alexander Milevski
+ * https://github.com/w8r/splay-tree
  */
 
 const DEFAULT_COMPARE = (a, b) => a > b ? 1 : a < b ? -1 : 0

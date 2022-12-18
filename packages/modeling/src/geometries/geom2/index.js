@@ -15,7 +15,7 @@
  */
 export { clone } from './clone.js'
 export { create } from './create.js'
-export { fromOutlines } from './fromOutlines'
+export { fromOutlines } from './fromOutlines.js'
 export { fromPoints } from './fromPoints.js'
 export { fromCompactBinary } from './fromCompactBinary.js'
 export { isA } from './isA.js'

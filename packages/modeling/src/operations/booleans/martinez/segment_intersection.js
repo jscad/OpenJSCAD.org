@@ -1,3 +1,8 @@
+/*
+ * Implementation of the Martinez 2D polygon clipping algorithm
+ * Copyright (c) 2018 Alexander Milevski
+ * https://github.com/w8r/martinez
+ */
 
 /**
  * Finds the magnitude of the cross product of two vectors (if we pretend

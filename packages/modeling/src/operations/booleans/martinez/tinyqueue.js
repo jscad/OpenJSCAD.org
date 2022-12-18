@@ -1,3 +1,9 @@
+/*
+ * The smallest and simplest binary heap priority queue in JavaScript
+ * Copyright (c) 2017, Vladimir Agafonkin
+ * https://github.com/mourner/tinyqueue
+ */
+
 export default class TinyQueue {
   constructor (data, compare) {
     this.data = data

@@ -1,5 +1,6 @@
 export { default as clone } from './clone'
 export { default as create } from './create'
+export { default as fromOutlines } from './fromOutlines'
 export { default as fromPoints } from './fromPoints'
 export { default as fromCompactBinary } from './fromCompactBinary'
 export { default as isA } from './isA'

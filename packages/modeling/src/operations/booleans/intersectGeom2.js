@@ -1,6 +1,6 @@
 import flatten from '../../utils/flatten.js'
 
-import * as martinez from './martinez/index'
+import * as martinez from './martinez/index.js'
 
 /*
  * Return a new 2D geometry representing space in both the first geometry and

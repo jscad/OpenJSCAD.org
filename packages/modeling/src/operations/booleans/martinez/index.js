@@ -1,4 +1,4 @@
-import geom2 from '../../../geometries/geom2/index.js'
+import * as geom2 from '../../../geometries/geom2/index.js'
 import boolean from './martinez.js'
 import {
   INTERSECTION,
@@ -9,6 +9,7 @@ import {
 const toMartinez = (geometry) => {
   const outlines = geom2.toOutlines(geometry)
   outlines.forEach((outline) => {
+    // Martinez expects first point == last point
     outline.push(outline[0])
   })
   return outlines

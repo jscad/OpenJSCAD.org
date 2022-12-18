@@ -1,9 +1,4 @@
 export default class Contour {
-  /**
-   * Contour
-   *
-   * @class {Contour}
-   */
   constructor () {
     this.points = []
     this.holeIds = []
