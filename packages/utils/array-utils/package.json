@@ -6,7 +6,10 @@
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
   "type": "module",
+  "unpkg": "dist/jscad-array-utils.min.js",
+  "module": "dist/jscad-array-utils.es.js",
   "scripts": {
+    "build": "rollup --config",
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava 'src/*.test.js' --verbose --timeout 2m"
   },
@@ -23,6 +26,8 @@
   },
   "devDependencies": {
     "ava": "4.3.3",
-    "nyc": "15.1.0"
+    "nyc": "15.1.0",
+    "rollup": "2.79.1",
+    "rollup-plugin-banner": "0.2.1"
   }
 }
