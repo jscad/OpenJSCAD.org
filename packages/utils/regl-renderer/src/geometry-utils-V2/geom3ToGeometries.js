@@ -38,7 +38,7 @@ const geom3ToGeometries = (options, solid) => {
     const normals = []
     const indices = []
     const colors = []
-    const isTransparent = true
+    const isTransparent = (color[3] < 1.0)
 
     for (let i = setstart; i < setend; i++) {
       const polygon = polygons[i]
