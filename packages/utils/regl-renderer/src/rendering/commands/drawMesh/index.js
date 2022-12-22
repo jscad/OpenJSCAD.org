@@ -53,8 +53,7 @@ const drawMesh = (regl, params = { extras: {} }) => {
     cull: {
       enable: true,
       face: cullFace
-    },
-    depth: { enable: !transparent }
+    }
   }
 
   // blending is a bit tricky
