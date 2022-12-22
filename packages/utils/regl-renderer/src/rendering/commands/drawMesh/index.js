@@ -12,7 +12,7 @@ const drawMesh = (regl, params = { extras: {} }) => {
   const { geometry, dynamicCulling, useVertexColors, color, visuals } = Object.assign({}, defaults, params)
   // let ambientOcclusion = vao(geometry.indices, geometry.positions, 64, 64)
   const ambientOcclusion = regl.buffer([])
-  
+
   // vertex colors or not ?
   const hasIndices = !!(geometry.indices && geometry.indices.length > 0)
   const hasNormals = !!(geometry.normals && geometry.normals.length > 0)
