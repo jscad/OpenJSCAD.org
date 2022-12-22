@@ -121,8 +121,7 @@ export class Viewer extends Jsx6 {
   }
 
   setTheme (theme){
-    if(!this.viewer) return; // called too soon
-    this.viewer.setBg(theme.bg)
+    this.viewer?.setBg(theme.bg)
     this.updateView(theme)
   }
 
