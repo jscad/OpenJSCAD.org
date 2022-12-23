@@ -4,6 +4,8 @@
  * https://github.com/w8r/martinez
  */
 
+import dotProduct from "../../../maths/vec2/dot.js"
+
 /**
  * Finds the magnitude of the cross product of two vectors (if we pretend
  * they're in three dimensions)
@@ -14,16 +16,6 @@
  * @returns {Number} The magnitude of the cross product
  */
 const crossProduct = (a, b) => (a[0] * b[1]) - (a[1] * b[0])
-
-/**
- * Finds the dot product of two vectors.
- *
- * @param {Object} a First vector
- * @param {Object} b Second vector
- * @private
- * @returns {Number} The dot product
- */
-const dotProduct = (a, b) => (a[0] * b[0]) + (a[1] * b[1])
 
 /**
  * Finds the intersection (if any) between two line segments a and b, given the
