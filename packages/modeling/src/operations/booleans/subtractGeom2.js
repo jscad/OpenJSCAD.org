@@ -1,6 +1,7 @@
 import flatten from '../../utils/flatten.js'
 
-import * as martinez from './martinez/index.js'
+import { DIFFERENCE } from './martinez/operation.js'
+import boolean from './martinez/index.js'
 
 /*
  * Return a new 2D geometry representing space in the first geometry but
@@ -13,7 +14,7 @@ export const subtractGeom2 = (...geometries) => {
 
   let newgeometry = geometries.shift()
   geometries.forEach((geometry) => {
-    newgeometry = martinez.diff(newgeometry, geometry)
+    newgeometry = boolean(newgeometry, geometry, DIFFERENCE)
   })
 
   return newgeometry

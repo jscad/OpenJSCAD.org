@@ -1,6 +1,7 @@
 import flatten from '../../utils/flatten.js'
 
-import * as martinez from './martinez/index.js'
+import { UNION } from './martinez/operation.js'
+import boolean from './martinez/index.js'
 
 /*
  * Return a new 2D geometry representing the total space in the given 2D geometries.
@@ -12,7 +13,7 @@ export const unionGeom2 = (...geometries) => {
 
   let newgeometry = geometries.shift()
   geometries.forEach((geometry) => {
-    newgeometry = martinez.union(newgeometry, geometry)
+    newgeometry = boolean(newgeometry, geometry, UNION)
   })
 
   return newgeometry
