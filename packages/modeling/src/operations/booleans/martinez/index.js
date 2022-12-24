@@ -82,10 +82,10 @@ const toMartinez = (geometry) => {
   return [outlines]
 }
 
-export default function boolean (subject, clipping, operation) {
+export default function boolean (subjectGeom, clippingGeom, operation) {
   // Convert from geom2 to outlines
-  subject = toMartinez(subject)
-  clipping = toMartinez(clipping)
+  const subject = toMartinez(subjectGeom)
+  const clipping = toMartinez(clippingGeom)
 
   let trivial = trivialOperation(subject, clipping, operation)
   if (trivial) {
