@@ -164,7 +164,6 @@ export default function connectEdges (sortedEvents) {
     const initial = resultEvents[i].point
     contour.points.push(initial)
 
-    /* eslint no-constant-condition: "off" */
     while (true) {
       markAsProcessed(pos)
 

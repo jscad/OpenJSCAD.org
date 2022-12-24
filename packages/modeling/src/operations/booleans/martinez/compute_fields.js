@@ -55,7 +55,6 @@ export default function computeFields (event, prev, operation) {
   }
 }
 
-/* eslint-disable indent */
 const inResult = (event, operation) => {
   switch (event.type) {
     case NORMAL:
@@ -82,7 +81,6 @@ const inResult = (event, operation) => {
   }
   return false
 }
-/* eslint-enable indent */
 
 const determineResultTransition = (event, operation) => {
   const thisIn = !event.inOut

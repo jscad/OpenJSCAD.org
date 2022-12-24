@@ -4,7 +4,7 @@
  * https://github.com/w8r/martinez
  */
 
-import dotProduct from "../../../maths/vec2/dot.js"
+import dotProduct from '../../../maths/vec2/dot.js'
 
 /**
  * Finds the magnitude of the cross product of two vectors (if we pretend
@@ -47,16 +47,10 @@ export default function (a1, a2, b1, b2, noEndpointTouch) {
   const vb = [b2[0] - b1[0], b2[1] - b1[1]]
   // We also define a function to convert back to regular point form:
 
-  /* eslint-disable arrow-body-style */
-
-  const toPoint = (p, s, d) => {
-    return [
-      p[0] + s * d[0],
-      p[1] + s * d[1]
-    ]
-  }
-
-  /* eslint-enable arrow-body-style */
+  const toPoint = (p, s, d) => [
+    p[0] + s * d[0],
+    p[1] + s * d[1]
+  ]
 
   // The rest is pretty much a straight port of the algorithm.
   const e = [b1[0] - a1[0], b1[1] - a1[1]]

@@ -26,7 +26,6 @@ export default function compareEvents (e1, e2) {
   return specialCases(e1, e2, p1, p2)
 }
 
-/* eslint-disable no-unused-vars */
 const specialCases = (e1, e2, p1, p2) => {
   // Same coordinates, but one is a left endpoint and the other is
   // a right endpoint. The right endpoint is processed first
@@ -44,4 +43,3 @@ const specialCases = (e1, e2, p1, p2) => {
 
   return (!e1.isSubject && e2.isSubject) ? 1 : -1
 }
-/* eslint-enable no-unused-vars */

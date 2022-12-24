@@ -1,5 +1,4 @@
 import SweepEvent from './sweep_event.js'
-import equals from '../../../maths/vec2/equals.js'
 import compareEvents from './compare_events.js'
 
 /**
@@ -12,11 +11,9 @@ export default function divideSegment (se, p, queue) {
   const r = new SweepEvent(p, false, se, se.isSubject)
   const l = new SweepEvent(p, true, se.otherEvent, se.isSubject)
 
-  /* eslint-disable no-console */
-  if (equals(se.point, se.otherEvent.point)) {
-    console.warn('what is that, a collapsed segment?', se)
-  }
-  /* eslint-enable no-console */
+  // if (equals(se.point, se.otherEvent.point)) {
+  //   console.warn('what is that, a collapsed segment?', se)
+  // }
 
   r.contourId = l.contourId = se.contourId
 
