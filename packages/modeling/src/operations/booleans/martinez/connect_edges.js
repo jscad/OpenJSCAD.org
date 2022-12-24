@@ -135,14 +135,14 @@ const initializeContourFromContext = (event, contours, contourId) => {
  * @return {Array.<*>} polygons
  */
 export default function connectEdges (sortedEvents) {
-  let i, len
   const resultEvents = orderEvents(sortedEvents)
+  const len = resultEvents.length
 
   // "false"-filled array
   const processed = {}
   const contours = []
 
-  for (i = 0, len = resultEvents.length; i < len; i++) {
+  for (let i = 0; i < len; i++) {
     if (processed[i]) {
       continue
     }

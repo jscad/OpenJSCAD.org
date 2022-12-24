@@ -5,7 +5,7 @@ import create from './create.js'
 /**
  * Create a new 2D geometry from the given outlines.
  * The geometry must not self intersect, i.e. the sides cannot cross.
- * @param {Array} points - list of outlines in 2D space
+ * @param {Array} outlines - list of outlines in 2D space
  * @returns {geom2} a new geometry
  * @alias module:modeling/geometries/geom2.fromOutlines
  */
@@ -14,7 +14,7 @@ export const fromOutlines = (outlines) => {
     throw new Error('the given outlines must be an array')
   }
   if (outlines.length > 0 && !Array.isArray(outlines[0])) {
-    throw new Error('the given outlines must be an array of points')
+    throw new Error('the given outlines must be arrays of points')
   }
 
   const sides = []

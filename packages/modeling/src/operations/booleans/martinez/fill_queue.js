@@ -14,9 +14,10 @@ const min = Math.min
 
 let contourId = 0
 
-const processPolygon = (contourOrHole, isSubject, depth, Q, bbox, isExteriorRing) => {
-  let i, len, s1, s2, e1, e2
-  for (i = 0, len = contourOrHole.length - 1; i < len; i++) {
+const processPolygon = (contourOrHole, isSubject, depth, queue, bbox, isExteriorRing) => {
+  const len = contourOrHole.length - 1
+  let s1, s2, e1, e2
+  for (let i = 0; i < len; i++) {
     s1 = contourOrHole[i]
     s2 = contourOrHole[i + 1]
     e1 = new SweepEvent(s1, false, undefined, isSubject)
@@ -47,8 +48,8 @@ const processPolygon = (contourOrHole, isSubject, depth, Q, bbox, isExteriorRing
 
     // Pushing it so the queue is sorted from left to right,
     // with object on the left having the highest priority.
-    Q.push(e1)
-    Q.push(e2)
+    queue.push(e1)
+    queue.push(e2)
   }
 }
 

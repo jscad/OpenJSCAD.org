@@ -91,8 +91,8 @@ export default function boolean (subject, clipping, operation) {
         const holeId = contour.holeIds[j]
         const holePoints = contours[holeId].points
         const hole = []
-        for (let i = holePoints.length - 2; i >= 0; i--) {
-          hole.push(holePoints[i])
+        for (let k = holePoints.length - 2; k >= 0; k--) {
+          hole.push(holePoints[k])
         }
         rings.push(hole)
       }
