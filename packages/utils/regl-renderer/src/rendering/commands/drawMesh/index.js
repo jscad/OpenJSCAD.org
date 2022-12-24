@@ -7,7 +7,8 @@ const drawMesh = (regl, params = { extras: {} }) => {
     useVertexColors: true,
     dynamicCulling: true,
     geometry: undefined,
-    color: meshColor
+    color: meshColor,
+    visuals: {}
   }
   const { geometry, dynamicCulling, useVertexColors, color, visuals } = Object.assign({}, defaults, params)
   // let ambientOcclusion = vao(geometry.indices, geometry.positions, 64, 64)
