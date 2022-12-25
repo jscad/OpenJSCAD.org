@@ -1,7 +1,9 @@
 /*
- * Implementation of the Martinez 2D polygon clipping algorithm
+ * Implementation of the Martinez 2D polygon clipping algorithm.
  * Copyright (c) 2018 Alexander Milevski
  * https://github.com/w8r/martinez
+ *
+ * Adapted for JSCAD by @platypii
  */
 
 import subdivideSegments from './subdivide_segments.js'
@@ -43,7 +45,7 @@ const trivialOperation = (subject, clipping, operation) => {
 }
 
 /*
- * Fast path for non-intersection subjects
+ * Fast path for non-intersecting subjects
  * Returns null if operation is non-trivial
  */
 const compareBBoxes = (subject, clipping, sbbox, cbbox, operation) => {
