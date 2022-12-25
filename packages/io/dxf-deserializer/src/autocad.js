@@ -1,11 +1,5 @@
 /*
 AutoCAD Constants
-
-## License
-
-Copyright (c) 2017 Z3 Development https://github.com/z3dev
-
-All code released under MIT license
 */
 
 //

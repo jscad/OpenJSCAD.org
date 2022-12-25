@@ -1,16 +1,3 @@
-/*
-## License
-
-Copyright (c) 2017 Z3 Development https://github.com/z3dev
-
-All code released under MIT license
-
-Thanks to @issacs for the sax js library, and inspiration for this reader
-
-*/
-
-// DXF reader to emit groups of interest to handlers
-
 export const reader = (options) => { return new DxfReader(options) }
 
 const STATES = [
