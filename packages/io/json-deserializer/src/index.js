@@ -1,3 +1,10 @@
+// //////////////////////////////////////////
+//
+// JSON (JavaScript Object Notation) is a lightweight data-interchange format
+// See https://www.json.org
+//
+// //////////////////////////////////////////
+
 /**
  * Deserializer of JSON data to JSCAD geometries.
  * @see https://www.json.org
