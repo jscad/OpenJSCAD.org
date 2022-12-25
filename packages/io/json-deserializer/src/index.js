@@ -1,20 +1,6 @@
-/*
-## License
-
-Copyright (c) JSCAD Organization https://github.com/jscad
-
-All code released under MIT license
-*/
-
-// //////////////////////////////////////////
-//
-// JSON (JavaScript Object Notation) is a lightweight data-interchange format
-// See https://www.json.org
-//
-// //////////////////////////////////////////
-
 /**
  * Deserializer of JSON data to JSCAD geometries.
+ * @see https://www.json.org
  * @module io/json-deserializer
  * @example
  * const { deserializer, extension } = require('@jscad/json-deserializer')
