@@ -1,12 +1,6 @@
 /*
 JSCAD Object to JSON Notation Serialization
 
-## License
-
-Copyright (c) JSCAD Organization https://github.com/jscad
-
-All code released under MIT license
-
 Notes:
 1) geom2 conversion to:
      JSON
