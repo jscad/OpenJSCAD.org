@@ -18,13 +18,13 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
   let obs = geom2.toPoints(result1)
   let exp = [
     [2, 0],
-    [1.4142000000000001, 1.4142000000000001],
+    [1.4142135623730951, 1.414213562373095],
     [0, 2],
-    [-1.4142000000000001, 1.4142000000000001],
+    [-1.414213562373095, 1.4142135623730951],
     [-2, 0],
-    [-1.4142000000000001, -1.4142000000000001],
+    [-1.4142135623730954, -1.414213562373095],
     [0, -2],
-    [1.4142000000000001, -1.4142000000000001]
+    [1.4142135623730947, -1.4142135623730954]
   ]
   t.notThrows(() => geom2.validate(result1))
   t.is(obs.length, 8)
@@ -37,13 +37,13 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
   obs = geom2.toPoints(result2)
   exp = [
     [2, 0],
-    [1.4142000000000001, 1.4142000000000001],
+    [1.4142135623730951, 1.414213562373095],
     [0, 2],
-    [-1.4142000000000001, 1.4142000000000001],
+    [-1.414213562373095, 1.4142135623730951],
     [-2, 0],
-    [-1.4142000000000001, -1.4142000000000001],
+    [-1.4142135623730954, -1.414213562373095],
     [0, -2],
-    [1.4142000000000001, -1.4142000000000001]
+    [1.4142135623730947, -1.4142135623730954]
   ]
   t.notThrows(() => geom2.validate(result2))
   t.is(obs.length, 8)
@@ -55,7 +55,7 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
   const result3 = subtract(geometry2, geometry3)
   obs = geom2.toPoints(result3)
   exp = [
-    [12, 12], [9, 9], [8, 9], [8, 12], [9, 8], [12, 8]
+    [8, 9], [9, 9], [9, 8], [12, 8], [12, 12], [8, 12]
   ]
   t.notThrows(() => geom2.validate(result3))
   t.is(obs.length, 6)

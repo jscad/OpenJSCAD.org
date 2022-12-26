@@ -93,6 +93,8 @@ Portions of glMatrix Library: Copyright (c) 2015-2020, Brandon Jones, Colin MacK
 
 Quickhull Library: Copyright (c) 2015 Mauricio Poppe, under the MIT license.
 
+Martinez Library: Copyright (c) 2018 Alexander Milevski, under MIT license.
+
 ## License
 
 [The MIT License (MIT)](../../LICENSE)
