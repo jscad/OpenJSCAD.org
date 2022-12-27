@@ -3,6 +3,7 @@ import flatten from '../../utils/flatten.js'
 import aboutEqualNormals from '../../maths/utils/aboutEqualNormals.js'
 import * as plane from '../../maths/plane/index.js'
 import * as mat4 from '../../maths/mat4/index.js'
+import * as vec2 from '../../maths/vec2/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
@@ -48,7 +49,12 @@ const projectGeom3 = (options, geometry) => {
   projpolys = projpolys.sort((a, b) => poly3.measureArea(b) - poly3.measureArea(a))
 
   // convert polygons to geometry, and union all pieces into a single geometry
-  const projgeoms = projpolys.map((p) => geom2.fromPoints(p.vertices))
+  const projgeoms = projpolys.map((p) => {
+    // This clones the points from vec3 to vec2
+    const cloned = p.vertices.map(vec2.clone)
+    return geom2.fromPoints(cloned)
+  })
+
   return unionGeom2(projgeoms)
 }
 

@@ -22,18 +22,18 @@ test('project (defaults)', (t) => {
   t.is(results[3], geometry3)
   t.is(results[4], geometry4)
 
-  const result = project({ }, torus({ outerSegments: 4 }))
+  const result = project({ }, torus({ innerSegments: 4, outerSegments: 4 }))
   t.notThrows(() => geom2.validate(result))
   const pts = geom2.toPoints(result)
   const exp = [
     [-5, 0],
     [0, -5],
     [5, 0],
-    [-3, 0],
+    [0, 5],
     [0, 3],
     [3, 0],
     [0, -3],
-    [0, 5]
+    [-3, 0]
   ]
   t.true(comparePoints(pts, exp))
 })

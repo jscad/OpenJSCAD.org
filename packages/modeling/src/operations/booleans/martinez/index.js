@@ -16,6 +16,7 @@ import {
   XOR
 } from './operation.js'
 import * as geom2 from '../../../geometries/geom2/index.js'
+import * as vec2 from '../../../maths/vec2/index.js'
 
 const EMPTY = []
 
@@ -76,10 +77,14 @@ const compareBBoxes = (subject, clipping, sbbox, cbbox, operation) => {
  * Convert from geom2 to martinez data structure
  */
 const toMartinez = (geometry) => {
-  const outlines = geom2.toOutlines(geometry)
-  outlines.forEach((outline) => {
+  const outlines = []
+  geom2.toOutlines(geometry).forEach((outline) => {
     // Martinez expects first point == last point
-    outline.push(outline[0])
+    if (vec2.equals(outline[0], outline[outline.length - 1])) {
+      outlines.push(outline)
+    } else {
+      outlines.push([...outline, outline[0]])
+    }
   })
   return [outlines]
 }
@@ -89,7 +94,9 @@ const toMartinez = (geometry) => {
  */
 const fromOutlines = (outlines) => {
   outlines.forEach((outline) => {
-    outline.pop() // first == last point
+    if (vec2.equals(outline[0], outline[outline.length - 1])) {
+      outline.pop() // first == last point
+    }
   })
   return geom2.create(outlines)
 }
