@@ -38,7 +38,7 @@ test('project (defaults)', (t) => {
   t.true(comparePoints(pts, exp))
 })
 
-test('project (X and Y axis)', (t) => {
+test('project torus (X and Y axis)', (t) => {
   let result = project({ axis: [1, 0, 0], origin: [1, 0, 0] }, torus({ outerSegments: 4 }))
   t.notThrows(() => geom2.validate(result))
   let pts = geom2.toPoints(result)
@@ -126,4 +126,14 @@ test('project (X and Y axis)', (t) => {
     [-4.98078528040323, 0.19509032201612872]
   ]
   t.true(comparePoints(pts, exp))
+})
+
+test('project torus (martinez issue #155)', (t) => {
+  const result = project(
+    { axis: [0, 1, 0], origin: [0, -1, 0] },
+    torus({ innerSegments: 8, outerSegments: 4})
+  )
+  const pts = geom2.toPoints(result)
+  t.notThrows(() => geom2.validate(result))
+  t.is(pts.length, 5)
 })
