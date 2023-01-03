@@ -169,18 +169,26 @@ test('union of geom2 with colinear edge (martinez issue #155)', (t) => {
   // This test is a minimal example extracted from:
   // project({ axis: [0, 1, 0], origin: [0, -1, 0] }, torus({ innerSegments: 8, outerSegments: 4 }))
   const g1 = geom2.create([[
-    [ -5, 0 ],
-    [ 4.707106781186547, 0.7071067811865477 ],
-    [ 3.477592250072517, 0.7836116248912244 ],
-    [ 4, 1 ],
+    [-5, 0],
+    [4.707106781186547, 0.7071067811865477],
+    [3.477592250072517, 0.7836116248912244],
+    [4, 1],
   ]])
   const g2 = geom2.create([[
-    [ 4.707106781186547, 0.7071067811865477 ],
-    [ 4, 1 ],
-    [ 0, 1 ],
+    [4.707106781186547, 0.7071067811865477],
+    [4, 1],
+    [0, 1],
   ]])
+  const exp = [
+    [-5, 0],
+    [4.707106781186547, 0.7071067811865477],
+    [4, 1],
+    [0, 1],
+    [2.564081902288895, 0.8404535446987661]
+  ]
   const result = union(g1, g2)
   const pts = geom2.toPoints(result)
   t.notThrows(() => geom2.validate(result))
   t.is(pts.length, 5)
+  t.true(comparePoints(pts, exp))
 })

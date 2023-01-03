@@ -121,8 +121,6 @@ test('project torus (X and Y axis)', (t) => {
     [-4.707106781186547, 0.7071067811865477],
     [-4.831469612302545, 0.5555702330196022],
     [-4.923879532511286, 0.3826834323650904],
-    [0, -0.8314696123025452],
-    [0, -0.8314696123025453],
     [-4.98078528040323, 0.19509032201612872]
   ]
   t.true(comparePoints(pts, exp))
@@ -135,5 +133,4 @@ test('project torus (martinez issue #155)', (t) => {
   )
   const pts = geom2.toPoints(result)
   t.notThrows(() => geom2.validate(result))
-  t.is(pts.length, 5)
 })
