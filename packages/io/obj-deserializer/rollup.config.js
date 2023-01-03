@@ -10,7 +10,7 @@ export default {
     {
       file: 'dist/jscad-obj-deserializer.min.js',
       format: 'umd',
-      name: 'jscadDxfSerializer',
+      name: 'jscadObjDeserializer',
       globals: {
         '@jscad/modeling': 'jscadModeling'
       }

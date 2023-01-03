@@ -8,15 +8,15 @@ export default {
 
   output: [
     {
-      file: 'dist/jscad-obj-deserializer.min.js',
+      file: 'dist/jscad-obj-serializer.min.js',
       format: 'umd',
-      name: 'jscadDxfSerializer',
+      name: 'jscadObjSerializer',
       globals: {
         '@jscad/modeling': 'jscadModeling'
       }
     },
     {
-      file: 'dist/jscad-obj-deserializer.es.js',
+      file: 'dist/jscad-obj-serializer.es.js',
       format: 'es',
     }
   ],
