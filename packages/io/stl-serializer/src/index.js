@@ -1,21 +1,3 @@
-/*
-JSCAD Geometry to STL Format Serialization
-
-## License
-
-Copyright (c) 2018-2019 JSCAD Organization https://github.com/jscad
-
-All code released under MIT license
-
-Notes:
-1) geom2 conversion to:
-     none
-2) geom3 conversion to:
-     STL mesh
-3) path2 conversion to:
-     none
-*/
-
 /**
  * Serializer of JSCAD geometries to STL mesh.
  * @module io/stl-serializer
@@ -34,6 +16,7 @@ const mimeType = 'application/sla'
 
 /**
  * Serialize the give objects to STL mesh.
+ * @see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
  * @param {Object} options - options for serialization
  * @param {String} [options.binary='true'] - target format for data
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
