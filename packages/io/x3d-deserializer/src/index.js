@@ -1,11 +1,3 @@
-/*
-## License
-
-Copyright (c) 2021 Z3 Development https://github.com/z3dev
-
-All code released under MIT license
-*/
-
 // //////////////////////////////////////////
 //
 // Extensible 3D (X3D) Graphics is the open standard for publishing, viewing, printing and archiving interactive 3D models
