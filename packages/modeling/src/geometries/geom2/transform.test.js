@@ -31,7 +31,7 @@ test('transform: adjusts the transforms of geom2', (t) => {
   t.true(compareVectors(another.transforms, expected.transforms))
 
   // expect application of the transforms to the sides
-  expectedSides = [[[5, 10], [5, 11]], [[5, 11], [4, 10]], [[4, 10], [5, 10]]]
+  const expectedSides = [[[5, 10], [5, 11]], [[5, 11], [4, 10]], [[4, 10], [5, 10]]]
   const sides = toSides(another)
   t.true(comparePoints(sides[0], expectedSides[0]))
   t.true(comparePoints(sides[1], expectedSides[1]))

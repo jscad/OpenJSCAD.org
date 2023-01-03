@@ -20,11 +20,12 @@ const snapPath2 = (geometry) => {
 
 const snapGeom2 = (geometry) => {
   const epsilon = measureEpsilon(geometry)
-  const sides = geom2.toSides(geometry)
-  let newsides = sides.map((side) => [vec2.snap(vec2.create(), side[0], epsilon), vec2.snap(vec2.create(), side[1], epsilon)])
-  // snap can produce sides with zero (0) length, remove those
-  newsides = newsides.filter((side) => !vec2.equals(side[0], side[1]))
-  return geom2.fromSides(newsides)
+  const outlines = geom2.toOutlines(geometry)
+  const newOutlines = outlines.map((outline) => {
+    return outline.map((point) => vec2.snap(vec2.create(), point, epsilon))
+  })
+  // TODO: remove duplicate points, and zero-area outlines
+  return geom2.create(newOutlines)
 }
 
 const snapGeom3 = (geometry) => {
