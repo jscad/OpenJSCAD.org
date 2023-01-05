@@ -1,21 +1,3 @@
-/*
-JSCAD Object to 3MF (XML) Format Serialization
-
-## License
-
-Copyright (c) 2022 JSCAD Organization https://github.com/jscad
-
-All code released under MIT license
-
-Notes:
-1) geom2 conversion to:
-     none
-2) geom3 conversion to:
-     mesh
-3) path2 conversion to:
-     none
-*/
-
 /**
  * Serializer of JSCAD geometries to 3D manufacturing format (XML)
  *
