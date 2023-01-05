@@ -8,7 +8,7 @@ export default {
 
   output: [
     {
-      file: 'dist/jscad-stl-deserializer.min.js',
+      file: 'dist/jscad-stl-serializer.min.js',
       format: 'umd',
       name: 'jscadStlSerializer',
       globals: {
@@ -16,7 +16,7 @@ export default {
       }
     },
     {
-      file: 'dist/jscad-stl-deserializer.es.js',
+      file: 'dist/jscad-stl-serializer.es.js',
       format: 'es',
     }
   ],

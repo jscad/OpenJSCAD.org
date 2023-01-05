@@ -8,7 +8,7 @@ export default {
 
   output: [
     {
-      file: 'dist/jscad-json-deserializer.min.js',
+      file: 'dist/jscad-json-serializer.min.js',
       format: 'umd',
       name: 'jscadJsonSerializer',
       globals: {
@@ -16,7 +16,7 @@ export default {
       }
     },
     {
-      file: 'dist/jscad-json-deserializer.es.js',
+      file: 'dist/jscad-json-serializer.es.js',
       format: 'es',
     }
   ],
