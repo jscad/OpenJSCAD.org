@@ -1,15 +1,3 @@
-/*
-## License
-
-Copyright (c) 2016 Z3 Development https://github.com/z3dev
-              2017 Mark 'kaosat-dev' Moissette
-
-The upgrades (direct geometry instantiation from this deserializer) and refactoring
-have been very kindly sponsored by [Copenhagen Fabrication / Stykka](https://www.stykka.com/)
-
-All code released under MIT license
-*/
-
 import saxes from 'saxes'
 
 import { colors, transforms } from '@jscad/modeling'
