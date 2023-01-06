@@ -36,6 +36,9 @@ export const validate = (object) => {
 
   // check for infinity, nan
   object.vertices.forEach((vertex) => {
+    if (vertex.length != 2) {
+      throw new Error(`poly2 invalid vertex ${vertex}`)
+    }
     if (!vertex.every(Number.isFinite)) {
       throw new Error(`poly2 invalid vertex ${vertex}`)
     }
