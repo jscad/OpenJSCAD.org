@@ -39,14 +39,12 @@ const toVertexMap = (sides) => {
 }
 
 /**
- * Create the outline(s) of the given geometry.
- * @param {geom2} geometry - geometry to create outlines from
- * @returns {Array} an array of outlines, where each outline is an array of ordered points
- * @alias module:modeling/geometries/geom2.toOutlines
+ * Create a new 2D geometry from a list of sides.
+ * @param {geom2} sides - geometry to create outlines from
+ * @returns {geom2} a new geometry
  *
  * @example
- * let geometry = subtract(rectangle({size: [5, 5]}), rectangle({size: [3, 3]}))
- * let outlines = toOutlines(geometry) // returns two outlines
+ * let geometry = fromSides([[[0, 0], [1, 0]], [[1, 0], [1, 1]], [[1, 1], [0, 0]]])
  */
 export const fromSides = (sides) => {
   const vertexMap = toVertexMap(sides) // {vertex: [edges]}

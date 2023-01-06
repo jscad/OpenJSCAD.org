@@ -18,15 +18,15 @@ export const validate = (object) => {
     throw new Error('invalid geom2 structure')
   }
 
-  object.outlines.forEach((outline) => {
+  object.outlines.forEach((outline, i) => {
     if (outline.length < 3) {
-      throw new Error('geom2 outlines must contain at least 3 points')
+      throw new Error(`geom2 outline ${i} must contain at least 3 points`)
     }
     // check for duplicate points
     for (let i = 0; i < outline.length; i++) {
       const j = (i + 1) % outline.length
       if (vec2.equals(outline[i], outline[j])) {
-        throw new Error(`geom2 self-edge ${outline[i]}`)
+        throw new Error(`geom2 outline ${i} found duplicate point ${outline[i]}`)
       }
     }
   })

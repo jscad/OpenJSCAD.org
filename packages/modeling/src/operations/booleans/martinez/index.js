@@ -98,6 +98,7 @@ const fromOutlines = (outlines) => {
       outline.pop() // first == last point
     }
   })
+  // Martinez sometime returns empty outlines, filter them out
   outlines = outlines.filter((o) => o.length >= 3)
   return geom2.create(outlines)
 }
