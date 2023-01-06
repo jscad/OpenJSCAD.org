@@ -5,6 +5,7 @@ import * as vec2 from '../../maths/vec2/index.js'
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as path2 from '../../geometries/path2/index.js'
+import * as poly2 from '../../geometries/poly2/index.js'
 
 import measureEpsilon from '../../measurements/measureEpsilon.js'
 
@@ -21,10 +22,21 @@ const snapPath2 = (geometry) => {
 const snapGeom2 = (geometry) => {
   const epsilon = measureEpsilon(geometry)
   const outlines = geom2.toOutlines(geometry)
-  const newOutlines = outlines.map((outline) => {
-    return outline.map((point) => vec2.snap(vec2.create(), point, epsilon))
+  let newOutlines = outlines.map((outline) => {
+    let prev = vec2.snap(vec2.create(), outline[outline.length - 1], epsilon)
+    const newOutline = []
+    outline.forEach((point) => {
+      const snapped = vec2.snap(vec2.create(), point, epsilon)
+      // remove duplicate points
+      if (!vec2.equals(prev, snapped)) {
+        newOutline.push(snapped)
+      }
+      prev = snapped
+    })
+    return newOutline
   })
-  // TODO: remove duplicate points, and zero-area outlines
+  // remove zero-area outlines
+  newOutlines = newOutlines.filter((outline) => poly2.measureArea(poly2.create(outline)))
   return geom2.create(newOutlines)
 }
 
