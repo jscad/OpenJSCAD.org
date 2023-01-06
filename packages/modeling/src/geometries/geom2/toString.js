@@ -1,6 +1,6 @@
 import * as vec2 from '../../maths/vec2/index.js'
 
-import toSides from './toSides.js'
+import toOutlines from './toOutlines.js'
 
 /**
  * Create a string representing the contents of the given geometry.
@@ -12,10 +12,10 @@ import toSides from './toSides.js'
  * console.out(toString(geometry))
  */
 export const toString = (geometry) => {
-  const sides = toSides(geometry)
-  let result = 'geom2 (' + sides.length + ' sides):\n[\n'
-  sides.forEach((side) => {
-    result += '  [' + vec2.toString(side[0]) + ', ' + vec2.toString(side[1]) + ']\n'
+  const outlines = toOutlines(geometry)
+  let result = 'geom2 (' + outlines.length + ' outlines):\n[\n'
+  outlines.forEach((outline) => {
+    result += '  [' + outline.map(vec2.toString).join() + ']\n'
   })
   result += ']\n'
   return result
