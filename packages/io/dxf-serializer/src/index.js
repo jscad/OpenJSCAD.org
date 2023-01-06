@@ -1,12 +1,6 @@
 /*
 JSCAD Object to AutoCAD DXF Entity Serialization
 
-## License
-
-Copyright (c) 2018 Z3 Development https://github.com/z3dev
-
-All code released under MIT license
-
 Notes:
 1) geom2 conversion to:
      POLYLINE

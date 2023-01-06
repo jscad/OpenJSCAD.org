@@ -1,12 +1,3 @@
-/*
-## License
-
-Copyright (c) 2017 Z3 Development https://github.com/z3dev
-
-All code released under MIT license
-
-*/
-
 import { BYLAYER, getTLA } from './autocad.js'
 import colorIndex from './colorindex2017.js'
 import { DxfReader } from './DxfReader.js'

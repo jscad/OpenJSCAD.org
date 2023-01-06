@@ -60,7 +60,11 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 Small Note: If editing this README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme) specification.
 
+The upgrades (direct geometry instantiation from this deserializer) and refactoring have been very kindly sponsored by [Copenhagen Fabrication / Stykka](https://www.stykka.com/)
+
 ## License
+
+Copyright (c) JSCAD Organization
 
 [The MIT License (MIT)](../../LICENSE)
 (unless specified otherwise)

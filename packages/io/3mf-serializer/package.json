@@ -6,7 +6,10 @@
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
   "type": "module",
+  "unpkg": "dist/jscad-3mf-serializer.min.js",
+  "module": "dist/jscad-3mf-serializer.es.js",
   "scripts": {
+    "build": "rollup --config",
     "coverage": "nyc --reporter=html --reporter=text npm test",
     "test": "ava --concurrency 3 --verbose --timeout 40000 './tests/*.test.js'"
   },
@@ -34,8 +37,12 @@
     "fflate": "0.7.3"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^23.0.4",
+    "@rollup/plugin-node-resolve": "^15.0.1",
     "ava": "4.3.3",
-    "nyc": "15.1.0"
+    "nyc": "15.1.0",
+    "rollup": "2.79.1",
+    "rollup-plugin-banner": "^0.2.1"
   },
   "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"
 }

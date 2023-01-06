@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { makeBlob } from './index.js'
+import { makeBlob } from '../src/index.js'
 
 const Blob = makeBlob()
 

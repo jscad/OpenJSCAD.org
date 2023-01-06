@@ -1,21 +1,3 @@
-/*
-JSCAD Object to X3D (XML) Format Serialization
-
-## License
-
-Copyright (c) 2018-2022 JSCAD Organization https://github.com/jscad
-
-All code released under MIT license
-
-Notes:
-1) geom2 conversion to:
-     Polyline2D with lineSegment and Color
-2) geom3 conversion to:
-     IndexedTriangleSet with Coordinates and Colors
-3) path2 conversion to:
-     Polyline2D with lineSegment and Color
-*/
-
 /**
  * Serializer of JSCAD geometries to X3D source data (XML).
  *
@@ -37,10 +19,6 @@ const { geom2, geom3, path2, poly2, poly3 } = geometries
 import { flatten, toArray } from '@jscad/array-utils'
 
 import { stringify } from '@jscad/io-utils'
-
-// http://www.web3d.org/x3d/content/X3dTooltips.html
-// http://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Meshes
-// https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter13GeometryTrianglesQuadrilaterals/
 
 const mimeType = 'model/x3d+xml'
 

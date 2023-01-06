@@ -50,5 +50,7 @@ Small Note: If editing this README, please conform to the [standard-readme](http
 
 ## License
 
+Copyright (c) JSCAD Organization
+
 [The MIT License (MIT)](./LICENSE)
 (unless specified otherwise)

@@ -1,12 +1,3 @@
-/*
-## License
-
-Copyright (c) 2017-2019 Z3 Development https://github.com/z3dev
-
-All code released under MIT license
-
-*/
-
 import { BYBLOCK, BYLAYER } from './autocad.js'
 
 //

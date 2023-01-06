@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { convertToBlob } from './index.js'
+import { convertToBlob } from '../src/index.js'
 
 test('convert strings', (t) => {
   let ablob = convertToBlob({ data: ['test'], mimeType: 'test1' })

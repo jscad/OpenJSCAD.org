@@ -1,21 +1,3 @@
-/*
-JSCAD Object to SVG Format Serialization
-
-## License
-
-Copyright (c) 2018 JSCAD Organization https://github.com/jscad
-
-All code released under MIT license
-
-Notes:
-1) geom2 conversion to:
-     SVG GROUP containing a continous SVG PATH that contains the outlines of the geometry
-2) geom3 conversion to:
-     none
-3) path2 conversion to:
-     SVG GROUP containing a SVG PATH for each path
-*/
-
 /**
  * Serializer of JSCAD geometries to SVG source (XML).
  *

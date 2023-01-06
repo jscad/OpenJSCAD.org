@@ -1,11 +1,3 @@
-/*
-## License
-
-Copyright (c) 2017 Z3 Development https://github.com/z3dev
-
-All code released under MIT license
-
-*/
 import { geometries, maths, primitives } from '@jscad/modeling'
 const EPS = 1e-5 // FIXME
 

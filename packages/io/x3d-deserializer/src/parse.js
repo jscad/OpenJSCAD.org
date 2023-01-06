@@ -1,4 +1,4 @@
-import saxes from 'saxes'
+import * as saxes from 'saxes'
 
 import {
   x3dTypes,
