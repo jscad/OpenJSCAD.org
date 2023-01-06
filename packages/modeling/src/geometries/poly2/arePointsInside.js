@@ -1,5 +1,5 @@
 import measureArea from './measureArea.js'
-import flip from './flip.js'
+import reverse from './reverse.js'
 
 /**
  * Determine if the given points are inside the given polygon.
@@ -16,7 +16,7 @@ export const arePointsInside = (points, polygon) => {
   if (vertices.length < 3) return 0 // nothing can be inside an empty polygon
 
   if (measureArea(polygon) < 0) {
-    polygon = flip(polygon) // CCW is required
+    polygon = reverse(polygon) // CCW is required
   }
 
   const sum = points.reduce((acc, point) => acc + isPointInside(point, vertices), 0)
@@ -79,12 +79,5 @@ const isPointInside = (point, polygon) => {
   }
   return insideFlag
 }
-
-/*
- * > 0 : p2 is left of the line p0 -> p1
- * = 0 : p2 is on the line p0 -> p1
- * < 0 : p2 is right of the line p0 -> p1
- */
-const isLeft = (p0, p1, p2) => (p1[0] - p0[0]) * (p2[1] - p0[1]) - (p2[0] - p0[0]) * (p1[1] - p0[1])
 
 export default arePointsInside

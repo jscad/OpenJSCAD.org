@@ -1,5 +1,7 @@
 /**
- * Represents a convex 2D polygon consisting of a list of ordered vertices.
+ * Represents a 2D polygon consisting of a list of ordered vertices
+ * which is closed between start and end vertices.
+ * @see https://en.wikipedia.org/wiki/Polygon
  * @typedef {Object} poly2
  * @property {Array} vertices - list of ordered vertices (2D)
  */
@@ -18,7 +20,7 @@ export const create = (vertices) => {
   if (vertices === undefined || vertices.length < 3) {
     vertices = [] // empty contents
   }
-  return { vertices: vertices }
+  return { vertices }
 }
 
 export default create
