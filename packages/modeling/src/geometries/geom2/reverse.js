@@ -12,7 +12,7 @@ import clone from './clone.js'
  */
 export const reverse = (geometry) => {
   const reversed = clone(geometry)
-  reversed.outlines.forEach((outline) => outline.reverse())
+  reversed.outlines.forEach((outline) => outline.slice().reverse())
   return reversed
 }
 
