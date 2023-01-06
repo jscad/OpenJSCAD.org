@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { isSimple, create } from './index.js'
 
-test('poly3: isSimple() should return correct values', (t) => {
+test('poly2: isSimple() should return correct values', (t) => {
   const ply1 = create()
   t.false(isSimple(ply1))
 

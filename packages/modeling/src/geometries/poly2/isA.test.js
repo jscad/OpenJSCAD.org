@@ -4,7 +4,7 @@ import { isA, create } from './index.js'
 
 test('isA: identifies created poly2', (t) => {
   const p1 = create()
-  const p2 = create([[0, 0, 0], [1, 0, 0], [1, 1, 0]])
+  const p2 = create([[0, 0], [1, 0], [1, 1]])
   t.true(isA(p1))
   t.true(isA(p2))
 })
