@@ -1,5 +1,6 @@
 /**
- * Represents a 2D geometry consisting of a list of sides.
+ * Represents a 2D geometry consisting of a outlines, where each outline is an ordered list of points.
+ * The outline is always closed between the first and last points.
  * @see {@link geom2} for data structure information.
  * @module modeling/geometries/geom2
  *
@@ -8,7 +9,7 @@
  *
  * @example
  * {
- *   "sides": [[[-1,1],[-1,-1]],[[-1,-1],[1,-1]],[[1,-1],[1,1]],[[1,1],[-1,1]]],
+ *   "outlines": [[[-1,-1],[1,-1],[1,1],[-1,1]]],
  *   "transforms": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
  *   "color": [0.5,0,1,1]
  * }
