@@ -30,17 +30,19 @@ export const extrudeRectangularGeom2 = (options, geometry) => {
   const outlines = geom2.toOutlines(geometry)
   if (outlines.length === 0) throw new Error('the given geometry cannot be empty')
 
-  // expand the outlines
-  const newparts = outlines.map((outline) => {
-    if (area(outline) < 0) outline.reverse() // all outlines must wind counter clockwise
-    return expand(options, path2.fromPoints({ closed: true }, outline))
-  })
-
   // create a composite geometry
-  const allsides = newparts.reduce((sides, part) => sides.concat(geom2.toSides(part)), [])
-  const newgeometry = geom2.fromSides(allsides)
+  let expanded = []
+  outlines.forEach((outline) => {
+    if (area(outline) < 0) {
+      outline = outline.slice().reverse() // all outlines must wind counter clockwise
+    }
+    // expand the outline
+    const part = expand(options, path2.fromPoints({ closed: true }, outline))
+    expanded = expanded.concat(geom2.toOutlines(part))
+  })
+  const newGeometry = geom2.create(expanded)
 
-  return extrudeLinearGeom2(options, newgeometry)
+  return extrudeLinearGeom2(options, newGeometry)
 }
 
 export default extrudeRectangularGeom2
