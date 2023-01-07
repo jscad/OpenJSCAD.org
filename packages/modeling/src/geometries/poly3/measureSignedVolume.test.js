@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { mat4 } from '../../maths/index.js'
 
-import { measureSignedVolume, create, invert, fromPoints, transform } from './index.js'
+import { measureSignedVolume, create, invert, transform } from './index.js'
 
 import { nearlyEqual } from '../../../test/helpers/index.js'
 
@@ -12,12 +12,12 @@ test('poly3: measureSignedVolume() should return correct values', (t) => {
   nearlyEqual(t, ret1, 0.0, Number.EPSILON)
 
   // simple triangle
-  let ply2 = fromPoints([[5, 5, 5], [5, 15, 5], [5, 15, 15]])
+  let ply2 = create([[5, 5, 5], [5, 15, 5], [5, 15, 15]])
   let ret2 = measureSignedVolume(ply2)
   nearlyEqual(t, ret2, 83.33333333333333, Number.EPSILON)
 
   // simple square
-  let ply3 = fromPoints([[5, 5, 5], [5, 15, 5], [5, 15, 15], [5, 5, 15]])
+  let ply3 = create([[5, 5, 5], [5, 15, 5], [5, 15, 15], [5, 5, 15]])
   let ret3 = measureSignedVolume(ply3)
   nearlyEqual(t, ret3, 166.66666666666666, Number.EPSILON)
 
@@ -34,7 +34,7 @@ test('poly3: measureSignedVolume() should return correct values', (t) => {
     [-50, 1, 3],
     [-50, 3, 3]
   ]
-  let ply4 = fromPoints(points)
+  let ply4 = create(points)
   let ret4 = measureSignedVolume(ply4)
   nearlyEqual(t, ret4, -325.00000, Number.EPSILON)
 

@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { mat4 } from '../../maths/index.js'
 
-import { measureArea, create, invert, fromPoints, transform } from './index.js'
+import { measureArea, create, invert, transform } from './index.js'
 
 import { nearlyEqual } from '../../../test/helpers/index.js'
 
@@ -12,12 +12,12 @@ test('poly3: measureArea() should return correct values', (t) => {
   t.is(ret1, 0.0)
 
   // simple triangle
-  let ply2 = fromPoints([[0, 0, 0], [0, 10, 0], [0, 10, 10]])
+  let ply2 = create([[0, 0, 0], [0, 10, 0], [0, 10, 10]])
   let ret2 = measureArea(ply2)
   t.is(ret2, 50.0)
 
   // simple square
-  let ply3 = fromPoints([[0, 0, 0], [0, 10, 0], [0, 10, 10], [0, 0, 10]])
+  let ply3 = create([[0, 0, 0], [0, 10, 0], [0, 10, 10], [0, 0, 10]])
   let ret3 = measureArea(ply3)
   t.is(ret3, 100.0)
 
@@ -34,22 +34,22 @@ test('poly3: measureArea() should return correct values', (t) => {
     [0, 1, 3],
     [0, 3, 3]
   ]
-  let ply4 = fromPoints(points)
+  let ply4 = create(points)
   let ret4 = measureArea(ply4)
   t.is(ret4, 19.5)
 
   // colinear vertices non-zero area
-  const ply5 = fromPoints([[0, 0, 0], [1, 0, 0], [2, 0, 0], [0, 1, 0]])
+  const ply5 = create([[0, 0, 0], [1, 0, 0], [2, 0, 0], [0, 1, 0]])
   const ret5 = measureArea(ply5)
   t.is(ret5, 1)
 
   // colinear vertices empty area
-  const ply6 = fromPoints([[0, 0, 0], [1, 0, 0], [2, 0, 0]])
+  const ply6 = create([[0, 0, 0], [1, 0, 0], [2, 0, 0]])
   const ret6 = measureArea(ply6)
   t.is(ret6, 0)
 
   // duplicate vertices empty area
-  const ply7 = fromPoints([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
+  const ply7 = create([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
   const ret7 = measureArea(ply7)
   t.is(ret7, 0)
 

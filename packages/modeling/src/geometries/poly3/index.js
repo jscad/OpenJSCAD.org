@@ -11,7 +11,6 @@
  */
 export { clone } from './clone.js'
 export { create } from './create.js'
-export { fromPoints } from './fromPoints.js'
 export { fromPointsAndPlane } from './fromPointsAndPlane.js'
 export { invert } from './invert.js'
 export { isA } from './isA.js'
