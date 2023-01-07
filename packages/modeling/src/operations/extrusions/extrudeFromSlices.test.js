@@ -7,33 +7,33 @@ import { mat4 } from '../../maths/index.js'
 
 import { geom2, geom3, poly3 } from '../../geometries/index.js'
 
-import { circle } from '../../primitives/index.js'
+import { circle, square } from '../../primitives/index.js'
 
 import { extrudeFromSlices, slice } from './index.js'
 
 test('extrudeFromSlices (defaults)', (t) => {
-  const geometry2 = geom2.fromPoints([[10, 10], [-10, 10], [-10, -10], [10, -10]])
+  const geometry2 = square({ size: 20 })
 
   let geometry3 = extrudeFromSlices({ }, geometry2)
   let pts = geom3.toPoints(geometry3)
   const exp = [
-    [[10, 10, 0], [-10, 10, 0], [-10, 10, 1]],
-    [[10, 10, 0], [-10, 10, 1], [10, 10, 1]],
-    [[-10, 10, 0], [-10, -10, 0], [-10, -10, 1]],
-    [[-10, 10, 0], [-10, -10, 1], [-10, 10, 1]],
     [[-10, -10, 0], [10, -10, 0], [10, -10, 1]],
     [[-10, -10, 0], [10, -10, 1], [-10, -10, 1]],
     [[10, -10, 0], [10, 10, 0], [10, 10, 1]],
     [[10, -10, 0], [10, 10, 1], [10, -10, 1]],
-    [[10, -10, 1], [10, 10, 1], [-10, 10, 1]],
+    [[10, 10, 0], [-10, 10, 0], [-10, 10, 1]],
+    [[10, 10, 0], [-10, 10, 1], [10, 10, 1]],
+    [[-10, 10, 0], [-10, -10, 0], [-10, -10, 1]],
+    [[-10, 10, 0], [-10, -10, 1], [-10, 10, 1]],
     [[-10, 10, 1], [-10, -10, 1], [10, -10, 1]],
-    [[-10, 10, 0], [10, 10, 0], [10, -10, 0]],
-    [[10, -10, 0], [-10, -10, 0], [-10, 10, 0]]
+    [[10, -10, 1], [10, 10, 1], [-10, 10, 1]],
+    [[10, -10, 0], [-10, -10, 0], [-10, 10, 0]],
+    [[-10, 10, 0], [10, 10, 0], [10, -10, 0]]
   ]
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 
-  const poly2 = poly3.create([[-10, 10, 0], [-10, -10, 0], [10, -10, 0], [10, 10, 0]])
+  const poly2 = poly3.create([[10, -10, 0], [10, 10, 0], [-10, 10, 0], [-10, -10, 0]])
   geometry3 = extrudeFromSlices({ }, poly2)
   pts = geom3.toPoints(geometry3)
 

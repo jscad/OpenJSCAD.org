@@ -6,7 +6,7 @@ import { geom2, geom3, path2 } from '../../geometries/index.js'
 import { measureBoundingBox } from '../../measurements/index.js'
 import { area } from '../../maths/utils/index.js'
 import { TAU } from '../../maths/constants.js'
-import { sphere } from '../../primitives/index.js'
+import { sphere, square } from '../../primitives/index.js'
 
 import { expand } from './index.js'
 
@@ -73,11 +73,12 @@ test('expand: chamfer-expanding a bent line produces expected geometry', (t) => 
 })
 
 test('expand: expanding of a geom2 produces expected changes to points', (t) => {
-  const geometry = geom2.fromPoints([[-8, -8], [8, -8], [8, 8], [-8, 8]])
+  const geometry = square({ size: 16 })
 
   const obs = expand({ delta: 2, corners: 'round', segments: 8 }, geometry)
   const pts = geom2.toPoints(obs)
   const exp = [
+    [-9.414213562373096, -9.414213562373096],
     [-8, -10],
     [8, -10],
     [9.414213562373096, -9.414213562373096],
@@ -88,8 +89,7 @@ test('expand: expanding of a geom2 produces expected changes to points', (t) => 
     [-8, 10],
     [-9.414213562373096, 9.414213562373096],
     [-10, 8],
-    [-10, -8],
-    [-9.414213562373096, -9.414213562373096]
+    [-10, -8]
   ]
   t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 12)
@@ -167,6 +167,7 @@ test('expand (options): offsetting of a complex geom2 produces expected offset g
   const obs = expand({ delta: 2, corners: 'edge' }, geometry)
   const pts = geom2.toPoints(obs)
   const exp = [
+    [77, -77],
     [77, 77],
     [38, 77],
     [38, 2],
@@ -174,7 +175,7 @@ test('expand (options): offsetting of a complex geom2 produces expected offset g
     [-37.99999999999999, 77],
     [-77, 77],
     [-77, -77],
-    [77, -77],
+    [6, -42],
     [6, -27],
     [-6, -27],
     [-6.000000000000001, -42],
@@ -182,11 +183,10 @@ test('expand (options): offsetting of a complex geom2 produces expected offset g
     [-16.999999999999996, -8],
     [17, -8.000000000000004],
     [16.999999999999996, -42],
-    [6, -42],
+    [3.9999999999999996, -21],
     [4, -13],
     [-4, -13],
-    [-4, -21],
-    [3.9999999999999996, -21]
+    [-4, -21]
   ]
   t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 20)

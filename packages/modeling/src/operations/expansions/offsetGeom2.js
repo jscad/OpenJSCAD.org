@@ -26,7 +26,7 @@ export const offsetGeom2 = (options, geometry) => {
 
   // convert the geometry to outlines, and generate offsets from each
   const outlines = geom2.toOutlines(geometry)
-  const newoutlines = outlines.map((outline) => {
+  const newOutlines = outlines.map((outline) => {
     const level = outlines.reduce((acc, polygon) => acc + poly2.arePointsInside(outline, poly2.create(polygon)), 0)
     const outside = (level % 2) === 0
 
@@ -40,8 +40,7 @@ export const offsetGeom2 = (options, geometry) => {
   })
 
   // create a composite geometry from the new outlines
-  const allsides = newoutlines.reduce((sides, newoutline) => sides.concat(geom2.toSides(geom2.fromPoints(newoutline))), [])
-  return geom2.fromSides(allsides)
+  return geom2.create(newOutlines)
 }
 
 export default offsetGeom2

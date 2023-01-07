@@ -5,8 +5,8 @@ import { geom2, geom3 } from '../../geometries/index.js'
 import { hullChain } from './index.js'
 
 test('hullChain (two, geom2)', (t) => {
-  const geometry1 = geom2.fromPoints([[6, 6], [3, 6], [3, 3], [6, 3]])
-  const geometry2 = geom2.fromPoints([[-6, -6], [-9, -6], [-9, -9], [-6, -9]])
+  const geometry1 = geom2.create([[[6, 6], [3, 6], [3, 3], [6, 3]]])
+  const geometry2 = geom2.create([[[-6, -6], [-9, -6], [-9, -9], [-6, -9]]])
 
   // same
   let obs = hullChain(geometry1, geometry1)
@@ -24,9 +24,9 @@ test('hullChain (two, geom2)', (t) => {
 })
 
 test('hullChain (three, geom2)', (t) => {
-  const geometry1 = geom2.fromPoints([[6, 6], [3, 6], [3, 3], [6, 3]])
-  const geometry2 = geom2.fromPoints([[-6, -6], [-9, -6], [-9, -9], [-6, -9]])
-  const geometry3 = geom2.fromPoints([[-6, 6], [-3, 6], [-3, 9], [-6, 9]])
+  const geometry1 = geom2.create([[[6, 6], [3, 6], [3, 3], [6, 3]]])
+  const geometry2 = geom2.create([[[-6, -6], [-9, -6], [-9, -9], [-6, -9]]])
+  const geometry3 = geom2.create([[[-6, 6], [-3, 6], [-3, 9], [-6, 9]]])
 
   // open
   let obs = hullChain(geometry1, geometry2, geometry3)

@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { reverse, fromPoints } from './index.js'
+import { create, reverse } from './index.js'
 
 import { comparePoints, compareVectors } from '../../../test/helpers/index.js'
 
@@ -10,7 +10,7 @@ test('reverse: Reverses a populated geom2', (t) => {
     outlines: [[[0, 1], [1, 0], [0, 0]]],
     transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
-  const geometry = fromPoints(points)
+  const geometry = create([points])
   const another = reverse(geometry)
   t.not(geometry, another)
   t.true(comparePoints(another.outlines[0], expected.outlines[0]))

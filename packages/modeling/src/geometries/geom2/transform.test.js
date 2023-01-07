@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { mat4 } from '../../maths/index.js'
 
-import { transform, fromPoints, toOutlines, toSides } from './index.js'
+import { create, transform, toOutlines, toSides } from './index.js'
 
 import { comparePoints, compareVectors } from '../../../test/helpers/index.js'
 
@@ -18,7 +18,7 @@ test('transform: adjusts the transforms of geom2', (t) => {
     outlines: [[[0, 0], [1, 0], [0, 1]]],
     transforms: [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
-  const geometry = fromPoints(points)
+  const geometry = create([points])
   let another = transform(rotate90, geometry)
   t.not(geometry, another)
   t.true(comparePoints(another.outlines[0], expected.outlines[0]))

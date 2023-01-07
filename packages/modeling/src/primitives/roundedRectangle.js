@@ -63,7 +63,8 @@ export const roundedRectangle = (options) => {
     corner3Points.push(vec2.add(vec2.create(), corner3, point))
   }
 
-  return geom2.fromPoints(corner0Points.concat(corner1Points, corner2Points, corner3Points))
+  const points = corner0Points.concat(corner1Points, corner2Points, corner3Points)
+  return geom2.create([points])
 }
 
 export default roundedRectangle

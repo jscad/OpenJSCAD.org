@@ -9,7 +9,7 @@ import { geom2, geom3 } from '../../geometries/index.js'
 import { extrudeRotate } from './index.js'
 
 test('extrudeRotate: (defaults) extruding of a geom2 produces an expected geom3', (t) => {
-  const geometry2 = geom2.fromPoints([[10, 8], [10, -8], [26, -8], [26, 8]])
+  const geometry2 = geom2.create([[[10, 8], [10, -8], [26, -8], [26, 8]]])
 
   const geometry3 = extrudeRotate({ }, geometry2)
   const pts = geom3.toPoints(geometry3)
@@ -18,7 +18,7 @@ test('extrudeRotate: (defaults) extruding of a geom2 produces an expected geom3'
 })
 
 test('extrudeRotate: (angle) extruding of a geom2 produces an expected geom3', (t) => {
-  const geometry2 = geom2.fromPoints([[10, 8], [10, -8], [26, -8], [26, 8]])
+  const geometry2 = geom2.create([[[10, 8], [10, -8], [26, -8], [26, 8]]])
 
   // test angle
   let geometry3 = extrudeRotate({ segments: 4, angle: TAU / 8 }, geometry2)
@@ -53,7 +53,7 @@ test('extrudeRotate: (angle) extruding of a geom2 produces an expected geom3', (
 })
 
 test('extrudeRotate: (startAngle) extruding of a geom2 produces an expected geom3', (t) => {
-  const geometry2 = geom2.fromPoints([[10, 8], [10, -8], [26, -8], [26, 8]])
+  const geometry2 = geom2.create([[[10, 8], [10, -8], [26, -8], [26, 8]]])
 
   // test startAngle
   let geometry3 = extrudeRotate({ segments: 5, startAngle: TAU / 8 }, geometry2)
@@ -80,7 +80,7 @@ test('extrudeRotate: (startAngle) extruding of a geom2 produces an expected geom
 })
 
 test('extrudeRotate: (segments) extruding of a geom2 produces an expected geom3', (t) => {
-  let geometry2 = geom2.fromPoints([[10, 8], [10, -8], [26, -8], [26, 8]])
+  let geometry2 = geom2.create([[[10, 8], [10, -8], [26, -8], [26, 8]]])
 
   // test segments
   let geometry3 = extrudeRotate({ segments: 4 }, geometry2)
@@ -94,14 +94,14 @@ test('extrudeRotate: (segments) extruding of a geom2 produces an expected geom3'
   t.is(pts.length, 512)
 
   // test overlapping edges
-  geometry2 = geom2.fromPoints([[0, 0], [2, 1], [1, 2], [1, 3], [3, 4], [0, 5]])
+  geometry2 = geom2.create([[[0, 0], [2, 1], [1, 2], [1, 3], [3, 4], [0, 5]]])
   geometry3 = extrudeRotate({ segments: 8 }, geometry2)
   pts = geom3.toPoints(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
   t.is(pts.length, 64)
 
   // test overlapping edges that produce hollow shape
-  geometry2 = geom2.fromPoints([[30, 0], [30, 60], [0, 60], [0, 50], [10, 40], [10, 30], [0, 20], [0, 10], [10, 0]])
+  geometry2 = geom2.create([[[30, 0], [30, 60], [0, 60], [0, 50], [10, 40], [10, 30], [0, 20], [0, 10], [10, 0]]])
   geometry3 = extrudeRotate({ segments: 8 }, geometry2)
   pts = geom3.toPoints(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
@@ -110,7 +110,7 @@ test('extrudeRotate: (segments) extruding of a geom2 produces an expected geom3'
 
 test('extrudeRotate: (overlap +/-) extruding of a geom2 produces an expected geom3', (t) => {
   // overlap of Y axis; even number of + and - points
-  let geometry = geom2.fromPoints([[-1, 8], [-1, -8], [7, -8], [7, 8]])
+  let geometry = geom2.create([[[-1, 8], [-1, -8], [7, -8], [7, 8]]])
 
   let obs = extrudeRotate({ segments: 4, angle: TAU / 4 }, geometry)
   let pts = geom3.toPoints(obs)
@@ -129,7 +129,7 @@ test('extrudeRotate: (overlap +/-) extruding of a geom2 produces an expected geo
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // overlap of Y axis; larger number of - points
-  geometry = geom2.fromPoints([[-1, 8], [-2, 4], [-1, -8], [7, -8], [7, 8]])
+  geometry = geom2.create([[[-1, 8], [-2, 4], [-1, -8], [7, -8], [7, 8]]])
 
   obs = extrudeRotate({ segments: 8, angle: TAU / 4 }, geometry)
   pts = geom3.toPoints(obs)

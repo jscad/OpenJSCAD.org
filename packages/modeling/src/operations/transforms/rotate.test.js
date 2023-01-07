@@ -28,7 +28,7 @@ test('rotate: rotating of a path2 produces expected changes to points', (t) => {
 })
 
 test('rotate: rotating of a geom2 produces expected changes to points', (t) => {
-  const geometry = geom2.fromPoints([[0, 0], [1, 0], [0, 1]])
+  const geometry = geom2.create([[[0, 0], [1, 0], [0, 1]]])
 
   // rotate about Z
   let rotated = rotate([0, 0, -TAU / 4], geometry)
@@ -136,7 +136,7 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', (t) =>
 test('rotate: rotating of multiple objects produces expected changes', (t) => {
   const junk = 'hello'
   const geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
-  const geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])
+  const geometry2 = geom2.create([[[-5, -5], [0, 5], [10, -5]]])
 
   const rotated = rotate([0, 0, TAU / 4], junk, geometry1, geometry2)
 

@@ -1,10 +1,10 @@
 import test from 'ava'
 
-import { isA, create, fromPoints } from './index.js'
+import { isA, create } from './index.js'
 
 test('isA: identifies created geom2', (t) => {
   const p1 = create()
-  const p2 = fromPoints([[0, 0], [1, 0], [1, 1]])
+  const p2 = create([[[0, 0], [1, 0], [1, 1]]])
   t.true(isA(p1))
   t.true(isA(p2))
 })

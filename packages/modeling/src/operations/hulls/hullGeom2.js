@@ -22,7 +22,7 @@ export const hullGeom2 = (...geometries) => {
   if (hullPoints.length < 3) return geom2.create()
 
   // assemble a new geometry from the list of points
-  return geom2.fromPoints(hullPoints)
+  return geom2.create([hullPoints])
 }
 
 export default hullGeom2

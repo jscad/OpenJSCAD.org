@@ -35,7 +35,7 @@ export const rectangle = (options) => {
     vec2.add(vec2.create(), center, point),
     vec2.subtract(vec2.create(), center, pswap)
   ]
-  return geom2.fromPoints(points)
+  return geom2.create([points])
 }
 
 export default rectangle

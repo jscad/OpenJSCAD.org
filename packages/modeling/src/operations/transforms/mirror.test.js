@@ -35,7 +35,7 @@ test('mirror: mirroring of path2 about X/Y produces expected changes to points',
 })
 
 test('mirror: mirroring of geom2 about X/Y produces expected changes to points', (t) => {
-  const geometry = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])
+  const geometry = geom2.create([[[-5, -5], [0, 5], [10, -5]]])
 
   // mirror about X
   let mirrored = mirror({ normal: [1, 0, 0] }, geometry)
@@ -135,7 +135,7 @@ test('mirror: mirroring of geom3 about X/Y/Z produces expected changes to polygo
 test('mirror: mirroring of multiple objects produces an array of mirrored objects', (t) => {
   const junk = 'hello'
   const geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
-  const geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])
+  const geometry2 = geom2.create([[[-5, -5], [0, 5], [10, -5]]])
 
   const mirrored = mirror({ normal: [0, 1, 0] }, junk, geometry1, geometry2)
   t.is(mirrored[0], junk)
