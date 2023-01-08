@@ -1,4 +1,4 @@
-import toSides from './toSides.js'
+import toOutlines from './toOutlines.js'
 
 /**
  * Produces an array of points from the given geometry.
@@ -12,13 +12,12 @@ import toSides from './toSides.js'
  * let sharedpoints = toPoints(geometry)
  */
 export const toPoints = (geometry) => {
-  const sides = toSides(geometry)
-  const points = sides.map((side) => side[0])
-  // due to the logic of fromPoints()
-  // move the first point to the last
-  if (points.length > 0) {
-    points.push(points.shift())
-  }
+  const points = []
+  toOutlines(geometry).forEach((outline) => {
+    outline.forEach((point) => {
+      points.push(point)
+    })
+  })
   return points
 }
 

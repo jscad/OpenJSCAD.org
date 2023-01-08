@@ -73,16 +73,38 @@ test('snap: snap of a geom2 produces an expected geom2', (t) => {
 
   pts = geom2.toPoints(results[2])
   exp = [
-    [-0.6666666666666666, -0.6666666666666666], [0.6666666666666666, -0.6666666666666666],
-    [0.6666666666666666, 0.6666666666666666], [-0.6666666666666666, 0.6666666666666666]
+    [-0.6666666666666666, -0.6666666666666666],
+    [0.6666666666666666, -0.6666666666666666],
+    [0.6666666666666666, 0.6666666666666666],
+    [-0.6666666666666666, 0.6666666666666666]
   ]
   t.true(comparePoints(pts, exp))
 
   pts = geom2.toPoints(results[3])
   exp = [
-    [-1570.7963267948967, -1570.7963267948967], [1570.7963267948967, -1570.7963267948967],
-    [1570.7963267948967, 1570.7963267948967], [-1570.7963267948967, 1570.7963267948967]
+    [-1570.7963267948967, -1570.7963267948967],
+    [1570.7963267948967, -1570.7963267948967],
+    [1570.7963267948967, 1570.7963267948967],
+    [-1570.7963267948967, 1570.7963267948967]
   ]
+  t.true(comparePoints(pts, exp))
+})
+
+test('snap: snap of a geom2 removes duplicate points after snap', (t) => {
+  const geometry = geom2.fromPoints([[0, 0], [0, 1], [2, 0], [1.999999, 0]])
+  const result = snap(geometry)
+  let pts = geom2.toPoints(result)
+  let exp = [[0, 0], [0, 1.000005], [1.9999950000000002, 0]]
+  t.is(pts.length, 3)
+  t.true(comparePoints(pts, exp))
+})
+
+test('snap: snap of a geom2 removes empty outlines after snap', (t) => {
+  const geometry = geom2.fromPoints([[0, 0], [0, 1.000001], [0, 0.999999]])
+  const result = snap(geometry)
+  let pts = geom2.toPoints(result)
+  let exp = []
+  t.is(pts.length, 0)
   t.true(comparePoints(pts, exp))
 })
 

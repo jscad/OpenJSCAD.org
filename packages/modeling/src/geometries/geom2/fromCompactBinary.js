@@ -16,11 +16,21 @@ export const fromCompactBinary = (data) => {
 
   created.transforms = mat4.clone(data.slice(1, 17))
 
-  for (let i = 21; i < data.length; i += 4) {
-    const point0 = vec2.fromValues(data[i + 0], data[i + 1])
-    const point1 = vec2.fromValues(data[i + 2], data[i + 3])
-    created.sides.push([point0, point1])
+  for (let i = 21; i < data.length;) {
+    const length = data[i++] // number of points for this polygon
+    if (length < 0 || i + length * 2 > data.length) {
+      throw new Error('invalid compact binary data')
+    }
+    const outline = []
+    for (let j = 0; j < length; j++) {
+      const x = data[i + j * 2]
+      const y = data[i + j * 2 + 1]
+      outline.push(vec2.fromValues(x, y))
+    }
+    created.outlines.push(outline)
+    i += length * 2
   }
+
   // transfer known properties, i.e. color
   if (data[17] >= 0) {
     created.color = [data[17], data[18], data[19], data[20]]

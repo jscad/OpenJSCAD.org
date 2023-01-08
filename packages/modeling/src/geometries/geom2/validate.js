@@ -18,13 +18,16 @@ export const validate = (object) => {
     throw new Error('invalid geom2 structure')
   }
 
-  // check for closedness
-  toOutlines(object)
-
-  // check for self-edges
-  object.sides.forEach((side) => {
-    if (vec2.equals(side[0], side[1])) {
-      throw new Error(`geom2 self-edge ${side[0]}`)
+  object.outlines.forEach((outline, i) => {
+    if (outline.length < 3) {
+      throw new Error(`geom2 outline ${i} must contain at least 3 points`)
+    }
+    // check for duplicate points
+    for (let i = 0; i < outline.length; i++) {
+      const j = (i + 1) % outline.length
+      if (vec2.equals(outline[i], outline[j])) {
+        throw new Error(`geom2 outline ${i} found duplicate point ${outline[i]}`)
+      }
     }
   })
 

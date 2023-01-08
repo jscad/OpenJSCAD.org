@@ -5,7 +5,7 @@ import { Color } from '../types'
 export default Geom2
 
 declare interface Geom2 {
-  sides: Array<[Vec2, Vec2]>
+  outlines: Array<Array<Vec2>>
   transforms: Mat4
   color?: Color
 }

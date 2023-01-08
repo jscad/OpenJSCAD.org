@@ -99,7 +99,10 @@ const initializeContourFromContext = (event, contours, contourId) => {
     // result".
     const lowerContourId = prevInResult.outputContourId
     const lowerResultTransition = prevInResult.resultTransition
-    if (lowerResultTransition > 0) {
+    if (lowerContourId < 0) {
+      contour.holeOf = null
+      contour.depth = 0
+    } else if (lowerResultTransition > 0) {
       // We are inside. Now we have to check if the thing below us is another hole or
       // an exterior contour.
       const lowerContour = contours[lowerContourId]

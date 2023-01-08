@@ -4,10 +4,10 @@ import { fromPoints } from './index.js'
 
 import applyTransforms from './applyTransforms.js'
 
-test('applyTransforms: Updates a populated geom2 with transformed sides', (t) => {
+test('applyTransforms: Updates a populated geom2 with transforms', (t) => {
   const points = [[0, 0], [1, 0], [0, 1]]
   const expected = {
-    sides: [[[0, 1], [0, 0]], [[0, 0], [1, 0]], [[1, 0], [0, 1]]],
+    outlines: [[[0, 0], [1, 0], [0, 1]]],
     transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   const geometry = fromPoints(points)

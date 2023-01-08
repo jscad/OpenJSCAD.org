@@ -57,21 +57,21 @@ const measureBoundingSphereOfGeom2 = (geometry) => {
   const centroid = vec3.create()
   let radius = 0
 
-  const sides = geom2.toSides(geometry)
+  const points = geom2.toPoints(geometry)
 
-  if (sides.length > 0) {
+  if (points.length > 0) {
     // calculate the centroid of the geometry
     let numPoints = 0
     const temp = vec3.create()
-    sides.forEach((side) => {
-      vec3.add(centroid, centroid, vec3.fromVec2(temp, side[0], 0))
+    points.forEach((point) => {
+      vec3.add(centroid, centroid, vec3.fromVec2(temp, point, 0))
       numPoints++
     })
     vec3.scale(centroid, centroid, 1 / numPoints)
 
     // find the farthest point from the centroid
-    sides.forEach((side) => {
-      radius = Math.max(radius, vec2.squaredDistance(centroid, side[0]))
+    points.forEach((point) => {
+      radius = Math.max(radius, vec2.squaredDistance(centroid, point))
     })
     radius = Math.sqrt(radius)
   }

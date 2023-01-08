@@ -38,7 +38,7 @@ export const extrudeRectangularGeom2 = (options, geometry) => {
 
   // create a composite geometry
   const allsides = newparts.reduce((sides, part) => sides.concat(geom2.toSides(part)), [])
-  const newgeometry = geom2.create(allsides)
+  const newgeometry = geom2.fromSides(allsides)
 
   return extrudeLinearGeom2(options, newgeometry)
 }

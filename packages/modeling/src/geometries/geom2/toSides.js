@@ -1,4 +1,4 @@
-import applyTransforms from './applyTransforms.js'
+import toOutlines from './toOutlines.js'
 
 /**
  * Produces an array of sides from the given geometry.
@@ -11,6 +11,15 @@ import applyTransforms from './applyTransforms.js'
  * @example
  * let sharedsides = toSides(geometry)
  */
-export const toSides = (geometry) => applyTransforms(geometry).sides
+export const toSides = (geometry) => {
+  const sides = []
+  toOutlines(geometry).forEach((outline) => {
+    outline.forEach((point, i) => {
+      const j = (i + 1) % outline.length
+      sides.push([point, outline[j]])
+    })
+  })
+  return sides
+}
 
 export default toSides

@@ -41,7 +41,7 @@ export const offsetGeom2 = (options, geometry) => {
 
   // create a composite geometry from the new outlines
   const allsides = newoutlines.reduce((sides, newoutline) => sides.concat(geom2.toSides(geom2.fromPoints(newoutline))), [])
-  return geom2.create(allsides)
+  return geom2.fromSides(allsides)
 }
 
 export default offsetGeom2

@@ -33,7 +33,7 @@ test('transform: adjusts the transforms of path', (t) => {
   t.false(another.isClosed)
   t.true(compareVectors(another.transforms, expected.transforms))
 
-  // expect application of the transforms to the sides
+  // expect application of the transforms to the points
   expected.points = [[5, 10], [5, 11], [4, 10]]
   expected.transforms = mat4.create()
   toPoints(another)

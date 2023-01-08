@@ -16,6 +16,7 @@ import {
   XOR
 } from './operation.js'
 import * as geom2 from '../../../geometries/geom2/index.js'
+import * as vec2 from '../../../maths/vec2/index.js'
 
 const EMPTY = []
 
@@ -38,7 +39,7 @@ const trivialOperation = (subject, clipping, operation) => {
   if (result === EMPTY) {
     return geom2.create()
   } else if (result) {
-    return geom2.fromOutlines(result.flat())
+    return fromOutlines(result.flat())
   } else {
     return null
   }
@@ -66,7 +67,7 @@ const compareBBoxes = (subject, clipping, sbbox, cbbox, operation) => {
   if (result === EMPTY) {
     return geom2.create()
   } else if (result) {
-    return geom2.fromOutlines(result.flat())
+    return fromOutlines(result.flat())
   } else {
     return null
   }
@@ -76,12 +77,30 @@ const compareBBoxes = (subject, clipping, sbbox, cbbox, operation) => {
  * Convert from geom2 to martinez data structure
  */
 const toMartinez = (geometry) => {
-  const outlines = geom2.toOutlines(geometry)
-  outlines.forEach((outline) => {
+  const outlines = []
+  geom2.toOutlines(geometry).forEach((outline) => {
     // Martinez expects first point == last point
-    outline.push(outline[0])
+    if (vec2.equals(outline[0], outline[outline.length - 1])) {
+      outlines.push(outline)
+    } else {
+      outlines.push([...outline, outline[0]])
+    }
   })
   return [outlines]
+}
+
+/*
+ * Convert martinez data structure to geom2
+ */
+const fromOutlines = (outlines) => {
+  outlines.forEach((outline) => {
+    if (vec2.equals(outline[0], outline[outline.length - 1])) {
+      outline.pop() // first == last point
+    }
+  })
+  // Martinez sometime returns empty outlines, filter them out
+  outlines = outlines.filter((o) => o.length >= 3)
+  return geom2.create(outlines)
 }
 
 export default function boolean (subjectGeom, clippingGeom, operation) {
@@ -134,7 +153,7 @@ export default function boolean (subjectGeom, clippingGeom, operation) {
   }
 
   if (polygons) {
-    return geom2.fromOutlines(polygons.flat())
+    return fromOutlines(polygons.flat())
   } else {
     return geom2.create()
   }

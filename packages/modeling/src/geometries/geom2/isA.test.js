@@ -13,7 +13,9 @@ test('isA: identifies non geom2', (t) => {
   const p1 = null
   const p2 = {}
   const p3 = { sides: 1, transforms: 1 }
+  const p4 = { outlines: 1, transforms: 1 }
   t.false(isA(p1))
   t.false(isA(p2))
   t.false(isA(p3))
+  t.false(isA(p4))
 })
