@@ -1,7 +1,7 @@
 import clone from './clone.js'
 
 /**
- * Reverses the given geometry so that the sides are flipped in the opposite order.
+ * Reverses the given geometry so that the outline points are flipped in the opposite order.
  * This swaps the left (interior) and right (exterior) edges.
  * @param {geom2} geometry - the geometry to reverse
  * @returns {geom2} the new reversed geometry

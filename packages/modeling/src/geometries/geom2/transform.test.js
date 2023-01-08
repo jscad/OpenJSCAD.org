@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { mat4 } from '../../maths/index.js'
 
-import { transform, fromPoints, toSides } from './index.js'
+import { transform, fromPoints, toOutlines, toSides } from './index.js'
 
 import { comparePoints, compareVectors } from '../../../test/helpers/index.js'
 
@@ -36,6 +36,12 @@ test('transform: adjusts the transforms of geom2', (t) => {
   t.true(comparePoints(sides[0], expectedSides[0]))
   t.true(comparePoints(sides[1], expectedSides[1]))
   t.true(comparePoints(sides[2], expectedSides[2]))
+
+  // expect application of the transforms to the outlines
+  const expectedOutline = [[5, 10], [5, 11], [4, 10]]
+  const outlines = toOutlines(another)
+  t.is(outlines.length, 1)
+  t.true(comparePoints(outlines[0], expectedOutline))
 
   // expect lazy transform, i.e. only the transforms change
   expected.transforms = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 10, 15, 1]

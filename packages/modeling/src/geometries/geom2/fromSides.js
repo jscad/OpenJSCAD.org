@@ -40,7 +40,7 @@ const toVertexMap = (sides) => {
 
 /**
  * Create a new 2D geometry from a list of sides.
- * @param {geom2} sides - geometry to create outlines from
+ * @param {Array} sides - list of sides to create outlines from
  * @returns {geom2} a new geometry
  *
  * @example

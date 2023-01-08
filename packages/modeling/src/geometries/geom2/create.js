@@ -13,10 +13,7 @@ import * as mat4 from '../../maths/mat4/index.js'
  * @returns {geom2} a new geometry
  * @alias module:modeling/geometries/geom2.create
  */
-export const create = (outlines) => {
-  if (outlines === undefined) {
-    outlines = [] // empty contents
-  }
+export const create = (outlines = []) => {
   return {
     outlines,
     transforms: mat4.create()

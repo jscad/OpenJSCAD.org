@@ -2,7 +2,7 @@
  * Geometries are objects that represent the contents of primitives or the results of operations.
  * Note: Geometries are considered immutable, so never change the contents directly.
  *
- * @see {@link geom2} - 2D geometry consisting of sides
+ * @see {@link geom2} - 2D geometry consisting of outlines
  * @see {@link geom3} - 3D geometry consisting of polygons
  * @see {@link path2} - 2D geometry consisting of ordered points
  * @see {@link poly2} - 2D polygon consisting of ordered vertices

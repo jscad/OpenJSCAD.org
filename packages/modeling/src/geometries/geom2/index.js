@@ -5,13 +5,12 @@
  * @module modeling/geometries/geom2
  *
  * @example
- * colorize([0.5,0,1,1], square()) // purple square
+ * square()
  *
  * @example
  * {
  *   "outlines": [[[-1,-1],[1,-1],[1,1],[-1,1]]],
- *   "transforms": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
- *   "color": [0.5,0,1,1]
+ *   "transforms": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
  * }
  */
 export { clone } from './clone.js'
