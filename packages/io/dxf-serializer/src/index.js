@@ -1,27 +1,10 @@
-/*
-JSCAD Object to AutoCAD DXF Entity Serialization
-
-Notes:
-1) geom2 conversion to:
-     POLYLINE
-     LWPOLYLINE
-2) geom3 conversion to:
-     3DFACE
-     POLYLINE (face mesh)
-3) path2 conversion to:
-     LWPOLYLINE
-TBD
-1) support binary output
-2) add color conversion
-*/
-
-import { geometries, modifiers } from '@jscad/modeling'
-const { geom3, geom2, path2 } = geometries
-
 import { flatten, toArray } from '@jscad/array-utils'
+import { geometries, modifiers } from '@jscad/modeling'
 
 import { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } from './autocad_AC2017.js'
 import colorindex2017 from './colorindex2017.js'
+
+const { geom3, geom2, path2 } = geometries
 
 const mimeType = 'application/dxf'
 

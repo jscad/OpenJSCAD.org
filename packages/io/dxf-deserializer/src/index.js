@@ -482,7 +482,6 @@ const handleName = (reader, group, value) => {
 //
 const createReader = (src, options) => {
   // create a reader for the DXF
-  //const dxfreader = reader(options)
   const dxfreader = new DxfReader(options)
 
   // setup event handling from the reader
@@ -597,9 +596,9 @@ const deserialize = (options, src) => {
   return options.output === 'script' ? translate(src, options) : instantiate(src, options)
 }
 
-const extension = 'dxf'
+const mimeType = 'application/dxf'
 
 export {
   deserialize,
-  extension
+  mimeType
 }

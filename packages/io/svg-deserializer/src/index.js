@@ -431,9 +431,9 @@ const createSvgParser = (src, pxPmm) => {
   return parser
 }
 
-const extension = 'svg'
+const mimeType = 'image/svg+xml'
 
 export {
   deserialize,
-  extension
+  mimeType
 }

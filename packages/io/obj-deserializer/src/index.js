@@ -214,9 +214,9 @@ module.exports = {main}
   return code
 }
 
-const extension = 'obj'
+const mimeType = 'application/object'
 
 export {
   deserialize,
-  extension
+  mimeType
 }

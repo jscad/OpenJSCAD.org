@@ -49,6 +49,6 @@ const serialize = (options, ...objects) => {
 }
 
 export {
-  mimeType,
-  serialize
+  serialize,
+  mimeType
 }

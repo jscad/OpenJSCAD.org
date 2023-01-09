@@ -86,9 +86,9 @@ const translateToObjects = (objects) => objects.reduce((script, object, index) =
 // NOTE: this implies that the original JSON was correct :)
 const translateToObject = (object, index) => `const json${index} = ${JSON.stringify(object)}\n`
 
-const extension = 'json'
+const mimeType = 'application/json'
 
 export {
   deserialize,
-  extension
+  mimeType
 }
