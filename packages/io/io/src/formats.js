@@ -30,15 +30,6 @@ const supportedFormats = {
     convertGeom3: true,
     convertGeom2: false
   },
-  amf: {
-    displayName: 'AMF (experimental)',
-    description: 'Additive Manufacturing File Format',
-    extension: 'amf',
-    mimetype: 'application/amf+xml',
-    deserializable: true,
-    convertGeom3: true,
-    convertGeom2: false
-  },
   dxf: {
     displayName: 'DXF (ASCII)',
     description: 'AutoCAD Drawing Exchange Format',
@@ -113,22 +104,6 @@ const supportedFormats = {
   }
 }
 
-// handled input formats that can be converted to jscad code
-const conversionFormats = [
-// 3D file formats
-  'amf',
-  'js',
-  'jscad',
-  'obj',
-  'scad',
-  'stl',
-  'dxf',
-  // 2D file formats
-  'svg',
-  'ttf',
-  'woff'
-]
-
 const supportedFormatsForObjects = (objects) => {
   const objectFormats = []
   let found3Dsolid = false
@@ -185,9 +160,19 @@ const supportedInputExtensions = () => {
   return supported
 }
 
+const getMimeType = (extension) => {
+  for (const format in supportedFormats) {
+    const meta = supportedFormats[format]
+    if (meta.extension === extension) return meta.mimetype
+  }
+  return null
+}
+
 export {
   supportedFormats,
+
   conversionFormats,
+  getMimeType,
   supportedInputExtensions,
   supportedOutputExtensions,
   supportedOutputFormats,
