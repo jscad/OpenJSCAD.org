@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.6.2...@jscad/web@2.6.3) (2023-01-09)
+
+
+### Bug Fixes
+
+* **web:** add render hotkey message in editor ([1e99fa5](https://github.com/jscad/OpenJSCAD.org/commit/1e99fa5222dfd12153f8318f3b112261088a2fe0))
+
+
+
+
+
 ## [2.6.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/web@2.6.1...@jscad/web@2.6.2) (2022-11-26)
 
 **Note:** Version bump only for package @jscad/web
