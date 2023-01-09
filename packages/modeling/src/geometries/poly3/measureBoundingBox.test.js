@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { mat4 } from '../../maths/index.js'
 
-import { measureBoundingBox, create, fromPoints, transform } from './index.js'
+import { measureBoundingBox, create, transform } from './index.js'
 
 import { compareVectors } from '../../../test/helpers/index.js'
 
@@ -14,14 +14,14 @@ test('poly3: measureBoundingBox() should return correct values', (t) => {
   t.true(compareVectors(ret1[1], exp1[1]))
 
   // simple triangle
-  let ply2 = fromPoints([[0, 0, 0], [0, 10, 0], [0, 10, 10]])
+  let ply2 = create([[0, 0, 0], [0, 10, 0], [0, 10, 10]])
   let exp2 = [[0, 0, 0], [0, 10, 10]]
   let ret2 = measureBoundingBox(ply2)
   t.true(compareVectors(ret2[0], exp2[0]))
   t.true(compareVectors(ret2[1], exp2[1]))
 
   // simple square
-  let ply3 = fromPoints([[0, 0, 0], [0, 10, 0], [0, 10, 10], [0, 0, 10]])
+  let ply3 = create([[0, 0, 0], [0, 10, 0], [0, 10, 10], [0, 0, 10]])
   let exp3 = [[0, 0, 0], [0, 10, 10]]
   let ret3 = measureBoundingBox(ply3)
   t.true(compareVectors(ret3[0], exp3[0]))
@@ -40,7 +40,7 @@ test('poly3: measureBoundingBox() should return correct values', (t) => {
     [0, 1, 3],
     [0, 3, 3]
   ]
-  let ply4 = fromPoints(points)
+  let ply4 = create(points)
   let exp4 = [[0, 1, 0], [0, 8, 6]]
   let ret4 = measureBoundingBox(ply4)
   t.true(compareVectors(ret4[0], exp4[0]))

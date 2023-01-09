@@ -17,7 +17,7 @@ export const extrudePath2 = (options, geometry) => {
   if (!geometry.isClosed) throw new Error('extruded path must be closed')
   // Convert path2 to geom2
   const points = path2.toPoints(geometry)
-  const geometry2 = geom2.fromPoints(points)
+  const geometry2 = geom2.create([points])
   return extrudeLinearGeom2(options, geometry2)
 }
 

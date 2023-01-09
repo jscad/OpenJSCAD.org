@@ -23,7 +23,7 @@ test('center: centering of a path2 produces expected changes to points', (t) => 
 })
 
 test('center: centering of a geom2 produces expected changes to points', (t) => {
-  const geometry = geom2.fromPoints([[0, 0], [10, 0], [0, 10]])
+  const geometry = geom2.create([[[0, 0], [10, 0], [0, 10]]])
 
   // center about Y
   let centered = center({ axes: [false, true, false] }, geometry)
@@ -110,7 +110,7 @@ test('center: centering of a geom3 produces expected changes to polygons', (t) =
 test('center: centering of multiple objects produces expected changes', (t) => {
   const junk = 'hello'
   const geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
-  const geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])
+  const geometry2 = geom2.create([[[-5, -5], [0, 5], [10, -5]]])
 
   const centered = center({ axes: [true, true, false], relativeTo: [10, 15, 0] }, junk, geometry1, geometry2)
 

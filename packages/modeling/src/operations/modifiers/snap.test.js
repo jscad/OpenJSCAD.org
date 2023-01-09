@@ -91,7 +91,7 @@ test('snap: snap of a geom2 produces an expected geom2', (t) => {
 })
 
 test('snap: snap of a geom2 removes duplicate points after snap', (t) => {
-  const geometry = geom2.fromPoints([[0, 0], [0, 1], [2, 0], [1.999999, 0]])
+  const geometry = geom2.create([[[0, 0], [0, 1], [2, 0], [1.999999, 0]]])
   const result = snap(geometry)
   let pts = geom2.toPoints(result)
   let exp = [[0, 0], [0, 1.000005], [1.9999950000000002, 0]]
@@ -100,7 +100,7 @@ test('snap: snap of a geom2 removes duplicate points after snap', (t) => {
 })
 
 test('snap: snap of a geom2 removes empty outlines after snap', (t) => {
-  const geometry = geom2.fromPoints([[0, 0], [0, 1.000001], [0, 0.999999]])
+  const geometry = geom2.create([[[0, 0], [0, 1.000001], [0, 0.999999]]])
   const result = snap(geometry)
   let pts = geom2.toPoints(result)
   let exp = []

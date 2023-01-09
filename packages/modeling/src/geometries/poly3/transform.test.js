@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { transform, fromPoints } from './index.js'
+import { create, transform } from './index.js'
 
 import { comparePolygons } from '../../../test/helpers/index.js'
 
@@ -13,7 +13,7 @@ test('poly3: transform() should return a new poly3 with correct values', (t) => 
   ]
 
   const exp1 = { vertices: [[0, 0, 0], [1, 0, 0], [1, 1, 0]] }
-  const org1 = fromPoints([[0, 0, 0], [1, 0, 0], [1, 1, 0]])
+  const org1 = create([[0, 0, 0], [1, 0, 0], [1, 1, 0]])
   const ret1 = transform(identityMatrix, org1)
   t.true(comparePolygons(ret1, exp1))
   t.not(org1, ret1)
@@ -29,7 +29,7 @@ test('poly3: transform() should return a new poly3 with correct values', (t) => 
   ]
 
   const exp2 = { vertices: [[1, 5, 7], [2, 5, 7], [2, 6, 7]] }
-  const org2 = fromPoints([[0, 0, 0], [1, 0, 0], [1, 1, 0]])
+  const org2 = create([[0, 0, 0], [1, 0, 0], [1, 1, 0]])
   const ret2 = transform(translationMatrix, org2)
   t.true(comparePolygons(ret2, exp2))
   t.not(org2, ret2)
@@ -43,7 +43,7 @@ test('poly3: transform() should return a new poly3 with correct values', (t) => 
   ]
 
   const exp3 = { vertices: [[0, 0, 0], [0, -1, 0], [1, -1, 0]] }
-  const org3 = fromPoints([[0, 0, 0], [1, 0, 0], [1, 1, 0]])
+  const org3 = create([[0, 0, 0], [1, 0, 0], [1, 1, 0]])
   const ret3 = transform(rotateZMatrix, org3)
   t.true(comparePolygons(ret3, exp3))
   t.not(org3, ret3)
@@ -55,7 +55,7 @@ test('poly3: transform() should return a new poly3 with correct values', (t) => 
     0, 0, 0, 1
   ]
   const exp4 = { vertices: [[-1, 1, 0], [-1, 0, 0], [0, 0, 0]] }
-  const org4 = fromPoints([[0, 0, 0], [1, 0, 0], [1, 1, 0]])
+  const org4 = create([[0, 0, 0], [1, 0, 0], [1, 1, 0]])
   const ret4 = transform(mirrorMatrix, org4)
   t.true(comparePolygons(ret4, exp4))
   t.not(org4, ret4)

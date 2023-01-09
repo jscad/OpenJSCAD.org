@@ -19,7 +19,7 @@ test('hull (single, geom2)', (t) => {
   t.notThrows(() => geom2.validate(geometry))
   t.is(pts.length, 0)
 
-  geometry = geom2.fromPoints([[5, 5], [-5, 5], [-5, -5], [5, -5]])
+  geometry = geom2.create([[[5, 5], [-5, 5], [-5, -5], [5, -5]]])
   obs = hull(geometry)
   pts = geom2.toPoints(obs)
 
@@ -27,18 +27,18 @@ test('hull (single, geom2)', (t) => {
   t.is(pts.length, 4)
 
   // convex C shape
-  geometry = geom2.fromPoints([
-    [5.00000, 8.66025],
-    [-5.00000, 8.66025],
-    [-10.00000, 0.00000],
-    [-5.00000, -8.66025],
-    [5.00000, -8.66025],
-    [6.00000, -6.92820],
-    [-2.00000, -6.92820],
-    [-6.00000, 0.00000],
-    [-2.00000, 6.92820],
-    [6.00000, 6.92820]
-  ])
+  geometry = geom2.create([[
+    [5, 8.66025],
+    [-5, 8.66025],
+    [-10, 0],
+    [-5, -8.66025],
+    [5, -8.66025],
+    [6, -6.92820],
+    [-2, -6.92820],
+    [-6, 0],
+    [-2, 6.92820],
+    [6, 6.92820]
+  ]])
   obs = hull(geometry)
   pts = geom2.toPoints(obs)
 
@@ -47,23 +47,23 @@ test('hull (single, geom2)', (t) => {
 })
 
 test('hull (multiple, overlapping, geom2)', (t) => {
-  const geometry1 = geom2.fromPoints([[5, 5], [-5, 5], [-5, -5], [5, -5]])
-  const geometry2 = geom2.fromPoints([[3, 3], [-3, 3], [-3, -3], [3, -3]])
-  const geometry3 = geom2.fromPoints([[6, 3], [-6, 3], [-6, -3], [6, -3]])
+  const geometry1 = geom2.create([[[5, 5], [-5, 5], [-5, -5], [5, -5]]])
+  const geometry2 = geom2.create([[[3, 3], [-3, 3], [-3, -3], [3, -3]]])
+  const geometry3 = geom2.create([[[6, 3], [-6, 3], [-6, -3], [6, -3]]])
 
   // convex C shape
-  const geometry4 = geom2.fromPoints([
-    [5.00000, 8.66025],
-    [-5.00000, 8.66025],
-    [-10.00000, 0.00000],
-    [-5.00000, -8.66025],
-    [5.00000, -8.66025],
-    [6.00000, -6.92820],
-    [-2.00000, -6.92820],
-    [-6.00000, 0.00000],
-    [-2.00000, 6.92820],
-    [6.00000, 6.92820]
-  ])
+  const geometry4 = geom2.create([[
+    [5, 8.66025],
+    [-5, 8.66025],
+    [-10, 0],
+    [-5, -8.66025],
+    [5, -8.66025],
+    [6, -6.92820],
+    [-2, -6.92820],
+    [-6, 0],
+    [-2, 6.92820],
+    [6, 6.92820]
+  ]])
 
   // same
   let obs = hull(geometry1, geometry1)
@@ -94,24 +94,24 @@ test('hull (multiple, overlapping, geom2)', (t) => {
 })
 
 test('hull (multiple, various, geom2)', (t) => {
-  const geometry1 = geom2.fromPoints([[6, 6], [0, 6], [0, 0], [6, 0]])
-  const geometry2 = geom2.fromPoints([[6, 3], [-6, 3], [-6, -3], [6, -3]])
-  const geometry3 = geom2.fromPoints([[-10, -10], [0, -20], [10, -10]])
+  const geometry1 = geom2.create([[[6, 6], [0, 6], [0, 0], [6, 0]]])
+  const geometry2 = geom2.create([[[6, 3], [-6, 3], [-6, -3], [6, -3]]])
+  const geometry3 = geom2.create([[[-10, -10], [0, -20], [10, -10]]])
 
   // convex C shape
-  const geometry4 = geom2.fromPoints([
-    [5.00000, 8.66025],
-    [-5.00000, 8.66025],
-    [-10.00000, 0.00000],
-    [-5.00000, -8.66025],
-    [5.00000, -8.66025],
-    [6.00000, -6.92820],
-    [-2.00000, -6.92820],
-    [-6.00000, 0.00000],
-    [-2.00000, 6.92820],
-    [6.00000, 6.92820]
-  ])
-  const geometry5 = geom2.fromPoints([[-17, -17], [-23, -17], [-23, -23], [-17, -23]])
+  const geometry4 = geom2.create([[
+    [5, 8.66025],
+    [-5, 8.66025],
+    [-10, 0],
+    [-5, -8.66025],
+    [5, -8.66025],
+    [6, -6.92820],
+    [-2, -6.92820],
+    [-6, 0],
+    [-2, 6.92820],
+    [6, 6.92820]
+  ]])
+  const geometry5 = geom2.create([[[-17, -17], [-23, -17], [-23, -23], [-17, -23]]])
 
   let obs = hull(geometry1, geometry2)
   let pts = geom2.toPoints(obs)

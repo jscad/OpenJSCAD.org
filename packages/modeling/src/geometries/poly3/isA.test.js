@@ -1,10 +1,10 @@
 import test from 'ava'
 
-import { isA, create, fromPoints } from './index.js'
+import { isA, create } from './index.js'
 
 test('isA: identifies created poly3', (t) => {
   const p1 = create()
-  const p2 = fromPoints([[0, 0, 0], [1, 0, 0], [1, 1, 0]])
+  const p2 = create([[0, 0, 0], [1, 0, 0], [1, 1, 0]])
   t.true(isA(p1))
   t.true(isA(p2))
 })

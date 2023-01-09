@@ -14,13 +14,7 @@ const createGeometryFromClosedOffsets = (paths) => {
   } else {
     internal = internal.reverse()
   }
-  // NOTE: creating path2 from the points ensures proper closure
-  const externalPath = path2.fromPoints({ closed: true }, external)
-  const internalPath = path2.fromPoints({ closed: true }, internal)
-  const externalSides = geom2.toSides(geom2.fromPoints(path2.toPoints(externalPath)))
-  const internalSides = geom2.toSides(geom2.fromPoints(path2.toPoints(internalPath)))
-  externalSides.push(...internalSides)
-  return geom2.fromSides(externalSides)
+  return geom2.create([external, internal])
 }
 
 const createGeometryFromExpandedOpenPath = (paths, segments, corners, delta) => {
@@ -51,7 +45,7 @@ const createGeometryFromExpandedOpenPath = (paths, segments, corners, delta) => 
   }
   const allPoints = []
   allPoints.push(...external, ...e2iCap, ...internal.reverse(), ...i2eCap)
-  return geom2.fromPoints(allPoints)
+  return geom2.create([allPoints])
 }
 
 /*

@@ -35,7 +35,7 @@ test('scale: scaling of a path2 produces expected changes to points', (t) => {
 })
 
 test('scale: scaling of a geom2 produces expected changes to points', (t) => {
-  const geometry = geom2.fromPoints([[-1, 0], [1, 0], [0, 1]])
+  const geometry = geom2.create([[[-1, 0], [1, 0], [0, 1]]])
 
   // scale X
   let scaled = scale([3], geometry)
@@ -133,7 +133,7 @@ test('scale: scaling of a geom3 produces expected changes to polygons', (t) => {
 test('scale: scaling of multiple objects produces expected changes', (t) => {
   const junk = 'hello'
   const geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
-  const geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])
+  const geometry2 = geom2.create([[[-5, -5], [0, 5], [10, -5]]])
 
   const scaled = scale([3, 1, 1], junk, geometry1, geometry2)
 

@@ -35,7 +35,7 @@ test('translate: translating of a path2 produces expected changes to points', (t
 })
 
 test('translate: translating of a geom2 produces expected changes to points', (t) => {
-  const geometry = geom2.fromPoints([[0, 0], [1, 0], [0, 1]])
+  const geometry = geom2.create([[[0, 0], [1, 0], [0, 1]]])
 
   // translate X
   let translated = translate([1], geometry)
@@ -134,7 +134,7 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
 test('translate: translating of multiple objects produces expected changes', (t) => {
   const junk = 'hello'
   const geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
-  const geometry2 = geom2.fromPoints([[-5, -5], [0, 5], [10, -5]])
+  const geometry2 = geom2.create([[[-5, -5], [0, 5], [10, -5]]])
 
   const translated = translate([3, 3, 3], junk, geometry1, geometry2)
   t.is(translated[0], junk)

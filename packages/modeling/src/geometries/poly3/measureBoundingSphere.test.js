@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { mat4 } from '../../maths/index.js'
 
-import { measureBoundingSphere, create, fromPoints, transform } from './index.js'
+import { measureBoundingSphere, create, transform } from './index.js'
 
 test('poly3: measureBoundingSphere() should return correct values', (t) => {
   let ply1 = create()
@@ -11,13 +11,13 @@ test('poly3: measureBoundingSphere() should return correct values', (t) => {
   t.deepEqual(ret1, exp1)
 
   // simple triangle
-  let ply2 = fromPoints([[0, 0, 0], [0, 10, 0], [0, 10, 10]])
+  let ply2 = create([[0, 0, 0], [0, 10, 0], [0, 10, 10]])
   let exp2 = [0, 5, 5, 7.0710678118654755]
   let ret2 = measureBoundingSphere(ply2)
   t.deepEqual(ret2, exp2)
 
   // simple square
-  let ply3 = fromPoints([[0, 0, 0], [0, 10, 0], [0, 10, 10], [0, 0, 10]])
+  let ply3 = create([[0, 0, 0], [0, 10, 0], [0, 10, 10], [0, 0, 10]])
   let exp3 = [0, 5, 5, 7.0710678118654755]
   let ret3 = measureBoundingSphere(ply3)
   t.deepEqual(ret3, exp3)
@@ -35,7 +35,7 @@ test('poly3: measureBoundingSphere() should return correct values', (t) => {
     [0, 1, 3],
     [0, 3, 3]
   ]
-  let ply4 = fromPoints(points)
+  let ply4 = create(points)
   let exp4 = [0, 4.5, 3, 4.6097722286464435]
   let ret4 = measureBoundingSphere(ply4)
   t.deepEqual(ret4, exp4)

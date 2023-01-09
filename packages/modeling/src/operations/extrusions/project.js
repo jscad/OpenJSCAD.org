@@ -52,7 +52,7 @@ const projectGeom3 = (options, geometry) => {
   const projgeoms = projpolys.map((p) => {
     // This clones the points from vec3 to vec2
     const cloned = p.vertices.map(vec2.clone)
-    return geom2.fromPoints(cloned)
+    return geom2.create([cloned])
   })
 
   return unionGeom2(projgeoms)

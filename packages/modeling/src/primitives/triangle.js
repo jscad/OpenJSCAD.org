@@ -110,7 +110,7 @@ const createTriangle = (A, B, C, a, b, c) => {
   const p1 = vec2.fromValues(c, 0)
   const p2 = vec2.fromValues(a, 0)
   vec2.add(p2, vec2.rotate(p2, p2, [0, 0], Math.PI - B), p1)
-  return geom2.fromPoints([p0, p1, p2])
+  return geom2.create([[p0, p1, p2]])
 }
 
 /**

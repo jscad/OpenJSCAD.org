@@ -82,7 +82,7 @@ export const star = (options) => {
     allPoints.push(innerPoints[i])
   }
 
-  return geom2.fromPoints(allPoints)
+  return geom2.create([allPoints])
 }
 
 export default star
