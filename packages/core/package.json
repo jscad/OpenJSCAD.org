@@ -39,7 +39,7 @@
     "@jscad/io": "2.4.4",
     "@jscad/io-utils": "2.0.23",
     "@jscad/modeling": "2.11.0",
-    "json5": "2.2.0",
+    "json5": "2.2.3",
     "strip-bom": "4.0.0"
   },
   "devDependencies": {
