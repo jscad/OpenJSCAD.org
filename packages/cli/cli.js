@@ -3,23 +3,23 @@
 
 // NOTE: this will only run on Node > 6 or needs to be transpiled
 
-// == OpenJSCAD.org CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License
+// == JSCAD CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License
 //
 // Description:
-//   openjscad <file> [-of <format>] [-o <output>]
+//   jscad <file> [-of <format>] [-o <output>]
 // e.g.
-//   openjscad test.jscad
-//   openjscad test.jscad -o test.stl
-//   openjscad test.jscad -o test.amf
-//   openjscad test.jscad -o test.dxf
-//   openjscad test.scad -o testFromSCAD.jscad
-//   openjscad test.scad -o test.stl
-//   openjscad test.stl -o test2.stl      # reprocessed: stl -> jscad -> stl
-//   openjscad test.amf -o test2.jscad
-//   openjscad test.jscad -of amf
-//   openjscad test.jscad -of dxf
-//   openjscad test.jscad -of stl
-//   openjscad name_plate.jscad --name "Just Me" --title "CEO" -o amf test.amf
+//   jscad test.jscad
+//   jscad test.jscad -o test.stl
+//   jscad test.jscad -o test.amf
+//   jscad test.jscad -o test.dxf
+//   jscad test.scad -o testFromSCAD.jscad
+//   jscad test.scad -o test.stl
+//   jscad test.stl -o test2.stl      # reprocessed: stl -> jscad -> stl
+//   jscad test.amf -o test2.jscad
+//   jscad test.jscad -of amf
+//   jscad test.jscad -of dxf
+//   jscad test.jscad -of stl
+//   jscad name_plate.jscad --name "Just Me" --title "CEO" -o amf test.amf
 //
 const fs = require('fs')
 
