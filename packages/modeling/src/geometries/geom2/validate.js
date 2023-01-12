@@ -39,7 +39,7 @@ export const validate = (object) => {
       const a2 = (a1 + 1) % outline.length
       for (let b1 = 0; b1 < outline.length; b1++) {
         const b2 = (b1 + 1) % outline.length
-        if (a1 != b1) {
+        if (a1 !== b1) {
           const int = intersect(outline[a1], outline[a2], outline[b1], outline[b2], true)
           if (int) {
             throw new Error(`geom2 outline ${i} self intersection at ${int}`)
