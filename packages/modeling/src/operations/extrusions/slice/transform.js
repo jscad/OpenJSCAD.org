@@ -14,8 +14,10 @@ import create from './create.js'
  * let newslice = transform(matrix, oldslice)
  */
 export const transform = (matrix, slice) => {
-  const edges = slice.edges.map((edge) => [vec3.transform(vec3.create(), edge[0], matrix), vec3.transform(vec3.create(), edge[1], matrix)])
-  return create(edges)
+  const parts = slice.parts.map((part) => {
+    return part.map((point) => vec3.transform(vec3.create(), point, matrix))
+  })
+  return create(parts)
 }
 
 export default transform

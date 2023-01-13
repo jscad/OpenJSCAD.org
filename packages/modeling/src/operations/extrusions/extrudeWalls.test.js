@@ -9,27 +9,14 @@ import extrudeWalls from './extrudeWalls.js'
 test('extrudeWalls (same shapes)', (t) => {
   const matrix = mat4.fromTranslation(mat4.create(), [0, 0, 10])
 
-  const shape0 = []
-  const shape1 = [
-    [[-10.0, 10.0], [-10.0, -10.0]],
-    [[-10.0, -10.0], [10.0, -10.0]],
-    [[10.0, -10.0], [10.0, 10.0]],
-    [[10.0, 10.0], [-10.0, 10.0]]
-  ]
-  const shape2 = [ // hole
-    [[-10.0, 10.0], [-10.0, -10.0]],
-    [[-10.0, -10.0], [10.0, -10.0]],
-    [[10.0, -10.0], [10.0, 10.0]],
-    [[10.0, 10.0], [-10.0, 10.0]],
-    [[-5.0, -5.0], [-5.0, 5.0]],
-    [[5.0, -5.0], [-5.0, -5.0]],
-    [[5.0, 5.0], [5.0, -5.0]],
-    [[-5.0, 5.0], [5.0, 5.0]]
-  ]
-
-  const slice0 = slice.fromSides(shape0)
-  const slice1 = slice.fromSides(shape1)
-  const slice2 = slice.fromSides(shape2)
+  const slice0 = slice.create([])
+  const slice1 = slice.create([
+    [[-10, 10, 0], [-10, -10, 0], [10, -10, 0], [10, 10, 0]]
+  ])
+  const slice2 = slice.create([
+    [[-10, 10, 0], [-10, -10, 0], [10, -10, 0], [10, 10, 0]],
+    [[-5, -5, 0], [5, -5, 0], [5, 5, 0], [-5, 5, 0]] // hole
+  ])
 
   // empty slices
   let walls = extrudeWalls(slice0, slice0)
@@ -47,29 +34,18 @@ test('extrudeWalls (same shapes)', (t) => {
 test('extrudeWalls (different shapes)', (t) => {
   const matrix = mat4.fromTranslation(mat4.create(), [0, 0, 10])
 
-  const shape1 = [
-    [[-10.0, 10.0], [-10.0, -10.0]],
-    [[-10.0, -10.0], [10.0, -10.0]],
-    [[10.0, -10.0], [10.0, 10.0]]
-  ]
-  const shape2 = [
-    [[-10.0, 10.0], [-10.0, -10.0]],
-    [[-10.0, -10.0], [10.0, -10.0]],
-    [[10.0, -10.0], [10.0, 10.0]],
-    [[10.0, 10.0], [-10.0, 10.0]]
-  ]
-  const shape3 = [
-    [[2.50000, -4.33013], [5.00000, 0.00000]],
-    [[5.00000, 0.00000], [2.50000, 4.33013]],
-    [[2.50000, 4.33013], [-2.50000, 4.33013]],
-    [[-2.50000, 4.33013], [-5.00000, 0.00000]],
-    [[-5.00000, 0.00000], [-2.50000, -4.33013]],
-    [[-2.50000, -4.33013], [2.50000, -4.33013]]
-  ]
-
-  const slice1 = slice.fromSides(shape1)
-  const slice2 = slice.fromSides(shape2)
-  const slice3 = slice.fromSides(shape3)
+  const slice1 = slice.create([[[-10, 10, 0], [-10, -10, 0], [10, -10, 0]]])
+  const slice2 = slice.create([
+    [[-10, 10, 0], [-10, -10, 0], [10, -10, 0], [10, 10, 0]]
+  ])
+  const slice3 = slice.create([[
+    [2.5, -4.33013, 0],
+    [5, 0, 0],
+    [2.5, 4.33013, 0],
+    [-2.5, 4.33013, 0],
+    [-5, 0, 0],
+    [-2.5, -4.33013, 0]
+  ]])
 
   let walls = extrudeWalls(slice1, slice.transform(matrix, slice2))
   t.is(walls.length, 24)

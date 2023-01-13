@@ -6,8 +6,8 @@
  */
 export const isA = (object) => {
   if (object && typeof object === 'object') {
-    if ('edges' in object) {
-      if (Array.isArray(object.edges)) {
+    if ('parts' in object) {
+      if (Array.isArray(object.parts)) {
         return true
       }
     }
