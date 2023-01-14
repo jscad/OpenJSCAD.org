@@ -1,5 +1,6 @@
 /**
- * Calculate the intersect point of the two line segments (p1-p2 and p3-p4), end points included.
+ * Calculate the intersect point of the two line segments (p1-p2 and p3-p4).
+ * If the endpointTouch parameter is false, intersections at segment end points are excluded.
  * Note: If the line segments do NOT intersect then undefined is returned.
  * @see http://paulbourke.net/geometry/pointlineplane/
  * @param {vec2} p1 - first point of first line segment
