@@ -29,8 +29,9 @@ export const serialize = (options, mimeType, ...objects) => {
     const serializer = serializers[mimeType]
     const data = serializer(options, ...objects)
     return { data, mimeType }
+  } else {
+    throw new Error(`Unknown mime type (${mimeType})`)
   }
-  throw new Error(`Unknown mime type (${mimeType})`)
 }
 
 export default serialize

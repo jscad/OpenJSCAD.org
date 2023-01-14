@@ -171,7 +171,6 @@ const getMimeType = (extension) => {
 export {
   supportedFormats,
 
-  conversionFormats,
   getMimeType,
   supportedInputExtensions,
   supportedOutputExtensions,
