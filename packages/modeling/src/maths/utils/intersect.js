@@ -6,11 +6,11 @@
  * @param {vec2} p2 - second point of first line segment
  * @param {vec2} p3 - first point of second line segment
  * @param {vec2} p4 - second point of second line segment
- * @param {Boolean} noEndpointTouch - skip intersections at segment endpoints
+ * @param {Boolean} endpointTouch - include intersections at segment endpoints
  * @returns {vec2} intersection point of the two line segments, or undefined
  * @alias module:modeling/maths/utils.intersect
  */
-export const intersect = (p1, p2, p3, p4, noEndpointTouch) => {
+export const intersect = (p1, p2, p3, p4, endpointTouch = true) => {
   // Check if none of the lines are of length 0
   if ((p1[0] === p2[0] && p1[1] === p2[1]) || (p3[0] === p4[0] && p3[1] === p4[1])) {
     return undefined
@@ -32,7 +32,7 @@ export const intersect = (p1, p2, p3, p4, noEndpointTouch) => {
   }
 
   // is the intersection at the end of a segment
-  if (noEndpointTouch && (ua === 0 || ua === 1 || ub === 0 || ub === 1)) {
+  if (!endpointTouch && (ua === 0 || ua === 1 || ub === 0 || ub === 1)) {
     return undefined
   }
 
