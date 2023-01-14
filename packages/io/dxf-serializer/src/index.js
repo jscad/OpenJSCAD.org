@@ -453,6 +453,6 @@ const getColorNumber = (object, options) => {
 }
 
 export {
-  serialize,
-  mimeType
+  mimeType,
+  serialize
 }

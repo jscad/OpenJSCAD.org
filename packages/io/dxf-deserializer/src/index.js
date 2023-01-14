@@ -599,6 +599,6 @@ const deserialize = (options, src) => {
 const mimeType = 'application/dxf'
 
 export {
-  deserialize,
-  mimeType
+  mimeType,
+  deserialize
 }

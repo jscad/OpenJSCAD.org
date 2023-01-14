@@ -217,6 +217,6 @@ module.exports = {main}
 const mimeType = 'application/object'
 
 export {
-  deserialize,
-  mimeType
+  mimeType,
+  deserialize
 }

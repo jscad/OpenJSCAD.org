@@ -126,6 +126,6 @@ const getColorName = (object) => {
 }
 
 export {
-  serialize,
-  mimeType
+  mimeType,
+  serialize
 }

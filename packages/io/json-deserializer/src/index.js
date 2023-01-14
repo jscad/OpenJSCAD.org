@@ -89,6 +89,6 @@ const translateToObject = (object, index) => `const json${index} = ${JSON.string
 const mimeType = 'application/json'
 
 export {
-  deserialize,
-  mimeType
+  mimeType,
+  deserialize
 }

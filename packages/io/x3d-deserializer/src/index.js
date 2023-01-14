@@ -47,6 +47,6 @@ const deserialize = (options, input) => {
 const mimeType = 'model/x3d+xml'
 
 export {
-  deserialize,
-  mimeType
+  mimeType,
+  deserialize
 }

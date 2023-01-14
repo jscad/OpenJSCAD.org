@@ -228,6 +228,6 @@ const convertToTriangles = (polygon, index) => {
 }
 
 export {
-  serialize,
-  mimeType
+  mimeType,
+  serialize
 }

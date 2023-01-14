@@ -434,6 +434,6 @@ const createSvgParser = (src, pxPmm) => {
 const mimeType = 'image/svg+xml'
 
 export {
-  deserialize,
-  mimeType
+  mimeType,
+  deserialize
 }

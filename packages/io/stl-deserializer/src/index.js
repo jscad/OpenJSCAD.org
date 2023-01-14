@@ -413,6 +413,6 @@ const solid${index} = () => {
 const mimeType = 'application/sla'
 
 export {
-  deserialize,
-  mimeType
+  mimeType,
+  deserialize
 }

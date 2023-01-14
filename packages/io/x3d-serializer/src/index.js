@@ -254,6 +254,6 @@ const polygons2coordinates = (polygons, options) => {
 }
 
 export {
-  serialize,
-  mimeType
+  mimeType,
+  serialize
 }
