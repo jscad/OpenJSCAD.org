@@ -3,4 +3,4 @@ import Vec2 from '../../maths/vec2/type'
 
 export default create
 
-declare function create(vertices?: Array<Vec2>): Poly2
+declare function create(points?: Array<Vec2>): Poly2

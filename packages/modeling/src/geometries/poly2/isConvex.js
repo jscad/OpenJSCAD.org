@@ -5,13 +5,13 @@
  * @alias module:modeling/geometries/poly2.isConvex
  */
 export const isConvex = (polygon) => {
-  const numvertices = polygon.vertices.length
-  if (numvertices > 2) {
-    const vertices = polygon.vertices
+  const numPoints = polygon.points.length
+  if (numPoints > 2) {
+    const points = polygon.points
     let prev = 0
     let curr = 0
-    for (let i = 0; i < numvertices; i++) {
-      curr = crossBetweenSegments(vertices[i], vertices[(i + 1) % numvertices], vertices[(i + 2) % numvertices])
+    for (let i = 0; i < numPoints; i++) {
+      curr = crossBetweenSegments(points[i], points[(i + 1) % numPoints], points[(i + 2) % numPoints])
       if (curr !== 0) {
         // sum angle of crosses, looking for a change in direction
         if (curr * prev < 0) {

@@ -19,8 +19,8 @@ export const validate = (object) => {
   }
 
   // check for empty polygon
-  if (object.vertices.length < 3) {
-    throw new Error(`poly2 not enough vertices ${object.vertices.length}`)
+  if (object.points.length < 3) {
+    throw new Error(`poly2 not enough points ${object.points.length}`)
   }
   // check area
   if (measureArea(object) <= 0) {
@@ -28,19 +28,19 @@ export const validate = (object) => {
   }
 
   // check for duplicate points
-  for (let i = 0; i < object.vertices.length; i++) {
-    if (vec2.equals(object.vertices[i], object.vertices[(i + 1) % object.vertices.length])) {
-      throw new Error(`poly2 duplicate vertex at ${i}: [${object.vertices[i]}]`)
+  for (let i = 0; i < object.points.length; i++) {
+    if (vec2.equals(object.points[i], object.points[(i + 1) % object.points.length])) {
+      throw new Error(`poly2 duplicate point at ${i}: [${object.points[i]}]`)
     }
   }
 
   // check for infinity, nan
-  object.vertices.forEach((vertex) => {
-    if (vertex.length != 2) {
-      throw new Error(`poly2 invalid vertex ${vertex}`)
+  object.points.forEach((point) => {
+    if (point.length != 2) {
+      throw new Error(`poly2 invalid point ${point}`)
     }
-    if (!vertex.every(Number.isFinite)) {
-      throw new Error(`poly2 invalid vertex ${vertex}`)
+    if (!point.every(Number.isFinite)) {
+      throw new Error(`poly2 invalid point ${point}`)
     }
   })
 }
