@@ -26,7 +26,6 @@ This package is a metapackage and includes all the input/output format handling 
 ie: file data => JSCAD code or JSCAD geometry
 
 Following formats are supported as inputs
-- [AMF](../amf-deserializer)
 - [DXF](../dxf-deserializer)
 - [JSON](../json-deserializer)
 - [OBJ](../obj-deserializer)
@@ -39,7 +38,6 @@ Following formats are supported as inputs
 ie: geometry => blob
 
 Following formats are supported as outputs
-- [AMF](../amf-serializer)
 - [DXF](../dxf-serializer)
 - [JSON](../json-serializer)
 - [OBJ](../obj-serializer)

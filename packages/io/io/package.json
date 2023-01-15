@@ -4,9 +4,12 @@
   "description": "Meta Package for JSCAD IO Packages",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
-  "scripts": {},
+  "scripts": {
+    "coverage": "nyc --all --reporter=html --reporter=text npm test",
+    "test": "ava --verbose --timeout 2m './tests/*.test.js'"
+  },
   "contributors": [
     {
       "name": "Rene K. Mueller",
@@ -32,8 +35,6 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/3mf-serializer": "workspace:2.1.6",
-    "@jscad/amf-deserializer": "workspace:2.3.2",
-    "@jscad/amf-serializer": "workspace:2.1.12",
     "@jscad/array-utils": "workspace:2.1.4",
     "@jscad/dxf-deserializer": "workspace:2.3.19",
     "@jscad/dxf-serializer": "workspace:2.1.12",
@@ -49,6 +50,10 @@
     "@jscad/svg-serializer": "workspace:2.3.10",
     "@jscad/x3d-deserializer": "workspace:2.2.2",
     "@jscad/x3d-serializer": "workspace:2.4.2"
+  },
+  "devDependencies": {
+    "ava": "4.3.3",
+    "nyc": "15.1.0"
   },
   "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"
 }

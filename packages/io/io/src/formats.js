@@ -2,12 +2,13 @@ import { geometries } from '@jscad/modeling'
 
 // handled format descriptions
 // note: order is important as regular expressions are created from extentions
+// see https://www.iana.org/assignments/media-types/media-types.xhtml
 const supportedFormats = {
   stl: {
     displayName: 'STL (Binary)',
     description: 'STereoLithography, Binary',
     extension: 'stl',
-    mimetype: 'application/sla',
+    mimetype: 'model/stl',
     deserializable: true,
     convertGeom3: false,
     convertGeom2: false
@@ -16,7 +17,7 @@ const supportedFormats = {
     displayName: 'STL (ASCII)',
     description: 'STereoLithography, ASCII',
     extension: 'stl',
-    mimetype: 'application/sla',
+    mimetype: 'model/stl',
     deserializable: false, // just once
     convertGeom3: true,
     convertGeom2: false
@@ -25,17 +26,8 @@ const supportedFormats = {
     displayName: 'STL (Binary)',
     description: 'STereoLithography, Binary',
     extension: 'stl',
-    mimetype: 'application/sla',
+    mimetype: 'model/stl',
     deserializable: false, // just once
-    convertGeom3: true,
-    convertGeom2: false
-  },
-  amf: {
-    displayName: 'AMF (experimental)',
-    description: 'Additive Manufacturing File Format',
-    extension: 'amf',
-    mimetype: 'application/amf+xml',
-    deserializable: true,
     convertGeom3: true,
     convertGeom2: false
   },
@@ -43,7 +35,7 @@ const supportedFormats = {
     displayName: 'DXF (ASCII)',
     description: 'AutoCAD Drawing Exchange Format',
     extension: 'dxf',
-    mimetype: 'application/dxf',
+    mimetype: 'image/vnd.dxf',
     deserializable: true,
     convertGeom3: true,
     convertGeom2: true
@@ -79,7 +71,7 @@ const supportedFormats = {
     displayName: 'OBJ',
     description: 'Wavefront OBJ File',
     extension: 'obj',
-    mimetype: 'text/plain',
+    mimetype: 'model/obj',
     deserializable: true,
     convertGeom3: true,
     convertGeom2: false
@@ -112,22 +104,6 @@ const supportedFormats = {
     convertGeom2: false
   }
 }
-
-// handled input formats that can be converted to jscad code
-const conversionFormats = [
-// 3D file formats
-  'amf',
-  'js',
-  'jscad',
-  'obj',
-  'scad',
-  'stl',
-  'dxf',
-  // 2D file formats
-  'svg',
-  'ttf',
-  'woff'
-]
 
 const supportedFormatsForObjects = (objects) => {
   const objectFormats = []
@@ -185,9 +161,27 @@ const supportedInputExtensions = () => {
   return supported
 }
 
+const getMimeType = (extension) => {
+  for (const format in supportedFormats) {
+    const meta = supportedFormats[format]
+    if (meta.extension === extension) return meta.mimetype
+  }
+  return null
+}
+
+const getExtension = (mimeType) => {
+  for (const format in supportedFormats) {
+    const meta = supportedFormats[format]
+    if (meta.mimetype === mimeType) return meta.extension
+  }
+  return null
+}
+
 export {
   supportedFormats,
-  conversionFormats,
+
+  getExtension,
+  getMimeType,
   supportedInputExtensions,
   supportedOutputExtensions,
   supportedOutputFormats,

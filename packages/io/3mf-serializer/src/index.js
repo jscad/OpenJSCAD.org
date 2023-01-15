@@ -12,24 +12,20 @@
  * const { serializer, mimeType } = require('@jscad/3mf-serializer')
  */
 
-
-import { zipSync } from 'fflate'
-import { strToU8 } from 'fflate'
+import { zipSync, strToU8 } from 'fflate'
 
 import { stringify } from '@jscad/io-utils'
 
 import { colors, geometries, modifiers } from '@jscad/modeling'
 import { flatten, toArray } from '@jscad/array-utils'
 
-
 const mimeType = 'model/3mf'
-const fileExtension = '3mf'
 
 /**
  * Serialize the give objects to 3MF contents (XML) or 3MF packaging (OPC).
  * @see https://3mf.io/specification/
  * @param {Object} [options] - options for serialization
- * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer
+ * @param {String} [options.unit='millimeter'] - unit of design; micron, millimeter, inch, feet, meter or micrometer
  * @param {Boolean} [options.metadata=true] - add metadata to 3MF contents, such at CreationDate
  * @param {Array} [options.defaultcolor=[0,0,0,1]] - default color for objects
  * @param {Boolean} [options.compress=true] - package and compress the contents
@@ -41,9 +37,9 @@ const fileExtension = '3mf'
  */
 const serialize = (options, ...objects) => {
   const defaults = {
-    unit: 'millimeter', // micron, millimeter, centimeter, inch, foot, meter
+    unit: 'millimeter',
     metadata: true,
-    defaultcolor: [255/255, 160/255, 0, 1], // JSCAD Orange
+    defaultcolor: [255 / 255, 160 / 255, 0, 1], // JSCAD orange
     compress: true
   }
   options = Object.assign({}, defaults, options)
@@ -51,7 +47,7 @@ const serialize = (options, ...objects) => {
   objects = flatten(objects)
 
   // convert only 3D geometries
-  let objects3d = objects.filter((object) => geometries.geom3.isA(object))
+  const objects3d = objects.filter((object) => geometries.geom3.isA(object))
 
   if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to 3MF')
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to 3MF')
@@ -83,7 +79,7 @@ ${stringify(body, 2)}`
       '3D': {
         '3dmodel.model': strToU8(xml)
       },
-      '_rels': {
+      _rels: {
         '.rels': strToU8(rels)
       },
       '[Content_Types].xml': strToU8(contenttype)
@@ -232,7 +228,6 @@ const convertToTriangles = (polygon, index) => {
 }
 
 export {
-  serialize,
   mimeType,
-  fileExtension
+  serialize
 }

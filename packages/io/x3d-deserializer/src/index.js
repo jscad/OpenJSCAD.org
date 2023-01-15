@@ -44,9 +44,9 @@ const deserialize = (options, input) => {
   return options.output === 'script' ? translate(options, input) : instantiate(options, input)
 }
 
-const extension = 'x3d'
+const mimeType = 'model/x3d+xml'
 
 export {
-  deserialize,
-  extension
+  mimeType,
+  deserialize
 }

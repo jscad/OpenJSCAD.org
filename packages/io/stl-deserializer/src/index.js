@@ -410,9 +410,9 @@ const solid${index} = () => {
   return src
 }
 
-const extension = 'stl'
+const mimeType = 'model/stl'
 
 export {
-  deserialize,
-  extension
+  mimeType,
+  deserialize
 }

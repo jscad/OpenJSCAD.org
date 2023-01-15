@@ -1,3 +1,9 @@
+import { geometries, modifiers } from '@jscad/modeling'
+
+import { flatten } from '@jscad/array-utils'
+
+import { stringify } from '@jscad/io-utils'
+
 /**
  * Serializer of JSCAD geometries to X3D source data (XML).
  *
@@ -13,12 +19,7 @@
  * const { serializer, mimeType } = require('@jscad/x3d-serializer')
  */
 
-import { geometries, modifiers } from '@jscad/modeling'
 const { geom2, geom3, path2, poly2, poly3 } = geometries
-
-import { flatten, toArray } from '@jscad/array-utils'
-
-import { stringify } from '@jscad/io-utils'
 
 const mimeType = 'model/x3d+xml'
 
@@ -67,11 +68,11 @@ const serialize = (options, ...objects) => {
     body.push(['head', {},
       ['meta', { name: 'creator', content: 'Created by JSCAD' }],
       ['meta', { name: 'reference', content: 'https://www.openjscad.xyz' }],
-      ['meta', { name: 'created', content: new Date().toISOString()}]
+      ['meta', { name: 'created', content: new Date().toISOString() }]
     ])
   } else {
     body.push(['head', {},
-      ['meta', { name: 'creator', content: 'Created by JSCAD' }],
+      ['meta', { name: 'creator', content: 'Created by JSCAD' }]
     ])
   }
   body = body.concat(convertObjects(objects, options))
@@ -145,13 +146,13 @@ const convertGeom2 = (object, options) => {
  */
 const convertPolyline2D = (object, options) => {
   const lineSegments = object.vertices.map((p) => `${p[0]} ${p[1]}`).join(' ')
-  return ['Polyline2D', {lineSegments}]
+  return ['Polyline2D', { lineSegments }]
 }
 
 const convertAppearance = (object, options) => {
   const diffuseColor = object.color.join(' ')
   const emissiveColor = object.color.join(' ')
-  return ['Appearance', ['Material', {diffuseColor, emissiveColor}]]
+  return ['Appearance', ['Material', { diffuseColor, emissiveColor }]]
 }
 
 /*
@@ -176,9 +177,9 @@ const convertMesh = (object, options) => {
   const faceset = [
     'IndexedTriangleSet',
     { ccw: 'true', colorPerVertex: 'false', solid: 'false', index: indexList },
-    ['Coordinate', { point: pointList }],
+    ['Coordinate', { point: pointList }]
   ]
-  if (! object.color) {
+  if (!object.color) {
     faceset.push(['Color', { color: colorList }])
   }
   return faceset
@@ -253,6 +254,6 @@ const polygons2coordinates = (polygons, options) => {
 }
 
 export {
-  serialize,
-  mimeType
+  mimeType,
+  serialize
 }

@@ -1,15 +1,3 @@
-/*
-JSCAD Object to JSON Notation Serialization
-
-Notes:
-1) geom2 conversion to:
-     JSON
-2) geom3 conversion to:
-     JSON
-3) path2 conversion to:
-     JSON
-*/
-
 /**
  * Serializer of JSCAD geometries to JSON strings.
  * @module io/json-serializer
@@ -18,6 +6,8 @@ Notes:
  */
 
 import { utils } from '@jscad/modeling'
+
+const mimeType = 'application/json'
 
 // Replace all typed arrays in geometries with standard Arrays
 // NOTE: 'this' in replacer is the object in which key was found
@@ -64,9 +54,7 @@ const serialize = (options, ...objects) => {
   return [notation]
 }
 
-const mimeType = 'application/json'
-
 export {
-  serialize,
-  mimeType
+  mimeType,
+  serialize
 }
