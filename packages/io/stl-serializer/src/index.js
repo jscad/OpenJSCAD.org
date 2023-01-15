@@ -12,7 +12,7 @@ import { flatten, toArray } from '@jscad/array-utils'
 import { serializeBinary } from './serializeBinary.js'
 import { serializeText } from './serializeText.js'
 
-const mimeType = 'application/sla'
+const mimeType = 'model/stl'
 
 /**
  * Serialize the give objects to STL mesh.

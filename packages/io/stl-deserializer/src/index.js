@@ -410,7 +410,7 @@ const solid${index} = () => {
   return src
 }
 
-const mimeType = 'application/sla'
+const mimeType = 'model/stl'
 
 export {
   mimeType,

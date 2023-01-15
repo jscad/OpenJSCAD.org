@@ -2,12 +2,13 @@ import { geometries } from '@jscad/modeling'
 
 // handled format descriptions
 // note: order is important as regular expressions are created from extentions
+// see https://www.iana.org/assignments/media-types/media-types.xhtml
 const supportedFormats = {
   stl: {
     displayName: 'STL (Binary)',
     description: 'STereoLithography, Binary',
     extension: 'stl',
-    mimetype: 'application/sla',
+    mimetype: 'model/stl',
     deserializable: true,
     convertGeom3: false,
     convertGeom2: false
@@ -16,7 +17,7 @@ const supportedFormats = {
     displayName: 'STL (ASCII)',
     description: 'STereoLithography, ASCII',
     extension: 'stl',
-    mimetype: 'application/sla',
+    mimetype: 'model/stl',
     deserializable: false, // just once
     convertGeom3: true,
     convertGeom2: false
@@ -25,7 +26,7 @@ const supportedFormats = {
     displayName: 'STL (Binary)',
     description: 'STereoLithography, Binary',
     extension: 'stl',
-    mimetype: 'application/sla',
+    mimetype: 'model/stl',
     deserializable: false, // just once
     convertGeom3: true,
     convertGeom2: false
@@ -34,7 +35,7 @@ const supportedFormats = {
     displayName: 'DXF (ASCII)',
     description: 'AutoCAD Drawing Exchange Format',
     extension: 'dxf',
-    mimetype: 'application/dxf',
+    mimetype: 'image/vnd.dxf',
     deserializable: true,
     convertGeom3: true,
     convertGeom2: true
@@ -70,7 +71,7 @@ const supportedFormats = {
     displayName: 'OBJ',
     description: 'Wavefront OBJ File',
     extension: 'obj',
-    mimetype: 'text/plain',
+    mimetype: 'model/obj',
     deserializable: true,
     convertGeom3: true,
     convertGeom2: false
@@ -168,9 +169,18 @@ const getMimeType = (extension) => {
   return null
 }
 
+const getExtension = (mimeType) => {
+  for (const format in supportedFormats) {
+    const meta = supportedFormats[format]
+    if (meta.mimetype === mimeType) return meta.extension
+  }
+  return null
+}
+
 export {
   supportedFormats,
 
+  getExtension,
   getMimeType,
   supportedInputExtensions,
   supportedOutputExtensions,

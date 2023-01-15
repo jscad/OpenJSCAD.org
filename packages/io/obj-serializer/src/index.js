@@ -13,7 +13,7 @@ import { colors, geometries, modifiers } from '@jscad/modeling'
 
 import { flatten, toArray } from '@jscad/array-utils'
 
-const mimeType = 'application/object'
+const mimeType = 'model/obj'
 
 /**
  * Serialize the give objects (geometry) to OBJ source data.

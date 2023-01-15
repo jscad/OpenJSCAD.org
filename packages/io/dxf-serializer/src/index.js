@@ -6,7 +6,7 @@ import colorindex2017 from './colorindex2017.js'
 
 const { geom3, geom2, path2 } = geometries
 
-const mimeType = 'application/dxf'
+const mimeType = 'image/vnd.dxf'
 
 /**
  * Serializer of JSCAD geometries to DXF entities.

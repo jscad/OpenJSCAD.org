@@ -596,7 +596,7 @@ const deserialize = (options, src) => {
   return options.output === 'script' ? translate(src, options) : instantiate(src, options)
 }
 
-const mimeType = 'application/dxf'
+const mimeType = 'image/vnd.dxf'
 
 export {
   mimeType,

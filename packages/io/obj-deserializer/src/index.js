@@ -214,7 +214,7 @@ module.exports = {main}
   return code
 }
 
-const mimeType = 'application/object'
+const mimeType = 'model/obj'
 
 export {
   mimeType,
