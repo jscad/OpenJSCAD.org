@@ -14,8 +14,8 @@ export const equals = (a, b) => {
 
   const len = a.contours.length
   for (let i = 0; i < len; i++) {
+    const aPoint = a.contours[i]
     for (let j = 0; j < len; j++) {
-      const aPoint = a.contours[i]
       const bPoint = b.contours[j]
       if (!vec3.equals(aPoint, bPoint)) {
         return false

@@ -8,10 +8,9 @@ import create from './create.js'
  * @alias module:modeling/extrusions/slice.reverse
  */
 export const reverse = (slice) => {
-  const out = create()
-  // reverse the contours
-  out.contours = slice.contours.map((contour) => contour.slice().reverse())
-  return out
+  // reverse each contour
+  const contours = slice.contours.map((contour) => contour.slice().reverse())
+  return create(contours)
 }
 
 export default reverse
