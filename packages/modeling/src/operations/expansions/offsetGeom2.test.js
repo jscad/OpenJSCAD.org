@@ -1,6 +1,7 @@
 import test from 'ava'
 
 import { geom2 } from '../../geometries/index.js'
+import { roundedRectangle } from '../../primitives/index.js'
 
 import { offset } from './index.js'
 
@@ -197,4 +198,10 @@ test('offset (options): offsetting of round geom2 produces expected offset geom2
   t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 16)
   t.true(comparePoints(pts, exp))
+})
+
+test('offset (options): offsetting issue #1017', (t) => {
+  const geometry = roundedRectangle({ size: [10, 10], segments: 4 })
+  const obs = offset({ delta: -2, corners: 'round' }, geometry)
+  t.notThrows.skip(() => geom2.validate(obs))
 })
