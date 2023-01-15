@@ -110,8 +110,8 @@ export const extrudeRotate = (options, geometry) => {
 
   const rotationPerSlice = totalRotation / segments
   const isCapped = Math.abs(totalRotation) < TAU
-  const baseSlice = slice.fromSides(geom2.toSides(geometry))
-  slice.reverse(baseSlice, baseSlice)
+  let baseSlice = slice.fromGeom2(geometry)
+  baseSlice = slice.reverse(baseSlice)
 
   const matrix = mat4.create()
   const createSlice = (progress, index, base) => {

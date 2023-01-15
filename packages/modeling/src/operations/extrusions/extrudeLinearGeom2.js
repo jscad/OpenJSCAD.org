@@ -36,11 +36,8 @@ export const extrudeGeom2 = (options, geometry) => {
   // convert to vector in order to perform transforms
   const offsetv = vec3.clone(offset)
 
-  const baseSides = geom2.toSides(geometry)
-  if (baseSides.length === 0) throw new Error('the given geometry cannot be empty')
-
-  const baseSlice = slice.fromSides(baseSides)
-  if (offsetv[2] < 0) slice.reverse(baseSlice, baseSlice)
+  let baseSlice = slice.fromGeom2(geometry)
+  if (offsetv[2] < 0) baseSlice = slice.reverse(baseSlice)
 
   const matrix = mat4.create()
   const createTwist = (progress, index, base) => {

@@ -6,8 +6,8 @@
  */
 export const isA = (object) => {
   if (object && typeof object === 'object') {
-    if ('edges' in object) {
-      if (Array.isArray(object.edges)) {
+    if ('contours' in object) {
+      if (Array.isArray(object.contours)) {
         return true
       }
     }

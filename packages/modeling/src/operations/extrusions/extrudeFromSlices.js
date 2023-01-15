@@ -5,13 +5,12 @@ import * as geom3 from '../../geometries/geom3/index.js'
 import * as poly3 from '../../geometries/poly3/index.js'
 
 import * as slice from './slice/index.js'
-import repairSlice from './slice/repair.js'
 
 import extrudeWalls from './extrudeWalls.js'
 
 const defaultCallback = (progress, index, base) => {
   let baseSlice = null
-  if (geom2.isA(base)) baseSlice = slice.fromSides(geom2.toSides(base))
+  if (geom2.isA(base)) baseSlice = slice.fromGeom2(base)
   if (poly3.isA(base)) baseSlice = slice.fromPoints(poly3.toPoints(base))
 
   return progress === 0 || progress === 1 ? slice.transform(mat4.fromTranslation(mat4.create(), [0, 0, progress]), baseSlice) : null
@@ -50,18 +49,11 @@ export const extrudeFromSlices = (options, base) => {
     capStart: true,
     capEnd: true,
     close: false,
-    repair: true,
     callback: defaultCallback
   }
-  const { numberOfSlices, capStart, capEnd, close, repair, callback: generate } = Object.assign({ }, defaults, options)
+  const { numberOfSlices, capStart, capEnd, close, callback: generate } = Object.assign({ }, defaults, options)
 
   if (numberOfSlices < 2) throw new Error('numberOfSlices must be 2 or more')
-
-  // Repair gaps in the base slice
-  if (repair) {
-    // note: base must be a slice, if base is geom2 this doesn't repair
-    base = repairSlice(base)
-  }
 
   const sMax = numberOfSlices - 1
 
@@ -77,8 +69,7 @@ export const extrudeFromSlices = (options, base) => {
     if (currentSlice) {
       if (!slice.isA(currentSlice)) throw new Error('the callback function must return slice objects')
 
-      const edges = slice.toEdges(currentSlice)
-      if (edges.length === 0) throw new Error('the callback function must return slices with one or more edges')
+      if (currentSlice.contours.length === 0) throw new Error('the callback function must return slices with one or more contours')
 
       if (prevSlice) {
         polygons = polygons.concat(extrudeWalls(prevSlice, currentSlice))

@@ -1,27 +1,29 @@
 import * as vec3 from '../../../maths/vec3/index.js'
 
 /**
- * Determine if the given slices have the same edges.
+ * Determine if the given slices have the same contours.
  * @param {slice} a - the first slice to compare
  * @param {slice} b - the second slice to compare
  * @returns {Boolean} true if the slices are equal
  * @alias module:modeling/extrusions/slice.equals
  */
 export const equals = (a, b) => {
-  const aedges = a.edges
-  const bedges = b.edges
-
-  if (aedges.length !== bedges.length) {
+  if (a.contours.length !== b.contours.length) {
     return false
   }
 
-  const isEqual = aedges.reduce((acc, aedge, i) => {
-    const bedge = bedges[i]
-    const d = vec3.squaredDistance(aedge[0], bedge[0])
-    return acc && (d < Number.EPSILON)
-  }, true)
+  const len = a.contours.length
+  for (let i = 0; i < len; i++) {
+    const aPoint = a.contours[i]
+    for (let j = 0; j < len; j++) {
+      const bPoint = b.contours[j]
+      if (!vec3.equals(aPoint, bPoint)) {
+        return false
+      }
+    }
+  }
 
-  return isEqual
+  return true
 }
 
 export default equals

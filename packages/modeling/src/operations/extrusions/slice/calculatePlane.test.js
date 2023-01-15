@@ -3,7 +3,7 @@ import test from 'ava'
 import { TAU } from '../../../maths/constants.js'
 import { mat4 } from '../../../maths/index.js'
 
-import { calculatePlane, fromPoints, transform } from './index.js'
+import { calculatePlane, create, fromPoints, transform } from './index.js'
 
 import { compareVectors } from '../../../../test/helpers/index.js'
 
@@ -32,4 +32,12 @@ test('slice: calculatePlane() returns correct plans for various slices', (t) => 
   const slice6 = fromPoints([[4, 0, 0], [-4, 0, 0], [-4, 5, 0], [-6, 5, 0], [-4, 7, 0], [4, 7, 0], [6, 5, 0], [4, 5, 0]])
   const plane6 = calculatePlane(slice6)
   t.true(compareVectors(plane6, [0, 0, -1, 0]))
+
+  // from extrude tests
+  const slice7 = create([
+    [[-10, 10, 0], [-10, -10, 0], [10, -10, 0], [10, 10, 0]],
+    [[-5, -5, 0], [-5, 5, 0], [5, 5, 0], [5, -5, 0]]
+  ])
+  const plane7 = calculatePlane(slice7)
+  t.true(compareVectors(plane7, [0, 0, 1, 0]))
 })

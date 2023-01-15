@@ -8,6 +8,15 @@
  * @example
  * let sharededges = toEdges(slice)
  */
-export const toEdges = (slice) => slice.edges
+export const toEdges = (slice) => {
+  const edges = []
+  slice.contours.forEach((contour) => {
+    contour.forEach((point, i) => {
+      const next = contour[(i + 1) % contour.length]
+      edges.push([point, next])
+    })
+  })
+  return edges
+}
 
 export default toEdges
