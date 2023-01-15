@@ -10,7 +10,7 @@
  */
 export const toPoints = (slice) => {
   const points = []
-  slice.parts.forEach((part) => {
+  slice.contours.forEach((part) => {
     part.forEach((point) => {
       points.push(point)
     })

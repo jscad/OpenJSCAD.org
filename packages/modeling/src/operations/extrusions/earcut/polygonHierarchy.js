@@ -28,7 +28,7 @@ export class PolygonHierarchy {
     this.basisMap = new Map()
 
     // project slice onto 2D plane
-    const projected = slice.parts.map((part) => part.map((v) => this.to2D(v)))
+    const projected = slice.contours.map((part) => part.map((v) => this.to2D(v)))
 
     // compute polygon hierarchies, assign holes to solids
     const geometry = geom2.create(projected)

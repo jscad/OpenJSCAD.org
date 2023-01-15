@@ -12,10 +12,10 @@ import create from './create.js'
  */
 export const fromGeom2 = (geometry) => {
   // Convert from 2D points to 3D
-  const parts = toOutlines(geometry).map((outline) => {
+  const contours = toOutlines(geometry).map((outline) => {
     return outline.map((point) => vec3.fromVec2(vec3.create(), point))
   })
-  return create(parts)
+  return create(contours)
 }
 
 export default fromGeom2

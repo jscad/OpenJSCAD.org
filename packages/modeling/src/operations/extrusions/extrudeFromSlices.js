@@ -69,7 +69,7 @@ export const extrudeFromSlices = (options, base) => {
     if (currentSlice) {
       if (!slice.isA(currentSlice)) throw new Error('the callback function must return slice objects')
 
-      if (currentSlice.parts.length === 0) throw new Error('the callback function must return slices with one or more parts')
+      if (currentSlice.contours.length === 0) throw new Error('the callback function must return slices with one or more contours')
 
       if (prevSlice) {
         polygons = polygons.concat(extrudeWalls(prevSlice, currentSlice))

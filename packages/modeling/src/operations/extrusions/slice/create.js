@@ -1,7 +1,7 @@
 /**
- * Represents a 3D geometry consisting of a list of parts consisting of 3D polygons.
+ * Represents a 3D geometry consisting of a list of contours consisting of 3D polygons.
  * @typedef {Object} slice
- * @property {Array} parts - list of parts, each part containing a list of 3D vertices
+ * @property {Array} contours - list of contours, each part containing a list of 3D vertices
  */
 
 /**
@@ -10,8 +10,8 @@
  * @returns {slice} a new slice
  * @alias module:modeling/extrusions/slice.create
  */
-export const create = (parts = []) => {
-  return { parts }
+export const create = (contours = []) => {
+  return { contours }
 }
 
 export default create

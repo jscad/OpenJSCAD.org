@@ -12,12 +12,12 @@ import * as vec3 from '../../../maths/vec3/index.js'
  * let myplane = calculatePlane(slice)
  */
 export const calculatePlane = (slice) => {
-  if (slice.parts < 1) throw new Error('slices must have at least one part to calculate a plane')
+  if (slice.contours < 1) throw new Error('slices must have at least one contour to calculate a plane')
 
   // find the midpoint of the slice, which will lie on the plane by definition
   const midpoint = vec3.create()
   let n = 0 // number of points
-  slice.parts.forEach((part) => {
+  slice.contours.forEach((part) => {
     part.forEach((point) => {
       vec3.add(midpoint, midpoint, point)
       n++
@@ -30,7 +30,7 @@ export const calculatePlane = (slice) => {
   let farthestBefore
   let farthestPoint
   let distance = 0
-  slice.parts.forEach((part) => {
+  slice.contours.forEach((part) => {
     let prev = part[part.length - 1]
     part.forEach((point) => {
       // make sure that the farthest edge is not a self-edge

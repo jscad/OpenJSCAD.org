@@ -9,8 +9,8 @@ import create from './create.js'
  */
 export const reverse = (slice) => {
   const out = create()
-  // reverse the outlines
-  out.parts = slice.parts.map((part) => part.slice().reverse())
+  // reverse the contours
+  out.contours = slice.contours.map((contour) => contour.slice().reverse())
   return out
 }
 

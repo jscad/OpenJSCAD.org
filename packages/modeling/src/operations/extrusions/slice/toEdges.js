@@ -10,9 +10,9 @@
  */
 export const toEdges = (slice) => {
   const edges = []
-  slice.parts.forEach((part) => {
-    part.forEach((point, i) => {
-      const next = part[(i + 1) % part.length]
+  slice.contours.forEach((contour) => {
+    contour.forEach((point, i) => {
+      const next = contour[(i + 1) % contour.length]
       edges.push([point, next])
     })
   })
