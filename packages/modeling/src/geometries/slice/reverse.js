@@ -5,7 +5,7 @@ import create from './create.js'
  *
  * @param {slice} slice - slice to reverse
  * @returns {slice} reverse of the slice
- * @alias module:modeling/extrusions/slice.reverse
+ * @alias module:modeling/geometries/slice.reverse
  */
 export const reverse = (slice) => {
   // reverse each contour

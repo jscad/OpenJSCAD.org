@@ -1,7 +1,8 @@
 import Geom2 from './geom2/type'
 import Geom3 from './geom3/type'
-import Poly3 from './poly3/type'
 import Path2 from './path2/type'
+import Poly3 from './poly3/type'
+import Slice from './slice/type'
 import { RGB, RGBA } from '../colors'
 
 // NOTE (@ahdinosaur): Poly2 is not included as not well-supported.
@@ -16,6 +17,7 @@ export interface Colored {
 
 export { default as Geom2 } from './geom2/type'
 export { default as Geom3 } from './geom3/type'
+export { default as Path2 } from './path2/type'
 export { default as Poly2 } from './poly2/type'
 export { default as Poly3 } from './poly3/type'
-export { default as Path2 } from './path2/type'
+export { default as Slice } from './slice/type'

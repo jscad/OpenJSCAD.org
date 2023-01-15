@@ -4,7 +4,7 @@
  *
  * @param {slice} slice - slice to clone
  * @returns {slice} a new slice
- * @alias module:modeling/extrusions/slice.clone
+ * @alias module:modeling/geometries/slice.clone
  */
 export const clone = (slice) => Object.assign({}, slice)
 

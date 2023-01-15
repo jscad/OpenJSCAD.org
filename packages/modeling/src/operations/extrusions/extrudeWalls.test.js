@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { mat4 } from '../../maths/index.js'
 
-import { slice } from './index.js'
+import * as slice from '../../geometries/slice/index.js'
 
 import extrudeWalls from './extrudeWalls.js'
 

@@ -1,5 +1,5 @@
-import * as vec3 from '../../../maths/vec3/index.js'
-import { toOutlines } from '../../../geometries/geom2/index.js'
+import * as vec3 from '../../maths/vec3/index.js'
+import { toOutlines } from '../geom2/index.js'
 
 import create from './create.js'
 
@@ -8,7 +8,7 @@ import create from './create.js'
  *
  * @param {Object} geometry - the 2D geometry to create a slice from
  * @returns {slice} a new slice
- * @alias module:modeling/extrusions/slice.fromGeom2
+ * @alias module:modeling/geometries/slice.fromGeom2
  */
 export const fromGeom2 = (geometry) => {
   // Convert from 2D points to 3D

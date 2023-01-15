@@ -5,11 +5,11 @@ import { comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 import { TAU } from '../../maths/constants.js'
 import { mat4 } from '../../maths/index.js'
 
-import { geom2, geom3, poly3 } from '../../geometries/index.js'
+import { geom2, geom3, poly3, slice } from '../../geometries/index.js'
 
 import { circle, square } from '../../primitives/index.js'
 
-import { extrudeFromSlices, slice } from './index.js'
+import { extrudeFromSlices } from './index.js'
 
 test('extrudeFromSlices (defaults)', (t) => {
   const geometry2 = square({ size: 20 })

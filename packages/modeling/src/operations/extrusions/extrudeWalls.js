@@ -2,8 +2,7 @@ import { EPS } from '../../maths/constants.js'
 import * as vec3 from '../../maths/vec3/index.js'
 
 import * as poly3 from '../../geometries/poly3/index.js'
-
-import * as slice from './slice/index.js'
+import * as slice from '../../geometries/slice/index.js'
 
 // https://en.wikipedia.org/wiki/Greatest_common_divisor#Using_Euclid's_algorithm
 const gcd = (a, b) => {
