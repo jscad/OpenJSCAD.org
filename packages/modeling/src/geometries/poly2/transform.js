@@ -11,12 +11,12 @@ import create from './create.js'
  * @alias module:modeling/geometries/poly2.transform
  */
 export const transform = (matrix, polygon) => {
-  const vertices = polygon.vertices.map((vertex) => vec2.transform(vec2.create(), vertex, matrix))
+  const points = polygon.points.map((point) => vec2.transform(vec2.create(), point, matrix))
   if (mat4.isMirroring(matrix)) {
     // reverse the order to preserve the orientation
-    vertices.reverse()
+    points.reverse()
   }
-  return create(vertices)
+  return create(points)
 }
 
 export default transform

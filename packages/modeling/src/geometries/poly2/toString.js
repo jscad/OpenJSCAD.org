@@ -7,9 +7,9 @@ import * as vec2 from '../../maths/vec2/index.js'
  * @alias module:modeling/geometries/poly2.toString
  */
 export const toString = (polygon) => {
-  let result = 'poly2: vertices: ['
-  polygon.vertices.forEach((vertex) => {
-    result += `${vec2.toString(vertex)}, `
+  let result = 'poly2: points: ['
+  polygon.points.forEach((point) => {
+    result += `${vec2.toString(point)}, `
   })
   result += ']'
   return result

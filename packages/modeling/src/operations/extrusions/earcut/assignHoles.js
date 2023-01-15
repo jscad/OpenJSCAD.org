@@ -1,6 +1,6 @@
 import area from '../../../maths/utils/area.js'
-import toOutlines from '../../../geometries/geom2/toOutlines.js'
-import arePointsInside from '../../../geometries/poly2/arePointsInside.js'
+import { toOutlines } from '../../../geometries/geom2/index.js'
+import * as poly2 from '../../../geometries/poly2/index.js'
 
 /*
  * Constructs a polygon hierarchy of solids and holes.
@@ -41,7 +41,7 @@ export const assignHoles = (geometry) => {
     holes.forEach((h, j) => {
       const hole = outlines[h]
       // check if a point of hole j is inside solid i
-      if (arePointsInside([hole[0]], { vertices: solid })) {
+      if (poly2.arePointsInside([hole[0]], poly2.create(solid))) {
         children[i].push(h)
         if (!parents[j]) parents[j] = []
         parents[j].push(i)

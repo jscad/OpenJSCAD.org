@@ -12,14 +12,13 @@ import reverse from './reverse.js'
 export const arePointsInside = (points, polygon) => {
   if (points.length === 0) return 0 // nothing to check
 
-  const vertices = polygon.vertices
-  if (vertices.length < 3) return 0 // nothing can be inside an empty polygon
+  if (polygon.points.length < 3) return 0 // nothing can be inside an empty polygon
 
   if (measureArea(polygon) < 0) {
     polygon = reverse(polygon) // CCW is required
   }
 
-  const sum = points.reduce((acc, point) => acc + isPointInside(point, vertices), 0)
+  const sum = points.reduce((acc, point) => acc + isPointInside(point, polygon.points), 0)
   return sum === points.length ? 1 : 0
 }
 
@@ -72,7 +71,7 @@ const isPointInside = (point, polygon) => {
         }
       }
     }
-    /* move to next pair of vertices, retaining info as possible */
+    /* move to next pair of points, retaining info as possible */
     yflag0 = yflag1
     vtx0 = vtx1
     vtx1 = polygon[++i]

@@ -1,5 +1,5 @@
 /**
- * Represents a 2D polygon consisting of a list of ordered vertices.
+ * Represents a 2D polygon consisting of a list of ordered points.
  * @see {@link poly2} for data structure information.
  * @module modeling/geometries/poly2
  *

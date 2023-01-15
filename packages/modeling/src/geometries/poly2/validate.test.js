@@ -4,7 +4,7 @@ import { validate, create, toString } from './index.js'
 
 test('validate: identifies polygons', (t) => {
   const ply1 = create()
-  t.throws(() => validate(ply1), { message: 'poly2 not enough vertices 0' })
+  t.throws(() => validate(ply1), { message: 'poly2 not enough points 0' })
 
   const ply2 = create([[0, 0], [1, 0], [1, 1]])
   t.notThrows(() => validate(ply2))
@@ -29,5 +29,5 @@ test('validate: identifies polygons', (t) => {
 
   // Counter Clockwise with duplicate points
   const ply7 = create([[5, 5], [-5, 5], [-5, 5], [-5, -5], [5, -5]])
-  t.throws(() => validate(ply7), { message: 'poly2 duplicate vertex at 1: [-5,5]' })
+  t.throws(() => validate(ply7), { message: 'poly2 duplicate point at 1: [-5,5]' })
 })

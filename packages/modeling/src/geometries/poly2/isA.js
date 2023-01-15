@@ -6,8 +6,8 @@
  */
 export const isA = (object) => {
   if (object && typeof object === 'object') {
-    if ('vertices' in object) {
-      if (Array.isArray(object.vertices)) {
+    if ('points' in object) {
+      if (Array.isArray(object.points)) {
         return true
       }
     }
