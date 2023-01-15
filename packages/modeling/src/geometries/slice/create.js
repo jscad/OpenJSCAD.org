@@ -8,7 +8,7 @@
  * Creates a new empty slice.
  *
  * @returns {slice} a new slice
- * @alias module:modeling/extrusions/slice.create
+ * @alias module:modeling/geometries/slice.create
  */
 export const create = (contours = []) => {
   return { contours }

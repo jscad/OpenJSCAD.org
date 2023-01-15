@@ -1,11 +1,11 @@
 import test from 'ava'
 
-import { TAU } from '../../../maths/constants.js'
-import { mat4 } from '../../../maths/index.js'
+import { TAU } from '../../maths/constants.js'
+import { mat4 } from '../../maths/index.js'
 
 import { calculatePlane, create, fromPoints, transform } from './index.js'
 
-import { compareVectors } from '../../../../test/helpers/index.js'
+import { compareVectors } from '../../../test/helpers/index.js'
 
 test('slice: calculatePlane() returns correct plans for various slices', (t) => {
   // do not do this... it's an error

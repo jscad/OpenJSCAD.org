@@ -3,8 +3,7 @@ import * as mat4 from '../../maths/mat4/index.js'
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as poly3 from '../../geometries/poly3/index.js'
-
-import * as slice from './slice/index.js'
+import * as slice from '../../geometries/slice/index.js'
 
 import extrudeWalls from './extrudeWalls.js'
 

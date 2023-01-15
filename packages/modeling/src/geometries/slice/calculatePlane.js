@@ -1,12 +1,12 @@
-import * as plane from '../../../maths/plane/index.js'
-import * as vec3 from '../../../maths/vec3/index.js'
+import * as plane from '../../maths/plane/index.js'
+import * as vec3 from '../../maths/vec3/index.js'
 
 /**
  * Calculate the plane of the given slice.
  * NOTE: The slice (and all points) are assumed to be planar from the beginning.
  * @param {slice} slice - the slice
  * @returns {plane} the plane of the slice
- * @alias module:modeling/extrusions/slice.calculatePlane
+ * @alias module:modeling/geometries/slice.calculatePlane
  *
  * @example
  * let myplane = calculatePlane(slice)

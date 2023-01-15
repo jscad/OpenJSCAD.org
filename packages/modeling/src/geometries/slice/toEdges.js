@@ -3,7 +3,7 @@
  * The returned array should not be modified as the data is shared with the slice.
  * @param {slice} slice - the slice
  * @returns {Array} an array of edges, each edge contains an array of two points (3D)
- * @alias module:modeling/extrusions/slice.toEdges
+ * @alias module:modeling/geometries/slice.toEdges
  *
  * @example
  * let sharededges = toEdges(slice)

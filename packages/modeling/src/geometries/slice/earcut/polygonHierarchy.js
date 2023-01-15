@@ -2,9 +2,9 @@ import * as plane from '../../../maths/plane/index.js'
 import * as vec2 from '../../../maths/vec2/index.js'
 import * as vec3 from '../../../maths/vec3/index.js'
 
-import * as geom2 from '../../../geometries/geom2/index.js'
+import * as geom2 from '../../geom2/index.js'
 
-import calculatePlane from '../slice/calculatePlane.js'
+import calculatePlane from '../calculatePlane.js'
 
 import assignHoles from './assignHoles.js'
 
