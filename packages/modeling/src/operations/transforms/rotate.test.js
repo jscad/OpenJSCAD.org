@@ -4,7 +4,7 @@ import { TAU } from '../../maths/constants.js'
 
 import { geom2, geom3, path2 } from '../../geometries/index.js'
 
-import { measureArea } from '../../measurements/index.js'
+import { measureArea, measureVolume } from '../../measurements/index.js'
 
 import { rotate, rotateX, rotateY, rotateZ } from './index.js'
 
@@ -80,11 +80,13 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', (t) =>
       [8, -18, 13.000000000000002], [-2, -18, 13.000000000000002]]
   ]
   t.notThrows(() => geom3.validate(rotated))
+  t.is(measureVolume(rotated), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   rotated = rotateX(TAU / 4, geometry)
   obs = geom3.toPoints(rotated)
   t.notThrows(() => geom3.validate(rotated))
+  t.is(measureVolume(rotated), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // rotate about Y
@@ -105,10 +107,13 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', (t) =>
       [-18, 13, 8.000000000000002], [-18, 13, -1.999999999999999]]
   ]
   t.notThrows(() => geom3.validate(rotated))
+  t.is(measureVolume(rotated), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   rotated = rotateY(-TAU / 4, geometry)
   obs = geom3.toPoints(rotated)
+  t.notThrows(() => geom3.validate(rotated))
+  t.is(measureVolume(rotated), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // rotate about Z
@@ -129,11 +134,13 @@ test('rotate: rotating of a geom3 produces expected changes to polygons', (t) =>
       [-8.000000000000002, -12.999999999999998, 18], [1.9999999999999984, -13, 18]]
   ]
   t.notThrows(() => geom3.validate(rotated))
+  t.is(measureVolume(rotated), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   rotated = rotateZ(TAU / 2, geometry)
   obs = geom3.toPoints(rotated)
   t.notThrows(() => geom3.validate(rotated))
+  t.is(measureVolume(rotated), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 })
 

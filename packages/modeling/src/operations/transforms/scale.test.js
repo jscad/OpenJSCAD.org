@@ -4,7 +4,7 @@ import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/in
 
 import { geom2, geom3, path2 } from '../../geometries/index.js'
 
-import { measureArea } from '../../measurements/index.js'
+import { measureArea, measureVolume } from '../../measurements/index.js'
 
 import { scale, scaleX, scaleY, scaleZ } from './index.js'
 

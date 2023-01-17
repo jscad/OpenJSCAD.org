@@ -4,7 +4,7 @@ import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/in
 
 import { geom2, geom3, path2 } from '../../geometries/index.js'
 
-import { measureArea } from '../../measurements/index.js'
+import { measureArea, measureVolume } from '../../measurements/index.js'
 
 import { mirror, mirrorX, mirrorY, mirrorZ } from './index.js'
 
@@ -91,12 +91,14 @@ test('mirror: mirroring of geom3 about X/Y/Z produces expected changes to polygo
     [[2, 13, 18], [-8, 13, 18], [-8, -7, 18], [2, -7, 18]]
   ]
   t.notThrows(() => geom3.validate(mirrored))
+  t.is(measureVolume(mirrored), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
   t.deepEqual(obs, exp)
 
   mirrored = mirrorX(geometry)
   obs = geom3.toPoints(mirrored)
   t.notThrows(() => geom3.validate(mirrored))
+  t.is(measureVolume(mirrored), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // mirror about Y
@@ -111,11 +113,13 @@ test('mirror: mirroring of geom3 about X/Y/Z produces expected changes to polygo
     [[-2, -13, 18], [8, -13, 18], [8, 7, 18], [-2, 7, 18]]
   ]
   t.notThrows(() => geom3.validate(mirrored))
+  t.is(measureVolume(mirrored), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   mirrored = mirrorY(geometry)
   obs = geom3.toPoints(mirrored)
   t.notThrows(() => geom3.validate(mirrored))
+  t.is(measureVolume(mirrored), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // mirror about Z
@@ -130,11 +134,13 @@ test('mirror: mirroring of geom3 about X/Y/Z produces expected changes to polygo
     [[-2, 13, -18], [8, 13, -18], [8, -7, -18], [-2, -7, -18]]
   ]
   t.notThrows(() => geom3.validate(mirrored))
+  t.is(measureVolume(mirrored), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   mirrored = mirrorZ(geometry)
   obs = geom3.toPoints(mirrored)
   t.notThrows(() => geom3.validate(mirrored))
+  t.is(measureVolume(mirrored), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 })
 

@@ -4,7 +4,7 @@ import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/in
 
 import { geom2, geom3, path2 } from '../../geometries/index.js'
 
-import { measureArea } from '../../measurements/index.js'
+import { measureArea, measureVolume } from '../../measurements/index.js'
 
 import { center, centerX, centerY, centerZ } from './index.js'
 
@@ -65,11 +65,13 @@ test('center: centering of a geom3 produces expected changes to polygons', (t) =
     [[-5, -7, 18], [5, -7, 18], [5, 13, 18], [-5, 13, 18]]
   ]
   t.notThrows(() => geom3.validate(centered))
+  t.is(measureVolume(centered), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(pts, exp))
 
   centered = centerX(geometry)
   pts = geom3.toPoints(centered)
   t.notThrows(() => geom3.validate(centered))
+  t.is(measureVolume(centered), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // center about Y
@@ -84,11 +86,13 @@ test('center: centering of a geom3 produces expected changes to polygons', (t) =
     [[-2, -10, 18], [8, -10, 18], [8, 10, 18], [-2, 10, 18]]
   ]
   t.notThrows(() => geom3.validate(centered))
+  t.is(measureVolume(centered), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(pts, exp))
 
   centered = centerY(geometry)
   pts = geom3.toPoints(centered)
   t.notThrows(() => geom3.validate(centered))
+  t.is(measureVolume(centered), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // center about Z
@@ -103,11 +107,13 @@ test('center: centering of a geom3 produces expected changes to polygons', (t) =
     [[-2, -7, 15], [8, -7, 15], [8, 13, 15], [-2, 13, 15]]
   ]
   t.notThrows(() => geom3.validate(centered))
+  t.is(measureVolume(centered), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(pts, exp))
 
   centered = centerZ(geometry)
   pts = geom3.toPoints(centered)
   t.notThrows(() => geom3.validate(centered))
+  t.is(measureVolume(centered), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(pts, exp))
 })
 
