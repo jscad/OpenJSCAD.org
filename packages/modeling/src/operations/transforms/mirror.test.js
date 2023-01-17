@@ -4,6 +4,8 @@ import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/in
 
 import { geom2, geom3, path2 } from '../../geometries/index.js'
 
+import { measureArea } from '../../measurements/index.js'
+
 import { mirror, mirrorX, mirrorY, mirrorZ } from './index.js'
 
 test('mirror: mirroring of path2 about X/Y produces expected changes to points', (t) => {
@@ -42,11 +44,13 @@ test('mirror: mirroring of geom2 about X/Y produces expected changes to points',
   let obs = geom2.toPoints(mirrored)
   let exp = [[5, -5], [0, 5], [-10, -5]]
   t.notThrows(() => geom2.validate(mirrored))
+  t.is(measureArea(mirrored), -measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   mirrored = mirrorX(geometry)
   obs = geom2.toPoints(mirrored)
   t.notThrows(() => geom2.validate(mirrored))
+  t.is(measureArea(mirrored), -measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   // mirror about Y
@@ -54,11 +58,13 @@ test('mirror: mirroring of geom2 about X/Y produces expected changes to points',
   obs = geom2.toPoints(mirrored)
   exp = [[-5, 5], [0, -5], [10, 5]]
   t.notThrows(() => geom2.validate(mirrored))
+  t.is(measureArea(mirrored), -measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   mirrored = mirrorY(geometry)
   obs = geom2.toPoints(mirrored)
   t.notThrows(() => geom2.validate(mirrored))
+  t.is(measureArea(mirrored), -measureArea(geometry))
   t.true(comparePoints(obs, exp))
 })
 

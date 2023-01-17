@@ -4,6 +4,8 @@ import { TAU } from '../../maths/constants.js'
 
 import { geom2, geom3, path2 } from '../../geometries/index.js'
 
+import { measureArea } from '../../measurements/index.js'
+
 import { rotate, rotateX, rotateY, rotateZ } from './index.js'
 
 import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/index.js'
@@ -39,11 +41,13 @@ test('rotate: rotating of a geom2 produces expected changes to points', (t) => {
     new Float32Array([1, 0])
   ]
   t.notThrows(() => geom2.validate(rotated))
+  t.is(measureArea(rotated), measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   rotated = rotateZ(-TAU / 4, geometry)
   obs = geom2.toPoints(rotated)
   t.notThrows(() => geom2.validate(rotated))
+  t.is(measureArea(rotated), measureArea(geometry))
   t.true(comparePoints(obs, exp))
 })
 

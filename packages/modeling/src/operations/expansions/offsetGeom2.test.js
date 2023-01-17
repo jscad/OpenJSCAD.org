@@ -1,6 +1,9 @@
 import test from 'ava'
 
 import { geom2 } from '../../geometries/index.js'
+
+import { measureArea } from '../../measurements/index.js'
+
 import { roundedRectangle } from '../../primitives/index.js'
 
 import { offset } from './index.js'
@@ -8,15 +11,17 @@ import { offset } from './index.js'
 import { comparePoints } from '../../../test/helpers/index.js'
 
 test('offset (options): offsetting of a simple geom2 produces expected offset geom2', (t) => {
-  const geometry = geom2.create([[[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5]]])
+  const geometry = geom2.create([
+    [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5]]
+  ])
 
   // empty
   const empty = geom2.create()
   let obs = offset({ delta: 1 }, empty)
   let pts = geom2.toPoints(obs)
-  let exp = [
-  ]
+  let exp = []
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 0)
   t.true(comparePoints(pts, exp))
 
   // expand +
@@ -39,6 +44,8 @@ test('offset (options): offsetting of a simple geom2 produces expected offset ge
     [-6, -5]
   ]
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 121)
+  t.is(pts.length, 14)
   t.true(comparePoints(pts, exp))
 
   // contract -
@@ -57,6 +64,8 @@ test('offset (options): offsetting of a simple geom2 produces expected offset ge
     [-4.5, 4.5]
   ]
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 46.25)
+  t.is(pts.length, 10)
   t.true(comparePoints(pts, exp))
 
   // segments 1 - sharp points at corner
@@ -73,6 +82,8 @@ test('offset (options): offsetting of a simple geom2 produces expected offset ge
     [-6, -6]
   ]
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 124)
+  t.is(pts.length, 8)
   t.true(comparePoints(pts, exp))
 
   // segments 16 - rounded corners
@@ -97,6 +108,8 @@ test('offset (options): offsetting of a simple geom2 produces expected offset ge
     [-4.5, 4.5]
   ]
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 46.1173165676349)
+  t.is(pts.length, 16)
   t.true(comparePoints(pts, exp))
 })
 
@@ -151,6 +164,7 @@ test('offset (options): offsetting of a complex geom2 produces expected offset g
     [-4, -21]
   ]
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 17704)
   t.is(pts.length, 20)
   t.true(comparePoints(pts, exp))
 })
@@ -196,6 +210,7 @@ test('offset (options): offsetting of round geom2 produces expected offset geom2
     [8.767810140100096, -3.6317399864658024]
   ]
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 275.72806620525375)
   t.is(pts.length, 16)
   t.true(comparePoints(pts, exp))
 })

@@ -4,6 +4,8 @@ import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/in
 
 import { geom2, geom3, path2 } from '../../geometries/index.js'
 
+import { measureArea } from '../../measurements/index.js'
+
 import { translate, translateX, translateY, translateZ } from './index.js'
 
 test('translate: translating of a path2 produces expected changes to points', (t) => {
@@ -42,11 +44,13 @@ test('translate: translating of a geom2 produces expected changes to points', (t
   let obs = geom2.toPoints(translated)
   let exp = [[1, 0], [2, 0], [1, 1]]
   t.notThrows(() => geom2.validate(translated))
+  t.is(measureArea(translated), measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   translated = translateX(1, geometry)
   obs = geom2.toPoints(translated)
   t.notThrows(() => geom2.validate(translated))
+  t.is(measureArea(translated), measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   // translate Y
@@ -54,11 +58,13 @@ test('translate: translating of a geom2 produces expected changes to points', (t
   obs = geom2.toPoints(translated)
   exp = [[0, 1], [1, 1], [0, 2]]
   t.notThrows(() => geom2.validate(translated))
+  t.is(measureArea(translated), measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   translated = translateY(1, geometry)
   obs = geom2.toPoints(translated)
   t.notThrows(() => geom2.validate(translated))
+  t.is(measureArea(translated), measureArea(geometry))
   t.true(comparePoints(obs, exp))
 })
 
