@@ -3,6 +3,9 @@ import test from 'ava'
 import { comparePoints } from '../../../test/helpers/index.js'
 
 import { geom2, geom3 } from '../../geometries/index.js'
+
+import { measureArea } from '../../measurements/index.js'
+
 import { cube, torus } from '../../primitives/index.js'
 
 import { project } from './index.js'
@@ -41,6 +44,7 @@ test('project (defaults)', (t) => {
 test('project torus (X and Y axis)', (t) => {
   let result = project({ axis: [1, 0, 0], origin: [1, 0, 0] }, torus({ outerSegments: 4 }))
   t.notThrows(() => geom2.validate(result))
+  t.is(measureArea(result), 19.12144515225805)
   let pts = geom2.toPoints(result)
   let exp = [
     [-1, -4],
@@ -84,6 +88,7 @@ test('project torus (X and Y axis)', (t) => {
 
   result = project({ axis: [0, 1, 0], origin: [0, -1, 0] }, torus({ outerSegments: 4 }))
   t.notThrows(() => geom2.validate(result))
+  t.is(measureArea(result), 19.12144515225805)
   pts = geom2.toPoints(result)
   exp = [
     [-5, 0],
@@ -133,4 +138,5 @@ test('project torus (martinez issue #155)', (t) => {
   )
   const pts = geom2.toPoints(result)
   t.notThrows(() => geom2.validate(result))
+  t.is(measureArea(result), 21.15545050788201)
 })

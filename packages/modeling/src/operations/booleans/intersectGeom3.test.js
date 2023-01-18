@@ -4,6 +4,8 @@ import { comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
 import { geom3 } from '../../geometries/index.js'
 
+import { measureVolume } from '../../measurements/index.js'
+
 import { sphere, cuboid } from '../../primitives/index.js'
 
 import { intersect } from './index.js'
@@ -67,6 +69,7 @@ test('intersect: intersect of one or more geom3 objects produces expected geomet
     [[8.65956056235493e-17, 8.659560562354935e-17, 2], [1.4142135623730951, 3.4638242249419736e-16, 1.414213562373095], [0.9999999999999998, 1.0000000000000002, 1.414213562373095]]
   ]
   t.notThrows.skip(() => geom3.validate(result1))
+  t.is(measureVolume(result1), 25.751611331979678)
   t.is(obs.length, 32)
   t.true(comparePolygonsAsPoints(obs, exp))
 
@@ -76,6 +79,7 @@ test('intersect: intersect of one or more geom3 objects produces expected geomet
   const result2 = intersect(geometry1, geometry2)
   obs = geom3.toPoints(result2)
   t.notThrows(() => geom3.validate(result2))
+  t.is(measureVolume(result2), 0)
   t.is(obs.length, 0)
 
   // intersect of two partially overlapping objects
@@ -85,16 +89,6 @@ test('intersect: intersect of one or more geom3 objects produces expected geomet
   obs = geom3.toPoints(result3)
 
   // the order changes based on the bestplane chosen in Node.js
-  /*
-  exp = [
-    [[9, 9, 8], [9, 9, 9], [9, 8, 9], [9, 8, 8]],
-    [[8, 9, 9], [9, 9, 9], [9, 9, 8], [8, 9, 8]],
-    [[9, 8, 9], [9, 9, 9], [8, 9, 9], [8, 8, 9]],
-    [[8, 9, 9], [8, 9, 8], [8, 8, 8], [8, 8, 9]],
-    [[8, 8, 9], [8, 8, 8], [9, 8, 8], [9, 8, 9]],
-    [[9, 9, 8], [9, 8, 8], [8, 8, 8], [8, 9, 8]]
-  ]
-*/
   exp = [
     [[9, 9, 8], [9, 9, 9], [9, 8, 9], [9, 8, 8]],
     [[8, 9, 9], [9, 9, 9], [9, 9, 8], [8, 9, 8]],
@@ -105,6 +99,7 @@ test('intersect: intersect of one or more geom3 objects produces expected geomet
   ]
 
   t.notThrows(() => geom3.validate(result3))
+  t.is(measureVolume(result3), 1.0000000000000009)
   t.is(obs.length, 6)
   t.true(comparePolygonsAsPoints(obs, exp))
 
@@ -112,5 +107,6 @@ test('intersect: intersect of one or more geom3 objects produces expected geomet
   const result4 = intersect(geometry1, geometry3)
   obs = geom3.toPoints(result4)
   t.notThrows.skip(() => geom3.validate(result4))
+  t.is(measureVolume(result4), 25.751611331979678)
   t.is(obs.length, 32)
 })

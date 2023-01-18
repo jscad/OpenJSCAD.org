@@ -5,6 +5,9 @@ import { comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 import { TAU } from '../../maths/constants.js'
 
 import { geom2, geom3, path2 } from '../../geometries/index.js'
+
+import { measureVolume } from '../../measurements/index.js'
+
 import square from '../../primitives/square.js'
 
 import { extrudeLinear } from './index.js'
@@ -29,6 +32,7 @@ test('extrudeLinear (defaults)', (t) => {
     [[5, 5, 0], [5, -5, 0], [-5, -5, 0]]
   ]
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureVolume(geometry3), 100.00000000000001)
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
@@ -53,6 +57,7 @@ test('extrudeLinear (no twist)', (t) => {
     [[5, 5, 0], [5, -5, 0], [-5, -5, 0]]
   ]
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureVolume(geometry3), 1500)
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -73,6 +78,7 @@ test('extrudeLinear (no twist)', (t) => {
     [[5, -5, 0], [5, 5, 0], [-5, 5, 0]]
   ]
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureVolume(geometry3), 1500)
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
@@ -105,6 +111,7 @@ test('extrudeLinear (twist)', (t) => {
     [[5, 5, 0], [5, -5, 0], [-5, -5, 0]]
   ]
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureVolume(geometry3), 1707.1067811865476)
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -146,6 +153,7 @@ test('extrudeLinear (twist)', (t) => {
   geometry3 = extrudeLinear({ height: 15, twistAngle: TAU / 2, twistSteps: 30 }, geometry2)
   pts = geom3.toPoints(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureVolume(geometry3), 1444.9967160503095)
   t.is(pts.length, 244)
 })
 
@@ -191,6 +199,7 @@ test('extrudeLinear (holes)', (t) => {
     [[-2, -2, 0], [2, -2, 0], [-5, -5, 0]]
   ]
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureVolume(geometry3), 1260)
   t.is(pts.length, 32)
   t.true(comparePolygonsAsPoints(pts, exp))
 })

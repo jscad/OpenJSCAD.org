@@ -4,6 +4,8 @@ import { comparePoints } from '../../../test/helpers/index.js'
 
 import { geom2 } from '../../geometries/index.js'
 
+import { measureArea } from '../../measurements/index.js'
+
 import { circle, rectangle } from '../../primitives/index.js'
 
 import { center, translate } from '../transforms/index.js'
@@ -27,6 +29,8 @@ test('union of one or more geom2 objects produces expected geometry', (t) => {
     [1.4142135623730947, -1.4142135623730954]
   ]
   t.notThrows(() => geom2.validate(result1))
+  t.is(measureArea(result1), 11.31370849898476)
+  t.is(obs.length, 8)
   t.true(comparePoints(obs, exp))
 
   // union of two non-overlapping objects
@@ -49,6 +53,7 @@ test('union of one or more geom2 objects produces expected geometry', (t) => {
     [8, 12]
   ]
   t.notThrows(() => geom2.validate(result2))
+  t.is(measureArea(result2), 27.31370849898476)
   t.is(obs.length, 12)
   t.true(comparePoints(obs, exp))
 
@@ -68,6 +73,8 @@ test('union of one or more geom2 objects produces expected geometry', (t) => {
     [-9, 9]
   ]
   t.notThrows(() => geom2.validate(result3))
+  t.is(measureArea(result3), 339)
+  t.is(obs.length, 8)
   t.true(comparePoints(obs, exp))
 
   // union of two completely overlapping objects
@@ -80,6 +87,8 @@ test('union of one or more geom2 objects produces expected geometry', (t) => {
     [-9, 9]
   ]
   t.notThrows(() => geom2.validate(result4))
+  t.is(measureArea(result4), 324)
+  t.is(obs.length, 4)
   t.true(comparePoints(obs, exp))
 
   // union of unions of non-overlapping objects (BSP gap from #907)
@@ -96,6 +105,7 @@ test('union of one or more geom2 objects produces expected geometry', (t) => {
   )
   obs = geom2.toPoints(result5)
   t.notThrows(() => geom2.validate(result5))
+  t.is(measureArea(result5), 9.36433545677411)
   t.is(obs.length, 96)
 })
 
@@ -141,8 +151,8 @@ test('union of geom2 with closing issues #15', (t) => {
     ]
   ])
 
-  const obs = union(c, d)
-  const pts = geom2.toPoints(obs)
+  const result = union(c, d)
+  const pts = geom2.toPoints(result)
   const exp = [
     [-68.40089829889257, -2.9818050203707855],
     [-68.31614651314507, -3.1079037395143487],
@@ -165,7 +175,8 @@ test('union of geom2 with closing issues #15', (t) => {
     [-49.057272912186846, -15.486616385421712],
     [-49.10586702080816, -15.276041773521108]
   ]
-  t.notThrows(() => geom2.validate(obs))
+  t.notThrows(() => geom2.validate(result))
+  t.is(measureArea(result), 17.56120670215806)
   t.is(pts.length, 20) // number of sides in union
   t.true(comparePoints(pts, exp))
 })
@@ -194,6 +205,7 @@ test('union of geom2 with colinear edge (martinez issue #155)', (t) => {
   const result = union(g1, g2)
   const pts = geom2.toPoints(result)
   t.notThrows(() => geom2.validate(result))
+  t.is(measureArea(result), 1.9906657858562764)
   t.is(pts.length, 5)
   t.true(comparePoints(pts, exp))
 })

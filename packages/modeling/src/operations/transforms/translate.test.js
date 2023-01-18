@@ -4,6 +4,8 @@ import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/in
 
 import { geom2, geom3, path2 } from '../../geometries/index.js'
 
+import { measureArea, measureVolume } from '../../measurements/index.js'
+
 import { translate, translateX, translateY, translateZ } from './index.js'
 
 test('translate: translating of a path2 produces expected changes to points', (t) => {
@@ -42,11 +44,13 @@ test('translate: translating of a geom2 produces expected changes to points', (t
   let obs = geom2.toPoints(translated)
   let exp = [[1, 0], [2, 0], [1, 1]]
   t.notThrows(() => geom2.validate(translated))
+  t.is(measureArea(translated), measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   translated = translateX(1, geometry)
   obs = geom2.toPoints(translated)
   t.notThrows(() => geom2.validate(translated))
+  t.is(measureArea(translated), measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   // translate Y
@@ -54,11 +58,13 @@ test('translate: translating of a geom2 produces expected changes to points', (t
   obs = geom2.toPoints(translated)
   exp = [[0, 1], [1, 1], [0, 2]]
   t.notThrows(() => geom2.validate(translated))
+  t.is(measureArea(translated), measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   translated = translateY(1, geometry)
   obs = geom2.toPoints(translated)
   t.notThrows(() => geom2.validate(translated))
+  t.is(measureArea(translated), measureArea(geometry))
   t.true(comparePoints(obs, exp))
 })
 
@@ -85,11 +91,13 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
     [[1, -7, 18], [11, -7, 18], [11, 13, 18], [1, 13, 18]]
   ]
   t.notThrows(() => geom3.validate(translated))
+  t.is(measureVolume(translated), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   translated = translateX(3, geometry)
   obs = geom3.toPoints(translated)
   t.notThrows(() => geom3.validate(translated))
+  t.is(measureVolume(translated), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // translated Y
@@ -104,11 +112,13 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
     [[-2, -4, 18], [8, -4, 18], [8, 16, 18], [-2, 16, 18]]
   ]
   t.notThrows(() => geom3.validate(translated))
+  t.is(measureVolume(translated), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   translated = translateY(3, geometry)
   obs = geom3.toPoints(translated)
   t.notThrows(() => geom3.validate(translated))
+  t.is(measureVolume(translated), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // translate Z
@@ -123,11 +133,13 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
     [[-2, -7, 21], [8, -7, 21], [8, 13, 21], [-2, 13, 21]]
   ]
   t.notThrows(() => geom3.validate(translated))
+  t.is(measureVolume(translated), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   translated = translateZ(3, geometry)
   obs = geom3.toPoints(translated)
   t.notThrows(() => geom3.validate(translated))
+  t.is(measureVolume(translated), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 })
 

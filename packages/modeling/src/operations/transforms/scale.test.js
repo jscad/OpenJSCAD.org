@@ -4,6 +4,8 @@ import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/in
 
 import { geom2, geom3, path2 } from '../../geometries/index.js'
 
+import { measureArea, measureVolume } from '../../measurements/index.js'
+
 import { scale, scaleX, scaleY, scaleZ } from './index.js'
 
 test('scale: scaling of a path2 produces expected changes to points', (t) => {
@@ -42,11 +44,13 @@ test('scale: scaling of a geom2 produces expected changes to points', (t) => {
   let obs = geom2.toPoints(scaled)
   let exp = [[-3, 0], [3, 0], [0, 1]]
   t.notThrows(() => geom2.validate(scaled))
+  t.is(measureArea(scaled), 3 * measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   scaled = scaleX(3, geometry)
   obs = geom2.toPoints(scaled)
   t.notThrows(() => geom2.validate(scaled))
+  t.is(measureArea(scaled), 3 * measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   // scale Y
@@ -54,11 +58,13 @@ test('scale: scaling of a geom2 produces expected changes to points', (t) => {
   obs = geom2.toPoints(scaled)
   exp = [[-1, 0], [1, 0], [0, 3]]
   t.notThrows(() => geom2.validate(scaled))
+  t.is(measureArea(scaled), 3 * measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   scaled = scaleY(3, geometry)
   obs = geom2.toPoints(scaled)
   t.notThrows(() => geom2.validate(scaled))
+  t.is(measureArea(scaled), 3 * measureArea(geometry))
   t.true(comparePoints(obs, exp))
 })
 

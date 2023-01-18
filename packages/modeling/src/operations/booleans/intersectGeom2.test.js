@@ -4,6 +4,8 @@ import { comparePoints } from '../../../test/helpers/index.js'
 
 import { geom2 } from '../../geometries/index.js'
 
+import { measureArea } from '../../measurements/index.js'
+
 import { circle, rectangle } from '../../primitives/index.js'
 
 import { intersect } from './index.js'
@@ -27,6 +29,7 @@ test('intersect: intersect of one or more geom2 objects produces expected geomet
     [1.4142135623730947, -1.4142135623730954]
   ]
   t.notThrows(() => geom2.validate(result1))
+  t.is(measureArea(result1), 11.31370849898476)
   t.is(obs.length, 8)
   t.true(comparePoints(obs, exp))
 
@@ -36,6 +39,7 @@ test('intersect: intersect of one or more geom2 objects produces expected geomet
   const result2 = intersect(geometry1, geometry2)
   obs = geom2.toPoints(result2)
   t.notThrows(() => geom2.validate(result2))
+  t.is(measureArea(result2), 0)
   t.is(obs.length, 0)
 
   // intersect of two partially overlapping objects
@@ -47,6 +51,7 @@ test('intersect: intersect of one or more geom2 objects produces expected geomet
     [8, 8], [9, 8], [9, 9], [8, 9]
   ]
   t.notThrows(() => geom2.validate(result3))
+  t.is(measureArea(result3), 1)
   t.is(obs.length, 4)
   t.true(comparePoints(obs, exp))
 
@@ -64,6 +69,7 @@ test('intersect: intersect of one or more geom2 objects produces expected geomet
     [-1.414213562373095, 1.4142135623730951]
   ]
   t.notThrows(() => geom2.validate(result4))
+  t.is(measureArea(result4), 11.31370849898476)
   t.is(obs.length, 8)
   t.true(comparePoints(obs, exp))
 })
