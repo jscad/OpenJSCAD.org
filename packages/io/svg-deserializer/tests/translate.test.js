@@ -154,7 +154,7 @@ test('deserialize : translate svg (path: simple) to script', (t) => {
   t.is(countOf('path2.appendPoints', obs), 2)
   t.is(countOf('path2.close', obs), 1)
   t.is(countOf('colors.colorize', obs), 1) // stroke
-  t.is(countOf('geom2.fromPoints', obs), 0)
+  t.is(countOf('geom2.create', obs), 0)
 
   obs = deserialize({ output: 'script', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(typeof obs, 'string')
@@ -162,7 +162,7 @@ test('deserialize : translate svg (path: simple) to script', (t) => {
   t.is(countOf('path2.appendPoints', obs), 2)
   t.is(countOf('path2.close', obs), 1)
   t.is(countOf('colors.colorize', obs), 1)
-  t.is(countOf('geom2.fromPoints', obs), 1)
+  t.is(countOf('geom2.create', obs), 1)
 
   // test getting stroke width from group
   sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120">
@@ -185,7 +185,7 @@ test('deserialize : translate svg (path: simple) to script', (t) => {
   t.is(countOf('path2.fromPoints', obs), 1)
   t.is(countOf('path2.appendPoints', obs), 2)
   t.is(countOf('path2.close', obs), 1)
-  t.is(countOf('geom2.fromPoints', obs), 0)
+  t.is(countOf('geom2.create', obs), 0)
 
   sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120">
   <path fill="#ff8000" d="m 240.00000 190.00000 h 30.00000 v 30.00000 h 30.00000 v 30.00000 h 30.00000 v 30.00000 h -90.00000 v -90.00000 z"/>
@@ -196,7 +196,7 @@ test('deserialize : translate svg (path: simple) to script', (t) => {
   t.is(countOf('path2.fromPoints', obs), 1)
   t.is(countOf('path2.appendPoints', obs), 8)
   t.is(countOf('path2.close', obs), 1)
-  t.is(countOf('geom2.fromPoints', obs), 1)
+  t.is(countOf('geom2.create', obs), 1)
   t.is(countOf('colors.colorize', obs), 1) // fill
 
   sourceSvg = `<svg width="120" height="120" viewBox="0 0 120 120">
@@ -208,7 +208,7 @@ test('deserialize : translate svg (path: simple) to script', (t) => {
   t.is(countOf('path2.fromPoints', obs), 1)
   t.is(countOf('path2.appendPoints', obs), 8)
   t.is(countOf('path2.close', obs), 1)
-  t.is(countOf('geom2.fromPoints', obs), 0)
+  t.is(countOf('geom2.create', obs), 0)
 })
 
 // ################################
@@ -224,7 +224,7 @@ test('deserialize : translate svg (path: arc) to script', (t) => {
   t.is(countOf('path2.appendArc', obs), 1)
   t.is(countOf('path2.appendPoints', obs), 1)
   t.is(countOf('path2.close', obs), 1)
-  t.is(countOf('geom2.fromPoints', obs), 0)
+  t.is(countOf('geom2.create', obs), 0)
 
   sourceSvg = `<svg height="500" width="500">
   <path d="M100,100 L150,100 a50,25 0 0,0 150,100 q50,-50 70,-170 Z"/>
@@ -236,7 +236,7 @@ test('deserialize : translate svg (path: arc) to script', (t) => {
   t.is(countOf('path2.appendArc', obs), 1)
   t.is(countOf('path2.appendBezier', obs), 1)
   t.is(countOf('path2.close', obs), 1)
-  t.is(countOf('geom2.fromPoints', obs), 1)
+  t.is(countOf('geom2.create', obs), 1)
 })
 
 // ################################
@@ -253,7 +253,7 @@ test('deserialize : translate svg (path: bezier) to script', (t) => {
   t.is(countOf('path2.appendArc', obs), 1)
   t.is(countOf('path2.appendBezier', obs), 1)
   t.is(countOf('path2.close', obs), 1)
-  t.is(countOf('geom2.fromPoints', obs), 0)
+  t.is(countOf('geom2.create', obs), 0)
 
   obs = deserialize({ output: 'script', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(typeof obs, 'string')
@@ -262,7 +262,7 @@ test('deserialize : translate svg (path: bezier) to script', (t) => {
   t.is(countOf('path2.appendArc', obs), 1)
   t.is(countOf('path2.appendBezier', obs), 1)
   t.is(countOf('path2.close', obs), 1)
-  t.is(countOf('geom2.fromPoints', obs), 1)
+  t.is(countOf('geom2.create', obs), 1)
 
   // absolute CUBIC bezier
   // relative CUBIC bezier
@@ -275,7 +275,7 @@ test('deserialize : translate svg (path: bezier) to script', (t) => {
   t.is(countOf('path2.fromPoints', obs), 1)
   t.is(countOf('path2.appendBezier', obs), 4)
   t.is(countOf('path2.close', obs), 1)
-  t.is(countOf('geom2.fromPoints', obs), 0)
+  t.is(countOf('geom2.create', obs), 0)
 
   // absolute QUADRATIC bezier
   sourceSvg = `<svg height="500" width="500">
@@ -287,7 +287,7 @@ test('deserialize : translate svg (path: bezier) to script', (t) => {
   t.is(countOf('path2.fromPoints', obs), 1)
   t.is(countOf('path2.appendBezier', obs), 2)
   t.is(countOf('path2.close', obs), 1)
-  t.is(countOf('geom2.fromPoints', obs), 0)
+  t.is(countOf('geom2.create', obs), 0)
 
   // absolute CUBIC bezier shorthand
   // relative CUBIC bezier shorthand
@@ -300,7 +300,7 @@ test('deserialize : translate svg (path: bezier) to script', (t) => {
   t.is(countOf('path2.fromPoints', obs), 2)
   t.is(countOf('path2.appendBezier', obs), 4)
   t.is(countOf('path2.close', obs), 0)
-  t.is(countOf('geom2.fromPoints', obs), 0)
+  t.is(countOf('geom2.create', obs), 0)
 
   // absolute QUADRATIC bezier shorthand
   // relative QUADRATIC bezier shorthand
@@ -313,7 +313,7 @@ test('deserialize : translate svg (path: bezier) to script', (t) => {
   t.is(countOf('path2.fromPoints', obs), 1)
   t.is(countOf('path2.appendBezier', obs), 2)
   t.is(countOf('path2.close', obs), 0)
-  t.is(countOf('geom2.fromPoints', obs), 0)
+  t.is(countOf('geom2.create', obs), 0)
 
   sourceSvg = `<svg height="500" width="500">
   <path id="Sin_Mqttttz" fill="#FF0000" d="M240 296 q25-100 47 0 t47 0 t47 0 t47 0 t47 0 z"/>
@@ -324,7 +324,7 @@ test('deserialize : translate svg (path: bezier) to script', (t) => {
   t.is(countOf('path2.fromPoints', obs), 1)
   t.is(countOf('path2.appendBezier', obs), 5)
   t.is(countOf('path2.close', obs), 1)
-  t.is(countOf('geom2.fromPoints', obs), 1)
+  t.is(countOf('geom2.create', obs), 1)
   t.is(countOf('colors.colorize', obs), 1) // fill
 })
 
@@ -342,7 +342,7 @@ test('deserialize : translate shape with a hole to script', (t) => {
   t.is(countOf('path2.fromPoints', obs), 2)
   t.is(countOf('path2.appendArc', obs), 8)
   t.is(countOf('path2.close', obs), 2)
-  t.is(countOf('geom2.fromPoints', obs), 0)
+  t.is(countOf('geom2.create', obs), 0)
   t.is(countOf('colors.colorize', obs), 1) // stroke
 
   obs = deserialize({ output: 'script', target: 'geom2', addMetaData: false }, sourceSvg)
@@ -350,7 +350,7 @@ test('deserialize : translate shape with a hole to script', (t) => {
   t.is(countOf('path2.fromPoints', obs), 2)
   t.is(countOf('path2.appendArc', obs), 8)
   t.is(countOf('path2.close', obs), 2)
-  t.is(countOf('geom2.fromPoints', obs), 2)
+  t.is(countOf('geom2.create', obs), 2)
   t.is(countOf('colors.colorize', obs), 1) // stroke
 })
 
@@ -366,7 +366,7 @@ test('deserialize : translate shape with a nested hole to script', (t) => {
   t.is(countOf('path2.appendArc', obs), 8)
   t.is(countOf('path2.appendBezier', obs), 16)
   t.is(countOf('path2.close', obs), 4)
-  t.is(countOf('geom2.fromPoints', obs), 0)
+  t.is(countOf('geom2.create', obs), 0)
 
   obs = deserialize({ output: 'script', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(typeof obs, 'string')
@@ -374,7 +374,7 @@ test('deserialize : translate shape with a nested hole to script', (t) => {
   t.is(countOf('path2.appendArc', obs), 8)
   t.is(countOf('path2.appendBezier', obs), 16)
   t.is(countOf('path2.close', obs), 4)
-  t.is(countOf('geom2.fromPoints', obs), 4)
+  t.is(countOf('geom2.create', obs), 4)
 })
 
 // ################################

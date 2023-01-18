@@ -96,7 +96,7 @@ export const shapesMapGeometry = (obj, objectify, params) => {
         }
       }
       if (target === 'geom2') {
-        return geometries.geom2.fromPoints(points)
+        return geometries.geom2.create([points])
       }
       return geometries.path2.fromPoints({}, points)
     },
@@ -136,9 +136,8 @@ export const shapesMapGeometry = (obj, objectify, params) => {
       const shapes = listofentries.map((entry) => {
         const path = entry[1]
         if (target === 'geom2' && path.isClosed) {
-          const points = geometries.path2.toPoints(path).slice()
-          points.push(points[0]) // add first point again to create closing sides
-          return geometries.geom2.fromPoints(points)
+          const points = geometries.path2.toPoints(path)
+          return geometries.geom2.create([points])
         }
         return path
       })

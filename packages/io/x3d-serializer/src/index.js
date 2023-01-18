@@ -145,7 +145,7 @@ const convertGeom2 = (object, options) => {
  * Convert the given object (poly2) to X3D source
  */
 const convertPolyline2D = (object, options) => {
-  const lineSegments = object.vertices.map((p) => `${p[0]} ${p[1]}`).join(' ')
+  const lineSegments = object.points.map((p) => `${p[0]} ${p[1]}`).join(' ')
   return ['Polyline2D', { lineSegments }]
 }
 
@@ -191,7 +191,7 @@ const convertToTriangles = (object, options) => {
   polygons.forEach((poly) => {
     const firstVertex = poly.vertices[0]
     for (let i = poly.vertices.length - 3; i >= 0; i--) {
-      const triangle = poly3.fromPoints([
+      const triangle = poly3.create([
         firstVertex,
         poly.vertices[i + 1],
         poly.vertices[i + 2]

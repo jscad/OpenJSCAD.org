@@ -365,7 +365,7 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
       case 'Z':
         tmpCode += `${indent}${pathName} = geometries.path2.close(${pathName})\n`
         if (target === 'geom2') {
-          tmpCode += `${indent}${pathName} = geometries.geom2.fromPoints(geometries.path2.toPoints(${pathName}))\n`
+          tmpCode += `${indent}${pathName} = geometries.geom2.create([geometries.path2.toPoints(${pathName})])\n`
         }
         tmpCode += `${indent}parts.push(${pathName})\n`
 
