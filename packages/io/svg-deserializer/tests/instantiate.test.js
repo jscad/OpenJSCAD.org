@@ -146,7 +146,7 @@ test('deserialize : instantiate svg (line) to objects', (t) => {
   let observed = deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
   let shape = observed[0]
-  // TODO t.is(shape.sides.length, 6)
+  // TODO t.is(shape.outlines[0].length, 6)
 
   observed = deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)

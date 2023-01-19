@@ -19,8 +19,8 @@ const replacer = (key, value) => {
     case 'points':
     case 'vertices':
       return value.map((v) => Array.from(v))
-    case 'sides':
-      return value.map((s) => [Array.from(s[0]), Array.from(s[1])])
+    case 'outlines':
+      return value.map((o) => o.map((v) => Array.from(v)))
     default:
       break
   }
