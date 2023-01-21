@@ -7,14 +7,15 @@ import { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } from '../src
 
 test('2D GEOMETRY to DXF LWPOLYLINE', (t) => {
   const cag1 = geometries.geom2.create()
-  t.is(cag1.sides.length, 0)
+  t.is(cag1.outlines.length, 0)
 
   const obs1 = serialize({}, cag1)
   const exp1 = [empty]
   t.deepEqual(obs1, exp1)
 
   const cag2 = primitives.rectangle()
-  t.is(cag2.sides.length, 4)
+  t.is(cag2.outlines.length, 1)
+  t.is(cag2.outlines[0].length, 4)
 
   const obs2 = serialize({}, cag2)
   const exp2 = [lwpolyline0]
@@ -31,14 +32,15 @@ test('2D GEOMETRY to DXF LWPOLYLINE', (t) => {
 
 test('2D GEOMETRY to DXF POLYLINE', (t) => {
   const cag1 = geometries.geom2.create()
-  t.is(cag1.sides.length, 0)
+  t.is(cag1.outlines.length, 0)
 
   const obs1 = serialize({ geom2To: 'polyline' }, cag1)
   const exp1 = [empty]
   t.deepEqual(obs1, exp1)
 
   const cag2 = primitives.rectangle()
-  t.is(cag2.sides.length, 4)
+  t.is(cag2.outlines.length, 1)
+  t.is(cag2.outlines[0].length, 4)
 
   const obs2 = serialize({ geom2To: 'polyline' }, cag2)
   const exp2 = [polyline1]

@@ -1,7 +1,7 @@
 import { extrusions, geometries, maths } from '@jscad/modeling'
 
 const { mat4, vec3, utils } = maths
-const { extrudeFromSlices, slice } = extrusions
+const { extrudeFromSlices } = extrusions
 
 const calculateYaxes = (spine) => {
   const slength = spine.length
@@ -151,8 +151,8 @@ export const extrudeX3D = (x3dshape) => {
   }
 
   // Create the initial slice
-  const initialShape = geometries.geom2.fromPoints(crossSection)
-  const initialSlice = slice.fromSides(geometries.geom2.toSides(initialShape))
+  const initialShape = geometries.geom2.create([crossSection])
+  const initialSlice = geometries.slice.fromGeom2(initialShape)
 
   // Calculate SCP values
   let yaxes = calculateYaxes(spine)
@@ -205,8 +205,8 @@ export const extrudeX3D = (x3dshape) => {
       mat4.multiply(rotationMatrix, translationMatrix, rotationMatrix)
 
       let newslice = base
-      newslice = slice.transform(scaleMatrix, newslice)
-      newslice = slice.transform(rotationMatrix, newslice)
+      newslice = geometries.slice.transform(scaleMatrix, newslice)
+      newslice = geometries.slice.transform(rotationMatrix, newslice)
       // newslice = slice.transform(translationMatrix, newslice)
       return newslice
     }

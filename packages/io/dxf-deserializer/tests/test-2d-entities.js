@@ -71,9 +71,9 @@ test('ASCII DXF 2D Circles from Autocad 2017 to Object Conversion', (t) => {
   // NOTE: the extra objects are from the page layout
   t.true(geometries.path2.isA(objs[20]))
   t.true(geometries.geom2.isA(objs[21]))
-  t.is(geometries.geom2.toSides(objs[21]).length, 16) // circle
+  t.is(geometries.geom2.toPoints(objs[21]).length, 16) // circle
   t.true(geometries.geom2.isA(objs[22]))
-  t.is(geometries.geom2.toSides(objs[22]).length, 16) // circle
+  t.is(geometries.geom2.toPoints(objs[22]).length, 16) // circle
 })
 
 test('ASCII DXF 2D Rectangles from Autocad 2017 to Object Conversion', (t) => {

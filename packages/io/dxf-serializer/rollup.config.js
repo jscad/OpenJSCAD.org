@@ -1,5 +1,5 @@
 import banner from 'rollup-plugin-banner'
-import { nodeResolve } from '@rollup/plugin-node-resolve';
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 
 export default {
   external: ['@jscad/modeling'],
@@ -17,7 +17,7 @@ export default {
     },
     {
       file: 'dist/jscad-dxf-serializer.es.js',
-      format: 'es',
+      format: 'es'
     }
   ],
 

@@ -26,18 +26,18 @@ test('serialize (single, color)', (t) => {
 test('serialize (multiple, color)', (t) => {
   let cube1 = primitives.cuboid({ size: [4, 5, 6], center: [5, 5, 5] })
   cube1 = colors.colorize([0.0, 0.0, 1.0, 0.8], cube1)
-  cube1.name = "CUBE A"
+  cube1.name = 'CUBE A'
   const cube2 = primitives.cube()
-  cube2.name = "CUBE B"
+  cube2.name = 'CUBE B'
   const buffer = serialize({ metadata: false, compress: false, defaultcolor: [1, 0, 0, 1] }, cube1, cube2)
   t.deepEqual(buffer, expected4)
 })
 
 test('serialize (multiple, compress)', (t) => {
   const cube1 = colors.colorize([1.0, 0.0, 0.5, 0.8], primitives.cube())
-  cube1.name = "CUBE A"
+  cube1.name = 'CUBE A'
   const cube2 = primitives.cuboid({ size: [4, 5, 6], center: [5, 5, 5] })
-  cube2.name = "CUBE B"
+  cube2.name = 'CUBE B'
 
   const results = serialize({ compress: true }, cube1, cube2)
   t.is(results.length, 1)

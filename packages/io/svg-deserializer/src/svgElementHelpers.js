@@ -124,7 +124,7 @@ const svgSvg = (element, { customPxPmm }) => {
       let s = css2cag(obj.width, customPxPmm) // width in millimeters
       s = obj.viewW / s
       // scale the default units
-      // obj.unitsPmm[0] = obj.unitsPmm[0] * s;
+      // obj.unitsPmm[0] = obj.unitsPmm[0] * s
       obj.unitsPmm[0] = s
     } else {
       // scale the default units by the width (%)
@@ -136,7 +136,7 @@ const svgSvg = (element, { customPxPmm }) => {
       let s = css2cag(obj.height, pxPmm) // height in millimeters
       s = obj.viewH / s
       // scale the default units
-      // obj.unitsPmm[1] = obj.unitsPmm[1] * s;
+      // obj.unitsPmm[1] = obj.unitsPmm[1] * s
       obj.unitsPmm[1] = s
     } else {
       // scale the default units by the width (%)

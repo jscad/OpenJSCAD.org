@@ -6,27 +6,27 @@ function deserialize (gcode, filename, options) {
   options = Object.assign({}, defaults, options)
   const { version, addMetaData } = options
   // just as experiment ...
-  var l = gcode.split(/[\n]/) // for now just GCODE ASCII
-  var srci = ''
-  var d = 0
-  var pos = []
-  var lpos = []
-  var le = 0
-  var p = []
-  var origin = [-100, -100]
-  var layers = 0
-  var lh = 0.35
-  var lz = 0
+  const l = gcode.split(/[\n]/) // for now just GCODE ASCII
+  let srci = ''
+  let d = 0
+  const pos = []
+  const lpos = []
+  let le = 0
+  let p = []
+  const origin = [-100, -100]
+  let layers = 0
+  let lh = 0.35
+  let lz = 0
 
-  for (var i = 0; i < l.length; i++) {
-    var val = ''
-    var k
-    var e = 0
+  for (let i = 0; i < l.length; i++) {
+    const val = ''
+    let k
+    let e = 0
     if (l[i].match(/^\s*;/)) { continue }
-    var c = l[i].split(/\s+/)
-    for (var j = 0; j < c.length; j++) {
+    const c = l[i].split(/\s+/)
+    for (let j = 0; j < c.length; j++) {
       if (c[j].match(/G(\d+)/)) {
-        var n = parseInt(RegExp.$1)
+        const n = parseInt(RegExp.$1)
         if (n === 1) d++
         if (n === 90) pos.type = 'abs'
         if (n === 91) pos.type = 'rel'
@@ -34,24 +34,24 @@ function deserialize (gcode, filename, options) {
         const n = parseInt(RegExp.$1)
         if (n === 104 || n === 109) { k = 'temp' }
       } else if (c[j].match(/S([\d.]+)/)) {
-        var v = parseInt(RegExp.$1)
+        const v = parseInt(RegExp.$1)
         if (k !== undefined) {
           val[k] = v
         }
       } else if (c[j].match(/([XYZE])([-\d.]+)/)) {
-        var a = RegExp.$1
+        const a = RegExp.$1
         const v = parseFloat(RegExp.$2)
         if (pos.type === 'abs') {
           if (d) pos[a] = v
         } else {
           if (d) pos[a] += v
         }
-        // console.log(d,a,pos.E,lpos.E);
+        // console.log(d,a,pos.E,lpos.E)
         if (d && a === 'E' && lpos.E === undefined) {
           lpos.E = pos.E
         }
         if (d && a === 'E' && (pos.E - lpos.E) > 0) {
-          // console.log(pos.E,lpos.E);
+          // console.log(pos.E,lpos.E)
           e++
         }
       }
@@ -59,7 +59,7 @@ function deserialize (gcode, filename, options) {
     if (d && pos.X && pos.Y) {
       if (e) {
         if (!le && lpos.X && lpos.Y) {
-          // console.log(lpos.X,lpos.Y);
+          // console.log(lpos.X,lpos.Y)
           p.push('[' + (lpos.X + origin[0]) + ',' + (lpos.Y + origin[1]) + ']')
         }
         p.push('[' + (pos.X + origin[0]) + ',' + (pos.Y + origin[1]) + ']')
@@ -74,7 +74,7 @@ function deserialize (gcode, filename, options) {
         p = []
         lz = pos.Z
         // if(layers>2)
-        //   break;
+        //   break
       }
       le = e
       lpos.X = pos.X
@@ -97,7 +97,7 @@ function deserialize (gcode, filename, options) {
   }
 }
   `
-  // if(err) src += "// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n";
+  // if (err) src += '// WARNING: import errors: "+err+" (some triangles might be misaligned or missing)\n'
 
   options && options.statusCallback && options.statusCallback({ progress: 100 })
 

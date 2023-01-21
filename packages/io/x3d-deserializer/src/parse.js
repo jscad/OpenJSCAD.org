@@ -46,7 +46,7 @@ import {
 } from './objects.js'
 
 let x3dLast = null // last object found
-let x3dDefinition = x3dTypes.X3D // what kind of object beinging created
+let x3dDefinition = x3dTypes.X3D // what kind of object being created
 
 // high level elements / definitions
 const x3dObjects = [] // list of objects

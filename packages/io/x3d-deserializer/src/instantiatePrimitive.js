@@ -62,9 +62,9 @@ export const instantiatePrimitive = (options, objects) => {
     if (object.closureType === 'PIE') {
       geometry = primitives.circle({ radius: object.radius, startAngle: object.startAngle, endAngle: object.endAngle, segments: object.subdivision })
     } else {
-      geometry = geometries.geom2.fromPoints(geometries.path2.toPoints(geometries.path2.close(
+      geometry = geometries.geom2.create([geometries.path2.toPoints(geometries.path2.close(
         primitives.arc({ radius: object.radius, startAngle: object.startAngle, endAngle: object.endAngle, segments: object.subdivision })
-      )))
+      ))])
     }
     return geometry
   }
@@ -109,7 +109,7 @@ export const instantiatePrimitive = (options, objects) => {
     const numfaces = Math.trunc(numpoints / 3)
     geometry = []
     for (let i = 0; i < numfaces; i = i + 3) {
-      geometry.push(geometries.geom2.fromPoints([vertices[i], vertices[i + 1], vertices[i + 2]]))
+      geometry.push(geometries.geom2.create([[vertices[i], vertices[i + 1], vertices[i + 2]]]))
     }
     return geometry
   }

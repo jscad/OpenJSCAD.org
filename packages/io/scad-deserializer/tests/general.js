@@ -10,7 +10,7 @@ function run (test) {
   return f()
 }
 
-exports['test variable assigments'] = function () {
+exports['test variable assignments'] = function () {
   check('x = 123;', 'var x;\nx = 123;')
   check('x = 123.456;', 'var x;\nx = 123.456;')
   check('x = 2e-1;', 'var x;\nx = 0.2;')

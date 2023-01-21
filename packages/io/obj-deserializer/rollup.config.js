@@ -1,5 +1,5 @@
 import banner from 'rollup-plugin-banner'
-import versionInjector from 'rollup-plugin-version-injector';
+import versionInjector from 'rollup-plugin-version-injector'
 
 export default {
   external: ['@jscad/modeling'],
@@ -17,12 +17,12 @@ export default {
     },
     {
       file: 'dist/jscad-obj-deserializer.es.js',
-      format: 'es',
+      format: 'es'
     }
   ],
 
   plugins: [
     banner('<%= pkg.description %>\n<%= pkg.name %>\nVersion <%= pkg.version %>\n<%= pkg.license %> License'),
-    versionInjector({injectInComments:{fileRegexp: /\.(html)$/},logLevel: 'warn'}),
+    versionInjector({ injectInComments: { fileRegexp: /\.(html)$/ }, logLevel: 'warn' })
   ]
 }

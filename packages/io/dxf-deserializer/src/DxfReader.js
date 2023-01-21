@@ -1,4 +1,4 @@
-export const reader = (options) => { return new DxfReader(options) }
+export const reader = (options) => new DxfReader(options)
 
 const STATES = [
   'start',

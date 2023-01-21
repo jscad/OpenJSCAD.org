@@ -1,7 +1,5 @@
 import { geometries } from '@jscad/modeling'
 
-const { geom3, poly3 } = geometries
-
 import extrudeX3D from './extrudeX3D.js'
 
 import { x3dTypes } from './objects.js'
@@ -9,6 +7,8 @@ import { findNode, findColor, pointsToString } from './translateHelpers.js'
 
 import translateLine from './translateLine.js'
 import translateMesh from './translateMesh.js'
+
+const { geom3, poly3 } = geometries
 
 export const translateShape = (options, object) => {
   let code = `
@@ -74,7 +74,7 @@ const createObjects${object.id} = (options) => {
         if (shape.closureType === 'PIE') {
           primitive = `primitives.circle({radius: ${shape.radius}, startAngle: ${shape.startAngle}, endAngle: ${shape.endAngle}, segments: ${shape.subdivision}})`
         } else {
-          primitive = `geometries.geom2.fromPoints(geometries.path2.toPoints(geometries.path2.close(primitives.arc({radius: ${shape.radius}, startAngle: ${shape.startAngle}, endAngle: ${shape.endAngle}, segments: ${shape.subdivision}}))))`
+          primitive = `geometries.geom2.create([geometries.path2.toPoints(geometries.path2.close(primitives.arc({radius: ${shape.radius}, startAngle: ${shape.startAngle}, endAngle: ${shape.endAngle}, segments: ${shape.subdivision}})))])`
         }
       } else {
         shape = findNode(x3dTypes.CIRCLE2D, objects)
@@ -112,7 +112,7 @@ const createObjects${object.id} = (options) => {
   const vertices = ${pointsToString(shape.vertices)}
   const triangles = []
   for (let i = 0; i < ${numfaces}; i = i + 3) {
-    triangles.push(geometries.geom2.fromPoints([vertices[i], vertices[i + 1], vertices[i + 2]]))
+    triangles.push(geometries.geom2.create([[vertices[i], vertices[i + 1], vertices[i + 2]]]))
   }
 `
                   primitive = 'triangles'

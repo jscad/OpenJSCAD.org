@@ -149,7 +149,7 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
   for (let j = 0; j < obj.commands.length; j++) {
     const co = obj.commands[j]
     const pts = co.p
-    // console.log('postion: ['+cx+','+cy+'] before '+co.c);
+    // console.log('position: ['+cx+','+cy+'] before '+co.c)
     switch (co.c) {
       case 'm': // relative move to X,Y
         // special case, if at beginning of path then treat like absolute M
@@ -365,7 +365,7 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
       case 'Z':
         tmpCode += `${indent}${pathName} = geometries.path2.close(${pathName})\n`
         if (target === 'geom2') {
-          tmpCode += `${indent}${pathName} = geometries.geom2.fromPoints(geometries.path2.toPoints(${pathName}))\n`
+          tmpCode += `${indent}${pathName} = geometries.geom2.create([geometries.path2.toPoints(${pathName})])\n`
         }
         tmpCode += `${indent}parts.push(${pathName})\n`
 
@@ -377,7 +377,7 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
         console.log('Warning: Unknow PATH command [' + co.c + ']')
         break
     }
-    // console.log('postion: ['+cx+','+cy+'] after '+co.c);
+    // console.log('postion: ['+cx+','+cy+'] after '+co.c)
   }
   if (pi > 0 && pc === false) {
     tmpCode += `${indent}parts.push(${pathName})\n`

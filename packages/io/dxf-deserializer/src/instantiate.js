@@ -1,7 +1,8 @@
 import { geometries, maths, primitives } from '@jscad/modeling'
-const EPS = 1e-5 // FIXME
 
 import { getColor, getColorNumber } from './helpers.js'
+
+const EPS = 1e-5 // FIXME
 
 //
 // instantiate the given object (3dface) as a polygon
@@ -366,7 +367,7 @@ const completeCurrent = (objects, baseobj, polygons, vectors, options) => {
 
 const instantiateAsciiDxf = (reader, options) => {
   // console.log('**************************************************')
-  // console.log(JSON.stringify(reader.objstack));
+  // console.log(JSON.stringify(reader.objstack))
   // console.log('**************************************************')
 
   const layers = [] // list of layers with various information like color
@@ -383,7 +384,7 @@ const instantiateAsciiDxf = (reader, options) => {
       // console.log('##### skip')
       continue
     }
-    // console.log(JSON.stringify(obj));
+    // console.log(JSON.stringify(obj))
 
     switch (obj.type) {
     // control objects
@@ -480,9 +481,9 @@ const instantiateAsciiDxf = (reader, options) => {
   // console.log('**************************************************')
   // objects.forEach(
   //   (e) => {
-  //     console.log(JSON.stringify(e));
+  //     console.log(JSON.stringify(e))
   //   }
-  // );
+  // )
   // console.log('**************************************************')
   return objects
 }

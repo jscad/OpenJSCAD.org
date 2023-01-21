@@ -192,7 +192,7 @@ ENDSEC`
   t.true(src6.indexOf('path2.appendPoints(') > 0)
   t.true(src6.indexOf('path2.appendArc(') > 0)
   t.true(src6.indexOf('path2.close(') > 0)
-  t.true(src6.indexOf('fromPoints(') > 0)
+  t.true(src6.indexOf('poly3.create(') > 0)
 
   // DXF ELLIPSE, translates to script with a 'ellipse' function
   const dxf7 = `0

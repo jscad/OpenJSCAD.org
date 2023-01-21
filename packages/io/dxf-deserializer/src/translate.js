@@ -842,7 +842,7 @@ const main = () => {
   script +=
 `
 function createPolygon(listofpoints, color) {
-  let polygon = geometries.poly3.fromPoints(listofpoints)
+  let polygon = geometries.poly3.create(listofpoints)
   if (color) polygon.color = color
   return polygon
 }
