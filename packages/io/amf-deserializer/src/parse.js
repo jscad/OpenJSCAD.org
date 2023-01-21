@@ -13,7 +13,7 @@ import {
 import { inchMM } from './constants.js'
 
 let amfLast = null // last object found
-let amfDefinition = 0 // definitions beinging created
+let amfDefinition = 0 // definitions being created
 // 0-AMF, 1-object, 2-material, 3-texture, 4-constellation, 5-metadata
 // high level elements / definitions
 const amfObjects = [] // list of objects

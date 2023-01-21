@@ -4,9 +4,9 @@ const test = require('ava')
 const deserializer = require('./index.js')
 
 const filesPath = path.resolve('../../node_modules/@jscad/sample-files') // require.resolve('@jscad/sample-files')
-const polygonsFromCsg = csg => csg.polygons.map(x => x.vertices.map(vert => ([vert.pos.x, vert.pos.y, vert.pos.z])))
+const polygonsFromCsg = (csg) => csg.polygons.map((x) => x.vertices.map((vert) => ([vert.pos.x, vert.pos.y, vert.pos.z])))
 
-test.failing('translate simple gcode file to jscad code (NOT IMPLEMENTED!!!)', function (t) {
+test.failing('translate simple gcode file to jscad code (NOT IMPLEMENTED!!!)', (t) => {
   const inputPath = path.resolve(filesPath, 'gcode/cube_10mm.gcode')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
   const expected = ''
@@ -15,7 +15,7 @@ test.failing('translate simple gcode file to jscad code (NOT IMPLEMENTED!!!)', f
   t.deepEqual(observed, expected)
 })
 
-test.failing('deserialize simple gcode to cag/csg objects (NOT IMPLEMENTED!!!)', function (t) {
+test.failing('deserialize simple gcode to cag/csg objects (NOT IMPLEMENTED!!!)', (t) => {
   const inputPath = path.resolve(filesPath, 'gcode/cube_10mm.gcode')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 

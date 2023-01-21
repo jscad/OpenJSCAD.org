@@ -1,7 +1,7 @@
 import { geometries } from '@jscad/modeling'
 
 // handled format descriptions
-// note: order is important as regular expressions are created from extentions
+// note: order is important as regular expressions are created from extensions
 // see https://www.iana.org/assignments/media-types/media-types.xhtml
 const supportedFormats = {
   stl: {

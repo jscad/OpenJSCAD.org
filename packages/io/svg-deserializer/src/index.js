@@ -353,7 +353,7 @@ const createSvgParser = (src, pxPmm) => {
     // this is just like an embedded SVG but does NOT render directly, only named
     // this requires another set of control objects
     // only add to named objects for later USE
-    //  break;
+    //  break
 
     if (obj) {
       // add to named objects if necessary

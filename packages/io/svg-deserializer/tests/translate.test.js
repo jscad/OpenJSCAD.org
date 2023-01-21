@@ -4,7 +4,6 @@ import countOf from '../../test/helpers/countOf.js'
 
 import { deserialize } from '../src/index.js'
 
-
 test('deserialize : translate svg (rect) to script', (t) => {
   const sourceSvg = `<svg pxpmm="10" width="500" height="500">
   <rect x="80" y="60" width="250" height="250" color="red"/>

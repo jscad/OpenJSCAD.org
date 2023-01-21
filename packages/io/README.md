@@ -4,7 +4,7 @@
 
 ## Overview
 
-This repository includes all the input/output format handling for the JSCAD projects, which can be used seperately.
+This repository includes all the input/output format handling for the JSCAD projects, which can be used separately.
 
 ### Input Format Handling (deserializers)
 

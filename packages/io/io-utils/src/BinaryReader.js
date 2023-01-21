@@ -62,7 +62,7 @@ export class BinaryReader {
     const exponent = this._readBits(precisionBits, exponentBits, size)
     let significand = 0
     let divisor = 2
-    let curByte = 0 // length + (-precisionBits >> 3) - 1;
+    let curByte = 0 // length + (-precisionBits >> 3) - 1
     let startBit = 0
     do {
       const byteValue = this._readByte(++curByte, size)
@@ -124,7 +124,7 @@ export class BinaryReader {
 
   _checkSize (neededBits) {
     if (!(this._pos + Math.ceil(neededBits / 8) < this._buffer.length)) {
-      // throw new Error("Index out of bound");
+      // throw new Error("Index out of bound")
     }
   }
 }

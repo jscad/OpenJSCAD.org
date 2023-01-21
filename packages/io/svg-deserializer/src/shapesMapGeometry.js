@@ -370,13 +370,13 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           by = rf[1]
         }
         break
-      case 'h': // relative Horzontal line to
+      case 'h': // relative Horizontal line to
         while (pts.length >= i + 1) {
           cx = cx + parseFloat(pts[i++])
           paths[pathName] = appendPoints([[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]], paths[pathName])
         }
         break
-      case 'H': // absolute Horzontal line to
+      case 'H': // absolute Horizontal line to
         while (pts.length >= i + 1) {
           cx = parseFloat(pts[i++])
           paths[pathName] = appendPoints([[svg2cagX(cx, svgUnitsPmm), svg2cagY(cy, svgUnitsPmm)]], paths[pathName])
@@ -416,7 +416,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
         pc = true
         break
       default:
-        console.log('Warning: Unknow PATH command [' + co.c + ']')
+        console.log('Warning: Unknown PATH command [' + co.c + ']')
         break
     }
 
@@ -425,7 +425,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
     if (pc !== true && paths[pathName] && paths[pathName].isClosed) {
       let coNext = obj.commands[j + 1]
       // allow self close in the last command #1135 (coNext is null or undefined)
-      // if do have a next command use pathSelfClosed to decide how to react to closing in the middle of a path 
+      // if do have a next command use pathSelfClosed to decide how to react to closing in the middle of a path
       if (coNext && !isCloseCmd(coNext.c)) {
         if (pathSelfClosed === 'trim') {
           while (coNext && !isCloseCmd(coNext.c)) {
@@ -434,7 +434,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           }
         } else if (pathSelfClosed === 'split') {
           newPath()
-        }else{ 
+        } else {
           throw new Error(`Malformed svg path at ${obj.position[0]}:${co.pos}. Path closed itself with command #${j} ${co.c}${pts.join(' ')}`)
         }
       }

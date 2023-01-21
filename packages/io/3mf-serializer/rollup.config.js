@@ -1,6 +1,6 @@
 import banner from 'rollup-plugin-banner'
-import commonjs from '@rollup/plugin-commonjs';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 
 export default {
   external: ['@jscad/modeling'],
@@ -18,7 +18,7 @@ export default {
     },
     {
       file: 'dist/jscad-3mf-serializer.es.js',
-      format: 'es',
+      format: 'es'
     }
   ],
 
