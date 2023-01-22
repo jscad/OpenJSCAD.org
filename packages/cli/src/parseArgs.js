@@ -4,8 +4,7 @@ import path from 'path'
 import { loading } from '@jscad/core'
 const { getDesignEntryPoint } = loading
 
-import { formats } from '@jscad/io'
-const { supportedInputExtensions, supportedOutputExtensions, supportedOutputFormats } = formats
+import { supportedInputExtensions, supportedOutputExtensions, supportedOutputFormats } from '@jscad/io'
 
 import env from './env.js'
 
@@ -17,7 +16,7 @@ export const parseArgs = (args) => {
   // hint: https://github.com/substack/node-optimist
   //       https://github.com/visionmedia/commander.js
   if (args.length < 1) {
-    console.log('USAGE:\n\nopenjscad [-v] <file> [-of <format>] [-o <output>]')
+    console.log('USAGE:\n\njscad [-v] <file> [-of <format>] [-o <output>]')
     console.log(`\t<file>  :\tinput (Supported types: folder, .${inputExtensions.join(', .')})`)
     console.log(`\t<output>:\toutput (Supported types: folder, .${outputExtensions.join(', .')})`)
     console.log(`\t<format>:\t${outputFormats.join(', ')}`)
@@ -79,7 +78,7 @@ export const parseArgs = (args) => {
         inputFormat = path.extname(inputFile).substring(1)
       } else {
         console.log('ERROR: invalid file name or argument <' + args[i] + '>')
-        console.log("Type 'openjscad' for a list of supported types")
+        console.log("Type 'jscad' for a list of supported types")
         process.exit(1)
       }
     }
@@ -89,6 +88,11 @@ export const parseArgs = (args) => {
 
   if (!outputFormat && !outputFile) {
     outputFormat = 'stla'
+  }
+  if (!outputFormats.includes(outputFormat)) {
+    console.log('ERROR: invalid output format <' + outputFormat + '>')
+    console.log("Type 'jscad' for a list of supported types")
+    process.exit(1)
   }
 
   return {

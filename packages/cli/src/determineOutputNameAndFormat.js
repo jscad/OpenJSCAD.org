@@ -1,6 +1,4 @@
-import { formats } from '@jscad/io'
-
-const { supportedOutputExtensions, supportedOutputFormats } = formats
+import { supportedOutputExtensions, supportedOutputFormats } from '@jscad/io'
 
 export const determineOutputNameAndFormat = (outputFormat, outputFile, inputFile) => {
   const extReg = new RegExp(`\\.(${supportedOutputExtensions().join('|')})$`)
