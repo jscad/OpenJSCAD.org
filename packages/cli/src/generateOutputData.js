@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { createRequire } from "module"
+import { createRequire } from 'module'
 
 import { deserialize, getMimeType, serialize } from '@jscad/io'
 import { convertToBlob } from '@jscad/io-utils'
@@ -9,8 +9,6 @@ import { evaluation, io } from '@jscad/core'
 
 const { rebuildGeometryCli } = evaluation
 const { registerAllExtensions } = io
-
-const solidsAsBlob = (solids, params) => convertToBlob(prepareOutput(solids, params))
 
 /**
  * Create a promise to convert the given source in inputFormat to the desired outputFormat.
@@ -35,10 +33,7 @@ export const generateOutputData = (source, cliparams, options) => {
 
   // setup support for require-ing files with .jscad, .stl etc extensions
   // HACK create the require function if necessary
-  if (typeof self === 'undefined') {
-    // create require via Node API
-    var require = createRequire(import.meta.url)
-  }
+  const require = createRequire(import.meta.url)
   registerAllExtensions(fs, require)
 
   return new Promise((resolve, reject) => {
@@ -46,7 +41,7 @@ export const generateOutputData = (source, cliparams, options) => {
     const prevsource = source
     const deserializerOptions = Object.assign({ output: 'script', filename: inputFile }, cliparams)
     source = deserialize(deserializerOptions, inputMimeType, source)
-    let useFakeFs = (source !== prevsource) // conversion, so use a fake file system when rebuilding
+    const useFakeFs = (source !== prevsource) // conversion, so use a fake file system when rebuilding
 
     if (outputMimeType === 'application/javascript') {
       // pass back the source

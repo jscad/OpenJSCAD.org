@@ -2,11 +2,12 @@ import fs from 'fs'
 import path from 'path'
 
 import { loading } from '@jscad/core'
-const { getDesignEntryPoint } = loading
 
 import { supportedInputExtensions, supportedOutputExtensions, supportedOutputFormats } from '@jscad/io'
 
 import env from './env.js'
+
+const { getDesignEntryPoint } = loading
 
 export const parseArgs = (args) => {
   const inputExtensions = supportedInputExtensions()
@@ -91,7 +92,7 @@ export const parseArgs = (args) => {
   }
   if (!outputFormat && outputFile) {
     outputFormat = path.extname(outputFile).substring(1)
-    if (outputFormat === "stl") outputFormat = 'stla'
+    if (outputFormat === 'stl') outputFormat = 'stla'
   }
   if (!outputFormats.includes(outputFormat)) {
     console.log('ERROR: invalid output format <' + outputFormat + '>')
