@@ -89,6 +89,10 @@ export const parseArgs = (args) => {
   if (!outputFormat && !outputFile) {
     outputFormat = 'stla'
   }
+  if (!outputFormat && outputFile) {
+    outputFormat = path.extname(outputFile).substring(1)
+    if (outputFormat === "stl") outputFormat = 'stla'
+  }
   if (!outputFormats.includes(outputFormat)) {
     console.log('ERROR: invalid output format <' + outputFormat + '>')
     console.log("Type 'jscad' for a list of supported types")

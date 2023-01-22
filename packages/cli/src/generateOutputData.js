@@ -53,8 +53,6 @@ export const generateOutputData = (source, cliparams, options) => {
       resolve(source)
     } else {
       try {
-        // FIXME useFakeFs = true
-console.log("useFakeFs",useFakeFs)
         const solids = rebuildGeometryCli({ mainPath: inputPath, parameterValues: cliparams, useFakeFs, source })
         resolve(solids)
       } catch (error) {
