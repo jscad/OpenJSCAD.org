@@ -2,7 +2,7 @@ import path from 'path'
 
 import { flatten } from '@jscad/array-utils'
 
-import { formats } from '@jscad/io'
+import { supportedFormats } from '@jscad/io'
 
 import getFileExtensionFromString from '../utils/getFileExtensionFromString.js'
 
@@ -66,7 +66,7 @@ const readFileAsync = (file, fileMeta) => {
 // all known formats are supported
 const isSupportedFormat = (file) => {
   const ext = getFileExtensionFromString(file.name)
-  const mimetype = formats[ext] ? formats[ext].mimetype : binaryMimetypes[ext]
+  const mimetype = supportedFormats[ext] ? supportedFormats[ext].mimetype : binaryMimetypes[ext]
   file.mimetype = file.type && file.type.length ? file.type : mimetype
   return file.mimetype && file.mimetype.length
 }
