@@ -165,6 +165,7 @@ const getMimeType = (extension) => {
   for (const format in supportedFormats) {
     const meta = supportedFormats[format]
     if (meta.extension === extension) return meta.mimetype
+    if (format === extension) return meta.mimetype
   }
   return null
 }
