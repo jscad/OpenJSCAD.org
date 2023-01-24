@@ -1,5 +1,5 @@
 /**
- * Represents a 2D geometry consisting of a outlines, where each outline is an ordered list of points.
+ * Represents a 2D geometry consisting of outlines, where each outline is an ordered list of points.
  * The outline is always closed between the first and last points.
  * @see {@link geom2} for data structure information.
  * @module modeling/geometries/geom2

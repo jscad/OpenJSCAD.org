@@ -1,17 +1,13 @@
 import * as vec3 from '../../maths/vec3/index.js'
 
 /**
- * @param {poly3} polygon - the polygon to measure
+ * Convert the given polygon to a readable string.
+ * @param {poly3} polygon - the polygon to convert
  * @return {String} the string representation
  * @alias module:modeling/geometries/poly3.toString
  */
 export const toString = (polygon) => {
-  let result = 'poly3: vertices: ['
-  polygon.vertices.forEach((vertex) => {
-    result += `${vec3.toString(vertex)}, `
-  })
-  result += ']'
-  return result
+  return `poly3: [${polygon.vertices.map(vec3.toString).join(', ')}]`
 }
 
 export default toString
