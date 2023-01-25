@@ -9,13 +9,11 @@ test('validate: identifies polygons', (t) => {
   const ply2 = create([[0, 0], [1, 0], [1, 1]])
   t.notThrows(() => validate(ply2))
 
-  const string = toString(ply2)
-
   // Clockwise
   const ply3 = create([[5, 5], [5, -5], [-5, -5], [-5, 5]])
   t.throws(() => validate(ply3), { message: 'poly2 area must be greater than zero' })
 
-  // Counter Clockwise
+  // Counterclockwise
   const ply4 = create([[5, 5], [-5, 5], [-5, -5], [5, -5]])
   t.notThrows(() => validate(ply4))
 
@@ -27,7 +25,7 @@ test('validate: identifies polygons', (t) => {
   const ply6 = create([[0, 0], [5, 5], [5, -5], [0, 0], [-5, -5], [-5, 5]])
   t.throws(() => validate(ply6), { message: 'poly2 area must be greater than zero' })
 
-  // Counter Clockwise with duplicate points
+  // Counterclockwise with duplicate points
   const ply7 = create([[5, 5], [-5, 5], [-5, 5], [-5, -5], [5, -5]])
   t.throws(() => validate(ply7), { message: 'poly2 duplicate point at 1: [-5,5]' })
 })

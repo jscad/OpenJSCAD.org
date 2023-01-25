@@ -1,7 +1,7 @@
 import * as mat4 from '../../maths/mat4/index.js'
 
 /**
- * Represents a 2D geometry consisting of a outlines, where each outline is an ordered list of points.
+ * Represents a 2D geometry consisting of outlines, where each outline is an ordered list of points.
  * @typedef {Object} geom2
  * @property {Array} outlines - list of polygon outlines
  * @property {mat4} transforms - transforms to apply to the geometry, see transform()

@@ -9,7 +9,7 @@ test('poly2: isConvex() should return correct values', (t) => {
   const ply2 = create([[0, 0], [1, 0], [1, 1]])
   t.true(isConvex(ply2))
 
-  // Counter Clockwise
+  // Counterclockwise
   const ply3 = create([[5, 5], [5, -5], [-5, -5], [-5, 5]])
   t.true(isConvex(ply3))
 
