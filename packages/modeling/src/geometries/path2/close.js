@@ -2,8 +2,6 @@ import { EPS } from '../../maths/constants.js'
 
 import * as vec2 from '../../maths/vec2/index.js'
 
-import { clone } from './clone.js'
-
 /**
  * Close the given geometry.
  * @param {path2} geometry - the path to close
@@ -13,7 +11,7 @@ import { clone } from './clone.js'
 export const close = (geometry) => {
   if (geometry.isClosed) return geometry
 
-  const cloned = clone(geometry)
+  const cloned = Object.assign({}, geometry)
   cloned.isClosed = true
 
   if (cloned.points.length > 1) {

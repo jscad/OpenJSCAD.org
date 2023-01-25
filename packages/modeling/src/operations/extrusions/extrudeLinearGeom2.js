@@ -31,16 +31,13 @@ export const extrudeLinearGeom2 = (options, geometry) => {
     twistSteps = 1
   }
 
-  // convert to vector in order to perform transforms
-  const offsetV = vec3.clone(offset)
-
   let baseSlice = slice.fromGeom2(geometry)
-  if (offsetV[2] < 0) baseSlice = slice.reverse(baseSlice)
+  if (offset[2] < 0) baseSlice = slice.reverse(baseSlice)
 
   const matrix = mat4.create()
   const createTwist = (progress, index, base) => {
     const Zrotation = index / twistSteps * twistAngle
-    const Zoffset = vec3.scale(vec3.create(), offsetV, index / twistSteps)
+    const Zoffset = vec3.scale(vec3.create(), offset, index / twistSteps)
     mat4.multiply(matrix, mat4.fromZRotation(matrix, Zrotation), mat4.fromTranslation(mat4.create(), Zoffset))
 
     return slice.transform(matrix, base)

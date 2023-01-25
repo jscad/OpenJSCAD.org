@@ -10,7 +10,6 @@
 export { appendArc } from './appendArc.js'
 export { appendBezier } from './appendBezier.js'
 export { appendPoints } from './appendPoints.js'
-export { clone } from './clone.js'
 export { close } from './close.js'
 export { concat } from './concat.js'
 export { create } from './create.js'

@@ -8,7 +8,6 @@
  * import { geometries } from '@jscad/modeling'
  * let myShape = geometries.geom2.create([ [[-1,-1], [1,-1], [1,1], [-1,1]] ])
  */
-export { clone } from './clone.js'
 export { create } from './create.js'
 export { fromSides } from './fromSides.js'
 export { fromCompactBinary } from './fromCompactBinary.js'

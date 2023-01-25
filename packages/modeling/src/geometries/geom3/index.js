@@ -14,7 +14,6 @@
  *   [[-1,-1,1], [1,-1,1], [1,1,1], [-1,1,1]]
  * ])
  */
-export { clone } from './clone.js'
 export { create } from './create.js'
 export { fromPoints } from './fromPoints.js'
 export { fromCompactBinary } from './fromCompactBinary.js'

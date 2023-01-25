@@ -1,4 +1,3 @@
-import { clone } from './clone.js'
 
 /**
  * Reverses the path so that the points are in the opposite order.
@@ -12,7 +11,7 @@ import { clone } from './clone.js'
  */
 export const reverse = (geometry) => {
   // NOTE: this only updates the order of the points
-  const cloned = clone(geometry)
+  const cloned = Object.assign({}, geometry)
   cloned.points = geometry.points.slice().reverse()
   return cloned
 }

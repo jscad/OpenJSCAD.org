@@ -18,4 +18,4 @@ import * as vec3 from '../maths/vec3/index.js'
  * @example
  * let myConnector = create()
  */
-export const create = () => ({ point: vec3.create(), axis: vec3.clone([0, 0, 1]), normal: vec3.clone([1, 0, 0]) })
+export const create = () => ({ point: vec3.create(), axis: [0, 0, 1], normal: [1, 0, 0] })

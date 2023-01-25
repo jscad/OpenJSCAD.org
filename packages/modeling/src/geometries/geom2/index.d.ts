@@ -1,4 +1,3 @@
-export { clone } from './clone'
 export { create } from './create'
 export { fromSides } from './fromSides'
 export { fromCompactBinary } from './fromCompactBinary'

@@ -6,27 +6,19 @@ import * as path2 from '../geometries/path2/index.js'
 import * as poly3 from '../geometries/poly3/index.js'
 
 const colorGeom2 = (color, object) => {
-  const newGeom2 = geom2.clone(object)
-  newGeom2.color = color
-  return newGeom2
+  return Object.assign({}, object, { color })
 }
 
 const colorGeom3 = (color, object) => {
-  const newGeom3 = geom3.clone(object)
-  newGeom3.color = color
-  return newGeom3
+  return Object.assign({}, object, { color })
 }
 
 const colorPath2 = (color, object) => {
-  const newPath2 = path2.clone(object)
-  newPath2.color = color
-  return newPath2
+  return Object.assign({}, object, { color })
 }
 
 const colorPoly3 = (color, object) => {
-  const newPoly = poly3.clone(object)
-  newPoly.color = color
-  return newPoly
+  return Object.assign({}, object, { color })
 }
 
 /**
