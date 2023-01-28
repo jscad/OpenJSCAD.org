@@ -31,6 +31,7 @@ importers:
       '@jscad/array-utils': workspace:2.1.4
       '@jscad/core': workspace:2.6.4
       '@jscad/io': workspace:2.4.3
+      '@jscad/io-utils': workspace:2.0.22
       '@jscad/modeling': workspace:2.10.0
       ava: 4.3.3
       nyc: 15.1.0
@@ -38,6 +39,7 @@ importers:
       '@jscad/array-utils': link:../utils/array-utils
       '@jscad/core': link:../core
       '@jscad/io': link:../io/io
+      '@jscad/io-utils': link:../io/io-utils
       '@jscad/modeling': link:../modeling
     devDependencies:
       ava: 4.3.3
@@ -74,19 +76,27 @@ importers:
   packages/io/3mf-serializer:
     specifiers:
       '@jscad/array-utils': workspace:2.1.4
+      '@jscad/io-utils': workspace:^2.0.22
       '@jscad/modeling': workspace:2.10.0
+      '@rollup/plugin-commonjs': ^23.0.4
+      '@rollup/plugin-node-resolve': ^15.0.1
       ava: 4.3.3
       fflate: 0.7.3
       nyc: 15.1.0
-      onml: 2.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: ^0.2.1
     dependencies:
       '@jscad/array-utils': link:../../utils/array-utils
+      '@jscad/io-utils': link:../io-utils
       '@jscad/modeling': link:../../modeling
       fflate: 0.7.3
-      onml: 2.1.0
     devDependencies:
+      '@rollup/plugin-commonjs': 23.0.7_rollup@2.79.1
+      '@rollup/plugin-node-resolve': 15.0.1_rollup@2.79.1
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
 
   packages/io/amf-deserializer:
     specifiers:
@@ -104,14 +114,14 @@ importers:
   packages/io/amf-serializer:
     specifiers:
       '@jscad/array-utils': workspace:2.1.4
+      '@jscad/io-utils': workspace:^2.0.22
       '@jscad/modeling': workspace:2.10.0
       ava: 4.3.3
       nyc: 15.1.0
-      onml: 2.1.0
     dependencies:
       '@jscad/array-utils': link:../../utils/array-utils
+      '@jscad/io-utils': link:../io-utils
       '@jscad/modeling': link:../../modeling
-      onml: 2.1.0
     devDependencies:
       ava: 4.3.3
       nyc: 15.1.0
@@ -121,30 +131,40 @@ importers:
       '@jscad/modeling': workspace:2.10.0
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: ^0.2.1
+      rollup-plugin-version-injector: ^1.3.3
     dependencies:
       '@jscad/modeling': link:../../modeling
     devDependencies:
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
+      rollup-plugin-version-injector: 1.3.3
 
   packages/io/dxf-serializer:
     specifiers:
       '@jscad/array-utils': workspace:2.1.4
       '@jscad/modeling': workspace:2.10.0
+      '@rollup/plugin-node-resolve': 15.0.1
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
     dependencies:
       '@jscad/array-utils': link:../../utils/array-utils
       '@jscad/modeling': link:../../modeling
     devDependencies:
+      '@rollup/plugin-node-resolve': 15.0.1_rollup@2.79.1
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
 
   packages/io/io:
     specifiers:
       '@jscad/3mf-serializer': workspace:2.1.6
-      '@jscad/amf-deserializer': workspace:2.3.2
-      '@jscad/amf-serializer': workspace:2.1.12
       '@jscad/array-utils': workspace:2.1.4
       '@jscad/dxf-deserializer': workspace:2.3.19
       '@jscad/dxf-serializer': workspace:2.1.12
@@ -160,10 +180,10 @@ importers:
       '@jscad/svg-serializer': workspace:2.3.10
       '@jscad/x3d-deserializer': workspace:2.2.2
       '@jscad/x3d-serializer': workspace:2.4.2
+      ava: 4.3.3
+      nyc: 15.1.0
     dependencies:
       '@jscad/3mf-serializer': link:../3mf-serializer
-      '@jscad/amf-deserializer': link:../amf-deserializer
-      '@jscad/amf-serializer': link:../amf-serializer
       '@jscad/array-utils': link:../../utils/array-utils
       '@jscad/dxf-deserializer': link:../dxf-deserializer
       '@jscad/dxf-serializer': link:../dxf-serializer
@@ -179,6 +199,9 @@ importers:
       '@jscad/svg-serializer': link:../svg-serializer
       '@jscad/x3d-deserializer': link:../x3d-deserializer
       '@jscad/x3d-serializer': link:../x3d-serializer
+    devDependencies:
+      ava: 4.3.3
+      nyc: 15.1.0
 
   packages/io/io-utils:
     specifiers:
@@ -194,49 +217,71 @@ importers:
     specifiers:
       '@jscad/array-utils': workspace:2.1.4
       '@jscad/modeling': workspace:2.10.0
+      '@rollup/plugin-node-resolve': ^15.0.1
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: ^0.2.1
+      rollup-plugin-version-injector: ^1.3.3
     dependencies:
       '@jscad/array-utils': link:../../utils/array-utils
     devDependencies:
       '@jscad/modeling': link:../../modeling
+      '@rollup/plugin-node-resolve': 15.0.1_rollup@2.79.1
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
+      rollup-plugin-version-injector: 1.3.3
 
   packages/io/json-serializer:
     specifiers:
       '@jscad/modeling': workspace:2.10.0
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
     dependencies:
       '@jscad/modeling': link:../../modeling
     devDependencies:
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
 
   packages/io/obj-deserializer:
     specifiers:
       '@jscad/modeling': workspace:2.10.0
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: ^0.2.1
+      rollup-plugin-version-injector: ^1.3.3
     dependencies:
       '@jscad/modeling': link:../../modeling
     devDependencies:
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
+      rollup-plugin-version-injector: 1.3.3
 
   packages/io/obj-serializer:
     specifiers:
       '@jscad/array-utils': workspace:2.1.4
       '@jscad/modeling': workspace:2.10.0
+      '@rollup/plugin-node-resolve': ^15.0.1
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: ^0.2.1
     dependencies:
       '@jscad/array-utils': link:../../utils/array-utils
       '@jscad/modeling': link:../../modeling
     devDependencies:
+      '@rollup/plugin-node-resolve': 15.0.1_rollup@2.79.1
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
 
   packages/io/stl-deserializer:
     specifiers:
@@ -244,103 +289,156 @@ importers:
       '@jscad/modeling': workspace:2.10.0
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: ^0.2.1
+      rollup-plugin-version-injector: ^1.3.3
     dependencies:
       '@jscad/io-utils': link:../io-utils
       '@jscad/modeling': link:../../modeling
     devDependencies:
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
+      rollup-plugin-version-injector: 1.3.3
 
   packages/io/stl-serializer:
     specifiers:
       '@jscad/array-utils': workspace:2.1.4
       '@jscad/modeling': workspace:2.10.0
+      '@rollup/plugin-node-resolve': ^15.0.1
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: ^0.2.1
     dependencies:
       '@jscad/array-utils': link:../../utils/array-utils
       '@jscad/modeling': link:../../modeling
     devDependencies:
+      '@rollup/plugin-node-resolve': 15.0.1_rollup@2.79.1
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
 
   packages/io/svg-deserializer:
     specifiers:
       '@jscad/array-utils': workspace:2.1.4
       '@jscad/modeling': workspace:2.10.0
+      '@rollup/plugin-commonjs': ^23.0.4
+      '@rollup/plugin-node-resolve': ^15.0.1
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: ^0.2.1
+      rollup-plugin-version-injector: ^1.3.3
       saxes: 6.0.0
     dependencies:
       '@jscad/array-utils': link:../../utils/array-utils
       '@jscad/modeling': link:../../modeling
       saxes: 6.0.0
     devDependencies:
+      '@rollup/plugin-commonjs': 23.0.7_rollup@2.79.1
+      '@rollup/plugin-node-resolve': 15.0.1_rollup@2.79.1
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
+      rollup-plugin-version-injector: 1.3.3
 
   packages/io/svg-serializer:
     specifiers:
+      '@jscad/io-utils': workspace:^2.0.22
       '@jscad/modeling': workspace:2.10.0
+      '@rollup/plugin-node-resolve': ^15.0.1
       ava: 4.3.3
       nyc: 15.1.0
-      onml: 2.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: ^0.2.1
+      rollup-plugin-version-injector: ^1.3.3
     dependencies:
+      '@jscad/io-utils': link:../io-utils
       '@jscad/modeling': link:../../modeling
-      onml: 2.1.0
     devDependencies:
+      '@rollup/plugin-node-resolve': 15.0.1_rollup@2.79.1
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
+      rollup-plugin-version-injector: 1.3.3
+
+  packages/io/test:
+    specifiers: {}
 
   packages/io/x3d-deserializer:
     specifiers:
       '@jscad/array-utils': workspace:2.1.4
       '@jscad/modeling': workspace:2.10.0
+      '@rollup/plugin-commonjs': ^23.0.4
+      '@rollup/plugin-node-resolve': ^15.0.1
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: ^0.2.1
+      rollup-plugin-version-injector: ^1.3.3
       saxes: 6.0.0
     dependencies:
       '@jscad/array-utils': link:../../utils/array-utils
       '@jscad/modeling': link:../../modeling
       saxes: 6.0.0
     devDependencies:
+      '@rollup/plugin-commonjs': 23.0.7_rollup@2.79.1
+      '@rollup/plugin-node-resolve': 15.0.1_rollup@2.79.1
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
+      rollup-plugin-version-injector: 1.3.3
 
   packages/io/x3d-serializer:
     specifiers:
       '@jscad/array-utils': workspace:2.1.4
+      '@jscad/io-utils': workspace:^2.0.22
       '@jscad/modeling': workspace:2.10.0
+      '@rollup/plugin-node-resolve': ^15.0.1
       ava: 4.3.3
       nyc: 15.1.0
-      onml: 2.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: ^0.2.1
     dependencies:
       '@jscad/array-utils': link:../../utils/array-utils
+      '@jscad/io-utils': link:../io-utils
       '@jscad/modeling': link:../../modeling
-      onml: 2.1.0
     devDependencies:
+      '@rollup/plugin-node-resolve': 15.0.1_rollup@2.79.1
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
 
   packages/modeling:
     specifiers:
       ava: 4.3.3
-      browserify: 16.5.1
       nyc: 15.1.0
-      uglifyify: 5.0.2
+      rollup: 2.79.1
+      rollup-plugin-banner: ^0.2.1
     devDependencies:
       ava: 4.3.3
-      browserify: 16.5.1
       nyc: 15.1.0
-      uglifyify: 5.0.2
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
 
   packages/utils/array-utils:
     specifiers:
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
     devDependencies:
       ava: 4.3.3
       nyc: 15.1.0
+      rollup: 2.79.1
+      rollup-plugin-banner: 0.2.1
 
   packages/utils/img:
     specifiers:
@@ -1222,6 +1320,57 @@ packages:
       '@octokit/openapi-types': 13.13.1
     dev: true
 
+  /@rollup/plugin-commonjs/23.0.7_rollup@2.79.1:
+    resolution: {integrity: sha512-hsSD5Qzyuat/swzrExGG5l7EuIlPhwTsT7KwKbSCQzIcJWjRxiimi/0tyMYY2bByitNb3i1p+6JWEDGa0NvT0Q==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^2.68.0||^3.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      '@rollup/pluginutils': 5.0.2_rollup@2.79.1
+      commondir: 1.0.1
+      estree-walker: 2.0.2
+      glob: 8.0.3
+      is-reference: 1.2.1
+      magic-string: 0.27.0
+      rollup: 2.79.1
+    dev: true
+
+  /@rollup/plugin-node-resolve/15.0.1_rollup@2.79.1:
+    resolution: {integrity: sha512-ReY88T7JhJjeRVbfCyNj+NXAG3IIsVMsX9b5/9jC98dRP8/yxlZdz7mHZbHk5zHr24wZZICS5AcXsFZAXYUQEg==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^2.78.0||^3.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      '@rollup/pluginutils': 5.0.2_rollup@2.79.1
+      '@types/resolve': 1.20.2
+      deepmerge: 4.2.2
+      is-builtin-module: 3.2.0
+      is-module: 1.0.0
+      resolve: 1.22.1
+      rollup: 2.79.1
+    dev: true
+
+  /@rollup/pluginutils/5.0.2_rollup@2.79.1:
+    resolution: {integrity: sha512-pTd9rIsP92h+B6wWwFbW8RkZv4hiR/xKsqre4SIuAOaOEQRxi0lqLke9k2/7WegC85GgUs9pjmOjCUi3In4vwA==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      '@types/estree': 1.0.0
+      estree-walker: 2.0.2
+      picomatch: 2.3.1
+      rollup: 2.79.1
+    dev: true
+
   /@tootallnate/once/2.0.0:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
@@ -1279,6 +1428,10 @@ packages:
 
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
+    dev: true
+
+  /@types/resolve/1.20.2:
+    resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
     dev: true
 
   /JSONStream/1.3.5:
@@ -2154,6 +2307,11 @@ packages:
       ieee754: 1.2.1
     dev: true
 
+  /builtin-modules/3.3.0:
+    resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
+    engines: {node: '>=6'}
+    dev: true
+
   /builtin-status-codes/3.0.0:
     resolution: {integrity: sha512-HpGFw18DgFWlncDfjTa2rcQ4W88O1mC8e8yZ2AvQY5KDaktSTwo+KRf6nHK6FRI5FyRyb/5T6+TSxfP7QyGsmQ==}
     dev: true
@@ -2893,6 +3051,10 @@ packages:
     resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
     dev: true
 
+  /dateformat/4.6.3:
+    resolution: {integrity: sha512-2P0p0pFGzHS5EMnhdxQi7aJN+iMheud0UhG4dlE1DLAlvL8JHjJJTX/CSm4JXwV0Ka5nGk3zC5mcb5bUQUxxMA==}
+    dev: true
+
   /debounce/1.2.1:
     resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}
     dev: true
@@ -2961,6 +3123,11 @@ packages:
 
   /deep-is/0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
+    dev: true
+
+  /deepmerge/4.2.2:
+    resolution: {integrity: sha512-FJ3UgI4gIl+PHZm53knsuSFpE+nESMr7M4v9QcgB7S63Kj/6WqMiFQJpBBYz1Pt+66bZpP3Q7Lye0Oo9MPKEdg==}
+    engines: {node: '>=0.10.0'}
     dev: true
 
   /default-gateway/2.7.2:
@@ -3640,6 +3807,10 @@ packages:
   /estree-is-member-expression/1.0.0:
     resolution: {integrity: sha512-Ec+X44CapIGExvSZN+pGkmr5p7HwUVQoPQSd458Lqwvaf4/61k/invHSh4BYK8OXnCkfEhWuIoG5hayKLQStIg==}
     dev: false
+
+  /estree-walker/2.0.2:
+    resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
+    dev: true
 
   /esutils/2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
@@ -4798,6 +4969,13 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
+  /is-builtin-module/3.2.0:
+    resolution: {integrity: sha512-phDA4oSGt7vl1n5tJvTWooWWAsXLY+2xCnxNqvKhGEzujg+A43wPlPOyDg3C8XQHN+6k/JTQWJ/j0dQh/qr+Hw==}
+    engines: {node: '>=6'}
+    dependencies:
+      builtin-modules: 3.3.0
+    dev: true
+
   /is-callable/1.2.6:
     resolution: {integrity: sha512-krO72EO2NptOGAX2KYyqbP9vYMlNAXdB53rq6f8LXY6RY7JdSR/3BD6wLUlPHSAesmY9vstNrjvqGaCiRK/91Q==}
     engines: {node: '>= 0.4'}
@@ -4930,6 +5108,10 @@ packages:
     resolution: {integrity: sha512-z7CMFGNrENq5iFB9Bqo64Xk6Y9sg+epq1myIcdHaGnbMTYOxvzsEtdYqQUylB7LxfkvgrrjP32T6Ywciio9UIQ==}
     dev: true
 
+  /is-module/1.0.0:
+    resolution: {integrity: sha512-51ypPSPCoTEIN9dy5Oy+h4pShgJmPCygKfyRCISBI+JoWT/2oJvK8QPxmwv7b/p239jXrm9M1mlQbyKJ5A152g==}
+    dev: true
+
   /is-negative-zero/2.0.2:
     resolution: {integrity: sha512-dqJvarLawXsFbNDeJW7zAz8ItJ9cd28YufuuFzh0G8pNHjJMnY08Dv7sYX2uF5UpQOwieAeOExEYAWWfu7ZZUA==}
     engines: {node: '>= 0.4'}
@@ -4993,6 +5175,12 @@ packages:
 
   /is-promise/4.0.0:
     resolution: {integrity: sha512-hvpoI6korhJMnej285dSg6nu1+e6uxs7zG3BYAm5byqDsgJNWwxzM6z6iZiAgQR4TJ30JmBTOwqZUw3WlyH3AQ==}
+    dev: true
+
+  /is-reference/1.2.1:
+    resolution: {integrity: sha512-U82MsXXiFIrjCK4otLT+o2NA2Cd2g5MLoOVXUZjIOhLurrRxpEXzI8O0KZHr3IjLvlAH1kTPYSuqer5T9ZVBKQ==}
+    dependencies:
+      '@types/estree': 1.0.0
     dev: true
 
   /is-regex/1.1.4:
@@ -5513,6 +5701,10 @@ packages:
       p-locate: 6.0.0
     dev: true
 
+  /lodash._reinterpolate/3.0.0:
+    resolution: {integrity: sha512-xYHt68QRoYGjeeM/XOE1uJtvXQAgvszfBhjV4yvsQH0u2i9I6cI6c6/eG4Hh3UAOVn0y/xAXwmTzEay49Q//HA==}
+    dev: true
+
   /lodash.flattendeep/4.4.0:
     resolution: {integrity: sha512-uHaJFihxmJcEX3kT4I23ABqKKalJ/zDrDg0lsFtc1h+3uw49SIJ5beyhx5ExVRti3AvKoOJngIj7xz3oylPdWQ==}
     dev: true
@@ -5527,6 +5719,19 @@ packages:
 
   /lodash.sortby/4.7.0:
     resolution: {integrity: sha512-HDWXG8isMntAyRF5vZ7xKuEvOhT4AhlRt/3czTSjvGUxjYCBVRQY48ViDHyfYz9VIoBkW4TMGQNapx+l3RUwdA==}
+    dev: true
+
+  /lodash.template/4.5.0:
+    resolution: {integrity: sha512-84vYFxIkmidUiFxidA/KjjH9pAycqW+h980j7Fuz5qxRtO9pgB7MDFTdys1N7A5mcucRiDyEq4fusljItR1T/A==}
+    dependencies:
+      lodash._reinterpolate: 3.0.0
+      lodash.templatesettings: 4.2.0
+    dev: true
+
+  /lodash.templatesettings/4.2.0:
+    resolution: {integrity: sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==}
+    dependencies:
+      lodash._reinterpolate: 3.0.0
     dev: true
 
   /lodash.truncate/4.4.2:
@@ -5573,6 +5778,13 @@ packages:
     dependencies:
       sourcemap-codec: 1.4.8
     dev: false
+
+  /magic-string/0.27.0:
+    resolution: {integrity: sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.4.14
+    dev: true
 
   /make-dir/2.1.0:
     resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==}
@@ -6474,12 +6686,6 @@ packages:
     dependencies:
       mimic-fn: 2.1.0
     dev: true
-
-  /onml/2.1.0:
-    resolution: {integrity: sha512-fvaSZRzprpwLFge/mcwE0CItfniNisVNamDdMK1FQUjh4ArQZ8ZWSkDaJbZc3XaANKZHq0xIa8NJpZ2HSe3oXA==}
-    dependencies:
-      sax: 1.2.4
-    dev: false
 
   /opn/3.0.3:
     resolution: {integrity: sha512-YKyQo/aDk+kLY/ChqYx3DMWW8cbxvZDh+7op1oU60TmLHGWFrn2gPaRWihzDhSwCarAESa9G8dNXzjTGfLx8FQ==}
@@ -7514,6 +7720,28 @@ packages:
       inherits: 2.0.4
     dev: true
 
+  /rollup-plugin-banner/0.2.1:
+    resolution: {integrity: sha512-Bs1uIPCsGpKIkNOwmBsCqn+dJ/xaojWk9PNlvd+1MEScddr1yUQlO6McAXi72wJyNWYL+9u9EI2JAZMpLRH92w==}
+    dependencies:
+      lodash.template: 4.5.0
+    dev: true
+
+  /rollup-plugin-version-injector/1.3.3:
+    resolution: {integrity: sha512-+Rrf0xIFHkwFGuMfphVlAOtd9FlhHFh3vrDwamJ6+YR3IxebRHGVT879qwWzZ1CpWMCLlngb2MmHW5wC5EJqvg==}
+    dependencies:
+      chalk: 4.1.2
+      dateformat: 4.6.3
+      lodash: 4.17.21
+    dev: true
+
+  /rollup/2.79.1:
+    resolution: {integrity: sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==}
+    engines: {node: '>=10.0.0'}
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
   /run-async/2.4.1:
     resolution: {integrity: sha512-tvVnVv01b8c1RrA6Ep7JkStj85Guv/YrMcwqYQnwjsAS2cTmmPGBBjAjpCW7RrSodNSoE2/qg9O4bceNvUuDgQ==}
     engines: {node: '>=0.12.0'}
@@ -7555,10 +7783,6 @@ packages:
   /safer-buffer/2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: true
-
-  /sax/1.2.4:
-    resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
-    dev: false
 
   /saxes/3.1.11:
     resolution: {integrity: sha512-Ydydq3zC+WYDJK1+gRxRapLIED9PWeSuuS41wqyoRmzvhhh9nc+QQrVMKJYzJFULazeGhzSV0QleN2wD3boh2g==}
