@@ -7,7 +7,7 @@ import requireDesignFromModule from '../code-loading/requireDesignFromModule.js'
 import getAllParameterDefintionsAndValues from '../parameters/getParameterDefinitionsAndValues.js'
 import makeWebRequire from '../code-loading/webRequire.js'
 
-export const rebuildGeometryCli = (data) => {
+export const rebuildGeometryCli = async (data) => {
   const defaults = {
     apiMainPath: '@jscad/modeling'
   }
@@ -34,7 +34,10 @@ export const rebuildGeometryCli = (data) => {
   }
 
   // rootModule should contain exported main and getParameterDefinitions functions
-  const rootModule = requireDesignFromModule(mainPath, requireFn)
+  // const rootModule = requireDesignFromModule(mainPath, requireFn)
+  // FIXME HACK for designs with import / export
+  const rootModule = await import(mainPath)
+
   // the design (module tree) has been loaded at this stage
   // now we can get our usefull data (definitions and values/defaults)
   const parameters = getAllParameterDefintionsAndValues(rootModule, parameterValues)

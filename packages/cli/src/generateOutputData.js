@@ -1,8 +1,9 @@
 import fs from 'fs'
 import path from 'path'
-import { createRequire } from "module"
+import { createRequire } from 'module'
 
-import { deserializers, solidsAsBlob } from '@jscad/io'
+import { deserialize, getMimeType, serialize } from '@jscad/io'
+import { convertToBlob } from '@jscad/io-utils'
 
 import { evaluation, io } from '@jscad/core'
 
@@ -10,58 +11,44 @@ const { rebuildGeometryCli } = evaluation
 const { registerAllExtensions } = io
 
 /**
- * generate output data from source
+ * Create a promise to convert the given source in inputFormat to the desired outputFormat.
+ * The given CLI params are passed into deserializer, main, and serializer.
  * @param {String} source the original source
- * @param {Object} params hash of parameters to pass to main function
- * @param {String} options
- * @return a Promise with the output data
+ * @param {Object} cliparams - parameters as provided on the command line
+ * @param {Object} options - options for conversion; inputFormat and outputFormat are required
+ * @return {Promise} promise function which can convert the given source
  */
-export const generateOutputData = (source, params, options) => {
+export const generateOutputData = (source, cliparams, options) => {
   const defaults = {
-    outputFile: undefined,
-    outputFormat: 'stl',
-    inputFile: '',
-    version: '',
-    addMetaData: true
+    inputFile: ''
   }
   options = Object.assign({}, defaults, options)
-  const { outputFormat, inputFile, inputFormat } = options
 
-  options.filename = inputFile // for deserializers
+  const { inputFile, inputFormat, outputFormat } = options
+
+  const inputMimeType = getMimeType(inputFormat)
+  const outputMimeType = getMimeType(outputFormat)
 
   const inputPath = path.isAbsolute(inputFile) ? inputFile : path.resolve(process.cwd(), inputFile)
 
   // setup support for require-ing files with .jscad, .stl etc extensions
   // HACK create the require function if necessary
-  if (typeof self === 'undefined') {
-    // create require via Node API
-    var require = createRequire(import.meta.url)
-  }
+  const require = createRequire(import.meta.url)
   registerAllExtensions(fs, require)
 
   return new Promise((resolve, reject) => {
-    let deserializer = deserializers[inputFormat]
-    if (!deserializer) {
-      if (inputFormat === 'jscad' || inputFormat === 'js') {
-        deserializer = (options, source) => source
-      } else {
-        reject(new Error(`unsuported input format ${inputFormat}`))
-      }
-    }
-
     // convert any inputs
     const prevsource = source
-    const deserializerOptions = Object.assign({}, params, options)
-    source = deserializer(deserializerOptions, source)
+    const deserializerOptions = Object.assign({ output: 'script', filename: inputFile }, cliparams)
+    source = deserialize(deserializerOptions, inputMimeType, source)
     const useFakeFs = (source !== prevsource) // conversion, so use a fake file system when rebuilding
 
-    if (outputFormat === 'jscad' || outputFormat === 'js') {
+    if (outputMimeType === 'application/javascript') {
+      // pass back the source
       resolve(source)
     } else {
-      //    } else if ((inputFormat === 'jscad' || inputFormat === 'js') &&
-      //               outputFormat !== 'jscad' && outputFormat !== 'js') {
       try {
-        const solids = rebuildGeometryCli({ mainPath: inputPath, parameterValues: params, useFakeFs, source })
+        const solids = rebuildGeometryCli({ mainPath: inputPath, parameterValues: cliparams, useFakeFs, source })
         resolve(solids)
       } catch (error) {
         reject(error)
@@ -69,8 +56,13 @@ export const generateOutputData = (source, params, options) => {
     }
   })
     .then((solids) => {
-      const serializerOptions = Object.assign({ format: outputFormat }, params)
-      return solidsAsBlob(solids, serializerOptions)
+      if (outputMimeType === 'application/javascript') {
+        // convert the source (solids) to blob for writing to file
+        return convertToBlob({ data: [solids], mimeType: outputMimeType })
+      } else {
+        const serializerOptions = Object.assign({}, cliparams)
+        return convertToBlob(serialize(serializerOptions, outputMimeType, solids))
+      }
     })
 }
 

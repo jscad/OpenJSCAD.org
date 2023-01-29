@@ -1,8 +1,9 @@
-const test = require('ava')
+import fs from 'fs'
+import path from 'path'
+import { execSync } from 'child_process'
+import { cwd } from 'process'
 
-const path = require('path')
-const { execSync } = require('child_process')
-const fs = require('fs')
+import test from 'ava'
 
 test.afterEach.always((t) => {
   // remove files
@@ -22,7 +23,7 @@ test.afterEach.always((t) => {
 test.beforeEach((t) => {
   const cliName = './cli.js'
   t.context = {
-    cliPath: path.resolve(__dirname, cliName)
+    cliPath: path.resolve(cwd(), cliName)
   }
 })
 
@@ -34,15 +35,15 @@ test.beforeEach((t) => {
 // the script should produce ALL geometry types
 const createJscad = (id) => {
   const jscadScript = `// test script ${id}
-const { primitives } = require('@jscad/modeling')
+import { primitives } from '@jscad/modeling'
 
-const getParameterDefinitions = () => {
+export const getParameterDefinitions = () => {
   return [
     { name: 'segments', caption: 'Segements:', type: 'int', initial: 10, min: 5, max: 20, step: 1 }
   ]
 }
 
-const main = (params) => {
+export const main = (params) => {
   // parameters
   let segments = params.segments || 16
 
@@ -53,12 +54,10 @@ const main = (params) => {
 
   return [apath2, ageom2, ageom3]
 }
-
-module.exports = { main, getParameterDefinitions }
 `
 
-  const fileName = `./test${id}.jscad`
-  const filePath = path.resolve(__dirname, fileName)
+  const fileName = `./test${id}.js`
+  const filePath = path.resolve(cwd(), fileName)
   fs.writeFileSync(filePath, jscadScript)
   return filePath
 }
@@ -72,7 +71,7 @@ test('cli (single input file)', (t) => {
   t.context.inputPath = inputPath
 
   const outputName = `./test${testID}.stl`
-  const outputPath = path.resolve(__dirname, outputName)
+  const outputPath = path.resolve(cwd(), outputName)
   t.false(fs.existsSync(outputPath))
 
   t.context.outputPath = outputPath
@@ -93,7 +92,7 @@ test('cli (single input file, output format)', (t) => {
   t.context.inputPath = inputPath
 
   const outputName = `./test${testID}.dxf`
-  const outputPath = path.resolve(__dirname, outputName)
+  const outputPath = path.resolve(cwd(), outputName)
   t.false(fs.existsSync(outputPath))
 
   t.context.outputPath = outputPath
@@ -113,8 +112,8 @@ test('cli (single input file, output filename)', (t) => {
 
   t.context.inputPath = inputPath
 
-  const outputName = `./test${testID}.amf`
-  const outputPath = path.resolve(__dirname, outputName)
+  const outputName = `./test${testID}.obj`
+  const outputPath = path.resolve(cwd(), outputName)
   t.false(fs.existsSync(outputPath))
 
   t.context.outputPath = outputPath
@@ -134,7 +133,7 @@ test('cli (folder, output format)', (t) => {
 
   t.context.inputPath = inputPath
 
-  const folderPath = path.resolve(__dirname, './test-folder')
+  const folderPath = path.resolve(cwd(), './test-folder')
   t.false(fs.existsSync(folderPath))
 
   fs.mkdirSync(folderPath)
@@ -142,14 +141,14 @@ test('cli (folder, output format)', (t) => {
 
   t.context.folderPath = folderPath
 
-  const mainPath = path.resolve(__dirname, './test-folder/main.js')
+  const mainPath = path.resolve(cwd(), './test-folder/main.js')
   fs.renameSync(inputPath, mainPath)
   t.true(fs.existsSync(mainPath))
 
   t.context.inputPath = mainPath
 
   const outputName = './test-folder/main.dxf'
-  const outputPath = path.resolve(__dirname, outputName)
+  const outputPath = path.resolve(cwd(), outputName)
   t.false(fs.existsSync(outputPath))
 
   t.context.outputPath = outputPath
@@ -170,7 +169,7 @@ test('cli (single input file, parameters)', (t) => {
   t.context.inputPath = inputPath
 
   const outputName = `./test${testID}.stl`
-  const outputPath = path.resolve(__dirname, outputName)
+  const outputPath = path.resolve(cwd(), outputName)
   t.false(fs.existsSync(outputPath))
 
   t.context.outputPath = outputPath
@@ -182,7 +181,7 @@ test('cli (single input file, parameters)', (t) => {
   t.true(fs.existsSync(outputPath))
 })
 
-test('cli (no parameters)', (t) => {
+test('cli (no parameters, out help)', (t) => {
   const cliPath = t.context.cliPath
 
   const cmd = `node ${cliPath}`

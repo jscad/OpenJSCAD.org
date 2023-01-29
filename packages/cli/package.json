@@ -39,6 +39,7 @@
     "@jscad/array-utils": "workspace:2.1.4",
     "@jscad/core": "workspace:2.6.4",
     "@jscad/io": "workspace:2.4.3",
+    "@jscad/io-utils": "workspace:2.0.22",
     "@jscad/modeling": "workspace:2.10.0"
   },
   "devDependencies": {
