@@ -13,7 +13,7 @@ import extrudeLinearGeom2 from './extrudeLinearGeom2.js'
  * @param {path2} geometry - the geometry to extrude
  * @returns {geom3} the extruded 3D geometry
 */
-export const extrudePath2 = (options, geometry) => {
+export const extrudeLinearPath2 = (options, geometry) => {
   if (!geometry.isClosed) throw new Error('extruded path must be closed')
   // Convert path2 to geom2
   const points = path2.toPoints(geometry)
@@ -21,4 +21,4 @@ export const extrudePath2 = (options, geometry) => {
   return extrudeLinearGeom2(options, geometry2)
 }
 
-export default extrudePath2
+export default extrudeLinearPath2
