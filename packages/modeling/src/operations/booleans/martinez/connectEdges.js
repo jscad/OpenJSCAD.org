@@ -4,11 +4,11 @@
  * https://github.com/w8r/martinez
  */
 
-import compareEvents from './compare_events.js'
+import compareEvents from './compareEvents.js'
 import Contour from './contour.js'
 
 /**
- * @param  {Array.<SweepEvent>} sortedEvents
+ * @param {Array.<SweepEvent>} sortedEvents
  * @return {Array.<SweepEvent>}
  */
 const orderEvents = (sortedEvents) => {
@@ -56,9 +56,9 @@ const orderEvents = (sortedEvents) => {
 }
 
 /**
- * @param  {Number} pos
- * @param  {Array.<SweepEvent>} resultEvents
- * @param  {Object>}    processed
+ * @param {Number} pos
+ * @param {Array.<SweepEvent>} resultEvents
+ * @param {Object>} processed
  * @return {Number}
  */
 const nextPos = (pos, resultEvents, processed, origPos) => {
@@ -134,7 +134,7 @@ const initializeContourFromContext = (event, contours, contourId) => {
 }
 
 /**
- * @param  {Array.<SweepEvent>} sortedEvents
+ * @param {Array.<SweepEvent>} sortedEvents
  * @return {Array.<*>} polygons
  */
 export default function connectEdges (sortedEvents) {

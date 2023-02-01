@@ -1,4 +1,4 @@
-export default class Contour {
+class Contour {
   constructor () {
     this.points = []
     this.holeIds = []
@@ -10,3 +10,5 @@ export default class Contour {
     return this.holeOf == null
   }
 }
+
+export default Contour

@@ -1,13 +1,13 @@
-import SweepEvent from './sweep_event.js'
-import compareEvents from './compare_events.js'
+import SweepEvent from './sweepEvent.js'
+import compareEvents from './compareEvents.js'
 
 /**
- * @param  {SweepEvent} se
- * @param  {Array.<Number>} p
- * @param  {Queue} queue
+ * @param {SweepEvent} se
+ * @param {Array.<Number>} p
+ * @param {Queue} queue
  * @return {Queue}
  */
-export default function divideSegment (se, p, queue) {
+const divideSegment = (se, p, queue) => {
   const r = new SweepEvent(p, false, se, se.isSubject)
   const l = new SweepEvent(p, true, se.otherEvent, se.isSubject)
 
@@ -34,3 +34,5 @@ export default function divideSegment (se, p, queue) {
 
   return queue
 }
+
+export default divideSegment

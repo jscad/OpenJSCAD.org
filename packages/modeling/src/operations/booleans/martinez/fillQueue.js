@@ -4,10 +4,10 @@
  * https://github.com/w8r/martinez
  */
 
-import Queue from './tinyqueue.js'
-import SweepEvent from './sweep_event.js'
-import compareEvents from './compare_events.js'
+import compareEvents from './compareEvents.js'
 import { DIFFERENCE } from './operation.js'
+import SweepEvent from './sweepEvent.js'
+import Queue from './tinyqueue.js'
 
 const max = Math.max
 const min = Math.min
@@ -53,7 +53,7 @@ const processPolygon = (contourOrHole, isSubject, depth, queue, bbox, isExterior
   }
 }
 
-export default function fillQueue (subject, clipping, sbbox, cbbox, operation) {
+const fillQueue = (subject, clipping, sbbox, cbbox, operation) => {
   const eventQueue = new Queue([], compareEvents)
   let polygonSet, isExteriorRing, i, ii, j, jj //, k, kk
 
@@ -78,3 +78,5 @@ export default function fillQueue (subject, clipping, sbbox, cbbox, operation) {
 
   return eventQueue
 }
+
+export default fillQueue

@@ -29,14 +29,12 @@ const crossProduct = (a, b) => (a[0] * b[1]) - (a[1] * b[0])
  * @param {Array.<Number>} a2 point of first line
  * @param {Array.<Number>} b1 point of second line
  * @param {Array.<Number>} b2 point of second line
- * @param {Boolean=}       noEndpointTouch whether to skip single touchpoints
- *                                         (meaning connected segments) as
- *                                         intersections
+ * @param {Boolean=} noEndpointTouch whether to skip single touchpoints (meaning connected segments) as intersections
  * @returns {Array.<Array.<Number>>|Null} If the lines intersect, the point of
  * intersection. If they overlap, the two end points of the overlapping segment.
  * Otherwise, null.
  */
-export default function (a1, a2, b1, b2, noEndpointTouch) {
+const segmentIntersection = (a1, a2, b1, b2, noEndpointTouch) => {
   // The algorithm expects our lines in the form P + sd, where P is a point,
   // s is on the interval [0, 1], and d is a vector.
   // We are passed two points. P can be the first point of each pair. The
@@ -132,3 +130,5 @@ export default function (a1, a2, b1, b2, noEndpointTouch) {
 
   return null
 }
+
+export default segmentIntersection

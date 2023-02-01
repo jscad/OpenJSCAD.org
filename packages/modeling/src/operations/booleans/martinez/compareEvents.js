@@ -4,14 +4,14 @@
  * https://github.com/w8r/martinez
  */
 
-import signedArea from './signed_area.js'
+import signedArea from './signedArea.js'
 
 /**
- * @param  {SweepEvent} e1
- * @param  {SweepEvent} e2
+ * @param {SweepEvent} e1
+ * @param {SweepEvent} e2
  * @return {Number}
  */
-export default function compareEvents (e1, e2) {
+const compareEvents = (e1, e2) => {
   const p1 = e1.point
   const p2 = e2.point
 
@@ -43,3 +43,5 @@ const specialCases = (e1, e2, p1, p2) => {
 
   return (!e1.isSubject && e2.isSubject) ? 1 : -1
 }
+
+export default compareEvents

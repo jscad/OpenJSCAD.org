@@ -4,23 +4,23 @@
  * https://github.com/w8r/martinez
  */
 
-import divideSegment from './divide_segment.js'
-import intersection from './segment_intersection.js'
 import equals from '../../../maths/vec2/equals.js'
-import compareEvents from './compare_events.js'
+import divideSegment from './divideSegment.js'
+import intersection from './segmentIntersection.js'
+import compareEvents from './compareEvents.js'
 import {
   NON_CONTRIBUTING,
   SAME_TRANSITION,
   DIFFERENT_TRANSITION
-} from './edge_type.js'
+} from './edgeType.js'
 
 /**
- * @param  {SweepEvent} se1
- * @param  {SweepEvent} se2
- * @param  {Queue}      queue
+ * @param {SweepEvent} se1
+ * @param {SweepEvent} se2
+ * @param {Queue} queue
  * @return {Number}
  */
-export default function possibleIntersection (se1, se2, queue) {
+const possibleIntersection = (se1, se2, queue) => {
   // that disallows self-intersecting polygons,
   // did cost us half a day, so I'll leave it
   // out of respect
@@ -116,3 +116,5 @@ export default function possibleIntersection (se1, se2, queue) {
 
   return 3
 }
+
+export default possibleIntersection
