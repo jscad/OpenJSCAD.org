@@ -1,7 +1,7 @@
-import dot from '../../../maths/vec3/dot.js'
+import { dot } from '../../../maths/vec3/index.js'
+import * as plane from '../../../maths/plane/index.js'
 
 import { pointLineDistance } from './point-line-distance.js'
-import { getPlaneNormal } from './get-plane-normal.js'
 
 import { VertexList } from './VertexList.js'
 import { Vertex } from './Vertex.js'
@@ -292,9 +292,9 @@ export class QuickHull {
       }
     }
 
-    // the next vertes is the one farthest to the plane `v0`, `v1`, `v2`
+    // the next vertex is the one farthest to the plane `v0`, `v1`, `v2`
     // normalize((v2 - v1) x (v0 - v1))
-    const normal = getPlaneNormal([], v0.point, v1.point, v2.point)
+    const normal = plane.fromPoints([], v0.point, v1.point, v2.point)
     // distance from the origin to the plane
     const distPO = dot(v0.point, normal)
     maxDistance = -1
