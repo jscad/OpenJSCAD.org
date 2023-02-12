@@ -1,4 +1,4 @@
-import vectorParams from './vectorParams.js'
+import { vectorParams } from './vectorParams.js'
 
 /**
  * Represents a character as a list of segments

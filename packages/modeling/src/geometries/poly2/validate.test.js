@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { validate, create, toString } from './index.js'
+import { validate, create } from './index.js'
 
 test('validate: identifies polygons', (t) => {
   const ply1 = create()

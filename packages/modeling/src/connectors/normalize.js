@@ -1,6 +1,6 @@
 import * as vec3 from '../maths/vec3/index.js'
 
-import fromPointAxisNormal from './fromPointAxisNormal.js'
+import { fromPointAxisNormal } from './fromPointAxisNormal.js'
 
 /*
  * Normalize the given connector, calculating new axis and normal

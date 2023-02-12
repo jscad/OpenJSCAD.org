@@ -1,10 +1,10 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/flatten.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
-import offsetGeom2 from './offsetGeom2.js'
-import offsetPath2 from './offsetPath2.js'
+import { offsetGeom2 } from './offsetGeom2.js'
+import { offsetPath2 } from './offsetPath2.js'
 
 /**
  * Create offset geometry from the given geometry using the given options.

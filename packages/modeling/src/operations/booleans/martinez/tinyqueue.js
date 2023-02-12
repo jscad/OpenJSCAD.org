@@ -4,7 +4,7 @@
  * https://github.com/mourner/tinyqueue
  */
 
-class TinyQueue {
+export class Queue {
   constructor (data, compare) {
     this.data = data
     this.length = this.data.length

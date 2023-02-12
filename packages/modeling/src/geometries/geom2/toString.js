@@ -1,6 +1,6 @@
 import * as vec2 from '../../maths/vec2/index.js'
 
-import toOutlines from './toOutlines.js'
+import { toOutlines } from './toOutlines.js'
 
 /**
  * Create a string representing the contents of the given geometry.

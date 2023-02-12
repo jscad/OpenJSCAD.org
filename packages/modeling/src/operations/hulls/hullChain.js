@@ -1,8 +1,8 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/flatten.js'
 
-import union from '../booleans/union.js'
+import { union } from '../booleans/index.js'
 
-import hull from './hull.js'
+import { hull } from './hull.js'
 
 /**
  * Create a chain of hulled geometries from the given geometries.

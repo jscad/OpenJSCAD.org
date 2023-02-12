@@ -1,4 +1,4 @@
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Create a matrix with the given values.

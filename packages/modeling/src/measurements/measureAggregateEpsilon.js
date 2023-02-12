@@ -1,9 +1,9 @@
-import flatten from '../utils/flatten.js'
+import { flatten } from '../utils/flatten.js'
 
 import { geom2, geom3, path2 } from '../geometries/index.js'
 
-import measureAggregateBoundingBox from './measureAggregateBoundingBox.js'
-import calculateEpsilonFromBounds from './calculateEpsilonFromBounds.js'
+import { measureAggregateBoundingBox } from './measureAggregateBoundingBox.js'
+import { calculateEpsilonFromBounds } from './calculateEpsilonFromBounds.js'
 
 /**
  * Measure the aggregated Epsilon for the given geometries.

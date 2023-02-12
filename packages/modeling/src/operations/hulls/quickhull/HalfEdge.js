@@ -1,5 +1,4 @@
-import distance from '../../../maths/vec3/distance.js'
-import squaredDistance from '../../../maths/vec3/squaredDistance.js'
+import { distance, squaredDistance } from '../../../maths/vec3/index.js'
 
 /*
  * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)

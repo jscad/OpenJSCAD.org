@@ -1,8 +1,8 @@
 import { TAU } from '../../maths/constants.js'
 import * as vec2 from '../../maths/vec2/index.js'
 
-import fromPoints from './fromPoints.js'
-import toPoints from './toPoints.js'
+import { fromPoints } from './fromPoints.js'
+import { toPoints } from './toPoints.js'
 
 /**
  * Append a series of points to the given geometry that represent an arc.

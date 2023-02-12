@@ -132,7 +132,7 @@ const printRow = (root, prefix, isTail, out, printNode) => {
   }
 }
 
-class Tree {
+export class Tree {
   constructor (comparator = DEFAULT_COMPARE) {
     this._comparator = comparator
     this._root = null

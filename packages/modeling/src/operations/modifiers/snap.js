@@ -1,4 +1,4 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/flatten.js'
 
 import * as vec2 from '../../maths/vec2/index.js'
 
@@ -7,9 +7,9 @@ import * as geom3 from '../../geometries/geom3/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 import * as poly2 from '../../geometries/poly2/index.js'
 
-import measureEpsilon from '../../measurements/measureEpsilon.js'
+import { measureEpsilon } from '../../measurements/index.js'
 
-import snapPolygons from './snapPolygons.js'
+import { snapPolygons } from './snapPolygons.js'
 
 const snapPath2 = (geometry) => {
   const epsilon = measureEpsilon(geometry)

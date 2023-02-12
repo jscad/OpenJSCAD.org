@@ -2,7 +2,7 @@ import { EPS } from '../../maths/constants.js'
 
 import * as vec2 from '../../maths/vec2/index.js'
 
-import clone from './clone.js'
+import { clone } from './clone.js'
 
 /**
  * Close the given geometry.

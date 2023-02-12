@@ -1,6 +1,4 @@
-import cross from '../../../maths/vec3/cross.js'
-import subtract from '../../../maths/vec3/subtract.js'
-import squaredLength from '../../../maths/vec3/squaredLength.js'
+import { cross, subtract, squaredLength } from '../../../maths/vec3/index.js'
 
 /*
  * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)

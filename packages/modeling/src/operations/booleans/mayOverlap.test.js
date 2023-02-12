@@ -6,9 +6,9 @@ import { geom3 } from '../../geometries/index.js'
 
 import { cuboid } from '../../primitives/index.js'
 
-import { center } from '../transforms/center.js'
+import { center } from '../transforms/index.js'
 
-import mayOverlap from './mayOverlap.js'
+import { mayOverlap } from './mayOverlap.js'
 
 test.only('mayOverlap: determination of overlap is reliable', (t) => {
   const geometry1 = center({ relativeTo: [0, 0, 0] }, cuboid({ size: [4, 4, 4] }))

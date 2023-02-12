@@ -1,6 +1,6 @@
 import { TAU } from '../maths/constants.js'
 
-import ellipse from './ellipse.js'
+import { ellipse } from './ellipse.js'
 
 import { isGT } from './commonChecks.js'
 

@@ -6,7 +6,7 @@ import { geom3, poly3 } from '../../geometries/index.js'
 
 import { cuboid } from '../../primitives/index.js'
 
-import insertTjunctions from './insertTjunctions.js'
+import { insertTjunctions } from './insertTjunctions.js'
 
 test('insertTjunctions: insertTjunctions produces expected polygons', (t) => {
   const geometry1 = geom3.create()

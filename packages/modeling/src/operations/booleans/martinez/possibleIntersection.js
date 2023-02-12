@@ -4,10 +4,10 @@
  * https://github.com/w8r/martinez
  */
 
-import equals from '../../../maths/vec2/equals.js'
-import divideSegment from './divideSegment.js'
-import intersection from './segmentIntersection.js'
-import compareEvents from './compareEvents.js'
+import { equals } from '../../../maths/vec2/index.js'
+import { divideSegment } from './divideSegment.js'
+import { segmentIntersection } from './segmentIntersection.js'
+import { compareEvents } from './compareEvents.js'
 import {
   NON_CONTRIBUTING,
   SAME_TRANSITION,
@@ -25,7 +25,7 @@ export const possibleIntersection = (se1, se2, queue) => {
   // did cost us half a day, so I'll leave it
   // out of respect
   // if (se1.isSubject === se2.isSubject) return
-  const inter = intersection(
+  const inter = segmentIntersection(
     se1.point, se1.otherEvent.point,
     se2.point, se2.otherEvent.point
   )

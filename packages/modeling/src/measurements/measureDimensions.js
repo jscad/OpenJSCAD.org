@@ -1,6 +1,6 @@
-import flatten from '../utils/flatten.js'
+import { flatten } from '../utils/flatten.js'
 
-import measureBoundingBox from './measureBoundingBox.js'
+import { measureBoundingBox } from './measureBoundingBox.js'
 
 /**
  * Measure the dimensions of the given geometries.

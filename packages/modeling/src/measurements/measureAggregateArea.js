@@ -1,6 +1,6 @@
-import flatten from '../utils/flatten.js'
+import { flatten } from '../utils/flatten.js'
 
-import measureArea from './measureArea.js'
+import { measureArea } from './measureArea.js'
 
 /**
  * Measure the total (aggregate) area for the given geometries.

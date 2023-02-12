@@ -1,5 +1,4 @@
-import rectangle from './rectangle.js'
-
+import { rectangle } from './rectangle.js'
 import { isGT } from './commonChecks.js'
 
 /**

@@ -4,7 +4,7 @@
  * https://github.com/w8r/martinez
  */
 
-import signedArea from './signedArea.js'
+import { signedArea } from './signedArea.js'
 
 /**
  * @param {SweepEvent} e1

@@ -1,6 +1,6 @@
 import * as vec3 from '../vec3/index.js'
 
-import fromPointAndDirection from './fromPointAndDirection.js'
+import { fromPointAndDirection } from './fromPointAndDirection.js'
 
 /**
  * Create a line that passes through the given points.

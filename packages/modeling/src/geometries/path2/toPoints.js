@@ -1,4 +1,4 @@
-import applyTransforms from './applyTransforms.js'
+import { applyTransforms } from './applyTransforms.js'
 
 /**
  * Produces an array of points from the given geometry.

@@ -1,7 +1,7 @@
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
-import extrudeLinearGeom2 from './extrudeLinearGeom2.js'
+import { extrudeLinearGeom2 } from './extrudeLinearGeom2.js'
 
 /*
  * Extrude the given geometry using the given options.

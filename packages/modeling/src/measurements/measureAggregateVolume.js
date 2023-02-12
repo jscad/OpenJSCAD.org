@@ -1,6 +1,6 @@
-import flatten from '../utils/flatten.js'
+import { flatten } from '../utils/flatten.js'
 
-import measureVolume from './measureVolume.js'
+import { measureVolume } from './measureVolume.js'
 
 /**
  * Measure the total (aggregate) volume for the given geometries.

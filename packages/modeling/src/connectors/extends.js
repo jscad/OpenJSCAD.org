@@ -1,6 +1,6 @@
 import * as vec3 from '../maths/vec3/index.js'
 
-import fromPointAxisNormal from './fromPointAxisNormal.js'
+import { fromPointAxisNormal } from './fromPointAxisNormal.js'
 
 /*
  * Creates a new connector, with the connection point moved in the direction of the axis

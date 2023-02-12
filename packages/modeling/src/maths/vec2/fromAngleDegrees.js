@@ -1,4 +1,4 @@
-import fromAngleRadians from './fromAngleRadians.js'
+import { fromAngleRadians } from './fromAngleRadians.js'
 
 /**
  * Create a new vector in the direction of the given angle.

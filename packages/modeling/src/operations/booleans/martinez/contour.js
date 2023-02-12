@@ -1,4 +1,4 @@
-class Contour {
+export class Contour {
   constructor () {
     this.points = []
     this.holeIds = []

@@ -1,6 +1,6 @@
 import * as geom2 from '../../geometries/geom2/index.js'
 
-import offsetFromPoints from './offsetFromPoints.js'
+import { offsetFromPoints } from './offsetFromPoints.js'
 
 /*
  * Expand the given geometry (geom2) using the given options (if any).

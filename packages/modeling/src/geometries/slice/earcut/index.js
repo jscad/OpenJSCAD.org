@@ -1,5 +1,6 @@
-import eliminateHoles from './eliminateHoles.js'
-import { removeNode, sortLinked } from './linkedList.js'
+import { eliminateHoles } from './eliminateHoles.js'
+import { removeNode } from './linkedList.js'
+import { linkedListSort } from './linkedListSort.js'
 import { cureLocalIntersections, filterPoints, isValidDiagonal, linkedPolygon, splitPolygon } from './linkedPolygon.js'
 import { area, pointInTriangle } from './triangle.js'
 
@@ -225,7 +226,7 @@ const indexCurve = (start, minX, minY, invSize) => {
   p.prevZ.nextZ = null
   p.prevZ = null
 
-  sortLinked(p, (p) => p.z)
+  linkedListSort(p, (p) => p.z)
 }
 
 /*

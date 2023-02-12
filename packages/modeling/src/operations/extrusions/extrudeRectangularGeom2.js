@@ -1,11 +1,11 @@
-import area from '../../maths/utils/area.js'
+import { area } from '../../maths/utils/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
-import expand from '../expansions/expand.js'
+import { expand } from '../expansions/index.js'
 
-import extrudeLinearGeom2 from './extrudeLinearGeom2.js'
+import { extrudeLinearGeom2 } from './extrudeLinearGeom2.js'
 
 /*
  * Expand and extrude the given geometry (geom2).

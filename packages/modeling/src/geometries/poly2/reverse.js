@@ -1,4 +1,4 @@
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Reverse the direction of points in the given polygon, rotating the opposite direction.

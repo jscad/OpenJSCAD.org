@@ -1,4 +1,4 @@
-import flatten from '../utils/flatten.js'
+import { flatten } from '../utils/flatten.js'
 
 /**
  * Converts HSV color values to RGB color values.

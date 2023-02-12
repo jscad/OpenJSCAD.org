@@ -1,4 +1,4 @@
-import applyTransforms from './applyTransforms.js'
+import { applyTransforms } from './applyTransforms.js'
 
 /**
  * Create the outline(s) of the given geometry.

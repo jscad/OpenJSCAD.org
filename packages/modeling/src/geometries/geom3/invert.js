@@ -1,7 +1,7 @@
 import * as poly3 from '../poly3/index.js'
 
-import create from './create.js'
-import toPolygons from './toPolygons.js'
+import { create } from './create.js'
+import { toPolygons } from './toPolygons.js'
 
 /**
  * Invert the given geometry, transposing solid and empty space.

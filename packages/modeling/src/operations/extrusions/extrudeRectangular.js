@@ -1,10 +1,10 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/flatten.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
-import extrudeRectangularPath2 from './extrudeRectangularPath2.js'
-import extrudeRectangularGeom2 from './extrudeRectangularGeom2.js'
+import { extrudeRectangularPath2 } from './extrudeRectangularPath2.js'
+import { extrudeRectangularGeom2 } from './extrudeRectangularGeom2.js'
 
 /**
  * Extrude the given geometry by following the outline(s) with a rectangle.

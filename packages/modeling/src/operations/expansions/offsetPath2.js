@@ -1,6 +1,6 @@
 import * as path2 from '../../geometries/path2/index.js'
 
-import offsetFromPoints from './offsetFromPoints.js'
+import { offsetFromPoints } from './offsetFromPoints.js'
 
 /*
  * Create a offset geometry from the given path using the given options (if any).

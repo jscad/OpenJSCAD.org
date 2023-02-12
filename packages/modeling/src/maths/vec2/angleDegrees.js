@@ -1,4 +1,4 @@
-import angleRadians from './angleRadians.js'
+import { angleRadians } from './angleRadians.js'
 
 /**
  * Calculate the angle of the given vector.

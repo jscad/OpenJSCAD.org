@@ -1,4 +1,4 @@
-import comparePolygons from './comparePolygons.js'
+import { comparePolygons } from './comparePolygons.js'
 
 export const comparePolygonLists = (polygons1, polygons2) => {
   if (polygons1.length === polygons2.length) {
@@ -6,4 +6,3 @@ export const comparePolygonLists = (polygons1, polygons2) => {
   }
   return false
 }
-export default comparePolygonLists

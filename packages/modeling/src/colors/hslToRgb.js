@@ -1,6 +1,6 @@
-import flatten from '../utils/flatten.js'
+import { flatten } from '../utils/flatten.js'
 
-import hueToColorComponent from './hueToColorComponent.js'
+import { hueToColorComponent } from './hueToColorComponent.js'
 
 /**
  * Converts HSL color values to RGB color values.

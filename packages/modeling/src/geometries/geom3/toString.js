@@ -1,6 +1,6 @@
 import * as poly3 from '../poly3/index.js'
 
-import toPolygons from './toPolygons.js'
+import { toPolygons } from './toPolygons.js'
 
 /**
  * Create a string representing the contents of the given geometry.

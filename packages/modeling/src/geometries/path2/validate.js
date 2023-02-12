@@ -1,6 +1,6 @@
 import * as vec2 from '../../maths/vec2/index.js'
 
-import isA from './isA.js'
+import { isA } from './isA.js'
 
 /**
  * Determine if the given object is a valid path2.

@@ -1,8 +1,8 @@
 import * as geom3 from '../../geometries/geom3/index.js'
 
-import union from '../booleans/union.js'
+import { union } from '../booleans/index.js'
 
-import expandShell from './expandShell.js'
+import { expandShell } from './expandShell.js'
 
 /*
  * Expand the given geometry (geom3) using the given options (if any).

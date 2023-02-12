@@ -1,4 +1,4 @@
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Creates a new line initialized with the given values.

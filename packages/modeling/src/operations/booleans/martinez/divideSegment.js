@@ -1,5 +1,5 @@
-import SweepEvent from './sweepEvent.js'
-import compareEvents from './compareEvents.js'
+import { SweepEvent } from './sweepEvent.js'
+import { compareEvents } from './compareEvents.js'
 
 /**
  * @param {SweepEvent} se

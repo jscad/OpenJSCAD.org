@@ -30,4 +30,3 @@ export const nearlyEqual = (t, a, b, epsilon, failMessage) => {
     t.fail(failMessage + '(' + a + ',' + b + ')')
   }
 }
-export default nearlyEqual

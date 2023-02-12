@@ -8,7 +8,7 @@ import { center } from '../transforms/index.js'
 
 import { hull } from './index.js'
 
-import comparePolygonsAsPoints from '../../../test/helpers/comparePolygonsAsPoints.js'
+import { comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
 test('hull (single, geom2)', (t) => {
   let geometry = geom2.create()

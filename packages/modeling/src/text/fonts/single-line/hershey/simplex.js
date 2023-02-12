@@ -1,7 +1,7 @@
 // -- data source from from http://paulbourke.net/dataformats/hershey/
 // -- reduced to save some bytes...
 // { [ascii code]: [width, x, y, ...] } - undefined value as path separator
-const simplex = {
+export const simplex = {
   height: 14,
   32: [16],
   33: [10, 5, 21, 5, 7, undefined, 5, 2, 4, 1, 5, 0, 6, 1, 5, 2],

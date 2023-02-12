@@ -4,10 +4,10 @@
  * https://github.com/w8r/martinez
  */
 
-import Tree from './splaytree.js'
-import computeFields from './computeFields.js'
-import possibleIntersection from './possibleIntersection.js'
-import compareSegments from './compareSegments.js'
+import { Tree } from './splaytree.js'
+import { computeFields } from './computeFields.js'
+import { possibleIntersection } from './possibleIntersection.js'
+import { compareSegments } from './compareSegments.js'
 import {
   INTERSECTION,
   DIFFERENCE

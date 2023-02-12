@@ -1,5 +1,4 @@
-import cylinderElliptic from './cylinderElliptic.js'
-
+import { cylinderElliptic } from './cylinderElliptic.js'
 import { isGT } from './commonChecks.js'
 
 /**

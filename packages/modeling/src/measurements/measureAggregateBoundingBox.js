@@ -1,8 +1,7 @@
-import flatten from '../utils/flatten.js'
-import vec3min from '../maths/vec3/min.js'
-import vec3max from '../maths/vec3/max.js'
+import { flatten } from '../utils/flatten.js'
+import * as vec3 from '../maths/vec3/index.js'
 
-import measureBoundingBox from './measureBoundingBox.js'
+import { measureBoundingBox } from './measureBoundingBox.js'
 
 /**
  * Measure the aggregated minimum and maximum bounds for the given geometries.
@@ -22,7 +21,7 @@ export const measureAggregateBoundingBox = (...geometries) => {
   }
   const result = [[Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE], [-Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE]]
   return bounds.reduce((result, item) => {
-    result = [vec3min(result[0], result[0], item[0]), vec3max(result[1], result[1], item[1])]
+    result = [vec3.min(result[0], result[0], item[0]), vec3.max(result[1], result[1], item[1])]
     return result
   }, result)
 }

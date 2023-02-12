@@ -1,6 +1,6 @@
-import abs from './abs.js'
-import create from './create.js'
-import cross from './cross.js'
+import { abs } from './abs.js'
+import { create } from './create.js'
+import { cross } from './cross.js'
 
 /**
  * Create a new vector that is orthogonal to the given vector.

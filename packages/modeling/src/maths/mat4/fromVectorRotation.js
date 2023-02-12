@@ -1,6 +1,6 @@
 import * as vec3 from '../vec3/index.js'
 
-import fromRotation from './fromRotation.js'
+import { fromRotation } from './fromRotation.js'
 
 /**
  * Create a matrix that rotates the given source to the given target vector.

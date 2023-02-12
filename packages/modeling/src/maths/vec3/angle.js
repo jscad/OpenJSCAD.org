@@ -1,4 +1,4 @@
-import dot from './dot.js'
+import { dot } from './dot.js'
 
 /**
  * Calculate the angle between two vectors.

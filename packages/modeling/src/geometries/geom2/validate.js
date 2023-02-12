@@ -1,8 +1,8 @@
 import * as vec2 from '../../maths/vec2/index.js'
-import intersect from '../../maths/utils/intersect.js'
+import { intersect } from '../../maths/utils/intersect.js'
 
-import isA from './isA.js'
-import toOutlines from './toOutlines.js'
+import { isA } from './isA.js'
+import { toOutlines } from './toOutlines.js'
 
 /**
  * Determine if the given object is a valid geom2.

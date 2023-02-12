@@ -2,7 +2,7 @@ import { EPS } from '../constants.js'
 
 import { sin, cos } from '../utils/trigonometry.js'
 
-import copy from './copy.js'
+import { copy } from './copy.js'
 
 /**
  * Rotates a matrix by the given angle about the given axis.

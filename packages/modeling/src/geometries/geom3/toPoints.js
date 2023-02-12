@@ -1,6 +1,6 @@
 import * as poly3 from '../poly3/index.js'
 
-import toPolygons from './toPolygons.js'
+import { toPolygons } from './toPolygons.js'
 
 /**
  * Return the given geometry as a list of points, after applying transforms.

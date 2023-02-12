@@ -1,4 +1,3 @@
-import sortLinked from './linkedListSort.js'
 
 class Node {
   constructor (i, x, y) {
@@ -58,6 +57,5 @@ const removeNode = (p) => {
 export {
   Node,
   insertNode,
-  removeNode,
-  sortLinked
+  removeNode
 }

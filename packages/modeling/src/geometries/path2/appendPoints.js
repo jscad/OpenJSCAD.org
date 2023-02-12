@@ -1,5 +1,5 @@
-import concat from './concat.js'
-import create from './create.js'
+import { concat } from './concat.js'
+import { create } from './create.js'
 
 /**
  * Append the given list of points to the end of the given geometry.

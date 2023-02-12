@@ -1,7 +1,7 @@
 import * as vec2 from '../vec2/index.js'
 
-import copy from './copy.js'
-import fromValues from './fromValues.js'
+import { copy } from './copy.js'
+import { fromValues } from './fromValues.js'
 
 /**
  * Create a new line in the opposite direction as the given.

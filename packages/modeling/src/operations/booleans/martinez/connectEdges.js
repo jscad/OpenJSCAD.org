@@ -4,8 +4,8 @@
  * https://github.com/w8r/martinez
  */
 
-import compareEvents from './compareEvents.js'
-import Contour from './contour.js'
+import { compareEvents } from './compareEvents.js'
+import { Contour } from './contour.js'
 
 /**
  * @param {Array.<SweepEvent>} sortedEvents

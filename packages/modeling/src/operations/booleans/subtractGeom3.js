@@ -1,8 +1,8 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/flatten.js'
 
-import retessellate from '../modifiers/retessellate.js'
+import { retessellate } from '../modifiers/retessellate.js'
 
-import subtractSub from './subtractGeom3Sub.js'
+import { subtractGeom3Sub } from './subtractGeom3Sub.js'
 
 /*
  * Return a new 3D geometry representing space in this geometry but not in the given geometries.
@@ -15,7 +15,7 @@ export const subtractGeom3 = (...geometries) => {
 
   let newgeometry = geometries.shift()
   geometries.forEach((geometry) => {
-    newgeometry = subtractSub(newgeometry, geometry)
+    newgeometry = subtractGeom3Sub(newgeometry, geometry)
   })
 
   newgeometry = retessellate(newgeometry)

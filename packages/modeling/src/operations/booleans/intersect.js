@@ -1,11 +1,11 @@
-import flatten from '../../utils/flatten.js'
-import areAllShapesTheSameType from '../../utils/areAllShapesTheSameType.js'
+import { flatten } from '../../utils/flatten.js'
+import { areAllShapesTheSameType } from '../../utils/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 
-import intersectGeom2 from './intersectGeom2.js'
-import intersectGeom3 from './intersectGeom3.js'
+import { intersectGeom2 } from './intersectGeom2.js'
+import { intersectGeom3 } from './intersectGeom3.js'
 
 /**
  * Return a new geometry representing space in both the first geometry and

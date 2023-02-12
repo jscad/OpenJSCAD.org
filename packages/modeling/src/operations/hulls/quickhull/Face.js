@@ -1,11 +1,4 @@
-import add from '../../../maths/vec3/add.js'
-import copy from '../../../maths/vec3/copy.js'
-import cross from '../../../maths/vec3/cross.js'
-import dot from '../../../maths/vec3/dot.js'
-import length from '../../../maths/vec3/length.js'
-import normalize from '../../../maths/vec3/normalize.js'
-import scale from '../../../maths/vec3/scale.js'
-import subtract from '../../../maths/vec3/subtract.js'
+import { add, copy, cross, dot, length, normalize, scale, subtract } from '../../../maths/vec3/index.js'
 
 /*
  * Original source from quickhull3d (https://github.com/mauriciopoppe/quickhull3d)

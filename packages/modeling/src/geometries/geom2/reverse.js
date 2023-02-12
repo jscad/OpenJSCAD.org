@@ -1,4 +1,4 @@
-import clone from './clone.js'
+import { clone } from './clone.js'
 
 /**
  * Reverses the given geometry so that the outline points are flipped in the opposite order.

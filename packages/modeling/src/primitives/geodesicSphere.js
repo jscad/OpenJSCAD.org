@@ -3,8 +3,7 @@ import * as vec3 from '../maths/vec3/index.js'
 
 import * as geom3 from '../geometries/geom3/index.js'
 
-import polyhedron from './polyhedron.js'
-
+import { polyhedron } from './polyhedron.js'
 import { isGT, isGTE } from './commonChecks.js'
 
 /**

@@ -1,4 +1,4 @@
-import cssColors from './cssColors.js'
+import { cssColors } from './cssColors.js'
 
 /**
  * Converts a CSS color name to RGB color.

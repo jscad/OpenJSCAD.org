@@ -1,4 +1,4 @@
-import compareVectors from './compareVectors.js'
+import { compareVectors } from './compareVectors.js'
 
 /**
  * Compare two polygons for equality
@@ -12,4 +12,3 @@ export const comparePolygons = (poly1, poly2) => {
   }
   return false
 }
-export default comparePolygons

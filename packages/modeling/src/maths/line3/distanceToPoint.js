@@ -1,6 +1,6 @@
 import * as vec3 from '../vec3/index.js'
 
-import closestPoint from './closestPoint.js'
+import { closestPoint } from './closestPoint.js'
 
 /**
  * Calculate the distance (positive) between the given point and line.

@@ -2,8 +2,8 @@ import { EPS } from '../../maths/constants.js'
 
 import * as vec2 from '../../maths/vec2/index.js'
 
-import close from './close.js'
-import create from './create.js'
+import { close } from './close.js'
+import { create } from './create.js'
 
 /**
  * Create a new path from the given points.

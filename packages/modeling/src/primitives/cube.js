@@ -1,5 +1,4 @@
-import cuboid from './cuboid.js'
-
+import { cuboid } from './cuboid.js'
 import { isGT } from './commonChecks.js'
 
 /**

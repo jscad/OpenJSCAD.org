@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { path2 } from '../../geometries/index.js'
 
-import hullPath2 from './hullPath2.js'
+import { hullPath2 } from './hullPath2.js'
 
 test('hullPath2', (t) => {
   const closed = true

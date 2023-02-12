@@ -1,7 +1,7 @@
 import * as vec3 from '../../maths/vec3/index.js'
 import { toOutlines } from '../geom2/index.js'
 
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Create a slice from a geom2.

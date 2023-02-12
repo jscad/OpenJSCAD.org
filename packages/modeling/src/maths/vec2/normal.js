@@ -1,7 +1,7 @@
 import { TAU } from '../constants.js'
 
-import create from './create.js'
-import rotate from './rotate.js'
+import { create } from './create.js'
+import { rotate } from './rotate.js'
 
 /**
  * Calculates the normal of the given vector.

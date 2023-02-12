@@ -3,7 +3,7 @@ import test from 'ava'
 import { subtract, union } from '../../../operations/booleans/index.js'
 import { square } from '../../../primitives/index.js'
 
-import assignHoles from './assignHoles.js'
+import { assignHoles } from './assignHoles.js'
 
 test('slice: assignHoles() should return a polygon hierarchy', (t) => {
   const exp1 = [{

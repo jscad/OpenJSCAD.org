@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { EPS } from '../maths/constants.js'
 
-import calculateEpsilonFromBounds from './calculateEpsilonFromBounds.js'
+import { calculateEpsilonFromBounds } from './calculateEpsilonFromBounds.js'
 
 test('calculateEpsilonFromBounds: 2 dimension', (t) => {
   const bounds = [[-10, -100], [100, 10]]

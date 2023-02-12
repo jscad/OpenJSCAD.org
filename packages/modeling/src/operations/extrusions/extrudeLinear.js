@@ -1,10 +1,10 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/flatten.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
-import extrudeLinearGeom2 from './extrudeLinearGeom2.js'
-import extrudeLinearPath2 from './extrudeLinearPath2.js'
+import { extrudeLinearGeom2 } from './extrudeLinearGeom2.js'
+import { extrudeLinearPath2 } from './extrudeLinearPath2.js'
 
 /**
  * Extrude the given geometry in an upward linear direction using the given options.

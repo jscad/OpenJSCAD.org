@@ -1,10 +1,10 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/flatten.js'
 
 // import geom2 from '../../geometries/geom2'
 import * as geom3 from '../../geometries/geom3/index.js'
 
 // import scissionGeom2 from './scissionGeom2'
-import scissionGeom3 from './scissionGeom3.js'
+import { scissionGeom3 } from './scissionGeom3.js'
 
 /**
  * Scission (divide) the given geometry into the component pieces.

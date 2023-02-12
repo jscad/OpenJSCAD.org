@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { fromPoints } from './index.js'
 
-import applyTransforms from './applyTransforms.js'
+import { applyTransforms } from './applyTransforms.js'
 
 import { comparePoints, compareVectors } from '../../../test/helpers/index.js'
 

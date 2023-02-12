@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { poly3 } from '../../geometries/index.js'
 
-import snapPolygons from './snapPolygons.js'
+import { snapPolygons } from './snapPolygons.js'
 
 test('snapPolygons: snap of polygons produces expected results', (t) => {
   const polygons = [

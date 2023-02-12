@@ -1,4 +1,4 @@
-import plane from './plane.js'
+import { plane } from './plane.js'
 
 /**
  * Measure the area of the given polygon.

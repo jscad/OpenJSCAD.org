@@ -1,8 +1,8 @@
 import * as vec2 from '../vec2/index.js'
 
-import fromPoints from './fromPoints.js'
-import origin from './origin.js'
-import direction from './direction.js'
+import { fromPoints } from './fromPoints.js'
+import { origin } from './origin.js'
+import { direction } from './direction.js'
 
 /**
  * Transforms the given line using the given matrix.

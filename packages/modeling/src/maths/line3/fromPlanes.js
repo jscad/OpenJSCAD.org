@@ -1,8 +1,8 @@
 import * as vec3 from '../vec3/index.js'
-import solve2Linear from '../utils/solve2Linear.js'
+import { solve2Linear } from '../utils/solve2Linear.js'
 import { EPS } from '../constants.js'
 
-import fromPointAndDirection from './fromPointAndDirection.js'
+import { fromPointAndDirection } from './fromPointAndDirection.js'
 
 /**
  * Create a line the intersection of the given planes.

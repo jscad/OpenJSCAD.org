@@ -1,7 +1,7 @@
 import * as vec2 from '../../maths/vec2/index.js'
 
-import isA from './isA.js'
-import measureArea from './measureArea.js'
+import { isA } from './isA.js'
+import { measureArea } from './measureArea.js'
 
 /**
  * Determine if the given object is a valid polygon.
@@ -36,7 +36,7 @@ export const validate = (object) => {
 
   // check for infinity, nan
   object.points.forEach((point) => {
-    if (point.length != 2) {
+    if (point.length !== 2) {
       throw new Error(`poly2 invalid point ${point}`)
     }
     if (!point.every(Number.isFinite)) {

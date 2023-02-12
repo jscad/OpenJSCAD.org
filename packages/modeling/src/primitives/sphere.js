@@ -1,5 +1,4 @@
-import ellipsoid from './ellipsoid.js'
-
+import { ellipsoid } from './ellipsoid.js'
 import { isGT } from './commonChecks.js'
 
 /**

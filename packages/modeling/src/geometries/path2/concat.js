@@ -1,7 +1,7 @@
-import equals from '../../maths/vec2/equals.js'
+import { equals } from '../../maths/vec2/index.js'
 
-import fromPoints from './fromPoints.js'
-import toPoints from './toPoints.js'
+import { fromPoints } from './fromPoints.js'
+import { toPoints } from './toPoints.js'
 
 /**
  * Concatenate the given paths.
