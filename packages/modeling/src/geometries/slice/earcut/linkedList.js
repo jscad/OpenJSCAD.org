@@ -1,5 +1,5 @@
 
-class Node {
+export class Node {
   constructor (i, x, y) {
     // vertex index in coordinates array
     this.i = i
@@ -27,7 +27,7 @@ class Node {
 /*
  * create a node and optionally link it with previous one (in a circular doubly linked list)
  */
-const insertNode = (i, x, y, last) => {
+export const insertNode = (i, x, y, last) => {
   const p = new Node(i, x, y)
 
   if (!last) {
@@ -46,16 +46,10 @@ const insertNode = (i, x, y, last) => {
 /*
  * remove a node and join prev with next nodes
  */
-const removeNode = (p) => {
+export const removeNode = (p) => {
   p.next.prev = p.prev
   p.prev.next = p.next
 
   if (p.prevZ) p.prevZ.nextZ = p.nextZ
   if (p.nextZ) p.nextZ.prevZ = p.prevZ
-}
-
-export {
-  Node,
-  insertNode,
-  removeNode
 }

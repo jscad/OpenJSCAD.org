@@ -9,11 +9,11 @@ import { add, copy, cross, dot, length, normalize, scale, subtract } from '../..
 
 import { HalfEdge } from './HalfEdge.js'
 
-const VISIBLE = 0
-const NON_CONVEX = 1
-const DELETED = 2
+export const VISIBLE = 0
+export const NON_CONVEX = 1
+export const DELETED = 2
 
-class Face {
+export class Face {
   constructor () {
     this.normal = []
     this.centroid = []
@@ -317,12 +317,4 @@ class Face {
     face.computeNormalAndCentroid(minArea)
     return face
   }
-}
-
-export {
-  VISIBLE,
-  NON_CONVEX,
-  DELETED,
-
-  Face
 }
