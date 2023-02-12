@@ -20,7 +20,7 @@ import {
  * @param {Queue} queue
  * @return {Number}
  */
-const possibleIntersection = (se1, se2, queue) => {
+export const possibleIntersection = (se1, se2, queue) => {
   // that disallows self-intersecting polygons,
   // did cost us half a day, so I'll leave it
   // out of respect

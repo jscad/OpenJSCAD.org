@@ -7,7 +7,7 @@ import compareEvents from './compareEvents.js'
  * @param {Queue} queue
  * @return {Queue}
  */
-const divideSegment = (se, p, queue) => {
+export const divideSegment = (se, p, queue) => {
   const r = new SweepEvent(p, false, se, se.isSubject)
   const l = new SweepEvent(p, true, se.otherEvent, se.isSubject)
 

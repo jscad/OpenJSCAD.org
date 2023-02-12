@@ -13,7 +13,7 @@ import {
   DIFFERENCE
 } from './operation.js'
 
-const subdivideSegments = (eventQueue, subject, clipping, sbbox, cbbox, operation) => {
+export const subdivideSegments = (eventQueue, subject, clipping, sbbox, cbbox, operation) => {
   const sweepLine = new Tree(compareSegments)
   const sortedEvents = []
 

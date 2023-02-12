@@ -13,7 +13,7 @@ import signedArea from './signedArea.js'
  * @param {SweepEvent} le2
  * @return {Number}
  */
-const compareSegments = (le1, le2) => {
+export const compareSegments = (le1, le2) => {
   if (le1 === le2) return 0
 
   // Segments are not collinear

@@ -22,7 +22,7 @@ import {
  * @param {SweepEvent} prev
  * @param {Operation} operation
  */
-const computeFields = (event, prev, operation) => {
+export const computeFields = (event, prev, operation) => {
   // compute inOut and otherInOut fields
   if (prev === null) {
     event.inOut = false
