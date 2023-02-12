@@ -16,5 +16,3 @@ export const transform = (out, vector, matrix) => {
   out[3] = matrix[3] * x + matrix[7] * y + matrix[11] * z + matrix[15] * w
   return out
 }
-
-export default transform

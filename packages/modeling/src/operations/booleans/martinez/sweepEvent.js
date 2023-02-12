@@ -130,5 +130,3 @@ class SweepEvent {
     return copy
   }
 }
-
-export default SweepEvent

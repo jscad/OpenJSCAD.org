@@ -38,5 +38,3 @@ export const validate = (object) => {
     throw new Error(`path2 invalid transforms ${object.transforms}`)
   }
 }
-
-export default validate

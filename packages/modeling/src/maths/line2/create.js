@@ -16,5 +16,3 @@
  * @alias module:modeling/maths/line2.create
  */
 export const create = () => [0, 1, 0] // normal and distance
-
-export default create

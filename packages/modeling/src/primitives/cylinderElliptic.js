@@ -128,5 +128,3 @@ export const cylinderElliptic = (options) => {
   const result = geom3.create(polygons)
   return result
 }
-
-export default cylinderElliptic

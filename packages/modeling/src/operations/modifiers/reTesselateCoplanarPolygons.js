@@ -341,5 +341,3 @@ export const reTesselateCoplanarPolygons = (sourcepolygons) => {
   } // for yindex
   return destpolygons
 }
-
-export default reTesselateCoplanarPolygons

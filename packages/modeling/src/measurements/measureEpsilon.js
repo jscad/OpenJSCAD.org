@@ -47,5 +47,3 @@ export const measureEpsilon = (...geometries) => {
   })
   return results.length === 1 ? results[0] : results
 }
-
-export default measureEpsilon

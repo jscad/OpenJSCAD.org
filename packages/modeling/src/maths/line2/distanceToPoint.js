@@ -13,5 +13,3 @@ export const distanceToPoint = (line, point) => {
   distance = Math.abs(distance - line[2])
   return distance
 }
-
-export default distanceToPoint

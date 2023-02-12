@@ -248,5 +248,3 @@ const zOrder = (x, y, minX, minY, invSize) => {
 
   return x | (y << 1)
 }
-
-export default triangulate

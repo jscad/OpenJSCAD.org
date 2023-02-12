@@ -16,5 +16,3 @@ export const reverse = (geometry) => {
   cloned.points = geometry.points.slice().reverse()
   return cloned
 }
-
-export default reverse

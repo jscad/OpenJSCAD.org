@@ -31,5 +31,3 @@ export const fromTranslation = (out, vector) => {
   out[15] = 1
   return out
 }
-
-export default fromTranslation

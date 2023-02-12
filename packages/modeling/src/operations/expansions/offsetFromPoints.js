@@ -167,5 +167,3 @@ export const offsetFromPoints = (options, points) => {
   }
   return newPoints
 }
-
-export default offsetFromPoints

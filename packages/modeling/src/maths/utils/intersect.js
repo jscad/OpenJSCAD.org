@@ -43,5 +43,3 @@ export const intersect = (p1, p2, p3, p4, endpointTouch = true) => {
 
   return [x, y]
 }
-
-export default intersect

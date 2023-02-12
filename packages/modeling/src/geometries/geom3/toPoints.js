@@ -14,5 +14,3 @@ export const toPoints = (geometry) => {
   const listofpoints = polygons.map((polygon) => poly3.toPoints(polygon))
   return listofpoints
 }
-
-export default toPoints

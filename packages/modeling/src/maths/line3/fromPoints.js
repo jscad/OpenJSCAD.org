@@ -15,5 +15,3 @@ export const fromPoints = (out, point1, point2) => {
   const direction = vec3.subtract(vec3.create(), point2, point1)
   return fromPointAndDirection(out, point1, direction)
 }
-
-export default fromPoints

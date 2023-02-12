@@ -26,5 +26,3 @@ export const cube = (options) => {
 
   return cuboid({ center, size })
 }
-
-export default cube

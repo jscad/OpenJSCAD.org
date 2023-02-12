@@ -49,5 +49,3 @@ export const compareSegments = (le1, le2) => {
 
   return compareEvents(le1, le2) === 1 ? 1 : -1
 }
-
-export default compareSegments

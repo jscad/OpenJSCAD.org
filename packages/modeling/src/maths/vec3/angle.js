@@ -21,5 +21,3 @@ export const angle = (a, b) => {
   const cosine = mag && dot(a, b) / mag
   return Math.acos(Math.min(Math.max(cosine, -1), 1))
 }
-
-export default angle

@@ -22,5 +22,3 @@ export const measureAggregateVolume = (...geometries) => {
   const result = 0
   return volumes.reduce((result, volume) => result + volume, result)
 }
-
-export default measureAggregateVolume

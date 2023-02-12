@@ -89,5 +89,3 @@ export const expandPath2 = (options, geometry) => {
     return createGeometryFromExpandedOpenPath(paths, segments, corners, delta)
   }
 }
-
-export default expandPath2

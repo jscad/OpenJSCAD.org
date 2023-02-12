@@ -17,5 +17,3 @@ export const fromGeom2 = (geometry) => {
   })
   return create(contours)
 }
-
-export default fromGeom2

@@ -78,5 +78,3 @@ const isPointInside = (point, polygon) => {
   }
   return insideFlag
 }
-
-export default arePointsInside

@@ -44,5 +44,3 @@ export const extrudeRectangularGeom2 = (options, geometry) => {
 
   return extrudeLinearGeom2(options, newGeometry)
 }
-
-export default extrudeRectangularGeom2

@@ -107,5 +107,3 @@ const determineResultTransition = (event, operation) => {
   }
   return isIn ? +1 : -1
 }
-
-export default computeFields

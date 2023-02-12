@@ -20,5 +20,3 @@ export const closestPoint = (line, point) => {
   vec3.add(closestpoint, closestpoint, lpoint)
   return closestpoint
 }
-
-export default closestPoint

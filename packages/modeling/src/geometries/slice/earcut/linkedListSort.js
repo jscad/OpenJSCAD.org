@@ -49,5 +49,3 @@ const linkedListSort = (list, fn) => {
 
   return list
 }
-
-export default linkedListSort

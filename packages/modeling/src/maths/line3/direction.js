@@ -6,5 +6,3 @@
  * @alias module:modeling/maths/line3.direction
  */
 export const direction = (line) => line[1]
-
-export default direction

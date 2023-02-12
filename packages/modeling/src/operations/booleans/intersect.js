@@ -43,5 +43,3 @@ export const intersect = (...geometries) => {
   if (geom3.isA(geometry)) return intersectGeom3(geometries)
   return geometry
 }
-
-export default intersect

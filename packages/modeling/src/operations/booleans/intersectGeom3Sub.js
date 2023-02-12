@@ -30,5 +30,3 @@ export const intersectGeom3Sub = (geometry1, geometry2) => {
   const newpolygons = a.allPolygons()
   return geom3.create(newpolygons)
 }
-
-export default intersectGeom3Sub

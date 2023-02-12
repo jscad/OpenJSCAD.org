@@ -39,5 +39,3 @@ export const hullChain = (...geometries) => {
   }
   return union(hulls)
 }
-
-export default hullChain

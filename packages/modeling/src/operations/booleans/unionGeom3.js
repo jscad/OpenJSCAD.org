@@ -21,5 +21,3 @@ export const unionGeom3 = (...geometries) => {
   newgeometry = retessellate(newgeometry)
   return newgeometry
 }
-
-export default unionGeom3

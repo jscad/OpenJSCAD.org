@@ -48,5 +48,3 @@ export const cuboid = (options) => {
   )
   return result
 }
-
-export default cuboid

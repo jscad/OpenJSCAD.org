@@ -21,5 +21,3 @@ export const subtractGeom3 = (...geometries) => {
   newgeometry = retessellate(newgeometry)
   return newgeometry
 }
-
-export default subtractGeom3

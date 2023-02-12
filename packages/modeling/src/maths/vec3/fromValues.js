@@ -16,5 +16,3 @@ export const fromValues = (x, y, z) => {
   out[2] = z
   return out
 }
-
-export default fromValues

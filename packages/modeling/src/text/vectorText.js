@@ -91,5 +91,3 @@ export const vectorText = (options, text) => {
   }
   return output
 }
-
-export default vectorText

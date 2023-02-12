@@ -138,5 +138,3 @@ export const appendArc = (options, geometry) => {
   const result = fromPoints({}, newpoints)
   return result
 }
-
-export default appendArc

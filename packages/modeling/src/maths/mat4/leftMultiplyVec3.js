@@ -25,5 +25,3 @@ const leftMultiplyVec3 = (vector, matrix) => {
   }
   return fromValues(x, y, z)
 }
-
-export default leftMultiplyVec3

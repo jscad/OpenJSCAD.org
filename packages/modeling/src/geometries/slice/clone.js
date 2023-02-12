@@ -7,5 +7,3 @@
  * @alias module:modeling/geometries/slice.clone
  */
 export const clone = (slice) => Object.assign({}, slice)
-
-export default clone

@@ -25,5 +25,3 @@ export const rightMultiplyVec2 = (vector, matrix) => {
   }
   return fromValues(x, y)
 }
-
-export default rightMultiplyVec2

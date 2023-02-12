@@ -34,5 +34,3 @@ export const divideSegment = (se, p, queue) => {
 
   return queue
 }
-
-export default divideSegment

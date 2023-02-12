@@ -18,4 +18,3 @@ export const fromValues = (x, y, z, w) => {
   out[3] = w
   return out
 }
-export default fromValues

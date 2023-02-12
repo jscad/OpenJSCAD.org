@@ -18,5 +18,3 @@ export const invert = (polygon) => {
   }
   return inverted
 }
-
-export default invert

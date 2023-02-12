@@ -78,5 +78,3 @@ export const rotate = (out, matrix, radians, axis) => {
   }
   return out
 }
-
-export default rotate

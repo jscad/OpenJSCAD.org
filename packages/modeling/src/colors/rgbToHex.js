@@ -23,5 +23,3 @@ export const rgbToHex = (...values) => {
   }
   return s
 }
-
-export default rgbToHex

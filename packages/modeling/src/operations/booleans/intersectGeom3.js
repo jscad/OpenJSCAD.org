@@ -21,5 +21,3 @@ export const intersectGeom3 = (...geometries) => {
   newgeometry = retessellate(newgeometry)
   return newgeometry
 }
-
-export default intersectGeom3

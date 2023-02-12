@@ -64,5 +64,3 @@ export const transformationBetween = (options, from, to) => {
 
   return matrix
 }
-
-export default transformationBetween

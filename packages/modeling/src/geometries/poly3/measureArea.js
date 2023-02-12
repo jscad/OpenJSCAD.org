@@ -79,5 +79,3 @@ export const measureArea = (polygon) => {
   }
   return area
 }
-
-export default measureArea

@@ -11,5 +11,3 @@ export const squaredLength = (vector) => {
   const z = vector[2]
   return x * x + y * y + z * z
 }
-
-export default squaredLength

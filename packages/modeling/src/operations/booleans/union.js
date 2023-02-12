@@ -42,5 +42,3 @@ export const union = (...geometries) => {
   if (geom3.isA(geometry)) return unionGeom3(geometries)
   return geometry
 }
-
-export default union

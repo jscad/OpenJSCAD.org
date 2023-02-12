@@ -32,5 +32,3 @@ export const expandGeom3 = (options, geometry) => {
   const expanded = expandShell(options, geometry)
   return union(geometry, expanded)
 }
-
-export default expandGeom3

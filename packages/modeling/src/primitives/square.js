@@ -27,5 +27,3 @@ export const square = (options) => {
 
   return rectangle({ center, size })
 }
-
-export default square

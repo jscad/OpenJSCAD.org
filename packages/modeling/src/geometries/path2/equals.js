@@ -43,5 +43,3 @@ export const equals = (a, b) => {
   } while (++offset < length)
   return false
 }
-
-export default equals

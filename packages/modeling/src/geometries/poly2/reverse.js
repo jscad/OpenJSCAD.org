@@ -11,5 +11,3 @@ export const reverse = (polygon) => {
   const points = polygon.points.slice().reverse()
   return create(points)
 }
-
-export default reverse

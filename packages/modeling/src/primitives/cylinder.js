@@ -37,5 +37,3 @@ export const cylinder = (options) => {
 
   return cylinderElliptic(newoptions)
 }
-
-export default cylinder

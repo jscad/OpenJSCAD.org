@@ -13,5 +13,3 @@ export const clone = (vector) => {
   out[1] = vector[1]
   return out
 }
-
-export default clone

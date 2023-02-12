@@ -100,5 +100,3 @@ export const extrudeFromSlices = (options, base) => {
   }
   return geom3.create(polygons)
 }
-
-export default extrudeFromSlices

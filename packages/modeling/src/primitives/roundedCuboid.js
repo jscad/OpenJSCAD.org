@@ -181,5 +181,3 @@ export const roundedCuboid = (options) => {
 
   return geom3.create(polygons)
 }
-
-export default roundedCuboid

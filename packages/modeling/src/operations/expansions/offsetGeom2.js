@@ -42,5 +42,3 @@ export const offsetGeom2 = (options, geometry) => {
   // create a composite geometry from the new outlines
   return geom2.create(newOutlines)
 }
-
-export default offsetGeom2

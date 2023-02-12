@@ -71,5 +71,3 @@ export const ellipse = (options) => {
   if (rotation < TAU) points.push(centerv)
   return geom2.create([points])
 }
-
-export default ellipse

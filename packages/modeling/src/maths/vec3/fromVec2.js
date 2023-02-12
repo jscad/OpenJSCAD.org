@@ -13,5 +13,3 @@ export const fromVec2 = (out, vector, z = 0) => {
   out[2] = z
   return out
 }
-
-export default fromVec2

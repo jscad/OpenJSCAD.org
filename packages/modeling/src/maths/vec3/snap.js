@@ -13,5 +13,3 @@ export const snap = (out, vector, epsilon) => {
   out[2] = Math.round(vector[2] / epsilon) * epsilon + 0
   return out
 }
-
-export default snap

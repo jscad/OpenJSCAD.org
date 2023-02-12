@@ -38,5 +38,3 @@ export const fromCompactBinary = (data) => {
   // TODO: how about custom properties or fields ?
   return created
 }
-
-export default fromCompactBinary

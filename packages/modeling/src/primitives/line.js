@@ -15,5 +15,3 @@ export const line = (points) => {
 
   return path2.fromPoints({}, points)
 }
-
-export default line

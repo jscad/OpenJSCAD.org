@@ -18,5 +18,3 @@ export const xAtY = (line, y) => {
   }
   return x
 }
-
-export default xAtY

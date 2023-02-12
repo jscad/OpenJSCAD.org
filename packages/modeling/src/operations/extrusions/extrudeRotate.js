@@ -133,5 +133,3 @@ export const extrudeRotate = (options, geometry) => {
   }
   return extrudeFromSlices(options, baseSlice)
 }
-
-export default extrudeRotate

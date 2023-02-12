@@ -47,5 +47,3 @@ export const translate = (out, matrix, offsets) => {
 
   return out
 }
-
-export default translate

@@ -87,5 +87,3 @@ const minIndex = (list, score) => {
   })
   return bestIndex
 }
-
-export default assignHoles

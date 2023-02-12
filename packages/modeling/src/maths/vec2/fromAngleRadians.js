@@ -13,5 +13,3 @@ export const fromAngleRadians = (out, radians) => {
   out[1] = sin(radians)
   return out
 }
-
-export default fromAngleRadians

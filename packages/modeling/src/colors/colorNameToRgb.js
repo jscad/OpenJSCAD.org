@@ -10,5 +10,3 @@ import cssColors from './cssColors.js'
  * let mysphere = colorize(colorNameToRgb('lightblue'), sphere())
  */
 export const colorNameToRgb = (s) => cssColors[s.toLowerCase()]
-
-export default colorNameToRgb

@@ -31,5 +31,3 @@ export const fromPoints = (points) => {
   })
   return create([cloned])
 }
-
-export default fromPoints

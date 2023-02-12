@@ -22,5 +22,3 @@ export const vectorParams = (options, input) => {
   params.input = input || params.input
   return params
 }
-
-export default vectorParams

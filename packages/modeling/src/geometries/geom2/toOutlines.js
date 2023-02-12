@@ -13,5 +13,3 @@ import applyTransforms from './applyTransforms.js'
 export const toOutlines = (geometry) => {
   return applyTransforms(geometry).outlines
 }
-
-export default toOutlines

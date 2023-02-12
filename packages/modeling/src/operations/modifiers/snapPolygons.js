@@ -28,5 +28,3 @@ export const snapPolygons = (epsilon, polygons) => {
   newpolygons = newpolygons.filter((polygon) => isValidPoly3(epsilonArea, polygon))
   return newpolygons
 }
-
-export default snapPolygons

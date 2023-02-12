@@ -11,5 +11,3 @@ export const squaredDistance = (a, b) => {
   const y = b[1] - a[1]
   return x * x + y * y
 }
-
-export default squaredDistance

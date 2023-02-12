@@ -50,5 +50,3 @@ export const retessellate = (geometry) => {
 
   return result
 }
-
-export default retessellate

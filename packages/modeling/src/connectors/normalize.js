@@ -16,5 +16,3 @@ export const normalize = (connector) => {
 
   return fromPointAxisNormal(connector.point, newaxis, newnormal)
 }
-
-export default normalize

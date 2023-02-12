@@ -22,5 +22,3 @@ export const transform = (out, line, matrix) => {
 
   return fromPointAndDirection(out, newpoint, newdirection)
 }
-
-export default transform

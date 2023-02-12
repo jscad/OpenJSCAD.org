@@ -13,5 +13,3 @@ export const fromPointsAndPlane = (vertices, plane) => {
   poly.plane = plane // retain the plane for later use
   return poly
 }
-
-export default fromPointsAndPlane

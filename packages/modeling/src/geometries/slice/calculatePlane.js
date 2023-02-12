@@ -61,5 +61,3 @@ export const calculatePlane = (slice) => {
 
   return plane.fromPoints(plane.create(), farthestBefore, farthestPoint, farthestAfter)
 }
-
-export default calculatePlane

@@ -19,5 +19,3 @@ export const toString = (geometry) => {
   })
   return result
 }
-
-export default toString

@@ -29,5 +29,3 @@ export const close = (geometry) => {
   }
   return cloned
 }
-
-export default close

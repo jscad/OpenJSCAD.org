@@ -13,5 +13,3 @@ import rotate from './rotate.js'
  * @alias module:modeling/maths/vec2.normal
  */
 export const normal = (out, vector) => rotate(out, vector, create(), (TAU / 4))
-
-export default normal

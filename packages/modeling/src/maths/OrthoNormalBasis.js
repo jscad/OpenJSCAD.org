@@ -203,5 +203,3 @@ OrthoNormalBasis.prototype = {
     return newbasis
   }
 }
-
-export default OrthoNormalBasis

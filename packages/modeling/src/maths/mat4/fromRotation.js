@@ -56,5 +56,3 @@ export const fromRotation = (out, rad, axis) => {
   out[15] = 1
   return out
 }
-
-export default fromRotation

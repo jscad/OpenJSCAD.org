@@ -78,5 +78,3 @@ export const fillQueue = (subject, clipping, sbbox, cbbox, operation) => {
 
   return eventQueue
 }
-
-export default fillQueue

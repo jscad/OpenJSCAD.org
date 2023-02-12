@@ -25,5 +25,3 @@ export const equals = (a, b) => {
 
   return true
 }
-
-export default equals

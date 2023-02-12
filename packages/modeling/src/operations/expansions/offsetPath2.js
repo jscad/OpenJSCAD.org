@@ -28,5 +28,3 @@ export const offsetPath2 = (options, geometry) => {
   const newpoints = offsetFromPoints(options, path2.toPoints(geometry))
   return path2.fromPoints({ closed: closed }, newpoints)
 }
-
-export default offsetPath2

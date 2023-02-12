@@ -5,5 +5,3 @@
  * @alias module:modeling/geometries/path2.clone
  */
 export const clone = (geometry) => Object.assign({}, geometry)
-
-export default clone

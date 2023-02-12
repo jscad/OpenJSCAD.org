@@ -91,5 +91,3 @@ export const ellipsoid = (options) => {
   }
   return geom3.create(polygons)
 }
-
-export default ellipsoid

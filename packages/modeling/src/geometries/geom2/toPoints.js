@@ -20,5 +20,3 @@ export const toPoints = (geometry) => {
   })
   return points
 }
-
-export default toPoints

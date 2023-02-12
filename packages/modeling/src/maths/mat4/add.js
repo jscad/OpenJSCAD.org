@@ -26,5 +26,3 @@ export const add = (out, a, b) => {
   out[15] = a[15] + b[15]
   return out
 }
-
-export default add

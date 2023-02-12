@@ -42,5 +42,3 @@ export const fromPlanes = (out, plane1, plane2) => {
   }
   return fromPointAndDirection(out, origin, direction)
 }
-
-export default fromPlanes

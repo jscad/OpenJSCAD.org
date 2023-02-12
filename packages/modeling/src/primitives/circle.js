@@ -34,5 +34,3 @@ export const circle = (options) => {
 
   return ellipse({ center, radius, startAngle, endAngle, segments })
 }
-
-export default circle

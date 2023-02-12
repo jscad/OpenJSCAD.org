@@ -10,5 +10,3 @@ class Contour {
     return this.holeOf == null
   }
 }
-
-export default Contour

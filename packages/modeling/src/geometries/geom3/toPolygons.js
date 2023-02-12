@@ -11,5 +11,3 @@ import applyTransforms from './applyTransforms.js'
  * let sharedpolygons = toPolygons(geometry)
  */
 export const toPolygons = (geometry) => applyTransforms(geometry).polygons
-
-export default toPolygons

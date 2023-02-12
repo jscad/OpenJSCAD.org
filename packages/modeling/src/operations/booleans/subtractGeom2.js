@@ -19,5 +19,3 @@ export const subtractGeom2 = (...geometries) => {
 
   return newgeometry
 }
-
-export default subtractGeom2

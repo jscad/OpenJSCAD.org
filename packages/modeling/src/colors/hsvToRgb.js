@@ -69,5 +69,3 @@ export const hsvToRgb = (...values) => {
   }
   return [r, g, b]
 }
-
-export default hsvToRgb

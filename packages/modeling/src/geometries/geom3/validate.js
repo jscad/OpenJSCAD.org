@@ -59,5 +59,3 @@ const validateManifold = (object) => {
     throw new Error(`non-manifold edges ${nonManifold.length}\n${nonManifold.join('\n')}`)
   }
 }
-
-export default validate

@@ -36,5 +36,3 @@ export const transform = (out, plane, matrix) => {
   }
   return out
 }
-
-export default transform

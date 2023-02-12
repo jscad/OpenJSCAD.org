@@ -40,5 +40,3 @@ const isConvexPoint = (prevpoint, point, nextpoint, normal) => {
   const crossdotnormal = vec3.dot(crossproduct, normal)
   return crossdotnormal >= 0
 }
-
-export default isConvex

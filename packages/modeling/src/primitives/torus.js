@@ -60,5 +60,3 @@ export const torus = (options) => {
   }
   return extrudeRotate(extrudeOptions, innerCircle)
 }
-
-export default torus

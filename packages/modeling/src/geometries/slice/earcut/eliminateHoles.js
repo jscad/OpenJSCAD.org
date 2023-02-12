@@ -127,5 +127,3 @@ const getLeftmost = (start) => {
 
   return leftmost
 }
-
-export default eliminateHoles

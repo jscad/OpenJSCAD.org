@@ -8,5 +8,3 @@ import angleRadians from './angleRadians.js'
  * @alias module:modeling/maths/vec2.angleDegrees
  */
 export const angleDegrees = (vector) => angleRadians(vector) * 57.29577951308232
-
-export default angleDegrees

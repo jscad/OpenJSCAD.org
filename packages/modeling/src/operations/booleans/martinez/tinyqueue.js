@@ -74,5 +74,3 @@ class TinyQueue {
     data[pos] = item
   }
 }
-
-export default TinyQueue

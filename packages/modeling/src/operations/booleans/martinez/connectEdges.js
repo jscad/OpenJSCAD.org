@@ -187,5 +187,3 @@ export const connectEdges = (sortedEvents) => {
 
   return contours
 }
-
-export default connectEdges

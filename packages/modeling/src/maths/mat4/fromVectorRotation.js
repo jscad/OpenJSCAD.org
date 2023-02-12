@@ -45,5 +45,3 @@ export const fromVectorRotation = (out, source, target) => {
   out[15] = 1
   return out
 }
-
-export default fromVectorRotation

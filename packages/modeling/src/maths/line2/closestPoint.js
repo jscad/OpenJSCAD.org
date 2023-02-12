@@ -27,5 +27,3 @@ export const closestPoint = (line, point) => {
   const closest = vec2.fromValues(x, y)
   return closest
 }
-
-export default closestPoint

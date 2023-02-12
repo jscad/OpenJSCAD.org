@@ -19,5 +19,3 @@ export const intersectGeom2 = (...geometries) => {
 
   return newgeometry
 }
-
-export default intersectGeom2

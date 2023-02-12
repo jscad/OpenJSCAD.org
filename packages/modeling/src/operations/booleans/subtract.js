@@ -43,5 +43,3 @@ export const subtract = (...geometries) => {
   if (geom3.isA(geometry)) return subtractGeom3(geometries)
   return geometry
 }
-
-export default subtract

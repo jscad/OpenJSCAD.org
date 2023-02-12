@@ -90,5 +90,3 @@ export const scissionGeom3 = (geometry) => {
 
   return newgeometries
 }
-
-export default scissionGeom3

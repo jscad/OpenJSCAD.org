@@ -5,5 +5,3 @@
  * @alias module:modeling/utils.degToRad
  */
 export const degToRad = (degrees) => degrees * 0.017453292519943295
-
-export default degToRad

@@ -11,5 +11,3 @@ import applyTransforms from './applyTransforms.js'
  * let sharedpoints = toPoints(geometry)
  */
 export const toPoints = (geometry) => applyTransforms(geometry).points
-
-export default toPoints

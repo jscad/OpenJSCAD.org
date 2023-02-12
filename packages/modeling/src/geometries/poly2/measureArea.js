@@ -8,5 +8,3 @@
 import area from '../../maths/utils/area.js'
 
 export const measureArea = (polygon) => area(polygon.points)
-
-export default measureArea

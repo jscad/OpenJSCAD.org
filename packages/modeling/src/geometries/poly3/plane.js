@@ -6,5 +6,3 @@ export const plane = (polygon) => {
   }
   return polygon.plane
 }
-
-export default plane

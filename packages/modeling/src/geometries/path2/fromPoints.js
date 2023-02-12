@@ -38,5 +38,3 @@ export const fromPoints = (options, points) => {
 
   return created
 }
-
-export default fromPoints

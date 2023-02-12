@@ -87,5 +87,3 @@ export const align = (options, ...geometries) => {
   }
   return geometries.length === 1 ? geometries[0] : geometries
 }
-
-export default align

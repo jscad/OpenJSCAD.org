@@ -24,5 +24,3 @@ export const identity = (out) => {
   out[15] = 1
   return out
 }
-
-export default identity

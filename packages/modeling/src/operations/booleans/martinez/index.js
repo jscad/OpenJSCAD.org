@@ -102,8 +102,6 @@ const fromOutlines = (outlines) => {
   outlines = outlines.filter((o) => o.length >= 3)
   return geom2.create(outlines)
 }
-
-export default function boolean (subjectGeom, clippingGeom, operation) {
   // Convert from geom2 to outlines
   const subject = toMartinez(subjectGeom)
   const clipping = toMartinez(clippingGeom)

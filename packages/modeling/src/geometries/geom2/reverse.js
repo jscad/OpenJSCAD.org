@@ -15,5 +15,3 @@ export const reverse = (geometry) => {
   reversed.outlines = reversed.outlines.map((outline) => outline.slice().reverse())
   return reversed
 }
-
-export default reverse

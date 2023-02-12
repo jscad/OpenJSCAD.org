@@ -36,5 +36,3 @@ export const isSimple = (polygon) => {
   }
   return true
 }
-
-export default isSimple

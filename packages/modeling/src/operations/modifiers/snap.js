@@ -66,5 +66,3 @@ export const snap = (...geometries) => {
   })
   return results.length === 1 ? results[0] : results
 }
-
-export default snap

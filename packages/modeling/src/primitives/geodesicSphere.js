@@ -133,5 +133,3 @@ export const geodesicSphere = (options) => {
   if (radius !== 1) geometry = geom3.transform(mat4.fromScaling(mat4.create(), [radius, radius, radius]), geometry)
   return geometry
 }
-
-export default geodesicSphere

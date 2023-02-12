@@ -27,5 +27,3 @@ export const clone = (matrix) => {
   out[15] = matrix[15]
   return out
 }
-
-export default clone

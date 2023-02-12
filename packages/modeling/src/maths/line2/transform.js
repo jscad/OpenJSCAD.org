@@ -22,5 +22,3 @@ export const transform = (out, line, matrix) => {
 
   return fromPoints(out, org, dir)
 }
-
-export default transform

@@ -21,5 +21,3 @@ export const fromPointAndDirection = (out, point, direction) => {
   vec3.copy(out[1], unit)
   return out
 }
-
-export default fromPointAndDirection

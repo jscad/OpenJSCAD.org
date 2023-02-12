@@ -24,5 +24,3 @@ export const fromPoints = (listofpoints) => {
   const result = create(polygons)
   return result
 }
-
-export default fromPoints

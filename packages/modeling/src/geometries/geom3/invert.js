@@ -14,5 +14,3 @@ export const invert = (geometry) => {
   const newpolygons = polygons.map((polygon) => poly3.invert(polygon))
   return create(newpolygons)
 }
-
-export default invert

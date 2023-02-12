@@ -12,5 +12,3 @@ export const reverse = (slice) => {
   const contours = slice.contours.map((contour) => contour.slice().reverse())
   return create(contours)
 }
-
-export default reverse

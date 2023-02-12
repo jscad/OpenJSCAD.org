@@ -37,5 +37,3 @@ const unionForNonIntersecting = (geometry1, geometry2) => {
   newpolygons = newpolygons.concat(geom3.toPolygons(geometry2))
   return geom3.create(newpolygons)
 }
-
-export default unionGeom3Sub

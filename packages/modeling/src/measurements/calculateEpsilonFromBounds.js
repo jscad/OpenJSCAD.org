@@ -7,5 +7,3 @@ export const calculateEpsilonFromBounds = (bounds, dimensions) => {
   }
   return EPS * total / dimensions
 }
-
-export default calculateEpsilonFromBounds

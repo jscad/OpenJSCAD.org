@@ -15,5 +15,3 @@ export const distanceToPoint = (line, point) => {
   const distancevector = vec3.subtract(vec3.create(), point, closest)
   return vec3.length(distancevector)
 }
-
-export default distanceToPoint

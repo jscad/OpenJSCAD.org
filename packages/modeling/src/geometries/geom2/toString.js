@@ -20,5 +20,3 @@ export const toString = (geometry) => {
   result += ']\n'
   return result
 }
-
-export default toString

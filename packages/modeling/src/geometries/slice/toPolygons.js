@@ -37,5 +37,3 @@ export const toPolygons = (slice) => {
 
   return polygons
 }
-
-export default toPolygons

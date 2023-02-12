@@ -56,5 +56,3 @@ export const extrudeLinearGeom2 = (options, geometry) => {
   }
   return extrudeFromSlices(options, baseSlice)
 }
-
-export default extrudeLinearGeom2

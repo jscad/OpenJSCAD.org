@@ -24,5 +24,3 @@ export const transform = (matrix, connector) => {
   )
   return fromPointAxisNormal(newpoint, newaxis, newnormal)
 }
-
-export default transform

@@ -21,5 +21,3 @@ export const toSides = (geometry) => {
   })
   return sides
 }
-
-export default toSides

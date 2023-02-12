@@ -48,5 +48,3 @@ export const hull = (...geometries) => {
   // FIXME should this throw an error for unknown geometries?
   return geometry
 }
-
-export default hull

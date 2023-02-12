@@ -54,5 +54,3 @@ export const validate = (object) => {
     throw new Error(`geom2 invalid transforms ${object.transforms}`)
   }
 }
-
-export default validate

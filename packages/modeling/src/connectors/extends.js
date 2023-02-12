@@ -12,5 +12,3 @@ export const extend = (distance, connector) => {
   const newpoint = vec3.add(connector.point, vec3.scale(distance, vec3.normalize(connector.axis)))
   return fromPointAxisNormal(newpoint, connector.axis, connector.normal)
 }
-
-export default extend

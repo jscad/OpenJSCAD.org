@@ -16,5 +16,3 @@ export const reverse = (out, line) => {
   const distance = -line[2]
   return copy(out, fromValues(normal[0], normal[1], distance))
 }
-
-export default reverse

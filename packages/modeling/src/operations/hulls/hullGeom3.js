@@ -28,5 +28,3 @@ export const hullGeom3 = (...geometries) => {
 
   return geom3.create(polygons)
 }
-
-export default hullGeom3

@@ -18,5 +18,3 @@ export const unionGeom2 = (...geometries) => {
 
   return newgeometry
 }
-
-export default unionGeom2

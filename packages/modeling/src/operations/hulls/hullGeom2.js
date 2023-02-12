@@ -24,5 +24,3 @@ export const hullGeom2 = (...geometries) => {
   // assemble a new geometry from the list of points
   return geom2.create([hullPoints])
 }
-
-export default hullGeom2

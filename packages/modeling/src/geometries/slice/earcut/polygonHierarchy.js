@@ -62,5 +62,3 @@ export class PolygonHierarchy {
     }
   }
 }
-
-export default PolygonHierarchy

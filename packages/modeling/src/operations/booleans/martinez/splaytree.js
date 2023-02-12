@@ -597,5 +597,3 @@ const sort = (keys, values, left, right, compare) => {
   sort(keys, values, left, j, compare)
   sort(keys, values, j + 1, right, compare)
 }
-
-export default Tree

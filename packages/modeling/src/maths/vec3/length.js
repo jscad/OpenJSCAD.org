@@ -11,5 +11,3 @@ export const length = (vector) => {
   const z = vector[2]
   return Math.sqrt(x * x + y * y + z * z)
 }
-
-export default length

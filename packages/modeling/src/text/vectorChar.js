@@ -59,5 +59,3 @@ export const vectorChar = (options, char) => {
   }
   return { width, height, segments }
 }
-
-export default vectorChar

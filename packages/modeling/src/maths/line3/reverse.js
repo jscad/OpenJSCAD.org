@@ -15,5 +15,3 @@ export const reverse = (out, line) => {
   const direction = vec3.negate(vec3.create(), line[1])
   return fromPointAndDirection(out, point, direction)
 }
-
-export default reverse

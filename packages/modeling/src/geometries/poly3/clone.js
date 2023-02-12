@@ -24,5 +24,3 @@ export const clone = (...params) => {
   out.vertices = poly3.vertices.map((vec) => vec3.clone(vec))
   return out
 }
-
-export default clone

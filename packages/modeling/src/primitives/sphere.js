@@ -31,5 +31,3 @@ export const sphere = (options) => {
 
   return ellipsoid({ center, radius, segments, axes })
 }
-
-export default sphere

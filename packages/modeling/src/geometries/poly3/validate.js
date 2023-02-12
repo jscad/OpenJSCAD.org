@@ -61,5 +61,3 @@ export const validate = (object) => {
     })
   }
 }
-
-export default validate

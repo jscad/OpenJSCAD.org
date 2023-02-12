@@ -13,5 +13,3 @@ export const flip = (out, plane) => {
   out[3] = -plane[3]
   return out
 }
-
-export default flip

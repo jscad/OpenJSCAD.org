@@ -43,5 +43,3 @@ const specialCases = (e1, e2, p1, p2) => {
 
   return (!e1.isSubject && e2.isSubject) ? 1 : -1
 }
-
-export default compareEvents

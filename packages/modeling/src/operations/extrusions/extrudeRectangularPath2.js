@@ -29,5 +29,3 @@ export const extrudeRectangularPath2 = (options, geometry) => {
   const newgeometry = expand(options, geometry)
   return extrudeLinearGeom2(options, newgeometry)
 }
-
-export default extrudeRectangularPath2

@@ -112,5 +112,3 @@ const popNextSide = (startSide, nextSides) => {
   nextSides.splice(bestIndex, 1) // remove side from list
   return nextSide
 }
-
-export default fromSides

@@ -152,5 +152,3 @@ export const appendBezier = (options, geometry) => {
   result.lastBezierControlPoint = controlPoints[controlPoints.length - 2]
   return result
 }
-
-export default appendBezier

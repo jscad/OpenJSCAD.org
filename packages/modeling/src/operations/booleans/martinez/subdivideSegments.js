@@ -80,5 +80,3 @@ export const subdivideSegments = (eventQueue, subject, clipping, sbbox, cbbox, o
   }
   return sortedEvents
 }
-
-export default subdivideSegments

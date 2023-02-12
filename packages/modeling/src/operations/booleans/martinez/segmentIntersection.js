@@ -130,5 +130,3 @@ export const segmentIntersection = (a1, a2, b1, b2, noEndpointTouch) => {
 
   return null
 }
-
-export default segmentIntersection

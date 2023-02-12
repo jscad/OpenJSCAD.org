@@ -49,5 +49,3 @@ export const rgbToHsl = (...values) => {
   }
   return [h, s, l]
 }
-
-export default rgbToHsl

@@ -19,5 +19,3 @@ export const transform = (matrix, slice) => {
   })
   return create(contours)
 }
-
-export default transform

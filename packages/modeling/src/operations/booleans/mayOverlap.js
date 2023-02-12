@@ -31,5 +31,3 @@ export const mayOverlap = (geometry1, geometry2) => {
   if ((min1[2] - max2[2]) > EPS) return false
   return true
 }
-
-export default mayOverlap

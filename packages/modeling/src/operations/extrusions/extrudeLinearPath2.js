@@ -20,5 +20,3 @@ export const extrudeLinearPath2 = (options, geometry) => {
   const geometry2 = geom2.create([points])
   return extrudeLinearGeom2(options, geometry2)
 }
-
-export default extrudeLinearPath2

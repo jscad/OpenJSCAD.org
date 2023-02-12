@@ -28,5 +28,3 @@ export const subtractGeom3Sub = (geometry1, geometry2) => {
   const newpolygons = a.allPolygons()
   return geom3.create(newpolygons)
 }
-
-export default subtractGeom3Sub

@@ -29,5 +29,3 @@ export const rotateY = (out, vector, origin, radians) => {
 
   return out
 }
-
-export default rotateY

@@ -18,5 +18,3 @@ export const transform = (matrix, polygon) => {
   }
   return create(vertices)
 }
-
-export default transform

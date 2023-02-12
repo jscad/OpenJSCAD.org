@@ -26,5 +26,3 @@ export const measureAggregateBoundingBox = (...geometries) => {
     return result
   }, result)
 }
-
-export default measureAggregateBoundingBox

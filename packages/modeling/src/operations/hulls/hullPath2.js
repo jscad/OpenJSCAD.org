@@ -21,5 +21,3 @@ export const hullPath2 = (...geometries) => {
   // assemble a new geometry from the list of points
   return path2.fromPoints({ closed: true }, hullPoints)
 }
-
-export default hullPath2

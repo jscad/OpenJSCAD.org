@@ -205,5 +205,3 @@ const mergePolygons = (epsilon, polygons) => {
   })
   return destpolygons
 }
-
-export default mergePolygons

@@ -116,5 +116,3 @@ export const possibleIntersection = (se1, se2, queue) => {
 
   return 3
 }
-
-export default possibleIntersection

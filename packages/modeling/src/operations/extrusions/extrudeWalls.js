@@ -73,5 +73,3 @@ export const extrudeWalls = (slice0, slice1) => {
   })
   return walls
 }
-
-export default extrudeWalls

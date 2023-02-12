@@ -17,5 +17,3 @@ export const fromPointAxisNormal = (point, axis, normal) => {
   connector.normal = vec3.normalize(vec3.create(), normal)
   return connector
 }
-
-export default fromPointAxisNormal

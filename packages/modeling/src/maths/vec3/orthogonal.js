@@ -18,5 +18,3 @@ export const orthogonal = (out, vector) => {
 
   return cross(out, vector, [b0, b1, b2])
 }
-
-export default orthogonal

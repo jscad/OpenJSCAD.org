@@ -27,5 +27,3 @@ export const measureAggregateEpsilon = (...geometries) => {
   }, dimensions)
   return calculateEpsilonFromBounds(bounds, dimensions)
 }
-
-export default measureAggregateEpsilon

@@ -13,5 +13,3 @@
 export const create = (contours = []) => {
   return { contours }
 }
-
-export default create

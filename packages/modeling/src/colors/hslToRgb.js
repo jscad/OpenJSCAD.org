@@ -40,5 +40,3 @@ export const hslToRgb = (...values) => {
   }
   return [r, g, b]
 }
-
-export default hslToRgb

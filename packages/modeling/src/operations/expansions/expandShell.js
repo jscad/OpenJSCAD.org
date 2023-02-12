@@ -220,5 +220,3 @@ export const expandShell = (options, geometry) => {
   })
   return retessellate(result)
 }
-
-export default expandShell

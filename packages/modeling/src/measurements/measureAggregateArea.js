@@ -22,5 +22,3 @@ export const measureAggregateArea = (...geometries) => {
   const result = 0
   return areas.reduce((result, area) => result + area, result)
 }
-
-export default measureAggregateArea

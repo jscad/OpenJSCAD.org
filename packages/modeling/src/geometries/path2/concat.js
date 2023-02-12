@@ -32,5 +32,3 @@ export const concat = (...paths) => {
   })
   return fromPoints({ closed: isClosed }, newpoints)
 }
-
-export default concat
