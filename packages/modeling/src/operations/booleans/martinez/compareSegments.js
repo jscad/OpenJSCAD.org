@@ -4,16 +4,16 @@
  * https://github.com/w8r/martinez
  */
 
-import signedArea from './signed_area.js'
-import compareEvents from './compare_events.js'
 import equals from '../../../maths/vec2/equals.js'
+import compareEvents from './compareEvents.js'
+import signedArea from './signedArea.js'
 
 /**
- * @param  {SweepEvent} le1
- * @param  {SweepEvent} le2
+ * @param {SweepEvent} le1
+ * @param {SweepEvent} le2
  * @return {Number}
  */
-export default function compareSegments (le1, le2) {
+export const compareSegments = (le1, le2) => {
   if (le1 === le2) return 0
 
   // Segments are not collinear
@@ -49,3 +49,5 @@ export default function compareSegments (le1, le2) {
 
   return compareEvents(le1, le2) === 1 ? 1 : -1
 }
+
+export default compareSegments

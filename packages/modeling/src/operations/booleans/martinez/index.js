@@ -6,9 +6,9 @@
  * Adapted for JSCAD by @platypii
  */
 
-import subdivideSegments from './subdivide_segments.js'
-import connectEdges from './connect_edges.js'
-import fillQueue from './fill_queue.js'
+import subdivideSegments from './subdivideSegments.js'
+import connectEdges from './connectEdges.js'
+import fillQueue from './fillQueue.js'
 import {
   INTERSECTION,
   DIFFERENCE,

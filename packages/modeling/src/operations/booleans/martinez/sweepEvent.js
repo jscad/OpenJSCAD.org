@@ -1,15 +1,15 @@
-import { NORMAL } from './edge_type.js'
+import { NORMAL } from './edgeType.js'
 
-export default class SweepEvent {
+class SweepEvent {
   /**
    * Sweepline event
    *
    * @class {SweepEvent}
-   * @param {Array.<Number>}  point
-   * @param {Boolean}         left
-   * @param {SweepEvent=}     otherEvent
-   * @param {Boolean}         isSubject
-   * @param {Number}          edgeType
+   * @param {Array.<Number>} point
+   * @param {Boolean} left
+   * @param {SweepEvent=} otherEvent
+   * @param {Boolean} isSubject
+   * @param {Number} edgeType
    */
   constructor (point, left, otherEvent, isSubject, edgeType) {
     /**
@@ -80,7 +80,7 @@ export default class SweepEvent {
   }
 
   /**
-   * @param  {Array.<Number>}  p
+   * @param {Array.<Number>} p
    * @return {Boolean}
    */
   isBelow (p) {
@@ -94,7 +94,7 @@ export default class SweepEvent {
   }
 
   /**
-   * @param  {Array.<Number>}  p
+   * @param {Array.<Number>} p
    * @return {Boolean}
    */
   isAbove (p) {
@@ -130,3 +130,5 @@ export default class SweepEvent {
     return copy
   }
 }
+
+export default SweepEvent

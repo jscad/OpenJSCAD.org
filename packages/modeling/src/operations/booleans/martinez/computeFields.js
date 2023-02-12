@@ -9,7 +9,7 @@ import {
   SAME_TRANSITION,
   DIFFERENT_TRANSITION,
   NON_CONTRIBUTING
-} from './edge_type.js'
+} from './edgeType.js'
 import {
   INTERSECTION,
   UNION,
@@ -18,11 +18,11 @@ import {
 } from './operation.js'
 
 /**
- * @param  {SweepEvent} event
- * @param  {SweepEvent} prev
- * @param  {Operation} operation
+ * @param {SweepEvent} event
+ * @param {SweepEvent} prev
+ * @param {Operation} operation
  */
-export default function computeFields (event, prev, operation) {
+export const computeFields = (event, prev, operation) => {
   // compute inOut and otherInOut fields
   if (prev === null) {
     event.inOut = false
@@ -107,3 +107,5 @@ const determineResultTransition = (event, operation) => {
   }
   return isIn ? +1 : -1
 }
+
+export default computeFields

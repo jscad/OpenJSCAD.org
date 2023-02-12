@@ -132,7 +132,7 @@ const printRow = (root, prefix, isTail, out, printNode) => {
   }
 }
 
-export default class Tree {
+class Tree {
   constructor (comparator = DEFAULT_COMPARE) {
     this._comparator = comparator
     this._root = null
@@ -144,7 +144,8 @@ export default class Tree {
    */
   insert (key, data) {
     this._size++
-    return this._root = insert(key, data, this._root, this._comparator)
+    this._root = insert(key, data, this._root, this._comparator)
+    return this._root
   }
 
   /**
@@ -181,7 +182,7 @@ export default class Tree {
   }
 
   /**
-   * @param  {Key} key
+   * @param {Key} key
    * @return {Node|null}
    */
   remove (key) {
@@ -596,3 +597,5 @@ const sort = (keys, values, left, right, compare) => {
   sort(keys, values, left, j, compare)
   sort(keys, values, j + 1, right, compare)
 }
+
+export default Tree

@@ -17,7 +17,7 @@ import extrudeFromSlices from './extrudeFromSlices.js'
  * @param {geom2} geometry - the geometry to extrude
  * @returns {geom3} the extruded 3D geometry
 */
-export const extrudeGeom2 = (options, geometry) => {
+export const extrudeLinearGeom2 = (options, geometry) => {
   const defaults = {
     offset: [0, 0, 1],
     twistAngle: 0,
@@ -57,4 +57,4 @@ export const extrudeGeom2 = (options, geometry) => {
   return extrudeFromSlices(options, baseSlice)
 }
 
-export default extrudeGeom2
+export default extrudeLinearGeom2
