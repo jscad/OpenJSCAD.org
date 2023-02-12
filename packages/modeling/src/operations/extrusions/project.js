@@ -1,6 +1,6 @@
 import { flatten } from '../../utils/flatten.js'
 
-import { aboutEqualNormals } from '../../maths/utils/aboutEqualNormals.js'
+import { aboutEqualNormals } from '../../maths/utils/index.js'
 import * as plane from '../../maths/plane/index.js'
 import * as mat4 from '../../maths/mat4/index.js'
 import * as vec2 from '../../maths/vec2/index.js'

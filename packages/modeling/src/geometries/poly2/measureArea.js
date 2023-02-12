@@ -1,4 +1,4 @@
-import { area } from '../../maths/utils/area.js'
+import { area } from '../../maths/utils/index.js'
 
 /**
  * Measure the area under the given polygon.
