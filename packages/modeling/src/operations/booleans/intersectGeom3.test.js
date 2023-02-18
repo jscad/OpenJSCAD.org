@@ -10,7 +10,7 @@ import { sphere, cuboid } from '../../primitives/index.js'
 
 import { intersect } from './index.js'
 
-import { center } from '../transforms/center.js'
+import { center } from '../transforms/index.js'
 
 test('intersect: intersect of one or more geom3 objects produces expected geometry', (t) => {
   const geometry1 = sphere({ radius: 2, segments: 8 })

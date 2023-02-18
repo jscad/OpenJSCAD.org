@@ -1,4 +1,4 @@
-import fromValues from '../vec2/fromValues.js'
+import { fromValues } from '../vec2/index.js'
 
 /**
  * Multiply a 2D vector by a matrix (interpreted as 2 row, 1 column).

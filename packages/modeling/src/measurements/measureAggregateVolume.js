@@ -1,4 +1,4 @@
-import { flatten } from '../utils/flatten.js'
+import { flatten } from '../utils/index.js'
 
 import { measureVolume } from './measureVolume.js'
 

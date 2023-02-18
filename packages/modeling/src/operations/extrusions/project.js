@@ -1,4 +1,4 @@
-import { flatten } from '../../utils/flatten.js'
+import { flatten } from '../../utils/index.js'
 
 import { aboutEqualNormals } from '../../maths/utils/index.js'
 import * as plane from '../../maths/plane/index.js'

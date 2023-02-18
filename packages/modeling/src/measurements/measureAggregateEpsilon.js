@@ -1,4 +1,4 @@
-import { flatten } from '../utils/flatten.js'
+import { flatten } from '../utils/index.js'
 
 import { geom2, geom3, path2 } from '../geometries/index.js'
 

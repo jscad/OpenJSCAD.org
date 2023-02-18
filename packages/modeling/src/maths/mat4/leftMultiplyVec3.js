@@ -1,4 +1,4 @@
-import fromValues from '../vec3/fromValues.js'
+import { fromValues } from '../vec3/index.js'
 
 /*
  * Multiply the input matrix by a Vector3 (interpreted as 3 column, 1 row)

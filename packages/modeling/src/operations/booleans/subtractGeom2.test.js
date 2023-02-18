@@ -8,7 +8,7 @@ import { measureArea } from '../../measurements/index.js'
 
 import { circle, rectangle } from '../../primitives/index.js'
 
-import { center } from '../transforms/center.js'
+import { center } from '../transforms/index.js'
 
 import { subtract } from './index.js'
 
