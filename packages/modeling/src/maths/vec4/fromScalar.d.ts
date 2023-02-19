@@ -1,5 +1,3 @@
 import Vec4 from './type'
 
-export default fromScalar
-
-declare function fromScalar(out: Vec4, scalar: number): Vec4
+export function fromScalar(out: Vec4, scalar: number): Vec4

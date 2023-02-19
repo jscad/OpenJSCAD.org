@@ -1,5 +1,3 @@
 import Slice from './type'
 
-export default isA
-
-declare function isA(object: any): object is Slice
+export function isA(object: any): object is Slice

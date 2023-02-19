@@ -1,4 +1,4 @@
-export { default as hull } from './hull'
-export { default as hullChain } from './hullChain'
+export { hull } from './hull'
+export { hullChain } from './hullChain'
 
 export as namespace hulls

@@ -1,5 +1,3 @@
 import Vec4 from './type'
 
-export default create
-
-declare function create(): Vec4
+export function create(): Vec4

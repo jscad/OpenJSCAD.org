@@ -15,9 +15,9 @@ export interface Colored {
   color: Color
 }
 
-export { default as Geom2 } from './geom2/type'
-export { default as Geom3 } from './geom3/type'
-export { default as Path2 } from './path2/type'
-export { default as Poly2 } from './poly2/type'
-export { default as Poly3 } from './poly3/type'
-export { default as Slice } from './slice/type'
+export { Geom2 } from './geom2/type'
+export { Geom3 } from './geom3/type'
+export { Path2 } from './path2/type'
+export { Poly2 } from './poly2/type'
+export { Poly3 } from './poly3/type'
+export { Slice } from './slice/type'

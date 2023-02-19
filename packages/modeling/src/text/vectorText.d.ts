@@ -1,7 +1,5 @@
 import Vec2 from '../maths/vec2/type'
 
-export default vectorText
-
 export interface VectorText extends Array<Array<Vec2>> {}
 
 export interface VectorTextOptions {
@@ -15,7 +13,7 @@ export interface VectorTextOptions {
   input?: string
 }
 
-declare function vectorText(): VectorText
-declare function vectorText(text: string): VectorText
-declare function vectorText(options: VectorTextOptions): VectorText
-declare function vectorText(options: Omit<VectorTextOptions, 'input'>, text: string): VectorText
+export function vectorText(): VectorText
+export function vectorText(text: string): VectorText
+export function vectorText(options: VectorTextOptions): VectorText
+export function vectorText(options: Omit<VectorTextOptions, 'input'>, text: string): VectorText

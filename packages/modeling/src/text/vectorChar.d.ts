@@ -1,7 +1,5 @@
 import Vec2 from '../maths/vec2/type'
 
-export default vectorChar
-
 export interface VectorChar {
   width: number
   height: number
@@ -16,7 +14,7 @@ export interface VectorCharOptions {
   input?: string
 }
 
-declare function vectorChar(): VectorChar
-declare function vectorChar(char: string): VectorChar
-declare function vectorChar(options: VectorCharOptions): VectorChar
-declare function vectorChar(options: Omit<VectorCharOptions, 'input'>, char: string): VectorChar
+export function vectorChar(): VectorChar
+export function vectorChar(char: string): VectorChar
+export function vectorChar(options: VectorCharOptions): VectorChar
+export function vectorChar(options: Omit<VectorCharOptions, 'input'>, char: string): VectorChar

@@ -1,5 +1,3 @@
 import { RGB } from './types'
 
-export default colorNameToRgb
-
-declare function colorNameToRgb(s: string): RGB
+export function colorNameToRgb(s: string): RGB

@@ -1,8 +1,6 @@
 import Vec3 from '../maths/vec3/type'
 import Geom3 from '../geometries/geom3/type'
 
-export default sphere
-
 export interface SphereOptions {
   center?: Vec3
   radius?: number
@@ -10,4 +8,4 @@ export interface SphereOptions {
   axes?: Vec3
 }
 
-declare function sphere(options?: SphereOptions): Geom3
+export function sphere(options?: SphereOptions): Geom3

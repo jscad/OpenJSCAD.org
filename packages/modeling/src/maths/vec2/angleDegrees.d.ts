@@ -1,5 +1,3 @@
 import Vec2 from './type'
 
-export default angleDegrees
-
-declare function angleDegrees(vector: Vec2): number
+export function angleDegrees(vector: Vec2): number

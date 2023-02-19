@@ -1,3 +1,3 @@
 export default radiusToSegments
 
-declare function radiusToSegments(radius: number, minimumLength?: number, minimumAngle?: number): number
+export function radiusToSegments(radius: number, minimumLength?: number, minimumAngle?: number): number

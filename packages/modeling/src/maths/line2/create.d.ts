@@ -1,5 +1,3 @@
 import Line2 from './type'
 
-export default create
-
-declare function create(): Line2
+export function create(): Line2
