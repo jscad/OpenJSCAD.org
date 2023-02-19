@@ -58,5 +58,3 @@ export const getParameterValuesFromUIControls = (paramControls, parameterDefinit
   }
   return parameterValues
 }
-
-export default getParameterValuesFromUIControls

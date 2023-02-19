@@ -52,5 +52,3 @@ endfacet`
   }
   return result.join('\n')
 }
-
-export default serializeText

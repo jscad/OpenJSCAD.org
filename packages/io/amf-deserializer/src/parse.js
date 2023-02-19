@@ -280,5 +280,3 @@ export const parse = (src) => {
   createAmfParser(src)
   return { amfObj, amfMaterials, amfTextures, amfConstels }
 }
-
-export default parse

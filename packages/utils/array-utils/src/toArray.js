@@ -11,5 +11,3 @@ export const toArray = (array) => {
   if (array === undefined || array === null) return []
   return [array]
 }
-
-export default toArray

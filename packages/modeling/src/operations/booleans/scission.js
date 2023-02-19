@@ -1,9 +1,7 @@
 import { flatten } from '../../utils/index.js'
 
-// import geom2 from '../../geometries/geom2'
 import * as geom3 from '../../geometries/geom3/index.js'
 
-// import scissionGeom2 from './scissionGeom2'
 import { scissionGeom3 } from './scissionGeom3.js'
 
 /**

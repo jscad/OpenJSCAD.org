@@ -237,5 +237,3 @@ export const walkFileTree = (fileList) => {
   }
   return processEntries(items)
 }
-
-export default walkFileTree

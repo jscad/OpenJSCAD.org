@@ -90,5 +90,3 @@ const main = () => {
 
   return code
 }
-
-export default translate

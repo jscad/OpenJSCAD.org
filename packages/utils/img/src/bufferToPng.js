@@ -29,5 +29,3 @@ export const bufferToPng = (buffer, width, height, fileName) => {
   }
   genOutput(buffer, width, height)
 }
-
-export default bufferToPng

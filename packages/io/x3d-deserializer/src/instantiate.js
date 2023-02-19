@@ -30,5 +30,3 @@ export const instantiate = (options, src) => {
 
   return geometries
 }
-
-export default instantiate

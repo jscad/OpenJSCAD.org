@@ -12,5 +12,3 @@ export const head = (array) => {
   }
   return array[0]
 }
-
-export default head

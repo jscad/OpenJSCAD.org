@@ -89,5 +89,3 @@ export const stringify = (a, indentation) => {
 
   return rec(a)
 }
-
-export default stringify

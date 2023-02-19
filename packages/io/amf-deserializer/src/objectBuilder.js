@@ -194,5 +194,3 @@ const createObject${obj.id} = () => {
   }
   return code
 }
-
-export default createObject

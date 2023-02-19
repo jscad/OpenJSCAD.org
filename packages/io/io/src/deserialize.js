@@ -59,5 +59,3 @@ export const deserialize = (options, mimeType, source) => {
   }
   throw new Error(`Unknown output option (${options.output}), only 'script' or 'geometry' allowed`)
 }
-
-export default deserialize

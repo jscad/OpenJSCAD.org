@@ -25,10 +25,10 @@ import fs from 'fs'
 
 import { supportedFormats } from '@jscad/io'
 
-import generateOutputData from './src/generateOutputData.js'
-import determineOutputNameAndFormat from './src/determineOutputNameAndFormat.js'
-import writeOutput from './src/writeOutput.js'
-import parseArgs from './src/parseArgs.js'
+import { generateOutputData } from './src/generateOutputData.js'
+import { determineOutputNameAndFormat } from './src/determineOutputNameAndFormat.js'
+import { writeOutput } from './src/writeOutput.js'
+import { parseArgs } from './src/parseArgs.js'
 
 const version = '[VI]{version}[/VI]' // version is injected by rollup
 

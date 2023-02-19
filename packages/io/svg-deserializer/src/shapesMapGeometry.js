@@ -442,5 +442,3 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
   }
   return paths
 }
-
-export default shapesMapGeometry

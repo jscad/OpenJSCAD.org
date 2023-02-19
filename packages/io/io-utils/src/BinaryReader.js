@@ -128,5 +128,3 @@ export class BinaryReader {
     }
   }
 }
-
-export default BinaryReader

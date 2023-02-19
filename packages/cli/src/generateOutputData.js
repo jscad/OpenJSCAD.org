@@ -65,5 +65,3 @@ export const generateOutputData = (source, cliparams, options) => {
       }
     })
 }
-
-export default generateOutputData

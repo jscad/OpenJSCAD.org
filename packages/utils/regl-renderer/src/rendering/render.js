@@ -80,5 +80,3 @@ console.log(context)
     // tick += 0.01
   }
 }
-
-export default prepareRender

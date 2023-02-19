@@ -151,5 +151,3 @@ const createObjects${object.id} = (options) => {
 `
   return code
 }
-
-export default translateShape

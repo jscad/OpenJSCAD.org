@@ -82,5 +82,3 @@ const translateDefinition = (options, object) => {
 
 // convert the given X3D objects into a series of JSCAD function definitions
 export const translateDefinitions = (options, objects) => objects.reduce((code, object, index) => code += translateDefinition(options, object), '')
-
-export default translateDefinitions

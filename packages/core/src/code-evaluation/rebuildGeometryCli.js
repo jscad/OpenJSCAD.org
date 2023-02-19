@@ -1,11 +1,11 @@
 import path from 'path'
-import { createRequire } from "module"
+import { createRequire } from 'module'
 
 import { toArray } from '@jscad/array-utils'
 
-import requireDesignFromModule from '../code-loading/requireDesignFromModule.js'
-import getAllParameterDefintionsAndValues from '../parameters/getParameterDefinitionsAndValues.js'
-import makeWebRequire from '../code-loading/webRequire.js'
+import { requireDesignFromModule } from '../code-loading/requireDesignFromModule.js'
+import { getAllParameterDefintionsAndValues } from '../parameters/getParameterDefinitionsAndValues.js'
+import { makeWebRequire } from '../code-loading/webRequire.js'
 
 export const rebuildGeometryCli = async (data) => {
   const defaults = {
@@ -45,5 +45,3 @@ export const rebuildGeometryCli = async (data) => {
   const rawResults = toArray(rootModule.main(parameters.parameterValues))
   return rawResults
 }
-
-export default rebuildGeometryCli

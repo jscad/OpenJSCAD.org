@@ -14,5 +14,3 @@ export const makeDrawMultiGrid = (regl, params) => {
   }
   return drawGrid
 }
-
-export default makeDrawMultiGrid

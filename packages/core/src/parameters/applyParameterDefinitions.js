@@ -70,5 +70,3 @@ const valueForChoices = (inputValue, definition) => {
   value = definition.values.length > 0 && typeof value === 'boolean' ? !!value : value
   return value
 }
-
-export default applyParameterDefinitions

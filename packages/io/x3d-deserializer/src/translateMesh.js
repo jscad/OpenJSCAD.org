@@ -27,5 +27,3 @@ export const translateMesh = (options, objects) => {
   }
   return null
 }
-
-export default translateMesh

@@ -34,5 +34,3 @@ export const modulifySource = (source, apiMainPath) => {
   `
   return updatedSource
 }
-
-export default modulifySource

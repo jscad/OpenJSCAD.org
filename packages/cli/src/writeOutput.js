@@ -11,5 +11,3 @@ export const writeOutputDataToFile = (outputFile, outputData) => {
     }
   )
 }
-
-export default writeOutputDataToFile

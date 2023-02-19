@@ -116,5 +116,3 @@ export const instantiatePrimitive = (options, objects) => {
 
   return geometry
 }
-
-export default instantiatePrimitive

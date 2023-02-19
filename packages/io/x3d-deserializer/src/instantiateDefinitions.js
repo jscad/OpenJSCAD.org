@@ -76,5 +76,3 @@ export const instantiateDefinitions = (options, objects) => {
 
   return geometries
 }
-
-export default instantiateDefinitions

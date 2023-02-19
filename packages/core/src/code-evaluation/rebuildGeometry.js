@@ -1,6 +1,6 @@
-import loadDesign from '../code-loading/loadDesign.js'
-import instanciateDesign from './instanciateDesign.js'
-import applyParameterDefinitions from '../parameters/applyParameterDefinitions.js'
+import { loadDesign } from '../code-loading/loadDesign.js'
+import { instanciateDesign } from './instanciateDesign.js'
+import { applyParameterDefinitions } from '../parameters/index.js'
 
 /**
  * Rebuild JSCAD solids from the given filesAndFolders.
@@ -83,5 +83,3 @@ export const rebuildGeometry = (data, callback) => {
     }, null)
   }
 }
-
-export default rebuildGeometry

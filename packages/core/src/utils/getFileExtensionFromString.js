@@ -4,5 +4,3 @@ export const getFileExtensionFromString = (input) => {
   }
   return (input.substring(input.lastIndexOf('.') + 1)).toLowerCase()
 }
-
-export default getFileExtensionFromString

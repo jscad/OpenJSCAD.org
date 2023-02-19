@@ -50,5 +50,3 @@ export const computeBounds = (...geometries) => {
   }
   return bounds
 }
-
-export default computeBounds

@@ -385,5 +385,3 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
   tmpCode += `${indent}${on} = parts\n`
   return tmpCode
 }
-
-export default shapesMap

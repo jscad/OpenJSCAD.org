@@ -69,5 +69,3 @@ export const drawNormals = (regl, params) => {
   const singleNormal = regl(commandParams)
   return () => singleNormal(foo)
 }
-
-export default drawNormals

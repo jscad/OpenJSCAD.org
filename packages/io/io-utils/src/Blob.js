@@ -136,5 +136,3 @@ export class Blob {
     return ''
   }
 }
-
-export default Blob

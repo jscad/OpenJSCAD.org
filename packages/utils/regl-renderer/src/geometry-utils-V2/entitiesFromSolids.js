@@ -63,5 +63,3 @@ export const entitiesFromSolids = (options, ...solids) => {
   })
   return entities
 }
-
-export default entitiesFromSolids

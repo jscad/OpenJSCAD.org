@@ -35,4 +35,3 @@ export const boundingBox = (positions) => {
 
   return [min, max]
 }
-export default boundingBox

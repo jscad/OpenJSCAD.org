@@ -24,5 +24,3 @@ export const translateLine = (options, objects) => {
   }
   return null
 }
-
-export default translateLine

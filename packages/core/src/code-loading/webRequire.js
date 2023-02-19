@@ -1,5 +1,5 @@
 import path from 'path'
-import { createRequire } from "module"
+import { createRequire } from 'module'
 
 // use posix versions of path, even in the browser
 const posix = path.posix ? path.posix : path
@@ -8,7 +8,7 @@ import stripBom from 'strip-bom'
 
 import * as jscadModule from '@jscad/modeling'
 
-import getFileExtensionFromString from '../utils/getFileExtensionFromString.js'
+import { getFileExtensionFromString } from '../utils/getFileExtensionFromString.js'
 import { combineParameterDefinitions, getParameterDefinitionsFromSource } from '../parameters/getParameterDefinitionsFromSource.js'
 
 import * as fsModule from './makeFakeFs.js'
@@ -272,5 +272,3 @@ export const makeWebRequire = (filesAndFolders, options) => {
   registerJsonExtension(makeFakeFs(filesAndFolders), req)
   return req
 }
-
-export default makeWebRequire

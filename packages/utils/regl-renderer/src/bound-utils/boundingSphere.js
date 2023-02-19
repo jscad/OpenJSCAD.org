@@ -34,5 +34,3 @@ export const boundingSphere = (center, positions) => {
   }
   return Math.sqrt(maxRadiusSq)
 }
-
-export default boundingSphere

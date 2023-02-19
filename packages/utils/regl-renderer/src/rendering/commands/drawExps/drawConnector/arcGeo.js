@@ -109,5 +109,3 @@ const createGeometry = (options, positions, cells, uvs) => {
     }
   }
 }
-
-export default geoArc

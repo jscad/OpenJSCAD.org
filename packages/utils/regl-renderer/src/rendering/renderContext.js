@@ -44,5 +44,3 @@ export const renderWrapper = (regl, params = {}) => {
   // it returns a function
   return regl(Object.assign({}, commandParams, params.extras))
 }
-
-export default renderWrapper

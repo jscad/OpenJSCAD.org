@@ -27,5 +27,3 @@ export const drawConnector = (regl, params) => {
     })
   }
 }
-
-export default drawConnector

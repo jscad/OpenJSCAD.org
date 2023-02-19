@@ -858,5 +858,3 @@ function createPolygon(listofpoints, color) {
   // console.log('**************************************************')
   return script
 }
-
-export default translateAsciiDxf

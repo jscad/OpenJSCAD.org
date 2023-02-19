@@ -19,5 +19,3 @@ export const getParameterValuesFromParameters = (parameterDefinitions, inputPara
   }
   return parameterValues
 }
-
-export default getParameterValuesFromParameters

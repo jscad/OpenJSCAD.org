@@ -62,5 +62,3 @@ export const geom2ToGeometries = (options, solid) => {
   }
   return geometries
 }
-
-export default geom2ToGeometries

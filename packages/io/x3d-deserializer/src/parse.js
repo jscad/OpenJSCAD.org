@@ -338,5 +338,3 @@ export const parse = (src) => {
   // console.log(JSON.stringify(x3dObj))
   return { x3dObj, x3dMaterials, x3dTextures }
 }
-
-export default parse
