@@ -14,7 +14,7 @@ import { transform } from './transform.js'
  *  true: the 'axis' vectors should point in opposite direction
  * @param {Number} [options.normalRotation=0] - the angle (RADIANS) of rotation between the 'normal' vectors
  * @param {connector} from - connector from which to connect
- * @param {connector} to - connector to which to connected
+ * @param {connector} to - connector to connect to
  * @returns {mat4} - the matrix that transforms (connects) one connector to another
  * @alias module:modeling/connectors.transformationBetween
  */

@@ -18,7 +18,7 @@ const measureAreaOfPath2 = () => 0
 
 /*
  * Measure the area of the given geometry.
- * For a counter clockwise rotating geometry (about Z) the area is positive, otherwise negative.
+ * For a counterclockwise rotating geometry (about Z) the area is positive, otherwise negative.
  *
  * @see http://paulbourke.net/geometry/polygonmesh/
  * @param {geom2} geometry - 2D geometry to measure

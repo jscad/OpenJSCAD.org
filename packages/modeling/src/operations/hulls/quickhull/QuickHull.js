@@ -15,7 +15,7 @@ import { Face, VISIBLE, NON_CONVEX, DELETED } from './Face.js'
  */
 
 // merge types
-// non convex with respect to the large face
+// non-convex with respect to the large face
 const MERGE_NON_CONVEX_WRT_LARGER_FACE = 1
 const MERGE_NON_CONVEX = 2
 

@@ -3,7 +3,7 @@ import * as path2 from '../../geometries/path2/index.js'
 import { offsetFromPoints } from './offsetFromPoints.js'
 
 /*
- * Create a offset geometry from the given path using the given options (if any).
+ * Create an offset geometry from the given path using the given options (if any).
  * @param {Object} options - options for offset
  * @param {Float} [options.delta=1] - delta of offset (+ to exterior, - from interior)
  * @param {String} [options.corners='edge'] - type corner to create during of expansion; edge, chamfer, round

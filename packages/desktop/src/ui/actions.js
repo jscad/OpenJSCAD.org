@@ -1,23 +1,6 @@
 const most = require('most')
 const { head } = require('../utils/utils')
 
-const compositeKeyFromKeyEvent = (event) => {
-  const ctrl = event.ctrlKey ? 'ctrl+' : ''
-  const shift = event.shiftKey ? 'shift+' : ''
-  const meta = event.metaKey ? 'command+' : ''
-  let key = event.key.toLowerCase()
-  if (ctrl && key === 'control') {
-    key = ''
-  }
-  if (shift && key === 'shift') {
-    key = ''
-  }
-  if (meta && key === 'meta') {
-    key = ''
-  }
-  const compositeKey = `${ctrl}${shift}${meta}${key}`
-  return compositeKey
-}
 const simpleKey = (event) => event.key ? event.key.toLowerCase() : undefined
 
 const getKeyCombos = (options, keyUps$, keyDown$) => {

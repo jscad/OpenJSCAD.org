@@ -22,9 +22,9 @@ import { expandPath2 } from './expandPath2.js'
  * @alias module:modeling/expansions.expand
  *
  * @example
- * let newarc = expand({delta: 5, corners: 'edge'}, arc({}))
- * let newsquare = expand({delta: 5, corners: 'chamfer'}, square({size: 30}))
- * let newsphere = expand({delta: 2, corners: 'round'}, cuboid({size: [20, 25, 5]}))
+ * let newArc = expand({delta: 5, corners: 'edge'}, arc({}))
+ * let newSquare = expand({delta: 5, corners: 'chamfer'}, square({size: 30}))
+ * let newSphere = expand({delta: 2, corners: 'round'}, cuboid({size: [20, 25, 5]}))
  */
 export const expand = (options, ...objects) => {
   objects = flatten(objects)

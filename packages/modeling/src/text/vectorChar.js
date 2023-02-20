@@ -8,7 +8,7 @@ import { vectorParams } from './vectorParams.js'
  * @property {Array} segments - character segments [[[x, y], ...], ...]
  */
 
-/** Construct a {@link VectorCharObject} from a ascii character whose code is between 31 and 127,
+/** Construct a {@link VectorCharObject} from an ascii character whose code is between 31 and 127,
 * if the character is not supported it is replaced by a question mark.
 * @param {Object|String} [options] - options for construction or ascii character
 * @param {Float} [options.xOffset=0] - x offset
