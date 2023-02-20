@@ -22,7 +22,7 @@ export const prepareRender = (params) => {
     }
   )
   // setup regl
-  const base = regl(options)  // , (width, height))
+  const base = regl(options) // , (width, height))
   // setup draw command cache
   // const drawCache = {}
   const drawCache2 = new Map()
@@ -56,8 +56,8 @@ export const prepareRender = (params) => {
                 drawCmd = drawCache2.get(visuals.cacheId)
               } else {
                 visuals.cacheId = drawCache2.size
-console.log(visuals.drawCmd)
-console.log(context)
+                console.log(visuals.drawCmd)
+                console.log(context)
                 drawCmd = props.drawCommands[visuals.drawCmd](base, entity)
                 drawCache2.set(visuals.cacheId, drawCmd)
               }

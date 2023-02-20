@@ -1,9 +1,6 @@
 import path from 'path'
 import { createRequire } from 'module'
 
-// use posix versions of path, even in the browser
-const posix = path.posix ? path.posix : path
-
 import stripBom from 'strip-bom'
 
 import * as jscadModule from '@jscad/modeling'
@@ -12,6 +9,9 @@ import { getFileExtensionFromString } from '../utils/getFileExtensionFromString.
 import { combineParameterDefinitions, getParameterDefinitionsFromSource } from '../parameters/getParameterDefinitionsFromSource.js'
 
 import * as fsModule from './makeFakeFs.js'
+
+// use posix versions of path, even in the browser
+const posix = path.posix ? path.posix : path
 
 /* find matching path in inputs
  * @param  {} path
@@ -60,14 +60,14 @@ export const makeWebRequire = (filesAndFolders, options) => {
   // HACK create the require function if necessary
   if (typeof self === 'undefined') {
     // create require via Node API
-    var require = createRequire(import.meta.url)
+    const require = createRequire(import.meta.url)
   }
 
   const { makeFakeFs } = fsModule
 
   // FIXME const apiModule = apiMainPath === '@jscad/modeling' ? jscadModule : require(apiMainPath)
   const apiModule = apiMainPath === '@jscad/modeling' ? jscadModule : import(apiMainPath)
-  //const fsModule = fakeFs ? fakeFs : makeFakeFs
+  // const fsModule = fakeFs ? fakeFs : makeFakeFs
 
   // preset core modules
   // FIXME this list of modules should be an option, replacing apiMainPath

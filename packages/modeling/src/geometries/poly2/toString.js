@@ -6,6 +6,4 @@ import * as vec2 from '../../maths/vec2/index.js'
  * @return {String} the string representation
  * @alias module:modeling/geometries/poly2.toString
  */
-export const toString = (polygon) => {
-  return `poly2: [${polygon.points.map(vec2.toString).join(', ')}]`
-}
+export const toString = (polygon) => `poly2: [${polygon.points.map(vec2.toString).join(', ')}]`

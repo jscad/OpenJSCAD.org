@@ -17,7 +17,8 @@ const loadScript = (scriptAsText, filePath, csgBasePath = '@jscad/csg/api') => {
   // && !scriptAsText.includes('require(')
   if ((!scriptAsText.includes('module.exports')) && scriptAsText.includes('main')) {
     const getParamsString = scriptAsText.includes('getParameterDefinitions')
-      ? 'module.exports.getParameterDefinitions = getParameterDefinitions' : ''
+      ? 'module.exports.getParameterDefinitions = getParameterDefinitions'
+      : ''
     const commonJsScriptText = `
     const {CSG, CAG} = require('${csgBasePath}').csg
     const {square, circle, polygon} = require('${csgBasePath}').primitives2d

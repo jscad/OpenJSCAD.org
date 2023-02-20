@@ -10,6 +10,4 @@ import { applyTransforms } from './applyTransforms.js'
  * let geometry = subtract(rectangle({size: [5, 5]}), rectangle({size: [3, 3]}))
  * let outlines = toOutlines(geometry) // returns two outlines
  */
-export const toOutlines = (geometry) => {
-  return applyTransforms(geometry).outlines
-}
+export const toOutlines = (geometry) => applyTransforms(geometry).outlines
