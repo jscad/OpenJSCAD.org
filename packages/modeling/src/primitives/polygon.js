@@ -65,5 +65,3 @@ export const polygon = (options) => {
   })
   return geom2.create(outlines)
 }
-
-export default polygon

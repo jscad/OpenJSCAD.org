@@ -1,4 +1,4 @@
-import toOutlines from './toOutlines.js'
+import { toOutlines } from './toOutlines.js'
 
 /**
  * Produces an array of points from the given geometry.
@@ -20,5 +20,3 @@ export const toPoints = (geometry) => {
   })
   return points
 }
-
-export default toPoints

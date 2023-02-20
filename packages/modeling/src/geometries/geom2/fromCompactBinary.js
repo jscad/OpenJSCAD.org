@@ -1,7 +1,7 @@
 import * as mat4 from '../../maths/mat4/index.js'
 import * as vec2 from '../../maths/vec2/index.js'
 
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Create a new 2D geometry from the given compact binary data.
@@ -38,5 +38,3 @@ export const fromCompactBinary = (data) => {
   // TODO: how about custom properties or fields ?
   return created
 }
-
-export default fromCompactBinary

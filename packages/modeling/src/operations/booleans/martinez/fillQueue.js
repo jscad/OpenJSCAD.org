@@ -4,10 +4,10 @@
  * https://github.com/w8r/martinez
  */
 
-import compareEvents from './compareEvents.js'
+import { compareEvents } from './compareEvents.js'
 import { DIFFERENCE } from './operation.js'
-import SweepEvent from './sweepEvent.js'
-import Queue from './tinyqueue.js'
+import { SweepEvent } from './sweepEvent.js'
+import { Queue } from './tinyqueue.js'
 
 const max = Math.max
 const min = Math.min
@@ -78,5 +78,3 @@ export const fillQueue = (subject, clipping, sbbox, cbbox, operation) => {
 
   return eventQueue
 }
-
-export default fillQueue

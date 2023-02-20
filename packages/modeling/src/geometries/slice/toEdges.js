@@ -18,5 +18,3 @@ export const toEdges = (slice) => {
   })
   return edges
 }
-
-export default toEdges

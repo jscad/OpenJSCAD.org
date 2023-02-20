@@ -1,6 +1,6 @@
 import * as vec3 from '../maths/vec3/index.js'
 
-import fromPointAxisNormal from './fromPointAxisNormal.js'
+import { fromPointAxisNormal } from './fromPointAxisNormal.js'
 
 /*
  * Creates a new connector, with the connection point moved in the direction of the axis
@@ -12,5 +12,3 @@ export const extend = (distance, connector) => {
   const newpoint = vec3.add(connector.point, vec3.scale(distance, vec3.normalize(connector.axis)))
   return fromPointAxisNormal(newpoint, connector.axis, connector.normal)
 }
-
-export default extend

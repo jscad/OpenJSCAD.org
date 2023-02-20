@@ -1,4 +1,4 @@
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Create a clone of the given vector.
@@ -14,5 +14,3 @@ export const clone = (vector) => {
   out[2] = vector[2]
   return out
 }
-
-export default clone

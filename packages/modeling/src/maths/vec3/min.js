@@ -13,5 +13,3 @@ export const min = (out, a, b) => {
   out[2] = Math.min(a[2], b[2])
   return out
 }
-
-export default min

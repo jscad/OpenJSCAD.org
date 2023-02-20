@@ -22,5 +22,3 @@ export const hexToRgb = (notation) => {
   }
   return [r, g, b]
 }
-
-export default hexToRgb

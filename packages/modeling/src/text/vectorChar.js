@@ -1,4 +1,4 @@
-import vectorParams from './vectorParams.js'
+import { vectorParams } from './vectorParams.js'
 
 /**
  * Represents a character as a list of segments
@@ -59,5 +59,3 @@ export const vectorChar = (options, char) => {
   }
   return { width, height, segments }
 }
-
-export default vectorChar

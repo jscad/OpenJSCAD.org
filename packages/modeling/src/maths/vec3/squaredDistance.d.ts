@@ -1,5 +1,3 @@
-import Vec3 from './type'
+import { Vec3 } from './type'
 
-export default squaredDistance
-
-declare function squaredDistance(a: Vec3, b: Vec3): number
+export function squaredDistance(a: Vec3, b: Vec3): number

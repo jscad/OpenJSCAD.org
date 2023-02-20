@@ -1,4 +1,4 @@
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Creates a new vector initialized with the given values.
@@ -16,5 +16,3 @@ export const fromValues = (x, y, z) => {
   out[2] = z
   return out
 }
-
-export default fromValues

@@ -1,4 +1,4 @@
-import flatten from '../utils/flatten.js'
+import { flatten } from '../utils/index.js'
 
 /**
  * Converts an RGB color value to HSL.
@@ -49,5 +49,3 @@ export const rgbToHsl = (...values) => {
   }
   return [h, s, l]
 }
-
-export default rgbToHsl

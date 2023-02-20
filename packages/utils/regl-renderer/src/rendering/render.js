@@ -1,6 +1,6 @@
 import regl from 'regl'
 
-import renderContext from './renderContext.js'
+import { renderContext } from './renderContext.js'
 import * as renderDefaults from './renderDefaults.js'
 
 export const prepareRender = (params) => {
@@ -80,5 +80,3 @@ console.log(context)
     // tick += 0.01
   }
 }
-
-export default prepareRender

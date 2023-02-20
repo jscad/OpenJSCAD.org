@@ -43,5 +43,3 @@ export const fromPoints = (out, ...vertices) => {
   out[3] = vec3.dot(out, vertices[0])
   return out
 }
-
-export default fromPoints

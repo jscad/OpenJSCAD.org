@@ -1,6 +1,6 @@
 import mat4 from 'gl-mat4'
 
-const cameraState = {
+export const cameraState = {
   view: mat4.identity(new Float32Array(16)),
   projection: mat4.identity(new Float32Array(16)),
   matrix: mat4.identity(new Float32Array(16)), // not sure if needed
@@ -18,9 +18,9 @@ const cameraState = {
   projectionType: 'orthographic'
 }
 
-const cameraProps = {}
+export const cameraProps = {}
 
-const setProjection = (camera, input) => {
+export const setProjection = (camera, input) => {
   const { width, height } = input
   // context.viewportWidth / context.viewportHeight,
   const aspect = width / height
@@ -34,10 +34,4 @@ const setProjection = (camera, input) => {
 
   const projection = mat4.ortho([], left, right, bottom, top, camera.near, camera.far)
   return { projection, aspect, viewport }
-}
-
-export {
-  cameraState,
-  cameraProps,
-  setProjection
 }

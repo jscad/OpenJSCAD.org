@@ -16,5 +16,3 @@ export const isIdentity = (matrix) => (
   matrix[8] === 0 && matrix[9] === 0 && matrix[10] === 1 && matrix[11] === 0 &&
   matrix[12] === 0 && matrix[13] === 0 && matrix[14] === 0 && matrix[15] === 1
 )
-
-export default isIdentity

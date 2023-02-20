@@ -20,5 +20,3 @@ export const cross = (out, a, b) => {
   out[2] = ax * by - ay * bx
   return out
 }
-
-export default cross

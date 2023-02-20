@@ -11,5 +11,3 @@ export const abs = (out, vector) => {
   out[1] = Math.abs(vector[1])
   return out
 }
-
-export default abs

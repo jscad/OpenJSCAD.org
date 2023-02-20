@@ -38,5 +38,3 @@ export const fromPointsRandom = (out, a, b, c) => {
   out[3] = w
   return out
 }
-
-export default fromPointsRandom

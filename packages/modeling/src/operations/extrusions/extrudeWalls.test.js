@@ -4,7 +4,7 @@ import { mat4 } from '../../maths/index.js'
 
 import * as slice from '../../geometries/slice/index.js'
 
-import extrudeWalls from './extrudeWalls.js'
+import { extrudeWalls } from './extrudeWalls.js'
 
 test('extrudeWalls (same shapes)', (t) => {
   const matrix = mat4.fromTranslation(mat4.create(), [0, 0, 10])

@@ -9,5 +9,3 @@
  * const sorted = numbers.sort(fnNumberSort)
  */
 export const fnNumberSort = (a, b) => a - b
-
-export default fnNumberSort

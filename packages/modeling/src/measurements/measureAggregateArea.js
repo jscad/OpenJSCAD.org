@@ -1,6 +1,6 @@
-import flatten from '../utils/flatten.js'
+import { flatten } from '../utils/index.js'
 
-import measureArea from './measureArea.js'
+import { measureArea } from './measureArea.js'
 
 /**
  * Measure the total (aggregate) area for the given geometries.
@@ -22,5 +22,3 @@ export const measureAggregateArea = (...geometries) => {
   const result = 0
   return areas.reduce((result, area) => result + area, result)
 }
-
-export default measureAggregateArea

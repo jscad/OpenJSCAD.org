@@ -1,5 +1,3 @@
-import Poly3 from './type'
+import { Poly3 } from './type'
 
-export default invert
-
-declare function invert(polygon: Poly3): Poly3
+export function invert(polygon: Poly3): Poly3

@@ -1,5 +1,5 @@
-import vectorChar from './vectorChar.js'
-import vectorParams from './vectorParams.js'
+import { vectorChar } from './vectorChar.js'
+import { vectorParams } from './vectorParams.js'
 
 // translate text line
 const translateLine = (options, line) => {
@@ -91,5 +91,3 @@ export const vectorText = (options, text) => {
   }
   return output
 }
-
-export default vectorText

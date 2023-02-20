@@ -1,6 +1,6 @@
 import * as vec2 from '../../maths/vec2/index.js'
 
-import toPoints from './toPoints.js'
+import { toPoints } from './toPoints.js'
 
 /**
   * Determine if the given paths are equal.
@@ -43,5 +43,3 @@ export const equals = (a, b) => {
   } while (++offset < length)
   return false
 }
-
-export default equals

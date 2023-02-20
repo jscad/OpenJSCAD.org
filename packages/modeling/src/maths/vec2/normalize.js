@@ -17,5 +17,3 @@ export const normalize = (out, vector) => {
   out[1] = y * len
   return out
 }
-
-export default normalize

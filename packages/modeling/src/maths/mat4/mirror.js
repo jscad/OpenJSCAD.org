@@ -30,5 +30,3 @@ export const mirror = (out, vector, matrix) => {
   out[15] = matrix[15]
   return out
 }
-
-export default mirror

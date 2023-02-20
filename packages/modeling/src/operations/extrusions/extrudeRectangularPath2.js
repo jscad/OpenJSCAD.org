@@ -1,8 +1,8 @@
 import * as path2 from '../../geometries/path2/index.js'
 
-import expand from '../expansions/expand.js'
+import { expand } from '../expansions/index.js'
 
-import extrudeLinearGeom2 from './extrudeLinearGeom2.js'
+import { extrudeLinearGeom2 } from './extrudeLinearGeom2.js'
 
 /*
  * Expand and extrude the given geometry (path2).
@@ -29,5 +29,3 @@ export const extrudeRectangularPath2 = (options, geometry) => {
   const newgeometry = expand(options, geometry)
   return extrudeLinearGeom2(options, newgeometry)
 }
-
-export default extrudeRectangularPath2

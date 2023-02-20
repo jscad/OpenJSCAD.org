@@ -1,7 +1,7 @@
 import * as vec2 from '../vec2/index.js'
 
-import direction from './direction.js'
-import origin from './origin.js'
+import { direction } from './direction.js'
+import { origin } from './origin.js'
 
 /**
  * Determine the closest point on the given line to the given point.
@@ -27,5 +27,3 @@ export const closestPoint = (line, point) => {
   const closest = vec2.fromValues(x, y)
   return closest
 }
-
-export default closestPoint

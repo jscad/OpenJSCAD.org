@@ -1,4 +1,4 @@
-import applyTransforms from './applyTransforms.js'
+import { applyTransforms } from './applyTransforms.js'
 
 /**
  * Create the outline(s) of the given geometry.
@@ -13,5 +13,3 @@ import applyTransforms from './applyTransforms.js'
 export const toOutlines = (geometry) => {
   return applyTransforms(geometry).outlines
 }
-
-export default toOutlines

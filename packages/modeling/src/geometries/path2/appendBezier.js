@@ -2,8 +2,8 @@ import { TAU } from '../../maths/constants.js'
 import * as vec2 from '../../maths/vec2/index.js'
 import * as vec3 from '../../maths/vec3/index.js' // FIXME why vec3?
 
-import appendPoints from './appendPoints.js'
-import toPoints from './toPoints.js'
+import { appendPoints } from './appendPoints.js'
+import { toPoints } from './toPoints.js'
 
 /**
  * Append a series of points to the given geometry that represent a Bezier curve.
@@ -152,5 +152,3 @@ export const appendBezier = (options, geometry) => {
   result.lastBezierControlPoint = controlPoints[controlPoints.length - 2]
   return result
 }
-
-export default appendBezier

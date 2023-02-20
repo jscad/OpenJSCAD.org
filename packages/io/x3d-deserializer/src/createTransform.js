@@ -13,5 +13,3 @@ export const createTransform = (center, rotation, scale, scaleOrientation, trans
 
   return matrix
 }
-
-export default createTransform

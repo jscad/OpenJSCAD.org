@@ -1,4 +1,4 @@
-import flatten from '../utils/flatten.js'
+import { flatten } from '../utils/index.js'
 
 import * as geom2 from '../geometries/geom2/index.js'
 import * as geom3 from '../geometries/geom3/index.js'
@@ -64,5 +64,3 @@ export const measureVolume = (...geometries) => {
   })
   return results.length === 1 ? results[0] : results
 }
-
-export default measureVolume

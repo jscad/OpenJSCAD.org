@@ -1,4 +1,4 @@
-import flatten from '../utils/flatten.js'
+import { flatten } from '../utils/index.js'
 
 /**
  * Converts HSV color values to RGB color values.
@@ -69,5 +69,3 @@ export const hsvToRgb = (...values) => {
   }
   return [r, g, b]
 }
-
-export default hsvToRgb

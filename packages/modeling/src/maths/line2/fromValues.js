@@ -1,4 +1,4 @@
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Creates a new line initialized with the given values.
@@ -16,5 +16,3 @@ export const fromValues = (x, y, d) => {
   out[2] = d
   return out
 }
-
-export default fromValues

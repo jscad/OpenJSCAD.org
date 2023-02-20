@@ -18,5 +18,3 @@ export const isOnlyTransformScale = (matrix) => (
 )
 
 const isZero = (num) => Math.abs(num) < Number.EPSILON
-
-export default isOnlyTransformScale

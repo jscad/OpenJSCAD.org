@@ -1,3 +1,1 @@
-export default toArray
-
-declare function toArray(anArray: Array<T>): Array<T>
+export function toArray(anArray: Array<T>): Array<T>

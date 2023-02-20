@@ -22,5 +22,3 @@ export const create = (polygons) => {
     transforms: mat4.create()
   }
 }
-
-export default create

@@ -1,4 +1,4 @@
-import compareVectors from './compareVectors.js'
+import { compareVectors } from './compareVectors.js'
 
 /**
  * Compare two list of points for equality
@@ -12,4 +12,3 @@ export const comparePoints = (list1, list2) => {
   }
   return false
 }
-export default comparePoints

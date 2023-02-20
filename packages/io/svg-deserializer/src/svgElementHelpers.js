@@ -1,12 +1,12 @@
 import { cagColor, cssStyle, css2cag } from './helpers.js'
 import { pxPmm } from './constants.js'
 
-const svgCore = (obj, element) => {
+export const svgCore = (obj, element) => {
   if ('id' in element) { obj.id = element.id }
   if ('position' in element) { obj.position = element.position }
 }
 
-const svgPresentation = (obj, element) => {
+export const svgPresentation = (obj, element) => {
   // presentation attributes for all
   if ('display' in element) { obj.visible = element.display }
   // presentation attributes for solids
@@ -95,7 +95,7 @@ const svgTransforms = (cag, element) => {
 
 const viewBoxRegExp = /([\d.-]+)[\s,]+([\d.-]+)[\s,]+([\d.-]+)[\s,]+([\d.-]+)/i
 
-const svgSvg = (element, { customPxPmm }) => {
+export const svgSvg = (element, { customPxPmm }) => {
   // default SVG with no viewport
   const obj = { type: 'svg', x: 0, y: 0, width: '100%', height: '100%', strokeWidth: '1' }
 
@@ -160,7 +160,7 @@ const svgSvg = (element, { customPxPmm }) => {
   return obj
 }
 
-const svgEllipse = (element) => {
+export const svgEllipse = (element) => {
   const obj = { type: 'ellipse', cx: '0', cy: '0', rx: '0', ry: '0' }
   if ('cx' in element) { obj.cx = element.cx }
   if ('cy' in element) { obj.cy = element.cy }
@@ -175,7 +175,7 @@ const svgEllipse = (element) => {
   return obj
 }
 
-const svgLine = (element) => {
+export const svgLine = (element) => {
   const obj = { type: 'line', x1: '0', y1: '0', x2: '0', y2: '0' }
   if ('x1' in element) { obj.x1 = element.x1 }
   if ('y1' in element) { obj.y1 = element.y1 }
@@ -206,7 +206,7 @@ const svgListOfPoints = (list) => {
   return points
 }
 
-const svgPolyline = (element) => {
+export const svgPolyline = (element) => {
   const obj = { type: 'polyline' }
   // transforms
   svgTransforms(obj, element)
@@ -221,7 +221,7 @@ const svgPolyline = (element) => {
   return obj
 }
 
-const svgPolygon = (element) => {
+export const svgPolygon = (element) => {
   const obj = { type: 'polygon' }
   // transforms
   svgTransforms(obj, element)
@@ -236,7 +236,7 @@ const svgPolygon = (element) => {
   return obj
 }
 
-const svgRect = (element) => {
+export const svgRect = (element) => {
   const obj = { type: 'rect', x: '0', y: '0', rx: '0', ry: '0', width: '0', height: '0' }
 
   if ('x' in element) { obj.x = element.x }
@@ -263,7 +263,7 @@ const svgRect = (element) => {
   return obj
 }
 
-const svgCircle = (element) => {
+export const svgCircle = (element) => {
   const obj = { type: 'circle', x: '0', y: '0', radius: '0' }
 
   if ('cx' in element) { obj.x = element.cx }
@@ -278,7 +278,7 @@ const svgCircle = (element) => {
   return obj
 }
 
-const svgGroup = (element) => {
+export const svgGroup = (element) => {
   const obj = { type: 'group' }
   // transforms
   svgTransforms(obj, element)
@@ -304,7 +304,7 @@ const svgGroup = (element) => {
 //
 // Convert the PATH element into object representation
 //
-const svgPath = (element) => {
+export const svgPath = (element) => {
   const obj = { type: 'path' }
   // transforms
   svgTransforms(obj, element)
@@ -415,7 +415,7 @@ const svgPath = (element) => {
 // - append translate(x,y) if x,y available
 // deep clone the referenced OBJECT and add to group
 // - clone using JSON.parse(JSON.stringify(obj))
-const svgUse = (element, { svgObjects }) => {
+export const svgUse = (element, { svgObjects }) => {
   const obj = { type: 'group' }
   // transforms
   svgTransforms(obj, element)
@@ -446,19 +446,4 @@ const svgUse = (element, { svgObjects }) => {
     }
   }
   return obj
-}
-
-export {
-  svgCore,
-  svgPresentation,
-  svgSvg,
-  svgRect,
-  svgCircle,
-  svgEllipse,
-  svgLine,
-  svgPolyline,
-  svgPolygon,
-  svgGroup,
-  svgPath,
-  svgUse
 }

@@ -17,5 +17,3 @@ export const normalizeDesignModule = (rootModule) => {
   }
   return rootModule
 }
-
-export default normalizeDesignModule

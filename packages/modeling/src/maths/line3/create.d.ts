@@ -1,5 +1,3 @@
-import Line3 from './type'
+import { Line3 } from './type'
 
-export default create
-
-declare function create(): Line3
+export function create(): Line3

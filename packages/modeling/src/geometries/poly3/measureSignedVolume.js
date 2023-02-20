@@ -21,5 +21,3 @@ export const measureSignedVolume = (polygon) => {
   signedVolume /= 6
   return signedVolume
 }
-
-export default measureSignedVolume

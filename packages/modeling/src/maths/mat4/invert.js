@@ -67,5 +67,3 @@ export const invert = (out, matrix) => {
 
   return out
 }
-
-export default invert

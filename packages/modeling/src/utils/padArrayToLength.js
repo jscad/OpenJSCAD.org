@@ -13,5 +13,3 @@ export const padArrayToLength = (anArray, padding, targetLength) => {
   }
   return anArray
 }
-
-export default padArrayToLength

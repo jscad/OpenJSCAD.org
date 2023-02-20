@@ -42,5 +42,3 @@ export const triangulatePolygons = (epsilon, polygons) => {
   })
   return triangles
 }
-
-export default triangulatePolygons

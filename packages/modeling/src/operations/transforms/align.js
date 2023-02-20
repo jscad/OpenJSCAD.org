@@ -1,7 +1,6 @@
-import flatten from '../../utils/flatten.js'
-import padArrayToLength from '../../utils/padArrayToLength.js'
+import { flatten, padArrayToLength } from '../../utils/index.js'
 
-import measureAggregateBoundingBox from '../../measurements/measureAggregateBoundingBox.js'
+import { measureAggregateBoundingBox } from '../../measurements/index.js'
 
 import { translate } from './translate.js'
 
@@ -87,5 +86,3 @@ export const align = (options, ...geometries) => {
   }
   return geometries.length === 1 ? geometries[0] : geometries
 }
-
-export default align

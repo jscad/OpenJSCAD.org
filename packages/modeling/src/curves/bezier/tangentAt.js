@@ -41,5 +41,3 @@ const bezierTangent = function (bezier, p, t) {
   }
   return result
 }
-
-export default tangentAt

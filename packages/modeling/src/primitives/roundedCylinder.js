@@ -1,5 +1,5 @@
 import { EPS, TAU } from '../maths/constants.js'
-import { sin, cos } from '../maths/utils/trigonometry.js'
+import { sin, cos } from '../maths/utils/index.js'
 
 import * as vec3 from '../maths/vec3/index.js'
 
@@ -135,5 +135,3 @@ export const roundedCylinder = (options) => {
   const result = geom3.create(polygons)
   return result
 }
-
-export default roundedCylinder

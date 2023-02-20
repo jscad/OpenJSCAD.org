@@ -1,6 +1,6 @@
 import * as vec2 from '../../maths/vec2/index.js'
 
-import toPoints from './toPoints.js'
+import { toPoints } from './toPoints.js'
 
 /**
  * Create a string representing the contents of the given path.
@@ -20,5 +20,3 @@ export const toString = (geometry) => {
   result += ']\n'
   return result
 }
-
-export default toString

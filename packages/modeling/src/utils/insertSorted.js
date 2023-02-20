@@ -17,5 +17,3 @@ export const insertSorted = (array, element, comparefunc) => {
   }
   array.splice(leftbound, 0, element)
 }
-
-export default insertSorted

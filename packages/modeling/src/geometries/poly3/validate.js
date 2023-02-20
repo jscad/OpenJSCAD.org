@@ -1,11 +1,11 @@
-import signedDistanceToPoint from '../../maths/plane/signedDistanceToPoint.js'
+import { signedDistanceToPoint } from '../../maths/plane/index.js'
 import { NEPS } from '../../maths/constants.js'
 import * as vec3 from '../../maths/vec3/index.js'
 
-import isA from './isA.js'
-import isConvex from './isConvex.js'
-import measureArea from './measureArea.js'
-import plane from './plane.js'
+import { isA } from './isA.js'
+import { isConvex } from './isConvex.js'
+import { measureArea } from './measureArea.js'
+import { plane } from './plane.js'
 
 /**
  * Determine if the given object is a valid polygon.
@@ -61,5 +61,3 @@ export const validate = (object) => {
     })
   }
 }
-
-export default validate

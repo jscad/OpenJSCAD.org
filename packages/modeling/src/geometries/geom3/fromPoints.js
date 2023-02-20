@@ -1,6 +1,6 @@
 import * as poly3 from '../poly3/index.js'
 
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Construct a new 3D geometry from a list of points.
@@ -24,5 +24,3 @@ export const fromPoints = (listofpoints) => {
   const result = create(polygons)
   return result
 }
-
-export default fromPoints

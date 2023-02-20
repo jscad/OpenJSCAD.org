@@ -1,8 +1,8 @@
 import * as vec2 from '../../maths/vec2/index.js'
-import intersect from '../../maths/utils/intersect.js'
+import { intersect } from '../../maths/utils/index.js'
 
-import isA from './isA.js'
-import toOutlines from './toOutlines.js'
+import { isA } from './isA.js'
+import { toOutlines } from './toOutlines.js'
 
 /**
  * Determine if the given object is a valid geom2.
@@ -54,5 +54,3 @@ export const validate = (object) => {
     throw new Error(`geom2 invalid transforms ${object.transforms}`)
   }
 }
-
-export default validate

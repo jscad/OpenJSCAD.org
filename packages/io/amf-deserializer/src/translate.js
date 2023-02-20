@@ -1,5 +1,5 @@
-import createObject from './objectBuilder.js'
-import parse from './parse.js'
+import { createObject } from './objectBuilder.js'
+import { parse } from './parse.js'
 
 export const translate = (options, src) => {
   const defaults = {
@@ -90,5 +90,3 @@ const main = () => {
 
   return code
 }
-
-export default translate

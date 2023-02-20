@@ -1,8 +1,8 @@
 import * as geom3 from '../../geometries/geom3/index.js'
 
-import union from '../booleans/union.js'
+import { union } from '../booleans/index.js'
 
-import expandShell from './expandShell.js'
+import { expandShell } from './expandShell.js'
 
 /*
  * Expand the given geometry (geom3) using the given options (if any).
@@ -32,5 +32,3 @@ export const expandGeom3 = (options, geometry) => {
   const expanded = expandShell(options, geometry)
   return union(geometry, expanded)
 }
-
-export default expandGeom3

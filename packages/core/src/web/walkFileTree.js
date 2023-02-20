@@ -4,7 +4,7 @@ import { flatten } from '@jscad/array-utils'
 
 import { supportedFormats } from '@jscad/io'
 
-import getFileExtensionFromString from '../utils/getFileExtensionFromString.js'
+import { getFileExtensionFromString } from '../utils/index.js'
 
 const binaryMimetypes = {
   bmp: 'image/bmp',
@@ -237,5 +237,3 @@ export const walkFileTree = (fileList) => {
   }
   return processEntries(items)
 }
-
-export default walkFileTree

@@ -1,8 +1,6 @@
-import Geom3 from '../../geometries/geom3/type'
+import { Geom3 } from '../../geometries/geom3/type'
 
-import Slice from './slice/type'
-
-export default extrudeFromSlices
+import { Slice } from '../../geometries/slice/type'
 
 export interface ExtrudeFromSlicesOptions<Base> {
   numberOfSlices?: number
@@ -12,4 +10,4 @@ export interface ExtrudeFromSlicesOptions<Base> {
   callback?: (progress: number, index: number, base: Base) => Slice
 }
 
-declare function extrudeFromSlices<Base>(options: ExtrudeFromSlicesOptions<Base>, base: Base): Geom3
+export function extrudeFromSlices<Base>(options: ExtrudeFromSlicesOptions<Base>, base: Base): Geom3

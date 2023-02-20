@@ -18,7 +18,7 @@ const countSpaces = (line) => {
   return count
 }
 
-const getParameterDefinitionsFromSource = (script) => {
+export const getParameterDefinitionsFromSource = (script) => {
   const lines = []
   script.split('\n').forEach((l, i) => {
     const trim = l.trim()
@@ -94,7 +94,7 @@ const getParameterDefinitionsFromSource = (script) => {
   return defs
 }
 
-const parseOne = (comment, code, line1, line2) => {
+export const parseOne = (comment, code, line1, line2) => {
   let def = parseDef(code, line2)
   const { caption, options } = parseComment(comment, line1, def.name)
   def.caption = caption || def.name
@@ -126,7 +126,7 @@ const extractTextFromComment = (c, lineNum) => {
   return c
 }
 
-const parseComment = (comment, lineNum, paramName) => {
+export const parseComment = (comment, lineNum, paramName) => {
   comment = extractTextFromComment(comment, lineNum)
 
   const ret = {}
@@ -145,7 +145,7 @@ const parseComment = (comment, lineNum, paramName) => {
   return ret
 }
 
-const parseDef = (code, line) => {
+export const parseDef = (code, line) => {
   if (code[code.length - 1] === ',') code = code.substring(0, code.length - 1).trim()
   let idx = code.indexOf('=')
 
@@ -179,7 +179,7 @@ const parseDef = (code, line) => {
   }
 }
 
-const combineParameterDefinitions = (paramDefFromSource, extraDef) => {
+export const combineParameterDefinitions = (paramDefFromSource, extraDef) => {
   const def = [...paramDefFromSource]
   if (extraDef) {
     extraDef.forEach((param) => {
@@ -189,12 +189,4 @@ const combineParameterDefinitions = (paramDefFromSource, extraDef) => {
     })
   }
   return def
-}
-
-export {
-  getParameterDefinitionsFromSource,
-  parseOne,
-  parseComment,
-  parseDef,
-  combineParameterDefinitions
 }

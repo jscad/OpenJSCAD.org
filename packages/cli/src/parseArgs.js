@@ -5,7 +5,7 @@ import { loading } from '@jscad/core'
 
 import { supportedInputExtensions, supportedOutputExtensions, supportedOutputFormats } from '@jscad/io'
 
-import env from './env.js'
+import { env } from './env.js'
 
 const { getDesignEntryPoint } = loading
 
@@ -110,5 +110,3 @@ export const parseArgs = (args) => {
     inputIsDirectory
   }
 }
-
-export default parseArgs

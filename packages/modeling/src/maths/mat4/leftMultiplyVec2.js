@@ -1,4 +1,4 @@
-import fromValues from '../vec2/fromValues.js'
+import { fromValues } from '../vec2/index.js'
 
 /*
  * Multiply the input matrix by a Vector2 (interpreted as 2 column, 1 row)
@@ -24,5 +24,3 @@ export const leftMultiplyVec2 = (vector, matrix) => {
   }
   return fromValues(x, y)
 }
-
-export default leftMultiplyVec2

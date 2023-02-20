@@ -2,7 +2,7 @@ import * as geom3 from '../../geometries/geom3/index.js'
 
 import { Tree } from './trees/index.js'
 
-import mayOverlap from './mayOverlap.js'
+import { mayOverlap } from './mayOverlap.js'
 
 /*
  * Return a new 3D geometry representing the space in the given geometries.
@@ -37,5 +37,3 @@ const unionForNonIntersecting = (geometry1, geometry2) => {
   newpolygons = newpolygons.concat(geom3.toPolygons(geometry2))
   return geom3.create(newpolygons)
 }
-
-export default unionGeom3Sub

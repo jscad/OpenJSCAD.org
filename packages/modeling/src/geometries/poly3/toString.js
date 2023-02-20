@@ -9,5 +9,3 @@ import * as vec3 from '../../maths/vec3/index.js'
 export const toString = (polygon) => {
   return `poly3: [${polygon.vertices.map(vec3.toString).join(', ')}]`
 }
-
-export default toString

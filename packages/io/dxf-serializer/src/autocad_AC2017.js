@@ -8,7 +8,7 @@ These are the common headers, classes, tables, blocks, and objects required for 
 //   ANGDIR = 0 : counter clockwise angles
 //   INSUNITS = 4 : millimeters
 //
-const dxfHeaders = function () {
+export const dxfHeaders = function () {
   const content = `  0
 SECTION
   2
@@ -1134,7 +1134,7 @@ ENDSEC`
   return content
 }
 
-const dxfClasses = function () {
+export const dxfClasses = function () {
   const content = `  0
 SECTION
   2
@@ -1560,7 +1560,7 @@ ENDSEC`
   return content
 }
 
-const dxfTables = function () {
+export const dxfTables = function () {
   const content = `  0
 SECTION
   2
@@ -2500,7 +2500,7 @@ ENDSEC`
   return content
 }
 
-const dxfBlocks = function () {
+export const dxfBlocks = function () {
   const content = `  0
 SECTION
   2
@@ -2666,7 +2666,7 @@ ENDSEC`
   return content
 }
 
-const dxfObjects = function () {
+export const dxfObjects = function () {
   const content = `  0
 SECTION
   2
@@ -3100,12 +3100,4 @@ Layout1
   0
 ENDSEC`
   return content
-}
-
-export {
-  dxfHeaders,
-  dxfClasses,
-  dxfTables,
-  dxfBlocks,
-  dxfObjects
 }

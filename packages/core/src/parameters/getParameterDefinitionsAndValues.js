@@ -1,5 +1,5 @@
-import getParameterValuesFromParameters from './getParameterValuesFromParameters.js'
-import applyParameterDefinitions from './applyParameterDefinitions.js'
+import { getParameterValuesFromParameters } from './getParameterValuesFromParameters.js'
+import { applyParameterDefinitions } from './applyParameterDefinitions.js'
 
 const doesModuleExportParameterDefiniitions = (moduleToCheck) => moduleToCheck && 'getParameterDefinitions' in moduleToCheck
 
@@ -30,5 +30,3 @@ export const getParameterDefinitionsAndValues = (rootModule, overrides) => {
 
   return { parameterValues, parameterDefinitions }
 }
-
-export default getParameterDefinitionsAndValues

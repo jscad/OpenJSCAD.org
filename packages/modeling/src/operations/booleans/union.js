@@ -1,11 +1,10 @@
-import flatten from '../../utils/flatten.js'
-import areAllShapesTheSameType from '../../utils/areAllShapesTheSameType.js'
+import { areAllShapesTheSameType, flatten } from '../../utils/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 
-import unionGeom2 from './unionGeom2.js'
-import unionGeom3 from './unionGeom3.js'
+import { unionGeom2 } from './unionGeom2.js'
+import { unionGeom3 } from './unionGeom3.js'
 
 /**
  * Return a new geometry representing the total space in the given geometries.
@@ -42,5 +41,3 @@ export const union = (...geometries) => {
   if (geom3.isA(geometry)) return unionGeom3(geometries)
   return geometry
 }
-
-export default union

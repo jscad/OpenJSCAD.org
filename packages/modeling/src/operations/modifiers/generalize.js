@@ -1,15 +1,15 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/index.js'
 
-import measureEpsilon from '../../measurements/measureEpsilon.js'
+import { measureEpsilon } from '../../measurements/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
-import snapPolygons from './snapPolygons.js'
-import mergePolygons from './mergePolygons.js'
-import insertTjunctions from './insertTjunctions.js'
-import triangulatePolygons from './triangulatePolygons.js'
+import { snapPolygons } from './snapPolygons.js'
+import { mergePolygons } from './mergePolygons.js'
+import { insertTjunctions } from './insertTjunctions.js'
+import { triangulatePolygons } from './triangulatePolygons.js'
 
 /*
  */
@@ -78,5 +78,3 @@ export const generalize = (options, ...geometries) => {
   })
   return results.length === 1 ? results[0] : results
 }
-
-export default generalize

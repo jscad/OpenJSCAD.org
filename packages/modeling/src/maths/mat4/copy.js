@@ -25,5 +25,3 @@ export const copy = (out, matrix) => {
   out[15] = matrix[15]
   return out
 }
-
-export default copy

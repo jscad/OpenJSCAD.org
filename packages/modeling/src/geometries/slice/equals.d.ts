@@ -1,5 +1,3 @@
-import Slice from './type'
+import { Slice } from './type'
 
-export default equals
-
-declare function equals(a: Slice, b: Slice): boolean
+export function equals(a: Slice, b: Slice): boolean

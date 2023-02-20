@@ -13,5 +13,3 @@ export const copy = (out, vector) => {
   out[3] = vector[3]
   return out
 }
-
-export default copy

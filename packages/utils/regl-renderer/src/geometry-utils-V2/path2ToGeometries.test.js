@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import path2ToGeometries from './path2ToGeometries.js'
+import { path2ToGeometries } from './path2ToGeometries.js'
 
 const defaultTransforms = Float32Array.from([
   1, 0, 0, 0,

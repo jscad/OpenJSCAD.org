@@ -1,9 +1,9 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 
-import hullPoints2 from './hullPoints2.js'
-import toUniquePoints from './toUniquePoints.js'
+import { hullPoints2 } from './hullPoints2.js'
+import { toUniquePoints } from './toUniquePoints.js'
 
 /*
  * Create a convex hull of the given geom2 geometries.
@@ -24,5 +24,3 @@ export const hullGeom2 = (...geometries) => {
   // assemble a new geometry from the list of points
   return geom2.create([hullPoints])
 }
-
-export default hullGeom2

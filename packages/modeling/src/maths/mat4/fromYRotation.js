@@ -37,5 +37,3 @@ export const fromYRotation = (out, radians) => {
   out[15] = 1
   return out
 }
-
-export default fromYRotation

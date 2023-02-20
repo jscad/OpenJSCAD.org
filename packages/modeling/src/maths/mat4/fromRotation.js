@@ -2,7 +2,7 @@ import { EPS } from '../constants.js'
 
 import { sin, cos } from '../utils/trigonometry.js'
 
-import identity from './identity.js'
+import { identity } from './identity.js'
 
 /**
  * Creates a matrix from a given angle around a given axis
@@ -56,5 +56,3 @@ export const fromRotation = (out, rad, axis) => {
   out[15] = 1
   return out
 }
-
-export default fromRotation

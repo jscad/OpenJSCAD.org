@@ -1,6 +1,6 @@
-export { default as create } from './create'
-export { default as tangentAt } from './tangentAt'
-export { default as valueAt } from './valueAt'
+export { create } from './create'
+export { tangentAt } from './tangentAt'
+export { valueAt } from './valueAt'
 
-export { default as Bezier } from './type'
+export { Bezier } from './type'
 export as namespace bezier

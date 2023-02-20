@@ -33,4 +33,3 @@ export const compareVectors = (vec1, vec2, eps = EPS) => {
   }
   return false
 }
-export default compareVectors

@@ -1,7 +1,5 @@
-import Vec3 from '../maths/vec3/type'
-import Geom3 from '../geometries/geom3/type'
-
-export default cylinderElliptic
+import { Vec3 } from '../maths/vec3/type'
+import { Geom3 } from '../geometries/geom3/type'
 
 export interface CylinderEllipticOptions {
   center?: Vec3
@@ -13,4 +11,4 @@ export interface CylinderEllipticOptions {
   segments?: number
 }
 
-declare function cylinderElliptic(options?: CylinderEllipticOptions): Geom3
+export function cylinderElliptic(options?: CylinderEllipticOptions): Geom3

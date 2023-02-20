@@ -3,7 +3,7 @@ import { geometries } from '@jscad/modeling'
 // handled format descriptions
 // note: order is important as regular expressions are created from extensions
 // see https://www.iana.org/assignments/media-types/media-types.xhtml
-const supportedFormats = {
+export const supportedFormats = {
   stl: {
     displayName: 'STL (Binary)',
     description: 'STereoLithography, Binary',
@@ -105,7 +105,7 @@ const supportedFormats = {
   }
 }
 
-const supportedFormatsForObjects = (objects) => {
+export const supportedFormatsForObjects = (objects) => {
   const objectFormats = []
   let found3Dsolid = false
   let found2Dsolid = false
@@ -126,7 +126,7 @@ const supportedFormatsForObjects = (objects) => {
 }
 
 // Return a list of extensions as used by the serializers
-const supportedOutputExtensions = () => {
+export const supportedOutputExtensions = () => {
   const supported = []
   for (const format in supportedFormats) {
     if (supportedFormats[format].convertGeom3 === true || supportedFormats[format].convertGeom2 === true) {
@@ -139,7 +139,7 @@ const supportedOutputExtensions = () => {
 }
 
 // Return a list of formats as used by the serializers
-const supportedOutputFormats = () => {
+export const supportedOutputFormats = () => {
   const supported = []
   for (const format in supportedFormats) {
     if (supportedFormats[format].convertGeom3 === true || supportedFormats[format].convertGeom2 === true) {
@@ -151,7 +151,7 @@ const supportedOutputFormats = () => {
 
 // Return a list of file extensions as used by the deserializers
 // See also code-loading/transfromSources.js
-const supportedInputExtensions = () => {
+export const supportedInputExtensions = () => {
   const supported = []
   for (const format in supportedFormats) {
     if (supportedFormats[format].deserializable === true) {
@@ -161,7 +161,7 @@ const supportedInputExtensions = () => {
   return supported
 }
 
-const getMimeType = (extension) => {
+export const getMimeType = (extension) => {
   for (const format in supportedFormats) {
     const meta = supportedFormats[format]
     if (meta.extension === extension) return meta.mimetype
@@ -170,21 +170,10 @@ const getMimeType = (extension) => {
   return null
 }
 
-const getExtension = (mimeType) => {
+export const getExtension = (mimeType) => {
   for (const format in supportedFormats) {
     const meta = supportedFormats[format]
     if (meta.mimetype === mimeType) return meta.extension
   }
   return null
-}
-
-export {
-  supportedFormats,
-
-  getExtension,
-  getMimeType,
-  supportedInputExtensions,
-  supportedOutputExtensions,
-  supportedOutputFormats,
-  supportedFormatsForObjects
 }

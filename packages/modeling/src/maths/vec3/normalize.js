@@ -19,5 +19,3 @@ export const normalize = (out, vector) => {
   out[2] = z * len
   return out
 }
-
-export default normalize

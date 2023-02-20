@@ -30,5 +30,3 @@ export const toUniquePoints = (geometries) => {
 
   return uniquePoints
 }
-
-export default toUniquePoints

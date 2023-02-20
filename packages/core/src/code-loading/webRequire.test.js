@@ -2,8 +2,8 @@ import test from 'ava'
 
 import { registerAllExtensions } from '../io/registerExtensions.js'
 
-import makeWebRequire from './webRequire.js'
-import makeFakeFs from './makeFakeFs.js'
+import { makeWebRequire } from './webRequire.js'
+import { makeFakeFs } from './makeFakeFs.js'
 
 test.beforeEach((t) => {
 })

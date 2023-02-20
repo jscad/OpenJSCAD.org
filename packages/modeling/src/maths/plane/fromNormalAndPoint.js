@@ -28,5 +28,3 @@ export const fromNormalAndPoint = (out, normal, point) => {
   out[3] = w
   return out
 }
-
-export default fromNormalAndPoint

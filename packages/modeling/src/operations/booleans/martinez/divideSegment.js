@@ -1,5 +1,5 @@
-import SweepEvent from './sweepEvent.js'
-import compareEvents from './compareEvents.js'
+import { SweepEvent } from './sweepEvent.js'
+import { compareEvents } from './compareEvents.js'
 
 /**
  * @param {SweepEvent} se
@@ -34,5 +34,3 @@ export const divideSegment = (se, p, queue) => {
 
   return queue
 }
-
-export default divideSegment

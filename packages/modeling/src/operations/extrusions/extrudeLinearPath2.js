@@ -1,7 +1,7 @@
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
-import extrudeLinearGeom2 from './extrudeLinearGeom2.js'
+import { extrudeLinearGeom2 } from './extrudeLinearGeom2.js'
 
 /*
  * Extrude the given geometry using the given options.
@@ -20,5 +20,3 @@ export const extrudeLinearPath2 = (options, geometry) => {
   const geometry2 = geom2.create([points])
   return extrudeLinearGeom2(options, geometry2)
 }
-
-export default extrudeLinearPath2

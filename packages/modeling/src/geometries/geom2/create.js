@@ -19,5 +19,3 @@ export const create = (outlines = []) => {
     transforms: mat4.create()
   }
 }
-
-export default create

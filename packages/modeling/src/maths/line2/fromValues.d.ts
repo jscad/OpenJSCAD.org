@@ -1,5 +1,3 @@
-import Line2 from './type'
+import { Line2 } from './type'
 
-export default fromValues
-
-declare function fromValues(x: number, y: number, d: number): Line2
+export function fromValues(x: number, y: number, d: number): Line2

@@ -1,4 +1,4 @@
-import flatten from '../utils/flatten.js'
+import { flatten } from '../utils/index.js'
 
 import * as vec2 from '../maths/vec2/index.js'
 import * as vec3 from '../maths/vec3/index.js'
@@ -130,5 +130,3 @@ export const measureBoundingBox = (...geometries) => {
   })
   return results.length === 1 ? results[0] : results
 }
-
-export default measureBoundingBox

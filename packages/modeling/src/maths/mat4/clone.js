@@ -1,4 +1,4 @@
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Creates a clone of the given matrix.
@@ -27,5 +27,3 @@ export const clone = (matrix) => {
   out[15] = matrix[15]
   return out
 }
-
-export default clone

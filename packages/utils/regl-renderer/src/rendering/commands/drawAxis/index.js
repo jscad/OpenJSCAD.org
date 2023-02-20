@@ -65,5 +65,3 @@ export const drawAxis = (regl, params) => {
     ])
   }
 }
-
-export default drawAxis

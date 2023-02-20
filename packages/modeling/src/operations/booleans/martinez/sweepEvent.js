@@ -1,6 +1,6 @@
 import { NORMAL } from './edgeType.js'
 
-class SweepEvent {
+export class SweepEvent {
   /**
    * Sweepline event
    *
@@ -130,5 +130,3 @@ class SweepEvent {
     return copy
   }
 }
-
-export default SweepEvent

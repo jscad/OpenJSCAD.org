@@ -22,5 +22,3 @@ export const fromPoints = (out, point1, point2) => {
   out[2] = distance
   return out
 }
-
-export default fromPoints

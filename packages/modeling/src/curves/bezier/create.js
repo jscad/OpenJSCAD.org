@@ -77,5 +77,3 @@ const factorial = function (b) {
   }
   return out
 }
-
-export default create

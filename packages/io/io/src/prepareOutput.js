@@ -55,5 +55,3 @@ export const prepareOutput = (objects, params) => {
   const mimeType = outputFormatHandlers[format].mimeType
   return { data, mimeType }
 }
-
-export default prepareOutput

@@ -3,8 +3,7 @@ import * as vec3 from '../maths/vec3/index.js'
 
 import * as geom3 from '../geometries/geom3/index.js'
 
-import polyhedron from './polyhedron.js'
-
+import { polyhedron } from './polyhedron.js'
 import { isGT, isGTE } from './commonChecks.js'
 
 /**
@@ -133,5 +132,3 @@ export const geodesicSphere = (options) => {
   if (radius !== 1) geometry = geom3.transform(mat4.fromScaling(mat4.create(), [radius, radius, radius]), geometry)
   return geometry
 }
-
-export default geodesicSphere

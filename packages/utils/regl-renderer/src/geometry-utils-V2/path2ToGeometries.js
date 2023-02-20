@@ -54,5 +54,3 @@ export const path2ToGeometries = (options, solid) => {
   }
   return geometries
 }
-
-export default path2ToGeometries

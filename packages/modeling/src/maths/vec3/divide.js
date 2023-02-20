@@ -13,5 +13,3 @@ export const divide = (out, a, b) => {
   out[2] = a[2] / b[2]
   return out
 }
-
-export default divide

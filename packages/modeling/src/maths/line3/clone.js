@@ -1,6 +1,6 @@
 import * as vec3 from '../vec3/index.js'
 
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Create a clone of the given line.
@@ -15,5 +15,3 @@ export const clone = (line) => {
   vec3.copy(out[1], line[1])
   return out
 }
-
-export default clone

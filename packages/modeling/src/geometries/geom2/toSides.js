@@ -1,4 +1,4 @@
-import toOutlines from './toOutlines.js'
+import { toOutlines } from './toOutlines.js'
 
 /**
  * Produces an array of sides from the given geometry.
@@ -21,5 +21,3 @@ export const toSides = (geometry) => {
   })
   return sides
 }
-
-export default toSides

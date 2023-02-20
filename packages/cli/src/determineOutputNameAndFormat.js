@@ -22,5 +22,3 @@ export const determineOutputNameAndFormat = (outputFormat, outputFile, inputFile
   }
   return { outputFormat, outputFile }
 }
-
-export default determineOutputNameAndFormat

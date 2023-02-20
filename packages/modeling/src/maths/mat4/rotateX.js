@@ -43,5 +43,3 @@ export const rotateX = (out, matrix, radians) => {
   out[11] = a23 * c - a13 * s
   return out
 }
-
-export default rotateX

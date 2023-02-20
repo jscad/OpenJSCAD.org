@@ -1,4 +1,4 @@
-import nodeBlob from './Blob.js'
+import { Blob as nodeBlob } from './Blob.js'
 
 /**
  * Make a constructor for Blob objects.
@@ -12,5 +12,3 @@ export const makeBlob = () => {
   const blob = typeof window !== 'undefined' ? window.Blob : nodeBlob
   return blob
 }
-
-export default makeBlob

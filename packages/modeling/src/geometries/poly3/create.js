@@ -19,5 +19,3 @@ export const create = (vertices) => {
   }
   return { vertices }
 }
-
-export default create

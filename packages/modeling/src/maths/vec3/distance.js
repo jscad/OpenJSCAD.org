@@ -12,5 +12,3 @@ export const distance = (a, b) => {
   const z = b[2] - a[2]
   return Math.sqrt(x * x + y * y + z * z)
 }
-
-export default distance

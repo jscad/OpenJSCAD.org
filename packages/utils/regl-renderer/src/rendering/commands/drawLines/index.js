@@ -60,5 +60,3 @@ export const drawLines = (regl, params = {}) => {
 
   return regl(commandParams)
 }
-
-export default drawLines

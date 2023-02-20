@@ -30,5 +30,3 @@ export const scale = (out, matrix, dimensions) => {
   out[15] = matrix[15]
   return out
 }
-
-export default scale

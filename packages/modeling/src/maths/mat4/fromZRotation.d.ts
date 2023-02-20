@@ -1,5 +1,3 @@
-import Mat4 from './type'
+import { Mat4 } from './type'
 
-export default fromZRotation
-
-declare function fromZRotation(out: Mat4, radians: number): Mat4
+export function fromZRotation(out: Mat4, radians: number): Mat4

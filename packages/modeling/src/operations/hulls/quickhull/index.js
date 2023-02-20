@@ -12,5 +12,3 @@ export const runner = (points, options = {}) => {
   instance.build()
   return instance.collectFaces(options.skipTriangulation)
 }
-
-export default runner

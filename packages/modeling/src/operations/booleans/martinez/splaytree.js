@@ -132,7 +132,7 @@ const printRow = (root, prefix, isTail, out, printNode) => {
   }
 }
 
-class Tree {
+export class Tree {
   constructor (comparator = DEFAULT_COMPARE) {
     this._comparator = comparator
     this._root = null
@@ -597,5 +597,3 @@ const sort = (keys, values, left, right, compare) => {
   sort(keys, values, left, j, compare)
   sort(keys, values, j + 1, right, compare)
 }
-
-export default Tree

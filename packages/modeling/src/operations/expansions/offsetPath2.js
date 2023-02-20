@@ -1,6 +1,6 @@
 import * as path2 from '../../geometries/path2/index.js'
 
-import offsetFromPoints from './offsetFromPoints.js'
+import { offsetFromPoints } from './offsetFromPoints.js'
 
 /*
  * Create a offset geometry from the given path using the given options (if any).
@@ -28,5 +28,3 @@ export const offsetPath2 = (options, geometry) => {
   const newpoints = offsetFromPoints(options, path2.toPoints(geometry))
   return path2.fromPoints({ closed: closed }, newpoints)
 }
-
-export default offsetPath2

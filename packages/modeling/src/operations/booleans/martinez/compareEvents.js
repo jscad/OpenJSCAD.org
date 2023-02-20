@@ -4,7 +4,7 @@
  * https://github.com/w8r/martinez
  */
 
-import signedArea from './signedArea.js'
+import { signedArea } from './signedArea.js'
 
 /**
  * @param {SweepEvent} e1
@@ -43,5 +43,3 @@ const specialCases = (e1, e2, p1, p2) => {
 
   return (!e1.isSubject && e2.isSubject) ? 1 : -1
 }
-
-export default compareEvents

@@ -134,7 +134,7 @@ test('project torus (X and Y axis)', (t) => {
 test('project torus (martinez issue #155)', (t) => {
   const result = project(
     { axis: [0, 1, 0], origin: [0, -1, 0] },
-    torus({ innerSegments: 8, outerSegments: 4})
+    torus({ innerSegments: 8, outerSegments: 4 })
   )
   const pts = geom2.toPoints(result)
   t.notThrows(() => geom2.validate(result))

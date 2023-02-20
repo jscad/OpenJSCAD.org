@@ -20,5 +20,3 @@ export const isMirroring = (matrix) => {
   const d = x * matrix[2] + y * matrix[6] + z * matrix[10]
   return (d < 0)
 }
-
-export default isMirroring

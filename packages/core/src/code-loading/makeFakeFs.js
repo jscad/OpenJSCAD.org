@@ -62,5 +62,3 @@ export const makeFakeFs = (filesAndFolders) => {
   }
   return fakeFs
 }
-
-export default makeFakeFs

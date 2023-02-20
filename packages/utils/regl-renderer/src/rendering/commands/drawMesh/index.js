@@ -90,5 +90,3 @@ export const drawMesh = (regl, params = { extras: {} }) => {
   commandParams = Object.assign({}, commandParams, params.extras)
   return regl(commandParams)
 }
-
-export default drawMesh

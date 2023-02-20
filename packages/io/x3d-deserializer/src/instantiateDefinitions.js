@@ -1,11 +1,11 @@
 import { colors, transforms } from '@jscad/modeling'
 
-import createTransform from './createTransform.js'
+import { createTransform } from './createTransform.js'
 
 import { x3dTypes } from './objects.js'
 import { findColor } from './translateHelpers.js'
 
-import instantiatePrimitive from './instantiatePrimitive.js'
+import { instantiatePrimitive } from './instantiatePrimitive.js'
 import { instantiateLine } from './instantiateLine.js'
 import { instantiateMesh } from './instantiateMesh.js'
 
@@ -76,5 +76,3 @@ export const instantiateDefinitions = (options, objects) => {
 
   return geometries
 }
-
-export default instantiateDefinitions

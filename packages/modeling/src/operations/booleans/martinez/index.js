@@ -6,9 +6,9 @@
  * Adapted for JSCAD by @platypii
  */
 
-import subdivideSegments from './subdivideSegments.js'
-import connectEdges from './connectEdges.js'
-import fillQueue from './fillQueue.js'
+import { subdivideSegments } from './subdivideSegments.js'
+import { connectEdges } from './connectEdges.js'
+import { fillQueue } from './fillQueue.js'
 import {
   INTERSECTION,
   DIFFERENCE,
@@ -103,7 +103,7 @@ const fromOutlines = (outlines) => {
   return geom2.create(outlines)
 }
 
-export default function boolean (subjectGeom, clippingGeom, operation) {
+export const boolean = (subjectGeom, clippingGeom, operation) => {
   // Convert from geom2 to outlines
   const subject = toMartinez(subjectGeom)
   const clipping = toMartinez(clippingGeom)

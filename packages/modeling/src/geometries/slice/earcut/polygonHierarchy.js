@@ -3,9 +3,9 @@ import * as vec3 from '../../../maths/vec3/index.js'
 
 import * as geom2 from '../../geom2/index.js'
 
-import calculatePlane from '../calculatePlane.js'
+import { calculatePlane } from '../calculatePlane.js'
 
-import assignHoles from './assignHoles.js'
+import { assignHoles } from './assignHoles.js'
 
 /*
  * Constructs a polygon hierarchy which associates holes with their outer solids.
@@ -62,5 +62,3 @@ export class PolygonHierarchy {
     }
   }
 }
-
-export default PolygonHierarchy

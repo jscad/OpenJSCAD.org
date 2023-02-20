@@ -1,4 +1,4 @@
-import area from '../../../maths/utils/area.js'
+import { area } from '../../../maths/utils/index.js'
 import { toOutlines } from '../../geom2/index.js'
 import * as poly2 from '../../poly2/index.js'
 
@@ -87,5 +87,3 @@ const minIndex = (list, score) => {
   })
   return bestIndex
 }
-
-export default assignHoles

@@ -1,7 +1,7 @@
 import * as poly3 from '../poly3/index.js'
 
-import earcut from './earcut/index.js'
-import PolygonHierarchy from './earcut/polygonHierarchy.js'
+import { triangulate } from './earcut/index.js'
+import { PolygonHierarchy } from './earcut/polygonHierarchy.js'
 
 /**
  * Return a list of polygons which are enclosed by the slice.
@@ -27,7 +27,7 @@ export const toPolygons = (slice) => {
     const data = vertices.flat()
     // Get original 3D vertex by index
     const getVertex = (i) => hierarchy.to3D(vertices[i])
-    const indices = earcut(data, holesIndex)
+    const indices = triangulate(data, holesIndex)
     for (let i = 0; i < indices.length; i += 3) {
       // Map back to original vertices
       const tri = indices.slice(i, i + 3).map(getVertex)
@@ -37,5 +37,3 @@ export const toPolygons = (slice) => {
 
   return polygons
 }
-
-export default toPolygons

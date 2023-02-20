@@ -1,7 +1,5 @@
-import Vec2 from '../maths/vec2/type'
-import Geom2 from '../geometries/geom2/type'
-
-export default roundedRectangle
+import { Vec2 } from '../maths/vec2/type'
+import { Geom2 } from '../geometries/geom2/type'
 
 export interface RoundedRectangleOptions {
   center?: Vec2
@@ -10,4 +8,4 @@ export interface RoundedRectangleOptions {
   segments?: number
 }
 
-declare function roundedRectangle(options?: RoundedRectangleOptions): Geom2
+export function roundedRectangle(options?: RoundedRectangleOptions): Geom2

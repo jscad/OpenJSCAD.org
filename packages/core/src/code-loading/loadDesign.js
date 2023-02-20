@@ -1,10 +1,10 @@
 import { registerAllExtensions } from '../io/registerExtensions.js'
 
-import transformSources from './transformSources.js'
-import makeFakeFs from './makeFakeFs.js'
-import makeWebRequire from './webRequire.js'
-import normalizeDesignModule from './normalizeDesignModule.js'
-import getAllParameterDefintionsAndValues from '../parameters/getParameterDefinitionsAndValues.js'
+import { transformSources } from './transformSources.js'
+import { makeFakeFs } from './makeFakeFs.js'
+import { makeWebRequire } from './webRequire.js'
+import { normalizeDesignModule } from './normalizeDesignModule.js'
+import { getParameterDefinitionsAndValues } from '../parameters/index.js'
 
 /**
  * load a jscad script, injecting the basic dependencies if necessary
@@ -45,9 +45,7 @@ export const loadDesign = (mainPath, apiMainPath, filesAndFolders, parameterValu
   // rootModule SHOULD contain a main() entry and optionally a getParameterDefinitions entry
   // the design (module tree) has been loaded at this stage
   // now we can get our usefull data (definitions and values/defaults)
-  const parameters = getAllParameterDefintionsAndValues(rootModule, parameterValuesOverride)
+  const parameters = getParameterDefinitionsAndValues(rootModule, parameterValuesOverride)
 
   return { rootModule, ...parameters }
 }
-
-export default loadDesign

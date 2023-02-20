@@ -19,5 +19,3 @@ export const applyTransforms = (geometry) => {
   geometry.transforms = mat4.create()
   return geometry
 }
-
-export default applyTransforms

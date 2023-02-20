@@ -1,10 +1,8 @@
-import Geom3 from '../geometries/geom3/type'
-
-export default geodesicSphere
+import { Geom3 } from '../geometries/geom3/type'
 
 export interface GeodesicSphereOptions {
   radius?: number
   frequency?: number
 }
 
-declare function geodesicSphere(options?: GeodesicSphereOptions): Geom3
+export function geodesicSphere(options?: GeodesicSphereOptions): Geom3

@@ -4,9 +4,9 @@
  * https://github.com/w8r/martinez
  */
 
-import equals from '../../../maths/vec2/equals.js'
-import compareEvents from './compareEvents.js'
-import signedArea from './signedArea.js'
+import { equals } from '../../../maths/vec2/index.js'
+import { compareEvents } from './compareEvents.js'
+import { signedArea } from './signedArea.js'
 
 /**
  * @param {SweepEvent} le1
@@ -49,5 +49,3 @@ export const compareSegments = (le1, le2) => {
 
   return compareEvents(le1, le2) === 1 ? 1 : -1
 }
-
-export default compareSegments

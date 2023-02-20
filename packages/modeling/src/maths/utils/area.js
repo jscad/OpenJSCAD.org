@@ -13,5 +13,3 @@ export const area = (points) => {
   }
   return (area / 2.0)
 }
-
-export default area

@@ -4,7 +4,7 @@
  * https://github.com/w8r/martinez
  */
 
-import dotProduct from '../../../maths/vec2/dot.js'
+import { dot as dotProduct } from '../../../maths/vec2/index.js'
 
 /**
  * Finds the magnitude of the cross product of two vectors (if we pretend
@@ -130,5 +130,3 @@ export const segmentIntersection = (a1, a2, b1, b2, noEndpointTouch) => {
 
   return null
 }
-
-export default segmentIntersection

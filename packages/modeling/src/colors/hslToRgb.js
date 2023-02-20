@@ -1,6 +1,6 @@
-import flatten from '../utils/flatten.js'
+import { flatten } from '../utils/index.js'
 
-import hueToColorComponent from './hueToColorComponent.js'
+import { hueToColorComponent } from './hueToColorComponent.js'
 
 /**
  * Converts HSL color values to RGB color values.
@@ -40,5 +40,3 @@ export const hslToRgb = (...values) => {
   }
   return [r, g, b]
 }
-
-export default hslToRgb

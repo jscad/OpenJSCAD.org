@@ -14,5 +14,3 @@ export const signedArea = (p0, p1, p2) => {
   if (res < 0) return 1
   return 0
 }
-
-export default signedArea

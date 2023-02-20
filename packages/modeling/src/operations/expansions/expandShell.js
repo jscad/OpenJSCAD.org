@@ -3,18 +3,18 @@ import { EPS, TAU } from '../../maths/constants.js'
 import * as mat4 from '../../maths/mat4/index.js'
 import * as vec3 from '../../maths/vec3/index.js'
 
-import fnNumberSort from '../../utils/fnNumberSort.js'
+import { fnNumberSort } from '../../utils/index.js'
 
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as poly3 from '../../geometries/poly3/index.js'
 
-import sphere from '../../primitives/sphere.js'
+import { sphere } from '../../primitives/index.js'
 
-import retessellate from '../modifiers/retessellate.js'
+import { retessellate } from '../modifiers/retessellate.js'
 
-import unionGeom3Sub from '../booleans/unionGeom3Sub.js'
+import { unionGeom3Sub } from '../booleans/unionGeom3Sub.js'
 
-import extrudePolygon from './extrudePolygon.js'
+import { extrudePolygon } from './extrudePolygon.js'
 
 /*
  * Collect all planes adjacent to each vertex
@@ -220,5 +220,3 @@ export const expandShell = (options, geometry) => {
   })
   return retessellate(result)
 }
-
-export default expandShell

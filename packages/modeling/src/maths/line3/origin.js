@@ -6,5 +6,3 @@
  * @alias module:modeling/maths/line3.origin
  */
 export const origin = (line) => line[0]
-
-export default origin

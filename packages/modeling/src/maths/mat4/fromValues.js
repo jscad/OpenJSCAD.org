@@ -1,4 +1,4 @@
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Create a matrix with the given values.
@@ -49,5 +49,3 @@ export const fromValues = (m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22
   out[15] = m33
   return out
 }
-
-export default fromValues

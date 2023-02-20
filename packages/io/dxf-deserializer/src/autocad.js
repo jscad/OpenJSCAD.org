@@ -29,12 +29,12 @@ const dxfTLA = [
 
 const dxfMap = new Map(dxfTLA)
 
-const getTLA = (group) => dxfMap.get(group)
+export const getTLA = (group) => dxfMap.get(group)
 
 /*
  * AutoCAD Drawing Units
  */
-const drawingUnits = [
+export const drawingUnits = [
   [0, 'none'],
   [1, 'inches'],
   [2, 'feet'],
@@ -58,12 +58,5 @@ const drawingUnits = [
   [20, 'parsecs']
 ]
 
-const BYBLOCK = 0
-const BYLAYER = 256
-
-export {
-  drawingUnits,
-  BYBLOCK,
-  BYLAYER,
-  getTLA
-}
+export const BYBLOCK = 0
+export const BYLAYER = 256

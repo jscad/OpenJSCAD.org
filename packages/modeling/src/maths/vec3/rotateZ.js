@@ -26,5 +26,3 @@ export const rotateZ = (out, vector, origin, radians) => {
 
   return out
 }
-
-export default rotateZ

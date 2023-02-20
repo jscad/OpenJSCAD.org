@@ -138,5 +138,3 @@ export const makeDrawGrid = (regl, params = {}) => {
 
   })
 }
-
-export default makeDrawGrid

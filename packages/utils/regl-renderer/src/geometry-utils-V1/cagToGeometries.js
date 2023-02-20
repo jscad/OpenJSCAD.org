@@ -48,5 +48,3 @@ const cagToPointsArray = (input) => {
 
   return points
 }
-
-export default cagToGeometries

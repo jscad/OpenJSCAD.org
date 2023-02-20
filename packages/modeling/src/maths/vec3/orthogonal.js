@@ -1,6 +1,6 @@
-import abs from './abs.js'
-import create from './create.js'
-import cross from './cross.js'
+import { abs } from './abs.js'
+import { create } from './create.js'
+import { cross } from './cross.js'
 
 /**
  * Create a new vector that is orthogonal to the given vector.
@@ -18,5 +18,3 @@ export const orthogonal = (out, vector) => {
 
   return cross(out, vector, [b0, b1, b2])
 }
-
-export default orthogonal

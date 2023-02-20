@@ -1,4 +1,4 @@
-import flatten from '../utils/flatten.js'
+import { flatten } from '../utils/index.js'
 
 /**
  * Convert the given RGB color values to CSS color notation (string)
@@ -23,5 +23,3 @@ export const rgbToHex = (...values) => {
   }
   return s
 }
-
-export default rgbToHex

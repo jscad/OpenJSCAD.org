@@ -19,5 +19,3 @@ export const create = () => [
   vec3.fromValues(0, 0, 0), // origin
   vec3.fromValues(0, 0, 1) // direction
 ]
-
-export default create

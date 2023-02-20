@@ -1,10 +1,9 @@
 import * as mat4 from '../../maths/mat4/index.js'
 import * as vec3 from '../../maths/vec3/index.js'
 
-import * as geom2 from '../../geometries/geom2/index.js'
 import * as slice from '../../geometries/slice/index.js'
 
-import extrudeFromSlices from './extrudeFromSlices.js'
+import { extrudeFromSlices } from './extrudeFromSlices.js'
 
 /*
  * Extrude the given geometry using the given options.
@@ -56,5 +55,3 @@ export const extrudeLinearGeom2 = (options, geometry) => {
   }
   return extrudeFromSlices(options, baseSlice)
 }
-
-export default extrudeLinearGeom2

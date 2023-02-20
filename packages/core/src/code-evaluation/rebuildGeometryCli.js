@@ -1,11 +1,11 @@
 import path from 'path'
-import { createRequire } from "module"
+import { createRequire } from 'module'
 
 import { toArray } from '@jscad/array-utils'
 
-import requireDesignFromModule from '../code-loading/requireDesignFromModule.js'
-import getAllParameterDefintionsAndValues from '../parameters/getParameterDefinitionsAndValues.js'
-import makeWebRequire from '../code-loading/webRequire.js'
+import { requireDesignFromModule } from '../code-loading/requireDesignFromModule.js'
+import { getParameterDefinitionsAndValues } from '../parameters/index.js'
+import { makeWebRequire } from '../code-loading/webRequire.js'
 
 export const rebuildGeometryCli = async (data) => {
   const defaults = {
@@ -40,10 +40,8 @@ export const rebuildGeometryCli = async (data) => {
 
   // the design (module tree) has been loaded at this stage
   // now we can get our usefull data (definitions and values/defaults)
-  const parameters = getAllParameterDefintionsAndValues(rootModule, parameterValues)
+  const parameters = getParameterDefinitionsAndValues(rootModule, parameterValues)
 
   const rawResults = toArray(rootModule.main(parameters.parameterValues))
   return rawResults
 }
-
-export default rebuildGeometryCli

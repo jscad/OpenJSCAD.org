@@ -291,5 +291,3 @@ export const insertTjunctions = (polygons) => {
 
   return polygons
 }
-
-export default insertTjunctions

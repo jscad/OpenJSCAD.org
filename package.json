@@ -79,6 +79,7 @@
       ],
       "arrow-spacing": "error",
       "prefer-arrow-callback": "error",
+      "import/no-default-export": "error",
       "no-var": "error"
     }
   }

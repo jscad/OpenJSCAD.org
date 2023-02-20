@@ -212,5 +212,3 @@ export const extrudeX3D = (x3dshape) => {
     }
   }, initialSlice)
 }
-
-export default extrudeX3D

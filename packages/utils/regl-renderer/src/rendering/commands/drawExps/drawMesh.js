@@ -58,5 +58,3 @@ export const drawMesh = (regl, params) => {
     }
   })
 }
-
-export default drawMesh

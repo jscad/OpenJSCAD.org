@@ -14,5 +14,3 @@ export const radiusToSegments = (radius, minimumLength, minimumAngle) => {
   // minimum segments is four(4) for round primitives
   return Math.ceil(Math.max(ss, as, 4))
 }
-
-export default radiusToSegments

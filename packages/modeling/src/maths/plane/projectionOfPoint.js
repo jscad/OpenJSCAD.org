@@ -15,5 +15,3 @@ export const projectionOfPoint = (plane, point) => {
   const z = point[2] - a * plane[2]
   return vec3.fromValues(x, y, z)
 }
-
-export default projectionOfPoint

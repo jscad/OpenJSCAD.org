@@ -4,7 +4,7 @@ import mat4 from 'gl-mat4'
 import * as orthographicCamera from './orthographicCamera.js'
 import * as perspectiveCamera from './perspectiveCamera.js'
 
-const fromOrthographicToPerspective = (orthographicCamera) => {
+export const fromOrthographicToPerspective = (orthographicCamera) => {
   const { near, far, fov, zoom } = orthographicCamera
   // recompute projection matrix to use perspective camera projection matrix
   const { viewport } = orthographicCamera
@@ -13,7 +13,7 @@ const fromOrthographicToPerspective = (orthographicCamera) => {
   return Object.assign({}, orthographicCamera, projection, { projectionType }, { near, far, fov })
 }
 
-const fromPerspectiveToOrthographic = (perspectiveCamera) => {
+export const fromPerspectiveToOrthographic = (perspectiveCamera) => {
   const { fov, aspect } = perspectiveCamera
 
   // set the orthographic view rectangle to 0,0,width,height
@@ -31,7 +31,7 @@ const fromPerspectiveToOrthographic = (perspectiveCamera) => {
   return Object.assign({}, orthographicCamera, perspectiveCamera, projection, { projectionType: orthographicCamera.projectionType, viewport })
 }
 
-const toPerspectiveView = ({ camera }) => {
+export const toPerspectiveView = ({ camera }) => {
   const offsetToTarget = vec3.distance(camera.position, camera.target)
   const distance = offsetToTarget
   const position = [distance, distance, distance]
@@ -43,7 +43,7 @@ const toPerspectiveView = ({ camera }) => {
 /**
  * Calculate the camera view and position for acheiving the given preset view.
  */
-const toPresetView = (viewName, { camera }) => {
+export const toPresetView = (viewName, { camera }) => {
   const presets = {
     top: [0, -0.000001, 1],
     bottom: [0, 0, -1],
@@ -59,11 +59,4 @@ const toPresetView = (viewName, { camera }) => {
   const view = mat4.lookAt(mat4.create(), position, camera.target, camera.up)
 
   return { view, position }
-}
-
-export {
-  toPerspectiveView,
-  toPresetView,
-  fromOrthographicToPerspective,
-  fromPerspectiveToOrthographic
 }

@@ -3,7 +3,7 @@ import * as mat4 from '../../maths/mat4/index.js'
 
 import * as poly3 from '../poly3/index.js'
 
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Construct a new 3D geometry from the given compact binary data.
@@ -40,5 +40,3 @@ export const fromCompactBinary = (data) => {
   // TODO: how about custom properties or fields ?
   return created
 }
-
-export default fromCompactBinary

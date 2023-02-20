@@ -2,7 +2,7 @@ import * as geom3 from '../../geometries/geom3/index.js'
 
 import { Tree } from './trees/index.js'
 
-import mayOverlap from './mayOverlap.js'
+import { mayOverlap } from './mayOverlap.js'
 
 /*
  * Return a new 3D geometry representing the space in the first geometry but not
@@ -28,5 +28,3 @@ export const subtractGeom3Sub = (geometry1, geometry2) => {
   const newpolygons = a.allPolygons()
   return geom3.create(newpolygons)
 }
-
-export default subtractGeom3Sub

@@ -28,5 +28,3 @@ export const mirrorByPlane = (out, plane) => {
 
   return out
 }
-
-export default mirrorByPlane

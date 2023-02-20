@@ -35,5 +35,3 @@ const crossBetweenSegments = (p1, p2, p3) => {
 
   return (X1 * Y2 - Y1 * X2)
 }
-
-export default isConvex

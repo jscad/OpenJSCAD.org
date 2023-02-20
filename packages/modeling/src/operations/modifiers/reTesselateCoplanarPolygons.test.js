@@ -4,7 +4,7 @@ import { mat4 } from '../../maths/index.js'
 
 import { poly3 } from '../../geometries/index.js'
 
-import reTesselateCoplanarPolygons from './reTesselateCoplanarPolygons.js'
+import { reTesselateCoplanarPolygons } from './reTesselateCoplanarPolygons.js'
 
 const translatePoly3 = (offsets, polygon) => {
   const matrix = mat4.fromTranslation(mat4.create(), offsets)

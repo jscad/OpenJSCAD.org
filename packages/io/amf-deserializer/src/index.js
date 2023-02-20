@@ -22,8 +22,8 @@ All code released under MIT license
  * const { deserializer, extension } = require('@jscad/amf-serializer')
  */
 
-import translate from './translate.js'
-import instantiate from './deserialize.js'
+import { translate } from './translate.js'
+import { instantiate } from './deserialize.js'
 
 const version = '[VI]{version}[/VI]' // version is injected by rollup
 

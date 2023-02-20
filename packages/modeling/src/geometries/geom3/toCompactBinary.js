@@ -64,5 +64,3 @@ export const toCompactBinary = (geometry) => {
   // TODO: how about custom properties or fields ?
   return compacted
 }
-
-export default toCompactBinary
