@@ -1,8 +1,8 @@
 import mat4 from 'gl-mat4'
 
-import makeDrawAxis from '../drawAxis.js'
-import makeDrawMesh from '../drawMeshNoNormals.js'
-import makeArcGeometry from './arcGeo.js'
+import { makeDrawAxis } from '../drawAxis.js'
+import { makeDrawMesh } from '../drawMeshNoNormals.js'
+import { makeArcGeometry } from './arcGeo.js'
 
 export const drawConnector = (regl, params) => {
   const argGeometry = makeArcGeometry({ innerRadius: 9, outerRadius: 10, startRadian: 0, endRadian: Math.PI * 2 })

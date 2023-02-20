@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import geom3ToGeometries from './geom3ToGeometries.js'
+import { geom3ToGeometries } from './geom3ToGeometries.js'
 
 const defaultTransforms = Float32Array.from([
   1, 0, 0, 0,

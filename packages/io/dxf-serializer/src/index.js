@@ -2,7 +2,7 @@ import { flatten, toArray } from '@jscad/array-utils'
 import { geometries, modifiers } from '@jscad/modeling'
 
 import { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } from './autocad_AC2017.js'
-import colorindex2017 from './colorindex2017.js'
+import { colorIndex } from './colorindex2017.js'
 
 const { geom3, geom2, path2 } = geometries
 
@@ -33,7 +33,7 @@ const serialize = (options, ...objects) => {
     geom3To: '3dface', // or polyline
     pathTo: 'lwpolyline',
     statusCallback: null,
-    colorIndex: colorindex2017
+    colorIndex
   }
   options = Object.assign({}, defaults, options)
 

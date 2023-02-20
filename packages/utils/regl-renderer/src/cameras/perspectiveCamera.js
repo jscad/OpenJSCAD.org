@@ -1,7 +1,7 @@
 import mat4 from 'gl-mat4'
 import vec3 from 'gl-vec3'
 
-const cameraState = {
+export const cameraState = {
   view: mat4.identity(new Float32Array(16)),
   projection: mat4.identity(new Float32Array(16)),
   matrix: mat4.identity(new Float32Array(16)), // not sure if needed
@@ -18,10 +18,10 @@ const cameraState = {
   projectionType: 'perspective'
 }
 
-const cameraProps = {}
-const defaults = Object.assign({}, cameraState, cameraProps)
+export const cameraProps = {}
+export const defaults = Object.assign({}, cameraState, cameraProps)
 
-const setProjection = (output, camera, input) => {
+export const setProjection = (output, camera, input) => {
   // context.viewportWidth / context.viewportHeight,
   const aspect = input.width / input.height
 
@@ -39,7 +39,7 @@ const setProjection = (output, camera, input) => {
   return out
 }
 
-const update = (output, camera) => {
+export const update = (output, camera) => {
   if (!camera) {
     camera = output
   }
@@ -53,12 +53,4 @@ const update = (output, camera) => {
   out.position = newPosition
   out.view = newView
   return out
-}
-
-export {
-  cameraState,
-  cameraProps,
-  defaults,
-  setProjection,
-  update
 }

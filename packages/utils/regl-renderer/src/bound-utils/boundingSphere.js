@@ -1,6 +1,6 @@
 import { squaredDistance, vec3 } from 'gl-vec3'
 
-import boundingBox from './boundingBox.js'
+import { boundingBox } from './boundingBox.js'
 
 /*
  * compute diameter of the bounding sphere for the given (geometry) positions

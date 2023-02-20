@@ -1,6 +1,6 @@
 import regl from 'regl'
 
-import renderContext from './renderContext.js'
+import { renderContext } from './renderContext.js'
 import * as renderDefaults from './renderDefaults.js'
 
 export const prepareRender = (params) => {

@@ -3,7 +3,7 @@ import { booleans, geometries, primitives, transforms } from '@jscad/modeling'
 import { x3dTypes } from './objects.js'
 import { findNode } from './translateHelpers.js'
 
-import extrudeX3D from './extrudeX3D.js'
+import { extrudeX3D } from './extrudeX3D.js'
 
 export const instantiatePrimitive = (options, objects) => {
   let geometry

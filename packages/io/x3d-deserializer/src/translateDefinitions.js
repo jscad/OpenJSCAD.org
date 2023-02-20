@@ -1,8 +1,8 @@
-import createTransform from './createTransform.js'
+import { createTransform } from './createTransform.js'
 
 import { x3dTypes } from './objects.js'
 
-import translateShape from './translateShape.js'
+import { translateShape } from './translateShape.js'
 
 // horrific order of transforms... see http://edutechwiki.unige.ch/en/X3D_grouping_and_transforms
 const translateTransform = (options, object) => {

@@ -1,6 +1,6 @@
-import createObject from './objectBuilder.js'
+import { createObject } from './objectBuilder.js'
 
-import parse from './parse.js'
+import { parse } from './parse.js'
 
 export const instantiate = (options, src) => {
   const defaults = {
