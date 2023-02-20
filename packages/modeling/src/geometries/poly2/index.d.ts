@@ -13,4 +13,3 @@ export { transform } from './transform'
 export { validate } from './validate'
 
 export { Poly2 } from './type'
-export as namespace poly2

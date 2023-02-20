@@ -1,6 +1,6 @@
-import Geom3 from '../../geometries/geom3/type'
+import { Geom3 } from '../../geometries/geom3/type'
 
-import Slice from './slice/type'
+import { Slice } from '../../geometries/slice/type'
 
 export interface ExtrudeFromSlicesOptions<Base> {
   numberOfSlices?: number

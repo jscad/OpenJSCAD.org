@@ -1,4 +1,4 @@
-import Geom3 from '../geometries/geom3/type'
+import { Geom3 } from '../geometries/geom3/type'
 
 export interface GeodesicSphereOptions {
   radius?: number

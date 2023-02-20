@@ -1,5 +1,5 @@
-import Vec2 from '../maths/vec2/type'
-import Geom2 from '../geometries/geom2/type'
+import { Vec2 } from '../maths/vec2/type'
+import { Geom2 } from '../geometries/geom2/type'
 
 export interface SquareOptions {
   center?: Vec2

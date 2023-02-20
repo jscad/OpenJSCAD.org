@@ -1,3 +1,3 @@
-import Slice from './type'
+import { Slice } from './type'
 
 export function toEdges(slice: Slice): Slice['edges']

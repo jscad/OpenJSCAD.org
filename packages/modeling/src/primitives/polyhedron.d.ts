@@ -1,5 +1,5 @@
-import Vec3 from '../maths/vec3/type'
-import Geom3 from '../geometries/geom3/type'
+import { Vec3 } from '../maths/vec3/type'
+import { Geom3 } from '../geometries/geom3/type'
 import { RGB, RGBA } from '../colors/types'
 
 export interface PolyhedronOptions {

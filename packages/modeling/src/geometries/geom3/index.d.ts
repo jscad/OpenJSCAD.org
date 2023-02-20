@@ -12,4 +12,3 @@ export { transform } from './transform'
 export { validate } from './validate'
 
 export { Geom3 } from './type'
-export as namespace geom3

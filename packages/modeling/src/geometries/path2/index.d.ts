@@ -17,4 +17,3 @@ export { transform } from './transform'
 export { validate } from './validate'
 
 export { Path2 } from './type'
-export as namespace path2

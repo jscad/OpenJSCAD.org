@@ -1,8 +1,8 @@
-import Geom2 from './geom2/type'
-import Geom3 from './geom3/type'
-import Path2 from './path2/type'
-import Poly3 from './poly3/type'
-import Slice from './slice/type'
+import { Geom2 } from './geom2/type'
+import { Geom3 } from './geom3/type'
+import { Path2 } from './path2/type'
+import { Poly3 } from './poly3/type'
+import { Slice } from './slice/type'
 import { RGB, RGBA } from '../colors'
 
 // NOTE (@ahdinosaur): Poly2 is not included as not well-supported.

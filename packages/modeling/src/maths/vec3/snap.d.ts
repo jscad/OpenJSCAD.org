@@ -1,3 +1,3 @@
-import Vec3 from './type'
+import { Vec3 } from './type'
 
 export function snap(out: Vec3, vector: Vec3, epsilon: number): Vec3

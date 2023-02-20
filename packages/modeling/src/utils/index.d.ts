@@ -3,6 +3,7 @@ export { degToRad } from './degToRad'
 export { flatten } from './flatten'
 export { fnNumberSort } from './fnNumberSort'
 export { insertSorted } from './insertSorted'
+export { padArrayToLength } from './padArrayToLength'
 export { radiusToSegments } from './radiusToSegments'
 export { radToDeg } from './radToDeg'
 

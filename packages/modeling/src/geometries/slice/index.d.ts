@@ -13,5 +13,3 @@ export { toString } from './toString'
 export { transform } from './transform'
 
 export { Slice } from './type'
-
-export as namespace slice

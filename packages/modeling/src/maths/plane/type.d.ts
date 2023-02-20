@@ -1,3 +1,1 @@
-export default Plane
-
-declare type Plane = [number, number, number, number]
+export type Plane = [number, number, number, number]

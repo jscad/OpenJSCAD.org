@@ -1,5 +1,5 @@
 import { Geometry } from '../../geometries/types'
-import Mat4 from '../../maths/mat4/type'
+import { Mat4 } from '../../maths/mat4/type'
 import RecursiveArray from '../../utils/recursiveArray'
 
 export function transform<T extends Geometry>(matrix: Mat4, geometry: T): T

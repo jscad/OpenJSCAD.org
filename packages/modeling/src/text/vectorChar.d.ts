@@ -1,4 +1,4 @@
-import Vec2 from '../maths/vec2/type'
+import { Vec2 } from '../maths/vec2/type'
 
 export interface VectorChar {
   width: number

@@ -1,5 +1,5 @@
-import Poly3 from '../../../geometries/poly3/type'
+import { Poly3 } from '../poly3/type'
 
-import Slice from './type'
+import { Slice } from './type'
 
 export function toPolygons(slice: Slice): Array<Poly3>
