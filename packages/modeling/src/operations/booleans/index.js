@@ -4,7 +4,8 @@
  * In all cases, the function returns the results, and never changes the original shapes.
  * @module modeling/booleans
  * @example
- * import { intersect, subtract, union } from '@jscad/modeling/booleans'
+ * import { booleans } from '@jscad/modeling'
+ * const { intersect, scission, subtract, union } = booleans
  */
 export { intersect } from './intersect.js'
 export { scission } from './scission.js'

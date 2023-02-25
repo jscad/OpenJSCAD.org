@@ -3,11 +3,11 @@ your designs, so that they can easily adapt to different situations.
 
 ## ParametricBox.js
 ```javascript
-const jscad = require('@jscad/modeling')
-const { cuboid, roundedCuboid } = jscad.primitives
-const { subtract } = jscad.booleans
+import { primitives, booleans } from  '@jscad/modeling'
+const { cuboid, roundedCuboid } = primitives
+const { subtract } = booleans
 
-const getParameterDefinitions = () => {
+export const getParameterDefinitions = () => {
   return [
     {name: 'outerWidth', caption: 'Outer width of box:', type: 'float', initial: 120},
     {name: 'outerDepth', caption: 'Outer depth of box:', type: 'float', initial: 100},
@@ -17,7 +17,7 @@ const getParameterDefinitions = () => {
    ];
 }
 
-const main = (params) => {
+export const main = (params) => {
 	return subtract(
 		outerBox(params),
 		innerBox(params)
@@ -41,15 +41,13 @@ const innerBox = (params) => {
 
 	return roundedCuboid({ size, center, roundRadius: params.cornerRadius, segments: 32 });
 }
-
-module.exports = { main, getParameterDefinitions }
 ```
 <img src="img/parametricBox.png" alt="Parametric Box example">
 
 ## All Parameter Types:
 Below is a comprehensive example of all the types of parameters you can specify in JSCAD:
 ```javascript
-const getParameterDefinitions = () => {
+export const getParameterDefinitions = () => {
   return [
     { name: 'group1', type: 'group', caption: 'Group 1: Text Entry' },
     { name: 'text', type: 'text', initial: '', size: 20, maxLength: 20, caption: 'Plain Text:', placeholder: '20 characters' },

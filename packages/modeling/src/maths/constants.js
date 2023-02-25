@@ -3,6 +3,8 @@
  * This should be 1 / spacialResolution.
  * @default
  * @alias module:modeling/maths.EPS
+ * @example
+ * const { EPS } = maths.constants
  */
 export const EPS = 1e-5
 
@@ -10,6 +12,8 @@ export const EPS = 1e-5
  * Smaller epsilon used for measuring near zero distances.
  * @default
  * @alias module:modeling/maths.NEPS
+ * @example
+ * const { NEPS } = maths.constants
  */
 export const NEPS = 1e-13
 // NEPS is derived from a series of tests to determine the optimal precision
@@ -19,8 +23,9 @@ export const NEPS = 1e-13
 /**
  * The TAU property represents the ratio of the circumference of a circle to its radius.
  * Approximately 6.28318530717958647692
+ * @alias module:modeling/maths.TAU
  * @default
  * @example
- * const { TAU } = require('@jscad/modeling').maths.constants
+ * const { TAU } = maths.constants
  */
 export const TAU = Math.PI * 2

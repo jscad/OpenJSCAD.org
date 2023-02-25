@@ -20,9 +20,9 @@ import { toPoints } from './toPoints.js'
  * @alias module:modeling/geometries/path2.appendBezier
  *
  * @example
- * let p5 = path2.create({}, [[10,-20]])
- * p5 = path2.appendBezier({controlPoints: [[10,-10],[25,-10],[25,-20]]}, p5);
- * p5 = path2.appendBezier({controlPoints: [null, [25,-30],[40,-30],[40,-20]]}, p5)
+ * let myShape = fromPoints({}, [[10,-20]])
+ * myShape = appendBezier({controlPoints: [[10,-10],[25,-10],[25,-20]]}, myShape);
+ * myShape = appendBezier({controlPoints: [null, [25,-30],[40,-30],[40,-20]]}, myShape)
  */
 export const appendBezier = (options, geometry) => {
   const defaults = {

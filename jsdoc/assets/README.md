@@ -1,4 +1,4 @@
-# JSCAD V2 - Documentation
+# JSCAD V3 - Documentation
 
 *JSCAD* is an open source set of modular, browser and command line tools for creating parametric 2D and 3D designs with Javascript code. It provides a quick, precise and reproducible method for generating 3D models, and is especially useful for 3D printing applications.
 

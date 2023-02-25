@@ -3,7 +3,8 @@
  * In all cases, the function returns the results, and never changes the original shapes.
  * @module modeling/extrusions
  * @example
- * import { extrudeLinear, extrudeRectangular, extrudeRotate } from '@jscad/modeling/extrusions'
+ * import { extrusions } from '@jscad/modeling'
+ * const { extrudeFromSlices, extrudeLinear, extrudeRectangular, extrudeRotate, project } = extrusions
  */
 export { extrudeFromSlices } from './extrudeFromSlices.js'
 export { extrudeLinear } from './extrudeLinear.js'

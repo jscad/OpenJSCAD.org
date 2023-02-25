@@ -1,7 +1,11 @@
 /**
- * Represents a 3D geometry consisting of a list of edges.
+ * Represents a 3D geometry consisting of a list of contours, where each contour consists of a list of planar vertices.
  * @see {@link slice} for data structure information.
  * @module modeling/geometries/slice
+ *
+ * @example
+ * import { geometries } from '@jscad/modeling'
+ * const slice = geometries.slice.create([[[0,0,0], [4,0,0], [4,3,12]]])
  */
 export { calculatePlane } from './calculatePlane.js'
 export { clone } from './clone.js'

@@ -20,9 +20,9 @@ import { toPoints } from './toPoints.js'
  * @alias module:modeling/geometries/path2.appendArc
  *
  * @example
- * let p1 = path2.fromPoints({}, [[27.5,-22.96875]]);
- * p1 = path2.appendPoints([[27.5,-3.28125]], p1);
- * p1 = path2.appendArc({endpoint: [12.5, -22.96875], radius: [15, -19.6875]}, p1);
+ * let myShape = fromPoints({}, [[27.5,-22.96875]]);
+ * myShape = appendPoints([[27.5,-3.28125]], myShape);
+ * myShape = appendArc({endpoint: [12.5, -22.96875], radius: [15, -19.6875]}, myShape);
  */
 export const appendArc = (options, geometry) => {
   const defaults = {
