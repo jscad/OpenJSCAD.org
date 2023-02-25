@@ -3,9 +3,9 @@ import * as plane from '../maths/plane/index.js'
 import * as vec2 from '../maths/vec2/index.js'
 import * as vec3 from '../maths/vec3/index.js'
 
-import OrthoNormalBasis from '../maths/OrthoNormalBasis.js'
+import { OrthoNormalBasis } from '../maths/OrthoNormalBasis.js'
 
-import transform from './transform.js'
+import { transform } from './transform.js'
 
 /**
  * Get the transformation matrix that connects the given connectors.
@@ -64,5 +64,3 @@ export const transformationBetween = (options, from, to) => {
 
   return matrix
 }
-
-export default transformationBetween

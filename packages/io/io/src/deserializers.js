@@ -12,5 +12,3 @@ deserializers[objDeSerializer.mimeType] = objDeSerializer.deserialize
 deserializers[stlDeSerializer.mimeType] = stlDeSerializer.deserialize
 deserializers[svgDeSerializer.mimeType] = svgDeSerializer.deserialize
 deserializers[x3dDeSerializer.mimeType] = x3dDeSerializer.deserialize
-
-export default deserializers

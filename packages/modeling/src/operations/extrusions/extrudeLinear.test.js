@@ -8,7 +8,7 @@ import { geom2, geom3, path2 } from '../../geometries/index.js'
 
 import { measureVolume } from '../../measurements/index.js'
 
-import square from '../../primitives/square.js'
+import { square } from '../../primitives/index.js'
 
 import { extrudeLinear } from './index.js'
 

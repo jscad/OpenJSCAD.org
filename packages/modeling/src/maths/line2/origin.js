@@ -8,5 +8,3 @@ import * as vec2 from '../vec2/index.js'
  * @alias module:modeling/maths/line2.origin
  */
 export const origin = (line) => vec2.scale(vec2.create(), line, line[2])
-
-export default origin

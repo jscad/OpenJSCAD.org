@@ -1,5 +1,6 @@
 import * as vec2 from '../../maths/vec2/index.js'
-import create from './create.js'
+
+import { create } from './create.js'
 
 /*
  * Create a list of edges which SHARE vertices.
@@ -112,5 +113,3 @@ const popNextSide = (startSide, nextSides) => {
   nextSides.splice(bestIndex, 1) // remove side from list
   return nextSide
 }
-
-export default fromSides

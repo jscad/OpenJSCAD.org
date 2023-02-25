@@ -16,5 +16,3 @@ export const measureBoundingBox = (polygon) => {
   }
   return [min, max]
 }
-
-export default measureBoundingBox

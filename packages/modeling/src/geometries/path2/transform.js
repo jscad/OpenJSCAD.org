@@ -16,5 +16,3 @@ export const transform = (matrix, geometry) => {
   const transforms = mat4.multiply(mat4.create(), matrix, geometry.transforms)
   return Object.assign({}, geometry, { transforms })
 }
-
-export default transform

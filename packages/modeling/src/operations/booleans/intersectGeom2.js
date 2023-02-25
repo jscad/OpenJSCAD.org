@@ -1,7 +1,7 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/index.js'
 
 import { INTERSECTION } from './martinez/operation.js'
-import boolean from './martinez/index.js'
+import { boolean } from './martinez/index.js'
 
 /*
  * Return a new 2D geometry representing space in both the first geometry and
@@ -19,5 +19,3 @@ export const intersectGeom2 = (...geometries) => {
 
   return newgeometry
 }
-
-export default intersectGeom2

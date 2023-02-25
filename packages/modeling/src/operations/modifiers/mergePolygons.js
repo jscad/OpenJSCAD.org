@@ -1,4 +1,4 @@
-import aboutEqualNormals from '../../maths/utils/aboutEqualNormals.js'
+import { aboutEqualNormals } from '../../maths/utils/index.js'
 
 import * as vec3 from '../../maths/vec3/index.js'
 
@@ -185,7 +185,7 @@ const coplanar = (plane1, plane2) => {
   return false
 }
 
-const mergePolygons = (epsilon, polygons) => {
+export const mergePolygons = (epsilon, polygons) => {
   const polygonsPerPlane = [] // elements: [plane, [poly3...]]
   polygons.forEach((polygon) => {
     const mapping = polygonsPerPlane.find((element) => coplanar(element[0], poly3.plane(polygon)))
@@ -205,5 +205,3 @@ const mergePolygons = (epsilon, polygons) => {
   })
   return destpolygons
 }
-
-export default mergePolygons

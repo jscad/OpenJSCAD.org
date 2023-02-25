@@ -1,4 +1,4 @@
-import fromValues from '../vec3/fromValues.js'
+import { fromValues } from '../vec3/index.js'
 
 /*
  * Multiply the input matrix by a Vector3 (interpreted as 3 column, 1 row)
@@ -8,7 +8,7 @@ import fromValues from '../vec3/fromValues.js'
  * @param {mat4} matrix the input matrix
  * @returns {vec3} output
  */
-const leftMultiplyVec3 = (vector, matrix) => {
+export const leftMultiplyVec3 = (vector, matrix) => {
   const [v0, v1, v2] = vector
   const v3 = 1
   let x = v0 * matrix[0] + v1 * matrix[4] + v2 * matrix[8] + v3 * matrix[12]
@@ -25,5 +25,3 @@ const leftMultiplyVec3 = (vector, matrix) => {
   }
   return fromValues(x, y, z)
 }
-
-export default leftMultiplyVec3

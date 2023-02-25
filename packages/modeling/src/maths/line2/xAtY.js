@@ -1,4 +1,4 @@
-import origin from './origin.js'
+import { origin } from './origin.js'
 
 /**
  * Determine the X coordinate of the given line at the Y coordinate.
@@ -18,5 +18,3 @@ export const xAtY = (line, y) => {
   }
   return x
 }
-
-export default xAtY

@@ -1,11 +1,12 @@
 import { geometries } from '@jscad/modeling'
-const isGeom2 = geometries.geom2.isA
-const isGeom3 = geometries.geom3.isA
-const isPath2 = geometries.path2.isA
 
 import { flatten, toArray } from '@jscad/array-utils'
 
-import serializeSolids from './serializeSolids.js'
+import { serializeSolids } from './serializeSolids.js'
+
+const isGeom2 = geometries.geom2.isA
+const isGeom3 = geometries.geom3.isA
+const isPath2 = geometries.path2.isA
 
 /*
  * determine if the given results contain valid geometry
@@ -30,5 +31,3 @@ export const instanciateDesign = (rootModule, parameterValues, options) => {
     throw new Error('bad output from script: expected geom3/geom2/path2 objects')
   }
 }
-
-export default instanciateDesign

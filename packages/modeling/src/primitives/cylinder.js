@@ -1,5 +1,4 @@
-import cylinderElliptic from './cylinderElliptic.js'
-
+import { cylinderElliptic } from './cylinderElliptic.js'
 import { isGT } from './commonChecks.js'
 
 /**
@@ -37,5 +36,3 @@ export const cylinder = (options) => {
 
   return cylinderElliptic(newoptions)
 }
-
-export default cylinder

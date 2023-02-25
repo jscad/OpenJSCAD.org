@@ -1,6 +1,6 @@
 import * as vec3 from '../vec3/index.js'
 
-import fromPointAndDirection from './fromPointAndDirection.js'
+import { fromPointAndDirection } from './fromPointAndDirection.js'
 
 /**
  * Create a line in the opposite direction as the given.
@@ -15,5 +15,3 @@ export const reverse = (out, line) => {
   const direction = vec3.negate(vec3.create(), line[1])
   return fromPointAndDirection(out, point, direction)
 }
-
-export default reverse

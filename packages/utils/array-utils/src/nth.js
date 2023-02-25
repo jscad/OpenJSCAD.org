@@ -14,5 +14,3 @@ export const nth = (array, index) => {
   }
   return array[index]
 }
-
-export default nth

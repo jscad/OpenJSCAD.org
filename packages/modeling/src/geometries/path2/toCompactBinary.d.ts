@@ -1,5 +1,3 @@
-import Path2 from './type'
+import { Path2 } from './type'
 
-export default toCompactBinary
-
-declare function toCompactBinary(geometry: Path2): Float32Array
+export function toCompactBinary(geometry: Path2): Float32Array

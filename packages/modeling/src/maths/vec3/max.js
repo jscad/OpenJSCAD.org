@@ -13,5 +13,3 @@ export const max = (out, a, b) => {
   out[2] = Math.max(a[2], b[2])
   return out
 }
-
-export default max

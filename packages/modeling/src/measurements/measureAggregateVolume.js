@@ -1,6 +1,6 @@
-import flatten from '../utils/flatten.js'
+import { flatten } from '../utils/index.js'
 
-import measureVolume from './measureVolume.js'
+import { measureVolume } from './measureVolume.js'
 
 /**
  * Measure the total (aggregate) volume for the given geometries.
@@ -22,5 +22,3 @@ export const measureAggregateVolume = (...geometries) => {
   const result = 0
   return volumes.reduce((result, volume) => result + volume, result)
 }
-
-export default measureAggregateVolume

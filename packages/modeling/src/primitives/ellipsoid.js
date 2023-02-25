@@ -1,5 +1,5 @@
 import { TAU } from '../maths/constants.js'
-import { sin, cos } from '../maths/utils/trigonometry.js'
+import { sin, cos } from '../maths/utils/index.js'
 import * as vec3 from '../maths/vec3/index.js'
 
 import * as geom3 from '../geometries/geom3/index.js'
@@ -91,5 +91,3 @@ export const ellipsoid = (options) => {
   }
   return geom3.create(polygons)
 }
-
-export default ellipsoid

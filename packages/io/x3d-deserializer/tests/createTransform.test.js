@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import createTransform from '../src/createTransform.js'
+import { createTransform } from '../src/createTransform.js'
 
 test('createTransform returns expected transform matrix', (t) => {
   // X3D defaults

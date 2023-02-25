@@ -6,5 +6,3 @@
  * @alias module:modeling/geometries/poly3.toPoints
  */
 export const toPoints = (polygon) => polygon.vertices
-
-export default toPoints

@@ -27,5 +27,3 @@ export const interpolateBetween2DPointsForY = (point1, point2, y) => {
   const result = point1[0] + t * (point2[0] - point1[0])
   return result
 }
-
-export default interpolateBetween2DPointsForY

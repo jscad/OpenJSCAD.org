@@ -1,7 +1,7 @@
 import * as vec3 from '../../maths/vec3/index.js'
 import { toOutlines } from '../geom2/index.js'
 
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Create a slice from a geom2.
@@ -17,5 +17,3 @@ export const fromGeom2 = (geometry) => {
   })
   return create(contours)
 }
-
-export default fromGeom2

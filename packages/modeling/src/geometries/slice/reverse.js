@@ -1,4 +1,4 @@
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Reverse the edges of the given slice.
@@ -12,5 +12,3 @@ export const reverse = (slice) => {
   const contours = slice.contours.map((contour) => contour.slice().reverse())
   return create(contours)
 }
-
-export default reverse

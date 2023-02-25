@@ -172,5 +172,3 @@ export const cssColors = {
   // 'yellow': [ 255 / 255, 255 / 255, 0 / 255 ],
   yellowgreen: [154 / 255, 205 / 255, 50 / 255]
 }
-
-export default cssColors

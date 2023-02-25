@@ -1,8 +1,8 @@
 import { BYLAYER, getTLA } from './autocad.js'
-import colorIndex from './colorindex2017.js'
+import { colorIndex } from './colorindex2017.js'
 import { DxfReader } from './DxfReader.js'
 import { instantiateAsciiDxf } from './instantiate.js'
-import translateAsciiDxf from './translate.js'
+import { translateAsciiDxf } from './translate.js'
 
 const version = '[VI]{version}[/VI]' // version is injected by rollup
 

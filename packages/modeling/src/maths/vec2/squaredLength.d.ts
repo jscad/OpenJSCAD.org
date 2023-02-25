@@ -1,5 +1,3 @@
-import Vec2 from './type'
+import { Vec2 } from './type'
 
-export default squaredLength
-
-declare function squaredLength(vector: Vec2): number
+export function squaredLength(vector: Vec2): number

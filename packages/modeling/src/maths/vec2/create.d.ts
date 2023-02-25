@@ -1,5 +1,3 @@
-import Vec2 from './type'
+import { Vec2 } from './type'
 
-export default create
-
-declare function create(): Vec2
+export function create(): Vec2

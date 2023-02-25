@@ -40,5 +40,3 @@ const bezierFunction = function (bezier, p, t) {
   }
   return result
 }
-
-export default valueAt

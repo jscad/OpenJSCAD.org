@@ -5,12 +5,7 @@
  * import { maths } from '@jscad/modeling'
  * const { aboutEqualNormals, area, intersect, solve2Linear } = maths.utils
  */
-import { cos, sin } from './trigonometry.js'
-export {
-  cos,
-  sin
-}
-
+export { cos, sin } from './trigonometry.js'
 export { aboutEqualNormals } from './aboutEqualNormals.js'
 export { area } from './area.js'
 export { interpolateBetween2DPointsForY } from './interpolateBetween2DPointsForY.js'

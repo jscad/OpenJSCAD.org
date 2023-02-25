@@ -51,5 +51,3 @@ export const fromTaitBryanRotation = (out, yaw, pitch, roll) => {
   out[15] = 1
   return out
 }
-
-export default fromTaitBryanRotation

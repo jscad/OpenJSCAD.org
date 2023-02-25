@@ -1,5 +1,3 @@
-import Line2 from './type'
+import { Line2 } from './type'
 
-export default toString
-
-declare function toString(line: Line2): string
+export function toString(line: Line2): string

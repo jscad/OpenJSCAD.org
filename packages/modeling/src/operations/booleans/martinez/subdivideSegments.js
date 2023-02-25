@@ -4,16 +4,16 @@
  * https://github.com/w8r/martinez
  */
 
-import Tree from './splaytree.js'
-import computeFields from './compute_fields.js'
-import possibleIntersection from './possible_intersection.js'
-import compareSegments from './compare_segments.js'
+import { Tree } from './splaytree.js'
+import { computeFields } from './computeFields.js'
+import { possibleIntersection } from './possibleIntersection.js'
+import { compareSegments } from './compareSegments.js'
 import {
   INTERSECTION,
   DIFFERENCE
 } from './operation.js'
 
-export default function subdivide (eventQueue, subject, clipping, sbbox, cbbox, operation) {
+export const subdivideSegments = (eventQueue, subject, clipping, sbbox, cbbox, operation) => {
   const sweepLine = new Tree(compareSegments)
   const sortedEvents = []
 

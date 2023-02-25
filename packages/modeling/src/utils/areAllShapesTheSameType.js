@@ -21,5 +21,3 @@ export const areAllShapesTheSameType = (shapes) => {
   }
   return true
 }
-
-export default areAllShapesTheSameType

@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import geom2ToGeometries from './geom2ToGeometries.js'
+import { geom2ToGeometries } from './geom2ToGeometries.js'
 
 const defaultTransforms = Float32Array.from([
   1, 0, 0, 0,

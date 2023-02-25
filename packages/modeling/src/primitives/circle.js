@@ -1,6 +1,6 @@
 import { TAU } from '../maths/constants.js'
 
-import ellipse from './ellipse.js'
+import { ellipse } from './ellipse.js'
 
 import { isGT } from './commonChecks.js'
 
@@ -34,5 +34,3 @@ export const circle = (options) => {
 
   return ellipse({ center, radius, startAngle, endAngle, segments })
 }
-
-export default circle

@@ -52,5 +52,3 @@ export const measureBoundingSphere = (polygon) => {
 
   return out
 }
-
-export default measureBoundingSphere

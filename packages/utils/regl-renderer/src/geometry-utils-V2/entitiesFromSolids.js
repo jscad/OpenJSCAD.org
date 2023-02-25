@@ -2,9 +2,9 @@ import { flatten, toArray } from '@jscad/array-utils'
 
 import { meshColor } from '../rendering/renderDefaults.js'
 
-import geom2ToGeometries from './geom2ToGeometries.js'
-import geom3ToGeometries from './geom3ToGeometries.js'
-import path2ToGeometries from './path2ToGeometries.js'
+import { geom2ToGeometries } from './geom2ToGeometries.js'
+import { geom3ToGeometries } from './geom3ToGeometries.js'
+import { path2ToGeometries } from './path2ToGeometries.js'
 
 /*
  * Assemble a set of renderable entities from the given geometries.
@@ -63,5 +63,3 @@ export const entitiesFromSolids = (options, ...solids) => {
   })
   return entities
 }
-
-export default entitiesFromSolids

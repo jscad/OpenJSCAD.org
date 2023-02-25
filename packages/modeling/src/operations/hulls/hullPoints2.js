@@ -55,5 +55,3 @@ const fakeAtan2 = (y, x) => {
     return -x / y
   }
 }
-
-export default hullPoints2

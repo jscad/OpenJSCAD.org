@@ -1,12 +1,12 @@
 // units for converting CSS2 points/length, i.e. CSS2 value / pxPmm
-const pxPmm = 1 / 0.2822222 // used for scaling SVG coordinates(PX) to CAG coordinates(MM)
-const inchMM = 1 / (1 / 0.039370) // used for scaling SVG coordinates(IN) to CAG coordinates(MM)
-const ptMM = 1 / (1 / 0.039370 / 72) // used for scaling SVG coordinates(IN) to CAG coordinates(MM)
-const pcMM = 1 / (1 / 0.039370 / 72 * 12) // used for scaling SVG coordinates(PC) to CAG coordinates(MM)
-const cssPxUnit = 0.2822222 // standard pixel size at arms length on 90dpi screens
+export const pxPmm = 1 / 0.2822222 // used for scaling SVG coordinates(PX) to CAG coordinates(MM)
+export const inchMM = 1 / (1 / 0.039370) // used for scaling SVG coordinates(IN) to CAG coordinates(MM)
+export const ptMM = 1 / (1 / 0.039370 / 72) // used for scaling SVG coordinates(IN) to CAG coordinates(MM)
+export const pcMM = 1 / (1 / 0.039370 / 72 * 12) // used for scaling SVG coordinates(PC) to CAG coordinates(MM)
+export const cssPxUnit = 0.2822222 // standard pixel size at arms length on 90dpi screens
 
 // standard SVG named colors (sRGB values)
-const svgColors = {
+export const svgColors = {
   aliceblue: [240, 248, 255],
   antiquewhite: [250, 235, 215],
   aqua: [0, 255, 255],
@@ -154,13 +154,4 @@ const svgColors = {
   whitesmoke: [245, 245, 245],
   yellow: [255, 255, 0],
   yellowgreen: [154, 205, 50]
-}
-
-export {
-  pxPmm,
-  inchMM,
-  ptMM,
-  pcMM,
-  cssPxUnit,
-  svgColors
 }

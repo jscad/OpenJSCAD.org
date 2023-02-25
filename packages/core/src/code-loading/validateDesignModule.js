@@ -9,5 +9,3 @@ export const validateDesignModule = (scriptRootModule) => {
     throw new Error('no main() function found in the input script')
   }
 }
-
-export default validateDesignModule

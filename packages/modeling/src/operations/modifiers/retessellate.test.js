@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { geom3 } from '../../geometries/index.js'
 
-import retessellate from './retessellate.js'
+import { retessellate } from './retessellate.js'
 
 import { comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 

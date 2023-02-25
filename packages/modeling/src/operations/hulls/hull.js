@@ -1,13 +1,12 @@
-import flatten from '../../utils/flatten.js'
-import areAllShapesTheSameType from '../../utils/areAllShapesTheSameType.js'
+import { areAllShapesTheSameType, flatten } from '../../utils/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
-import hullPath2 from './hullPath2.js'
-import hullGeom2 from './hullGeom2.js'
-import hullGeom3 from './hullGeom3.js'
+import { hullPath2 } from './hullPath2.js'
+import { hullGeom2 } from './hullGeom2.js'
+import { hullGeom3 } from './hullGeom3.js'
 
 /**
  * Create a convex hull of the given geometries.
@@ -48,5 +47,3 @@ export const hull = (...geometries) => {
   // FIXME should this throw an error for unknown geometries?
   return geometry
 }
-
-export default hull

@@ -2,9 +2,9 @@ import mat4 from 'gl-mat4'
 
 import { flatten, toArray } from '@jscad/array-utils'
 
-import csgToGeometries from './csgToGeometries.js'
-import cagToGeometries from './cagToGeometries.js'
-import computeBounds from '../bound-utils/computeBounds.js'
+import { csgToGeometries } from './csgToGeometries.js'
+import { cagToGeometries } from './cagToGeometries.js'
+import { computeBounds } from '../bound-utils/computeBounds.js'
 
 export const entitiesFromSolids = (params, solids) => {
   const defaults = {
@@ -73,5 +73,3 @@ export const entitiesFromSolids = (params, solids) => {
   // }
   return entities
 }
-
-export default entitiesFromSolids

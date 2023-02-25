@@ -1,7 +1,5 @@
-import Vec2 from '../maths/vec2/type'
-import Path2 from '../geometries/path2/type'
-
-export default arc
+import { Vec2 } from '../maths/vec2/type'
+import { Path2 } from '../geometries/path2/type'
 
 export interface ArcOptions {
   center?: Vec2
@@ -12,4 +10,4 @@ export interface ArcOptions {
   makeTangent?: boolean
 }
 
-declare function arc(options?: ArcOptions): Path2
+export function arc(options?: ArcOptions): Path2

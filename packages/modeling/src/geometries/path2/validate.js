@@ -1,6 +1,6 @@
 import * as vec2 from '../../maths/vec2/index.js'
 
-import isA from './isA.js'
+import { isA } from './isA.js'
 
 /**
  * Determine if the given object is a valid path2.
@@ -38,5 +38,3 @@ export const validate = (object) => {
     throw new Error(`path2 invalid transforms ${object.transforms}`)
   }
 }
-
-export default validate

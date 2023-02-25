@@ -25,5 +25,3 @@ export const intersectPointOfLineAndPlane = (line, plane) => {
   const point = vec3.add(vec3.create(), lpoint, vec3.scale(vec3.create(), ldirection, labda))
   return point
 }
-
-export default intersectPointOfLineAndPlane

@@ -12,5 +12,3 @@ export const copy = (out, vector) => {
   out[2] = vector[2]
   return out
 }
-
-export default copy

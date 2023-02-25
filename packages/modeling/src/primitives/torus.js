@@ -1,10 +1,9 @@
 import { TAU } from '../maths/constants.js'
 
-import extrudeRotate from '../operations/extrusions/extrudeRotate.js'
-import { rotate } from '../operations/transforms/rotate.js'
-import { translate } from '../operations/transforms/translate.js'
+import { extrudeRotate } from '../operations/extrusions/index.js'
+import { rotate, translate } from '../operations/transforms/index.js'
 
-import circle from './circle.js'
+import { circle } from './circle.js'
 
 import { isGT, isGTE } from './commonChecks.js'
 
@@ -60,5 +59,3 @@ export const torus = (options) => {
   }
   return extrudeRotate(extrudeOptions, innerCircle)
 }
-
-export default torus

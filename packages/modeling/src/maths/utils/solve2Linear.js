@@ -7,5 +7,3 @@ export const solve2Linear = (a, b, c, d, u, v) => {
   y *= invdet
   return [x, y]
 }
-
-export default solve2Linear

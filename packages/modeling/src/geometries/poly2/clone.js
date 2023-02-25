@@ -6,5 +6,3 @@
  * @alias module:modeling/geometries/poly2.clone
  */
 export const clone = (polygon) => Object.assign({}, polygon)
-
-export default clone

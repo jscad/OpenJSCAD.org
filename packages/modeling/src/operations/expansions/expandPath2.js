@@ -1,11 +1,11 @@
-import area from '../../maths/utils/area.js'
+import { area } from '../../maths/utils/index.js'
 
 import * as vec2 from '../../maths/vec2/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
-import offsetFromPoints from './offsetFromPoints.js'
+import { offsetFromPoints } from './offsetFromPoints.js'
 
 const createGeometryFromClosedOffsets = (paths) => {
   let { external, internal } = paths
@@ -89,5 +89,3 @@ export const expandPath2 = (options, geometry) => {
     return createGeometryFromExpandedOpenPath(paths, segments, corners, delta)
   }
 }
-
-export default expandPath2

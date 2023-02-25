@@ -1,5 +1,5 @@
-import measureArea from './measureArea.js'
-import reverse from './reverse.js'
+import { measureArea } from './measureArea.js'
+import { reverse } from './reverse.js'
 
 /**
  * Determine if the given points are inside the given polygon.
@@ -78,5 +78,3 @@ const isPointInside = (point, polygon) => {
   }
   return insideFlag
 }
-
-export default arePointsInside

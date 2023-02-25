@@ -27,7 +27,7 @@ const unregisterDeserializer = (extension, fs, _require) => {
   delete _require.extensions[fileExtension]
 }
 
-const registerAllExtensions = (fs, _require) => {
+export const registerAllExtensions = (fs, _require) => {
   registerJscadExtension(fs, _require)
 
   for (const extension of Object.keys(deserializers)) {
@@ -35,15 +35,10 @@ const registerAllExtensions = (fs, _require) => {
   }
 }
 
-const unRegisterAllExtensions = (fs, _require) => {
+export const unRegisterAllExtensions = (fs, _require) => {
   unRegisterJscadExtension(fs, _require)
 
   for (const extension of Object.keys(deserializers)) {
     unregisterDeserializer(extension, fs, _require)
   }
-}
-
-export {
-  registerAllExtensions,
-  unRegisterAllExtensions
 }

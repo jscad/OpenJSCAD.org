@@ -12,5 +12,3 @@ export const add = (out, a, b) => {
   out[1] = a[1] + b[1]
   return out
 }
-
-export default add

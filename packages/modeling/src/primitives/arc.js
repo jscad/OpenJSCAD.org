@@ -80,5 +80,3 @@ export const arc = (options) => {
   }
   return path2.fromPoints({ closed: false }, pointArray)
 }
-
-export default arc

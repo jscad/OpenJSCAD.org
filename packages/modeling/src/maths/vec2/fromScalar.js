@@ -11,5 +11,3 @@ export const fromScalar = (out, scalar) => {
   out[1] = scalar
   return out
 }
-
-export default fromScalar

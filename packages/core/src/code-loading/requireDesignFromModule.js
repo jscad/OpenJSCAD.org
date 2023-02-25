@@ -1,5 +1,5 @@
-import validateDesignModule from './validateDesignModule.js'
-import normalizeDesignModule from './normalizeDesignModule.js'
+import { validateDesignModule } from './validateDesignModule.js'
+import { normalizeDesignModule } from './normalizeDesignModule.js'
 
 /** load a jscad script, injecting the basic dependencies if necessary
  * @param  {string} filePath
@@ -12,5 +12,3 @@ export const requireDesignFromModule = (filePath, requireFn) => {
   validateDesignModule(designRootModule)
   return normalizeDesignModule(designRootModule)
 }
-
-export default requireDesignFromModule

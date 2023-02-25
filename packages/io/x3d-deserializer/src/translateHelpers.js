@@ -1,8 +1,8 @@
 import { x3dTypes } from './objects.js'
 
-const findNode = (x3dtype, objects) => objects.find((object) => object.definition === x3dtype)
+export const findNode = (x3dtype, objects) => objects.find((object) => object.definition === x3dtype)
 
-const findColor = (objects, options) => {
+export const findColor = (objects, options) => {
   const appearance = findNode(x3dTypes.APPEARANCE, objects)
   let material
   if (appearance) {
@@ -19,9 +19,9 @@ const findColor = (objects, options) => {
   return null
 }
 
-const pointToString = (point) => `[${point}]`
+export const pointToString = (point) => `[${point}]`
 
-const pointsToString = (triangle) => {
+export const pointsToString = (triangle) => {
   const strings = triangle.map((point) => pointToString(point))
   return `[
     ${strings.join(',\n    ')}
@@ -66,7 +66,7 @@ const createColorsFromFaceColors = (colorIndex, faceColors) => {
 }
 
 // create a list of colors from the given shape and color objects
-const createColors = (shape, color) => {
+export const createColors = (shape, color) => {
   if (!color) return null
   if (!Array.isArray(shape.colorIndex)) return null
 
@@ -77,14 +77,4 @@ const createColors = (shape, color) => {
     colors = createColorsFromFaceColors(shape.colorIndex, color.colors)
   }
   return colors
-}
-
-export {
-  findNode,
-  findColor,
-
-  createColors,
-
-  pointToString,
-  pointsToString
 }

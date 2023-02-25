@@ -6,5 +6,3 @@
  * @alias module:modeling/maths/vec2.angleRadians
  */
 export const angleRadians = (vector) => Math.atan2(vector[1], vector[0]) // y=sin, x=cos
-
-export default angleRadians

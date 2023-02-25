@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import countOf from '../../test/helpers/countOf.js'
+import { countOf } from '../../test/helpers/countOf.js'
 
 import { colors, geometries, primitives, transforms } from '@jscad/modeling'
 

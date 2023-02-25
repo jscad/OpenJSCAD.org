@@ -1,7 +1,7 @@
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as poly2 from '../../geometries/poly2/index.js'
 
-import offsetFromPoints from './offsetFromPoints.js'
+import { offsetFromPoints } from './offsetFromPoints.js'
 
 /*
  * Create a offset geometry from the given geom2 using the given options (if any).
@@ -42,5 +42,3 @@ export const offsetGeom2 = (options, geometry) => {
   // create a composite geometry from the new outlines
   return geom2.create(newOutlines)
 }
-
-export default offsetGeom2

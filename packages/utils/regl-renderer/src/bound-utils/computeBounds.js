@@ -2,7 +2,7 @@ import vec3 from 'gl-vec3'
 
 import { flatten } from '@jscad/array-utils'
 
-import boundingBox from './boundingBox.js'
+import { boundingBox } from './boundingBox.js'
 
 /*
  * Compute the bounds of the given geometries.
@@ -50,5 +50,3 @@ export const computeBounds = (...geometries) => {
   }
   return bounds
 }
-
-export default computeBounds

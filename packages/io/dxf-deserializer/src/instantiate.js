@@ -7,7 +7,7 @@ const EPS = 1e-5 // FIXME
 //
 // instantiate the given object (3dface) as a polygon
 //
-const instantiatePolygon = (obj, layers, options) => {
+export const instantiatePolygon = (obj, layers, options) => {
   const vertices = []
   // FIXME: should check global variable to instantiate in the proper orientation
   vertices.push(maths.vec3.fromValues(obj.pptx, obj.ppty, obj.pptz))
@@ -50,7 +50,7 @@ const instantiateLine = (obj, layers, options) => {
 //
 // instantiate the give object as 2D Vector or 3D Vector wrapped as an object
 //
-const instantiateVector = (obj) => {
+export const instantiateVector = (obj) => {
   const d3line = parseInt('00000000000100000', 2)
   const d3mesh = parseInt('00000000001000000', 2)
   const d3face = parseInt('00000000010000000', 2)
@@ -365,7 +365,7 @@ const completeCurrent = (objects, baseobj, polygons, vectors, options) => {
   return null
 }
 
-const instantiateAsciiDxf = (reader, options) => {
+export const instantiateAsciiDxf = (reader, options) => {
   // console.log('**************************************************')
   // console.log(JSON.stringify(reader.objstack))
   // console.log('**************************************************')
@@ -486,10 +486,4 @@ const instantiateAsciiDxf = (reader, options) => {
   // )
   // console.log('**************************************************')
   return objects
-}
-
-export {
-  instantiatePolygon,
-  instantiateVector,
-  instantiateAsciiDxf
 }

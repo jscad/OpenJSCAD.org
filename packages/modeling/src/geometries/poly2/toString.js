@@ -9,5 +9,3 @@ import * as vec2 from '../../maths/vec2/index.js'
 export const toString = (polygon) => {
   return `poly2: [${polygon.points.map(vec2.toString).join(', ')}]`
 }
-
-export default toString

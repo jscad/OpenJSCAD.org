@@ -1,5 +1,5 @@
 import { EPS, TAU } from '../maths/constants.js'
-import { sin, cos } from '../maths/utils/trigonometry.js'
+import { sin, cos } from '../maths/utils/index.js'
 
 import * as vec2 from '../maths/vec2/index.js'
 import * as vec3 from '../maths/vec3/index.js'
@@ -181,5 +181,3 @@ export const roundedCuboid = (options) => {
 
   return geom3.create(polygons)
 }
-
-export default roundedCuboid

@@ -12,5 +12,3 @@ export const copy = (out, line) => {
   out[2] = line[2]
   return out
 }
-
-export default copy

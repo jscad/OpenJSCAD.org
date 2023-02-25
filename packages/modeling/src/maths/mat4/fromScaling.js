@@ -31,5 +31,3 @@ export const fromScaling = (out, vector) => {
   out[15] = 1
   return out
 }
-
-export default fromScaling

@@ -1,6 +1,6 @@
 import * as vec3 from '../../maths/vec3/index.js'
 
-import measureEpsilon from '../../measurements/measureEpsilon.js'
+import { measureEpsilon } from '../../measurements/index.js'
 
 import * as geom3 from '../../geometries/geom3/index.js'
 
@@ -90,5 +90,3 @@ export const scissionGeom3 = (geometry) => {
 
   return newgeometries
 }
-
-export default scissionGeom3

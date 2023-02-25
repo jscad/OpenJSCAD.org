@@ -33,7 +33,7 @@ rotate => modify the angle input
 
 */
 
-const controlsProps = {
+export const controlsProps = {
   limits: {
     minDistance: 0.01,
     maxDistance: 10000
@@ -61,16 +61,16 @@ const controlsProps = {
   autoAdjustPlanes: true // adjust near & far planes when zooming in &out
 }
 
-const controlsState = {
+export constexport const controlsState = {
   // orbit controls state
   thetaDelta: 0,
   phiDelta: 0,
   scale: 1
 }
 
-const defaults = Object.assign({}, controlsState, controlsProps)
+export const defaults = Object.assign({}, controlsState, controlsProps)
 
-const update = ({ controls, camera }, output) => {
+export const update = ({ controls, camera }, output) => {
   // custom z up is settable, with inverted Y and Z (since we use camera[2] => up)
   const { EPS, drag } = controls
   const { position, target } = camera
@@ -162,7 +162,7 @@ const update = ({ controls, camera }, output) => {
   * @param {Float} angle value of the angle to rotate
   * @return {Object} the updated camera data/state
 */
-const rotate = ({ controls, camera, speed = 1 }, angle) => {
+export const rotate = ({ controls, camera, speed = 1 }, angle) => {
   let {
     thetaDelta,
     phiDelta
@@ -189,7 +189,7 @@ const rotate = ({ controls, camera, speed = 1 }, angle) => {
   * @param {Float} zoomDelta value of the zoom
   * @return {Object} the updated camera data/state
 */
-const zoom = ({ controls, camera, speed = 1 }, zoomDelta = 0) => {
+export const zoom = ({ controls, camera, speed = 1 }, zoomDelta = 0) => {
   let { scale } = controls
 
   if (controls.userControl.zoom && camera && zoomDelta !== undefined && zoomDelta !== 0 && !isNaN(zoomDelta)) {
@@ -231,7 +231,7 @@ const zoom = ({ controls, camera, speed = 1 }, zoomDelta = 0) => {
   * @param {Float} delta value of the raw pan delta
   * @return {Object} the updated camera data/state
 */
-const pan = ({ controls, camera, speed = 1 }, delta) => {
+export const pan = ({ controls, camera, speed = 1 }, delta) => {
   const { projection, view, viewport } = camera
   const combinedProjView = mat4.multiply([], projection, view)
   const invProjView = mat4.invert([], combinedProjView)
@@ -269,7 +269,7 @@ const pan = ({ controls, camera, speed = 1 }, delta) => {
   * @param {Array} entities - an array of entities (see entitiesFromSolids)
   * @return {Object} the updated camera data/state
 */
-const zoomToFit = ({ controls, camera, entities }) => {
+export const zoomToFit = ({ controls, camera, entities }) => {
   // our camera.fov is already in radian, no need to convert
   const { zoomToFit } = controls
   if (zoomToFit.targets !== 'all') {
@@ -310,7 +310,7 @@ const zoomToFit = ({ controls, camera, entities }) => {
   * @param {Object} desiredState the state to reset the camera to: defaults to default values
   * @return {Object} the updated camera data/state
 */
-const reset = ({ controls, camera }, desiredState) => {
+export const reset = ({ controls, camera }, desiredState) => {
   const options = {
     camera: {
       position: desiredState.camera.position,
@@ -325,16 +325,4 @@ const reset = ({ controls, camera }, desiredState) => {
     }
   }
   return options
-}
-
-export {
-  controlsProps,
-  controlsState,
-  defaults,
-  update,
-  rotate,
-  zoom,
-  pan,
-  zoomToFit,
-  reset
 }

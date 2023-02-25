@@ -14,5 +14,3 @@ export const isA = (object) => {
   }
   return false
 }
-
-export default isA

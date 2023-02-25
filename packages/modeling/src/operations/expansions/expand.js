@@ -1,12 +1,12 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
-import expandGeom2 from './expandGeom2.js'
-import expandGeom3 from './expandGeom3.js'
-import expandPath2 from './expandPath2.js'
+import { expandGeom2 } from './expandGeom2.js'
+import { expandGeom3 } from './expandGeom3.js'
+import { expandPath2 } from './expandPath2.js'
 
 /**
  * Expand the given geometry using the given options.
@@ -38,5 +38,3 @@ export const expand = (options, ...objects) => {
   })
   return results.length === 1 ? results[0] : results
 }
-
-export default expand

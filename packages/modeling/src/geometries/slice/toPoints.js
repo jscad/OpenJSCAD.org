@@ -17,5 +17,3 @@ export const toPoints = (slice) => {
   })
   return points
 }
-
-export default toPoints

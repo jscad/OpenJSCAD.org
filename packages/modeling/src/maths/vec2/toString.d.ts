@@ -1,5 +1,3 @@
-import Vec2 from './type'
+import { Vec2 } from './type'
 
-export default toString
-
-declare function toString(vec: Vec2): string
+export function toString(vec: Vec2): string

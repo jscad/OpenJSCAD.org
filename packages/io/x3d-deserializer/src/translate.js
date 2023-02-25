@@ -1,6 +1,6 @@
-import translateDefinitions from './translateDefinitions.js'
+import { translateDefinitions } from './translateDefinitions.js'
 import { x3dTypes } from './objects.js'
-import parse from './parse.js'
+import { parse } from './parse.js'
 
 export const translate = (options, src) => {
   const defaults = {
@@ -89,5 +89,3 @@ const main = () => {
 
   return code
 }
-
-export default translate

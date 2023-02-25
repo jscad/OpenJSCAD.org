@@ -1,4 +1,4 @@
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Create a polygon from the given vertices and plane.
@@ -13,5 +13,3 @@ export const fromPointsAndPlane = (vertices, plane) => {
   poly.plane = plane // retain the plane for later use
   return poly
 }
-
-export default fromPointsAndPlane

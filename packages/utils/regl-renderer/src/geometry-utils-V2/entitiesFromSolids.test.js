@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import entitiesFromSolids from './entitiesFromSolids.js'
+import { entitiesFromSolids } from './entitiesFromSolids.js'
 
 test('entitiesFromSolids (various solids)', (t) => {
   const solids = [

@@ -22,5 +22,3 @@ export const create = (points) => {
   }
   return { points }
 }
-
-export default create

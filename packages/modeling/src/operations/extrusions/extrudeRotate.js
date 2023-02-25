@@ -1,12 +1,12 @@
 import { TAU } from '../../maths/constants.js'
 import * as mat4 from '../../maths/mat4/index.js'
 
-import { mirrorX } from '../transforms/mirror.js'
+import { mirrorX } from '../transforms/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as slice from '../../geometries/slice/index.js'
 
-import extrudeFromSlices from './extrudeFromSlices.js'
+import { extrudeFromSlices } from './extrudeFromSlices.js'
 
 /**
  * Rotate extrude the given geometry using the given options.
@@ -133,5 +133,3 @@ export const extrudeRotate = (options, geometry) => {
   }
   return extrudeFromSlices(options, baseSlice)
 }
-
-export default extrudeRotate

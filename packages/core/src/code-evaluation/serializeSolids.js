@@ -23,5 +23,3 @@ export const serializeSolids = (solids) => {
   })
   return solids
 }
-
-export default serializeSolids

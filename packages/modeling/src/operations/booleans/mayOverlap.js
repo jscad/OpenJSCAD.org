@@ -1,6 +1,6 @@
 import { EPS } from '../../maths/constants.js'
 
-import measureBoundingBox from '../../measurements/measureBoundingBox.js'
+import { measureBoundingBox } from '../../measurements/index.js'
 
 /*
  * Determine if the given geometries overlap by comparing min and max bounds.
@@ -31,5 +31,3 @@ export const mayOverlap = (geometry1, geometry2) => {
   if ((min1[2] - max2[2]) > EPS) return false
   return true
 }
-
-export default mayOverlap

@@ -117,4 +117,3 @@ export const splitPolygonByPlane = (splane, polygon) => {
   }
   return result
 }
-export default splitPolygonByPlane

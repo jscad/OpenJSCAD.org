@@ -14,5 +14,3 @@ export const lerp = (out, a, b, t) => {
   out[2] = a[2] + t * (b[2] - a[2])
   return out
 }
-
-export default lerp

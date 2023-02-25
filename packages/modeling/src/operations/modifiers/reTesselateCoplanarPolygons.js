@@ -1,6 +1,6 @@
 import { EPS } from '../../maths/constants.js'
-import interpolateBetween2DPointsForY from '../../maths/utils/interpolateBetween2DPointsForY.js'
-import OrthoNormalBasis from '../../maths/OrthoNormalBasis.js'
+import { interpolateBetween2DPointsForY } from '../../maths/utils/index.js'
+import { OrthoNormalBasis } from '../../maths/OrthoNormalBasis.js'
 
 import * as line2 from '../../maths/line2/index.js'
 import * as vec2 from '../../maths/vec2/index.js'
@@ -341,5 +341,3 @@ export const reTesselateCoplanarPolygons = (sourcepolygons) => {
   } // for yindex
   return destpolygons
 }
-
-export default reTesselateCoplanarPolygons

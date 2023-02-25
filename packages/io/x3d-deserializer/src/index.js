@@ -13,8 +13,8 @@
  * const { deserializer, extension } = require('@jscad/x3d-deserializer')
  */
 
-import translate from './translate.js'
-import instantiate from './instantiate.js'
+import { translate } from './translate.js'
+import { instantiate } from './instantiate.js'
 
 const version = '[VI]{version}[/VI]' // version is injected by rollup
 

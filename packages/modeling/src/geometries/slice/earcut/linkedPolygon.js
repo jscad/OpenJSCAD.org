@@ -4,7 +4,7 @@ import { area } from './triangle.js'
 /*
  * create a circular doubly linked list from polygon points in the specified winding order
  */
-const linkedPolygon = (data, start, end, dim, clockwise) => {
+export const linkedPolygon = (data, start, end, dim, clockwise) => {
   let last
 
   if (clockwise === (signedArea(data, start, end, dim) > 0)) {
@@ -28,7 +28,7 @@ const linkedPolygon = (data, start, end, dim, clockwise) => {
 /*
  * eliminate colinear or duplicate points
  */
-const filterPoints = (start, end) => {
+export const filterPoints = (start, end) => {
   if (!start) return start
   if (!end) end = start
 
@@ -53,7 +53,7 @@ const filterPoints = (start, end) => {
 /*
  * go through all polygon nodes and cure small local self-intersections
  */
-const cureLocalIntersections = (start, triangles, dim) => {
+export const cureLocalIntersections = (start, triangles, dim) => {
   let p = start
   do {
     const a = p.prev
@@ -94,7 +94,7 @@ const intersectsPolygon = (a, b) => {
 /*
  * check if a polygon diagonal is locally inside the polygon
  */
-const locallyInside = (a, b) => area(a.prev, a, a.next) < 0
+export const locallyInside = (a, b) => area(a.prev, a, a.next) < 0
   ? area(a, b, a.next) >= 0 && area(a, a.prev, b) >= 0
   : area(a, b, a.prev) < 0 || area(a, a.next, b) < 0
 
@@ -119,7 +119,7 @@ const middleInside = (a, b) => {
  * link two polygon vertices with a bridge; if the vertices belong to the same ring, it splits polygon into two
  * if one belongs to the outer ring and another to a hole, it merges it into a single ring
  */
-const splitPolygon = (a, b) => {
+export const splitPolygon = (a, b) => {
   const a2 = new Node(a.i, a.x, a.y)
   const b2 = new Node(b.i, b.x, b.y)
   const an = a.next
@@ -143,7 +143,7 @@ const splitPolygon = (a, b) => {
 /*
  * check if a diagonal between two polygon nodes is valid (lies in polygon interior)
  */
-const isValidDiagonal = (a, b) => a.next.i !== b.i &&
+export const isValidDiagonal = (a, b) => a.next.i !== b.i &&
     a.prev.i !== b.i &&
     !intersectsPolygon(a, b) && // doesn't intersect other edges
     (
@@ -193,12 +193,3 @@ const signedArea = (data, start, end, dim) => {
  * check if two points are equal
  */
 const equals = (p1, p2) => p1.x === p2.x && p1.y === p2.y
-
-export {
-  cureLocalIntersections,
-  filterPoints,
-  isValidDiagonal,
-  linkedPolygon,
-  locallyInside,
-  splitPolygon
-}

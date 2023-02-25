@@ -1,8 +1,8 @@
-import createTransform from './createTransform.js'
+import { createTransform } from './createTransform.js'
 
 import { x3dTypes } from './objects.js'
 
-import translateShape from './translateShape.js'
+import { translateShape } from './translateShape.js'
 
 // horrific order of transforms... see http://edutechwiki.unige.ch/en/X3D_grouping_and_transforms
 const translateTransform = (options, object) => {
@@ -82,5 +82,3 @@ const translateDefinition = (options, object) => {
 
 // convert the given X3D objects into a series of JSCAD function definitions
 export const translateDefinitions = (options, objects) => objects.reduce((code, object, index) => code += translateDefinition(options, object), '')
-
-export default translateDefinitions

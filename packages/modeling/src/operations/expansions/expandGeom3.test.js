@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { geom3, poly3 } from '../../geometries/index.js'
 
-import expandGeom3 from './expandGeom3.js'
+import { expandGeom3 } from './expandGeom3.js'
 
 test('expandGeom3: expand completes properly, issue 876', async (t) => {
   setTimeout(() => t.fail(), 1000)

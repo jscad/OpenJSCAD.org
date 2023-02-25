@@ -1,6 +1,6 @@
 import * as vec3 from '../maths/vec3/index.js'
 
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Create a connector from the given point, axis and normal.
@@ -17,5 +17,3 @@ export const fromPointAxisNormal = (point, axis, normal) => {
   connector.normal = vec3.normalize(vec3.create(), normal)
   return connector
 }
-
-export default fromPointAxisNormal

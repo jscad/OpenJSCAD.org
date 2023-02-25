@@ -1,5 +1,4 @@
-import rectangle from './rectangle.js'
-
+import { rectangle } from './rectangle.js'
 import { isGT } from './commonChecks.js'
 
 /**
@@ -27,5 +26,3 @@ export const square = (options) => {
 
   return rectangle({ center, size })
 }
-
-export default square

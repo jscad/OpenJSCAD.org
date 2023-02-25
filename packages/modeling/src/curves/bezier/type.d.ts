@@ -1,6 +1,6 @@
 export default Bezier
 
-declare interface Bezier {
+export interface Bezier {
   points: Array<number> | Array<Array<number>>
   pointType: string
   dimensions: number

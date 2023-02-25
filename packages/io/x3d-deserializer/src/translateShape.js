@@ -1,12 +1,12 @@
 import { geometries } from '@jscad/modeling'
 
-import extrudeX3D from './extrudeX3D.js'
+import { extrudeX3D } from './extrudeX3D.js'
 
 import { x3dTypes } from './objects.js'
 import { findNode, findColor, pointsToString } from './translateHelpers.js'
 
-import translateLine from './translateLine.js'
-import translateMesh from './translateMesh.js'
+import { translateLine } from './translateLine.js'
+import { translateMesh } from './translateMesh.js'
 
 const { geom3, poly3 } = geometries
 
@@ -151,5 +151,3 @@ const createObjects${object.id} = (options) => {
 `
   return code
 }
-
-export default translateShape

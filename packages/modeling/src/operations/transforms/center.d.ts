@@ -1,5 +1,5 @@
 import { Geometry } from '../../geometries/types'
-import Vec3 from '../../maths/vec3/type'
+import { Vec3 } from '../../maths/vec3/type'
 import RecursiveArray from '../../utils/recursiveArray'
 
 export interface CenterOptions {

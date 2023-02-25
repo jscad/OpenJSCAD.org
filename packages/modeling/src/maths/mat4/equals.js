@@ -12,5 +12,3 @@ export const equals = (a, b) => (
   a[8] === b[8] && a[9] === b[9] && a[10] === b[10] && a[11] === b[11] &&
   a[12] === b[12] && a[13] === b[13] && a[14] === b[14] && a[15] === b[15]
 )
-
-export default equals

@@ -159,5 +159,3 @@ export const triangle = (options) => {
       throw new Error('invalid triangle type, try again')
   }
 }
-
-export default triangle

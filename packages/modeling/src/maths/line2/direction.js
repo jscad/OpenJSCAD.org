@@ -12,5 +12,3 @@ export const direction = (line) => {
   vec2.negate(vector, vector)
   return vector
 }
-
-export default direction

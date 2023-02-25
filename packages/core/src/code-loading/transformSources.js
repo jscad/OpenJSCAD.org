@@ -51,5 +51,3 @@ export const transformSources = (options, filesAndFolders) => {
   }
   return filesAndFolders
 }
-
-export default transformSources

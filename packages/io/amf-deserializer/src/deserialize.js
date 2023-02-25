@@ -1,6 +1,6 @@
-import createObject from './objectBuilder.js'
+import { createObject } from './objectBuilder.js'
 
-import parse from './parse.js'
+import { parse } from './parse.js'
 
 export const instantiate = (options, src) => {
   const defaults = {
@@ -20,5 +20,3 @@ const objectify = (amf, data) => {
   const objects = amf.objects.filter((o) => o.type === 'object')
   return objects.map((object, index) => createObject(object, index, data, { amf, instantiate: true }))
 }
-
-export default instantiate

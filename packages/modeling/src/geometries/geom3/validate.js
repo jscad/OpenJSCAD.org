@@ -1,6 +1,6 @@
 import * as poly3 from '../poly3/index.js'
 
-import isA from './isA.js'
+import { isA } from './isA.js'
 
 /**
  * Determine if the given object is a valid 3D geometry.
@@ -59,5 +59,3 @@ const validateManifold = (object) => {
     throw new Error(`non-manifold edges ${nonManifold.length}\n${nonManifold.join('\n')}`)
   }
 }
-
-export default validate

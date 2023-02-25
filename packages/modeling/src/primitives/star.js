@@ -84,5 +84,3 @@ export const star = (options) => {
 
   return geom2.create([allPoints])
 }
-
-export default star

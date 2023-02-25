@@ -1,5 +1,5 @@
-export { default as intersect } from './intersect'
-export { default as subtract } from './subtract'
-export { default as union } from './union'
+export { intersect } from './intersect'
+export { subtract } from './subtract'
+export { union } from './union'
 
 export as namespace booleans

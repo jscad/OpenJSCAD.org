@@ -10,5 +10,3 @@ export const countOf = (search, string) => {
   }
   return count
 }
-
-export default countOf

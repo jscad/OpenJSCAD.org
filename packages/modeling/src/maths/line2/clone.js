@@ -1,4 +1,4 @@
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Create a clone of the given line.
@@ -14,5 +14,3 @@ export const clone = (line) => {
   out[2] = line[2]
   return out
 }
-
-export default clone

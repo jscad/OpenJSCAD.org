@@ -32,5 +32,3 @@ export const create = (points) => {
     transforms: mat4.create()
   }
 }
-
-export default create

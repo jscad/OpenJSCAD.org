@@ -72,5 +72,3 @@ export const drawNormals = (regl, params) => {
   const singleNormal = regl(commandParams)
   return () => singleNormal(normaLines)
 }
-
-export default drawNormals

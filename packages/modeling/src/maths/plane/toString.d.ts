@@ -1,5 +1,3 @@
-import Plane from './type'
+import { Plane } from './type'
 
-export default toString
-
-declare function toString(plane: Plane): string
+export function toString(plane: Plane): string

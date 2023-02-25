@@ -1,7 +1,7 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/index.js'
 
 import { DIFFERENCE } from './martinez/operation.js'
-import boolean from './martinez/index.js'
+import { boolean } from './martinez/index.js'
 
 /*
  * Return a new 2D geometry representing space in the first geometry but
@@ -19,5 +19,3 @@ export const subtractGeom2 = (...geometries) => {
 
   return newgeometry
 }
-
-export default subtractGeom2

@@ -1,4 +1,4 @@
-import clone from './clone.js'
+import { clone } from './clone.js'
 
 /**
  * Reverses the given geometry so that the outline points are flipped in the opposite order.
@@ -15,5 +15,3 @@ export const reverse = (geometry) => {
   reversed.outlines = reversed.outlines.map((outline) => outline.slice().reverse())
   return reversed
 }
-
-export default reverse

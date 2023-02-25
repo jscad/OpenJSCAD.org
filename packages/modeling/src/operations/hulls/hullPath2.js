@@ -1,9 +1,9 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/index.js'
 
 import * as path2 from '../../geometries/path2/index.js'
 
-import hullPoints2 from './hullPoints2.js'
-import toUniquePoints from './toUniquePoints.js'
+import { hullPoints2 } from './hullPoints2.js'
+import { toUniquePoints } from './toUniquePoints.js'
 
 /*
  * Create a convex hull of the given geometries (path2).
@@ -21,5 +21,3 @@ export const hullPath2 = (...geometries) => {
   // assemble a new geometry from the list of points
   return path2.fromPoints({ closed: true }, hullPoints)
 }
-
-export default hullPath2

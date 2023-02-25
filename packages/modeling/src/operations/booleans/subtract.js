@@ -1,11 +1,10 @@
-import flatten from '../../utils/flatten.js'
-import areAllShapesTheSameType from '../../utils/areAllShapesTheSameType.js'
+import { areAllShapesTheSameType, flatten } from '../../utils/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 
-import subtractGeom2 from './subtractGeom2.js'
-import subtractGeom3 from './subtractGeom3.js'
+import { subtractGeom2 } from './subtractGeom2.js'
+import { subtractGeom3 } from './subtractGeom3.js'
 
 /**
  * Return a new geometry representing space in the first geometry but
@@ -43,5 +42,3 @@ export const subtract = (...geometries) => {
   if (geom3.isA(geometry)) return subtractGeom3(geometries)
   return geometry
 }
-
-export default subtract

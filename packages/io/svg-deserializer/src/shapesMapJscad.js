@@ -1,6 +1,6 @@
 import { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect } from './helpers.js'
 
-export const shapesMap = (obj, codify, params) => {
+export const shapesMapJscad = (obj, codify, params) => {
   const { level, indent, on, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, target, segments } = params
 
   const types = {
@@ -385,5 +385,3 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
   tmpCode += `${indent}${on} = parts\n`
   return tmpCode
 }
-
-export default shapesMap

@@ -286,5 +286,3 @@ export const colorIndex = [
   [224, 224, 224, 255],
   [0, 0, 0, 255]
 ]
-
-export default colorIndex

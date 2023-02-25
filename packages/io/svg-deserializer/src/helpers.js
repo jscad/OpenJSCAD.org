@@ -1,12 +1,12 @@
 import { inchMM, ptMM, pcMM, svgColors } from './constants.js'
 
 // Calculate the CAG length/size from the given SVG value (float)
-const svg2cagX = (v, svgUnitsPmm) => (v / svgUnitsPmm[0])
+export const svg2cagX = (v, svgUnitsPmm) => (v / svgUnitsPmm[0])
 
-const svg2cagY = (v, svgUnitsPmm) => 0 - (v / svgUnitsPmm[1])
+export const svg2cagY = (v, svgUnitsPmm) => 0 - (v / svgUnitsPmm[1])
 
 // Calculate the CAG length/size from the given CSS value (string)
-const cagLengthX = (css, svgUnitsPmm, svgUnitsX) => {
+export const cagLengthX = (css, svgUnitsPmm, svgUnitsX) => {
   if (css.indexOf('%') < 0) {
     return css2cag(css, svgUnitsPmm[0])
   }
@@ -20,7 +20,7 @@ const cagLengthX = (css, svgUnitsPmm, svgUnitsX) => {
   return Math.round(v * 100000) / 100000
 }
 
-const cagLengthY = (css, svgUnitsPmm, svgUnitsY) => {
+export const cagLengthY = (css, svgUnitsPmm, svgUnitsY) => {
   if (css.indexOf('%') < 0) {
     return css2cag(css, svgUnitsPmm[1])
   }
@@ -34,7 +34,7 @@ const cagLengthY = (css, svgUnitsPmm, svgUnitsY) => {
   return Math.round(v * 100000) / 100000
 }
 
-const cagLengthP = (css, svgUnitsPmm, svgUnitsV) => {
+export const cagLengthP = (css, svgUnitsPmm, svgUnitsV) => {
   if (css.indexOf('%') < 0) {
     return css2cag(css, svgUnitsPmm[1])
   }
@@ -48,7 +48,7 @@ const cagLengthP = (css, svgUnitsPmm, svgUnitsV) => {
   return v
 }
 
-const css2cag = (css, unit) => {
+export const css2cag = (css, unit) => {
   let v = parseFloat(css) // number part
   if (isNaN(v)) { return 0.0 }
   if (v === 0) return v
@@ -79,7 +79,7 @@ const css2cag = (css, unit) => {
 }
 
 // convert the SVG color specification to CAG RGB
-const cagColor = (value) => {
+export const cagColor = (value) => {
   // let rgb = [0,0,0]; // default is black
   let rgb
   value = value.toLowerCase()
@@ -123,7 +123,7 @@ const cagColor = (value) => {
   return rgb
 }
 
-const cssStyle = (element, name) => {
+export const cssStyle = (element, name) => {
   if ('style' in element) {
     const list = element.style + ';'
     const pat = name + '\\s*:\\s*(\\S+);'
@@ -140,7 +140,7 @@ const cssStyle = (element, name) => {
   return undefined
 }
 
-const reflect = (x, y, px, py) => {
+export const reflect = (x, y, px, py) => {
   const ox = x - px
   const oy = y - py
   if (x === px && y === px) return [x, y]
@@ -150,7 +150,7 @@ const reflect = (x, y, px, py) => {
 }
 
 // Return the value for the given attribute from the group hiearchy
-const groupValue = (svgGroups, name) => {
+export const groupValue = (svgGroups, name) => {
   let i = svgGroups.length
   while (i > 0) {
     const g = svgGroups[i - 1]
@@ -162,7 +162,7 @@ const groupValue = (svgGroups, name) => {
   return undefined
 }
 
-const svgColorForTarget = (target, svgObject) => {
+export const svgColorForTarget = (target, svgObject) => {
   let color = null
   if (target === 'path') {
     if (svgObject.stroke) {
@@ -183,18 +183,4 @@ const svgColorForTarget = (target, svgObject) => {
     }
   }
   return color
-}
-
-export {
-  svg2cagX,
-  svg2cagY,
-  cagLengthX,
-  cagLengthY,
-  cagLengthP,
-  css2cag,
-  cagColor,
-  cssStyle,
-  reflect,
-  groupValue,
-  svgColorForTarget
 }

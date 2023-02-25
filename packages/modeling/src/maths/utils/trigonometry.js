@@ -16,7 +16,7 @@ const rezero = (n) => Math.abs(n) < NEPS ? 0 : n
  * sin(TAU / 2) == 0
  * sin(TAU) == 0
  */
-const sin = (radians) => rezero(Math.sin(radians))
+export const sin = (radians) => rezero(Math.sin(radians))
 
 /**
  * Return Math.cos but accurate for TAU / 4 rotations.
@@ -29,9 +29,4 @@ const sin = (radians) => rezero(Math.sin(radians))
  * cos(TAU * 0.25) == 0
  * cos(TAU * 0.75) == 0
  */
-const cos = (radians) => rezero(Math.cos(radians))
-
-export {
-  cos,
-  sin
-}
+export const cos = (radians) => rezero(Math.cos(radians))

@@ -1,7 +1,5 @@
-import Vec3 from '../../../maths/vec3/type'
+import { Vec3 } from '../../maths/vec3/type'
 
-interface Slice {
+export interface Slice {
   contours: Array<Array<Vec3>>
 }
-
-export default Slice

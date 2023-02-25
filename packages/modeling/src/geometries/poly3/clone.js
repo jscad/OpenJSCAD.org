@@ -1,6 +1,6 @@
 import * as vec3 from '../../maths/vec3/index.js'
 
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Create a deep clone of the given polygon
@@ -24,5 +24,3 @@ export const clone = (...params) => {
   out.vertices = poly3.vertices.map((vec) => vec3.clone(vec))
   return out
 }
-
-export default clone

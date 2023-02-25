@@ -1,5 +1,3 @@
-import Slice from './type'
+import { Slice } from './type'
 
-export default reverse
-
-declare function reverse(slice: Slice): Slice
+export function reverse(slice: Slice): Slice

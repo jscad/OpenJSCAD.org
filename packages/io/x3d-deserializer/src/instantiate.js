@@ -1,7 +1,7 @@
 import { flatten } from '@jscad/array-utils'
 
-import parse from './parse.js'
-import instantiateDefinitions from './instantiateDefinitions.js'
+import { parse } from './parse.js'
+import { instantiateDefinitions } from './instantiateDefinitions.js'
 import { x3dTypes } from './objects.js'
 
 export const instantiate = (options, src) => {
@@ -30,5 +30,3 @@ export const instantiate = (options, src) => {
 
   return geometries
 }
-
-export default instantiate

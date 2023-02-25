@@ -6,7 +6,7 @@
  * @example
  * const { EPS } = maths.constants
  */
-const EPS = 1e-5
+export const EPS = 1e-5
 
 /**
  * Smaller epsilon used for measuring near zero distances.
@@ -15,7 +15,7 @@ const EPS = 1e-5
  * @example
  * const { NEPS } = maths.constants
  */
-const NEPS = 1e-13
+export const NEPS = 1e-13
 // NEPS is derived from a series of tests to determine the optimal precision
 // for comparing coplanar polygons, as provided by the sphere primitive at high
 // segmentation. NEPS is for 64 bit Number values.
@@ -28,10 +28,4 @@ const NEPS = 1e-13
  * @example
  * const { TAU } = maths.constants
  */
-const TAU = Math.PI * 2
-
-export {
-  EPS,
-  NEPS,
-  TAU
-}
+export const TAU = Math.PI * 2

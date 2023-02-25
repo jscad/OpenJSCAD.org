@@ -11,5 +11,3 @@ export const negate = (out, vector) => {
   out[1] = -vector[1]
   return out
 }
-
-export default negate

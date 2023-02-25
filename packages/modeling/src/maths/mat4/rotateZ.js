@@ -43,5 +43,3 @@ export const rotateZ = (out, matrix, radians) => {
   out[7] = a13 * c - a03 * s
   return out
 }
-
-export default rotateZ

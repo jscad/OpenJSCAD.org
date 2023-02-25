@@ -14,5 +14,3 @@ export const toString = (slice) => {
   result += ']\n'
   return result
 }
-
-export default toString

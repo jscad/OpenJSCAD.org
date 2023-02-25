@@ -1,7 +1,5 @@
-import { Geom2 } from '../../../geometries/types'
+import { Geom2 } from '../geom2/type'
 
-import Slice from './type'
+import { Slice } from './type'
 
-export default fromGeom2
-
-declare function fromGeom2(geometry: Geom2): Slice
+export function fromGeom2(geometry: Geom2): Slice

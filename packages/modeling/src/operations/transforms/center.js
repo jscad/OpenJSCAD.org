@@ -1,10 +1,10 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
-import measureBoundingBox from '../../measurements/measureBoundingBox.js'
+import { measureBoundingBox } from '../../measurements/index.js'
 
 import { translate } from './translate.js'
 

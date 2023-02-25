@@ -1,7 +1,5 @@
-import Vec3 from '../maths/vec3/type'
-import Geom3 from '../geometries/geom3/type'
-
-export default roundedCylinder
+import { Vec3 } from '../maths/vec3/type'
+import { Geom3 } from '../geometries/geom3/type'
 
 export interface RoundedCylinderOptions {
   center?: Vec3
@@ -11,4 +9,4 @@ export interface RoundedCylinderOptions {
   segments?: number
 }
 
-declare function roundedCylinder(options?: RoundedCylinderOptions): Geom3
+export function roundedCylinder(options?: RoundedCylinderOptions): Geom3

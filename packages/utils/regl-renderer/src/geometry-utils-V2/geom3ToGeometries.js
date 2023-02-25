@@ -213,5 +213,3 @@ const fuzyNormalAndPositionLookup = (normalPositionLookup, toCompare, normalThre
   }
   return undefined
 }
-
-export default geom3ToGeometries

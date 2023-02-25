@@ -1,6 +1,6 @@
 import { maths } from '@jscad/modeling'
 
-const x3dTypes = {
+export const x3dTypes = {
   X3D: 0,
   UNIT: 1,
   META: 2,
@@ -43,14 +43,14 @@ const x3dTypes = {
 }
 
 // document level node, basically a group
-const x3dX3D = (element) => {
+export const x3dX3D = (element) => {
   const obj = { definition: x3dTypes.X3D }
 
   obj.objects = []
   return obj
 }
 
-const x3dUnit = (element) => {
+export const x3dUnit = (element) => {
   const obj = { definition: x3dTypes.UNIT, category: '', name: '', conversionFactor: 1.0 }
 
   if (element.category) obj.category = element.category
@@ -60,7 +60,7 @@ const x3dUnit = (element) => {
   return obj
 }
 
-const x3dMeta = (element) => {
+export const x3dMeta = (element) => {
   const obj = { definition: x3dTypes.META, content: '', name: '' }
 
   if (element.content) obj.content = element.content
@@ -70,7 +70,7 @@ const x3dMeta = (element) => {
 }
 
 // scenes contain various other nodes, basically a group
-const x3dScene = (element) => {
+export const x3dScene = (element) => {
   const obj = { definition: x3dTypes.SCENE }
   obj.objects = []
   return obj
@@ -78,7 +78,7 @@ const x3dScene = (element) => {
 
 // transforms contain various other nodes, basically a group
 // horrific order of transforms... see http://edutechwiki.unige.ch/en/X3D_grouping_and_transforms
-const x3dTransform = (element) => {
+export const x3dTransform = (element) => {
   const obj = {
     definition: x3dTypes.TRANSFORM,
     center: [0, 0, 0],
@@ -124,7 +124,7 @@ const x3dTransform = (element) => {
 }
 
 // shapes contain geometry and appearance, in any order
-const x3dShape = (element) => {
+export const x3dShape = (element) => {
   const obj = { definition: x3dTypes.SHAPE }
   obj.objects = []
   return obj
@@ -134,7 +134,7 @@ const x3dShape = (element) => {
 // 3D shapes
 //
 
-const x3dBox = (element) => {
+export const x3dBox = (element) => {
   const obj = { definition: x3dTypes.BOX, size: [2, 2, 2] }
 
   if (element.size) {
@@ -146,7 +146,7 @@ const x3dBox = (element) => {
   return obj
 }
 
-const x3dCone = (element) => {
+export const x3dCone = (element) => {
   const NEAR0 = 0.00001
   const obj = { definition: x3dTypes.CONE, bottomRadius: 1, height: 2, subdivision: 32, topRadius: NEAR0 }
 
@@ -165,7 +165,7 @@ const x3dCone = (element) => {
   return obj
 }
 
-const x3dCylinder = (element) => {
+export const x3dCylinder = (element) => {
   const obj = { definition: x3dTypes.CYLINDER, height: 2, radius: 1, subdivision: 32 }
 
   if (element.height) {
@@ -180,7 +180,7 @@ const x3dCylinder = (element) => {
   return obj
 }
 
-const x3dSphere = (element) => {
+export const x3dSphere = (element) => {
   const obj = { definition: x3dTypes.SPHERE, radius: 1, subdivision: 24 }
 
   if (element.radius) {
@@ -195,7 +195,7 @@ const x3dSphere = (element) => {
   return obj
 }
 
-const x3dExtrusion = (element) => {
+export const x3dExtrusion = (element) => {
   const obj = {
     definition: x3dTypes.EXTRUSION,
     ccw: true,
@@ -267,7 +267,7 @@ const x3dExtrusion = (element) => {
 // 2D shapes
 //
 
-const x3dArc2D = (element) => {
+export const x3dArc2D = (element) => {
   const obj = { definition: x3dTypes.ARC2D, endAngle: Math.PI / 2, radius: 1, startAngle: 0, subdivision: 32 }
 
   if (element.endAngle) {
@@ -285,7 +285,7 @@ const x3dArc2D = (element) => {
   return obj
 }
 
-const x3dArcClose2D = (element) => {
+export const x3dArcClose2D = (element) => {
   const obj = { definition: x3dTypes.ARCCLOSE2D, closureType: 'PIE', endAngle: Math.PI / 2, radius: 1, startAngle: 0, subdivision: 32 }
 
   if (element.closureType) {
@@ -306,7 +306,7 @@ const x3dArcClose2D = (element) => {
   return obj
 }
 
-const x3dCircle2D = (element) => {
+export const x3dCircle2D = (element) => {
   const obj = { definition: x3dTypes.CIRCLE2D, radius: 1, subdivision: 32 }
 
   if (element.radius) {
@@ -318,7 +318,7 @@ const x3dCircle2D = (element) => {
   return obj
 }
 
-const x3dDisk2D = (element) => {
+export const x3dDisk2D = (element) => {
   const obj = { definition: x3dTypes.DISK2D, innerRadius: 0, outerRadius: 1, subdivision: 32 }
 
   if (element.innerRadius) {
@@ -333,7 +333,7 @@ const x3dDisk2D = (element) => {
   return obj
 }
 
-const x3dPolyline2D = (element) => {
+export const x3dPolyline2D = (element) => {
   const obj = { definition: x3dTypes.POLYLINE2D, lineSegments: [] }
 
   if (element.lineSegments) {
@@ -346,7 +346,7 @@ const x3dPolyline2D = (element) => {
   return obj
 }
 
-const x3dRectangle2D = (element) => {
+export const x3dRectangle2D = (element) => {
   const obj = { definition: x3dTypes.RECTANGLE2D, size: [2, 2] }
 
   if (element.size) {
@@ -358,7 +358,7 @@ const x3dRectangle2D = (element) => {
   return obj
 }
 
-const x3dTriangleSet2D = (element) => {
+export const x3dTriangleSet2D = (element) => {
   const obj = { definition: x3dTypes.TRIANGLESET2D, vertices: [] }
 
   if (element.vertices) {
@@ -375,7 +375,7 @@ const x3dTriangleSet2D = (element) => {
 // Lines
 //
 
-const x3dLineSet = (element) => {
+export const x3dLineSet = (element) => {
   const obj = { definition: x3dTypes.LINESET, vertexCount: [], colorPerVertex: true }
 
   if (element.vertexCount) {
@@ -389,7 +389,7 @@ const x3dLineSet = (element) => {
   return obj
 }
 
-const x3dIndexedLineSet = (element) => {
+export const x3dIndexedLineSet = (element) => {
   const obj = { definition: x3dTypes.INDEXEDLINESET, indexes: [], colorPerVertex: true }
 
   if (element.coordIndex) {
@@ -409,7 +409,7 @@ const x3dIndexedLineSet = (element) => {
 // Meshs
 //
 
-const x3dColor = (element) => {
+export const x3dColor = (element) => {
   const obj = { definition: x3dTypes.COLOR, colors: [] }
 
   if (element.color) {
@@ -424,7 +424,7 @@ const x3dColor = (element) => {
   return obj
 }
 
-const x3dCoordinate = (element) => {
+export const x3dCoordinate = (element) => {
   const obj = { definition: x3dTypes.COORDINATE, points: [] }
 
   if (element.point) {
@@ -439,7 +439,7 @@ const x3dCoordinate = (element) => {
   return obj
 }
 
-const x3dTriangleSet = (element) => {
+export const x3dTriangleSet = (element) => {
   const obj = { definition: x3dTypes.TRIANGLESET, ccw: true, colorPerVertex: true }
 
   if (element.ccw) {
@@ -449,7 +449,7 @@ const x3dTriangleSet = (element) => {
   return obj
 }
 
-const x3dTriangleFanSet = (element) => {
+export const x3dTriangleFanSet = (element) => {
   const obj = { definition: x3dTypes.TRIANGLEFANSET, ccw: true, fanCount: [], colorPerVertex: true }
 
   if (element.ccw) {
@@ -462,7 +462,7 @@ const x3dTriangleFanSet = (element) => {
   return obj
 }
 
-const x3dTriangleStripSet = (element) => {
+export const x3dTriangleStripSet = (element) => {
   const obj = { definition: x3dTypes.TRIANGLESTRIPSET, ccw: true, stripCount: [], colorPerVertex: true }
 
   if (element.ccw) {
@@ -475,7 +475,7 @@ const x3dTriangleStripSet = (element) => {
   return obj
 }
 
-const x3dQuadSet = (element) => {
+export const x3dQuadSet = (element) => {
   const obj = { definition: x3dTypes.QUADSET, ccw: true, colorPerVertex: true }
 
   if (element.ccw) {
@@ -485,7 +485,7 @@ const x3dQuadSet = (element) => {
   return obj
 }
 
-const x3dIndexedTriangleSet = (element) => {
+export const x3dIndexedTriangleSet = (element) => {
   const obj = { definition: x3dTypes.INDEXEDTRIANGLESET, ccw: true, index: [], colorPerVertex: true }
 
   if (element.ccw) {
@@ -498,7 +498,7 @@ const x3dIndexedTriangleSet = (element) => {
   return obj
 }
 
-const x3dIndexedTriangleFanSet = (element) => {
+export const x3dIndexedTriangleFanSet = (element) => {
   const obj = { definition: x3dTypes.INDEXEDTRIANGLEFANSET, ccw: true, fans: [], colorPerVertex: true }
 
   if (element.ccw) {
@@ -512,7 +512,7 @@ const x3dIndexedTriangleFanSet = (element) => {
   return obj
 }
 
-const x3dIndexedTriangleStripSet = (element) => {
+export const x3dIndexedTriangleStripSet = (element) => {
   const obj = { definition: x3dTypes.INDEXEDTRIANGLESTRIPSET, ccw: true, strips: [], colorPerVertex: true }
 
   obj.objects = []
@@ -526,7 +526,7 @@ const x3dIndexedTriangleStripSet = (element) => {
   return obj
 }
 
-const x3dIndexedQuadSet = (element) => {
+export const x3dIndexedQuadSet = (element) => {
   const obj = { definition: x3dTypes.INDEXEDQUADSET, ccw: true, index: [], colorPerVertex: true }
 
   if (element.ccw) {
@@ -539,7 +539,7 @@ const x3dIndexedQuadSet = (element) => {
   return obj
 }
 
-const x3dIndexedFaceSet = (element) => {
+export const x3dIndexedFaceSet = (element) => {
   const obj = { definition: x3dTypes.INDEXEDFACESET, ccw: true, convex: true, faces: [], colorPerVertex: true, colorIndex: null }
 
   if (element.ccw) {
@@ -573,7 +573,7 @@ const x3dIndexedFaceSet = (element) => {
   return obj
 }
 
-const x3dElevationGrid = (element) => {
+export const x3dElevationGrid = (element) => {
   const obj = { definition: x3dTypes.ELEVATIONGRID, xDimension: 2, zDimension: 2, xSpacing: 1.0, zSpacing: 1.0, height: [0, 0, 0, 0], ccw: true, solid: false, colorPerVertex: true }
 
   if (element.xDimension) {
@@ -610,14 +610,14 @@ const x3dElevationGrid = (element) => {
 // Materials
 //
 
-const x3dAppearance = (element) => {
+export const x3dAppearance = (element) => {
   const obj = { definition: x3dTypes.APPEARANCE }
 
   obj.objects = []
   return obj
 }
 
-const x3dMaterial = (element) => {
+export const x3dMaterial = (element) => {
   const obj = { definition: x3dTypes.MATERIAL, color: [0.8, 0.8, 0.8, 1.0] }
 
   // convert material to colors if possible
@@ -650,54 +650,9 @@ const x3dMaterial = (element) => {
 
 // GROUPS
 
-const x3dGroup = (element) => {
+export const x3dGroup = (element) => {
   const obj = { definition: x3dTypes.GROUP }
 
   obj.objects = []
   return obj
-}
-
-export {
-  x3dTypes,
-
-  x3dX3D,
-  x3dUnit,
-  x3dMeta,
-  x3dScene,
-  x3dTransform,
-  x3dShape,
-  x3dGroup,
-
-  x3dBox,
-  x3dCone,
-  x3dCylinder,
-  x3dSphere,
-  x3dExtrusion,
-
-  x3dArc2D,
-  x3dArcClose2D,
-  x3dCircle2D,
-  x3dDisk2D,
-  x3dPolyline2D,
-  x3dRectangle2D,
-  x3dTriangleSet2D,
-
-  x3dColor,
-  x3dCoordinate,
-  x3dTriangleSet,
-  x3dTriangleFanSet,
-  x3dTriangleStripSet,
-  x3dQuadSet,
-  x3dIndexedTriangleSet,
-  x3dIndexedTriangleFanSet,
-  x3dIndexedTriangleStripSet,
-  x3dIndexedQuadSet,
-  x3dIndexedFaceSet,
-  x3dElevationGrid,
-
-  x3dLineSet,
-  x3dIndexedLineSet,
-
-  x3dAppearance,
-  x3dMaterial
 }

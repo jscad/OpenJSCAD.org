@@ -11,5 +11,3 @@
  * @alias module:modeling/maths/vec3.create
  */
 export const create = () => [0, 0, 0]
-
-export default create

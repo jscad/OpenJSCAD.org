@@ -1,6 +1,6 @@
 import * as plane from '../../maths/plane/index.js'
 
-import create from './create.js'
+import { create } from './create.js'
 
 /**
  * Invert the give polygon to face the opposite direction.
@@ -18,5 +18,3 @@ export const invert = (polygon) => {
   }
   return inverted
 }
-
-export default invert

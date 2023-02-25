@@ -6,5 +6,3 @@
  * @alias module:modeling/geometries/poly2.toPoints
  */
 export const toPoints = (polygon) => polygon.points
-
-export default toPoints

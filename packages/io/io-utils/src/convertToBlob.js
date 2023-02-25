@@ -1,4 +1,4 @@
-import makeBlob from './makeBlob.js'
+import { makeBlob } from './makeBlob.js'
 
 const Blob = makeBlob()
 
@@ -18,5 +18,3 @@ export const convertToBlob = (input) => {
   const blob = new Blob(data, { type: mimeType })
   return blob
 }
-
-export default convertToBlob

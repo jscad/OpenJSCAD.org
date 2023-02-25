@@ -1,8 +1,8 @@
 import * as vec3 from '../vec3/index.js'
-import solve2Linear from '../utils/solve2Linear.js'
+import { solve2Linear } from '../utils/index.js'
 import { EPS } from '../constants.js'
 
-import fromPointAndDirection from './fromPointAndDirection.js'
+import { fromPointAndDirection } from './fromPointAndDirection.js'
 
 /**
  * Create a line the intersection of the given planes.
@@ -42,5 +42,3 @@ export const fromPlanes = (out, plane1, plane2) => {
   }
   return fromPointAndDirection(out, origin, direction)
 }
-
-export default fromPlanes

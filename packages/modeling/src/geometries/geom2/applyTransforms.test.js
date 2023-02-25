@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { create } from './index.js'
 
-import applyTransforms from './applyTransforms.js'
+import { applyTransforms } from './applyTransforms.js'
 
 test('applyTransforms: Updates a populated geom2 with transforms', (t) => {
   const points = [[0, 0], [1, 0], [0, 1]]

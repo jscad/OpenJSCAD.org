@@ -1,5 +1,3 @@
-import Slice from './type'
+import { Slice } from './type'
 
-export default clone
-
-declare function clone(slice: Slice): Slice
+export function clone(slice: Slice): Slice

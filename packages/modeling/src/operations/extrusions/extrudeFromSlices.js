@@ -5,7 +5,7 @@ import * as geom3 from '../../geometries/geom3/index.js'
 import * as poly3 from '../../geometries/poly3/index.js'
 import * as slice from '../../geometries/slice/index.js'
 
-import extrudeWalls from './extrudeWalls.js'
+import { extrudeWalls } from './extrudeWalls.js'
 
 const defaultCallback = (progress, index, base) => {
   let baseSlice = null
@@ -100,5 +100,3 @@ export const extrudeFromSlices = (options, base) => {
   }
   return geom3.create(polygons)
 }
-
-export default extrudeFromSlices

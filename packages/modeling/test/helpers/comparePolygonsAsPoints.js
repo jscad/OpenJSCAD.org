@@ -1,4 +1,4 @@
-import compareVectors from './compareVectors.js'
+import { compareVectors } from './compareVectors.js'
 
 const comparePolygons = (poly1, poly2) => {
   if (poly1.length === poly2.length) {
@@ -19,4 +19,3 @@ export const comparePolygonsAsPoints = (list1, list2) => {
   }
   return false
 }
-export default comparePolygonsAsPoints

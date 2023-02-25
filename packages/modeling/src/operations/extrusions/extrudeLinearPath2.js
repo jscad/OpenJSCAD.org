@@ -1,7 +1,7 @@
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
-import extrudeLinearGeom2 from './extrudeLinearGeom2.js'
+import { extrudeLinearGeom2 } from './extrudeLinearGeom2.js'
 
 /*
  * Extrude the given geometry using the given options.
@@ -13,12 +13,10 @@ import extrudeLinearGeom2 from './extrudeLinearGeom2.js'
  * @param {path2} geometry - the geometry to extrude
  * @returns {geom3} the extruded 3D geometry
 */
-export const extrudePath2 = (options, geometry) => {
+export const extrudeLinearPath2 = (options, geometry) => {
   if (!geometry.isClosed) throw new Error('extruded path must be closed')
   // Convert path2 to geom2
   const points = path2.toPoints(geometry)
   const geometry2 = geom2.create([points])
   return extrudeLinearGeom2(options, geometry2)
 }
-
-export default extrudePath2

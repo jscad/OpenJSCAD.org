@@ -37,5 +37,3 @@ export const rectangle = (options) => {
   ]
   return geom2.create([points])
 }
-
-export default rectangle

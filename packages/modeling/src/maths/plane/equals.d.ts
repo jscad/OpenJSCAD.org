@@ -1,5 +1,3 @@
-import Plane from './type'
+import { Plane } from './type'
 
-export default equals
-
-declare function equals(a: Plane, b: Plane): boolean
+export function equals(a: Plane, b: Plane): boolean

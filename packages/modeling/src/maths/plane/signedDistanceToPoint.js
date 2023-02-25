@@ -9,5 +9,3 @@ import * as vec3 from '../vec3/index.js'
  * @alias module:modeling/maths/plane.signedDistanceToPoint
  */
 export const signedDistanceToPoint = (plane, point) => vec3.dot(plane, point) - plane[3]
-
-export default signedDistanceToPoint

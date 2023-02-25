@@ -1,7 +1,7 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/index.js'
 
 import { UNION } from './martinez/operation.js'
-import boolean from './martinez/index.js'
+import { boolean } from './martinez/index.js'
 
 /*
  * Return a new 2D geometry representing the total space in the given 2D geometries.
@@ -18,5 +18,3 @@ export const unionGeom2 = (...geometries) => {
 
   return newgeometry
 }
-
-export default unionGeom2

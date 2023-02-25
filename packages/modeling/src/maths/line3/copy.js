@@ -13,5 +13,3 @@ export const copy = (out, line) => {
   vec3.copy(out[1], line[1])
   return out
 }
-
-export default copy

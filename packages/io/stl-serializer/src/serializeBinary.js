@@ -82,5 +82,3 @@ export const serializeBinary = (objects, options) => {
   options.statusCallback && options.statusCallback({ progress: 100 })
   return [headerarray.buffer, ar1.buffer, allTrianglesBuffer] // 'blobable array'
 }
-
-export default serializeBinary

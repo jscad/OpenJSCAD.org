@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-export const writeOutputDataToFile = (outputFile, outputData) => {
+export const writeOutput = (outputFile, outputData) => {
   fs.writeFile(outputFile, outputData.asBuffer(),
     (err) => {
       if (err) {
@@ -11,5 +11,3 @@ export const writeOutputDataToFile = (outputFile, outputData) => {
     }
   )
 }
-
-export default writeOutputDataToFile

@@ -1,4 +1,4 @@
-import fromValues from '../vec3/fromValues.js'
+import { fromValues } from '../vec3/index.js'
 
 /**
  * Multiply a 3D vector by a matrix (interpreted as 3 row, 1 column)
@@ -26,5 +26,3 @@ export const rightMultiplyVec3 = (vector, matrix) => {
   }
   return fromValues(x, y, z)
 }
-
-export default rightMultiplyVec3

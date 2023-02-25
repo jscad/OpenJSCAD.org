@@ -19,5 +19,3 @@ serializers[svgSerializer.mimeType] = svgSerializer.serialize
 serializers[x3dSerializer.mimeType] = x3dSerializer.serialize
 
 serializers['application/javascript'] = defaultSerialize
-
-export default serializers

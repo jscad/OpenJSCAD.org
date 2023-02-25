@@ -29,5 +29,3 @@ export const merge = (output = {}, currentState, options) => {
 
   return output
 }
-
-export default merge

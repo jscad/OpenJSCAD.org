@@ -1,9 +1,9 @@
-import aboutEqualNormals from '../../maths/utils/aboutEqualNormals.js'
+import { aboutEqualNormals } from '../../maths/utils/index.js'
 
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as poly3 from '../../geometries/poly3/index.js'
 
-import reTesselateCoplanarPolygons from './reTesselateCoplanarPolygons.js'
+import { reTesselateCoplanarPolygons } from './reTesselateCoplanarPolygons.js'
 
 const coplanar = (plane1, plane2) => {
   // expect the same distance from the origin, within tolerance
@@ -50,5 +50,3 @@ export const retessellate = (geometry) => {
 
   return result
 }
-
-export default retessellate

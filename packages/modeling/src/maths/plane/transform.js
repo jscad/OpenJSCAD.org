@@ -1,8 +1,8 @@
 import * as mat4 from '../mat4/index.js'
 import * as vec3 from '../vec3/index.js'
 
-import fromPoints from './fromPoints.js'
-import flip from './flip.js'
+import { fromPoints } from './fromPoints.js'
+import { flip } from './flip.js'
 
 /**
  * Transform the given plane using the given matrix
@@ -36,5 +36,3 @@ export const transform = (out, plane, matrix) => {
   }
   return out
 }
-
-export default transform

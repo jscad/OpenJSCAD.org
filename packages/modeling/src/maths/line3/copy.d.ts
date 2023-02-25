@@ -1,5 +1,3 @@
-import Line3 from './type'
+import { Line3 } from './type'
 
-export default copy
-
-declare function copy(out: Line3, line: Line3): Line3
+export function copy(out: Line3, line: Line3): Line3

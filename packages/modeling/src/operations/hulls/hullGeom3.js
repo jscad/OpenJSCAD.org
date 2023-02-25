@@ -1,10 +1,10 @@
-import flatten from '../../utils/flatten.js'
+import { flatten } from '../../utils/index.js'
 
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as poly3 from '../../geometries/poly3/index.js'
 
-import runner from './quickhull/index.js'
-import toUniquePoints from './toUniquePoints.js'
+import { runner } from './quickhull/index.js'
+import { toUniquePoints } from './toUniquePoints.js'
 
 /*
  * Create a convex hull of the given geometries (geom3).
@@ -28,5 +28,3 @@ export const hullGeom3 = (...geometries) => {
 
   return geom3.create(polygons)
 }
-
-export default hullGeom3

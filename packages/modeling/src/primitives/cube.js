@@ -1,5 +1,4 @@
-import cuboid from './cuboid.js'
-
+import { cuboid } from './cuboid.js'
 import { isGT } from './commonChecks.js'
 
 /**
@@ -26,5 +25,3 @@ export const cube = (options) => {
 
   return cuboid({ center, size })
 }
-
-export default cube

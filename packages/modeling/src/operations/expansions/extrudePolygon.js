@@ -30,5 +30,3 @@ export const extrudePolygon = (offsetvector, polygon1) => {
 
   return geom3.create(newpolygons)
 }
-
-export default extrudePolygon

@@ -1,4 +1,4 @@
-import intersect from '../../maths/utils/intersect.js'
+import { intersect } from '../../maths/utils/index.js'
 
 /**
  * Check whether the given polygon is simple, i.e. does not intersect itself.
@@ -36,5 +36,3 @@ export const isSimple = (polygon) => {
   }
   return true
 }
-
-export default isSimple

@@ -13,5 +13,3 @@ export const scale = (out, vector, amount) => {
   out[2] = vector[2] * amount
   return out
 }
-
-export default scale

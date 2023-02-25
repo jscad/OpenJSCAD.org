@@ -1,5 +1,3 @@
-import Geom3 from './type'
+import { Geom3 } from './type'
 
-export default clone
-
-declare function clone(geometry: Geom3): Geom3
+export function clone(geometry: Geom3): Geom3

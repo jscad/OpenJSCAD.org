@@ -6,8 +6,8 @@ import { toArray } from '@jscad/array-utils'
 import { pxPmm } from './constants.js'
 import { cagLengthX, cagLengthY, svgColorForTarget } from './helpers.js'
 import { svgSvg, svgRect, svgCircle, svgGroup, svgLine, svgPath, svgEllipse, svgPolygon, svgPolyline, svgUse } from './svgElementHelpers.js'
-import shapesMapGeometry from './shapesMapGeometry.js'
-import shapesMapJscad from './shapesMapJscad.js'
+import { shapesMapGeometry } from './shapesMapGeometry.js'
+import { shapesMapJscad } from './shapesMapJscad.js'
 
 const version = '[VI]{version}[/VI]' // version is injected by rollup
 

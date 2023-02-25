@@ -1,5 +1,3 @@
-import Slice from './type'
+import { Slice } from './type'
 
-export default toEdges
-
-declare function toEdges(slice: Slice): Slice['edges']
+export function toEdges(slice: Slice): Slice['edges']

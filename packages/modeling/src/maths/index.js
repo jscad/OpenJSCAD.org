@@ -7,24 +7,12 @@
  * import { maths } from '@jscad/modeling'
  * const { constants, line2, line3, mat4, plane, utils, vec2, vec3, vec4 } = maths
  */
-import * as constants from './constants.js'
-import * as line2 from './line2/index.js'
-import * as line3 from './line3/index.js'
-import * as mat4 from './mat4/index.js'
-import * as plane from './plane/index.js'
-import * as utils from './utils/index.js'
-import * as vec2 from './vec2/index.js'
-import * as vec3 from './vec3/index.js'
-import * as vec4 from './vec4/index.js'
-
-export {
-  constants,
-  line2,
-  line3,
-  mat4,
-  plane,
-  utils,
-  vec2,
-  vec3,
-  vec4
-}
+export * as constants from './constants.js'
+export * as line2 from './line2/index.js'
+export * as line3 from './line3/index.js'
+export * as mat4 from './mat4/index.js'
+export * as plane from './plane/index.js'
+export * as utils from './utils/index.js'
+export * as vec2 from './vec2/index.js'
+export * as vec3 from './vec3/index.js'
+export * as vec4 from './vec4/index.js'
