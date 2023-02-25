@@ -8,7 +8,7 @@
  */
 
 /**
- * Creates a new slice from the give contours.
+ * Creates a new slice from the given contours.
  *
  * @param {Array} [contours] - a list of contours, where each contour contains a list of vertices (3D)
  * @returns {slice} a new slice

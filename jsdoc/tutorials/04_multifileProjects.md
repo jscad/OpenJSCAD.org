@@ -24,7 +24,7 @@ contain your design. Your project can also contain:
 import { primtives } from '@jscad/modeling'
 const { cylinder } = primitives
 
-import utils  from './lib/utils.js'
+import { hexWidthToRadius }  from './lib/utils.js'
 
 export const main = () => {
   let hexRadius = utils.hexWidthToRadius(12)
@@ -33,9 +33,7 @@ export const main = () => {
 ```
 ## hexcap/lib/utils.js
 ```javascript
-const hexWidthToRadius = (shortWidth) => {
+export const hexWidthToRadius = (shortWidth) => {
     return shortWidth * 0.57735
 }
-
-export default hexWidthToRadius
 ```
