@@ -4,10 +4,8 @@
  * @module modeling/geometries/poly3
  *
  * @example
- * poly3.create([[0,0,0], [4,0,0], [4,3,12]])
- *
- * @example
- * {"vertices": [[0,0,0], [4,0,0], [4,3,12]]}
+ * import { geometries } from '@jscad/modeling'
+ * const polygon = geometries.poly3.create([[0,0,0], [4,0,0], [4,3,12]])
  */
 export { clone } from './clone.js'
 export { create } from './create.js'

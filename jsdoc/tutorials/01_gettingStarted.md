@@ -22,91 +22,78 @@ it with the "Load a JSCAD Project" file dialog.
 
 The simplest file that will render a cube in JSCAD looks like this:
 ```javascript
-// An import statement allows your code to use jscad methods:
-const { cube } = require('@jscad/modeling').primitives
+// the import statement allows your code to use JSCAD functions.
+import { primitives } from '@jscad/modeling'
 
-// A function declaration that returns geometry
-const main = () => {
-  return cube()
+// the export statement defines the entry point of the design.
+export const main = () => {
+  return primitives.cube()
 }
-
-// A declaration of what elements in the module (this file) are externally available.
-module.exports = { main }
 ```
-Code must be imported using require, but there are several different syntaxes for doing this:
+JSCAD functions must be imported, but there are several different syntaxes for using the functions:
 ```javascript
-// import only a specific object:
-const cube = require('@jscad/modeling/primitives/cube')
-let aCube = cube()
+// import one or more functional areas from JSCAD:
+import { primitives, booleans } from '@jscad/modeling'
 
-// import one or several objects from a module:
-const { cube, sphere } = require('@jscad/modeling/primitives')
+// use functions directly
+let aCube = primitives.cube()
+
 // or
-const { cube, sphere } = require('@jscad/modeling').primitives
-// ...
-let aCube = cube()
 
-// import all jscad code into a single object:
-const jscad = require('@jscad/modeling')
-const { cube, sphere } = jscad.primitives
-// ...
+// use the functions by name
+const { cube, sphere } = primitives
+
 let aCube = cube()
-let aTorus = jscad.primitives.torus()
+let aSphere = sphere()
 ```
 ## Adding Methods
-Clean, readable code is one of the most important aspects of a useful design. In that respect, it can often be useful to break your code into simple methods that do part of the work for your design:
+Clean, readable code is one of the most important aspects of a useful design. In that respect, it can often be useful to break your code into simple function that do part of the work for your design:
 ```javascript
-const jscad = require('@jscad/modeling')
-const { cylinder } = jscad.primitives
+import { primitives } from '@jscad/modeling'
+const { cylinder } = primitives
 
 const hex = (radius, height) => {
     return cylinder({radius, height, segments: 6})
 }
 
-const main = () => {
+export const main = () => {
   return hex(6, 2)
 }
-
-module.exports = { main }
 ```
 ## Re-usable Designs
 A valuable practise when creating models is to store all but the most trivial values as parameters in the code, rather than using the numerical values directly.  This can be done by storing them in constants in your file...
 ```javascript
-const jscad = require('@jscad/modeling')
-const { cylinder } = jscad.primitives
+import { primitives } from '@jscad/modeling'
+const { cylinder } = primitives
 
 const options = {
     height: 5.1,
     radius: 3.7
 }
 
-const main = () => {
+export const main = () => {
   return cylinder({radius: options.radius, height: options.height, segments: 6})
 }
-
-module.exports = { main }
 ```
  
-... or, even better, to include runtime parameters in your design.  This is done using the getParameterDefinitions method:
+... or, even better, to include runtime parameters in your design.  This is done using the getParameterDefinitions function:
 ```javascript
-const jscad = require('@jscad/modeling')
-const { cylinder } = jscad.primitives
+import { primitives } from '@jscad/modeling'
+const { cylinder } = primitives
 
 // Declare a function named "getParameterDefinitions". It will return an array of parameter definitions.
-const getParameterDefinitions = () => {
+export const getParameterDefinitions = () => {
   return [
     { name: 'height', type: 'number', initial: 2.0, min: 1.0, max: 10.0, step: 0.1, caption: 'Hex Height:' },
     { name: 'radius', type: 'number', initial: 5.0, min: 1.0, max: 20.0, caption: 'Hex Radius:' }
   ]
 }
 
-// The parameter values are passed into the main method as an object.
-const main = (params) => {
+// The parameter values are passed into the main function as an object.
+export const main = (params) => {
   return cylinder({radius: params.radius, height: params.height, segments: 6})
 }
-
-// You must also export the getParameterDefinitions method.
-module.exports = { main, getParameterDefinitions }
+// You must also export the getParameterDefinitions function.
 ```
 <img src="img/parameters.png" alt="JSCAD Parameters Example">
 

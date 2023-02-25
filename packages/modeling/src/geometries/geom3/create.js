@@ -5,6 +5,18 @@ import * as mat4 from '../../maths/mat4/index.js'
  * @typedef {Object} geom3
  * @property {Array} polygons - list of polygons, each polygon containing three or more points
  * @property {mat4} transforms - transforms to apply to the polygons, see transform()
+ * @example
+ * {
+ *   "polygons": [
+ *     {"vertices": [[-1,-1,-1], [-1,-1,1], [-1,1,1], [-1,1,-1]]},
+ *     {"vertices": [[1,-1,-1], [1,1,-1], [1,1,1], [1,-1,1]]},
+ *     {"vertices": [[-1,-1,-1], [1,-1,-1], [1,-1,1], [-1,-1,1]]},
+ *     {"vertices": [[-1,1,-1], [-1,1,1], [1,1,1], [1,1,-1]]},
+ *     {"vertices": [[-1,-1,-1], [-1,1,-1], [1,1,-1], [1,-1,-1]]},
+ *     {"vertices": [[-1,-1,1], [1,-1,1], [1,1,1], [-1,1,1]]}
+ *   ],
+ *   "transforms": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+ * }
  */
 
 /**

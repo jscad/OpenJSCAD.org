@@ -5,13 +5,8 @@
  * @module modeling/geometries/geom2
  *
  * @example
- * square()
- *
- * @example
- * {
- *   "outlines": [[[-1,-1],[1,-1],[1,1],[-1,1]]],
- *   "transforms": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
- * }
+ * import { geometries } from '@jscad/modeling'
+ * let myShape = geometries.geom2.create([ [[-1,-1], [1,-1], [1,1], [-1,1]] ])
  */
 export { clone } from './clone.js'
 export { create } from './create.js'

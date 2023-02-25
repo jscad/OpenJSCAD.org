@@ -4,7 +4,8 @@
  * @see Most computations are based upon the glMatrix library (glmatrix.net)
  * @module modeling/maths
  * @example
- * const { constants, line2, mat4, vec2, vec3 } = require('@jscad/modeling').maths
+ * import { maths } from '@jscad/modeling'
+ * const { constants, line2, line3, mat4, plane, utils, vec2, vec3, vec4 } = maths
  */
 import * as constants from './constants.js'
 import * as line2 from './line2/index.js'

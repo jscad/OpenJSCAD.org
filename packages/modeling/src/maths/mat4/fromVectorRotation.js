@@ -13,7 +13,7 @@ import fromRotation from './fromRotation.js'
  * @returns {mat4} a new matrix
  * @alias module:modeling/maths/mat4.fromVectorRotation
  * @example
- * let matrix = fromVectorRotation(mat4.create(), [1, 2, 2], [-3, 3, 12])
+ * let matrix = fromVectorRotation(create(), [1, 2, 2], [-3, 3, 12])
  */
 export const fromVectorRotation = (out, source, target) => {
   const sourceNormal = vec3.normalize(vec3.create(), source)

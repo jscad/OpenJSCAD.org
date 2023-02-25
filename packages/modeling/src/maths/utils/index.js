@@ -2,7 +2,8 @@
  * Utility functions for maths.
  * @module modeling/maths/utils
  * @example
- * import { area, solve2Linear } from '@jscad/maths/utils'
+ * import { maths } from '@jscad/modeling'
+ * const { aboutEqualNormals, area, intersect, solve2Linear } = maths.utils
  */
 import { cos, sin } from './trigonometry.js'
 export {

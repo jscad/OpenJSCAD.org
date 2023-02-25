@@ -4,7 +4,7 @@
  * @module modeling/colors
  * @example
  * import { colors } from '@jscad/modeling'
- * const { colorize, hexToRgb } = colors
+ * const { colorize, cssColors } = colors
  */
 export { colorNameToRgb } from './colorNameToRgb.js'
 export { colorize } from './colorize.js'

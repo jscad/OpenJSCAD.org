@@ -21,17 +21,15 @@ contain your design. Your project can also contain:
 ```
 ## hexcap/index.js
 ```javascript
-const jscad = require('@jscad/modeling')
-const { cylinder } = jscad.primitives
+import { primtives } from '@jscad/modeling'
+const { cylinder } = primitives
 
-const utils = require('./lib/utils.js')
+import utils  from './lib/utils.js'
 
-const main = () => {
+export const main = () => {
   let hexRadius = utils.hexWidthToRadius(12)
   return cylinder({radius: hexRadius, height: 4, segments: 6})
 }
-
-module.exports = { main }
 ```
 ## hexcap/lib/utils.js
 ```javascript
@@ -39,5 +37,5 @@ const hexWidthToRadius = (shortWidth) => {
     return shortWidth * 0.57735
 }
 
-module.exports = { hexWidthToRadius }
+export default hexWidthToRadius
 ```

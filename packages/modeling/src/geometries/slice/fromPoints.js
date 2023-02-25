@@ -11,9 +11,9 @@ import create from './create.js'
  *
  * @example
  * const points = [
- *   [0,  0],
- *   [0, 10],
- *   [0, 10]
+ *   [0,  0, 3],
+ *   [0, 10, 3],
+ *   [0, 10, 6]
  * ]
  * const slice = fromPoints(points)
  */

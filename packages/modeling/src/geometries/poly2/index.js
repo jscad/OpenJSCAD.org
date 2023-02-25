@@ -4,8 +4,8 @@
  * @module modeling/geometries/poly2
  *
  * @example
- * const p0 = poly2.create()
- * const p1 = poly2.create([[0,0], [4,0], [4,3]])
+ * import { geometries } from '@jscad/modeling'
+ * const p1 = geometries.poly2.create([[0,0], [4,0], [4,3]])
  */
 export { arePointsInside } from './arePointsInside.js'
 export { clone } from './clone.js'

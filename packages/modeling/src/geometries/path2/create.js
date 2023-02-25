@@ -6,6 +6,12 @@ import * as mat4 from '../../maths/mat4/index.js'
  * @property {Array} points - list of ordered points
  * @property {Boolean} isClosed - true if the path is closed where start and end points are the same
  * @property {mat4} transforms - transforms to apply to the points, see transform()
+ * @example
+ * {
+ *   "points": [[0,0], [4,0], [4,3]],
+ *   "isClosed": true,
+ *   "transforms": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+ * }
  */
 
 /**
