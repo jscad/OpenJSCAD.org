@@ -14,7 +14,7 @@ import { flip } from './flip.js'
  * @alias module:modeling/maths/plane.transform
  */
 export const transform = (out, plane, matrix) => {
-  const ismirror = mat4.isMirroring(matrix)
+  const isMirror = mat4.isMirroring(matrix)
   // get two vectors in the plane:
   const r = vec3.orthogonal(vec3.create(), plane)
   const u = vec3.cross(r, plane, r)
@@ -30,7 +30,7 @@ export const transform = (out, plane, matrix) => {
   point3 = vec3.transform(point3, point3, matrix)
   // and create a new plane from the transformed points:
   fromPoints(out, point1, point2, point3)
-  if (ismirror) {
+  if (isMirror) {
     // the transform is mirroring so flip the plane
     flip(out, out)
   }

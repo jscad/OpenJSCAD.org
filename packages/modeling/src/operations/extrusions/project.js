@@ -15,8 +15,8 @@ import { unionGeom2 } from '../booleans/unionGeom2.js'
 
 const projectGeom3 = (options, geometry) => {
   // create a plane from the options, and verify
-  const projplane = plane.fromNormalAndPoint(plane.create(), options.axis, options.origin)
-  if (Number.isNaN(projplane[0]) || Number.isNaN(projplane[1]) || Number.isNaN(projplane[2]) || Number.isNaN(projplane[3])) {
+  const projPlane = plane.fromNormalAndPoint(plane.create(), options.axis, options.origin)
+  if (Number.isNaN(projPlane[0]) || Number.isNaN(projPlane[1]) || Number.isNaN(projPlane[2]) || Number.isNaN(projPlane[3])) {
     throw new Error('project: invalid axis or origin')
   }
 
@@ -27,35 +27,35 @@ const projectGeom3 = (options, geometry) => {
 
   // project the polygons to the plane
   const polygons = geom3.toPolygons(geometry)
-  let projpolys = []
+  let projPolys = []
   for (let i = 0; i < polygons.length; i++) {
-    const newpoints = polygons[i].vertices.map((v) => plane.projectionOfPoint(projplane, v))
-    const newpoly = poly3.create(newpoints)
+    const newPoints = polygons[i].vertices.map((v) => plane.projectionOfPoint(projPlane, v))
+    const newPoly = poly3.create(newPoints)
     // only keep projections that face the same direction as the plane
-    const newplane = poly3.plane(newpoly)
-    if (!aboutEqualNormals(projplane, newplane)) continue
+    const newPlane = poly3.plane(newPoly)
+    if (!aboutEqualNormals(projPlane, newPlane)) continue
     // only keep projections that have a measurable area
-    if (poly3.measureArea(newpoly) < epsilonArea) continue
-    projpolys.push(newpoly)
+    if (poly3.measureArea(newPoly) < epsilonArea) continue
+    projPolys.push(newPoly)
   }
 
   // rotate the polygons to lay on X/Y axes if necessary
-  if (!aboutEqualNormals(projplane, [0, 0, 1])) {
-    const rotation = mat4.fromVectorRotation(mat4.create(), projplane, [0, 0, 1])
-    projpolys = projpolys.map((p) => poly3.transform(rotation, p))
+  if (!aboutEqualNormals(projPlane, [0, 0, 1])) {
+    const rotation = mat4.fromVectorRotation(mat4.create(), projPlane, [0, 0, 1])
+    projPolys = projPolys.map((p) => poly3.transform(rotation, p))
   }
 
   // sort the polygons to allow the union to ignore small pieces efficiently
-  projpolys = projpolys.sort((a, b) => poly3.measureArea(b) - poly3.measureArea(a))
+  projPolys = projPolys.sort((a, b) => poly3.measureArea(b) - poly3.measureArea(a))
 
   // convert polygons to geometry, and union all pieces into a single geometry
-  const projgeoms = projpolys.map((p) => {
+  const projGeoms = projPolys.map((p) => {
     // This clones the points from vec3 to vec2
     const cloned = p.vertices.map(vec2.clone)
     return geom2.create([cloned])
   })
 
-  return unionGeom2(projgeoms)
+  return unionGeom2(projGeoms)
 }
 
 /**

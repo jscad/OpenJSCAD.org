@@ -15,20 +15,20 @@ import { toPoints } from './toPoints.js'
  * @alias module:modeling/geometries/path2.concat
  *
  * @example
- * let newpath = concat(fromPoints({}, [[1, 2]]), fromPoints({}, [[3, 4]]))
+ * let newPath = concat(fromPoints({}, [[1, 2]]), fromPoints({}, [[3, 4]]))
  */
 export const concat = (...paths) => {
   // Only the last path can be closed, producing a closed path.
   let isClosed = false
-  let newpoints = []
+  let newPoints = []
   paths.forEach((path, i) => {
     const tmp = toPoints(path).slice()
-    if (newpoints.length > 0 && tmp.length > 0 && equals(tmp[0], newpoints[newpoints.length - 1])) tmp.shift()
+    if (newPoints.length > 0 && tmp.length > 0 && equals(tmp[0], newPoints[newPoints.length - 1])) tmp.shift()
     if (tmp.length > 0 && isClosed) {
       throw new Error(`Cannot concatenate to a closed path; check the ${i}th path`)
     }
     isClosed = path.isClosed
-    newpoints = newpoints.concat(tmp)
+    newPoints = newPoints.concat(tmp)
   })
-  return fromPoints({ closed: isClosed }, newpoints)
+  return fromPoints({ closed: isClosed }, newPoints)
 }

@@ -3,19 +3,19 @@ import { vectorParams } from './vectorParams.js'
 /**
  * Represents a character as a list of segments
  * @typedef {Object} VectorCharObject
- * @property {Float} width - character width
- * @property {Float} height - character height (uppercase)
+ * @property {number} width - character width
+ * @property {number} height - character height (uppercase)
  * @property {Array} segments - character segments [[[x, y], ...], ...]
  */
 
 /** Construct a {@link VectorCharObject} from an ascii character whose code is between 31 and 127,
 * if the character is not supported it is replaced by a question mark.
 * @param {Object|String} [options] - options for construction or ascii character
-* @param {Float} [options.xOffset=0] - x offset
-* @param {Float} [options.yOffset=0] - y offset
-* @param {Float} [options.height=21] - font size (uppercase height)
-* @param {Float} [options.extrudeOffset=0] - width of the extrusion that will be applied (manually) after the creation of the character
-* @param {String} [options.input='?'] - ascii character (ignored/overwrited if provided as seconds parameter)
+* @param {number} [options.xOffset=0] - x offset
+* @param {number} [options.yOffset=0] - y offset
+* @param {number} [options.height=21] - font size (uppercase height)
+* @param {number} [options.extrudeOffset=0] - width of the extrusion that will be applied (manually) after the creation of the character
+* @param {String} [options.input='?'] - ascii character (ignored/overwritten if provided as second parameter)
 * @param {String} [char='?'] - ascii character
 * @returns {VectorCharObject}
 * @alias module:modeling/text.vectorChar

@@ -37,7 +37,7 @@ export const intersect = (...geometries) => {
   }
 
   const geometry = geometries[0]
-  // if (path.isA(geometry)) return pathintersect(matrix, geometries)
+  // if (path.isA(geometry)) return intersectPath(matrix, geometries)
   if (geom2.isA(geometry)) return intersectGeom2(geometries)
   if (geom3.isA(geometry)) return intersectGeom3(geometries)
   return geometry

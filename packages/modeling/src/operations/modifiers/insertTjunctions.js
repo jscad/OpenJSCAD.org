@@ -7,79 +7,79 @@ const assert = false
 
 const getTag = (vertex) => `${vertex}`
 
-const addSide = (sidemap, vertextag2sidestart, vertextag2sideend, vertex0, vertex1, polygonindex) => {
-  const starttag = getTag(vertex0)
-  const endtag = getTag(vertex1)
-  if (assert && starttag === endtag) throw new Error('assert failed')
-  const newsidetag = `${starttag}/${endtag}`
-  const reversesidetag = `${endtag}/${starttag}`
-  if (sidemap.has(reversesidetag)) {
+const addSide = (sideMap, vertextag2sidestart, vertextag2sideend, vertex0, vertex1, polygonIndex) => {
+  const startTag = getTag(vertex0)
+  const endTag = getTag(vertex1)
+  if (assert && startTag === endTag) throw new Error('assert failed')
+  const newSideTag = `${startTag}/${endTag}`
+  const reverseSideTag = `${endTag}/${startTag}`
+  if (sideMap.has(reverseSideTag)) {
     // remove the opposing side from mappings
-    deleteSide(sidemap, vertextag2sidestart, vertextag2sideend, vertex1, vertex0, null)
+    deleteSide(sideMap, vertextag2sidestart, vertextag2sideend, vertex1, vertex0, null)
     return null
   }
   // add the side to the mappings
-  const newsideobj = {
+  const newSideObj = {
     vertex0: vertex0,
     vertex1: vertex1,
-    polygonindex: polygonindex
+    polygonIndex
   }
-  if (!(sidemap.has(newsidetag))) {
-    sidemap.set(newsidetag, [newsideobj])
+  if (!(sideMap.has(newSideTag))) {
+    sideMap.set(newSideTag, [newSideObj])
   } else {
-    sidemap.get(newsidetag).push(newsideobj)
+    sideMap.get(newSideTag).push(newSideObj)
   }
-  if (vertextag2sidestart.has(starttag)) {
-    vertextag2sidestart.get(starttag).push(newsidetag)
+  if (vertextag2sidestart.has(startTag)) {
+    vertextag2sidestart.get(startTag).push(newSideTag)
   } else {
-    vertextag2sidestart.set(starttag, [newsidetag])
+    vertextag2sidestart.set(startTag, [newSideTag])
   }
-  if (vertextag2sideend.has(endtag)) {
-    vertextag2sideend.get(endtag).push(newsidetag)
+  if (vertextag2sideend.has(endTag)) {
+    vertextag2sideend.get(endTag).push(newSideTag)
   } else {
-    vertextag2sideend.set(endtag, [newsidetag])
+    vertextag2sideend.set(endTag, [newSideTag])
   }
-  return newsidetag
+  return newSideTag
 }
 
-const deleteSide = (sidemap, vertextag2sidestart, vertextag2sideend, vertex0, vertex1, polygonindex) => {
-  const starttag = getTag(vertex0)
-  const endtag = getTag(vertex1)
-  const sidetag = `${starttag}/${endtag}`
-  if (assert && !(sidemap.has(sidetag))) throw new Error('assert failed')
+const deleteSide = (sidemap, vertextag2sidestart, vertextag2sideend, vertex0, vertex1, polygonIndex) => {
+  const startTag = getTag(vertex0)
+  const endTag = getTag(vertex1)
+  const sideTag = `${startTag}/${endTag}`
+  if (assert && !(sidemap.has(sideTag))) throw new Error('assert failed')
   let idx = -1
-  const sideobjs = sidemap.get(sidetag)
-  for (let i = 0; i < sideobjs.length; i++) {
-    const sideobj = sideobjs[i]
-    let sidetag = getTag(sideobj.vertex0)
-    if (sidetag !== starttag) continue
-    sidetag = getTag(sideobj.vertex1)
-    if (sidetag !== endtag) continue
-    if (polygonindex !== null) {
-      if (sideobj.polygonindex !== polygonindex) continue
+  const sideObjs = sidemap.get(sideTag)
+  for (let i = 0; i < sideObjs.length; i++) {
+    const sideObj = sideObjs[i]
+    let sideTag = getTag(sideObj.vertex0)
+    if (sideTag !== startTag) continue
+    sideTag = getTag(sideObj.vertex1)
+    if (sideTag !== endTag) continue
+    if (polygonIndex !== null) {
+      if (sideObj.polygonIndex !== polygonIndex) continue
     }
     idx = i
     break
   }
   if (assert && idx < 0) throw new Error('assert failed')
-  sideobjs.splice(idx, 1)
-  if (sideobjs.length === 0) {
-    sidemap.delete(sidetag)
+  sideObjs.splice(idx, 1)
+  if (sideObjs.length === 0) {
+    sidemap.delete(sideTag)
   }
 
   // adjust start and end lists
-  idx = vertextag2sidestart.get(starttag).indexOf(sidetag)
+  idx = vertextag2sidestart.get(startTag).indexOf(sideTag)
   if (assert && idx < 0) throw new Error('assert failed')
-  vertextag2sidestart.get(starttag).splice(idx, 1)
-  if (vertextag2sidestart.get(starttag).length === 0) {
-    vertextag2sidestart.delete(starttag)
+  vertextag2sidestart.get(startTag).splice(idx, 1)
+  if (vertextag2sidestart.get(startTag).length === 0) {
+    vertextag2sidestart.delete(startTag)
   }
 
-  idx = vertextag2sideend.get(endtag).indexOf(sidetag)
+  idx = vertextag2sideend.get(endTag).indexOf(sideTag)
   if (assert && idx < 0) throw new Error('assert failed')
-  vertextag2sideend.get(endtag).splice(idx, 1)
-  if (vertextag2sideend.get(endtag).length === 0) {
-    vertextag2sideend.delete(endtag)
+  vertextag2sideend.get(endTag).splice(idx, 1)
+  if (vertextag2sideend.get(endTag).length === 0) {
+    vertextag2sideend.delete(endTag)
   }
 }
 
@@ -98,76 +98,76 @@ const deleteSide = (sidemap, vertextag2sidestart, vertextag2sideend, vertex0, ve
 
   This function will return a new solid with ACDB replaced by ACDEB
 
-  Note that this can create polygons that are slightly non-convex (due to rounding errors). Therefore the result should
-  not be used for further CSG operations!
+  Note that this can create polygons that are slightly non-convex (due to rounding errors).
+  Therefore, the result should not be used for further CSG operations!
 
   Note this function is meant to be used to preprocess geometries when triangulation is required, i.e. AMF, STL, etc.
   Do not use the results in other operations.
 */
 
 /*
- * Insert missing vertices for T junctions, which creates polygons that can be triangulated.
- * @param {Array} polygons - the original polygons which may or may not have T junctions
- * @return original polygons (if no T junctions found) or new polygons with updated vertices
+ * Insert missing vertices for T-junctions, which creates polygons that can be triangulated.
+ * @param {Array} polygons - the original polygons which may or may not have T-junctions
+ * @return original polygons (if no T-junctions found) or new polygons with updated vertices
  */
 export const insertTjunctions = (polygons) => {
   // STEP 1 : build a map of 'unmatched' sides from the polygons
   // i.e. side AB in one polygon does not have a matching side BA in another polygon
-  const sidemap = new Map()
-  for (let polygonindex = 0; polygonindex < polygons.length; polygonindex++) {
-    const polygon = polygons[polygonindex]
-    const numvertices = polygon.vertices.length
-    if (numvertices >= 3) {
+  const sideMap = new Map()
+  for (let polygonIndex = 0; polygonIndex < polygons.length; polygonIndex++) {
+    const polygon = polygons[polygonIndex]
+    const numVertices = polygon.vertices.length
+    if (numVertices >= 3) {
       let vertex = polygon.vertices[0]
-      let vertextag = getTag(vertex)
-      for (let vertexindex = 0; vertexindex < numvertices; vertexindex++) {
-        let nextvertexindex = vertexindex + 1
-        if (nextvertexindex === numvertices) nextvertexindex = 0
+      let vertexTag = getTag(vertex)
+      for (let vertexIndex = 0; vertexIndex < numVertices; vertexIndex++) {
+        let nextVertexIndex = vertexIndex + 1
+        if (nextVertexIndex === numVertices) nextVertexIndex = 0
 
-        const nextvertex = polygon.vertices[nextvertexindex]
-        const nextvertextag = getTag(nextvertex)
+        const nextVertex = polygon.vertices[nextVertexIndex]
+        const nextVertexTag = getTag(nextVertex)
 
-        const sidetag = `${vertextag}/${nextvertextag}`
-        const reversesidetag = `${nextvertextag}/${vertextag}`
-        if (sidemap.has(reversesidetag)) {
+        const sideTag = `${vertexTag}/${nextVertexTag}`
+        const reverseSideTag = `${nextVertexTag}/${vertexTag}`
+        if (sideMap.has(reverseSideTag)) {
           // this side matches the same side in another polygon. Remove from sidemap
           // FIXME is this check necessary? there should only be ONE(1) opposing side
           // FIXME assert ?
-          const ar = sidemap.get(reversesidetag)
+          const ar = sideMap.get(reverseSideTag)
           ar.splice(-1, 1)
           if (ar.length === 0) {
-            sidemap.delete(reversesidetag)
+            sideMap.delete(reverseSideTag)
           }
         } else {
           const sideobj = {
             vertex0: vertex,
-            vertex1: nextvertex,
-            polygonindex: polygonindex
+            vertex1: nextVertex,
+            polygonIndex
           }
-          if (!(sidemap.has(sidetag))) {
-            sidemap.set(sidetag, [sideobj])
+          if (!(sideMap.has(sideTag))) {
+            sideMap.set(sideTag, [sideobj])
           } else {
-            sidemap.get(sidetag).push(sideobj)
+            sideMap.get(sideTag).push(sideobj)
           }
         }
-        vertex = nextvertex
-        vertextag = nextvertextag
+        vertex = nextVertex
+        vertexTag = nextVertexTag
       }
     } else {
       console.warn('warning: invalid polygon found during insertTjunctions')
     }
   }
 
-  if (sidemap.size > 0) {
+  if (sideMap.size > 0) {
     // STEP 2 : create a list of starting sides and ending sides
     const vertextag2sidestart = new Map()
     const vertextag2sideend = new Map()
     const sidesToCheck = new Map()
-    for (const [sidetag, sideobjs] of sidemap) {
+    for (const [sidetag, sideObjs] of sideMap) {
       sidesToCheck.set(sidetag, true)
-      sideobjs.forEach((sideobj) => {
-        const starttag = getTag(sideobj.vertex0)
-        const endtag = getTag(sideobj.vertex1)
+      sideObjs.forEach((sideObj) => {
+        const starttag = getTag(sideObj.vertex0)
+        const endtag = getTag(sideObj.vertex1)
         if (vertextag2sidestart.has(starttag)) {
           vertextag2sidestart.get(starttag).push(sidetag)
         } else {
@@ -181,113 +181,113 @@ export const insertTjunctions = (polygons) => {
       })
     }
 
-    // STEP 3 : if sidemap is not empty
-    const newpolygons = polygons.slice(0) // make a copy in order to replace polygons inline
+    // STEP 3 : if sideMap is not empty
+    const newPolygons = polygons.slice(0) // make a copy in order to replace polygons inline
     while (true) {
-      if (sidemap.size === 0) break
+      if (sideMap.size === 0) break
 
-      for (const sidetag of sidemap.keys()) {
-        sidesToCheck.set(sidetag, true)
+      for (const sideTag of sideMap.keys()) {
+        sidesToCheck.set(sideTag, true)
       }
 
-      let donesomething = false
+      let doneSomething = false
       while (true) {
-        const sidetags = Array.from(sidesToCheck.keys())
-        if (sidetags.length === 0) break // sidesToCheck is empty, we're done!
-        const sidetagtocheck = sidetags[0]
-        let donewithside = true
-        if (sidemap.has(sidetagtocheck)) {
-          const sideobjs = sidemap.get(sidetagtocheck)
-          if (assert && sideobjs.length === 0) throw new Error('assert failed')
-          const sideobj = sideobjs[0]
-          for (let directionindex = 0; directionindex < 2; directionindex++) {
-            const startvertex = (directionindex === 0) ? sideobj.vertex0 : sideobj.vertex1
-            const endvertex = (directionindex === 0) ? sideobj.vertex1 : sideobj.vertex0
-            const startvertextag = getTag(startvertex)
-            const endvertextag = getTag(endvertex)
-            let matchingsides = []
-            if (directionindex === 0) {
-              if (vertextag2sideend.has(startvertextag)) {
-                matchingsides = vertextag2sideend.get(startvertextag)
+        const sideTags = Array.from(sidesToCheck.keys())
+        if (sideTags.length === 0) break // sidesToCheck is empty, we're done!
+        const sideTagToCheck = sideTags[0]
+        let doneWithSide = true
+        if (sideMap.has(sideTagToCheck)) {
+          const sideObjs = sideMap.get(sideTagToCheck)
+          if (assert && sideObjs.length === 0) throw new Error('assert failed')
+          const sideObj = sideObjs[0]
+          for (let directionIndex = 0; directionIndex < 2; directionIndex++) {
+            const startVertex = (directionIndex === 0) ? sideObj.vertex0 : sideObj.vertex1
+            const endVertex = (directionIndex === 0) ? sideObj.vertex1 : sideObj.vertex0
+            const startVertexTag = getTag(startVertex)
+            const endVertexTag = getTag(endVertex)
+            let matchingSides = []
+            if (directionIndex === 0) {
+              if (vertextag2sideend.has(startVertexTag)) {
+                matchingSides = vertextag2sideend.get(startVertexTag)
               }
             } else {
-              if (vertextag2sidestart.has(startvertextag)) {
-                matchingsides = vertextag2sidestart.get(startvertextag)
+              if (vertextag2sidestart.has(startVertexTag)) {
+                matchingSides = vertextag2sidestart.get(startVertexTag)
               }
             }
-            for (let matchingsideindex = 0; matchingsideindex < matchingsides.length; matchingsideindex++) {
-              const matchingsidetag = matchingsides[matchingsideindex]
-              const matchingside = sidemap.get(matchingsidetag)[0]
-              const matchingsidestartvertex = (directionindex === 0) ? matchingside.vertex0 : matchingside.vertex1
-              const matchingsideendvertex = (directionindex === 0) ? matchingside.vertex1 : matchingside.vertex0
-              const matchingsidestartvertextag = getTag(matchingsidestartvertex)
-              const matchingsideendvertextag = getTag(matchingsideendvertex)
-              if (assert && matchingsideendvertextag !== startvertextag) throw new Error('assert failed')
-              if (matchingsidestartvertextag === endvertextag) {
-                // matchingside cancels sidetagtocheck
-                deleteSide(sidemap, vertextag2sidestart, vertextag2sideend, startvertex, endvertex, null)
-                deleteSide(sidemap, vertextag2sidestart, vertextag2sideend, endvertex, startvertex, null)
-                donewithside = false
-                directionindex = 2 // skip reverse direction check
-                donesomething = true
+            for (let matchingSideIndex = 0; matchingSideIndex < matchingSides.length; matchingSideIndex++) {
+              const matchingSideTag = matchingSides[matchingSideIndex]
+              const matchingSide = sideMap.get(matchingSideTag)[0]
+              const matchingSideStartVertex = (directionIndex === 0) ? matchingSide.vertex0 : matchingSide.vertex1
+              const matchingSideEndVertex = (directionIndex === 0) ? matchingSide.vertex1 : matchingSide.vertex0
+              const matchingSideStartVertexTag = getTag(matchingSideStartVertex)
+              const matchingSideEndVertexTag = getTag(matchingSideEndVertex)
+              if (assert && matchingSideEndVertexTag !== startVertexTag) throw new Error('assert failed')
+              if (matchingSideStartVertexTag === endVertexTag) {
+                // matchingSide cancels sideTagToCheck
+                deleteSide(sideMap, vertextag2sidestart, vertextag2sideend, startVertex, endVertex, null)
+                deleteSide(sideMap, vertextag2sidestart, vertextag2sideend, endVertex, startVertex, null)
+                doneWithSide = false
+                directionIndex = 2 // skip reverse direction check
+                doneSomething = true
                 break
               } else {
-                const startpos = startvertex
-                const endpos = endvertex
-                const checkpos = matchingsidestartvertex
-                const direction = vec3.subtract(vec3.create(), checkpos, startpos)
-                // Now we need to check if endpos is on the line startpos-checkpos:
-                const t = vec3.dot(vec3.subtract(vec3.create(), endpos, startpos), direction) / vec3.dot(direction, direction)
+                const startPos = startVertex
+                const endPos = endVertex
+                const checkPos = matchingSideStartVertex
+                const direction = vec3.subtract(vec3.create(), checkPos, startPos)
+                // Now we need to check if endPos is on the line startPos-checkPos:
+                const t = vec3.dot(vec3.subtract(vec3.create(), endPos, startPos), direction) / vec3.dot(direction, direction)
                 if ((t > 0) && (t < 1)) {
-                  const closestpoint = vec3.scale(vec3.create(), direction, t)
-                  vec3.add(closestpoint, closestpoint, startpos)
-                  const distancesquared = vec3.squaredDistance(closestpoint, endpos)
-                  if (distancesquared < (EPS * EPS)) {
-                    // Yes it's a t-junction! We need to split matchingside in two:
-                    const polygonindex = matchingside.polygonindex
-                    const polygon = newpolygons[polygonindex]
-                    // find the index of startvertextag in polygon:
-                    const insertionvertextag = getTag(matchingside.vertex1)
-                    let insertionvertextagindex = -1
+                  const closestPoint = vec3.scale(vec3.create(), direction, t)
+                  vec3.add(closestPoint, closestPoint, startPos)
+                  const distanceSquared = vec3.squaredDistance(closestPoint, endPos)
+                  if (distanceSquared < (EPS * EPS)) {
+                    // Yes it's a t-junction! We need to split matchingSide in two:
+                    const polygonIndex = matchingSide.polygonIndex
+                    const polygon = newPolygons[polygonIndex]
+                    // find the index of startVertexTag in polygon:
+                    const insertionVertexTag = getTag(matchingSide.vertex1)
+                    let insertionVertexTagIndex = -1
                     for (let i = 0; i < polygon.vertices.length; i++) {
-                      if (getTag(polygon.vertices[i]) === insertionvertextag) {
-                        insertionvertextagindex = i
+                      if (getTag(polygon.vertices[i]) === insertionVertexTag) {
+                        insertionVertexTagIndex = i
                         break
                       }
                     }
-                    if (assert && insertionvertextagindex < 0) throw new Error('assert failed')
+                    if (assert && insertionVertexTagIndex < 0) throw new Error('assert failed')
                     // split the side by inserting the vertex:
-                    const newvertices = polygon.vertices.slice(0)
-                    newvertices.splice(insertionvertextagindex, 0, endvertex)
-                    const newpolygon = poly3.create(newvertices)
+                    const newVertices = polygon.vertices.slice(0)
+                    newVertices.splice(insertionVertexTagIndex, 0, endVertex)
+                    const newPolygon = poly3.create(newVertices)
 
-                    newpolygons[polygonindex] = newpolygon
+                    newPolygons[polygonIndex] = newPolygon
 
                     // remove the original sides from our maps
-                    deleteSide(sidemap, vertextag2sidestart, vertextag2sideend, matchingside.vertex0, matchingside.vertex1, polygonindex)
-                    const newsidetag1 = addSide(sidemap, vertextag2sidestart, vertextag2sideend, matchingside.vertex0, endvertex, polygonindex)
-                    const newsidetag2 = addSide(sidemap, vertextag2sidestart, vertextag2sideend, endvertex, matchingside.vertex1, polygonindex)
-                    if (newsidetag1 !== null) sidesToCheck.set(newsidetag1, true)
-                    if (newsidetag2 !== null) sidesToCheck.set(newsidetag2, true)
-                    donewithside = false
-                    directionindex = 2 // skip reverse direction check
-                    donesomething = true
+                    deleteSide(sideMap, vertextag2sidestart, vertextag2sideend, matchingSide.vertex0, matchingSide.vertex1, polygonIndex)
+                    const newSideTag1 = addSide(sideMap, vertextag2sidestart, vertextag2sideend, matchingSide.vertex0, endVertex, polygonIndex)
+                    const newSideTag2 = addSide(sideMap, vertextag2sidestart, vertextag2sideend, endVertex, matchingSide.vertex1, polygonIndex)
+                    if (newSideTag1 !== null) sidesToCheck.set(newSideTag1, true)
+                    if (newSideTag2 !== null) sidesToCheck.set(newSideTag2, true)
+                    doneWithSide = false
+                    directionIndex = 2 // skip reverse direction check
+                    doneSomething = true
                     break
-                  } // if(distancesquared < 1e-10)
+                  } // if(distanceSquared < 1e-10)
                 } // if( (t > 0) && (t < 1) )
-              } // if(endingstidestartvertextag === endvertextag)
-            } // for matchingsideindex
-          } // for directionindex
-        } // if(sidetagtocheck in sidemap)
-        if (donewithside) {
-          sidesToCheck.delete(sidetagtocheck)
+              } // if(endingSideStartVertexTag === endVertexTag)
+            } // for matchingSideIndex
+          } // for directionIndex
+        } // if(sideTagToCheck in sideMap)
+        if (doneWithSide) {
+          sidesToCheck.delete(sideTagToCheck)
         }
       }
-      if (!donesomething) break
+      if (!doneSomething) break
     }
-    polygons = newpolygons
+    polygons = newPolygons
   }
-  sidemap.clear()
+  sideMap.clear()
 
   return polygons
 }

@@ -17,8 +17,8 @@ import { extrudeRectangularGeom2 } from './extrudeRectangularGeom2.js'
  * @alias module:modeling/extrusions.extrudeRectangular
  *
  * @example
- * let mywalls = extrudeRectangular({size: 1, height: 3}, square({size: 20}))
- * let mywalls = extrudeRectangular({size: 1, height: 300, twistAngle: TAU / 2}, square({size: 20}))
+ * let myWalls = extrudeRectangular({size: 1, height: 3}, square({size: 20}))
+ * let myWalls = extrudeRectangular({size: 1, height: 300, twistAngle: TAU / 2}, square({size: 20}))
  */
 export const extrudeRectangular = (options, ...objects) => {
   const defaults = {

@@ -14,7 +14,7 @@ import * as path2 from '../../geometries/path2/index.js'
  * @alias module:modeling/transforms.translate
  *
  * @example
- * const newsphere = translate([5, 0, 10], sphere())
+ * const newSphere = translate([5, 0, 10], sphere())
  */
 export const translate = (offset, ...objects) => {
   if (!Array.isArray(offset)) throw new Error('offset must be an array')

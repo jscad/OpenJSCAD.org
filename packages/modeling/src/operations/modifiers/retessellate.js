@@ -38,14 +38,14 @@ export const retessellate = (geometry) => {
     }
   })
 
-  let destpolygons = []
+  let destPolygons = []
   polygonsPerPlane.forEach((mapping) => {
-    const sourcepolygons = mapping[1]
-    const retesselayedpolygons = reTesselateCoplanarPolygons(sourcepolygons)
-    destpolygons = destpolygons.concat(retesselayedpolygons)
+    const sourcePolygons = mapping[1]
+    const retesselatedPolygons = reTesselateCoplanarPolygons(sourcePolygons)
+    destPolygons = destPolygons.concat(retesselatedPolygons)
   })
 
-  const result = geom3.create(destpolygons)
+  const result = geom3.create(destPolygons)
   result.isRetesselated = true
 
   return result

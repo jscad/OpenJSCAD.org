@@ -7,6 +7,6 @@ import { cssColors } from './cssColors.js'
  * @return {Array} the RGB color, or undefined if not found
  * @alias module:modeling/colors.colorNameToRgb
  * @example
- * let mysphere = colorize(colorNameToRgb('lightblue'), sphere())
+ * let mySphere = colorize(colorNameToRgb('lightblue'), sphere())
  */
 export const colorNameToRgb = (s) => cssColors[s.toLowerCase()]

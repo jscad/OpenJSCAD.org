@@ -11,10 +11,10 @@ import { boolean } from './martinez/index.js'
 export const unionGeom2 = (...geometries) => {
   geometries = flatten(geometries)
 
-  let newgeometry = geometries.shift()
+  let newGeometry = geometries.shift()
   geometries.forEach((geometry) => {
-    newgeometry = boolean(newgeometry, geometry, UNION)
+    newGeometry = boolean(newGeometry, geometry, UNION)
   })
 
-  return newgeometry
+  return newGeometry
 }

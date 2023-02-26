@@ -39,7 +39,7 @@ export const roundedRectangle = (options) => {
   if (roundRadius > (size[0] - EPS) ||
       roundRadius > (size[1] - EPS)) throw new Error('roundRadius must be smaller then the radius of all dimensions')
 
-  const cornersegments = Math.floor(segments / 4)
+  const cornerSegments = Math.floor(segments / 4)
 
   // create sets of points that define the corners
   const corner0 = vec2.add(vec2.create(), center, [size[0] - roundRadius, size[1] - roundRadius])
@@ -50,8 +50,8 @@ export const roundedRectangle = (options) => {
   const corner1Points = []
   const corner2Points = []
   const corner3Points = []
-  for (let i = 0; i <= cornersegments; i++) {
-    const radians = TAU / 4 * i / cornersegments
+  for (let i = 0; i <= cornerSegments; i++) {
+    const radians = TAU / 4 * i / cornerSegments
     const point = vec2.fromAngleRadians(vec2.create(), radians)
     vec2.scale(point, point, roundRadius)
     corner0Points.push(vec2.add(vec2.create(), corner0, point))

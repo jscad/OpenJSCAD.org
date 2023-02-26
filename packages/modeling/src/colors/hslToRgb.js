@@ -11,7 +11,7 @@ import { hueToColorComponent } from './hueToColorComponent.js'
  * @alias module:modeling/colors.hslToRgb
  *
  * @example
- * let mysphere = colorize(hslToRgb([0.9166666666666666, 1, 0.5]), sphere())
+ * let mySphere = colorize(hslToRgb([0.9166666666666666, 1, 0.5]), sphere())
  */
 export const hslToRgb = (...values) => {
   values = flatten(values)

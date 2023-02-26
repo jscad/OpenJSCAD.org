@@ -59,10 +59,10 @@ export const cylinderElliptic = (options) => {
     rotation = endAngle + (TAU - startAngle)
   }
 
-  const minradius = Math.min(startRadius[0], startRadius[1], endRadius[0], endRadius[1])
-  const minangle = Math.acos(((minradius * minradius) + (minradius * minradius) - (EPS * EPS)) /
-                            (2 * minradius * minradius))
-  if (rotation < minangle) throw new Error('startAngle and endAngle do not define a significant rotation')
+  const minRadius = Math.min(startRadius[0], startRadius[1], endRadius[0], endRadius[1])
+  const minAngle = Math.acos(((minRadius * minRadius) + (minRadius * minRadius) - (EPS * EPS)) /
+                            (2 * minRadius * minRadius))
+  if (rotation < minAngle) throw new Error('startAngle and endAngle do not define a significant rotation')
 
   const slices = Math.floor(segments * (rotation / TAU))
 
@@ -89,8 +89,8 @@ export const cylinderElliptic = (options) => {
 
   // adjust the points to center
   const fromPoints = (...points) => {
-    const newpoints = points.map((point) => vec3.add(vec3.create(), point, center))
-    return poly3.create(newpoints)
+    const newPoints = points.map((point) => vec3.add(vec3.create(), point, center))
+    return poly3.create(newPoints)
   }
 
   const polygons = []

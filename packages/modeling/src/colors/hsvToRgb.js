@@ -9,7 +9,7 @@ import { flatten } from '../utils/index.js'
  * @alias module:modeling/colors.hsvToRgb
  *
  * @example
- * let mysphere = colorize(hsvToRgb([0.9166666666666666, 1, 1]), sphere())
+ * let mySphere = colorize(hsvToRgb([0.9166666666666666, 1, 1]), sphere())
  */
 export const hsvToRgb = (...values) => {
   values = flatten(values)

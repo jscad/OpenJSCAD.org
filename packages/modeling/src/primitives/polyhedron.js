@@ -16,9 +16,9 @@ import { isNumberArray } from './commonChecks.js'
  * @alias module:modeling/primitives.polyhedron
  *
  * @example
- * let mypoints = [ [10, 10, 0], [10, -10, 0], [-10, -10, 0], [-10, 10, 0], [0, 0, 10] ]
- * let myfaces = [ [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4], [1, 0, 3], [2, 1, 3] ]
- * let myshape = polyhedron({points: mypoint, faces: myfaces, orientation: 'inward'})
+ * let myPoints = [ [10, 10, 0], [10, -10, 0], [-10, -10, 0], [-10, 10, 0], [0, 0, 10] ]
+ * let myFaces = [ [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4], [1, 0, 3], [2, 1, 3] ]
+ * let myShape = polyhedron({points: myPoints, faces: myFaces, orientation: 'inward'})
  */
 export const polyhedron = (options) => {
   const defaults = {
@@ -54,7 +54,7 @@ export const polyhedron = (options) => {
     if (!isNumberArray(face, face.length)) throw new Error(`face ${i} must be an array of numbers`)
   })
 
-  // invert the faces if orientation is inwards, as all internals expect outwarding facing polygons
+  // invert the faces if orientation is inwards, as all internals expect outward facing polygons
   if (orientation !== 'outward') {
     faces.forEach((face) => face.reverse())
   }

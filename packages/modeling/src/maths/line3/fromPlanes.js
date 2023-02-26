@@ -22,16 +22,16 @@ export const fromPlanes = (out, plane1, plane2) => {
   length = (1.0 / length)
   direction = vec3.scale(direction, direction, length)
 
-  const absx = Math.abs(direction[0])
-  const absy = Math.abs(direction[1])
-  const absz = Math.abs(direction[2])
+  const absX = Math.abs(direction[0])
+  const absY = Math.abs(direction[1])
+  const absZ = Math.abs(direction[2])
   let origin
   let r
-  if ((absx >= absy) && (absx >= absz)) {
+  if ((absX >= absY) && (absX >= absZ)) {
     // find a point p for which x is zero
     r = solve2Linear(plane1[1], plane1[2], plane2[1], plane2[2], plane1[3], plane2[3])
     origin = vec3.fromValues(0, r[0], r[1])
-  } else if ((absy >= absx) && (absy >= absz)) {
+  } else if ((absY >= absX) && (absY >= absZ)) {
     // find a point p for which y is zero
     r = solve2Linear(plane1[0], plane1[2], plane2[0], plane2[2], plane1[3], plane2[3])
     origin = vec3.fromValues(r[0], 0, r[1])

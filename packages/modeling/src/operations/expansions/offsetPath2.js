@@ -25,6 +25,6 @@ export const offsetPath2 = (options, geometry) => {
   }
 
   options = { delta, corners, closed, segments }
-  const newpoints = offsetFromPoints(options, path2.toPoints(geometry))
-  return path2.fromPoints({ closed: closed }, newpoints)
+  const newPoints = offsetFromPoints(options, path2.toPoints(geometry))
+  return path2.fromPoints({ closed: closed }, newPoints)
 }

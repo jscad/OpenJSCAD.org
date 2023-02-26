@@ -20,7 +20,7 @@ import * as mat4 from '../../maths/mat4/index.js'
  * @alias module:modeling/geometries/path2.create
  *
  * @example
- * let newpath = create()
+ * let newPath = create()
  */
 export const create = (points) => {
   if (points === undefined) {

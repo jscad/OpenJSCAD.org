@@ -11,16 +11,16 @@ import { fromPointAxisNormal } from './fromPointAxisNormal.js'
  */
 export const transform = (matrix, connector) => {
   // OPTIMIZE
-  const newpoint = vec3.transform(vec3.create(), connector.point, matrix)
-  const newaxis = vec3.subtract(
+  const newPoint = vec3.transform(vec3.create(), connector.point, matrix)
+  const newAxis = vec3.subtract(
     vec3.create(),
     vec3.transform(vec3.create(), vec3.add(vec3.create(), connector.point, connector.axis), matrix),
-    newpoint
+    newPoint
   )
-  const newnormal = vec3.subtract(
+  const newNormal = vec3.subtract(
     vec3.create(),
     vec3.transform(vec3.create(), vec3.add(vec3.create(), connector.point, connector.normal), matrix),
-    newpoint
+    newPoint
   )
-  return fromPointAxisNormal(newpoint, newaxis, newnormal)
+  return fromPointAxisNormal(newPoint, newAxis, newNormal)
 }

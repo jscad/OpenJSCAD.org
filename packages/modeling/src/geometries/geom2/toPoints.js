@@ -9,7 +9,7 @@ import { toOutlines } from './toOutlines.js'
  * @alias module:modeling/geometries/geom2.toPoints
  *
  * @example
- * let sharedpoints = toPoints(geometry)
+ * let sharedPoints = toPoints(geometry)
  */
 export const toPoints = (geometry) => {
   const points = []

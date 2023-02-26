@@ -34,43 +34,41 @@ export class Node {
 
   // clip polygontreenodes to our plane
   // calls remove() for all clipped PolygonTreeNodes
-  clipPolygons (polygontreenodes, alsoRemovecoplanarFront) {
-    let current = { node: this, polygontreenodes: polygontreenodes }
+  clipPolygons (polygonTreeNodes, alsoRemoveCoplanarFront) {
+    let current = { node: this, polygonTreeNodes }
     let node
     const stack = []
 
     do {
       node = current.node
-      polygontreenodes = current.polygontreenodes
+      polygonTreeNodes = current.polygonTreeNodes
 
       if (node.plane) {
         const plane = node.plane
 
-        const backnodes = []
-        const frontnodes = []
-        const coplanarfrontnodes = alsoRemovecoplanarFront ? backnodes : frontnodes
-        const numpolygontreenodes = polygontreenodes.length
-        for (let i = 0; i < numpolygontreenodes; i++) {
-          const treenode = polygontreenodes[i]
-          if (!treenode.isRemoved()) {
+        const backNodes = []
+        const frontNodes = []
+        const coplanarFrontNodes = alsoRemoveCoplanarFront ? backNodes : frontNodes
+        polygonTreeNodes.forEach((treeNode) => {
+          if (!treeNode.isRemoved()) {
             // split this polygon tree node using the plane
             // NOTE: children are added to the tree if there are spanning polygons
-            treenode.splitByPlane(plane, coplanarfrontnodes, backnodes, frontnodes, backnodes)
+            treeNode.splitByPlane(plane, coplanarFrontNodes, backNodes, frontNodes, backNodes)
           }
-        }
+        })
 
-        if (node.front && (frontnodes.length > 0)) {
+        if (node.front && (frontNodes.length > 0)) {
           // add front node for further splitting
-          stack.push({ node: node.front, polygontreenodes: frontnodes })
+          stack.push({ node: node.front, polygonTreeNodes: frontNodes })
         }
-        const numbacknodes = backnodes.length
-        if (node.back && (numbacknodes > 0)) {
+        const numBackNodes = backNodes.length
+        if (node.back && (numBackNodes > 0)) {
           // add back node for further splitting
-          stack.push({ node: node.back, polygontreenodes: backnodes })
+          stack.push({ node: node.back, polygonTreeNodes: backNodes })
         } else {
           // remove all back nodes from processing
-          for (let i = 0; i < numbacknodes; i++) {
-            backnodes[i].remove()
+          for (let i = 0; i < numBackNodes; i++) {
+            backNodes[i].remove()
           }
         }
       }
@@ -80,12 +78,12 @@ export class Node {
 
   // Remove all polygons in this BSP tree that are inside the other BSP tree
   // `tree`.
-  clipTo (tree, alsoRemovecoplanarFront) {
+  clipTo (tree, alsoRemoveCoplanarFront) {
     let node = this
     const stack = []
     do {
       if (node.polygontreenodes.length > 0) {
-        tree.rootnode.clipPolygons(node.polygontreenodes, alsoRemovecoplanarFront)
+        tree.rootnode.clipPolygons(node.polygontreenodes, alsoRemoveCoplanarFront)
       }
       if (node.front) stack.push(node.front)
       if (node.back) stack.push(node.back)
@@ -93,48 +91,48 @@ export class Node {
     } while (node !== undefined)
   }
 
-  addPolygonTreeNodes (newpolygontreenodes) {
-    let current = { node: this, polygontreenodes: newpolygontreenodes }
+  addPolygonTreeNodes (newPolygonTreeNodes) {
+    let current = { node: this, polygonTreeNodes: newPolygonTreeNodes }
     const stack = []
     do {
       const node = current.node
-      const polygontreenodes = current.polygontreenodes
+      const polygonTreeNodes = current.polygonTreeNodes
+      const len = polygonTreeNodes.length
 
-      if (polygontreenodes.length === 0) {
+      if (len === 0) {
         current = stack.pop()
         continue
       }
       if (!node.plane) {
         let index = 0 // default
-        index = Math.floor(polygontreenodes.length / 2)
-        // index = polygontreenodes.length >> 1
-        // index = Math.floor(Math.random()*polygontreenodes.length)
-        const bestpoly = polygontreenodes[index].getPolygon()
-        node.plane = poly3.plane(bestpoly)
+        index = Math.floor(len / 2)
+        // index = len >> 1
+        // index = Math.floor(Math.random() * len)
+        const bestPoly = polygonTreeNodes[index].getPolygon()
+        node.plane = poly3.plane(bestPoly)
       }
-      const frontnodes = []
-      const backnodes = []
-      const n = polygontreenodes.length
-      for (let i = 0; i < n; ++i) {
-        polygontreenodes[i].splitByPlane(node.plane, node.polygontreenodes, backnodes, frontnodes, backnodes)
+      const frontNodes = []
+      const backNodes = []
+      for (let i = 0; i < len; ++i) {
+        polygonTreeNodes[i].splitByPlane(node.plane, node.polygontreenodes, backNodes, frontNodes, backNodes)
       }
 
-      if (frontnodes.length > 0) {
+      if (frontNodes.length > 0) {
         if (!node.front) node.front = new Node(node)
 
         // unable to split by any of the current nodes
-        const stopCondition = n === frontnodes.length && backnodes.length === 0
-        if (stopCondition) node.front.polygontreenodes = frontnodes
-        else stack.push({ node: node.front, polygontreenodes: frontnodes })
+        const stopCondition = len === frontNodes.length && backNodes.length === 0
+        if (stopCondition) node.front.polygontreenodes = frontNodes
+        else stack.push({ node: node.front, polygonTreeNodes: frontNodes })
       }
-      if (backnodes.length > 0) {
+      if (backNodes.length > 0) {
         if (!node.back) node.back = new Node(node)
 
         // unable to split by any of the current nodes
-        const stopCondition = n === backnodes.length && frontnodes.length === 0
+        const stopCondition = len === backNodes.length && frontNodes.length === 0
 
-        if (stopCondition) node.back.polygontreenodes = backnodes
-        else stack.push({ node: node.back, polygontreenodes: backnodes })
+        if (stopCondition) node.back.polygontreenodes = backNodes
+        else stack.push({ node: node.back, polygonTreeNodes: backNodes })
       }
 
       current = stack.pop()

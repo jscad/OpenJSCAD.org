@@ -19,7 +19,7 @@ export class Face {
     this.centroid = []
     // signed distance from face to the origin
     this.offset = 0
-    // pointer to the a vertex in a double linked list this face can see
+    // pointer to the vertex in a double linked list this face can see
     this.outside = null
     this.mark = VISIBLE
     this.edge = null

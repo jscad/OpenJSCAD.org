@@ -36,7 +36,7 @@ export const union = (...geometries) => {
   }
 
   const geometry = geometries[0]
-  // if (path.isA(geometry)) return pathunion(matrix, geometries)
+  // if (path.isA(geometry)) return unionPath(matrix, geometries)
   if (geom2.isA(geometry)) return unionGeom2(geometries)
   if (geom3.isA(geometry)) return unionGeom3(geometries)
   return geometry

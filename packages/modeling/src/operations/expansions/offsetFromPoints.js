@@ -56,7 +56,7 @@ export const offsetFromPoints = (options, points) => {
     if (previousSegment != null) {
       if (closed || (!closed && j !== 0)) {
         // check for intersection of new line segments
-        const ip = intersect(previousSegment[0], previousSegment[1], currentSegment[0], currentSegment[1])
+        const ip = intersect(previousSegment[0], previousSegment[1], currentSegment[0], currentSegment[1], true)
         if (ip) {
           // adjust the previous points
           newPoints.pop()
@@ -79,15 +79,15 @@ export const offsetFromPoints = (options, points) => {
     // check for intersection of closing line segments
     const n0 = newPoints[0]
     const n1 = newPoints[1]
-    const ip = intersect(previousSegment[0], previousSegment[1], n0, n1)
+    const ip = intersect(previousSegment[0], previousSegment[1], n0, n1, true)
     if (ip) {
       // adjust the previous points
       newPoints[0] = ip
       newPoints.pop()
     } else {
       const p0 = points[0]
-      const cursegment = [n0, n1]
-      newCorners.push({ c: p0, s0: previousSegment, s1: cursegment })
+      const currentSegment = [n0, n1]
+      newCorners.push({ c: p0, s0: previousSegment, s1: currentSegment })
     }
   }
 
@@ -111,7 +111,7 @@ export const offsetFromPoints = (options, points) => {
         newPoints[i] = ip
         newPoints[(i + 1) % newPoints.length] = undefined
       } else {
-        // paralell segments, drop one
+        // parallel segments, drop one
         const p0 = corner.s1[0]
         const i = pointIndex.get(p0)
         newPoints[i] = undefined
@@ -122,7 +122,7 @@ export const offsetFromPoints = (options, points) => {
 
   if (corners === 'round') {
     // create rounded corners
-    let cornersegments = Math.floor(segments / 4)
+    let cornerSegments = Math.floor(segments / 4)
     const v0 = vec2.create()
     newCorners.forEach((corner) => {
       // calculate angle of rotation
@@ -139,25 +139,25 @@ export const offsetFromPoints = (options, points) => {
 
       if (rotation !== 0.0) {
         // generate the segments
-        cornersegments = Math.floor(segments * (Math.abs(rotation) / TAU))
-        const step = rotation / cornersegments
+        cornerSegments = Math.floor(segments * (Math.abs(rotation) / TAU))
+        const step = rotation / cornerSegments
         const start = vec2.angle(vec2.subtract(v0, corner.s0[1], corner.c))
-        const cornerpoints = []
-        for (let i = 1; i < cornersegments; i++) {
+        const cornerPoints = []
+        for (let i = 1; i < cornerSegments; i++) {
           const radians = start + (step * i)
           const point = vec2.fromAngleRadians(vec2.create(), radians)
           vec2.scale(point, point, delta)
           vec2.add(point, point, corner.c)
-          cornerpoints.push(point)
+          cornerPoints.push(point)
         }
-        if (cornerpoints.length > 0) {
+        if (cornerPoints.length > 0) {
           const p0 = corner.s0[1]
           let i = newPoints.findIndex((point) => vec2.equals(p0, point))
           i = (i + 1) % newPoints.length
-          newPoints.splice(i, 0, ...cornerpoints)
+          newPoints.splice(i, 0, ...cornerPoints)
         }
       } else {
-        // paralell segments, drop one
+        // parallel segments, drop one
         const p0 = corner.s1[0]
         const i = newPoints.findIndex((point) => vec2.equals(p0, point))
         newPoints.splice(i, 1)

@@ -8,11 +8,11 @@ import { fromPointAxisNormal } from './fromPointAxisNormal.js'
  * @returns {connector} a new connector
  */
 export const normalize = (connector) => {
-  const newaxis = vec3.normalize(connector.axis)
+  const newAxis = vec3.normalize(connector.axis)
 
   // make the normal vector truly normal
-  const newnormal = vec3.normalize(vec3.cross(connector.normal, connector.axis))
-  vec3.cross(newnormal, newaxis, newnormal)
+  const newNormal = vec3.normalize(vec3.cross(connector.normal, connector.axis))
+  vec3.cross(newNormal, newAxis, newNormal)
 
-  return fromPointAxisNormal(connector.point, newaxis, newnormal)
+  return fromPointAxisNormal(connector.point, newAxis, newNormal)
 }

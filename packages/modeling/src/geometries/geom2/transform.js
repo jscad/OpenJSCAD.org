@@ -10,7 +10,7 @@ import * as mat4 from '../../maths/mat4/index.js'
  * @alias module:modeling/geometries/geom2.transform
  *
  * @example
- * let newgeometry = transform(fromZRotation(TAU / 4), geometry)
+ * let newGeometry = transform(fromZRotation(TAU / 4), geometry)
  */
 export const transform = (matrix, geometry) => {
   const transforms = mat4.multiply(mat4.create(), matrix, geometry.transforms)

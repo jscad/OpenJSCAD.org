@@ -88,7 +88,7 @@ test('intersect: intersect of one or more geom3 objects produces expected geomet
   const result3 = intersect(geometry2, geometry3)
   obs = geom3.toPoints(result3)
 
-  // the order changes based on the bestplane chosen in Node.js
+  // the order changes based on the best plane chosen in Node.js
   exp = [
     [[9, 9, 8], [9, 9, 9], [9, 8, 9], [9, 8, 8]],
     [[8, 9, 9], [9, 9, 9], [9, 9, 8], [8, 9, 8]],

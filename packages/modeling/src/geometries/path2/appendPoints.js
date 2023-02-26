@@ -8,6 +8,6 @@ import { create } from './create.js'
  * @returns {path2} a new path with the appended points
  * @alias module:modeling/geometries/path2.appendPoints
  * @example
- * let newpath = appendPoints([[3, 4], [4, 5]], oldpath)
+ * let newPath = appendPoints([[3, 4], [4, 5]], oldPath)
  */
 export const appendPoints = (points, geometry) => concat(geometry, create(points))

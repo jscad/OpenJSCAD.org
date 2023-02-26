@@ -46,35 +46,35 @@ export const arc = (options) => {
     rotation = endAngle + (TAU - startAngle)
   }
 
-  const minangle = Math.acos(((radius * radius) + (radius * radius) - (EPS * EPS)) / (2 * radius * radius))
+  const minAngle = Math.acos(((radius * radius) + (radius * radius) - (EPS * EPS)) / (2 * radius * radius))
 
-  const centerv = vec2.clone(center)
+  const centerV = vec2.clone(center)
   let point
   const pointArray = []
-  if (rotation < minangle) {
+  if (rotation < minAngle) {
     // there is no rotation, just a single point
     point = vec2.fromAngleRadians(vec2.create(), startAngle)
     vec2.scale(point, point, radius)
-    vec2.add(point, point, centerv)
+    vec2.add(point, point, centerV)
     pointArray.push(point)
   } else {
-    // note: add one additional step to acheive full rotation
-    const numsteps = Math.max(1, Math.floor(segments * (rotation / TAU))) + 1
-    let edgestepsize = numsteps * 0.5 / rotation // step size for half a degree
-    if (edgestepsize > 0.25) edgestepsize = 0.25
+    // note: add one additional step to achieve full rotation
+    const numSteps = Math.max(1, Math.floor(segments * (rotation / TAU))) + 1
+    let edgeStepSize = numSteps * 0.5 / rotation // step size for half a degree
+    if (edgeStepSize > 0.25) edgeStepSize = 0.25
 
-    const totalsteps = makeTangent ? (numsteps + 2) : numsteps
-    for (let i = 0; i <= totalsteps; i++) {
+    const totalSteps = makeTangent ? (numSteps + 2) : numSteps
+    for (let i = 0; i <= totalSteps; i++) {
       let step = i
       if (makeTangent) {
-        step = (i - 1) * (numsteps - 2 * edgestepsize) / numsteps + edgestepsize
+        step = (i - 1) * (numSteps - 2 * edgeStepSize) / numSteps + edgeStepSize
         if (step < 0) step = 0
-        if (step > numsteps) step = numsteps
+        if (step > numSteps) step = numSteps
       }
-      const angle = startAngle + (step * (rotation / numsteps))
+      const angle = startAngle + (step * (rotation / numSteps))
       point = vec2.fromAngleRadians(vec2.create(), angle)
       vec2.scale(point, point, radius)
-      vec2.add(point, point, centerv)
+      vec2.add(point, point, centerV)
       pointArray.push(point)
     }
   }

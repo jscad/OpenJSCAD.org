@@ -18,7 +18,7 @@ export const EPS = 1e-5
 export const NEPS = 1e-13
 // NEPS is derived from a series of tests to determine the optimal precision
 // for comparing coplanar polygons, as provided by the sphere primitive at high
-// segmentation. NEPS is for 64 bit Number values.
+// segmentation. NEPS is for 64-bit Number values.
 
 /**
  * The TAU property represents the ratio of the circumference of a circle to its radius.

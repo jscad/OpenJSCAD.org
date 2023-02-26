@@ -435,11 +435,11 @@ export class QuickHull {
    * Finds the next vertex to make faces with the current hull
    *
    * - let `face` be the first face existing in the `claimed` vertex list
-   *  - if `face` doesn't exist then return since there're no vertices left
+   *  - if `face` doesn't exist then return since there are no vertices left
    *  - otherwise for each `vertex` that face sees find the one furthest away
    *  from `face`
    *
-   * @return {Vertex|undefined} Returns undefined when there're no more
+   * @return {Vertex|undefined} Returns undefined when there are no more
    * visible vertices
    */
   nextVertexToAdd () {
@@ -603,7 +603,7 @@ export class QuickHull {
    *
    *    dot(centroid larger face, smaller face normal) - smaller face offset > -tolerance
    *
-   * If true then it means that two faces are non convex (concave), even if the
+   * If true then it means that two faces are non-convex (concave), even if the
    * dot(...) - offset value is > 0 (that's the point of doing the merge in the
    * first place)
    *
@@ -727,7 +727,7 @@ export class QuickHull {
     }
 
     // second merge pass
-    // Do the merge on non convex faces (a face is marked as non convex in the
+    // Do the merge on non-convex faces (a face is marked as non-convex in the
     // first pass)
     for (let i = 0; i < this.newFaces.length; i += 1) {
       const face = this.newFaces[i]
