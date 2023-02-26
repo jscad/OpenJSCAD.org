@@ -11,7 +11,7 @@ import { toPoints } from './toPoints.js'
  * @param {Object} options - options for construction
  * @param {vec2} options.endpoint - end point of arc (REQUIRED)
  * @param {vec2} [options.radius=[0,0]] - radius of arc (X and Y)
- * @param {Number} [options.xaxisrotation=0] - rotation (RADIANS) of the X axis of the arc with respect to the X axis of the coordinate system
+ * @param {Number} [options.xaxisRotation=0] - rotation (RADIANS) of the X axis of the arc with respect to the X axis of the coordinate system
  * @param {Boolean} [options.clockwise=false] - draw an arc clockwise with respect to the center point
  * @param {Boolean} [options.large=false] - draw an arc longer than TAU / 2 radians
  * @param {Number} [options.segments=16] - number of segments per full rotation
@@ -27,12 +27,12 @@ import { toPoints } from './toPoints.js'
 export const appendArc = (options, geometry) => {
   const defaults = {
     radius: [0, 0], // X and Y radius
-    xaxisrotation: 0,
+    xaxisRotation: 0,
     clockwise: false,
     large: false,
     segments: 16
   }
-  let { endpoint, radius, xaxisrotation, clockwise, large, segments } = Object.assign({}, defaults, options)
+  let { endpoint, radius, xaxisRotation, clockwise, large, segments } = Object.assign({}, defaults, options)
 
   // validate the given options
   if (!Array.isArray(endpoint)) throw new Error('endpoint must be an array of X and Y values')
@@ -76,7 +76,7 @@ export const appendArc = (options, geometry) => {
     yradius = Math.abs(yradius)
 
     // see http://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes :
-    const phi = xaxisrotation
+    const phi = xaxisRotation
     const cosphi = Math.cos(phi)
     const sinphi = Math.sin(phi)
     const minushalfdistance = vec2.subtract(vec2.create(), startpoint, endpoint)
