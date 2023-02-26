@@ -21,3 +21,6 @@ pnpm test
 
 The modeling package has fundamentally changed to acheive several goals.
 
+The following name changes were made to improve the API.
+ - path2.appendArc() : option xaxisrotation renamed to xaxisRotation
+
