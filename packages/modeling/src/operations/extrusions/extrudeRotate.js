@@ -56,11 +56,6 @@ export const extrudeRotate = (options, geometry) => {
     if (Math.abs(totalRotation) > (segments * anglePerSegment)) segments++
   }
 
-  // console.log('startAngle: '+startAngle)
-  // console.log('endAngle: '+endAngle)
-  // console.log(totalRotation)
-  // console.log(segments)
-
   // convert geometry to an array of sides, easier to deal with
   let shapeSides = geom2.toSides(geometry)
   if (shapeSides.length === 0) throw new Error('the given geometry cannot be empty')

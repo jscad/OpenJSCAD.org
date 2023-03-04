@@ -87,8 +87,6 @@ export const makeWebRequire = (filesAndFolders, options) => {
     }
   }
 
-  // console.log('*****\n',filesAndFolders,'\n*****')
-
   const extensions = {}
   const moduleCache = {}
 
@@ -97,8 +95,6 @@ export const makeWebRequire = (filesAndFolders, options) => {
    * @see https://nodejs.org/dist/latest-v12.x/docs/api/modules.html#modules_all_together
    */
   const _require = (currentPath, requirePath) => {
-    // console.log('***** require: cur:', currentPath, ' req:', requirePath)
-
     // core modules
     const directModule = coreModules[requirePath]
     if (directModule) {
@@ -110,7 +106,6 @@ export const makeWebRequire = (filesAndFolders, options) => {
     }
 
     const loadAsFile = (requirePath) => {
-      // console.log('***** load as file', requirePath)
       let baseExt = getFileExtensionFromString(requirePath)
       if (!baseExt) {
         baseExt = 'js' // for lookups
@@ -164,7 +159,6 @@ export const makeWebRequire = (filesAndFolders, options) => {
     }
 
     const loadIndex = (requirePath) => {
-      // console.log('***** load index', requirePath)
       const entry = findMatch(requirePath, filesAndFolders)
       if (!entry) return null
 
@@ -182,7 +176,6 @@ export const makeWebRequire = (filesAndFolders, options) => {
     }
 
     const loadAsDirectory = (requirePath) => {
-      // console.log('***** load as directory', requirePath)
       let entry = findMatch(requirePath, filesAndFolders)
       if (!entry) return null
 
@@ -241,7 +234,6 @@ export const makeWebRequire = (filesAndFolders, options) => {
     }
 
     const loadNodeModules = (requirePath, basePath) => {
-      // console.log('loadNodeModules',requirePath, basePath)
       const dirs = nodeModulesPaths(basePath)
       for (let i = 0; i < dirs.length; i++) {
         const dir = dirs[i]

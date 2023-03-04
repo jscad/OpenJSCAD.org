@@ -19,7 +19,6 @@ const pinchZooms = ({ touchStarts$, touchMoves$, touchEnds$ }, settings) => {
         .tap((e) => e.preventDefault())
         .filter((t) => t.touches.length === 2)
         .tap((e) => {
-          // console.log("pinch started");
           if (typeof CustomEvent !== 'undefined') {
             const pinchStarted = new CustomEvent('pinchStarted', {
               detail: true
@@ -54,7 +53,6 @@ const pinchZooms = ({ touchStarts$, touchMoves$, touchEnds$ }, settings) => {
           return scale
         }) */
         .takeUntil(touchEnds$.tap((e) => {
-          // console.log("pinch ended");
           if (typeof CustomEvent !== 'undefined') {
             const pinchEnded = new CustomEvent('pinchEnded', {
               detail: true

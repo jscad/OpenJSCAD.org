@@ -34,7 +34,6 @@ const getKeyCombos = (options, keyUps$, keyDown$) => {
     }, [])
     .filter((x) => x !== undefined)
     .filter((x) => x.event !== undefined)
-    // .tap(x => console.log('key stuff', x))
     .multicast()
 
   return keyCombos$
@@ -174,7 +173,6 @@ const makeActions = (sources) => {
     .map(x => undefined)
     .map(data => ({type: 'clearErrors', data}))
     .delay(30000) */
-  // .forEach(x => console.log('clear errors', x))
 
   const setAppUpdatesAvailable$ = most.mergeArray([
     sources
