@@ -15,13 +15,13 @@ export class OrthoNormalBasis {
   constructor (plane) {
     // plane normal is one component
     this.plane = plane
-    // orthognal vector to plane normal is one component
-    const rightvector = vec3.orthogonal(vec3.create(), plane)
-    this.v = vec3.normalize(vec3.create(), vec3.cross(vec3.create(), plane, rightvector))
+    // orthogonal vector to plane normal is one component
+    const o = vec3.orthogonal(vec3.create(), plane)
+    this.v = vec3.normalize(o, vec3.cross(o, plane, o))
     // cross between plane normal and orthogonal vector is one component
     this.u = vec3.cross(vec3.create(), this.v, plane)
 
-    this.planeorigin = vec3.scale(vec3.create(), plane, plane[3])
+    this.planeOrigin = vec3.scale(vec3.create(), plane, plane[3])
   }
 
   /**
@@ -42,13 +42,11 @@ export class OrthoNormalBasis {
    * return {mat4} matrix which can be used to convert 2D points to 3D vertices
    */
   getInverseProjectionMatrix () {
-    // FIXME optimize this code
-    const p = vec3.scale(vec3.create(), this.plane, this.plane[3])
     return mat4.fromValues(
       this.u[0], this.u[1], this.u[2], 0,
       this.v[0], this.v[1], this.v[2], 0,
       this.plane[0], this.plane[1], this.plane[2], 0,
-      p[0], p[1], p[2], 1
+      this.planeOrigin[0], this.planeOrigin[1], this.planeOrigin[2], 1
     )
   }
 
@@ -67,11 +65,9 @@ export class OrthoNormalBasis {
    * @return {vec3} - 3D vertex which lies within the original basis (set)
    */
   to3D (point) {
-    // FIXME optimize this code
     const v1 = vec3.scale(vec3.create(), this.u, point[0])
     const v2 = vec3.scale(vec3.create(), this.v, point[1])
-
-    const v3 = vec3.add(v1, v1, this.planeorigin)
+    const v3 = vec3.add(v1, v1, this.planeOrigin)
     const v4 = vec3.add(v2, v2, v3)
     return v4
   }
