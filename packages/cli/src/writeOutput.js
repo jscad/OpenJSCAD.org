@@ -5,8 +5,6 @@ export const writeOutput = (outputFile, outputData) => {
     (err) => {
       if (err) {
         console.log('err', err)
-      } else {
-        // console.log('success')
       }
     }
   )

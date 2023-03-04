@@ -91,11 +91,13 @@ test('scale: scaling of a geom3 produces expected changes to polygons', (t) => {
     [[-6, -7, 18], [24, -7, 18], [24, 13, 18], [-6, 13, 18]]
   ]
   t.notThrows(() => geom3.validate(scaled))
+  t.is(measureVolume(scaled), 3 * measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   scaled = scaleX(3, geometry)
   obs = geom3.toPoints(scaled)
   t.notThrows(() => geom3.validate(scaled))
+  t.is(measureVolume(scaled), 3 * measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // scale Y
@@ -109,11 +111,14 @@ test('scale: scaling of a geom3 produces expected changes to polygons', (t) => {
     [[-2, -3.5, -12], [-2, 6.5, -12], [8, 6.5, -12], [8, -3.5, -12]],
     [[-2, -3.5, 18], [8, -3.5, 18], [8, 6.5, 18], [-2, 6.5, 18]]
   ]
+  t.notThrows(() => geom3.validate(scaled))
+  t.is(measureVolume(scaled), 0.5 * measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   scaled = scaleY(0.5, geometry)
   obs = geom3.toPoints(scaled)
   t.notThrows(() => geom3.validate(scaled))
+  t.is(measureVolume(scaled), 0.5 * measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // scale Z
@@ -128,11 +133,13 @@ test('scale: scaling of a geom3 produces expected changes to polygons', (t) => {
     [[-2, -7, 90], [8, -7, 90], [8, 13, 90], [-2, 13, 90]]
   ]
   t.notThrows(() => geom3.validate(scaled))
+  t.is(measureVolume(scaled), 5 * measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   scaled = scaleZ(5, geometry)
   obs = geom3.toPoints(scaled)
   t.notThrows(() => geom3.validate(scaled))
+  t.is(measureVolume(scaled), 5 * measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 })
 
@@ -148,10 +155,12 @@ test('scale: scaling of multiple objects produces expected changes', (t) => {
   const obs1 = path2.toPoints(scaled[1])
   const exp1 = [[-15, 5], [15, 5], [-15, -5], [30, -5]]
   t.notThrows(() => path2.validate(scaled[1]))
+  t.is(measureVolume(scaled[1]), 3 * measureVolume(geometry1))
   t.true(comparePoints(obs1, exp1))
 
   const obs2 = geom2.toPoints(scaled[2])
   const exp2 = [[-15, -5], [0, 5], [30, -5]]
   t.notThrows(() => geom2.validate(scaled[2]))
+  t.is(measureVolume(scaled[2]), 3 * measureVolume(geometry2))
   t.true(comparePoints(obs2, exp2))
 })

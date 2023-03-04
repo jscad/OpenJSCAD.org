@@ -8,7 +8,7 @@ import { clone } from './clone.js'
  * @alias module:modeling/geometries/geom2.reverse
  *
  * @example
- * let newgeometry = reverse(geometry)
+ * let newGeometry = reverse(geometry)
  */
 export const reverse = (geometry) => {
   const reversed = clone(geometry)

@@ -6,7 +6,7 @@
  * @alias module:modeling/geometries/slice.toEdges
  *
  * @example
- * let sharededges = toEdges(slice)
+ * let sharedEdges = toEdges(slice)
  */
 export const toEdges = (slice) => {
   const edges = []

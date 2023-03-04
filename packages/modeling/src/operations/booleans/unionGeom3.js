@@ -17,7 +17,7 @@ export const unionGeom3 = (...geometries) => {
   for (i = 1; i < geometries.length; i += 2) {
     geometries.push(unionGeom3Sub(geometries[i - 1], geometries[i]))
   }
-  let newgeometry = geometries[i - 1]
-  newgeometry = retessellate(newgeometry)
-  return newgeometry
+  let newGeometry = geometries[i - 1]
+  newGeometry = retessellate(newGeometry)
+  return newGeometry
 }

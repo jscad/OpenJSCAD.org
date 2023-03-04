@@ -8,6 +8,6 @@ import { applyTransforms } from './applyTransforms.js'
  * @alias module:modeling/geometries/geom3.toPolygons
  *
  * @example
- * let sharedpolygons = toPolygons(geometry)
+ * let sharedPolygons = toPolygons(geometry)
  */
 export const toPolygons = (geometry) => applyTransforms(geometry).polygons

@@ -83,7 +83,6 @@ const emitstart = (reader) => emitstate(reader, 'onstart', reader.data)
 // emit the group (code and value) to asorbers
 //
 const emitgroup = (reader, group, value) => {
-  // console.log(group+": "+value)
   // emit this group to all listeners
   if (reader.absorbers !== undefined) {
     const absorber = reader.absorbers.get(group)

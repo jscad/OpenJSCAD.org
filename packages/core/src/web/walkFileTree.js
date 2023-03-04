@@ -163,7 +163,6 @@ const processDirectory = (directory) => {
  * Transform the flat list of files (from HTML input) to a heiarchy of files (from drag-n-drop).
  */
 const transformFileList = (fileList) => {
-
   if (fileList.length === 1) {
     const file = fileList[0]
     const filePath = file.webkitRelativePath ? file.webkitRelativePath : file.name

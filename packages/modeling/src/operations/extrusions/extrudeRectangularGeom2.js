@@ -34,7 +34,7 @@ export const extrudeRectangularGeom2 = (options, geometry) => {
   let expanded = []
   outlines.forEach((outline) => {
     if (area(outline) < 0) {
-      outline = outline.slice().reverse() // all outlines must wind counter clockwise
+      outline = outline.slice().reverse() // all outlines must wind counterclockwise
     }
     // expand the outline
     const part = expand(options, path2.fromPoints({ closed: true }, outline))

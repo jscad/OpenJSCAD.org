@@ -2,18 +2,18 @@
  * Insert the given element into the give array using the compareFunction.
  * @alias module:modeling/utils.insertSorted
  */
-export const insertSorted = (array, element, comparefunc) => {
-  let leftbound = 0
-  let rightbound = array.length
-  while (rightbound > leftbound) {
-    const testindex = Math.floor((leftbound + rightbound) / 2)
-    const testelement = array[testindex]
-    const compareresult = comparefunc(element, testelement)
-    if (compareresult > 0) { // element > testelement
-      leftbound = testindex + 1
+export const insertSorted = (array, element, compareFunc) => {
+  let leftBound = 0
+  let rightBound = array.length
+  while (rightBound > leftBound) {
+    const testIndex = Math.floor((leftBound + rightBound) / 2)
+    const testElement = array[testIndex]
+    const compareResult = compareFunc(element, testElement)
+    if (compareResult > 0) { // element > testElement
+      leftBound = testIndex + 1
     } else {
-      rightbound = testindex
+      rightBound = testIndex
     }
   }
-  array.splice(leftbound, 0, element)
+  array.splice(leftBound, 0, element)
 }

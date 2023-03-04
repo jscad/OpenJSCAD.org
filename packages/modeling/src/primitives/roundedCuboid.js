@@ -11,28 +11,28 @@ import { isGT, isGTE, isNumberArray } from './commonChecks.js'
 
 const createCorners = (center, size, radius, segments, slice, positive) => {
   const pitch = (TAU / 4) * slice / segments
-  const cospitch = cos(pitch)
-  const sinpitch = sin(pitch)
+  const cosPitch = cos(pitch)
+  const sinPitch = sin(pitch)
 
-  const layersegments = segments - slice
-  let layerradius = radius * cospitch
-  let layeroffset = size[2] - (radius - (radius * sinpitch))
-  if (!positive) layeroffset = (radius - (radius * sinpitch)) - size[2]
+  const layerSegments = segments - slice
+  let layerRadius = radius * cosPitch
+  let layerOffset = size[2] - (radius - (radius * sinPitch))
+  if (!positive) layerOffset = (radius - (radius * sinPitch)) - size[2]
 
-  layerradius = layerradius > EPS ? layerradius : 0
+  layerRadius = layerRadius > EPS ? layerRadius : 0
 
-  const corner0 = vec3.add(vec3.create(), center, [size[0] - radius, size[1] - radius, layeroffset])
-  const corner1 = vec3.add(vec3.create(), center, [radius - size[0], size[1] - radius, layeroffset])
-  const corner2 = vec3.add(vec3.create(), center, [radius - size[0], radius - size[1], layeroffset])
-  const corner3 = vec3.add(vec3.create(), center, [size[0] - radius, radius - size[1], layeroffset])
+  const corner0 = vec3.add(vec3.create(), center, [size[0] - radius, size[1] - radius, layerOffset])
+  const corner1 = vec3.add(vec3.create(), center, [radius - size[0], size[1] - radius, layerOffset])
+  const corner2 = vec3.add(vec3.create(), center, [radius - size[0], radius - size[1], layerOffset])
+  const corner3 = vec3.add(vec3.create(), center, [size[0] - radius, radius - size[1], layerOffset])
   const corner0Points = []
   const corner1Points = []
   const corner2Points = []
   const corner3Points = []
-  for (let i = 0; i <= layersegments; i++) {
-    const radians = layersegments > 0 ? TAU / 4 * i / layersegments : 0
+  for (let i = 0; i <= layerSegments; i++) {
+    const radians = layerSegments > 0 ? TAU / 4 * i / layerSegments : 0
     const point2d = vec2.fromAngleRadians(vec2.create(), radians)
-    vec2.scale(point2d, point2d, layerradius)
+    vec2.scale(point2d, point2d, layerRadius)
     const point3d = vec3.fromVec2(vec3.create(), point2d)
     corner0Points.push(vec3.add(vec3.create(), corner0, point3d))
     vec3.rotateZ(point3d, point3d, [0, 0, 0], TAU / 4)
@@ -121,7 +121,7 @@ const stitchSides = (bottomCorners, topCorners) => {
  * @alias module:modeling/primitives.roundedCuboid
  *
  * @example
- * let mycube = roundedCuboid({size: [10, 20, 10], roundRadius: 2, segments: 16})
+ * let myCube = roundedCuboid({size: [10, 20, 10], roundRadius: 2, segments: 16})
  */
 export const roundedCuboid = (options) => {
   const defaults = {

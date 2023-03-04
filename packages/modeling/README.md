@@ -38,7 +38,7 @@ This package is published and available for download via [NPM](https://www.npmjs
 npm install @jscad/modeling
 ```
 
-In addition this package is hosted at [UNPKG](https://unpkg.com/), and can be imported directly into webpages.
+In addition, this package is hosted at [UNPKG](https://unpkg.com/), and can be imported directly into webpages.
 
 ```
 <script language="javascript" src="https://unpkg.com/@jscad/modeling" id="MODELING"></script>

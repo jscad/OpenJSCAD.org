@@ -6,6 +6,4 @@ import * as vec3 from '../../maths/vec3/index.js'
  * @return {String} the string representation
  * @alias module:modeling/geometries/poly3.toString
  */
-export const toString = (polygon) => {
-  return `poly3: [${polygon.vertices.map(vec3.toString).join(', ')}]`
-}
+export const toString = (polygon) => `poly3: [${polygon.vertices.map(vec3.toString).join(', ')}]`

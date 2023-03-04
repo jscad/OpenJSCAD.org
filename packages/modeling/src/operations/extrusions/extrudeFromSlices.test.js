@@ -86,9 +86,9 @@ test('extrudeFromSlices (same shape, changing dimensions)', (t) => {
       capStart: true,
       capEnd: false,
       callback: function (progress, count, base) {
-        let newslice = slice.transform(mat4.fromTranslation(mat4.create(), [0, 0, count * 2]), base)
-        newslice = slice.transform(mat4.fromScaling(mat4.create(), [1 + count, 1 + (count / 2), 1]), newslice)
-        return newslice
+        let newSlice = slice.transform(mat4.fromTranslation(mat4.create(), [0, 0, count * 2]), base)
+        newSlice = slice.transform(mat4.fromScaling(mat4.create(), [1 + count, 1 + (count / 2), 1]), newSlice)
+        return newSlice
       }
     }, base
   )
@@ -105,10 +105,10 @@ test('extrudeFromSlices (changing shape, changing dimensions)', (t) => {
     {
       numberOfSlices: 5,
       callback: (progress, count, base) => {
-        const newshape = circle({ radius: 5 + count, segments: 4 + count })
-        let newslice = slice.fromGeom2(newshape)
-        newslice = slice.transform(mat4.fromTranslation(mat4.create(), [0, 0, count * 10]), newslice)
-        return newslice
+        const newShape = circle({ radius: 5 + count, segments: 4 + count })
+        let newSlice = slice.fromGeom2(newShape)
+        newSlice = slice.transform(mat4.fromTranslation(mat4.create(), [0, 0, count * 10]), newSlice)
+        return newSlice
       }
     }, base
   )

@@ -8,7 +8,7 @@
  * @returns {Boolean} true if matrix is the identity transform
  * @alias module:modeling/maths/mat4.isIdentity
  * @example
- * if (mat4.isIdentity(mymatrix)) ...
+ * if (mat4.isIdentity(myMatrix)) ...
  */
 export const isIdentity = (matrix) => (
   matrix[0] === 1 && matrix[1] === 0 && matrix[2] === 0 && matrix[3] === 0 &&

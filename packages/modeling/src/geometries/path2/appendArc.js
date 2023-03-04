@@ -56,59 +56,59 @@ export const appendArc = (options, geometry) => {
     throw new Error('the given path must contain one or more points (as the starting point for the arc)')
   }
 
-  let xradius = radius[0]
-  let yradius = radius[1]
+  let xRadius = radius[0]
+  let yRadius = radius[1]
   const startpoint = points[points.length - 1]
 
   // round to precision in order to have determinate calculations
-  xradius = Math.round(xradius * decimals) / decimals
-  yradius = Math.round(yradius * decimals) / decimals
+  xRadius = Math.round(xRadius * decimals) / decimals
+  yRadius = Math.round(yRadius * decimals) / decimals
   endpoint = vec2.fromValues(Math.round(endpoint[0] * decimals) / decimals, Math.round(endpoint[1] * decimals) / decimals)
 
   const sweepFlag = !clockwise
-  let newpoints = []
-  if ((xradius === 0) || (yradius === 0)) {
+  let newPoints = []
+  if ((xRadius === 0) || (yRadius === 0)) {
     // http://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes:
     // If rx = 0 or ry = 0, then treat this as a straight line from (x1, y1) to (x2, y2) and stop
-    newpoints.push(endpoint)
+    newPoints.push(endpoint)
   } else {
-    xradius = Math.abs(xradius)
-    yradius = Math.abs(yradius)
+    xRadius = Math.abs(xRadius)
+    yRadius = Math.abs(yRadius)
 
     // see http://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes :
     const phi = xaxisRotation
-    const cosphi = Math.cos(phi)
-    const sinphi = Math.sin(phi)
-    const minushalfdistance = vec2.subtract(vec2.create(), startpoint, endpoint)
-    vec2.scale(minushalfdistance, minushalfdistance, 0.5)
+    const cosPhi = Math.cos(phi)
+    const sinPhi = Math.sin(phi)
+    const minusHalfDistance = vec2.subtract(vec2.create(), startpoint, endpoint)
+    vec2.scale(minusHalfDistance, minusHalfDistance, 0.5)
     // F.6.5.1:
     // round to precision in order to have determinate calculations
-    const x = Math.round((cosphi * minushalfdistance[0] + sinphi * minushalfdistance[1]) * decimals) / decimals
-    const y = Math.round((-sinphi * minushalfdistance[0] + cosphi * minushalfdistance[1]) * decimals) / decimals
+    const x = Math.round((cosPhi * minusHalfDistance[0] + sinPhi * minusHalfDistance[1]) * decimals) / decimals
+    const y = Math.round((-sinPhi * minusHalfDistance[0] + cosPhi * minusHalfDistance[1]) * decimals) / decimals
     const startTranslated = vec2.fromValues(x, y)
     // F.6.6.2:
-    const biglambda = (startTranslated[0] * startTranslated[0]) / (xradius * xradius) + (startTranslated[1] * startTranslated[1]) / (yradius * yradius)
-    if (biglambda > 1.0) {
+    const bigLambda = (startTranslated[0] * startTranslated[0]) / (xRadius * xRadius) + (startTranslated[1] * startTranslated[1]) / (yRadius * yRadius)
+    if (bigLambda > 1.0) {
       // F.6.6.3:
-      const sqrtbiglambda = Math.sqrt(biglambda)
-      xradius *= sqrtbiglambda
-      yradius *= sqrtbiglambda
+      const sqrtBigLambda = Math.sqrt(bigLambda)
+      xRadius *= sqrtBigLambda
+      yRadius *= sqrtBigLambda
       // round to precision in order to have determinate calculations
-      xradius = Math.round(xradius * decimals) / decimals
-      yradius = Math.round(yradius * decimals) / decimals
+      xRadius = Math.round(xRadius * decimals) / decimals
+      yRadius = Math.round(yRadius * decimals) / decimals
     }
     // F.6.5.2:
-    let multiplier1 = Math.sqrt((xradius * xradius * yradius * yradius - xradius * xradius * startTranslated[1] * startTranslated[1] - yradius * yradius * startTranslated[0] * startTranslated[0]) / (xradius * xradius * startTranslated[1] * startTranslated[1] + yradius * yradius * startTranslated[0] * startTranslated[0]))
+    let multiplier1 = Math.sqrt((xRadius * xRadius * yRadius * yRadius - xRadius * xRadius * startTranslated[1] * startTranslated[1] - yRadius * yRadius * startTranslated[0] * startTranslated[0]) / (xRadius * xRadius * startTranslated[1] * startTranslated[1] + yRadius * yRadius * startTranslated[0] * startTranslated[0]))
     if (sweepFlag === large) multiplier1 = -multiplier1
-    const centerTranslated = vec2.fromValues(xradius * startTranslated[1] / yradius, -yradius * startTranslated[0] / xradius)
+    const centerTranslated = vec2.fromValues(xRadius * startTranslated[1] / yRadius, -yRadius * startTranslated[0] / xRadius)
     vec2.scale(centerTranslated, centerTranslated, multiplier1)
     // F.6.5.3:
-    let center = vec2.fromValues(cosphi * centerTranslated[0] - sinphi * centerTranslated[1], sinphi * centerTranslated[0] + cosphi * centerTranslated[1])
+    let center = vec2.fromValues(cosPhi * centerTranslated[0] - sinPhi * centerTranslated[1], sinPhi * centerTranslated[0] + cosPhi * centerTranslated[1])
     center = vec2.add(center, center, vec2.scale(vec2.create(), vec2.add(vec2.create(), startpoint, endpoint), 0.5))
 
     // F.6.5.5:
-    const vector1 = vec2.fromValues((startTranslated[0] - centerTranslated[0]) / xradius, (startTranslated[1] - centerTranslated[1]) / yradius)
-    const vector2 = vec2.fromValues((-startTranslated[0] - centerTranslated[0]) / xradius, (-startTranslated[1] - centerTranslated[1]) / yradius)
+    const vector1 = vec2.fromValues((startTranslated[0] - centerTranslated[0]) / xRadius, (startTranslated[1] - centerTranslated[1]) / yRadius)
+    const vector2 = vec2.fromValues((-startTranslated[0] - centerTranslated[0]) / xRadius, (-startTranslated[1] - centerTranslated[1]) / yRadius)
     const theta1 = vec2.angleRadians(vector1)
     const theta2 = vec2.angleRadians(vector2)
     let deltatheta = theta2 - theta1
@@ -120,21 +120,21 @@ export const appendArc = (options, geometry) => {
     }
 
     // Ok, we have the center point and angle range (from theta1, deltatheta radians) so we can create the ellipse
-    let numsteps = Math.ceil(Math.abs(deltatheta) / TAU * segments) + 1
-    if (numsteps < 1) numsteps = 1
-    for (let step = 1; step < numsteps; step++) {
-      const theta = theta1 + step / numsteps * deltatheta
-      const costheta = Math.cos(theta)
-      const sintheta = Math.sin(theta)
+    let numSteps = Math.ceil(Math.abs(deltatheta) / TAU * segments) + 1
+    if (numSteps < 1) numSteps = 1
+    for (let step = 1; step < numSteps; step++) {
+      const theta = theta1 + step / numSteps * deltatheta
+      const cosTheta = Math.cos(theta)
+      const sinTheta = Math.sin(theta)
       // F.6.3.1:
-      const point = vec2.fromValues(cosphi * xradius * costheta - sinphi * yradius * sintheta, sinphi * xradius * costheta + cosphi * yradius * sintheta)
+      const point = vec2.fromValues(cosPhi * xRadius * cosTheta - sinPhi * yRadius * sinTheta, sinPhi * xRadius * cosTheta + cosPhi * yRadius * sinTheta)
       vec2.add(point, point, center)
-      newpoints.push(point)
+      newPoints.push(point)
     }
     // ensure end point is precisely what user gave as parameter
-    if (numsteps) newpoints.push(options.endpoint)
+    if (numSteps) newPoints.push(options.endpoint)
   }
-  newpoints = points.concat(newpoints)
-  const result = fromPoints({}, newpoints)
+  newPoints = points.concat(newPoints)
+  const result = fromPoints({}, newPoints)
   return result
 }

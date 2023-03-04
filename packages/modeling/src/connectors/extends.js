@@ -9,6 +9,6 @@ import { fromPointAxisNormal } from './fromPointAxisNormal.js'
  * @returns {connector} a normalized connector
  */
 export const extend = (distance, connector) => {
-  const newpoint = vec3.add(connector.point, vec3.scale(distance, vec3.normalize(connector.axis)))
-  return fromPointAxisNormal(newpoint, connector.axis, connector.normal)
+  const newPoint = vec3.add(connector.point, vec3.scale(distance, vec3.normalize(connector.axis)))
+  return fromPointAxisNormal(newPoint, connector.axis, connector.normal)
 }

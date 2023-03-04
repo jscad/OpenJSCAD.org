@@ -30,17 +30,17 @@ export const possibleIntersection = (se1, se2, queue) => {
     se2.point, se2.otherEvent.point
   )
 
-  const nintersections = inter ? inter.length : 0
-  if (nintersections === 0) return 0 // no intersection
+  const nIntersections = inter ? inter.length : 0
+  if (nIntersections === 0) return 0 // no intersection
 
   // the line segments intersect at an endpoint of both line segments
-  if ((nintersections === 1) &&
+  if ((nIntersections === 1) &&
       (equals(se1.point, se2.point) ||
        equals(se1.otherEvent.point, se2.otherEvent.point))) {
     return 0
   }
 
-  if (nintersections === 2 && se1.isSubject === se2.isSubject) {
+  if (nIntersections === 2 && se1.isSubject === se2.isSubject) {
     // if(se1.contourId === se2.contourId){
     // console.warn('Edges of the same polygon overlap',
     //   se1.point, se1.otherEvent.point, se2.point, se2.otherEvent.point)
@@ -50,7 +50,7 @@ export const possibleIntersection = (se1, se2, queue) => {
   }
 
   // The line segments associated to se1 and se2 intersect
-  if (nintersections === 1) {
+  if (nIntersections === 1) {
     // if the intersection point is not an endpoint of se1
     if (!equals(se1.point, inter[0]) && !equals(se1.otherEvent.point, inter[0])) {
       divideSegment(se1, inter[0], queue)

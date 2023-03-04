@@ -14,7 +14,7 @@ import { hull } from './hull.js'
  * @alias module:modeling/hulls.hullChain
  *
  * @example
- * let newshape = hullChain(rectangle({center: [-5,-5]}), circle({center: [0,0]}), rectangle({center: [5,5]}))
+ * let newShape = hullChain(rectangle({center: [-5,-5]}), circle({center: [0,0]}), rectangle({center: [5,5]}))
  *
  * @example
  * +-------+   +-------+     +-------+   +------+

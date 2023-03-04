@@ -9,14 +9,14 @@ import * as vec3 from '../vec3/index.js'
  * @alias module:modeling/maths/line3.closestPoint
  */
 export const closestPoint = (line, point) => {
-  const lpoint = line[0]
-  const ldirection = line[1]
+  const lPoint = line[0]
+  const lDirection = line[1]
 
-  const a = vec3.dot(vec3.subtract(vec3.create(), point, lpoint), ldirection)
-  const b = vec3.dot(ldirection, ldirection)
+  const a = vec3.dot(vec3.subtract(vec3.create(), point, lPoint), lDirection)
+  const b = vec3.dot(lDirection, lDirection)
   const t = a / b
 
-  const closestpoint = vec3.scale(vec3.create(), ldirection, t)
-  vec3.add(closestpoint, closestpoint, lpoint)
-  return closestpoint
+  const closestPoint = vec3.scale(vec3.create(), lDirection, t)
+  vec3.add(closestPoint, closestPoint, lPoint)
+  return closestPoint
 }

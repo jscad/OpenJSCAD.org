@@ -129,7 +129,6 @@ const rotationMatrixFromSCP = (out, xaxis, yaxis, zaxis) => {
 }
 
 export const extrudeX3D = (x3dshape) => {
-  // console.log(x3dshape)
   let { beginCap, endCap, crossSection, orientations, scales, spine } = Object.assign({}, x3dshape)
 
   // orientate the crossection for extruding
@@ -156,11 +155,8 @@ export const extrudeX3D = (x3dshape) => {
 
   // Calculate SCP values
   let yaxes = calculateYaxes(spine)
-  // console.log(yaxes)
   let zaxes = calculateZaxes(spine)
-  // console.log(zaxes)
   let xaxes = calculateXaxes(yaxes, zaxes)
-  // console.log(xaxes)
 
   // initial Y=0 matrix
   const y0direction = [0, 1, 0]

@@ -18,7 +18,7 @@ const translateLine = (options, line) => {
 }
 
 /**
- * Construct an array of character segments from a ascii string whose characters code is between 31 and 127,
+ * Construct an array of character segments from an ascii string whose characters code is between 31 and 127,
  * if one character is not supported it is replaced by a question mark.
  * @param {Object|String} [options] - options for construction or ascii string
  * @param {Float} [options.xOffset=0] - x offset

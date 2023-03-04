@@ -25,7 +25,7 @@ export const isConvex = (polygon) => {
 }
 
 /*
- * Calculate cross product between two consecutive line segements; p1 -> p2, p2 -> p3.
+ * Calculate cross product between two consecutive line segments; p1 -> p2, p2 -> p3.
  */
 const crossBetweenSegments = (p1, p2, p3) => {
   const X1 = p2[0] - p1[0]

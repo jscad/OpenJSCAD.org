@@ -18,17 +18,17 @@ export const equals = (a, b) => {
     return false
   }
 
-  const apoints = toPoints(a)
-  const bpoints = toPoints(b)
+  const aPoints = toPoints(a)
+  const bPoints = toPoints(b)
 
   // closed paths might be equal under graph rotation
   // so try comparison by rotating across all points
-  const length = apoints.length
+  const length = aPoints.length
   let offset = 0
   do {
     let unequal = false
     for (let i = 0; i < length; i++) {
-      if (!vec2.equals(apoints[i], bpoints[(i + offset) % length])) {
+      if (!vec2.equals(aPoints[i], bPoints[(i + offset) % length])) {
         unequal = true
         break
       }

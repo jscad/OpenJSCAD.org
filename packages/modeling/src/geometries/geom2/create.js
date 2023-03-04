@@ -21,9 +21,7 @@ import * as mat4 from '../../maths/mat4/index.js'
  * @example
  * let myShape = create([ [[-1,-1], [1,-1], [1,1], [-1,1]] ])
  */
-export const create = (outlines = []) => {
-  return {
-    outlines,
-    transforms: mat4.create()
-  }
-}
+export const create = (outlines = []) => ({
+  outlines,
+  transforms: mat4.create()
+})

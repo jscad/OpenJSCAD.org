@@ -18,8 +18,8 @@ export class PolygonHierarchy {
 
     // create an orthonormal basis
     // choose an arbitrary right hand vector, making sure it is somewhat orthogonal to the plane normal
-    const rightvector = vec3.orthogonal(vec3.create(), this.plane)
-    const perp = vec3.cross(vec3.create(), this.plane, rightvector)
+    const rightVector = vec3.orthogonal(vec3.create(), this.plane)
+    const perp = vec3.cross(vec3.create(), this.plane, rightVector)
     this.v = vec3.normalize(perp, perp)
     this.u = vec3.cross(vec3.create(), this.v, this.plane)
 

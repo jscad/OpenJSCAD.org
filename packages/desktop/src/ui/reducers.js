@@ -7,7 +7,6 @@ const changeTheme = (state, themeName) => {
     dark: require('../../data/theme.dark')
   }
   const themeData = themes[themeName]
-  // console.log('changeTheme', themeName, themeData)
   const viewer = merge({}, state.viewer, themeData.viewer)
   return Object.assign({}, state, { viewer, themeName, themeSettings: themeData })
 }

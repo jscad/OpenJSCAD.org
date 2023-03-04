@@ -12,11 +12,11 @@ export const isMirroring = (matrix) => {
 
   // for a true orthogonal, non-mirrored base, xVector.cross(yVector) == zVector
   // If they have an opposite direction then we are mirroring
-  // calcuate xVector.cross(yVector)
+  // calculate xVector.cross(yVector)
   const x = matrix[4] * matrix[9] - matrix[8] * matrix[5]
   const y = matrix[8] * matrix[1] - matrix[0] * matrix[9]
   const z = matrix[0] * matrix[5] - matrix[4] * matrix[1]
-  // calcualte dot(cross, zVector)
+  // calculate dot(cross, zVector)
   const d = x * matrix[2] + y * matrix[6] + z * matrix[10]
   return (d < 0)
 }

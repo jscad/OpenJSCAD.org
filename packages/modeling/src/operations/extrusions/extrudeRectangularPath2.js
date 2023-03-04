@@ -26,6 +26,6 @@ export const extrudeRectangularPath2 = (options, geometry) => {
   const points = path2.toPoints(geometry)
   if (points.length === 0) throw new Error('the given geometry cannot be empty')
 
-  const newgeometry = expand(options, geometry)
-  return extrudeLinearGeom2(options, newgeometry)
+  const newGeometry = expand(options, geometry)
+  return extrudeLinearGeom2(options, newGeometry)
 }

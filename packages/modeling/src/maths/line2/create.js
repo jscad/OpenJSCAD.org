@@ -1,7 +1,7 @@
 /**
- * Represents a unbounded line in 2D space, positioned at a point of origin.
- * A line is parametrized by a normal vector (perpendicular to the line, rotated 90 degrees counter clockwise) and
- * distance from the origin.
+ * Represents an unbounded line in 2D space, positioned at a point of origin.
+ * A line is parametrized by a normal vector (perpendicular to the line,
+ * rotated 90 degrees counterclockwise) and distance from the origin.
  *
  * Equation: A Point (P) is on Line (L) if dot(L.normal, P) == L.distance
  *

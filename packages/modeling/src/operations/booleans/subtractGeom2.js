@@ -12,10 +12,10 @@ import { boolean } from './martinez/index.js'
 export const subtractGeom2 = (...geometries) => {
   geometries = flatten(geometries)
 
-  let newgeometry = geometries.shift()
+  let newGeometry = geometries.shift()
   geometries.forEach((geometry) => {
-    newgeometry = boolean(newgeometry, geometry, DIFFERENCE)
+    newGeometry = boolean(newGeometry, geometry, DIFFERENCE)
   })
 
-  return newgeometry
+  return newGeometry
 }

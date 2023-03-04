@@ -6,16 +6,16 @@ import { appendPoints } from './appendPoints.js'
 import { toPoints } from './toPoints.js'
 
 /**
- * Append a series of points to the given geometry that represent a Bezier curve.
+ * Append a series of points to the given geometry that represent a Bézier curve.
  * The Bézier curve starts at the last point in the given geometry, and ends at the last control point.
  * The other control points are intermediate control points to transition the curve from start to end points.
  * The first control point may be null to ensure a smooth transition occurs. In this case,
- * the second to last point of the given geometry is mirrored into the control points of the Bezier curve.
+ * the second to last point of the given geometry is mirrored into the control points of the Bézier curve.
  * In other words, the trailing gradient of the geometry matches the new gradient of the curve.
  * @param {Object} options - options for construction
- * @param {Array} options.controlPoints - list of control points (2D) for the bezier curve
+ * @param {Array} options.controlPoints - list of control points (2D) for the Bézier curve
  * @param {Number} [options.segment=16] - number of segments per 360 rotation
- * @param {path2} geometry - the path of which to appended points
+ * @param {path2} geometry - the path of which to append points
  * @returns {path2} a new path with the appended points
  * @alias module:modeling/geometries/path2.appendBezier
  *
@@ -64,10 +64,10 @@ export const appendBezier = (options, geometry) => {
       throw new Error('the given path must contain TWO or more points if given a null control point')
     }
     // replace the first control point with the mirror of the last bezier control point
-    const controlpoint = vec2.scale(vec2.create(), points[points.length - 1], 2)
-    vec2.subtract(controlpoint, controlpoint, lastBezierControlPoint)
+    const controlPoint = vec2.scale(vec2.create(), points[points.length - 1], 2)
+    vec2.subtract(controlPoint, controlPoint, lastBezierControlPoint)
 
-    controlPoints[0] = controlpoint
+    controlPoints[0] = controlPoint
   }
 
   // add a control point for the previous end point
@@ -106,38 +106,38 @@ export const appendBezier = (options, geometry) => {
     return point
   }
 
-  const newpoints = []
-  const newpointsT = []
-  const numsteps = bezierOrder + 1
-  for (let i = 0; i < numsteps; ++i) {
-    const t = i / (numsteps - 1)
+  const newPoints = []
+  const newPointsT = []
+  const numSteps = bezierOrder + 1
+  for (let i = 0; i < numSteps; ++i) {
+    const t = i / (numSteps - 1)
     const point = getPointForT(t)
-    newpoints.push(point)
-    newpointsT.push(t)
+    newPoints.push(point)
+    newPointsT.push(t)
   }
 
   // subdivide each segment until the angle at each vertex becomes small enough:
   let subdivideBase = 1
-  const maxangle = TAU / segments
-  const maxsinangle = Math.sin(maxangle)
-  while (subdivideBase < newpoints.length - 1) {
-    const dir1 = vec2.subtract(v0, newpoints[subdivideBase], newpoints[subdivideBase - 1])
+  const maxAngle = TAU / segments
+  const maxSinAngle = Math.sin(maxAngle)
+  while (subdivideBase < newPoints.length - 1) {
+    const dir1 = vec2.subtract(v0, newPoints[subdivideBase], newPoints[subdivideBase - 1])
     vec2.normalize(dir1, dir1)
-    const dir2 = vec2.subtract(v1, newpoints[subdivideBase + 1], newpoints[subdivideBase])
+    const dir2 = vec2.subtract(v1, newPoints[subdivideBase + 1], newPoints[subdivideBase])
     vec2.normalize(dir2, dir2)
-    const sinangle = vec2.cross(v3, dir1, dir2) // the sine of the angle
-    if (Math.abs(sinangle[2]) > maxsinangle) {
+    const sinAngle = vec2.cross(v3, dir1, dir2) // the sine of the angle
+    if (Math.abs(sinAngle[2]) > maxSinAngle) {
       // angle is too big, we need to subdivide
-      const t0 = newpointsT[subdivideBase - 1]
-      const t1 = newpointsT[subdivideBase + 1]
+      const t0 = newPointsT[subdivideBase - 1]
+      const t1 = newPointsT[subdivideBase + 1]
       const newt0 = t0 + (t1 - t0) * 1 / 3
       const newt1 = t0 + (t1 - t0) * 2 / 3
       const point0 = getPointForT(newt0)
       const point1 = getPointForT(newt1)
       // remove the point at subdivideBase and replace with 2 new points:
-      newpoints.splice(subdivideBase, 1, point0, point1)
-      newpointsT.splice(subdivideBase, 1, newt0, newt1)
-      // re - evaluate the angles, starting at the previous junction since it has changed:
+      newPoints.splice(subdivideBase, 1, point0, point1)
+      newPointsT.splice(subdivideBase, 1, newt0, newt1)
+      // reevaluate the angles, starting at the previous junction since it has changed:
       subdivideBase--
       if (subdivideBase < 1) subdivideBase = 1
     } else {
@@ -147,8 +147,8 @@ export const appendBezier = (options, geometry) => {
 
   // append to the new points to the given path
   // but skip the first new point because it is identical to the last point in the given path
-  newpoints.shift()
-  const result = appendPoints(newpoints, geometry)
+  newPoints.shift()
+  const result = appendPoints(newPoints, geometry)
   result.lastBezierControlPoint = controlPoints[controlPoints.length - 2]
   return result
 }

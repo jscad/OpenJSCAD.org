@@ -13,11 +13,11 @@ import { subtractGeom3Sub } from './subtractGeom3Sub.js'
 export const subtractGeom3 = (...geometries) => {
   geometries = flatten(geometries)
 
-  let newgeometry = geometries.shift()
+  let newGeometry = geometries.shift()
   geometries.forEach((geometry) => {
-    newgeometry = subtractGeom3Sub(newgeometry, geometry)
+    newGeometry = subtractGeom3Sub(newGeometry, geometry)
   })
 
-  newgeometry = retessellate(newgeometry)
-  return newgeometry
+  newGeometry = retessellate(newGeometry)
+  return newGeometry
 }

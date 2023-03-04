@@ -20,22 +20,22 @@ const measureBoundingBoxOfPath2 = (geometry) => {
 
   const points = path2.toPoints(geometry)
 
-  let minpoint
+  let minPoint
   if (points.length === 0) {
-    minpoint = vec2.create()
+    minPoint = vec2.create()
   } else {
-    minpoint = vec2.clone(points[0])
+    minPoint = vec2.clone(points[0])
   }
-  let maxpoint = vec2.clone(minpoint)
+  let maxPoint = vec2.clone(minPoint)
 
   points.forEach((point) => {
-    vec2.min(minpoint, minpoint, point)
-    vec2.max(maxpoint, maxpoint, point)
+    vec2.min(minPoint, minPoint, point)
+    vec2.max(maxPoint, maxPoint, point)
   })
-  minpoint = [minpoint[0], minpoint[1], 0]
-  maxpoint = [maxpoint[0], maxpoint[1], 0]
+  minPoint = [minPoint[0], minPoint[1], 0]
+  maxPoint = [maxPoint[0], maxPoint[1], 0]
 
-  boundingBox = [minpoint, maxpoint]
+  boundingBox = [minPoint, maxPoint]
 
   cache.set(geometry, boundingBox)
 
@@ -52,23 +52,23 @@ const measureBoundingBoxOfGeom2 = (geometry) => {
 
   const points = geom2.toPoints(geometry)
 
-  let minpoint
+  let minPoint
   if (points.length === 0) {
-    minpoint = vec2.create()
+    minPoint = vec2.create()
   } else {
-    minpoint = vec2.clone(points[0])
+    minPoint = vec2.clone(points[0])
   }
-  let maxpoint = vec2.clone(minpoint)
+  let maxPoint = vec2.clone(minPoint)
 
   points.forEach((point) => {
-    vec2.min(minpoint, minpoint, point)
-    vec2.max(maxpoint, maxpoint, point)
+    vec2.min(minPoint, minPoint, point)
+    vec2.max(maxPoint, maxPoint, point)
   })
 
-  minpoint = [minpoint[0], minpoint[1], 0]
-  maxpoint = [maxpoint[0], maxpoint[1], 0]
+  minPoint = [minPoint[0], minPoint[1], 0]
+  maxPoint = [maxPoint[0], maxPoint[1], 0]
 
-  boundingBox = [minpoint, maxpoint]
+  boundingBox = [minPoint, maxPoint]
 
   cache.set(geometry, boundingBox)
 
@@ -85,24 +85,24 @@ const measureBoundingBoxOfGeom3 = (geometry) => {
 
   const polygons = geom3.toPolygons(geometry)
 
-  let minpoint = vec3.create()
+  let minPoint = vec3.create()
   if (polygons.length > 0) {
     const points = poly3.toPoints(polygons[0])
-    vec3.copy(minpoint, points[0])
+    vec3.copy(minPoint, points[0])
   }
-  let maxpoint = vec3.clone(minpoint)
+  let maxPoint = vec3.clone(minPoint)
 
   polygons.forEach((polygon) => {
     poly3.toPoints(polygon).forEach((point) => {
-      vec3.min(minpoint, minpoint, point)
-      vec3.max(maxpoint, maxpoint, point)
+      vec3.min(minPoint, minPoint, point)
+      vec3.max(maxPoint, maxPoint, point)
     })
   })
 
-  minpoint = [minpoint[0], minpoint[1], minpoint[2]]
-  maxpoint = [maxpoint[0], maxpoint[1], maxpoint[2]]
+  minPoint = [minPoint[0], minPoint[1], minPoint[2]]
+  maxPoint = [maxPoint[0], maxPoint[1], maxPoint[2]]
 
-  boundingBox = [minpoint, maxpoint]
+  boundingBox = [minPoint, maxPoint]
 
   cache.set(geometry, boundingBox)
 

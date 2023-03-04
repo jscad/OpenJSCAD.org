@@ -19,8 +19,8 @@ export class Tree {
 
   // Remove all polygons in this BSP tree that are inside the other BSP tree
   // `tree`.
-  clipTo (tree, alsoRemovecoplanarFront = false) {
-    this.rootnode.clipTo(tree, alsoRemovecoplanarFront)
+  clipTo (tree, alsoRemoveCoplanarFront = false) {
+    this.rootnode.clipTo(tree, alsoRemoveCoplanarFront)
   }
 
   allPolygons () {
@@ -30,11 +30,11 @@ export class Tree {
   }
 
   addPolygons (polygons) {
-    const polygontreenodes = new Array(polygons.length)
+    const polygonTreeNodes = new Array(polygons.length)
     for (let i = 0; i < polygons.length; i++) {
-      polygontreenodes[i] = this.polygonTree.addChild(polygons[i])
+      polygonTreeNodes[i] = this.polygonTree.addChild(polygons[i])
     }
-    this.rootnode.addPolygonTreeNodes(polygontreenodes)
+    this.rootnode.addPolygonTreeNodes(polygonTreeNodes)
   }
 
   clear () {
@@ -42,7 +42,6 @@ export class Tree {
   }
 
   toString () {
-    const result = 'Tree: ' + this.polygonTree.toString('')
-    return result
+    return 'Tree: ' + this.polygonTree.toString('')
   }
 }

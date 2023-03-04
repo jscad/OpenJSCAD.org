@@ -1,5 +1,5 @@
 /**
- * Creates a invert copy of the given matrix.
+ * Creates an inverted copy of the given matrix.
  * @author Julian Lloyd
  * code from https://github.com/jlmakes/rematrix/blob/master/src/index.js
  *
