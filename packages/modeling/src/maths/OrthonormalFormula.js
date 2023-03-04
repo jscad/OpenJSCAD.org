@@ -22,6 +22,7 @@ export class OrthonormalFormula {
     this.u = vec3.cross(vec3.create(), this.v, plane)
 
     this.planeOrigin = vec3.scale(vec3.create(), plane, plane[3])
+    this.basisMap = new Map()
   }
 
   /**
@@ -56,7 +57,9 @@ export class OrthonormalFormula {
    * @return {vec2} - 2D point which lies within the orthonormal basis
    */
   to2D (vertex) {
-    return vec2.fromValues(vec3.dot(vertex, this.u), vec3.dot(vertex, this.v))
+    const point = vec2.fromValues(vec3.dot(vertex, this.u), vec3.dot(vertex, this.v))
+    this.basisMap.set(`${point}`, vertex)
+    return point
   }
 
   /**
@@ -65,6 +68,11 @@ export class OrthonormalFormula {
    * @return {vec3} - 3D vertex which lies within the original basis (set)
    */
   to3D (point) {
+    // return the original vertex if possible, i.e. no floating point error
+    const original = this.basisMap.get(`${point}`)
+    if (original) return original
+
+    // calculate a new 3D vertex from the orthonormal basis formula
     const v1 = vec3.scale(vec3.create(), this.u, point[0])
     const v2 = vec3.scale(vec3.create(), this.v, point[1])
     const v3 = vec3.add(v1, v1, this.planeOrigin)
