@@ -1,6 +1,6 @@
 import { EPS } from '../../maths/constants.js'
 import { interpolateBetween2DPointsForY } from '../../maths/utils/index.js'
-import { OrthoNormalBasis } from '../../maths/OrthoNormalBasis.js'
+import { OrthonormalFormula } from '../../maths/OrthonormalFormula.js'
 
 import * as line2 from '../../maths/line2/index.js'
 import * as vec2 from '../../maths/vec2/index.js'
@@ -20,7 +20,7 @@ export const reTesselateCoplanarPolygons = (sourcepolygons) => {
   const destpolygons = []
   const numpolygons = sourcepolygons.length
   const plane = poly3.plane(sourcepolygons[0])
-  const orthobasis = new OrthoNormalBasis(plane)
+  const orthonormalFormula = new OrthonormalFormula(plane)
   const polygonvertices2d = [] // array of array of Vector2D
   const polygontopvertexindexes = [] // array of indexes of topmost vertex per polygon
   const topy2polygonindexes = new Map()
@@ -40,7 +40,7 @@ export const reTesselateCoplanarPolygons = (sourcepolygons) => {
       let miny
       let maxy
       for (let i = 0; i < numvertices; i++) {
-        let pos2d = orthobasis.to2D(poly3d.vertices[i])
+        let pos2d = orthonormalFormula.to2D(poly3d.vertices[i])
         // perform binning of y coordinates: If we have multiple vertices very
         // close to each other, give them the same y coordinate:
         const ycoordinatebin = Math.floor(pos2d[1] * ycoordinateBinningFactor)
@@ -306,7 +306,7 @@ export const reTesselateCoplanarPolygons = (sourcepolygons) => {
           // reverse the left half so we get a counterclockwise circle:
           prevpolygon.outpolygon.leftpoints.reverse()
           const points2d = prevpolygon.outpolygon.rightpoints.concat(prevpolygon.outpolygon.leftpoints)
-          const vertices3d = points2d.map((point2d) => orthobasis.to3D(point2d))
+          const vertices3d = points2d.map((point2d) => orthonormalFormula.to3D(point2d))
           const polygon = poly3.fromPointsAndPlane(vertices3d, plane) // TODO support shared
 
           // if we let empty polygon out, next retesselate will crash

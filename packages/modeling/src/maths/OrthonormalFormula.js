@@ -7,7 +7,7 @@ import * as vec3 from './vec3/index.js'
  * Class that defines the formula for convertion to/from orthonomal basis vectors.
  * @see https://www.kristakingmath.com/blog/orthonormal-basis-for-a-vector-set
  */
-export class OrthoNormalBasis {
+export class OrthonormalFormula {
   /**
    * Construct the standard basis formula from the given plane.
    * @param {plane} the plane of which to convert vertices to/from the orthonormal basis

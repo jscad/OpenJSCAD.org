@@ -3,7 +3,7 @@ import * as plane from '../maths/plane/index.js'
 import * as vec2 from '../maths/vec2/index.js'
 import * as vec3 from '../maths/vec3/index.js'
 
-import { OrthoNormalBasis } from '../maths/OrthoNormalBasis.js'
+import { OrthonormalFormula } from '../maths/OrthonormalFormula.js'
 
 import { transform } from './transform.js'
 
@@ -31,7 +31,7 @@ export const transformationBetween = (options, from, to) => {
 
   // align the axis
   const axesplane = plane.fromPointsRandom(plane.create(), vec3.create(), from.axis, to.axis)
-  const axesbasis = new OrthoNormalBasis(axesplane)
+  const axesbasis = new OrthonormalFormula(axesplane)
 
   let angle1 = vec2.angleRadians(axesbasis.to2D(from.axis))
   let angle2 = vec2.angleRadians(axesbasis.to2D(to.axis))
@@ -48,7 +48,7 @@ export const transformationBetween = (options, from, to) => {
 
   // align the normals
   const normalsplane = plane.fromNormalAndPoint(plane.create(), to.axis, vec3.create())
-  const normalsbasis = new OrthoNormalBasis(normalsplane)
+  const normalsbasis = new OrthonormalFormula(normalsplane)
 
   angle1 = vec2.angleRadians(normalsbasis.to2D(usAxesAligned.normal))
   angle2 = vec2.angleRadians(normalsbasis.to2D(to.normal))
