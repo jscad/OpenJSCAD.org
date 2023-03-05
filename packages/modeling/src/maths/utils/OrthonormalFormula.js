@@ -1,7 +1,7 @@
-import * as mat4 from './mat4/index.js'
+import * as mat4 from '../mat4/index.js'
 
-import * as vec2 from './vec2/index.js'
-import * as vec3 from './vec3/index.js'
+import * as vec2 from '../vec2/index.js'
+import * as vec3 from '../vec3/index.js'
 
 /*
  * Class that defines the formula for convertion to/from orthonomal basis vectors.

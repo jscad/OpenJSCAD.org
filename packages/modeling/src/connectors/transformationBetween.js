@@ -3,7 +3,7 @@ import * as plane from '../maths/plane/index.js'
 import * as vec2 from '../maths/vec2/index.js'
 import * as vec3 from '../maths/vec3/index.js'
 
-import { OrthonormalFormula } from '../maths/OrthonormalFormula.js'
+import { OrthonormalFormula } from '../maths/utils/index.js'
 
 import { transform } from './transform.js'
 
