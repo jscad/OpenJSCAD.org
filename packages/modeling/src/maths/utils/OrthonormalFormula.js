@@ -58,7 +58,7 @@ export class OrthonormalFormula {
    */
   to2D (vertex) {
     const point = vec2.fromValues(vec3.dot(vertex, this.u), vec3.dot(vertex, this.v))
-    this.basisMap.set(`${point}`, vertex)
+    this.basisMap.set(point, vertex)
     return point
   }
 
@@ -69,7 +69,7 @@ export class OrthonormalFormula {
    */
   to3D (point) {
     // return the original vertex if possible, i.e. no floating point error
-    const original = this.basisMap.get(`${point}`)
+    const original = this.basisMap.get(point)
     if (original) return original
 
     // calculate a new 3D vertex from the orthonormal basis formula
