@@ -26,28 +26,22 @@ const options = {
   segments: 32
 }
 
-const main = () => {
-  return [
-    colorize([0.9, 0.6, 0.2], bolt(options)),
-    colorize([0.4, 0.4, 0.4], translate([30, 0, 0], nut(options)))
-  ]
-}
+const main = () => [
+  colorize([0.9, 0.6, 0.2], bolt(options)),
+  colorize([0.4, 0.4, 0.4], translate([30, 0, 0], nut(options)))
+]
 
 // generate bolt by attaching threads to a hex head
-const bolt = (options) => {
-  return union(
-    translate([0, 0, options.threadLength], hex(options)),
-    threads(options)
-  )
-}
+const bolt = (options) => union(
+  translate([0, 0, options.threadLength], hex(options)),
+  threads(options)
+)
 
 // generate nut by subtracting threads from a hex block
-const nut = (options) => {
-  return subtract(
-    hex(options),
-    threads({ ...options, threadLength: options.hexHeight })
-  )
-}
+const nut = (options) => subtract(
+  hex(options),
+  threads({ ...options, threadLength: options.hexHeight })
+)
 
 // generate hexagonal block
 const hex = (options) => {

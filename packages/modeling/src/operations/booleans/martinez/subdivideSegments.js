@@ -17,7 +17,7 @@ export const subdivideSegments = (eventQueue, subject, clipping, sbbox, cbbox, o
   const sweepLine = new Tree(compareSegments)
   const sortedEvents = []
 
-  const rightbound = Math.min(sbbox[2], cbbox[2])
+  const rightBound = Math.min(sbbox[2], cbbox[2])
 
   let prev, next, begin
 
@@ -26,7 +26,7 @@ export const subdivideSegments = (eventQueue, subject, clipping, sbbox, cbbox, o
     sortedEvents.push(event)
 
     // optimization by bboxes for intersection and difference goes here
-    if ((operation === INTERSECTION && event.point[0] > rightbound) ||
+    if ((operation === INTERSECTION && event.point[0] > rightBound) ||
         (operation === DIFFERENCE && event.point[0] > sbbox[2])) {
       break
     }

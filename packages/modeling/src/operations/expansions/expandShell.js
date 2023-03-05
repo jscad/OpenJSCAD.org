@@ -80,14 +80,14 @@ export const expandShell = (options, geometry) => {
 
   // loop through the polygons
   // - extruded the polygon, and add to the composite result
-  // - add the plane to the unique vertice map
+  // - add the plane to the unique vertex map
   // - add the plane to the unique edge map
   const polygons = geom3.toPolygons(geometry)
   polygons.forEach((polygon, index) => {
-    const extrudevector = vec3.scale(vec3.create(), poly3.plane(polygon), 2 * delta)
-    const translatedpolygon = poly3.transform(mat4.fromTranslation(mat4.create(), vec3.scale(vec3.create(), extrudevector, -0.5)), polygon)
-    const extrudedface = extrudePolygon(extrudevector, translatedpolygon)
-    result = unionGeom3Sub(result, extrudedface)
+    const extrudeVector = vec3.scale(vec3.create(), poly3.plane(polygon), 2 * delta)
+    const translatedPolygon = poly3.transform(mat4.fromTranslation(mat4.create(), vec3.scale(vec3.create(), extrudeVector, -0.5)), polygon)
+    const extrudedFace = extrudePolygon(extrudeVector, translatedPolygon)
+    result = unionGeom3Sub(result, extrudedFace)
 
     const vertices = polygon.vertices
     for (let i = 0; i < vertices.length; i++) {
@@ -106,14 +106,14 @@ export const expandShell = (options, geometry) => {
   edges2planes.forEach((item) => {
     const edge = item[0]
     const planes = item[1]
-    const startpoint = edge[0]
-    const endpoint = edge[1]
+    const startPoint = edge[0]
+    const endPoint = edge[1]
 
     // our x,y and z vectors:
-    const zbase = vec3.subtract(vec3.create(), endpoint, startpoint)
-    vec3.normalize(zbase, zbase)
-    const xbase = planes[0]
-    const ybase = vec3.cross(vec3.create(), xbase, zbase)
+    const zBase = vec3.subtract(vec3.create(), endPoint, startPoint)
+    vec3.normalize(zBase, zBase)
+    const xBase = planes[0]
+    const yBase = vec3.cross(vec3.create(), xBase, zBase)
 
     // make a list of angles that the cylinder should traverse:
     let angles = []
@@ -125,9 +125,9 @@ export const expandShell = (options, geometry) => {
 
     // and also at every normal of all touching planes:
     for (let i = 0, iMax = planes.length; i < iMax; i++) {
-      const planenormal = planes[i]
-      const si = vec3.dot(ybase, planenormal)
-      const co = vec3.dot(xbase, planenormal)
+      const planeNormal = planes[i]
+      const si = vec3.dot(yBase, planeNormal)
+      const co = vec3.dot(xBase, planeNormal)
       let angle = Math.atan2(si, co)
 
       if (angle < 0) angle += TAU
@@ -141,42 +141,42 @@ export const expandShell = (options, geometry) => {
     angles = angles.sort(fnNumberSort)
 
     // Now construct the cylinder by traversing all angles:
-    const numangles = angles.length
-    let prevp1
-    let prevp2
-    const startfacevertices = []
-    const endfacevertices = []
+    const numAngles = angles.length
+    let prevP1
+    let prevP2
+    const startFaceVertices = []
+    const endFaceVertices = []
     const polygons = []
-    for (let i = -1; i < numangles; i++) {
-      const angle = angles[(i < 0) ? (i + numangles) : i]
+    for (let i = -1; i < numAngles; i++) {
+      const angle = angles[(i < 0) ? (i + numAngles) : i]
       const si = Math.sin(angle)
       const co = Math.cos(angle)
-      vec3.scale(v1, xbase, co * delta)
-      vec3.scale(v2, ybase, si * delta)
+      vec3.scale(v1, xBase, co * delta)
+      vec3.scale(v2, yBase, si * delta)
       vec3.add(v1, v1, v2)
-      const p1 = vec3.add(vec3.create(), startpoint, v1)
-      const p2 = vec3.add(vec3.create(), endpoint, v1)
+      const p1 = vec3.add(vec3.create(), startPoint, v1)
+      const p2 = vec3.add(vec3.create(), endPoint, v1)
       let skip = false
       if (i >= 0) {
-        if (vec3.distance(p1, prevp1) < EPS) {
+        if (vec3.distance(p1, prevP1) < EPS) {
           skip = true
         }
       }
       if (!skip) {
         if (i >= 0) {
-          startfacevertices.push(p1)
-          endfacevertices.push(p2)
-          const points = [prevp2, p2, p1, prevp1]
+          startFaceVertices.push(p1)
+          endFaceVertices.push(p2)
+          const points = [prevP2, p2, p1, prevP1]
           const polygon = poly3.create(points)
           polygons.push(polygon)
         }
-        prevp1 = p1
-        prevp2 = p2
+        prevP1 = p1
+        prevP2 = p2
       }
     }
-    endfacevertices.reverse()
-    polygons.push(poly3.create(startfacevertices))
-    polygons.push(poly3.create(endfacevertices))
+    endFaceVertices.reverse()
+    polygons.push(poly3.create(startFaceVertices))
+    polygons.push(poly3.create(endFaceVertices))
 
     const cylinder = geom3.create(polygons)
     result = unionGeom3Sub(result, cylinder)
@@ -192,14 +192,14 @@ export const expandShell = (options, geometry) => {
     const xaxis = planes[0]
     // and find a suitable z axis. We will use the normal which is most perpendicular to the x axis:
     let bestzaxis = null
-    let bestzaxisorthogonality = 0
+    let bestzaxisOrthogonality = 0
     for (let i = 1; i < planes.length; i++) {
       const normal = planes[i]
       const cross = vec3.cross(v1, xaxis, normal)
-      const crosslength = vec3.length(cross)
-      if (crosslength > 0.05) { // FIXME why 0.05?
-        if (crosslength > bestzaxisorthogonality) {
-          bestzaxisorthogonality = crosslength
+      const crossLength = vec3.length(cross)
+      if (crossLength > 0.05) { // FIXME why 0.05?
+        if (crossLength > bestzaxisOrthogonality) {
+          bestzaxisOrthogonality = crossLength
           bestzaxis = normal
         }
       }

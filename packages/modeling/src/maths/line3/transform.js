@@ -16,9 +16,9 @@ export const transform = (out, line, matrix) => {
   const direction = line[1]
   const pointPlusDirection = vec3.add(vec3.create(), point, direction)
 
-  const newpoint = vec3.transform(vec3.create(), point, matrix)
+  const newPoint = vec3.transform(vec3.create(), point, matrix)
   const newPointPlusDirection = vec3.transform(pointPlusDirection, pointPlusDirection, matrix)
-  const newdirection = vec3.subtract(newPointPlusDirection, newPointPlusDirection, newpoint)
+  const newDirection = vec3.subtract(newPointPlusDirection, newPointPlusDirection, newPoint)
 
-  return fromPointAndDirection(out, newpoint, newdirection)
+  return fromPointAndDirection(out, newPoint, newDirection)
 }

@@ -8,6 +8,6 @@ import { applyTransforms } from './applyTransforms.js'
  * @alias module:modeling/geometries/path2.toPoints
  *
  * @example
- * let sharedpoints = toPoints(geometry)
+ * let sharedPoints = toPoints(geometry)
  */
 export const toPoints = (geometry) => applyTransforms(geometry).points

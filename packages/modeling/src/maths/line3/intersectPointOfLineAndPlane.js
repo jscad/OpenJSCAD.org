@@ -13,15 +13,14 @@ import * as vec3 from '../vec3/index.js'
  */
 export const intersectPointOfLineAndPlane = (line, plane) => {
   // plane: plane.normal * p = plane.w
-  const pnormal = plane
+  const pNormal = plane
   const pw = plane[3]
 
-  const lpoint = line[0]
-  const ldirection = line[1]
+  const lPoint = line[0]
+  const lDirection = line[1]
 
   // point: p = line.point + labda * line.direction
-  const labda = (pw - vec3.dot(pnormal, lpoint)) / vec3.dot(pnormal, ldirection)
+  const labda = (pw - vec3.dot(pNormal, lPoint)) / vec3.dot(pNormal, lDirection)
 
-  const point = vec3.add(vec3.create(), lpoint, vec3.scale(vec3.create(), ldirection, labda))
-  return point
+  return vec3.add(vec3.create(), lPoint, vec3.scale(vec3.create(), lDirection, labda))
 }

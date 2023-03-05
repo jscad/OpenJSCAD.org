@@ -10,333 +10,333 @@ import * as poly3 from '../../geometries/poly3/index.js'
 
 /*
  * Retesselation for a set of COPLANAR polygons.
- * @param {poly3[]} sourcepolygons - list of polygons
+ * @param {poly3[]} sourcePolygons - list of polygons
  * @returns {poly3[]} new set of polygons
  */
-export const reTesselateCoplanarPolygons = (sourcepolygons) => {
-  if (sourcepolygons.length < 2) return sourcepolygons
+export const reTesselateCoplanarPolygons = (sourcePolygons) => {
+  if (sourcePolygons.length < 2) return sourcePolygons
 
-  const destpolygons = []
-  const numpolygons = sourcepolygons.length
-  const plane = poly3.plane(sourcepolygons[0])
+  const destPolygons = []
+  const numPolygons = sourcePolygons.length
+  const plane = poly3.plane(sourcePolygons[0])
   const orthonormalFormula = new OrthonormalFormula(plane)
-  const polygonvertices2d = [] // array of array of Vector2D
-  const polygontopvertexindexes = [] // array of indexes of topmost vertex per polygon
-  const topy2polygonindexes = new Map()
-  const ycoordinatetopolygonindexes = new Map()
+  const polygonVertices2d = [] // array of array of Vector2D
+  const polygonTopVertexIndexes = [] // array of indexes of topmost vertex per polygon
+  const topy2polygonIndexes = new Map()
+  const yCoordinateToPolygonIndexes = new Map()
 
   // convert all polygon vertices to 2D
   // Make a list of all encountered y coordinates
   // And build a map of all polygons that have a vertex at a certain y coordinate:
-  const ycoordinatebins = new Map()
-  const ycoordinateBinningFactor = 10 / EPS
-  for (let polygonindex = 0; polygonindex < numpolygons; polygonindex++) {
-    const poly3d = sourcepolygons[polygonindex]
+  const yCoordinateBins = new Map()
+  const yCoordinateBinningFactor = 10 / EPS
+  for (let polygonIndex = 0; polygonIndex < numPolygons; polygonIndex++) {
+    const poly3d = sourcePolygons[polygonIndex]
     let vertices2d = []
-    let numvertices = poly3d.vertices.length
-    let minindex = -1
-    if (numvertices > 0) {
+    let numVertices = poly3d.vertices.length
+    let minIndex = -1
+    if (numVertices > 0) {
       let miny
       let maxy
-      for (let i = 0; i < numvertices; i++) {
+      for (let i = 0; i < numVertices; i++) {
         let pos2d = orthonormalFormula.to2D(poly3d.vertices[i])
         // perform binning of y coordinates: If we have multiple vertices very
         // close to each other, give them the same y coordinate:
-        const ycoordinatebin = Math.floor(pos2d[1] * ycoordinateBinningFactor)
-        let newy
-        if (ycoordinatebins.has(ycoordinatebin)) {
-          newy = ycoordinatebins.get(ycoordinatebin)
-        } else if (ycoordinatebins.has(ycoordinatebin + 1)) {
-          newy = ycoordinatebins.get(ycoordinatebin + 1)
-        } else if (ycoordinatebins.has(ycoordinatebin - 1)) {
-          newy = ycoordinatebins.get(ycoordinatebin - 1)
+        const yCoordinateBin = Math.floor(pos2d[1] * yCoordinateBinningFactor)
+        let newY
+        if (yCoordinateBins.has(yCoordinateBin)) {
+          newY = yCoordinateBins.get(yCoordinateBin)
+        } else if (yCoordinateBins.has(yCoordinateBin + 1)) {
+          newY = yCoordinateBins.get(yCoordinateBin + 1)
+        } else if (yCoordinateBins.has(yCoordinateBin - 1)) {
+          newY = yCoordinateBins.get(yCoordinateBin - 1)
         } else {
-          newy = pos2d[1]
-          ycoordinatebins.set(ycoordinatebin, pos2d[1])
+          newY = pos2d[1]
+          yCoordinateBins.set(yCoordinateBin, pos2d[1])
         }
-        pos2d = vec2.fromValues(pos2d[0], newy)
+        pos2d = vec2.fromValues(pos2d[0], newY)
         vertices2d.push(pos2d)
         const y = pos2d[1]
         if ((i === 0) || (y < miny)) {
           miny = y
-          minindex = i
+          minIndex = i
         }
         if ((i === 0) || (y > maxy)) {
           maxy = y
         }
-        let polygonindexes = ycoordinatetopolygonindexes.get(y)
-        if (!polygonindexes) {
-          polygonindexes = {} // PERF
-          ycoordinatetopolygonindexes.set(y, polygonindexes)
+        let polygonIndexes = yCoordinateToPolygonIndexes.get(y)
+        if (!polygonIndexes) {
+          polygonIndexes = {} // PERF
+          yCoordinateToPolygonIndexes.set(y, polygonIndexes)
         }
-        polygonindexes[polygonindex] = true
+        polygonIndexes[polygonIndex] = true
       }
       if (miny >= maxy) {
         // degenerate polygon, all vertices have same y coordinate. Just ignore it from now:
         vertices2d = []
-        numvertices = 0
-        minindex = -1
+        numVertices = 0
+        minIndex = -1
       } else {
-        let polygonindexes = topy2polygonindexes.get(miny)
-        if (!polygonindexes) {
-          polygonindexes = []
-          topy2polygonindexes.set(miny, polygonindexes)
+        let polygonIndexes = topy2polygonIndexes.get(miny)
+        if (!polygonIndexes) {
+          polygonIndexes = []
+          topy2polygonIndexes.set(miny, polygonIndexes)
         }
-        polygonindexes.push(polygonindex)
+        polygonIndexes.push(polygonIndex)
       }
-    } // if(numvertices > 0)
+    } // if(numVertices > 0)
     // reverse the vertex order:
     vertices2d.reverse()
-    minindex = numvertices - minindex - 1
-    polygonvertices2d.push(vertices2d)
-    polygontopvertexindexes.push(minindex)
+    minIndex = numVertices - minIndex - 1
+    polygonVertices2d.push(vertices2d)
+    polygonTopVertexIndexes.push(minIndex)
   }
 
-  const ycoordinates = []
-  ycoordinatetopolygonindexes.forEach((polylist, y) => ycoordinates.push(y))
-  ycoordinates.sort(fnNumberSort)
+  const yCoordinates = []
+  yCoordinateToPolygonIndexes.forEach((polylist, y) => yCoordinates.push(y))
+  yCoordinates.sort(fnNumberSort)
 
   // Now we will iterate over all y coordinates, from lowest to highest y coordinate
-  // activepolygons: source polygons that are 'active', i.e. intersect with our y coordinate
+  // activePolygons: source polygons that are 'active', i.e. intersect with our y coordinate
   //   Is sorted so the polygons are in left to right order
-  // Each element in activepolygons has these properties:
-  //        polygonindex: the index of the source polygon (i.e. an index into the sourcepolygons
-  //                      and polygonvertices2d arrays)
-  //        leftvertexindex: the index of the vertex at the left side of the polygon (lowest x)
+  // Each element in activePolygons has these properties:
+  //        polygonIndex: the index of the source polygon (i.e. an index into the sourcePolygons
+  //                      and polygonVertices2d arrays)
+  //        leftVertexIndex: the index of the vertex at the left side of the polygon (lowest x)
   //                         that is at or just above the current y coordinate
-  //        rightvertexindex: dito at right hand side of polygon
-  //        topleft, bottomleft: coordinates of the left side of the polygon crossing the current y coordinate
-  //        topright, bottomright: coordinates of the right hand side of the polygon crossing the current y coordinate
-  let activepolygons = []
-  let prevoutpolygonrow = []
-  for (let yindex = 0; yindex < ycoordinates.length; yindex++) {
-    const newoutpolygonrow = []
-    const ycoordinate = ycoordinates[yindex]
+  //        rightVertexIndex: ditto at right hand side of polygon
+  //        topLeft, bottomLeft: coordinates of the left side of the polygon crossing the current y coordinate
+  //        topRight, bottomRight: coordinates of the right hand side of the polygon crossing the current y coordinate
+  let activePolygons = []
+  let prevOutPolygonRow = []
+  for (let yIndex = 0; yIndex < yCoordinates.length; yIndex++) {
+    const newOutPolygonRow = []
+    const yCoordinate = yCoordinates[yIndex]
 
-    // update activepolygons for this y coordinate:
+    // update activePolygons for this y coordinate:
     // - Remove any polygons that end at this y coordinate
-    // - update leftvertexindex and rightvertexindex (which point to the current vertex index
-    //   at the the left and right side of the polygon
+    // - update leftVertexIndex and rightVertexIndex (which point to the current vertex index
+    //   at the left and right side of the polygon
     // Iterate over all polygons that have a corner at this y coordinate:
-    const polygonindexeswithcorner = ycoordinatetopolygonindexes.get(ycoordinate)
-    for (let activepolygonindex = 0; activepolygonindex < activepolygons.length; ++activepolygonindex) {
-      const activepolygon = activepolygons[activepolygonindex]
-      const polygonindex = activepolygon.polygonindex
-      if (polygonindexeswithcorner[polygonindex]) {
+    const polygonIndexesWithCorner = yCoordinateToPolygonIndexes.get(yCoordinate)
+    for (let activePolygonIndex = 0; activePolygonIndex < activePolygons.length; ++activePolygonIndex) {
+      const activePolygon = activePolygons[activePolygonIndex]
+      const polygonIndex = activePolygon.polygonIndex
+      if (polygonIndexesWithCorner[polygonIndex]) {
         // this active polygon has a corner at this y coordinate:
-        const vertices2d = polygonvertices2d[polygonindex]
-        const numvertices = vertices2d.length
-        let newleftvertexindex = activepolygon.leftvertexindex
-        let newrightvertexindex = activepolygon.rightvertexindex
-        // See if we need to increase leftvertexindex or decrease rightvertexindex:
+        const vertices2d = polygonVertices2d[polygonIndex]
+        const numVertices = vertices2d.length
+        let newLeftVertexIndex = activePolygon.leftVertexIndex
+        let newRightVertexIndex = activePolygon.rightVertexIndex
+        // See if we need to increase leftVertexIndex or decrease rightVertexIndex:
         while (true) {
-          let nextleftvertexindex = newleftvertexindex + 1
-          if (nextleftvertexindex >= numvertices) nextleftvertexindex = 0
-          if (vertices2d[nextleftvertexindex][1] !== ycoordinate) break
-          newleftvertexindex = nextleftvertexindex
+          let nextLeftVertexIndex = newLeftVertexIndex + 1
+          if (nextLeftVertexIndex >= numVertices) nextLeftVertexIndex = 0
+          if (vertices2d[nextLeftVertexIndex][1] !== yCoordinate) break
+          newLeftVertexIndex = nextLeftVertexIndex
         }
-        let nextrightvertexindex = newrightvertexindex - 1
-        if (nextrightvertexindex < 0) nextrightvertexindex = numvertices - 1
-        if (vertices2d[nextrightvertexindex][1] === ycoordinate) {
-          newrightvertexindex = nextrightvertexindex
+        let nextRightVertexIndex = newRightVertexIndex - 1
+        if (nextRightVertexIndex < 0) nextRightVertexIndex = numVertices - 1
+        if (vertices2d[nextRightVertexIndex][1] === yCoordinate) {
+          newRightVertexIndex = nextRightVertexIndex
         }
-        if ((newleftvertexindex !== activepolygon.leftvertexindex) && (newleftvertexindex === newrightvertexindex)) {
-          // We have increased leftvertexindex or decreased rightvertexindex, and now they point to the same vertex
+        if ((newLeftVertexIndex !== activePolygon.leftVertexIndex) && (newLeftVertexIndex === newRightVertexIndex)) {
+          // We have increased leftVertexIndex or decreased rightVertexIndex, and now they point to the same vertex
           // This means that this is the bottom point of the polygon. We'll remove it:
-          activepolygons.splice(activepolygonindex, 1)
-          --activepolygonindex
+          activePolygons.splice(activePolygonIndex, 1)
+          --activePolygonIndex
         } else {
-          activepolygon.leftvertexindex = newleftvertexindex
-          activepolygon.rightvertexindex = newrightvertexindex
-          activepolygon.topleft = vertices2d[newleftvertexindex]
-          activepolygon.topright = vertices2d[newrightvertexindex]
-          let nextleftvertexindex = newleftvertexindex + 1
-          if (nextleftvertexindex >= numvertices) nextleftvertexindex = 0
-          activepolygon.bottomleft = vertices2d[nextleftvertexindex]
-          let nextrightvertexindex = newrightvertexindex - 1
-          if (nextrightvertexindex < 0) nextrightvertexindex = numvertices - 1
-          activepolygon.bottomright = vertices2d[nextrightvertexindex]
+          activePolygon.leftVertexIndex = newLeftVertexIndex
+          activePolygon.rightVertexIndex = newRightVertexIndex
+          activePolygon.topLeft = vertices2d[newLeftVertexIndex]
+          activePolygon.topRight = vertices2d[newRightVertexIndex]
+          let nextLeftVertexIndex = newLeftVertexIndex + 1
+          if (nextLeftVertexIndex >= numVertices) nextLeftVertexIndex = 0
+          activePolygon.bottomLeft = vertices2d[nextLeftVertexIndex]
+          let nextRightVertexIndex = newRightVertexIndex - 1
+          if (nextRightVertexIndex < 0) nextRightVertexIndex = numVertices - 1
+          activePolygon.bottomRight = vertices2d[nextRightVertexIndex]
         }
       } // if polygon has corner here
-    } // for activepolygonindex
-    let nextycoordinate
-    if (yindex >= ycoordinates.length - 1) {
+    } // for activePolygonIndex
+    let nextYcoordinate
+    if (yIndex >= yCoordinates.length - 1) {
       // last row, all polygons must be finished here:
-      activepolygons = []
-      nextycoordinate = null
-    } else { // yindex < ycoordinates.length-1
-      nextycoordinate = Number(ycoordinates[yindex + 1])
-      const middleycoordinate = 0.5 * (ycoordinate + nextycoordinate)
-      // update activepolygons by adding any polygons that start here:
-      const startingpolygonindexes = topy2polygonindexes.get(ycoordinate)
-      for (const polygonindexKey in startingpolygonindexes) {
-        const polygonindex = startingpolygonindexes[polygonindexKey]
-        const vertices2d = polygonvertices2d[polygonindex]
-        const numvertices = vertices2d.length
-        const topvertexindex = polygontopvertexindexes[polygonindex]
-        // the top of the polygon may be a horizontal line. In that case topvertexindex can point to any point on this line.
+      activePolygons = []
+      nextYcoordinate = null
+    } else { // yIndex < yCoordinates.length-1
+      nextYcoordinate = Number(yCoordinates[yIndex + 1])
+      const middleYcoordinate = 0.5 * (yCoordinate + nextYcoordinate)
+      // update activePolygons by adding any polygons that start here:
+      const startingPolygonIndexes = topy2polygonIndexes.get(yCoordinate)
+      for (const polygonIndexKey in startingPolygonIndexes) {
+        const polygonIndex = startingPolygonIndexes[polygonIndexKey]
+        const vertices2d = polygonVertices2d[polygonIndex]
+        const numVertices = vertices2d.length
+        const topVertexIndex = polygonTopVertexIndexes[polygonIndex]
+        // the top of the polygon may be a horizontal line. In that case topVertexIndex can point to any point on this line.
         // Find the left and right topmost vertices which have the current y coordinate:
-        let topleftvertexindex = topvertexindex
+        let topLeftVertexIndex = topVertexIndex
         while (true) {
-          let i = topleftvertexindex + 1
-          if (i >= numvertices) i = 0
-          if (vertices2d[i][1] !== ycoordinate) break
-          if (i === topvertexindex) break // should not happen, but just to prevent endless loops
-          topleftvertexindex = i
+          let i = topLeftVertexIndex + 1
+          if (i >= numVertices) i = 0
+          if (vertices2d[i][1] !== yCoordinate) break
+          if (i === topVertexIndex) break // should not happen, but just to prevent endless loops
+          topLeftVertexIndex = i
         }
-        let toprightvertexindex = topvertexindex
+        let topRightVertexIndex = topVertexIndex
         while (true) {
-          let i = toprightvertexindex - 1
-          if (i < 0) i = numvertices - 1
-          if (vertices2d[i][1] !== ycoordinate) break
-          if (i === topleftvertexindex) break // should not happen, but just to prevent endless loops
-          toprightvertexindex = i
+          let i = topRightVertexIndex - 1
+          if (i < 0) i = numVertices - 1
+          if (vertices2d[i][1] !== yCoordinate) break
+          if (i === topLeftVertexIndex) break // should not happen, but just to prevent endless loops
+          topRightVertexIndex = i
         }
-        let nextleftvertexindex = topleftvertexindex + 1
-        if (nextleftvertexindex >= numvertices) nextleftvertexindex = 0
-        let nextrightvertexindex = toprightvertexindex - 1
-        if (nextrightvertexindex < 0) nextrightvertexindex = numvertices - 1
-        const newactivepolygon = {
-          polygonindex: polygonindex,
-          leftvertexindex: topleftvertexindex,
-          rightvertexindex: toprightvertexindex,
-          topleft: vertices2d[topleftvertexindex],
-          topright: vertices2d[toprightvertexindex],
-          bottomleft: vertices2d[nextleftvertexindex],
-          bottomright: vertices2d[nextrightvertexindex]
+        let nextLeftVertexIndex = topLeftVertexIndex + 1
+        if (nextLeftVertexIndex >= numVertices) nextLeftVertexIndex = 0
+        let nextRightVertexIndex = topRightVertexIndex - 1
+        if (nextRightVertexIndex < 0) nextRightVertexIndex = numVertices - 1
+        const newActivePolygon = {
+          polygonIndex,
+          leftVertexIndex: topLeftVertexIndex,
+          rightVertexIndex: topRightVertexIndex,
+          topLeft: vertices2d[topLeftVertexIndex],
+          topRight: vertices2d[topRightVertexIndex],
+          bottomLeft: vertices2d[nextLeftVertexIndex],
+          bottomRight: vertices2d[nextRightVertexIndex]
         }
-        insertSorted(activepolygons, newactivepolygon, (el1, el2) => {
-          const x1 = interpolateBetween2DPointsForY(el1.topleft, el1.bottomleft, middleycoordinate)
-          const x2 = interpolateBetween2DPointsForY(el2.topleft, el2.bottomleft, middleycoordinate)
+        insertSorted(activePolygons, newActivePolygon, (el1, el2) => {
+          const x1 = interpolateBetween2DPointsForY(el1.topLeft, el1.bottomLeft, middleYcoordinate)
+          const x2 = interpolateBetween2DPointsForY(el2.topLeft, el2.bottomLeft, middleYcoordinate)
           if (x1 > x2) return 1
           if (x1 < x2) return -1
           return 0
         })
-      } // for(let polygonindex in startingpolygonindexes)
-    } //  yindex < ycoordinates.length-1
+      } // for(let polygonIndex in startingPolygonIndexes)
+    } //  yIndex < yCoordinates.length-1
 
-    // Now activepolygons is up to date
-    // Build the output polygons for the next row in newoutpolygonrow:
-    for (const activepolygonKey in activepolygons) {
-      const activepolygon = activepolygons[activepolygonKey]
+    // Now activePolygons is up to date
+    // Build the output polygons for the next row in newOutPolygonRow:
+    for (const activePolygonKey in activePolygons) {
+      const activePolygon = activePolygons[activePolygonKey]
 
-      let x = interpolateBetween2DPointsForY(activepolygon.topleft, activepolygon.bottomleft, ycoordinate)
-      const topleft = vec2.fromValues(x, ycoordinate)
-      x = interpolateBetween2DPointsForY(activepolygon.topright, activepolygon.bottomright, ycoordinate)
-      const topright = vec2.fromValues(x, ycoordinate)
-      x = interpolateBetween2DPointsForY(activepolygon.topleft, activepolygon.bottomleft, nextycoordinate)
-      const bottomleft = vec2.fromValues(x, nextycoordinate)
-      x = interpolateBetween2DPointsForY(activepolygon.topright, activepolygon.bottomright, nextycoordinate)
-      const bottomright = vec2.fromValues(x, nextycoordinate)
-      const outpolygon = {
-        topleft: topleft,
-        topright: topright,
-        bottomleft: bottomleft,
-        bottomright: bottomright,
-        leftline: line2.fromPoints(line2.create(), topleft, bottomleft),
-        rightline: line2.fromPoints(line2.create(), bottomright, topright)
+      let x = interpolateBetween2DPointsForY(activePolygon.topLeft, activePolygon.bottomLeft, yCoordinate)
+      const topLeft = vec2.fromValues(x, yCoordinate)
+      x = interpolateBetween2DPointsForY(activePolygon.topRight, activePolygon.bottomRight, yCoordinate)
+      const topRight = vec2.fromValues(x, yCoordinate)
+      x = interpolateBetween2DPointsForY(activePolygon.topLeft, activePolygon.bottomLeft, nextYcoordinate)
+      const bottomLeft = vec2.fromValues(x, nextYcoordinate)
+      x = interpolateBetween2DPointsForY(activePolygon.topRight, activePolygon.bottomRight, nextYcoordinate)
+      const bottomRight = vec2.fromValues(x, nextYcoordinate)
+      const outPolygon = {
+        topLeft,
+        topRight,
+        bottomLeft,
+        bottomRight,
+        leftLine: line2.fromPoints(line2.create(), topLeft, bottomLeft),
+        rightLine: line2.fromPoints(line2.create(), bottomRight, topRight)
       }
-      if (newoutpolygonrow.length > 0) {
-        const prevoutpolygon = newoutpolygonrow[newoutpolygonrow.length - 1]
-        const d1 = vec2.distance(outpolygon.topleft, prevoutpolygon.topright)
-        const d2 = vec2.distance(outpolygon.bottomleft, prevoutpolygon.bottomright)
+      if (newOutPolygonRow.length > 0) {
+        const prevOutPolygon = newOutPolygonRow[newOutPolygonRow.length - 1]
+        const d1 = vec2.distance(outPolygon.topLeft, prevOutPolygon.topRight)
+        const d2 = vec2.distance(outPolygon.bottomLeft, prevOutPolygon.bottomRight)
         if ((d1 < EPS) && (d2 < EPS)) {
           // we can join this polygon with the one to the left:
-          outpolygon.topleft = prevoutpolygon.topleft
-          outpolygon.leftline = prevoutpolygon.leftline
-          outpolygon.bottomleft = prevoutpolygon.bottomleft
-          newoutpolygonrow.splice(newoutpolygonrow.length - 1, 1)
+          outPolygon.topLeft = prevOutPolygon.topLeft
+          outPolygon.leftLine = prevOutPolygon.leftLine
+          outPolygon.bottomLeft = prevOutPolygon.bottomLeft
+          newOutPolygonRow.splice(newOutPolygonRow.length - 1, 1)
         }
       }
-      newoutpolygonrow.push(outpolygon)
-    } // for(activepolygon in activepolygons)
-    if (yindex > 0) {
+      newOutPolygonRow.push(outPolygon)
+    } // for(activePolygon in activePolygons)
+    if (yIndex > 0) {
       // try to match the new polygons against the previous row:
-      const prevcontinuedindexes = new Set()
-      const matchedindexes = new Set()
-      for (let i = 0; i < newoutpolygonrow.length; i++) {
-        const thispolygon = newoutpolygonrow[i]
-        for (let ii = 0; ii < prevoutpolygonrow.length; ii++) {
-          if (!matchedindexes.has(ii)) { // not already processed?
+      const prevContinuedIndexes = new Set()
+      const matchedIndexes = new Set()
+      for (let i = 0; i < newOutPolygonRow.length; i++) {
+        const thisPolygon = newOutPolygonRow[i]
+        for (let ii = 0; ii < prevOutPolygonRow.length; ii++) {
+          if (!matchedIndexes.has(ii)) { // not already processed?
             // We have a match if the sidelines are equal or if the top coordinates
             // are on the sidelines of the previous polygon
-            const prevpolygon = prevoutpolygonrow[ii]
-            if (vec2.distance(prevpolygon.bottomleft, thispolygon.topleft) < EPS) {
-              if (vec2.distance(prevpolygon.bottomright, thispolygon.topright) < EPS) {
+            const prevPolygon = prevOutPolygonRow[ii]
+            if (vec2.distance(prevPolygon.bottomLeft, thisPolygon.topLeft) < EPS) {
+              if (vec2.distance(prevPolygon.bottomRight, thisPolygon.topRight) < EPS) {
                 // Yes, the top of this polygon matches the bottom of the previous:
-                matchedindexes.add(ii)
+                matchedIndexes.add(ii)
                 // Now check if the joined polygon would remain convex:
-                const v1 = line2.direction(thispolygon.leftline)
-                const v2 = line2.direction(prevpolygon.leftline)
+                const v1 = line2.direction(thisPolygon.leftLine)
+                const v2 = line2.direction(prevPolygon.leftLine)
                 const d1 = v1[0] - v2[0]
 
-                const v3 = line2.direction(thispolygon.rightline)
-                const v4 = line2.direction(prevpolygon.rightline)
+                const v3 = line2.direction(thisPolygon.rightLine)
+                const v4 = line2.direction(prevPolygon.rightLine)
                 const d2 = v3[0] - v4[0]
 
-                const leftlinecontinues = Math.abs(d1) < EPS
-                const rightlinecontinues = Math.abs(d2) < EPS
-                const leftlineisconvex = leftlinecontinues || (d1 >= 0)
-                const rightlineisconvex = rightlinecontinues || (d2 >= 0)
-                if (leftlineisconvex && rightlineisconvex) {
+                const leftLineContinues = Math.abs(d1) < EPS
+                const rightLineContinues = Math.abs(d2) < EPS
+                const leftLineIsConvex = leftLineContinues || (d1 >= 0)
+                const rightLineIsConvex = rightLineContinues || (d2 >= 0)
+                if (leftLineIsConvex && rightLineIsConvex) {
                   // yes, both sides have convex corners:
                   // This polygon will continue the previous polygon
-                  thispolygon.outpolygon = prevpolygon.outpolygon
-                  thispolygon.leftlinecontinues = leftlinecontinues
-                  thispolygon.rightlinecontinues = rightlinecontinues
-                  prevcontinuedindexes.add(ii)
+                  thisPolygon.outPolygon = prevPolygon.outPolygon
+                  thisPolygon.leftLineContinues = leftLineContinues
+                  thisPolygon.rightLineContinues = rightLineContinues
+                  prevContinuedIndexes.add(ii)
                 }
                 break
               }
             }
-          } // if(!prevcontinuedindexes.has(ii))
+          } // if(!prevContinuedIndexes.has(ii))
         } // for ii
       } // for i
-      for (let ii = 0; ii < prevoutpolygonrow.length; ii++) {
-        if (!prevcontinuedindexes.has(ii)) {
+      for (let ii = 0; ii < prevOutPolygonRow.length; ii++) {
+        if (!prevContinuedIndexes.has(ii)) {
           // polygon ends here
           // Finish the polygon with the last point(s):
-          const prevpolygon = prevoutpolygonrow[ii]
-          prevpolygon.outpolygon.rightpoints.push(prevpolygon.bottomright)
-          if (vec2.distance(prevpolygon.bottomright, prevpolygon.bottomleft) > EPS) {
+          const prevPolygon = prevOutPolygonRow[ii]
+          prevPolygon.outPolygon.rightPoints.push(prevPolygon.bottomRight)
+          if (vec2.distance(prevPolygon.bottomRight, prevPolygon.bottomLeft) > EPS) {
             // polygon ends with a horizontal line:
-            prevpolygon.outpolygon.leftpoints.push(prevpolygon.bottomleft)
+            prevPolygon.outPolygon.leftPoints.push(prevPolygon.bottomLeft)
           }
           // reverse the left half so we get a counterclockwise circle:
-          prevpolygon.outpolygon.leftpoints.reverse()
-          const points2d = prevpolygon.outpolygon.rightpoints.concat(prevpolygon.outpolygon.leftpoints)
+          prevPolygon.outPolygon.leftPoints.reverse()
+          const points2d = prevPolygon.outPolygon.rightPoints.concat(prevPolygon.outPolygon.leftPoints)
           const vertices3d = points2d.map((point2d) => orthonormalFormula.to3D(point2d))
           const polygon = poly3.fromPointsAndPlane(vertices3d, plane) // TODO support shared
 
           // if we let empty polygon out, next retesselate will crash
-          if (polygon.vertices.length) destpolygons.push(polygon)
+          if (polygon.vertices.length) destPolygons.push(polygon)
         }
       }
-    } // if(yindex > 0)
-    for (let i = 0; i < newoutpolygonrow.length; i++) {
-      const thispolygon = newoutpolygonrow[i]
-      if (!thispolygon.outpolygon) {
+    } // if(yIndex > 0)
+    for (let i = 0; i < newOutPolygonRow.length; i++) {
+      const thisPolygon = newOutPolygonRow[i]
+      if (!thisPolygon.outPolygon) {
         // polygon starts here:
-        thispolygon.outpolygon = {
-          leftpoints: [],
-          rightpoints: []
+        thisPolygon.outPolygon = {
+          leftPoints: [],
+          rightPoints: []
         }
-        thispolygon.outpolygon.leftpoints.push(thispolygon.topleft)
-        if (vec2.distance(thispolygon.topleft, thispolygon.topright) > EPS) {
+        thisPolygon.outPolygon.leftPoints.push(thisPolygon.topLeft)
+        if (vec2.distance(thisPolygon.topLeft, thisPolygon.topRight) > EPS) {
           // we have a horizontal line at the top:
-          thispolygon.outpolygon.rightpoints.push(thispolygon.topright)
+          thisPolygon.outPolygon.rightPoints.push(thisPolygon.topRight)
         }
       } else {
         // continuation of a previous row
-        if (!thispolygon.leftlinecontinues) {
-          thispolygon.outpolygon.leftpoints.push(thispolygon.topleft)
+        if (!thisPolygon.leftLineContinues) {
+          thisPolygon.outPolygon.leftPoints.push(thisPolygon.topLeft)
         }
-        if (!thispolygon.rightlinecontinues) {
-          thispolygon.outpolygon.rightpoints.push(thispolygon.topright)
+        if (!thisPolygon.rightLineContinues) {
+          thisPolygon.outPolygon.rightPoints.push(thisPolygon.topRight)
         }
       }
     }
-    prevoutpolygonrow = newoutpolygonrow
-  } // for yindex
-  return destpolygons
+    prevOutPolygonRow = newOutPolygonRow
+  } // for yIndex
+  return destPolygons
 }

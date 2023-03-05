@@ -6,7 +6,7 @@ import { reverse } from './reverse.js'
  *
  * @param {Array} points - a list of points, where each point is an array with X and Y values
  * @param {poly2} polygon - a 2D polygon
- * @return {Integer} 1 if all points are inside, 0 if some or none are inside
+ * @return {number} 1 if all points are inside, 0 if some or none are inside
  * @alias module:modeling/geometries/poly2.arePointsInside
  */
 export const arePointsInside = (points, polygon) => {
@@ -31,39 +31,39 @@ export const arePointsInside = (points, polygon) => {
  * @return {Integer} 1 if the point is inside, 0 if outside
  */
 const isPointInside = (point, polygon) => {
-  const numverts = polygon.length
+  const numVertices = polygon.length
 
   const tx = point[0]
   const ty = point[1]
 
-  let vtx0 = polygon[numverts - 1]
+  let vtx0 = polygon[numVertices - 1]
   let vtx1 = polygon[0]
 
-  let yflag0 = (vtx0[1] > ty)
+  let yFlag0 = (vtx0[1] > ty)
 
   let insideFlag = 0
 
   let i = 0
-  for (let j = (numverts + 1); --j;) {
+  for (let j = (numVertices + 1); --j;) {
     /*
      * check if Y endpoints straddle (are on opposite sides) of point's Y
      * if so, +X ray could intersect this edge.
      */
-    const yflag1 = (vtx1[1] > ty)
-    if (yflag0 !== yflag1) {
+    const yFlag1 = (vtx1[1] > ty)
+    if (yFlag0 !== yFlag1) {
       /*
        * check if X endpoints are on same side of the point's X
        * if so, it's easy to test if edge hits or misses.
        */
-      const xflag0 = (vtx0[0] > tx)
-      const xflag1 = (vtx1[0] > tx)
-      if (xflag0 && xflag1) {
+      const xFlag0 = (vtx0[0] > tx)
+      const xFlag1 = (vtx1[0] > tx)
+      if (xFlag0 && xFlag1) {
         /* if edge's X values are both right of the point, then the point must be inside */
         insideFlag = !insideFlag
       } else {
         /*
          * if X endpoints straddle the point, then
-         * the compute intersection of polygon edge with +X ray
+         * compute the intersection of polygon edge with +X ray
          * if intersection >= point's X then the +X ray hits it.
          */
         if ((vtx1[0] - (vtx1[1] - ty) * (vtx0[0] - vtx1[0]) / (vtx0[1] - vtx1[1])) >= tx) {
@@ -72,7 +72,7 @@ const isPointInside = (point, polygon) => {
       }
     }
     /* move to next pair of points, retaining info as possible */
-    yflag0 = yflag1
+    yFlag0 = yFlag1
     vtx0 = vtx1
     vtx1 = polygon[++i]
   }

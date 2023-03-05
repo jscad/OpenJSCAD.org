@@ -7,7 +7,7 @@
  * @alias module:modeling/colors.hexToRgb
  *
  * @example
- * let mysphere = colorize(hexToRgb('#000080'), sphere()) // navy blue
+ * let mySphere = colorize(hexToRgb('#000080'), sphere()) // navy blue
  */
 export const hexToRgb = (notation) => {
   notation = notation.replace('#', '')

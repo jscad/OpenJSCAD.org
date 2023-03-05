@@ -9,7 +9,7 @@ import { toOutlines } from './toOutlines.js'
  * @alias module:modeling/geometries/geom2.toSides
  *
  * @example
- * let sharedsides = toSides(geometry)
+ * let sharedSides = toSides(geometry)
  */
 export const toSides = (geometry) => {
   const sides = []

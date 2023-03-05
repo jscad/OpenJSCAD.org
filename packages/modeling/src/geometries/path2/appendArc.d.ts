@@ -4,7 +4,7 @@ import { Vec2 } from '../../maths/vec2/type'
 export interface AppendArcOptions {
   endpoint: Vec2
   radius?: Vec2
-  xaxisrotation?: number
+  xaxisRotation?: number
   clockwise?: boolean
   large?: boolean
   segments?: number

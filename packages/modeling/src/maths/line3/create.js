@@ -1,7 +1,7 @@
 import * as vec3 from '../vec3/index.js'
 
 /**
- * Represents a unbounded line in 3D space, positioned at a point of origin.
+ * Represents an unbounded line in 3D space, positioned at a point of origin.
  * A line is parametrized by a point of origin and a directional vector.
  *
  * The array contents are two 3D vectors; origin [0,0,0] and directional vector [0,0,1].

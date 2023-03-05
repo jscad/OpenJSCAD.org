@@ -50,14 +50,14 @@ export const ellipse = (options) => {
     rotation = endAngle + (TAU - startAngle)
   }
 
-  const minradius = Math.min(radius[0], radius[1])
-  const minangle = Math.acos(((minradius * minradius) + (minradius * minradius) - (EPS * EPS)) /
-                            (2 * minradius * minradius))
-  if (rotation < minangle) throw new Error('startAngle and endAngle do not define a significant rotation')
+  const minRadius = Math.min(radius[0], radius[1])
+  const minAngle = Math.acos(((minRadius * minRadius) + (minRadius * minRadius) - (EPS * EPS)) /
+                            (2 * minRadius * minRadius))
+  if (rotation < minAngle) throw new Error('startAngle and endAngle do not define a significant rotation')
 
   segments = Math.floor(segments * (rotation / TAU))
 
-  const centerv = vec2.clone(center)
+  const centerV = vec2.clone(center)
   const step = rotation / segments // radians per segment
 
   const points = []
@@ -65,9 +65,9 @@ export const ellipse = (options) => {
   for (let i = 0; i < segments; i++) {
     const angle = (step * i) + startAngle
     const point = vec2.fromValues(radius[0] * cos(angle), radius[1] * sin(angle))
-    vec2.add(point, centerv, point)
+    vec2.add(point, centerV, point)
     points.push(point)
   }
-  if (rotation < TAU) points.push(centerv)
+  if (rotation < TAU) points.push(centerV)
   return geom2.create([points])
 }

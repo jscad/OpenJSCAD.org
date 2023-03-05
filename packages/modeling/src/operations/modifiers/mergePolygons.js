@@ -58,9 +58,9 @@ const calculateAnglesBetween = (current, opposite, normal) => {
 const v1 = vec3.create()
 const v2 = vec3.create()
 
-const calculateAngle = (prevpoint, point, nextpoint, normal) => {
-  const d0 = vec3.subtract(v1, point, prevpoint)
-  const d1 = vec3.subtract(v2, nextpoint, point)
+const calculateAngle = (prevPoint, point, nextPoint, normal) => {
+  const d0 = vec3.subtract(v1, point, prevPoint)
+  const d1 = vec3.subtract(v2, nextPoint, point)
   vec3.cross(d0, d0, d1)
   return vec3.dot(d0, normal)
 }
@@ -87,14 +87,14 @@ const createPolygonAnd = (edge) => {
 
 /*
  * Merge COPLANAR polygons that share common edges.
- * @param {poly3[]} sourcepolygons - list of polygons
+ * @param {poly3[]} sourcePolygons - list of polygons
  * @returns {poly3[]} new set of polygons
  */
-export const mergeCoplanarPolygons = (sourcepolygons) => {
-  if (sourcepolygons.length < 2) return sourcepolygons
+export const mergeCoplanarPolygons = (sourcePolygons) => {
+  if (sourcePolygons.length < 2) return sourcePolygons
 
-  const normal = sourcepolygons[0].plane
-  const polygons = sourcepolygons.slice()
+  const normal = sourcePolygons[0].plane
+  const polygons = sourcePolygons.slice()
   const edgeList = new Map()
 
   while (polygons.length > 0) { // NOTE: the length of polygons WILL change
@@ -129,15 +129,15 @@ export const mergeCoplanarPolygons = (sourcepolygons) => {
           opposite.prev = null
 
           const mergeEdges = (list, e1, e2) => {
-            const newedge = {
+            const newEdge = {
               v1: e2.v1,
               v2: e1.v2,
               next: e1.next,
               prev: e2.prev
             }
-            // link in newedge
-            e2.prev.next = newedge
-            e1.next.prev = newedge
+            // link in newEdge
+            e2.prev.next = newEdge
+            e1.next.prev = newEdge
             // remove old edges
             deleteEdge(list, e1)
             e1.v1 = null
@@ -166,15 +166,15 @@ export const mergeCoplanarPolygons = (sourcepolygons) => {
   }
 
   // build a set of polygons from the remaining edges
-  const destpolygons = []
+  const destPolygons = []
   edgeList.forEach((edge) => {
     const polygon = createPolygonAnd(edge)
-    if (polygon) destpolygons.push(polygon)
+    if (polygon) destPolygons.push(polygon)
   })
 
   edgeList.clear()
 
-  return destpolygons
+  return destPolygons
 }
 
 const coplanar = (plane1, plane2) => {
@@ -197,11 +197,11 @@ export const mergePolygons = (epsilon, polygons) => {
     }
   })
 
-  let destpolygons = []
+  let destPolygons = []
   polygonsPerPlane.forEach((mapping) => {
-    const sourcepolygons = mapping[1]
-    const retesselayedpolygons = mergeCoplanarPolygons(sourcepolygons)
-    destpolygons = destpolygons.concat(retesselayedpolygons)
+    const sourcePolygons = mapping[1]
+    const retesselatedPolygons = mergeCoplanarPolygons(sourcePolygons)
+    destPolygons = destPolygons.concat(retesselatedPolygons)
   })
-  return destpolygons
+  return destPolygons
 }

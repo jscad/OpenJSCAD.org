@@ -9,7 +9,7 @@ import * as vec3 from '../../maths/vec3/index.js'
  * @alias module:modeling/geometries/slice.calculatePlane
  *
  * @example
- * let myplane = calculatePlane(slice)
+ * let myPlane = calculatePlane(slice)
  */
 export const calculatePlane = (slice) => {
   if (slice.contours < 1) throw new Error('slices must have at least one contour to calculate a plane')

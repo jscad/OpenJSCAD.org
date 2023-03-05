@@ -11,6 +11,6 @@ import { toPolygons } from './toPolygons.js'
  */
 export const invert = (geometry) => {
   const polygons = toPolygons(geometry)
-  const newpolygons = polygons.map((polygon) => poly3.invert(polygon))
-  return create(newpolygons)
+  const newPolygons = polygons.map((polygon) => poly3.invert(polygon))
+  return create(newPolygons)
 }

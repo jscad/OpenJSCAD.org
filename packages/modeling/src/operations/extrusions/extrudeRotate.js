@@ -56,21 +56,16 @@ export const extrudeRotate = (options, geometry) => {
     if (Math.abs(totalRotation) > (segments * anglePerSegment)) segments++
   }
 
-  // console.log('startAngle: '+startAngle)
-  // console.log('endAngle: '+endAngle)
-  // console.log(totalRotation)
-  // console.log(segments)
-
   // convert geometry to an array of sides, easier to deal with
   let shapeSides = geom2.toSides(geometry)
   if (shapeSides.length === 0) throw new Error('the given geometry cannot be empty')
 
-  // determine if the rotate extrude can be computed in the first place
+  // determine if the extrusion can be computed in the first place
   // ie all the points have to be either x > 0 or x < 0
 
   // generic solution to always have a valid solid, even if points go beyond x/ -x
-  // 1. split points up between all those on the 'left' side of the axis (x<0) & those on the 'righ' (x>0)
-  // 2. for each set of points do the extrusion operation IN OPOSITE DIRECTIONS
+  // 1. split points up between all those on the 'left' side of the axis (x<0) & those on the 'right' (x>0)
+  // 2. for each set of points do the extrusion operation IN OPPOSITE DIRECTIONS
   // 3. union the two resulting solids
 
   // 1. alt : OR : just cap of points at the axis ?

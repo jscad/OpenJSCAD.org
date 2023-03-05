@@ -8,7 +8,7 @@ import { clone } from './clone.js'
  * @alias module:modeling/geometries/path2.reverse
  *
  * @example
- * let newpath = reverse(mypath)
+ * let newPath = reverse(myPath)
  */
 export const reverse = (geometry) => {
   // NOTE: this only updates the order of the points

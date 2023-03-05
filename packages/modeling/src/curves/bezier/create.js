@@ -1,7 +1,7 @@
 /**
- * Represents a bezier easing function.
+ * Represents a Bézier easing function.
  * @typedef {Object} bezier
- * @property {Array} points - The control points for the bezier curve. The first and last point will also be the start and end of the curve
+ * @property {Array} points - The control points for the Bézier curve. The first and last point will also be the start and end of the curve
  * @property {string} pointType - A reference to the type and dimensionality of the points that the curve was created from
  * @property {number} dimensions - The dimensionality of the bezier
  * @property {Array} permutations - A pre-calculation of the bezier algorithm's co-efficients

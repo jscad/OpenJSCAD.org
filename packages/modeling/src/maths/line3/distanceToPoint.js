@@ -12,6 +12,6 @@ import { closestPoint } from './closestPoint.js'
  */
 export const distanceToPoint = (line, point) => {
   const closest = closestPoint(line, point)
-  const distancevector = vec3.subtract(vec3.create(), point, closest)
-  return vec3.length(distancevector)
+  const distanceVector = vec3.subtract(vec3.create(), point, closest)
+  return vec3.length(distanceVector)
 }

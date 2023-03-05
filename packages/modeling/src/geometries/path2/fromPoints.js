@@ -16,7 +16,7 @@ import { create } from './create.js'
  * @alias module:modeling/geometries/path2.fromPoints
  *
  * @example:
- * my newpath = fromPoints({closed: true}, [[10, 10], [-10, 10]])
+ * my newPath = fromPoints({closed: true}, [[10, 10], [-10, 10]])
  */
 export const fromPoints = (options, points) => {
   const defaults = { closed: false }

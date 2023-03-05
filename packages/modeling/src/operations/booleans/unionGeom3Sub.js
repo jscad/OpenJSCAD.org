@@ -25,9 +25,8 @@ export const unionGeom3Sub = (geometry1, geometry2) => {
   b.clipTo(a)
   b.invert()
 
-  const newpolygons = a.allPolygons().concat(b.allPolygons())
-  const result = geom3.create(newpolygons)
-  return result
+  const newPolygons = a.allPolygons().concat(b.allPolygons())
+  return geom3.create(newPolygons)
 }
 
 // Like union, but when we know that the two solids are not intersecting

@@ -13,7 +13,7 @@ test('poly2: isSimple() should return correct values', (t) => {
   const ply3 = create([[5, 5], [5, -5], [-5, -5], [-5, 5]])
   t.true(isSimple(ply3))
 
-  // Counter Clockwise
+  // Counterclockwise
   const ply4 = create([[5, 5], [-5, 5], [-5, -5], [5, -5]])
   t.true(isSimple(ply4))
 

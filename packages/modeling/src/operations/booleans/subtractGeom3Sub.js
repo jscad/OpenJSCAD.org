@@ -25,6 +25,6 @@ export const subtractGeom3Sub = (geometry1, geometry2) => {
   a.addPolygons(b.allPolygons())
   a.invert()
 
-  const newpolygons = a.allPolygons()
-  return geom3.create(newpolygons)
+  const newPolygons = a.allPolygons()
+  return geom3.create(newPolygons)
 }

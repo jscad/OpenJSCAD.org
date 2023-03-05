@@ -14,11 +14,7 @@ export const applyTransforms = (geometry) => {
   if (mat4.isIdentity(geometry.transforms)) return geometry
 
   // apply transforms to each side
-  geometry.outlines = geometry.outlines.map((outline) => {
-    return outline.map((point) => {
-      return vec2.transform(vec2.create(), point, geometry.transforms)
-    })
-  })
+  geometry.outlines = geometry.outlines.map((outline) => outline.map((point) => vec2.transform(vec2.create(), point, geometry.transforms)))
   geometry.transforms = mat4.create()
   return geometry
 }

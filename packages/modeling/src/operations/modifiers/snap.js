@@ -14,9 +14,9 @@ import { snapPolygons } from './snapPolygons.js'
 const snapPath2 = (geometry) => {
   const epsilon = measureEpsilon(geometry)
   const points = path2.toPoints(geometry)
-  const newpoints = points.map((point) => vec2.snap(vec2.create(), point, epsilon))
+  const newPoints = points.map((point) => vec2.snap(vec2.create(), point, epsilon))
   // snap can produce duplicate points, remove those
-  return path2.create(newpoints)
+  return path2.create(newPoints)
 }
 
 const snapGeom2 = (geometry) => {
@@ -43,8 +43,8 @@ const snapGeom2 = (geometry) => {
 const snapGeom3 = (geometry) => {
   const epsilon = measureEpsilon(geometry)
   const polygons = geom3.toPolygons(geometry)
-  const newpolygons = snapPolygons(epsilon, polygons)
-  return geom3.create(newpolygons)
+  const newPolygons = snapPolygons(epsilon, polygons)
+  return geom3.create(newPolygons)
 }
 
 /**

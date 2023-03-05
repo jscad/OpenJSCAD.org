@@ -26,7 +26,7 @@ export const cylinder = (options) => {
 
   if (!isGT(radius, 0)) throw new Error('radius must be greater than zero')
 
-  const newoptions = {
+  const newOptions = {
     center,
     height,
     startRadius: [radius, radius],
@@ -34,5 +34,5 @@ export const cylinder = (options) => {
     segments
   }
 
-  return cylinderElliptic(newoptions)
+  return cylinderElliptic(newOptions)
 }

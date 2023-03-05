@@ -35,7 +35,7 @@ const getPoints = (vertices, radius, startAngle, center) => {
  * @param {Number} [options.density=2] - density (Q) of star
  * @param {Number} [options.outerRadius=1] - outer radius of vertices
  * @param {Number} [options.innerRadius=0] - inner radius of vertices, or zero to calculate
- * @param {Number} [options.startAngle=0] - starting angle for first vertice, in radians
+ * @param {Number} [options.startAngle=0] - starting angle for first vertex, in radians
  * @returns {geom2} new 2D geometry
  * @alias module:modeling/primitives.star
  *
@@ -71,10 +71,10 @@ export const star = (options) => {
     innerRadius = outerRadius * getRadiusRatio(vertices, density)
   }
 
-  const centerv = vec2.clone(center)
+  const centerV = vec2.clone(center)
 
-  const outerPoints = getPoints(vertices, outerRadius, startAngle, centerv)
-  const innerPoints = getPoints(vertices, innerRadius, startAngle + Math.PI / vertices, centerv)
+  const outerPoints = getPoints(vertices, outerRadius, startAngle, centerV)
+  const innerPoints = getPoints(vertices, innerRadius, startAngle + Math.PI / vertices, centerV)
 
   const allPoints = []
   for (let i = 0; i < vertices; i++) {

@@ -25,8 +25,11 @@ export const hullPoints2 = (uniquePoints) => {
   })
 
   // sort by polar coordinates
-  points.sort((pt1, pt2) => pt1.angle < pt2.angle ? -1 : pt1.angle > pt2.angle ? 1 :
-    pt1.distSq < pt2.distSq ? -1 : pt1.distSq > pt2.distSq ? 1 : 0)
+  points.sort((pt1, pt2) => pt1.angle < pt2.angle
+    ? -1
+    : pt1.angle > pt2.angle
+      ? 1
+      : pt1.distSq < pt2.distSq ? -1 : pt1.distSq > pt2.distSq ? 1 : 0)
 
   const stack = [] // start with empty stack
   points.forEach((point) => {

@@ -3,7 +3,7 @@
  * @see CSS color table from http://www.w3.org/TR/css3-color/
  * @enum {Array}
  * @example
- * let newshape = colorize(cssColors.red, oldshape)
+ * let newShape = colorize(cssColors.red, oldShape)
  */
 export const cssColors = {
   // basic color keywords

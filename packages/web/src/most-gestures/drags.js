@@ -4,12 +4,10 @@ let isPinching = false
 
 if (typeof window !== 'undefined') {
   window.addEventListener('pinchStarted', (e) => {
-    // console.log("received pinch started");
     isPinching = true
   })
 
   window.addEventListener('pinchEnded', (e) => {
-    // console.log("received pinch ended");
     isPinching = false
   })
 }
@@ -83,7 +81,7 @@ const touchDrags = (touchStarts$, touchEnds$, touchMoves$, settings) => {
     })
 }
 
-/* drag move interactions press & move(continuously firing)
+/* drag move interactions press & move (continuously firing)
 */
 const drags = ({ mouseDowns$, mouseUps$, mouseMoves$, touchStarts$, touchEnds$, longTaps$, touchMoves$ }, settings) => {
   // 2020-09 FIX
@@ -93,8 +91,6 @@ const drags = ({ mouseDowns$, mouseUps$, mouseMoves$, touchStarts$, touchEnds$, 
     mouseDrags(mouseDowns$, mouseUps$, mouseMoves$, settings),
     touchDrags(touchStarts$, touchEnds$, touchMoves$, settings)
   )
-  // .merge(merge(touchEnds$, mouseUps$).map(undefined))
-  // .tap(e=>console.log('dragMoves',e))
 
   // .takeUntil(longTaps$) // .repeat() // no drag moves if there is a context action already taking place
 

@@ -11,8 +11,8 @@ import { splitPolygonByPlane } from './splitPolygonByPlane.js'
 // At the top is a root node which does not hold a polygon, only child PolygonTreeNodes.
 // Below that are zero or more 'top' nodes; each holds a polygon.
 // The polygons can be in different planes.
-// splitByPlane() splits a node by a plane. If the plane intersects the polygon, two new child nodes
-// are created holding the splitted polygon.
+// splitByPlane() splits a node by a plane. If the plane intersects the polygon,
+// two new child nodes are created holding the split polygon.
 // getPolygons() retrieves the polygons from the tree. If for PolygonTreeNode the polygon is split but
 // the two split parts (child nodes) are still intact, then the unsplit polygon is returned.
 // This ensures that we can safely split a polygon into many fragments. If the fragments are untouched,
@@ -31,7 +31,7 @@ export class PolygonTreeNode {
   // fill the tree with polygons. Should be called on the root node only; child nodes must
   // always be a derivate (split) of the parent node.
   addPolygons (polygons) {
-    // new polygons can only be added to root node; children can only be splitted polygons
+    // new polygons can only be added to root node; children can only be split polygons
     if (!this.isRootNode()) {
       throw new Error('Assertion failed')
     }
@@ -98,11 +98,11 @@ export class PolygonTreeNode {
     }
   }
 
-  // split the node by a plane; add the resulting nodes to the frontnodes and backnodes array
+  // split the node by a plane; add the resulting nodes to the frontNodes and backNodes array
   // If the plane doesn't intersect the polygon, the 'this' object is added to one of the arrays
   // If the plane does intersect the polygon, two new child nodes are created for the front and back fragments,
   //  and added to both arrays.
-  splitByPlane (plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes) {
+  splitByPlane (plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes) {
     if (this.children.length) {
       const queue = [this.children]
       let i
@@ -118,59 +118,59 @@ export class PolygonTreeNode {
             queue.push(node.children)
           } else {
             // no children. Split the polygon:
-            node._splitByPlane(plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes)
+            node._splitByPlane(plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes)
           }
         }
       }
     } else {
-      this._splitByPlane(plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes)
+      this._splitByPlane(plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes)
     }
   }
 
   // only to be called for nodes with no children
-  _splitByPlane (splane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes) {
+  _splitByPlane (splane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes) {
     const polygon = this.polygon
     if (polygon) {
       const bound = poly3.measureBoundingSphere(polygon)
-      const sphereradius = bound[3] + EPS // ensure radius is LARGER then polygon
-      const spherecenter = bound
-      const d = vec3.dot(splane, spherecenter) - splane[3]
-      if (d > sphereradius) {
-        frontnodes.push(this)
-      } else if (d < -sphereradius) {
-        backnodes.push(this)
+      const sphereRadius = bound[3] + EPS // ensure radius is LARGER then polygon
+      const sphereCenter = bound
+      const d = vec3.dot(splane, sphereCenter) - splane[3]
+      if (d > sphereRadius) {
+        frontNodes.push(this)
+      } else if (d < -sphereRadius) {
+        backNodes.push(this)
       } else {
-        const splitresult = splitPolygonByPlane(splane, polygon)
-        switch (splitresult.type) {
+        const splitResult = splitPolygonByPlane(splane, polygon)
+        switch (splitResult.type) {
           case 0:
             // coplanar front:
-            coplanarfrontnodes.push(this)
+            coplanarFrontNodes.push(this)
             break
 
           case 1:
             // coplanar back:
-            coplanarbacknodes.push(this)
+            coplanarBackNodes.push(this)
             break
 
           case 2:
             // front:
-            frontnodes.push(this)
+            frontNodes.push(this)
             break
 
           case 3:
             // back:
-            backnodes.push(this)
+            backNodes.push(this)
             break
 
           case 4:
             // spanning:
-            if (splitresult.front) {
-              const frontnode = this.addChild(splitresult.front)
-              frontnodes.push(frontnode)
+            if (splitResult.front) {
+              const frontNode = this.addChild(splitResult.front)
+              frontNodes.push(frontNode)
             }
-            if (splitresult.back) {
-              const backnode = this.addChild(splitresult.back)
-              backnodes.push(backnode)
+            if (splitResult.back) {
+              const backNode = this.addChild(splitResult.back)
+              backNodes.push(backNode)
             }
             break
         }
@@ -184,9 +184,9 @@ export class PolygonTreeNode {
   // a child should be created for every fragment of the split polygon
   // returns the newly created child
   addChild (polygon) {
-    const newchild = new PolygonTreeNode(this, polygon)
-    this.children.push(newchild)
-    return newchild
+    const newChild = new PolygonTreeNode(this, polygon)
+    this.children.push(newChild)
+    return newChild
   }
 
   invertSub () {

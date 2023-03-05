@@ -27,13 +27,13 @@ export const rectangle = (options) => {
   if (!size.every((n) => n > 0)) throw new Error('size values must be greater than zero')
 
   const point = [size[0] / 2, size[1] / 2]
-  const pswap = [point[0], -point[1]]
+  const swapped = [point[0], -point[1]]
 
   const points = [
     vec2.subtract(vec2.create(), center, point),
-    vec2.add(vec2.create(), center, pswap),
+    vec2.add(vec2.create(), center, swapped),
     vec2.add(vec2.create(), center, point),
-    vec2.subtract(vec2.create(), center, pswap)
+    vec2.subtract(vec2.create(), center, swapped)
   ]
   return geom2.create([points])
 }

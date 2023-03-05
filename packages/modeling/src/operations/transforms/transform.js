@@ -12,7 +12,7 @@ import * as path2 from '../../geometries/path2/index.js'
  * @alias module:modeling/transforms.transform
  *
  * @example
- * const newsphere = transform(mat4.rotateX(TAU / 8), sphere())
+ * const newSphere = transform(mat4.rotateX(TAU / 8), sphere())
  */
 export const transform = (matrix, ...objects) => {
   // TODO how to check that the matrix is REAL?

@@ -11,11 +11,9 @@ import { create } from './create.js'
  *
  * @example
  * let matrix = mat4.fromTranslation([1, 2, 3])
- * let newslice = transform(matrix, oldslice)
+ * let newSlice = transform(matrix, oldSlice)
  */
 export const transform = (matrix, slice) => {
-  const contours = slice.contours.map((contour) => {
-    return contour.map((point) => vec3.transform(vec3.create(), point, matrix))
-  })
+  const contours = slice.contours.map((contour) => contour.map((point) => vec3.transform(vec3.create(), point, matrix)))
   return create(contours)
 }

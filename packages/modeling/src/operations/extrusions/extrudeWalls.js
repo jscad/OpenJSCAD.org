@@ -16,10 +16,10 @@ const gcd = (a, b) => {
 const lcm = (a, b) => (a * b) / gcd(a, b)
 
 // Return a set of edges that encloses the same area by splitting
-// the given edges to have newlength total edges.
-const repartitionEdges = (newlength, edges) => {
+// the given edges to have newLength total edges.
+const repartitionEdges = (newLength, edges) => {
   // NOTE: This implementation splits each edge evenly.
-  const multiple = newlength / edges.length
+  const multiple = newLength / edges.length
   if (multiple === 1) {
     return edges
   }
@@ -54,9 +54,9 @@ export const extrudeWalls = (slice0, slice1) => {
 
   if (edges0.length !== edges1.length) {
     // different shapes, so adjust one or both to the same number of edges
-    const newlength = lcm(edges0.length, edges1.length)
-    if (newlength !== edges0.length) edges0 = repartitionEdges(newlength, edges0)
-    if (newlength !== edges1.length) edges1 = repartitionEdges(newlength, edges1)
+    const newLength = lcm(edges0.length, edges1.length)
+    if (newLength !== edges0.length) edges0 = repartitionEdges(newLength, edges0)
+    if (newLength !== edges1.length) edges1 = repartitionEdges(newLength, edges1)
   }
 
   const walls = []

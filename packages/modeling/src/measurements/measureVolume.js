@@ -9,7 +9,7 @@ const cache = new WeakMap()
 
 /*
  * Measure the volume of the given geometry.
- * NOTE: paths are infinitely narrow and do not have an volume
+ * NOTE: paths are infinitely narrow and do not have a volume
  *
  * @param {Path2} geometry - geometry to measure
  * @returns {Number} volume of the geometry
@@ -18,7 +18,7 @@ const measureVolumeOfPath2 = () => 0
 
 /*
  * Measure the volume of the given geometry.
- * NOTE: 2D geometry are infinitely thin and do not have an volume
+ * NOTE: 2D geometry are infinitely thin and do not have a volume
  *
  * @param {Geom2} geometry - 2D geometry to measure
  * @returns {Number} volume of the geometry

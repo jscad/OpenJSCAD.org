@@ -7,25 +7,6 @@ const requireUncached = require('../core/code-loading/requireUncached')
 const resolveDependencies = require('../core/code-loading/resolveDependencies')
 const { flatten } = require('@jscad/array-utils')
 
-// FIXME: not used anymore? remove?
-const watchMultiplePaths = (paths, changed) => {
-  const prevContents = {}
-  const watchers = paths.map((filePath, index) => {
-    prevContents[filePath] = ''
-    const watcher = fs.watch(filePath, { encoding: 'utf8' }, (eventType, filename) => {
-      requireUncached(filePath)
-      const contents = fs.readFileSync(filePath, 'utf8')
-
-      if (prevContents[filePath] !== contents) {
-        changed({ filePath, contents })
-        prevContents[filePath] = contents
-      }
-    })
-    return watcher
-  })
-  return watchers
-}
-
 const removeWatchers = (watchers) => {
   watchers.map((watcher) => {
     watcher.close()

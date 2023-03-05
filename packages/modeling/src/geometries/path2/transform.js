@@ -10,7 +10,7 @@ import * as mat4 from '../../maths/mat4/index.js'
  * @alias module:modeling/geometries/path2.transform
  *
  * @example
- * let newpath = transform(fromZRotation(TAU / 8), path)
+ * let newPath = transform(fromZRotation(TAU / 8), path)
  */
 export const transform = (matrix, geometry) => {
   const transforms = mat4.multiply(mat4.create(), matrix, geometry.transforms)

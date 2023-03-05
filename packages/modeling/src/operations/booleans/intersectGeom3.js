@@ -13,11 +13,11 @@ import { intersectGeom3Sub } from './intersectGeom3Sub.js'
 export const intersectGeom3 = (...geometries) => {
   geometries = flatten(geometries)
 
-  let newgeometry = geometries.shift()
+  let newGeometry = geometries.shift()
   geometries.forEach((geometry) => {
-    newgeometry = intersectGeom3Sub(newgeometry, geometry)
+    newGeometry = intersectGeom3Sub(newGeometry, geometry)
   })
 
-  newgeometry = retessellate(newgeometry)
-  return newgeometry
+  newGeometry = retessellate(newGeometry)
+  return newGeometry
 }

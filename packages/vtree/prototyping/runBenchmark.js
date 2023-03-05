@@ -1,5 +1,5 @@
 // const decache = require('decache')
-const child_process = require('child_process')
+const childProcess = require('child_process')
 
 const runBenchMark = (runFn, name, runs = 10) => {
   console.log('running benchmarks for ' + name + ' ' + runs + ' times')
@@ -22,7 +22,7 @@ const spawnBenchMark = (path, runs = 100) => {
   const cpuNumbers = []
   const memNumbers = []
 
-  const process = child_process.spawn('node', [path, runs])
+  const process = childProcess.spawn('node', [path, runs])
 
   const pid = process.pid // you can use any valid PID instead
   const measureInterval = setInterval(() => {

@@ -30,15 +30,15 @@ export const polygon = (options) => {
 
   if (!(Array.isArray(points) && Array.isArray(paths))) throw new Error('points and paths must be arrays')
 
-  let listofpolys = points
+  let listOfPolys = points
   if (Array.isArray(points[0])) {
     if (!Array.isArray(points[0][0])) {
       // points is an array of something... convert to list
-      listofpolys = [points]
+      listOfPolys = [points]
     }
   }
 
-  listofpolys.forEach((list, i) => {
+  listOfPolys.forEach((list, i) => {
     if (!Array.isArray(list)) throw new Error('list of points ' + i + ' must be an array')
     if (list.length < 3) throw new Error('list of points ' + i + ' must contain three or more points')
     list.forEach((point, j) => {
@@ -47,21 +47,21 @@ export const polygon = (options) => {
     })
   })
 
-  let listofpaths = paths
+  let listOfPaths = paths
   if (paths.length === 0) {
     // create a list of paths based on the points
     let count = 0
-    listofpaths = listofpolys.map((list) => list.map((point) => count++))
+    listOfPaths = listOfPolys.map((list) => list.map((point) => count++))
   }
 
-  // flatten the listofpoints for indexed access
-  const allpoints = []
-  listofpolys.forEach((list) => list.forEach((point) => allpoints.push(point)))
+  // flatten the listOfPoints for indexed access
+  const allPoints = []
+  listOfPolys.forEach((list) => list.forEach((point) => allPoints.push(point)))
 
   const outlines = []
-  listofpaths.forEach((path) => {
-    const setofpoints = path.map((index) => allpoints[index])
-    outlines.push(setofpoints)
+  listOfPaths.forEach((path) => {
+    const setOfPoints = path.map((index) => allPoints[index])
+    outlines.push(setOfPoints)
   })
   return geom2.create(outlines)
 }

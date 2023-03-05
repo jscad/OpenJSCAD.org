@@ -12,10 +12,10 @@ import { boolean } from './martinez/index.js'
 export const intersectGeom2 = (...geometries) => {
   geometries = flatten(geometries)
 
-  let newgeometry = geometries.shift()
+  let newGeometry = geometries.shift()
   geometries.forEach((geometry) => {
-    newgeometry = boolean(newgeometry, geometry, INTERSECTION)
+    newGeometry = boolean(newGeometry, geometry, INTERSECTION)
   })
 
-  return newgeometry
+  return newGeometry
 }
