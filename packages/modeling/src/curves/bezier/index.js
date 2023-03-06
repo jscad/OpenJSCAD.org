@@ -6,5 +6,7 @@
 module.exports = {
   create: require('./create'),
   valueAt: require('./valueAt'),
-  tangentAt: require('./tangentAt')
+  tangentAt: require('./tangentAt'),
+  length: require('./length'),
+  arcLengthToT: require('./arcLengthToT')
 }
