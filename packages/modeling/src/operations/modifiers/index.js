@@ -7,5 +7,6 @@
  */
 module.exports = {
   generalize: require('./generalize'),
-  snap: require('./snap')
+  snap: require('./snap'),
+  retessellate: require('./retessellate'),
 }
