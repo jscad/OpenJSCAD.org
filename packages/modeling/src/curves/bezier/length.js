@@ -6,14 +6,14 @@ const lengths = require('./lengths')
  *
  * @example
  * const b = bezier.create([[0, 0], [0, 10]]);
- * console.log(length(b)) // output 10
+ * console.log(length(100, b)) // output 10
  * 
+ * @param {Number} segments the number of segments to use when approximating the curve length.
  * @param {Object} bezier a bezier curve.
- * @param {Number} [segments=100] the number of segments to use when approximating the curve length.
  * @returns an approximation of the curve's length.
  * @alias module:modeling/curves/bezier.length
  */
-const length = (bezier, segments = 100) => {
+const length = (segments, bezier) => {
   return lengths(bezier, segments)[segments]
 };
 
