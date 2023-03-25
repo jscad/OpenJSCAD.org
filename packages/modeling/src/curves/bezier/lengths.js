@@ -6,13 +6,13 @@ const valueAt = require("./valueAt")
  * 
  * @example
  * const b = bezier.create([[0, 0], [0, 10]]);
- * const totalLength = lengths(b).pop(); // the last element of the array is the curve's approximate length
+ * const totalLength = lengths(100, b).pop(); // the last element of the array is the curve's approximate length
  * 
+ * @param {Number} segments the number of segments to use when approximating the curve length.
  * @param {Object} bezier a bezier curve.
- * @param {Number} [segments=100] the number of segments to use when approximating the curve length.
  * @returns an array containing the cumulative length of the segments.
  */
-const lengths = (bezier, segments = 100) => {
+const lengths = (segments, bezier) => {
   let sum = 0
   let lengths = [0]
   let previous = valueAt(0, bezier)

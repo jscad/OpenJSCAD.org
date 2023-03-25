@@ -2,4 +2,9 @@ import Bezier from './type'
 
 export default arcLengthToT
 
-declare function arcLengthToT(arcLength: number, bezier: Bezier, segments?: number): number
+export interface ArcLengthToTOptions {
+  distance?: Number
+  segments?: Number
+}
+
+declare function arcLengthToT(options?: ArcLengthToTOptions, bezier: Bezier): number

@@ -29,7 +29,7 @@ const arcLengthToT = (options, bezier) => {
   }
   const {distance, segments} = Object.assign({}, defaults, options)
   
-  const arcLengths = lengths(bezier, segments)
+  const arcLengths = lengths(segments, bezier)
   // binary search for the index with largest value smaller than target arcLength
   let startIndex = 0
   let endIndex = segments

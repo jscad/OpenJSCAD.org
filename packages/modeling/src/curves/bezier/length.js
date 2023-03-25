@@ -14,7 +14,7 @@ const lengths = require('./lengths')
  * @alias module:modeling/curves/bezier.length
  */
 const length = (segments, bezier) => {
-  return lengths(bezier, segments)[segments]
+  return lengths(segments, bezier)[segments]
 };
 
 module.exports = length
