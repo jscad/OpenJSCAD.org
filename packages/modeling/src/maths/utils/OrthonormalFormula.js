@@ -16,8 +16,8 @@ export class OrthonormalFormula {
     // plane normal is one component
     this.plane = plane
     // orthogonal vector to plane normal is one component
-    const o = vec3.orthogonal(vec3.create(), plane)
-    this.v = vec3.normalize(o, vec3.cross(o, plane, o))
+    const rightVector = vec3.orthogonal(vec3.create(), plane)
+    this.v = vec3.normalize(rightVector, vec3.cross(rightVector, plane, rightVector))
     // cross between plane normal and orthogonal vector is one component
     this.u = vec3.cross(vec3.create(), this.v, plane)
 
