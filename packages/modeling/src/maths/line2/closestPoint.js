@@ -12,20 +12,14 @@ const origin = require('./origin')
  * @alias module:modeling/maths/line2.closestPoint
  */
 const closestPoint = (line, point) => {
-  // linear function of AB
-  const a = origin(line)
-  const b = direction(line)
-  const m1 = (b[1] - a[1]) / (b[0] - a[0])
-  const t1 = a[1] - m1 * a[0]
-  // linear function of PC
-  const m2 = -1 / m1 // perpendicular
-  const t2 = point[1] - m2 * point[0]
-  // c.x * m1 + t1 === c.x * m2 + t2
-  const x = (t2 - t1) / (m1 - m2)
-  const y = m1 * x + t1
+  const orig = origin(line)
+  const dir = direction(line)
 
-  const closest = vec2.fromValues(x, y)
-  return closest
+  const v = vec2.subtract(vec2.create(), point, orig)
+  const dist = vec2.dot(v, dir)
+  vec2.scale(v, dir, dist)
+  vec2.add(v, v, orig)
+  return v
 }
 
 module.exports = closestPoint
