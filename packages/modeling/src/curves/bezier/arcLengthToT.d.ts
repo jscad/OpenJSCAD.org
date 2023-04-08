@@ -7,4 +7,4 @@ export interface ArcLengthToTOptions {
   segments?: Number
 }
 
-declare function arcLengthToT(options?: ArcLengthToTOptions, bezier: Bezier): number
+declare function arcLengthToT(options: ArcLengthToTOptions, bezier: Bezier): number
