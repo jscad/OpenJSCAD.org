@@ -171,9 +171,11 @@ const convertPolyline2D = (object, options) => {
 }
 
 const convertAppearance = (object, options) => {
-  const diffuseColor = object.color.join(' ')
-  const emissiveColor = object.color.join(' ')
-  return ['Appearance', ['Material', {diffuseColor, emissiveColor}]]
+  const colorRGB = object.color.slice(0, 3)
+  const diffuseColor = colorRGB.join(' ')
+  const emissiveColor = colorRGB.join(' ')
+  const transparency = object.color[3]
+  return ['Appearance', ['Material', {diffuseColor, emissiveColor, transparency}]]
 }
 
 /*

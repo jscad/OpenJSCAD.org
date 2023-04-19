@@ -46,6 +46,7 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   t.is(results.length, 1)
 
   obs = results[0]
+  console.log(obs)
   t.is(countOf('X3D', obs), 2)
   t.is(countOf('head', obs), 2)
   t.is(countOf('meta', obs), 1)
@@ -59,6 +60,6 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   // for color
   t.is(countOf('Color', obs), 3)
   t.is(countOf('Appearance', obs), 2)
-
+  t.is(countOf('diffuseColor="0.5 1 0.5"', obs), 1)
 })
 
