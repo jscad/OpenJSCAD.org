@@ -60,6 +60,7 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   // for color
   t.is(countOf('Color', obs), 3)
   t.is(countOf('Appearance', obs), 2)
+  // check RGB
   t.is(countOf('diffuseColor="0.5 1 0.5"', obs), 1)
 })
 

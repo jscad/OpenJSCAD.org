@@ -170,6 +170,9 @@ const convertPolyline2D = (object, options) => {
   return ['Polyline2D', {lineSegments}]
 }
 
+/*
+ * Convert color to Appearance
+ */
 const convertAppearance = (object, options) => {
   const colorRGB = object.color.slice(0, 3)
   const diffuseColor = colorRGB.join(' ')
