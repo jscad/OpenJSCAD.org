@@ -34,7 +34,7 @@ Notes:
 const { geometries, modifiers } = require('@jscad/modeling')
 const { geom2, geom3, path2, poly2, poly3 } = geometries
 
-const { flatten, toArray } = require('@jscad/array-utils')
+const { flatten } = require('@jscad/array-utils')
 
 const stringify = require('onml/lib/stringify')
 
@@ -138,7 +138,7 @@ const convertObjects = (objects, options) => {
 const convertPath2 = (object, options) => {
   const points = path2.toPoints(object).slice()
   if (points.length > 1 && object.isClosed) points.push(points[0])
-  let shape = ['Shape', {}, convertPolyline2D(poly2.create(points), options)]
+  const shape = ['Shape', {}, convertPolyline2D(poly2.create(points), options)]
   if (object.color) {
     shape.push(convertAppearance(object, options))
   }
