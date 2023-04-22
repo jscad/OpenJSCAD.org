@@ -34,7 +34,7 @@ Notes:
 const { geometries, modifiers } = require('@jscad/modeling')
 const { geom2, geom3, path2, poly2, poly3 } = geometries
 
-const { flatten, toArray } = require('@jscad/array-utils')
+const { flatten } = require('@jscad/array-utils')
 
 const stringify = require('onml/lib/stringify')
 
@@ -89,11 +89,11 @@ const serialize = (options, ...objects) => {
     body.push(['head', {},
       ['meta', { name: 'creator', content: 'Created by JSCAD' }],
       ['meta', { name: 'reference', content: 'https://www.openjscad.xyz' }],
-      ['meta', { name: 'created', content: new Date().toISOString()}]
+      ['meta', { name: 'created', content: new Date().toISOString() }]
     ])
   } else {
     body.push(['head', {},
-      ['meta', { name: 'creator', content: 'Created by JSCAD' }],
+      ['meta', { name: 'creator', content: 'Created by JSCAD' }]
     ])
   }
   body = body.concat(convertObjects(objects, options))
@@ -138,7 +138,7 @@ const convertObjects = (objects, options) => {
 const convertPath2 = (object, options) => {
   const points = path2.toPoints(object).slice()
   if (points.length > 1 && object.isClosed) points.push(points[0])
-  shape = ['Shape', {}, convertPolyline2D(poly2.create(points), options)]
+  const shape = ['Shape', {}, convertPolyline2D(poly2.create(points), options)]
   if (object.color) {
     shape.push(convertAppearance(object, options))
   }
@@ -167,13 +167,18 @@ const convertGeom2 = (object, options) => {
  */
 const convertPolyline2D = (object, options) => {
   const lineSegments = object.vertices.map((p) => `${p[0]} ${p[1]}`).join(' ')
-  return ['Polyline2D', {lineSegments}]
+  return ['Polyline2D', { lineSegments }]
 }
 
+/*
+ * Convert color to Appearance
+ */
 const convertAppearance = (object, options) => {
-  const diffuseColor = object.color.join(' ')
-  const emissiveColor = object.color.join(' ')
-  return ['Appearance', ['Material', {diffuseColor, emissiveColor}]]
+  const colorRGB = object.color.slice(0, 3)
+  const diffuseColor = colorRGB.join(' ')
+  const emissiveColor = colorRGB.join(' ')
+  const transparency = 1.0 - object.color[3]
+  return ['Appearance', ['Material', { diffuseColor, emissiveColor, transparency }]]
 }
 
 /*
@@ -198,9 +203,9 @@ const convertMesh = (object, options) => {
   const faceset = [
     'IndexedTriangleSet',
     { ccw: 'true', colorPerVertex: 'false', solid: 'false', index: indexList },
-    ['Coordinate', { point: pointList }],
+    ['Coordinate', { point: pointList }]
   ]
-  if (! object.color) {
+  if (!object.color) {
     faceset.push(['Color', { color: colorList }])
   }
   return faceset

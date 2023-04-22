@@ -39,7 +39,6 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   t.is(countOf('Coordinate', obs), 1)
   t.is(countOf('Color', obs), 1)
 
-
   const geom3 = colors.colorize([0.5, 1, 0.5, 1.0], transforms.center({ relativeTo: [5, 5, 5] }, primitives.cube()))
 
   results = serializer.serialize({metadata: false}, geom2, geom3)
@@ -59,6 +58,6 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   // for color
   t.is(countOf('Color', obs), 3)
   t.is(countOf('Appearance', obs), 2)
-
+  // check RGB
+  t.is(countOf('diffuseColor="0.5 1 0.5"', obs), 1)
 })
-
