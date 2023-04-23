@@ -190,6 +190,7 @@ const convertGeom3 = (object, options) => {
   const shape = ['Shape', {}, convertMesh(object, options)]
   if (object.color) {
     shape.push(convertAppearance(object, options))
+    shape[3][1][1].emissiveColor="0 0 0"
   }
   return shape
 }
