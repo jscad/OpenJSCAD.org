@@ -48,6 +48,7 @@ const mimeType = 'model/x3d+xml'
  * Serialize the give objects to X3D elements (XML).
  * @param {Object} options - options for serialization, REQUIRED
  * @param {Array} [options.color=[0,0,1,1]] - default color for objects
+ * @param {Boolean} [options.smooth=false] - use averaged vertex normals
  * @param {Boolean} [options.metadata=true] - add metadata to 3MF contents, such at CreationDate
  * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
@@ -61,6 +62,7 @@ const mimeType = 'model/x3d+xml'
 const serialize = (options, ...objects) => {
   const defaults = {
     color: [0, 0, 1, 1.0], // default colorRGBA specification
+    smooth: false,
     decimals: 1000,
     metadata: true,
     unit: 'millimeter', // millimeter, inch, feet, meter or micrometer
@@ -108,7 +110,7 @@ ${stringify(body, 2)}`
 }
 
 const convertObjects = (objects, options) => {
-  let scene = ['Scene', {}]
+  let scene = ['Scene', ['Transform', { rotation: '1 0 0 -1.5708'}]]
   const shapes = []
   objects.forEach((object, i) => {
     options.statusCallback && options.statusCallback({ progress: 100 * i / objects.length })
@@ -128,7 +130,7 @@ const convertObjects = (objects, options) => {
       shapes.push(convertPath2(object, options))
     }
   })
-  scene = scene.concat(shapes)
+  scene[1] = scene[1].concat(shapes)
   return [scene]
 }
 
@@ -202,7 +204,7 @@ const convertMesh = (object, options) => {
 
   const faceset = [
     'IndexedTriangleSet',
-    { ccw: 'true', colorPerVertex: 'false', solid: 'false', index: indexList },
+    { ccw: 'true', colorPerVertex: 'false', normalPerVertex: options.smooth === true, solid: 'false', index: indexList },
     ['Coordinate', { point: pointList }]
   ]
   if (!object.color) {
