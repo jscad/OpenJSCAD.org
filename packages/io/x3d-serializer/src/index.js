@@ -82,7 +82,7 @@ const serialize = (options, ...objects) => {
   let body = ['X3D',
     {
       profile: 'Interchange',
-      version: '4.0',
+      version: '3.3',
       'xmlns:xsd': 'http://www.w3.org/2001/XMLSchema-instance',
       'xsd:noNamespaceSchemaLocation': 'http://www.web3d.org/specifications/x3d-4.0.xsd'
     }
