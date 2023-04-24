@@ -110,7 +110,7 @@ ${stringify(body, 2)}`
 }
 
 const convertObjects = (objects, options) => {
-  let scene = ['Scene', ['Transform', { rotation: '1 0 0 -1.5708'}]]
+  const scene = ['Scene', ['Transform', { rotation: '1 0 0 -1.5708' }]]
   const shapes = []
   objects.forEach((object, i) => {
     options.statusCallback && options.statusCallback({ progress: 100 * i / objects.length })
@@ -190,7 +190,7 @@ const convertGeom3 = (object, options) => {
   const shape = ['Shape', {}, convertMesh(object, options)]
   if (object.color) {
     shape.push(convertAppearance(object, options))
-    shape[3][1][1].emissiveColor="0 0 0"
+    shape[3][1][1].emissiveColor = '0 0 0'
   }
   return shape
 }
