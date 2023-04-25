@@ -84,7 +84,7 @@ const serialize = (options, ...objects) => {
       profile: 'Interchange',
       version: '3.3',
       'xmlns:xsd': 'http://www.w3.org/2001/XMLSchema-instance',
-      'xsd:noNamespaceSchemaLocation': 'http://www.web3d.org/specifications/x3d-4.0.xsd'
+      'xsd:noNamespaceSchemaLocation': 'http://www.web3d.org/specifications/x3d-3.3.xsd'
     }
   ]
   if (options.metadata) {
@@ -110,7 +110,6 @@ ${stringify(body, 2)}`
 }
 
 const convertObjects = (objects, options) => {
-  const scene = ['Scene', ['Transform', { rotation: '1 0 0 -1.5708' }]]
   const shapes = []
   objects.forEach((object, i) => {
     options.statusCallback && options.statusCallback({ progress: 100 * i / objects.length })
@@ -130,7 +129,8 @@ const convertObjects = (objects, options) => {
       shapes.push(convertPath2(object, options))
     }
   })
-  scene[1] = scene[1].concat(shapes)
+  const transform = ['Transform', { rotation: '1 0 0 -1.5708' }, ...shapes]
+  const scene = ['Scene', {}, transform]
   return [scene]
 }
 
@@ -142,7 +142,7 @@ const convertPath2 = (object, options) => {
   if (points.length > 1 && object.isClosed) points.push(points[0])
   const shape = ['Shape', {}, convertPolyline2D(poly2.create(points), options)]
   if (object.color) {
-    shape.push(convertAppearance(object, options))
+    shape.push(convertAppearance(object, "emissiveColor", options))
   }
   return shape
 }
@@ -157,7 +157,7 @@ const convertGeom2 = (object, options) => {
     if (outline.length > 1) outline.push(outline[0]) // close the outline for conversion
     const shape = ['Shape', {}, convertPolyline2D(poly2.create(outline), options)]
     if (object.color) {
-      shape.push(convertAppearance(object, options))
+      shape.push(convertAppearance(object, "emissiveColor", options))
     }
     group.push(shape)
   })
@@ -175,12 +175,11 @@ const convertPolyline2D = (object, options) => {
 /*
  * Convert color to Appearance
  */
-const convertAppearance = (object, options) => {
+const convertAppearance = (object, colorField, options) => {
   const colorRGB = object.color.slice(0, 3)
-  const diffuseColor = colorRGB.join(' ')
-  const emissiveColor = colorRGB.join(' ')
-  const transparency = 1.0 - object.color[3]
-  return ['Appearance', ['Material', { diffuseColor, emissiveColor, transparency }]]
+  const color = colorRGB.join(' ')
+  const transparency = roundToDecimals(1.0 - object.color[3], options)
+  return ['Appearance', ['Material', { [colorField]: color, transparency } ]]
 }
 
 /*
@@ -189,8 +188,7 @@ const convertAppearance = (object, options) => {
 const convertGeom3 = (object, options) => {
   const shape = ['Shape', {}, convertMesh(object, options)]
   if (object.color) {
-    shape.push(convertAppearance(object, options))
-    shape[3][1][1].emissiveColor = '0 0 0'
+    shape.push(convertAppearance(object, "diffuseColor", options))
   }
   return shape
 }
@@ -244,6 +242,10 @@ const convertToColor = (polygon, options) => {
   return `${color[0]} ${color[1]} ${color[2]}`
 }
 
+const roundToDecimals = (float, options) => {
+  return Math.round(float * options.decimals) / options.decimals
+}
+
 /*
  * This function converts the given polygons into three lists
  * - indexList : index of each vertex in the triangle (tuples)
@@ -265,10 +267,12 @@ const polygons2coordinates = (polygons, options) => {
 
       // add the vertex to the list of points (and index) if not found
       if (!vertexTagToCoordIndexMap.has(id)) {
-        const x = Math.round(vertex[0] * options.decimals) / options.decimals
-        const y = Math.round(vertex[1] * options.decimals) / options.decimals
-        const z = Math.round(vertex[2] * options.decimals) / options.decimals
+        const x = roundToDecimals(vertex[0], options)
+        const y = roundToDecimals(vertex[1], options)
+        const z = roundToDecimals(vertex[2], options)
         pointList.push(`${x} ${y} ${z}`)
+        //const roundedVertex = vertex.map((v) => roundToDecimals(v, options))
+        //pointList.push(roundedVertex.join(" "))
         vertexTagToCoordIndexMap.set(id, pointList.length - 1)
       }
       // add the index (of the vertex) to the list for this polygon
