@@ -203,7 +203,7 @@ const convertMesh = (object, options) => {
 
   const faceset = [
     'IndexedTriangleSet',
-    { ccw: 'true', colorPerVertex: 'false', normalPerVertex: options.smooth === true, solid: 'false', index: indexList },
+    { ccw: 'true', colorPerVertex: 'false', normalPerVertex: options.smooth, solid: 'false', index: indexList },
     ['Coordinate', { point: pointList }]
   ]
   if (!object.color) {
