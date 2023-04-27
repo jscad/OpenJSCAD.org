@@ -49,6 +49,7 @@ const mimeType = 'model/x3d+xml'
  * @param {Object} options - options for serialization, REQUIRED
  * @param {Array} [options.color=[0,0,1,1]] - default color for objects
  * @param {Boolean} [options.smooth=false] - use averaged vertex normals
+ * @param {Number} [options.decimals=1000] - multiplier before rounding to limit precision
  * @param {Boolean} [options.metadata=true] - add metadata to 3MF contents, such at CreationDate
  * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
@@ -142,7 +143,7 @@ const convertPath2 = (object, options) => {
   if (points.length > 1 && object.isClosed) points.push(points[0])
   const shape = ['Shape', {}, convertPolyline2D(poly2.create(points), options)]
   if (object.color) {
-    shape.push(convertAppearance(object, "emissiveColor", options))
+    shape.push(convertAppearance(object, 'emissiveColor', options))
   }
   return shape
 }
@@ -157,7 +158,7 @@ const convertGeom2 = (object, options) => {
     if (outline.length > 1) outline.push(outline[0]) // close the outline for conversion
     const shape = ['Shape', {}, convertPolyline2D(poly2.create(outline), options)]
     if (object.color) {
-      shape.push(convertAppearance(object, "emissiveColor", options))
+      shape.push(convertAppearance(object, 'emissiveColor', options))
     }
     group.push(shape)
   })
@@ -179,7 +180,7 @@ const convertAppearance = (object, colorField, options) => {
   const colorRGB = object.color.slice(0, 3)
   const color = colorRGB.join(' ')
   const transparency = roundToDecimals(1.0 - object.color[3], options)
-  return ['Appearance', ['Material', { [colorField]: color, transparency } ]]
+  return ['Appearance', ['Material', { [colorField]: color, transparency }]]
 }
 
 /*
@@ -187,9 +188,11 @@ const convertAppearance = (object, colorField, options) => {
  */
 const convertGeom3 = (object, options) => {
   const shape = ['Shape', {}, convertMesh(object, options)]
+  let appearance = ['Appearance', {}, ['Material']]
   if (object.color) {
-    shape.push(convertAppearance(object, "diffuseColor", options))
+    appearance = convertAppearance(object, 'diffuseColor', options)
   }
+  shape.push(appearance)
   return shape
 }
 
@@ -242,9 +245,7 @@ const convertToColor = (polygon, options) => {
   return `${color[0]} ${color[1]} ${color[2]}`
 }
 
-const roundToDecimals = (float, options) => {
-  return Math.round(float * options.decimals) / options.decimals
-}
+const roundToDecimals = (float, options) => Math.round(float * options.decimals) / options.decimals
 
 /*
  * This function converts the given polygons into three lists
@@ -271,8 +272,6 @@ const polygons2coordinates = (polygons, options) => {
         const y = roundToDecimals(vertex[1], options)
         const z = roundToDecimals(vertex[2], options)
         pointList.push(`${x} ${y} ${z}`)
-        //const roundedVertex = vertex.map((v) => roundToDecimals(v, options))
-        //pointList.push(roundedVertex.join(" "))
         vertexTagToCoordIndexMap.set(id, pointList.length - 1)
       }
       // add the index (of the vertex) to the list for this polygon
