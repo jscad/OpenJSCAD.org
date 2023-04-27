@@ -48,7 +48,7 @@ test('serialize 2D path to X3D Polyline2D', (t) => {
   // and color on path3
   t.is(countOf('Appearance', obs), 2)
   t.is(countOf('Material', obs), 1)
-  t.is(countOf('diffuseColor', obs), 1)
+  t.is(countOf('diffuseColor', obs), 0)
   t.is(countOf('emissiveColor', obs), 1)
 
 })

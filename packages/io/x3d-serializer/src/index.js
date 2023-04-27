@@ -48,6 +48,8 @@ const mimeType = 'model/x3d+xml'
  * Serialize the give objects to X3D elements (XML).
  * @param {Object} options - options for serialization, REQUIRED
  * @param {Array} [options.color=[0,0,1,1]] - default color for objects
+ * @param {Boolean} [options.smooth=false] - use averaged vertex normals
+ * @param {Number} [options.decimals=1000] - multiplier before rounding to limit precision
  * @param {Boolean} [options.metadata=true] - add metadata to 3MF contents, such at CreationDate
  * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
@@ -61,6 +63,7 @@ const mimeType = 'model/x3d+xml'
 const serialize = (options, ...objects) => {
   const defaults = {
     color: [0, 0, 1, 1.0], // default colorRGBA specification
+    smooth: false,
     decimals: 1000,
     metadata: true,
     unit: 'millimeter', // millimeter, inch, feet, meter or micrometer
@@ -80,9 +83,9 @@ const serialize = (options, ...objects) => {
   let body = ['X3D',
     {
       profile: 'Interchange',
-      version: '4.0',
+      version: '3.3',
       'xmlns:xsd': 'http://www.w3.org/2001/XMLSchema-instance',
-      'xsd:noNamespaceSchemaLocation': 'http://www.web3d.org/specifications/x3d-4.0.xsd'
+      'xsd:noNamespaceSchemaLocation': 'http://www.web3d.org/specifications/x3d-3.3.xsd'
     }
   ]
   if (options.metadata) {
@@ -108,7 +111,6 @@ ${stringify(body, 2)}`
 }
 
 const convertObjects = (objects, options) => {
-  let scene = ['Scene', {}]
   const shapes = []
   objects.forEach((object, i) => {
     options.statusCallback && options.statusCallback({ progress: 100 * i / objects.length })
@@ -128,7 +130,8 @@ const convertObjects = (objects, options) => {
       shapes.push(convertPath2(object, options))
     }
   })
-  scene = scene.concat(shapes)
+  const transform = ['Transform', { rotation: '1 0 0 -1.5708' }, ...shapes]
+  const scene = ['Scene', {}, transform]
   return [scene]
 }
 
@@ -140,7 +143,7 @@ const convertPath2 = (object, options) => {
   if (points.length > 1 && object.isClosed) points.push(points[0])
   const shape = ['Shape', {}, convertPolyline2D(poly2.create(points), options)]
   if (object.color) {
-    shape.push(convertAppearance(object, options))
+    shape.push(convertAppearance(object, 'emissiveColor', options))
   }
   return shape
 }
@@ -155,7 +158,7 @@ const convertGeom2 = (object, options) => {
     if (outline.length > 1) outline.push(outline[0]) // close the outline for conversion
     const shape = ['Shape', {}, convertPolyline2D(poly2.create(outline), options)]
     if (object.color) {
-      shape.push(convertAppearance(object, options))
+      shape.push(convertAppearance(object, 'emissiveColor', options))
     }
     group.push(shape)
   })
@@ -173,12 +176,11 @@ const convertPolyline2D = (object, options) => {
 /*
  * Convert color to Appearance
  */
-const convertAppearance = (object, options) => {
+const convertAppearance = (object, colorField, options) => {
   const colorRGB = object.color.slice(0, 3)
-  const diffuseColor = colorRGB.join(' ')
-  const emissiveColor = colorRGB.join(' ')
-  const transparency = 1.0 - object.color[3]
-  return ['Appearance', ['Material', { diffuseColor, emissiveColor, transparency }]]
+  const color = colorRGB.join(' ')
+  const transparency = roundToDecimals(1.0 - object.color[3], options)
+  return ['Appearance', ['Material', { [colorField]: color, transparency }]]
 }
 
 /*
@@ -186,9 +188,11 @@ const convertAppearance = (object, options) => {
  */
 const convertGeom3 = (object, options) => {
   const shape = ['Shape', {}, convertMesh(object, options)]
+  let appearance = ['Appearance', {}, ['Material']]
   if (object.color) {
-    shape.push(convertAppearance(object, options))
+    appearance = convertAppearance(object, 'diffuseColor', options)
   }
+  shape.push(appearance)
   return shape
 }
 
@@ -202,7 +206,7 @@ const convertMesh = (object, options) => {
 
   const faceset = [
     'IndexedTriangleSet',
-    { ccw: 'true', colorPerVertex: 'false', solid: 'false', index: indexList },
+    { ccw: 'true', colorPerVertex: 'false', normalPerVertex: options.smooth, solid: 'false', index: indexList },
     ['Coordinate', { point: pointList }]
   ]
   if (!object.color) {
@@ -241,6 +245,8 @@ const convertToColor = (polygon, options) => {
   return `${color[0]} ${color[1]} ${color[2]}`
 }
 
+const roundToDecimals = (float, options) => Math.round(float * options.decimals) / options.decimals
+
 /*
  * This function converts the given polygons into three lists
  * - indexList : index of each vertex in the triangle (tuples)
@@ -262,9 +268,9 @@ const polygons2coordinates = (polygons, options) => {
 
       // add the vertex to the list of points (and index) if not found
       if (!vertexTagToCoordIndexMap.has(id)) {
-        const x = Math.round(vertex[0] * options.decimals) / options.decimals
-        const y = Math.round(vertex[1] * options.decimals) / options.decimals
-        const z = Math.round(vertex[2] * options.decimals) / options.decimals
+        const x = roundToDecimals(vertex[0], options)
+        const y = roundToDecimals(vertex[1], options)
+        const z = roundToDecimals(vertex[2], options)
         pointList.push(`${x} ${y} ${z}`)
         vertexTagToCoordIndexMap.set(id, pointList.length - 1)
       }
