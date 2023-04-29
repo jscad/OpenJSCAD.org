@@ -66,7 +66,6 @@ test('serialize 2D geometry to X3D Polyline2D', (t) => {
   t.is(results.length, 1)
 
   obs = results[0]
-  console.log(obs)
   t.is(countOf('X3D', obs), 2)
   t.is(countOf('head', obs), 2)
   t.is(countOf('meta', obs), 1)
