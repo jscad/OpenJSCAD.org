@@ -43,6 +43,7 @@ const stringify = require('onml/lib/stringify')
 // https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter13GeometryTrianglesQuadrilaterals/
 
 const mimeType = 'model/x3d+xml'
+const defNames = new Map()
 
 /**
  * Serialize the give objects to X3D elements (XML).
@@ -143,7 +144,7 @@ const convertObjects = (objects, options) => {
 const convertPath2 = (object, options) => {
   const points = path2.toPoints(object).slice()
   if (points.length > 1 && object.isClosed) points.push(points[0])
-  const shape = ['Shape', {}, convertPolyline2D(poly2.create(points), options)]
+  const shape = ['Shape', shapeAttributes(object), convertPolyline2D(poly2.create(points), options)]
   if (object.color) {
     shape.push(convertAppearance(object, 'emissiveColor', options))
   }
@@ -158,13 +159,31 @@ const convertGeom2 = (object, options) => {
   const group = ['Group', {}]
   outlines.forEach((outline) => {
     if (outline.length > 1) outline.push(outline[0]) // close the outline for conversion
-    const shape = ['Shape', {}, convertPolyline2D(poly2.create(outline), options)]
+    const shape = ['Shape', shapeAttributes(object), convertPolyline2D(poly2.create(outline), options)]
     if (object.color) {
       shape.push(convertAppearance(object, 'emissiveColor', options))
     }
     group.push(shape)
   })
   return group
+}
+
+/*
+ * generate attributes for Shape node
+ */
+
+const shapeAttributes = (object, attributes = {}) => {
+  if (object.name) {
+    Object.assign(attributes, { DEF: uniqueDefName(object.name) })
+  }
+  return attributes
+}
+
+const uniqueDefName = (defName) => {
+  const count = defNames.get(defName) || 0
+  defNames.set(defName, count + 1)
+  const suffix = count === 0 ? '' : '_' + count
+  return defName + suffix
 }
 
 /*
@@ -195,7 +214,7 @@ const convertAppearance = (object, colorField, options) => {
  * Convert the given object (geom3) to X3D source
  */
 const convertGeom3 = (object, options) => {
-  const shape = ['Shape', {}, convertMesh(object, options)]
+  const shape = ['Shape', shapeAttributes(object), convertMesh(object, options)]
   let appearance = ['Appearance', {}, ['Material']]
   if (object.color) {
     appearance = convertAppearance(object, 'diffuseColor', options)
