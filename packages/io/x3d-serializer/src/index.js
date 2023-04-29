@@ -48,6 +48,7 @@ const mimeType = 'model/x3d+xml'
  * Serialize the give objects to X3D elements (XML).
  * @param {Object} options - options for serialization, REQUIRED
  * @param {Array} [options.color=[0,0,1,1]] - default color for objects
+ * @param {Number} [options.shininess=8/256] - x3d shininess for specular highlights
  * @param {Boolean} [options.smooth=false] - use averaged vertex normals
  * @param {Number} [options.decimals=1000] - multiplier before rounding to limit precision
  * @param {Boolean} [options.metadata=true] - add metadata to 3MF contents, such at CreationDate
@@ -63,6 +64,7 @@ const mimeType = 'model/x3d+xml'
 const serialize = (options, ...objects) => {
   const defaults = {
     color: [0, 0, 1, 1.0], // default colorRGBA specification
+    shininess: 8 / 256,
     smooth: false,
     decimals: 1000,
     metadata: true,
@@ -180,7 +182,13 @@ const convertAppearance = (object, colorField, options) => {
   const colorRGB = object.color.slice(0, 3)
   const color = colorRGB.join(' ')
   const transparency = roundToDecimals(1.0 - object.color[3], options)
-  return ['Appearance', ['Material', { [colorField]: color, transparency }]]
+  const materialFields = { [colorField]: color, transparency }
+  if (colorField === 'diffuseColor') {
+    Object.assign(
+      materialFields,
+      { specularColor: '0.2 0.2 0.2', shininess: options.shininess })
+  }
+  return ['Appearance', ['Material', materialFields]]
 }
 
 /*

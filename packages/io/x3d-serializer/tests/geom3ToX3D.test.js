@@ -61,7 +61,11 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   t.is(countOf('Appearance', obs), 4)
   // for RGB
   t.is(countOf('diffuseColor="0.5 1 0.5"', obs), 1)
+  t.is(countOf('specularColor', obs), 1)
   // for facets
   t.is(countOf('normalPerVertex="false"', obs), 2)
+
+  const { main } = require('./basicColors')
+  t.log(serializer.serialize({}, main()))
   
 })

@@ -66,6 +66,7 @@ test('serialize 2D geometry to X3D Polyline2D', (t) => {
   t.is(results.length, 1)
 
   obs = results[0]
+  console.log(obs)
   t.is(countOf('X3D', obs), 2)
   t.is(countOf('head', obs), 2)
   t.is(countOf('meta', obs), 1)
@@ -80,6 +81,7 @@ test('serialize 2D geometry to X3D Polyline2D', (t) => {
   t.is(countOf('Appearance', obs), 2)
   t.is(countOf('Material', obs), 1)
   t.is(countOf('diffuseColor', obs), 0)
+  t.is(countOf('specularColor', obs), 0)
   t.is(countOf('emissiveColor', obs), 1)
 })
 
