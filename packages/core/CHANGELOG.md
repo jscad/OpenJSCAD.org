@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.6.5...@jscad/core@2.6.6) (2023-04-30)
+
+**Note:** Version bump only for package @jscad/core
+
+
+
+
+
 ## [2.6.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.6.4...@jscad/core@2.6.5) (2022-11-26)
 
 **Note:** Version bump only for package @jscad/core

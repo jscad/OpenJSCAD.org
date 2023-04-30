@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/amf-deserializer@2.3.3...@jscad/amf-deserializer@2.3.4) (2023-04-30)
+
+**Note:** Version bump only for package @jscad/amf-deserializer
+
+
+
+
+
 ## [2.3.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/amf-deserializer@2.3.2...@jscad/amf-deserializer@2.3.3) (2022-11-26)
 
 **Note:** Version bump only for package @jscad/amf-deserializer

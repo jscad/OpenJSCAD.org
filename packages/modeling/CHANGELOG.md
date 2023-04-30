@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.11.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.11.0...@jscad/modeling@2.11.1) (2023-04-30)
+
+
+### Bug Fixes
+
+* **modeling:** arcLengthToT first argument is required ([fc4ceef](https://github.com/jscad/OpenJSCAD.org/commit/fc4ceef607abfcf3c0076155dd69254d19efab0a))
+* **modeling:** export retessellate from modifiers ([fe40aea](https://github.com/jscad/OpenJSCAD.org/commit/fe40aea35af8cde2934e9fea614a6384b1c291c6))
+* **modeling:** fix line2.closestPoint ([4419fe5](https://github.com/jscad/OpenJSCAD.org/commit/4419fe5a9b08f368fb0df91bd20acc3dc3ca7af7))
+
+
+
+
+
 # [2.11.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.10.0...@jscad/modeling@2.11.0) (2022-11-26)
 
 

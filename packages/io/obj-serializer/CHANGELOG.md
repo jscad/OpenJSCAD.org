@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.14](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/obj-serializer@2.1.13...@jscad/obj-serializer@2.1.14) (2023-04-30)
+
+**Note:** Version bump only for package @jscad/obj-serializer
+
+
+
+
+
 ## [2.1.13](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/obj-serializer@2.1.12...@jscad/obj-serializer@2.1.13) (2022-11-26)
 
 **Note:** Version bump only for package @jscad/obj-serializer

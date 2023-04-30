@@ -1,6 +1,6 @@
 {
   "name": "@jscad/3mf-serializer",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "description": "3MF serializer for JSCAD project",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@jscad/array-utils": "2.1.4",
-    "@jscad/modeling": "2.11.0",
+    "@jscad/modeling": "2.11.1",
     "fflate": "0.7.3",
     "onml": "1.2.0"
   },
