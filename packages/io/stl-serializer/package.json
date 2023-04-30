@@ -1,6 +1,6 @@
 {
   "name": "@jscad/stl-serializer",
-  "version": "2.1.13",
+  "version": "2.1.14",
   "description": "STL Serializer for JSCAD",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
@@ -33,7 +33,7 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/array-utils": "2.1.4",
-    "@jscad/modeling": "2.11.0"
+    "@jscad/modeling": "2.11.1"
   },
   "devDependencies": {
     "ava": "3.15.0",
