@@ -27,7 +27,10 @@ The serialization of the following geometries are possible.
 - serialization of 2D geometries (geom2) to X3D Polyline2D
 - serialization of 2D paths (path2) to X3D Polyline2D
 
-Material (color) is added to X3D shapes when found on the geometry.
+The id attribute is used as the DEF name for the generated X3D shape when found on a geometry.  
+Material (color) is added to X3D shapes when found on a geometry.
+
+All shapes are wrapped in a rotation transform to align the positive Z direction of JSCAD with the vertical up direction in X3D.
 
 ## Table of Contents
 
