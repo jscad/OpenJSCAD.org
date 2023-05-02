@@ -42,7 +42,7 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   t.is(countOf('Color', obs), 1)
 
   const geom3 = colors.colorize([0.5, 1, 0.5, 1.0], transforms.center({ relativeTo: [5, 5, 5] }, primitives.cube()))
-  geom3.name = 'g3'
+  geom2.id = geom3.id = 'g23'
 
   results = serializer.serialize({metadata: false}, geom2, geom3)
   t.is(results.length, 1)
@@ -56,7 +56,7 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   t.is(countOf('Created by JSCAD', obs), 1)
   t.is(countOf('Scene', obs), 2)
   t.is(countOf('Shape', obs), 4)
-  t.is(countOf('DEF', obs), 1)
+  t.is(countOf('DEF', obs), 2)
   t.is(countOf('IndexedTriangleSet', obs), 4)
   t.is(countOf('Coordinate', obs), 2)
   // for color

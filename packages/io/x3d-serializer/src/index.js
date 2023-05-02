@@ -173,17 +173,17 @@ const convertGeom2 = (object, options) => {
  */
 
 const shapeAttributes = (object, attributes = {}) => {
-  if (object.name) {
-    Object.assign(attributes, { DEF: uniqueDefName(object.name) })
+  if (object.id) {
+    Object.assign(attributes, { DEF: checkDefName(object.id) })
   }
   return attributes
 }
 
-const uniqueDefName = (defName) => {
+const checkDefName = (defName) => {
   const count = defNames.get(defName) || 0
   defNames.set(defName, count + 1)
-  const suffix = count === 0 ? '' : '_' + count
-  return defName + suffix
+  if (count > 0) console.warn(`Warning: object.id set as DEF but not unique. ${defName} set ${count + 1} times.`)
+  return defName
 }
 
 /*
