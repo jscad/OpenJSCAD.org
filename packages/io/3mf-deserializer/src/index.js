@@ -61,8 +61,8 @@ const deserialize = (options, input) => {
   }
   options = Object.assign({}, defaults, options)
 
-  const models = []
-  if (isBuffer(input)) {
+  let models = []
+  try {
     // 3MF packaging (OPC)
     const decompressed = unzipSync(input)
     Object.keys(decompressed).forEach((key) => {
@@ -72,11 +72,10 @@ const deserialize = (options, input) => {
         models.push(contents)
       }
     })
-  } else {
+  } catch (e) {
     // 3MF contents (XML)
-    models.push(input)
+    models = [input]
   }
-
   return options.output === 'script' ? translateModels(options, models) : instantiateModels(options, models)
 }
 

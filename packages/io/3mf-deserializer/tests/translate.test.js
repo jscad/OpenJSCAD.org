@@ -11,7 +11,7 @@ const samplesPath = './tests'
 test('simple model translates as expected', (t) => {
   // single mesh, no materials, no colorgroups
   const inputPath = path.resolve(samplesPath, '3mf/P_XXX_0101_01.xml')
-  const inputFile = fs.readFileSync(inputPath, 'UTF8') // read character stream (UTF8 string)
+  const inputFile = fs.readFileSync(inputPath)
 
   const script = deserialize({ output: 'script' }, inputFile)
 
@@ -23,7 +23,7 @@ test('simple model translates as expected', (t) => {
 test('model with basematerials translates as expected', (t) => {
   // single mesh, no materials, no colorgroups
   const inputPath = path.resolve(samplesPath, '3mf/P_XXX_0312_01.xml')
-  const inputFile = fs.readFileSync(inputPath, 'UTF8') // read character stream (UTF8 string)
+  const inputFile = fs.readFileSync(inputPath)
 
   const script = deserialize({ output: 'script' }, inputFile)
 
@@ -36,7 +36,7 @@ test('model with basematerials translates as expected', (t) => {
 test('model with colorgroups translates as expected', (t) => {
   // single mesh, no materials, no colorgroups
   const inputPath = path.resolve(samplesPath, '3mf/P_XXM_0101_01.xml')
-  const inputFile = fs.readFileSync(inputPath, 'UTF8') // read character stream (UTF8 string)
+  const inputFile = fs.readFileSync(inputPath)
 
   const script = deserialize({ output: 'script' }, inputFile)
 
