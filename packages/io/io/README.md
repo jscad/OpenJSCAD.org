@@ -32,6 +32,7 @@ Following formats are supported as inputs
 - [STL (binary, ASCII)](../stl-deserializer)
 - [SVG](../svg-deserializer)
 - [X3D](../x3d-deserializer)
+- [3MF](../3mf-deserializer)
 
 ### Outputs/ Serializers
 

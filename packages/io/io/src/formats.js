@@ -99,7 +99,7 @@ export const supportedFormats = {
     description: '3D Manufacturing Format',
     extension: '3mf',
     mimetype: 'model/3mf',
-    deserializable: false,
+    deserializable: true,
     convertGeom3: true,
     convertGeom2: false
   }

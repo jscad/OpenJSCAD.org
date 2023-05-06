@@ -34,6 +34,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@jscad/3mf-deserializer": "workspace:2.0.0",
     "@jscad/3mf-serializer": "workspace:2.1.6",
     "@jscad/array-utils": "workspace:2.1.4",
     "@jscad/dxf-deserializer": "workspace:2.3.19",
