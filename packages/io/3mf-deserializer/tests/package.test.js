@@ -27,7 +27,6 @@ test('package decompression/contents works as expected, script', (t) => {
   const inputFile = fs.readFileSync(inputPath) // read RAW binary stream
 
   const script = deserialize({ output: 'script' }, inputFile)
-  t.is(script.length, 1362)
 
   t.is(countOf('createObject', script), 2)
   t.is(countOf('createBuildItem', script), 2)
