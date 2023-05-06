@@ -6,9 +6,9 @@ import { create } from './create.js'
  * @param {Array} vertices - list of vertices (3D)
  * @param {plane} plane - plane of the polygon
  * @returns {poly3} a new polygon
- * @alias module:modeling/geometries/poly3.fromPointsAndPlane
+ * @alias module:modeling/geometries/poly3.fromVerticesAndPlane
  */
-export const fromPointsAndPlane = (vertices, plane) => {
+export const fromVerticesAndPlane = (vertices, plane) => {
   const poly = create(vertices)
   poly.plane = plane // retain the plane for later use
   return poly
