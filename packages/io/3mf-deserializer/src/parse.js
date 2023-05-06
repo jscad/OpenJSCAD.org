@@ -160,8 +160,9 @@ const getProperty = (object, triangle) => {
 }
 
 const create3mfParser = (src, storage) => {
-  let { model, items, materials, colorgroups, objects } = storage
+  let { items, materials, colorgroups, objects } = storage
 
+  let model = null
   let objLast = null // last object found
   let objList = []
 
