@@ -2,26 +2,6 @@ import { colors, maths } from '@jscad/modeling'
 
 import saxes from 'saxes'
 
-let objLast = null // last object found
-let objList = []
-
-let model = null
-let items = [] // build items list
-let materials = [] // materials list
-let colorgroups = [] // colorgroups list
-let objects = [] // objects list
-
-const reset = () => {
-  objLast = null
-  objList = []
-
-  model = null
-  items = []
-  materials = []
-  colorgroups = []
-  objects = []
-}
-
 const convertTransform = (text) => {
   // convert the list of values (string) to mat4
   const values = text.split(/ +/).map((s) => parseFloat(s))
@@ -179,7 +159,12 @@ const getProperty = (object, triangle) => {
   return property
 }
 
-const create3mfParser = (src) => {
+const create3mfParser = (src, storage) => {
+  let { model, items, materials, colorgroups, objects } = storage
+
+  let objLast = null // last object found
+  let objList = []
+
   // create a parser for the XML
   const parser = new saxes.SaxesParser()
 
@@ -206,7 +191,7 @@ const create3mfParser = (src) => {
 
     const elementName = node.name.toUpperCase().replace(':', '')
 
-    const obj = objMap[elementName] ? objMap[elementName](node.attributes, { objList }) : null
+    const obj = objMap[elementName] ? objMap[elementName](node.attributes) : null
 
     let object = null
     let material = null
@@ -286,7 +271,11 @@ const create3mfParser = (src) => {
 }
 
 export const parse = (src) => {
-  reset()
-  create3mfParser(src)
-  return { model, objects, materials, colorgroups, items }
+  let items = [] // build items list
+  let materials = [] // materials list
+  let colorgroups = [] // colorgroups list
+  let objects = [] // objects list
+
+  create3mfParser(src, { items, materials, colorgroups, objects })
+  return { items, materials, colorgroups, objects }
 }
