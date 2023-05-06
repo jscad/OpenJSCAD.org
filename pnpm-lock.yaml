@@ -73,6 +73,23 @@ importers:
   packages/examples:
     specifiers: {}
 
+  packages/io/3mf-deserializer:
+    specifiers:
+      '@jscad/array-utils': workspace:2.1.4
+      '@jscad/modeling': workspace:2.10.0
+      ava: 4.3.3
+      fflate: 0.7.3
+      nyc: 15.1.0
+      saxes: 6.0.0
+    dependencies:
+      '@jscad/array-utils': link:../../utils/array-utils
+      '@jscad/modeling': link:../../modeling
+      fflate: 0.7.3
+      saxes: 6.0.0
+    devDependencies:
+      ava: 4.3.3
+      nyc: 15.1.0
+
   packages/io/3mf-serializer:
     specifiers:
       '@jscad/array-utils': workspace:2.1.4
@@ -164,6 +181,7 @@ importers:
 
   packages/io/io:
     specifiers:
+      '@jscad/3mf-deserializer': workspace:2.0.0
       '@jscad/3mf-serializer': workspace:2.1.6
       '@jscad/array-utils': workspace:2.1.4
       '@jscad/dxf-deserializer': workspace:2.3.19
@@ -183,6 +201,7 @@ importers:
       ava: 4.3.3
       nyc: 15.1.0
     dependencies:
+      '@jscad/3mf-deserializer': link:../3mf-deserializer
       '@jscad/3mf-serializer': link:../3mf-serializer
       '@jscad/array-utils': link:../../utils/array-utils
       '@jscad/dxf-deserializer': link:../dxf-deserializer
@@ -4171,7 +4190,7 @@ packages:
     resolution: {integrity: sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw==}
     engines: {node: '>= 4.0'}
     os: [darwin]
-    deprecated: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
+    deprecated: The v1 package contains DANGEROUS / INSECURE binaries. Upgrade to safe fsevents v2
     requiresBuild: true
     dependencies:
       bindings: 1.5.0
