@@ -29,8 +29,8 @@ const cylinder = (options) => {
 
   if (!isGTE(radius, 0)) throw new Error('radius must be positive')
 
-  // if radius is zero return empty geometry
-  if (radius === 0) return geom3.create()
+  // if size is zero return empty geometry
+  if (height === 0 || radius === 0) return geom3.create()
 
   const newoptions = {
     center,
