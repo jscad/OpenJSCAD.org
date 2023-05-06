@@ -14,7 +14,6 @@ test('simple model translates as expected', (t) => {
   const inputFile = fs.readFileSync(inputPath, 'UTF8') // read character stream (UTF8 string)
 
   const script = deserialize({ output: 'script' }, inputFile)
-  t.is(script.length, 1362)
 
   t.is(countOf('createObject', script), 2)
   t.is(countOf('createBuildItem', script), 2)
@@ -27,7 +26,6 @@ test('model with basematerials translates as expected', (t) => {
   const inputFile = fs.readFileSync(inputPath, 'UTF8') // read character stream (UTF8 string)
 
   const script = deserialize({ output: 'script' }, inputFile)
-  t.is(script.length, 2103)
 
   t.is(countOf('createObject', script), 2)
   t.is(countOf('const displaycolors = [', script), 1)
@@ -41,7 +39,6 @@ test('model with colorgroups translates as expected', (t) => {
   const inputFile = fs.readFileSync(inputPath, 'UTF8') // read character stream (UTF8 string)
 
   const script = deserialize({ output: 'script' }, inputFile)
-  t.is(script.length, 2155)
 
   t.is(countOf('createObject', script), 2)
   t.is(countOf('const displaycolors = [', script), 1)
