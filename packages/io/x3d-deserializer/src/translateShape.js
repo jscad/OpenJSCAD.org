@@ -51,7 +51,7 @@ const createObjects${object.id} = (options) => {
             const geometry = extrudeX3D(shape)
             // convert the 3D geometry into a call to polyhedron()
             const polygons = geom3.toPolygons(geometry)
-            const polysAsStrings = polygons.map((polygon) => pointsToString(poly3.toPoints(polygon)))
+            const polysAsStrings = polygons.map((polygon) => pointsToString(poly3.toVertices(polygon)))
             code += `  const polygons = [
   ${polysAsStrings.join(',\n  ')}
 ]
