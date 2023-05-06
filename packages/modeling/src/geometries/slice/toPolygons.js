@@ -31,7 +31,7 @@ export const toPolygons = (slice) => {
     for (let i = 0; i < indices.length; i += 3) {
       // Map back to original vertices
       const tri = indices.slice(i, i + 3).map(getVertex)
-      polygons.push(poly3.fromPointsAndPlane(tri, hierarchy.plane))
+      polygons.push(poly3.fromVerticesAndPlane(tri, hierarchy.plane))
     }
   })
 

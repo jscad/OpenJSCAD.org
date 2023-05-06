@@ -11,5 +11,5 @@ import { toPolygons } from './toPolygons.js'
  */
 export const toPoints = (geometry) => {
   const polygons = toPolygons(geometry)
-  return polygons.map((polygon) => poly3.toPoints(polygon))
+  return polygons.map((polygon) => poly3.toVertices(polygon))
 }

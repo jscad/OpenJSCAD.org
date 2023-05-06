@@ -108,10 +108,10 @@ export const splitPolygonByPlane = (splane, polygon) => {
         }
       }
       if (frontVertices.length >= 3) {
-        result.front = poly3.fromPointsAndPlane(frontVertices, pplane)
+        result.front = poly3.fromVerticesAndPlane(frontVertices, pplane)
       }
       if (backVertices.length >= 3) {
-        result.back = poly3.fromPointsAndPlane(backVertices, pplane)
+        result.back = poly3.fromVerticesAndPlane(backVertices, pplane)
       }
     }
   }

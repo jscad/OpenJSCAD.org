@@ -6,7 +6,7 @@ import * as poly3 from '../../geometries/poly3/index.js'
 
 // create a set of edges from the given polygon, and link the edges as well
 const createEdges = (polygon) => {
-  const points = poly3.toPoints(polygon)
+  const points = poly3.toVertices(polygon)
   const edges = []
   for (let i = 0; i < points.length; i++) {
     const j = (i + 1) % points.length

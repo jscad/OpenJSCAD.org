@@ -58,7 +58,7 @@ test('extrudeFromSlices (torus)', (t) => {
     [radius / 2, -radius * sqrt3, 0]
   ])
   hex = poly3.transform(mat4.fromTranslation(mat4.create(), [0, 20, 0]), hex)
-  hex = slice.fromPoints(poly3.toPoints(hex))
+  hex = slice.fromPoints(poly3.toVertices(hex))
 
   const angle = TAU / 8
   const geometry3 = extrudeFromSlices(
