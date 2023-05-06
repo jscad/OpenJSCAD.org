@@ -1,6 +1,6 @@
 {
   "name": "@jscad/3mf-deserializer",
-  "version": "3.0.0",
+  "version": "2.0.0",
   "description": "3MF Deserializer for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org/",
   "main": "src/index.js",
@@ -22,6 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/modeling": "workspace:2.10.0",
+    "@jscad/array-utils": "workspace:2.1.4",
     "saxes": "6.0.0",
     "fflate": "0.7.3"
   },

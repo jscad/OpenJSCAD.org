@@ -19,20 +19,18 @@
 
 ## Overview
 
-This deserializer converts raw 3MF formatted data (XML) to JSCAD scripts or geometries.
-
-**NOTE: At this time, only XML files are supported, so unzip the original 3MF file before proceeding.**
+This deserializer converts 3MF data (OPC archives or XML strings) to JSCAD scripts or geometries.
 
 This deserializer converts only what is supported by JSCAD libraries.
-Full document conversion is NOT supported, so don't even try.
+Full document conversion of models and materials are NOT supported, so don't even try.
 However, conversion of 3MF objects and materials are possible:
 
 | 3MF Entity      | JSCAD Geometry | Notes |
-| --------------- | ------------ | ------ |
-| mesh            | to geom3     | conversion of vertices and volumes |
-| color           | color | color found at object, volume, and triangle are converted |
+| --------------- | ----------- | ------ |
+| object          | to geom3    | conversion of mesh with vertices and triangles |
+| basematerials   | RGBA colors | convertion of materials found on objects and triangles |
 
-Also, if the 'USEMTL' (material) matches the name of a CSS3 color then the color is applied to the geometry.
+Also, many attributes as found on objects are transferred to the geometry, e.g. id, type, etc.
 
 ## Table of Contents
 
@@ -50,10 +48,13 @@ npm install @jscad/3mf-deserializer
 ## Usage
 
 ```javascript
+// note: javascript variable names cannot start with a number
 const mf3DeSerializer = require('@jscad/3mf-deserializer')
 
 const rawData = fs.readFileSync('PATH/TO/file.3mf')
-const jscadScript = mf3DeSerializer.deserialize(rawData, 'file.amf', {output: 'jscad'})
+const jscadScript = mf3DeSerializer.deserialize({output: 'script'}, rawData)
+// OR
+const geometries = mf3DeSerializer.deserialize({output: 'geometry'}, rawData)
 ```
 
 ## Contributing

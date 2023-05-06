@@ -1,4 +1,4 @@
-import { maths } from '@jscad/modeling'
+import { colors, maths } from '@jscad/modeling'
 
 import saxes from 'saxes'
 
@@ -8,7 +8,19 @@ let objList = []
 let model = null
 let items = [] // build items list
 let materials = [] // materials list
+let colorgroups = [] // colorgroups list
 let objects = [] // objects list
+
+const reset = () => {
+  objLast = null
+  objList = []
+
+  model = null
+  items = []
+  materials = []
+  colorgroups = []
+  objects = []
+}
 
 const convertTransform = (text) => {
   // convert the list of values (string) to mat4
@@ -20,7 +32,6 @@ const convertTransform = (text) => {
     values[9], values[10], values[11], 1.0
   )
 }
-
 
 const parseModel = (attributes) => {
   const obj = { type: 'model', unit: 'millimeter' }
@@ -35,9 +46,10 @@ const parseModel = (attributes) => {
 const parseMesh = (attributes) => {
   const obj = { type: 'mesh' }
 
-  // mesh have vertices and triangles
+  // mesh have vertices, triangles, and properties
   obj.vertices = []
   obj.triangles = []
+  obj.properties = []
 
   return obj
 }
@@ -48,7 +60,7 @@ const parseVertex = (attributes) => {
   obj.vertex = [
     parseFloat(attributes.x),
     parseFloat(attributes.y),
-    parseFloat(attributes.z),
+    parseFloat(attributes.z)
   ]
 
   return obj
@@ -60,11 +72,11 @@ const parseTriangle = (attributes) => {
   obj.indices = [
     parseFloat(attributes.v1),
     parseFloat(attributes.v2),
-    parseFloat(attributes.v3),
+    parseFloat(attributes.v3)
   ]
-  if (attributes.p1) { obj.p1 = attributes.p1 }
-  if (attributes.p2) { obj.p2 = attributes.p2 }
-  if (attributes.p3) { obj.p3 = attributes.p3 }
+  if (attributes.p1) { obj.p1 = parseFloat(attributes.p1) }
+  if (attributes.p2) { obj.p2 = parseFloat(attributes.p2) }
+  if (attributes.p3) { obj.p3 = parseFloat(attributes.p3) }
   if (attributes.pid) { obj.pid = attributes.pid }
 
   return obj
@@ -91,7 +103,7 @@ const parseObject = (attributes) => {
   if (attributes.partnumber) { obj.partnumber = attributes.partnumber }
   if (attributes.name) { obj.name = attributes.name }
   if (attributes.pid) { obj.pid = attributes.pid }
-  if (attributes.pindex) { obj.pindex = attributes.pindex }
+  if (attributes.pindex) { obj.pindex = parseFloat(attributes.pindex) }
 
   return obj
 }
@@ -112,15 +124,67 @@ const parseComponent = (attributes) => {
   return obj
 }
 
+const parseBaseMaterials = (attributes) => {
+  const obj = { type: 'basematerials', bases: [] }
 
+  obj.id = attributes.id
 
-const createAmfParser = (src) => {
+  return obj
+}
+
+const parseBase = (attributes) => {
+  const obj = { type: 'base' }
+
+  obj.name = attributes.name
+
+  let color = colors.hexToRgb(attributes.displaycolor)
+  if (color.length === 3) color = [color[0], color[1], color[2], 1.0] // add alpha
+  obj.displaycolor = color
+
+  return obj
+}
+
+const parseColorGroup = (attributes) => {
+  const obj = { type: 'colorgroup', colors: [] }
+
+  obj.id = attributes.id
+
+  return obj
+}
+
+const parseColor = (attributes) => {
+  const obj = { type: 'color' }
+
+  let color = colors.hexToRgb(attributes.color)
+  if (color.length === 3) color = [color[0], color[1], color[2], 1.0] // add alpha
+  obj.color = color
+
+  return obj
+}
+
+// get the associated property for the given triangle
+const getProperty = (object, triangle) => {
+  const property = {}
+  // determine the pid (material)
+  if (object.pid) property.pid = object.pid
+  if (triangle.pid) property.pid = triangle.pid
+
+  // determine the base (index) into the material
+  // only consider p1 as gradient colors are not supported
+  if ('p1' in triangle) {
+    property.pindex = triangle.p1
+  } else {
+    if ('pindex' in object) property.pindex = object.pindex
+  }
+  return property
+}
+
+const create3mfParser = (src) => {
   // create a parser for the XML
   const parser = new saxes.SaxesParser()
 
   parser.on('error', (e) => {
     console.log(e)
-    // console.log(`ERROR: AMF file line ${e.line}, column ${e.column}, bad character [${e.c}]`)
   })
 
   parser.on('opentag', (node) => {
@@ -133,16 +197,21 @@ const createAmfParser = (src) => {
       TRIANGLE: parseTriangle,
       COMPONENTS: parseComponents,
       COMPONENT: parseComponent,
-      undefined: () => console.log(`WARNING: unsupported AMF element: ${node.name}`)
+      BASEMATERIALS: parseBaseMaterials,
+      BASE: parseBase,
+      MCOLORGROUP: parseColorGroup,
+      MCOLOR: parseColor,
+      undefined: () => console.log(`WARNING: unsupported 3MF element: ${node.name}`)
     }
 
-    const elementName = node.name.toUpperCase()
+    const elementName = node.name.toUpperCase().replace(':', '')
 
     const obj = objMap[elementName] ? objMap[elementName](node.attributes, { objList }) : null
 
     let object = null
+    let material = null
+    let colorgroup = null
     if (obj) {
-// console.log(obj)
       switch (obj.type) {
         case 'model':
           model = obj
@@ -164,6 +233,7 @@ const createAmfParser = (src) => {
         case 'triangle':
           object = objects.at(-1)
           object.mesh.triangles.push(obj.indices)
+          object.mesh.properties.push(getProperty(object, obj))
           break
         case 'components':
           object = objects.at(-1)
@@ -172,6 +242,20 @@ const createAmfParser = (src) => {
         case 'component':
           object = objects.at(-1)
           object.components.push(obj)
+          break
+        case 'basematerials':
+          materials.push(obj)
+          break
+        case 'base':
+          material = materials.at(-1)
+          material.bases.push(obj)
+          break
+        case 'colorgroup':
+          colorgroups.push(obj)
+          break
+        case 'color':
+          colorgroup = colorgroups.at(-1)
+          colorgroup.colors.push(obj)
           break
         default:
           console.log('WARNING: unknown object type', obj.type)
@@ -182,13 +266,6 @@ const createAmfParser = (src) => {
   })
 
   parser.on('closetag', (node) => {
-    const elementName = node.name.toUpperCase()
-    // console.log('close',elementName)
-    switch (elementName) {
-      default:
-        return
-    }
-
   })
 
   parser.on('text', (value) => {
@@ -202,7 +279,6 @@ const createAmfParser = (src) => {
   })
 
   parser.on('end', () => {
-    console.log('AMF parsing completed')
   })
 
   // start the parser
@@ -210,6 +286,7 @@ const createAmfParser = (src) => {
 }
 
 export const parse = (src) => {
-  createAmfParser(src)
-  return { model, objects, materials, items }
+  reset()
+  create3mfParser(src)
+  return { model, objects, materials, colorgroups, items }
 }

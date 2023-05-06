@@ -23,8 +23,8 @@ All code released under MIT license
 
 import { unzipSync, strFromU8 } from 'fflate'
 
-// import { translate } from './translate.js'
-import { instantiate } from './instantiate.js'
+import { translateModels } from './translate.js'
+import { instantiateModels } from './instantiate.js'
 
 const version = '[VI]{version}[/VI]' // version is injected by rollup
 
@@ -52,12 +52,12 @@ const version = '[VI]{version}[/VI]' // version is injected by rollup
  */
 const deserialize = (options, input) => {
   const defaults = {
-    output: 'geometry',
+    output: 'script',
     version,
     addMetaData: true,
-    includedItems: 'build',  // or all
-    includedType: 'all', // or mesh, solidsupport, surface, other
-    unitOfConversion: 'model', // or micron, millimeter, centimeter, inch, foot, meter
+    includedItems: 'build', // or all
+    includedType: 'all', // or model, solidsupport, surface, other
+    unitOfConversion: 'model' // or micron, millimeter, centimeter, inch, foot, meter
   }
   options = Object.assign({}, defaults, options)
 
@@ -68,25 +68,23 @@ const deserialize = (options, input) => {
     Object.keys(decompressed).forEach((key) => {
       if (key.endsWith('3dmodel.model')) {
         // convert the buffer to UTF8 string
-        let contents = strFromU8(decompressed[key])
-console.log(contents)
+        const contents = strFromU8(decompressed[key])
         models.push(contents)
       }
     })
   } else {
     // 3MF contents (XML)
-    print("XML string")
-    // models.append(input)
+    models.push(input)
   }
 
-  return options.output === 'script' ? translate(options, models[0]) : instantiate(options, models[0])
+  return options.output === 'script' ? translateModels(options, models) : instantiateModels(options, models)
 }
 
 const isBuffer = (obj) => (obj.byteLength !== undefined && typeof obj.slice === 'function')
 
-const extension = '3mf'
+const mimeType = 'model/3mf'
 
 export {
-  deserialize,
-  extension
+  mimeType,
+  deserialize
 }

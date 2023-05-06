@@ -1,70 +1,87 @@
-import { maths } from '@jscad/modeling'
+import { flatten } from '@jscad/array-utils'
+import { geometries, transforms, primitives } from '@jscad/modeling'
 
-import { createObject } from './objectBuilder.js'
+import { parseModel } from './model.js'
 
-import { parse } from './parse.js'
-
-export const instantiate = (options, src) => {
-  const { includedItems, includedType } = options
-
-  // parse the 3MF contents (XML)
-  const { model, objects, materials, items } = parse(src)
-  if (!model) {
-    throw new Error('3MF parsing failed, no valid 3MF data retrieved')
+const getDisplayColor = (property, materials, colorgroups) => {
+  if ('pid' in property && 'pindex' in property) {
+    const material = materials.find((m) => property.pid === m.id)
+    if (material) {
+      const base = material.bases[property.pindex]
+      return base.displaycolor
+    }
+    const colorgroup = colorgroups.find((g) => property.pid === g.id)
+    if (colorgroup) {
+      const color = colorgroup.colors[property.pindex]
+      return color.color
+    }
   }
-  console.log(model)
-  console.log(objects)
-  // console.log(objects[0].mesh)
-  // console.log(objects[3].components)
-  console.log(materials)
-  console.log(items)
-  // get a list of objects to include in the results
-  let buildItems = []
-  items.forEach((item) => {
-    const components = getComponents(item, objects)
-    buildItems.push(...components)
-  })
-
-  if (includedItems == 'all') {
-    // FIXME loop through objects.. include anything missing
-  }
-
-console.log("*****BUILD")
-console.log(buildItems)
-console.log("*****BUILD")
-  // FIXME filter for desired mesh types
-
-  // return objectify(amfObj, { amfMaterials, amfTextures, amfConstels })
+  return null
 }
 
-const getComponents = (component, objects) => {
-  const object = objects.find((obj) => {
-    return obj.id == component.objectid
-  })
-  const components = []
+const instantiateProperties = (options, properties, materials, colorgroups) => {
+  const displaycolors = []
+  for (let i = 0; i < properties.length; i++) {
+    const displaycolor = getDisplayColor(properties[i], materials, colorgroups)
+    if (displaycolor) {
+      displaycolors.push(displaycolor)
+    }
+  }
+  if (displaycolors.length === properties.length) return displaycolors
+  return null
+}
+
+const instantiateObject = (options, object, materials, colorgroups) => {
   if (object.mesh) {
-    const cmp = { mesh: object.mesh, transform: component.transform, id: object.id }
-    if (object.name) cmp.name = object.name
-    if (object.partnumber) cmp.partnumber = object.partnumber
-    if (object.pid) cmp.pid = object.pid
-    if (object.pindex) cmp.pindex = object.pindex
-    components.push(cmp)
+    const mesh = object.mesh
+    const displaycolors = instantiateProperties(options, mesh.properties, materials, colorgroups)
+    const shape = primitives.polyhedron({ points: mesh.vertices, faces: mesh.triangles, colors: displaycolors })
+    // add properties from the object to the shape
+    shape.id = object.id
+    shape.type = object.otype
+    if (object.name) shape.name = object.name
+
+    const displayColor = getDisplayColor(object, materials, colorgroups)
+    if (!displaycolors && displayColor) shape.color = displayColor
+
+    return shape
   }
-  if (object.components) {
-    object.components.forEach((c) => {
-// console.log("#####component",c)
-      const subcomponents = getComponents(c, objects)
-      subcomponents.forEach((s) => {
-        maths.mat4.multiply(s.transform, c.transform, s.transform)
-// console.log("#####subcomponent",s)
-        components.push(s)
-      })
-    })
-  }
-  return components
+  return geometries.geom3.create()
 }
 
-const objectify = (amf, data) => {
-  const objects = amf.objects.filter((o) => o.type === 'object')
-  return objects.map((object, index) => createObject(object, index, data, { amf, instantiate: true }))
+/*
+ * Instantiate the given model into a list of shapes (JSCAD geometries).
+ */
+const instantiateModel = (options, model) => {
+  const { includedType } = options
+
+  // parse the 3MF model contents (XML)
+  let { buildItems, objects, materials, colorgroups } = parseModel(options, model)
+
+  if (includedType !== 'all') {
+    // only include the desired types
+    buildItems = buildItems.filter((item) => item.mesh.type === includedType)
+  }
+
+  // instantiate each object found in the model
+  const instantiatedObjects = {}
+  objects.forEach((object) => {
+    const instantiatedObject = instantiateObject(options, object, materials, colorgroups)
+    instantiatedObjects[object.id] = instantiatedObject
+  })
+
+  // but include only those objects which are part of the build items
+  const instantiatedItems = buildItems.map((item) => {
+    const object = instantiatedObjects[item.oid]
+    return transforms.transform(item.transform, object)
+  })
+  return instantiatedItems
+}
+
+/*
+ * Instantiate each of the given models into a list of shapes (JSCAD geometries).
+ */
+export const instantiateModels = (options, models) => {
+  const shapeLists = models.map((model) => instantiateModel(options, model))
+  return flatten(shapeLists)
 }
