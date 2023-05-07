@@ -5,7 +5,7 @@ const cache = new WeakMap()
 /**
  * Measure the bounding sphere of the given polygon.
  * @param {poly3} polygon - the polygon to measure
- * @returns {vec4} the computed bounding sphere; center point (3D) and radius
+ * @returns {vec4} the computed bounding sphere; center vertex (3D) and radius
  * @alias module:modeling/geometries/poly3.measureBoundingSphere
  */
 export const measureBoundingSphere = (polygon) => {

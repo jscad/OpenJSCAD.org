@@ -22,7 +22,7 @@ test('poly3: measureSignedVolume() should return correct values', (t) => {
   nearlyEqual(t, ret3, 166.66666666666666, Number.EPSILON)
 
   // V-shape
-  const points = [
+  const vertices = [
     [-50, 3, 0],
     [-50, 5, 0],
     [-50, 8, 2],
@@ -34,7 +34,7 @@ test('poly3: measureSignedVolume() should return correct values', (t) => {
     [-50, 1, 3],
     [-50, 3, 3]
   ]
-  let ply4 = create(points)
+  let ply4 = create(vertices)
   let ret4 = measureSignedVolume(ply4)
   nearlyEqual(t, ret4, -325.00000, Number.EPSILON)
 

@@ -31,12 +31,12 @@ export const arePointsInside = (points, polygon) => {
  * @return {Integer} 1 if the point is inside, 0 if outside
  */
 const isPointInside = (point, polygon) => {
-  const numVertices = polygon.length
+  const numPoints = polygon.length
 
   const tx = point[0]
   const ty = point[1]
 
-  let vtx0 = polygon[numVertices - 1]
+  let vtx0 = polygon[numPoints - 1]
   let vtx1 = polygon[0]
 
   let yFlag0 = (vtx0[1] > ty)
@@ -44,7 +44,7 @@ const isPointInside = (point, polygon) => {
   let insideFlag = 0
 
   let i = 0
-  for (let j = (numVertices + 1); --j;) {
+  for (let j = (numPoints + 1); --j;) {
     /*
      * check if Y endpoints straddle (are on opposite sides) of point's Y
      * if so, +X ray could intersect this edge.

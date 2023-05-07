@@ -23,7 +23,7 @@ test('poly3: measureBoundingSphere() should return correct values', (t) => {
   t.deepEqual(ret3, exp3)
 
   // V-shape
-  const points = [
+  const vertices = [
     [0, 3, 0],
     [0, 5, 0],
     [0, 8, 2],
@@ -35,7 +35,7 @@ test('poly3: measureBoundingSphere() should return correct values', (t) => {
     [0, 1, 3],
     [0, 3, 3]
   ]
-  let ply4 = create(points)
+  let ply4 = create(vertices)
   let exp4 = [0, 4.5, 3, 4.6097722286464435]
   let ret4 = measureBoundingSphere(ply4)
   t.deepEqual(ret4, exp4)

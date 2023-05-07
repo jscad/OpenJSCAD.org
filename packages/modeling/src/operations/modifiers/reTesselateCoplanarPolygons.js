@@ -306,7 +306,7 @@ export const reTesselateCoplanarPolygons = (sourcePolygons) => {
           prevPolygon.outPolygon.leftPoints.reverse()
           const points2d = prevPolygon.outPolygon.rightPoints.concat(prevPolygon.outPolygon.leftPoints)
           const vertices3d = points2d.map((point2d) => orthonormalFormula.to3D(point2d))
-          const polygon = poly3.fromPointsAndPlane(vertices3d, plane) // TODO support shared
+          const polygon = poly3.fromVerticesAndPlane(vertices3d, plane) // TODO support shared
 
           // if we let empty polygon out, next retesselate will crash
           if (polygon.vertices.length) destPolygons.push(polygon)
