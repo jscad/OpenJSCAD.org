@@ -28,7 +28,7 @@ test('poly3: measureBoundingBox() should return correct values', (t) => {
   t.true(compareVectors(ret3[1], exp3[1]))
 
   // V-shape
-  const points = [
+  const vertices = [
     [0, 3, 0],
     [0, 5, 0],
     [0, 8, 2],
@@ -40,7 +40,7 @@ test('poly3: measureBoundingBox() should return correct values', (t) => {
     [0, 1, 3],
     [0, 3, 3]
   ]
-  let ply4 = create(points)
+  let ply4 = create(vertices)
   let exp4 = [[0, 1, 0], [0, 8, 6]]
   let ret4 = measureBoundingBox(ply4)
   t.true(compareVectors(ret4[0], exp4[0]))

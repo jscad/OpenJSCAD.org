@@ -99,7 +99,7 @@ const measureBoundingSphereOfGeom3 = (geometry) => {
     // calculate the centroid of the geometry
     let numPoints = 0
     polygons.forEach((polygon) => {
-      poly3.toPoints(polygon).forEach((point) => {
+      poly3.toVertices(polygon).forEach((point) => {
         vec3.add(centroid, centroid, point)
         numPoints++
       })
@@ -108,7 +108,7 @@ const measureBoundingSphereOfGeom3 = (geometry) => {
 
     // find the farthest point from the centroid
     polygons.forEach((polygon) => {
-      poly3.toPoints(polygon).forEach((point) => {
+      poly3.toVertices(polygon).forEach((point) => {
         radius = Math.max(radius, vec3.squaredDistance(centroid, point))
       })
     })

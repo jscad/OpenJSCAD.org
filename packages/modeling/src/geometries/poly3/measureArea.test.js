@@ -22,7 +22,7 @@ test('poly3: measureArea() should return correct values', (t) => {
   t.is(ret3, 100.0)
 
   // V-shape
-  const points = [
+  const vertices = [
     [0, 3, 0],
     [0, 5, 0],
     [0, 8, 2],
@@ -34,7 +34,7 @@ test('poly3: measureArea() should return correct values', (t) => {
     [0, 1, 3],
     [0, 3, 3]
   ]
-  let ply4 = create(points)
+  let ply4 = create(vertices)
   let ret4 = measureArea(ply4)
   t.is(ret4, 19.5)
 

@@ -24,7 +24,7 @@ const translateVector3D = (vector) => {
 // translate the given polygon into JSCAD script
 //
 const translatePolygon = (polygon) => {
-  const vertices = geometries.poly3.toPoints(polygon)
+  const vertices = geometries.poly3.toVertices(polygon)
   let script = 'createPolygon(['
   vertices.forEach((vertice) => {
     script += `[${translateVector3D(vertice)}],`

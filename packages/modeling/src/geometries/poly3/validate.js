@@ -9,7 +9,7 @@ import { plane } from './plane.js'
 
 /**
  * Determine if the given object is a valid polygon.
- * Checks for valid data structure, convex polygons, and duplicate points.
+ * Checks for valid data structure, convex polygons, and duplicate vertices.
  *
  * **If the geometry is not valid, an exception will be thrown with details of the geometry error.**
  *
@@ -31,7 +31,7 @@ export const validate = (object) => {
     throw new Error('poly3 area must be greater than zero')
   }
 
-  // check for duplicate points
+  // check for duplicate vertices
   for (let i = 0; i < object.vertices.length; i++) {
     if (vec3.equals(object.vertices[i], object.vertices[(i + 1) % object.vertices.length])) {
       throw new Error(`poly3 duplicate vertex ${object.vertices[i]}`)
@@ -50,7 +50,7 @@ export const validate = (object) => {
     }
   })
 
-  // check that points are co-planar
+  // check that vertices are co-planar
   if (object.vertices.length > 3) {
     const normal = plane(object)
     object.vertices.forEach((vertex) => {
