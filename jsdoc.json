@@ -12,6 +12,7 @@
       "packages/modeling/src/geometries/path2",
       "packages/modeling/src/geometries/poly2",
       "packages/modeling/src/geometries/poly3",
+      "packages/modeling/src/geometries/slice",
       "packages/modeling/src/maths",
       "packages/modeling/src/maths/line2",
       "packages/modeling/src/maths/line3",
@@ -25,7 +26,6 @@
       "packages/modeling/src/operations/booleans",
       "packages/modeling/src/operations/expansions",
       "packages/modeling/src/operations/extrusions",
-      "packages/modeling/src/operations/extrusions/slice",
       "packages/modeling/src/operations/hulls",
       "packages/modeling/src/operations/modifiers",
       "packages/modeling/src/operations/transforms",
@@ -40,6 +40,7 @@
       "packages/io/svg-serializer",
       "packages/io/x3d-deserializer/src",
       "packages/io/x3d-serializer/src",
+      "packages/io/3mf-deserializer/src",
       "packages/io/3mf-serializer/src"
     ],
     "includePattern": ".+\\.js(doc|x)?$",
@@ -62,31 +63,37 @@
     }
   },
   "docdash": {
-    "_static": [true],
+    "static": [true],
     "sort": [true],
     "sectionOrder": [
       "Tutorials",
-      "Modules"
+      "Modules",
+      "Classes",
+      "Externals",
+      "Events",
+      "Namespaces",
+      "Mixins",
+      "Interfaces"
     ],
-    "_disqus": "",
-    "_openGraph": {
+    "disqus": "",
+    "openGraph": {
       "title": "",
       "type": "website",
       "image": "",
       "site_name": "",
       "url": ""
     },
-    "_meta": {
-      "title": "",
-      "description": "",
-      "keyword": ""
+    "meta": {
+      "title": "JSCAD API Documentation",
+      "description": "JSCAD API Documentation",
+      "keyword": "JSCAD OpenJSCAD"
     },
     "search": [true],
-    "collapse": [true],
+    "collapse": [false],
     "wrap": [false],
-    "typedefs": [false],
+    "typedefs": [true],
     "navLevel": [-1],
-    "private": [false],
+    "private": [true],
     "removeQuotes": ["none"],
     "scripts": ["jscad-docs.css", "jscad-docs.js"],
     "menu": {
@@ -102,6 +109,9 @@
         "class":"menu-item",
         "id":"forum_link"
       }
-    }
+    },
+    "scopeInOutputPath": [true],
+    "nameInOutputPath": [true],
+    "versionInOutputPath": [true]
   }
 }
