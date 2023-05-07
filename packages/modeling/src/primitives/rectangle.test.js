@@ -50,3 +50,10 @@ test('rectangle (options)', (t) => {
   t.deepEqual(obs.length, 4)
   t.true(comparePoints(obs, exp))
 })
+
+test('rectangle (zero size)', (t) => {
+  const geometry = rectangle({ size: [1, 0] })
+  const obs = geom2.toPoints(geometry)
+  t.notThrows(() => geom2.validate(geometry))
+  t.is(obs.length, 0)
+})

@@ -1,6 +1,6 @@
 const rectangle = require('./rectangle')
 
-const { isGT } = require('./commonChecks')
+const { isGTE } = require('./commonChecks')
 
 /**
  * Construct an axis-aligned square in two dimensional space with four equal sides at right angles.
@@ -21,7 +21,7 @@ const square = (options) => {
   }
   let { center, size } = Object.assign({}, defaults, options)
 
-  if (!isGT(size, 0)) throw new Error('size must be greater than zero')
+  if (!isGTE(size, 0)) throw new Error('size must be positive')
 
   size = [size, size]
 

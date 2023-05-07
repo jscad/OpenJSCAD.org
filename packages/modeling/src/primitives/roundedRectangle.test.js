@@ -14,6 +14,20 @@ test('roundedRectangle (defaults)', (t) => {
   t.deepEqual(obs.length, 36)
 })
 
+test('roundedRectangle (zero size)', (t) => {
+  const obs = roundedRectangle({ size: [1, 0] })
+  const pts = geom2.toPoints(obs)
+  t.notThrows(() => geom2.validate(obs))
+  t.is(pts.length, 0)
+})
+
+test('roundedRectangle (zero radius)', (t) => {
+  const obs = roundedRectangle({ roundRadius: 0 })
+  const pts = geom2.toPoints(obs)
+  t.notThrows(() => geom2.validate(obs))
+  t.deepEqual(pts.length, 4)
+})
+
 test('roundedRectangle (options)', (t) => {
   // test center
   let geometry = roundedRectangle({ center: [4, 5], segments: 16 })

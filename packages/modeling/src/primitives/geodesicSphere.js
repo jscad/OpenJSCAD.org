@@ -25,8 +25,11 @@ const geodesicSphere = (options) => {
   }
   let { radius, frequency } = Object.assign({}, defaults, options)
 
-  if (!isGT(radius, 0)) throw new Error('radius must be greater than zero')
+  if (!isGTE(radius, 0)) throw new Error('radius must be positive')
   if (!isGTE(frequency, 6)) throw new Error('frequency must be six or more')
+
+  // if radius is zero return empty geometry
+  if (radius === 0) return geom3.create()
 
   // adjust the frequency to base 6
   frequency = Math.floor(frequency / 6)

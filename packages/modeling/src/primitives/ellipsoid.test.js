@@ -207,3 +207,10 @@ test('ellipsoid (options)', (t) => {
   t.is(pts.length, 32)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
+
+test('ellipsoid (zero radius)', (t) => {
+  const obs = ellipsoid({ radius: [1, 1, 0] })
+  const pts = geom3.toPoints(obs)
+  t.notThrows(() => geom3.validate(obs))
+  t.is(pts.length, 0)
+})

@@ -146,3 +146,10 @@ test('circle (options)', (t) => {
   t.deepEqual(pts.length, 5)
   t.true(comparePoints(pts, exp))
 })
+
+test('circle (radius zero)', (t) => {
+  const geometry = circle({ radius: 0 })
+  const pts = geom2.toPoints(geometry)
+  t.notThrows(() => geom2.validate(geometry))
+  t.is(pts.length, 0)
+})
