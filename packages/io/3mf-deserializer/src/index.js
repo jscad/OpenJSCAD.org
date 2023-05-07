@@ -8,17 +8,18 @@ All code released under MIT license
 
 // //////////////////////////////////////////
 //
-// 3MF is a language for describing three-dimensional graphics in XML
-// See ASTM for Documentation, http://www.astm.org/Standards/ISOASTM52915.htm
+// 3MF is a 3D printing format that allows design and engineering applications
+//   to send full-fidelity 3D models and additive manufacturing data
+// See the 3MF Consortium for Documentation, https://3mf.io/
 //
 // //////////////////////////////////////////
 
 /**
- * Deserializer of 3MF source data (XML) to JSCAD geometries.
+ * Deserializer of 3MF source data (OPC or XML) to JSCAD geometries.
  * @see {@link https://github.com/jscad/OpenJSCAD.org/blob/master/packages/io/3mf-deserializer/README.md|README} for supported conversion of 3MF objects.
  * @module io/3mf-deserializer
  * @example
- * const { deserializer, extension } = require('@jscad/3mf-serializer')
+ * import { deserializer, mimeType } from '@jscad/3mf-serializer'
  */
 
 import { unzipSync, strFromU8 } from 'fflate'
@@ -27,14 +28,6 @@ import { translateModels } from './translate.js'
 import { instantiateModels } from './instantiate.js'
 
 const version = '[VI]{version}[/VI]' // version is injected by rollup
-
-// possible options
-// - which unit of conversion, default is same as model
-//     micron, millimeter, centimeter, inch, foot, meter
-// - which object types to include; mesh, solidsupport, surface, other
-// - which objects to include; all or build (default)
-
-// add attributes (id / partnumber / color / name) to geometries
 
 /**
  * Deserialize the given 3MF source into either a script or an array of geometry.
@@ -46,6 +39,7 @@ const version = '[VI]{version}[/VI]' // version is injected by rollup
  * @param {String} [options.output='script'] - either 'script' or 'geometry' to set desired output
  * @param {String} [options.version] - version added to the script metadata, default is package version
  * @param {Boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script
+ * @param {String} [options.includedType] - type of 3MF objects to include, default is 'all'
  * @param {String} input - 3MF source data (OPC or XML)
  * @returns {(Array|String)} either an array of objects (geometry) or a string (script)
  * @alias module:io/3mf-deserializer.deserialize
@@ -56,8 +50,7 @@ const deserialize = (options, input) => {
     version,
     addMetaData: true,
     includedItems: 'build', // or all
-    includedType: 'all', // or model, solidsupport, surface, other
-    unitOfConversion: 'model' // or micron, millimeter, centimeter, inch, foot, meter
+    includedType: 'all' // or model, solidsupport, surface, other
   }
   options = Object.assign({}, defaults, options)
 

@@ -3,7 +3,7 @@ import { maths } from '@jscad/modeling'
 import { parse } from './parse.js'
 
 /*
- * Parse the given 3MF source (XML) into 3MF build items, objects and materials.
+ * Parse the given 3MF source (XML) into 3MF build items, objects, materials, and colorgroups.
  *
  * Each build item is a 3MF mesh with
  *   oid: object id of which to build (and transform)
@@ -33,13 +33,6 @@ export const parseModel = (options, source) => {
   if (includedItems === 'all') {
     // FIXME loop through objects.. include anything missing
   }
-
-  // console.log(model)
-  // console.log(objects)
-  // console.log(materials)
-  // console.log(colorgroups)
-  // console.log(items)
-  // console.log(buildItems)
 
   return { buildItems, objects, materials, colorgroups }
 }

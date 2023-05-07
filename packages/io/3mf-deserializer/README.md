@@ -29,6 +29,7 @@ However, conversion of 3MF objects and materials are possible:
 | --------------- | ----------- | ------ |
 | object          | to geom3    | conversion of mesh with vertices and triangles |
 | basematerials   | RGBA colors | convertion of materials found on objects and triangles |
+| colorgroups     | RGBA colors | convertion of materials found on objects and triangles |
 
 Also, many attributes as found on objects are transferred to the geometry, e.g. id, type, etc.
 
@@ -49,12 +50,12 @@ npm install @jscad/3mf-deserializer
 
 ```javascript
 // note: javascript variable names cannot start with a number
-const mf3DeSerializer = require('@jscad/3mf-deserializer')
+import { deserializer } from '@jscad/3mf-deserializer'
 
 const rawData = fs.readFileSync('PATH/TO/file.3mf')
-const jscadScript = mf3DeSerializer.deserialize({output: 'script'}, rawData)
+const jscadScript = deserialize({output: 'script'}, rawData)
 // OR
-const geometries = mf3DeSerializer.deserialize({output: 'geometry'}, rawData)
+const geometries = deserialize({output: 'geometry'}, rawData)
 ```
 
 ## Contributing
