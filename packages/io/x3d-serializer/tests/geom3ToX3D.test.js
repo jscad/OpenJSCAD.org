@@ -22,8 +22,8 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   t.is(countOf('Scene', obs), 2)
 
   const geom2 = primitives.cube()
-  
-  results = serializer.serialize({metadata: false}, geom2)
+
+  results = serializer.serialize({ metadata: false }, geom2)
   t.is(results.length, 1)
 
   obs = results[0]
@@ -44,7 +44,7 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   const geom3 = colors.colorize([0.5, 1, 0.5, 1.0], transforms.center({ relativeTo: [5, 5, 5] }, primitives.cube()))
   geom2.id = geom3.id = 'g23'
 
-  results = serializer.serialize({metadata: false}, geom2, geom3)
+  results = serializer.serialize({ metadata: false }, geom2, geom3)
   t.is(results.length, 1)
 
   obs = results[0]
