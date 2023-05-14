@@ -14,10 +14,10 @@ export const equals = (a, b) => {
 
   const len = a.contours.length
   for (let i = 0; i < len; i++) {
-    const aPoint = a.contours[i]
+    const aVertex = a.contours[i]
     for (let j = 0; j < len; j++) {
-      const bPoint = b.contours[j]
-      if (!vec3.equals(aPoint, bPoint)) {
+      const bVertex = b.contours[j]
+      if (!vec3.equals(aVertex, bVertex)) {
         return false
       }
     }

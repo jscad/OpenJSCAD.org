@@ -3,7 +3,7 @@ import * as mat4 from '../../maths/mat4/index.js'
 /**
  * Represents a 3D geometry consisting of a list of polygons.
  * @typedef {Object} geom3
- * @property {Array} polygons - list of polygons, each polygon containing three or more points
+ * @property {Array} polygons - list of polygons, each polygon containing three or more vertices
  * @property {mat4} transforms - transforms to apply to the polygons, see transform()
  * @example
  * {

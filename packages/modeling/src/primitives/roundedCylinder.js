@@ -62,75 +62,75 @@ export const roundedCylinder = (options) => {
 
   const qSegments = Math.floor(0.25 * segments)
 
-  const fromPoints = (points) => {
-    // adjust the points to center
-    const newPoints = points.map((point) => vec3.add(point, point, center))
-    return poly3.create(newPoints)
+  const fromVertices = (vertices) => {
+    // adjust the vertices to center
+    const newVertices = vertices.map((vertex) => vec3.add(vertex, vertex, center))
+    return poly3.create(newVertices)
   }
 
   const polygons = []
   const v1 = vec3.create()
   const v2 = vec3.create()
-  let prevCylinderPoint
+  let prevCylinderVertex
   for (let slice1 = 0; slice1 <= segments; slice1++) {
     const angle = TAU * slice1 / segments
-    const cylinderPoint = vec3.add(vec3.create(), vec3.scale(v1, xVector, cos(angle)), vec3.scale(v2, yVector, sin(angle)))
+    const cylinderVertex = vec3.add(vec3.create(), vec3.scale(v1, xVector, cos(angle)), vec3.scale(v2, yVector, sin(angle)))
     if (slice1 > 0) {
       // cylinder wall
-      let points = []
-      points.push(vec3.add(vec3.create(), start, cylinderPoint))
-      points.push(vec3.add(vec3.create(), start, prevCylinderPoint))
-      points.push(vec3.add(vec3.create(), end, prevCylinderPoint))
-      points.push(vec3.add(vec3.create(), end, cylinderPoint))
-      polygons.push(fromPoints(points))
+      let vertices = []
+      vertices.push(vec3.add(vec3.create(), start, cylinderVertex))
+      vertices.push(vec3.add(vec3.create(), start, prevCylinderVertex))
+      vertices.push(vec3.add(vec3.create(), end, prevCylinderVertex))
+      vertices.push(vec3.add(vec3.create(), end, cylinderVertex))
+      polygons.push(fromVertices(vertices))
 
       let prevCosPitch, prevSinPitch
+      let vertex
       for (let slice2 = 0; slice2 <= qSegments; slice2++) {
         const pitch = TAU / 4 * slice2 / qSegments
         const cosPitch = cos(pitch)
         const sinPitch = sin(pitch)
         if (slice2 > 0) {
           // cylinder rounding, start
-          points = []
-          let point
-          point = vec3.add(vec3.create(), start, vec3.subtract(v1, vec3.scale(v1, prevCylinderPoint, prevCosPitch), vec3.scale(v2, zVector, prevSinPitch)))
-          points.push(point)
-          point = vec3.add(vec3.create(), start, vec3.subtract(v1, vec3.scale(v1, cylinderPoint, prevCosPitch), vec3.scale(v2, zVector, prevSinPitch)))
-          points.push(point)
+          vertices = []
+          vertex = vec3.add(vec3.create(), start, vec3.subtract(v1, vec3.scale(v1, prevCylinderVertex, prevCosPitch), vec3.scale(v2, zVector, prevSinPitch)))
+          vertices.push(vertex)
+          vertex = vec3.add(vec3.create(), start, vec3.subtract(v1, vec3.scale(v1, cylinderVertex, prevCosPitch), vec3.scale(v2, zVector, prevSinPitch)))
+          vertices.push(vertex)
           if (slice2 < qSegments) {
-            point = vec3.add(vec3.create(), start, vec3.subtract(v1, vec3.scale(v1, cylinderPoint, cosPitch), vec3.scale(v2, zVector, sinPitch)))
-            points.push(point)
+            vertex = vec3.add(vec3.create(), start, vec3.subtract(v1, vec3.scale(v1, cylinderVertex, cosPitch), vec3.scale(v2, zVector, sinPitch)))
+            vertices.push(vertex)
           }
-          point = vec3.add(vec3.create(), start, vec3.subtract(v1, vec3.scale(v1, prevCylinderPoint, cosPitch), vec3.scale(v2, zVector, sinPitch)))
-          points.push(point)
+          vertex = vec3.add(vec3.create(), start, vec3.subtract(v1, vec3.scale(v1, prevCylinderVertex, cosPitch), vec3.scale(v2, zVector, sinPitch)))
+          vertices.push(vertex)
 
-          polygons.push(fromPoints(points))
+          polygons.push(fromVertices(vertices))
 
           // cylinder rounding, end
-          points = []
-          point = vec3.add(vec3.create(), vec3.scale(v1, prevCylinderPoint, prevCosPitch), vec3.scale(v2, zVector, prevSinPitch))
-          vec3.add(point, point, end)
-          points.push(point)
-          point = vec3.add(vec3.create(), vec3.scale(v1, cylinderPoint, prevCosPitch), vec3.scale(v2, zVector, prevSinPitch))
-          vec3.add(point, point, end)
-          points.push(point)
+          vertices = []
+          vertex = vec3.add(vec3.create(), vec3.scale(v1, prevCylinderVertex, prevCosPitch), vec3.scale(v2, zVector, prevSinPitch))
+          vec3.add(vertex, vertex, end)
+          vertices.push(vertex)
+          vertex = vec3.add(vec3.create(), vec3.scale(v1, cylinderVertex, prevCosPitch), vec3.scale(v2, zVector, prevSinPitch))
+          vec3.add(vertex, vertex, end)
+          vertices.push(vertex)
           if (slice2 < qSegments) {
-            point = vec3.add(vec3.create(), vec3.scale(v1, cylinderPoint, cosPitch), vec3.scale(v2, zVector, sinPitch))
-            vec3.add(point, point, end)
-            points.push(point)
+            vertex = vec3.add(vec3.create(), vec3.scale(v1, cylinderVertex, cosPitch), vec3.scale(v2, zVector, sinPitch))
+            vec3.add(vertex, vertex, end)
+            vertices.push(vertex)
           }
-          point = vec3.add(vec3.create(), vec3.scale(v1, prevCylinderPoint, cosPitch), vec3.scale(v2, zVector, sinPitch))
-          vec3.add(point, point, end)
-          points.push(point)
-          points.reverse()
+          vertex = vec3.add(vec3.create(), vec3.scale(v1, prevCylinderVertex, cosPitch), vec3.scale(v2, zVector, sinPitch))
+          vec3.add(vertex, vertex, end)
+          vertices.push(vertex)
+          vertices.reverse()
 
-          polygons.push(fromPoints(points))
+          polygons.push(fromVertices(vertices))
         }
         prevCosPitch = cosPitch
         prevSinPitch = sinPitch
       }
     }
-    prevCylinderPoint = cylinderPoint
+    prevCylinderVertex = cylinderVertex
   }
   return geom3.create(polygons)
 }

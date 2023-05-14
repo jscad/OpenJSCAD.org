@@ -41,11 +41,6 @@ export const possibleIntersection = (se1, se2, queue) => {
   }
 
   if (nIntersections === 2 && se1.isSubject === se2.isSubject) {
-    // if(se1.contourId === se2.contourId){
-    // console.warn('Edges of the same polygon overlap',
-    //   se1.point, se1.otherEvent.point, se2.point, se2.otherEvent.point)
-    // }
-    // throw new Error('Edges of the same polygon overlap')
     return 0
   }
 

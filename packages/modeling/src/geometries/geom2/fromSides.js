@@ -3,40 +3,40 @@ import * as vec2 from '../../maths/vec2/index.js'
 import { create } from './create.js'
 
 /*
- * Create a list of edges which SHARE vertices.
+ * Create a list of edges which SHARE points.
  * This allows the edges to be traversed in order.
  */
-const toSharedVertices = (sides) => {
-  const unique = new Map() // {key: vertex}
-  const getUniqueVertex = (vertex) => {
-    const key = vertex.toString()
+const toSharedPoints = (sides) => {
+  const unique = new Map() // {key: point}
+  const getUniquePoint = (point) => {
+    const key = point.toString()
     if (unique.has(key)) {
       return unique.get(key)
     } else {
-      unique.set(key, vertex)
-      return vertex
+      unique.set(key, point)
+      return point
     }
   }
 
-  return sides.map((side) => side.map(getUniqueVertex))
+  return sides.map((side) => side.map(getUniquePoint))
 }
 
 /*
- * Convert a list of sides into a map from vertex to edges.
+ * Convert a list of sides into a map from point to edges.
  */
-const toVertexMap = (sides) => {
-  const vertexMap = new Map()
+const toPointMap = (sides) => {
+  const pointMap = new Map()
   // first map to edges with shared vertices
-  const edges = toSharedVertices(sides)
+  const edges = toSharedPoints(sides)
   // construct adjacent edges map
   edges.forEach((edge) => {
-    if (vertexMap.has(edge[0])) {
-      vertexMap.get(edge[0]).push(edge)
+    if (pointMap.has(edge[0])) {
+      pointMap.get(edge[0]).push(edge)
     } else {
-      vertexMap.set(edge[0], [edge])
+      pointMap.set(edge[0], [edge])
     }
   })
-  return vertexMap
+  return pointMap
 }
 
 /**
@@ -48,45 +48,45 @@ const toVertexMap = (sides) => {
  * let geometry = fromSides([[[0, 0], [1, 0]], [[1, 0], [1, 1]], [[1, 1], [0, 0]]])
  */
 export const fromSides = (sides) => {
-  const vertexMap = toVertexMap(sides) // {vertex: [edges]}
+  const pointMap = toPointMap(sides) // {point: [edges]}
   const outlines = []
   while (true) {
     let startSide
-    for (const [vertex, edges] of vertexMap) {
+    for (const [point, edges] of pointMap) {
       startSide = edges.shift()
       if (!startSide) {
-        vertexMap.delete(vertex)
+        pointMap.delete(point)
         continue
       }
       break
     }
     if (startSide === undefined) break // all starting sides have been visited
 
-    const connectedVertexPoints = []
-    const startVertex = startSide[0]
+    const connectedPoints = []
+    const startPoint = startSide[0]
     while (true) {
-      connectedVertexPoints.push(startSide[0])
-      const nextVertex = startSide[1]
-      if (nextVertex === startVertex) break // the outline has been closed
-      const nextPossibleSides = vertexMap.get(nextVertex)
+      connectedPoints.push(startSide[0])
+      const nextPoint = startSide[1]
+      if (nextPoint === startPoint) break // the outline has been closed
+      const nextPossibleSides = pointMap.get(nextPoint)
       if (!nextPossibleSides) {
-        throw new Error(`geometry is not closed at vertex ${nextVertex}`)
+        throw new Error(`geometry is not closed at point ${nextPoint}`)
       }
       const nextSide = popNextSide(startSide, nextPossibleSides)
       if (nextPossibleSides.length === 0) {
-        vertexMap.delete(nextVertex)
+        pointMap.delete(nextPoint)
       }
       startSide = nextSide
     } // inner loop
 
     // due to the logic of fromPoints()
     // move the first point to the last
-    if (connectedVertexPoints.length > 0) {
-      connectedVertexPoints.push(connectedVertexPoints.shift())
+    if (connectedPoints.length > 0) {
+      connectedPoints.push(connectedPoints.shift())
     }
-    outlines.push(connectedVertexPoints)
+    outlines.push(connectedPoints)
   } // outer loop
-  vertexMap.clear()
+  pointMap.clear()
   return create(outlines)
 }
 

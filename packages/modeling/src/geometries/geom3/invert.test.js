@@ -16,14 +16,14 @@ test('invert: Creates a invert on an empty geom3', (t) => {
 })
 
 test('invert: Creates a invert of a populated geom3', (t) => {
-  const points = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]
+  const vertices = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]
   const expected = {
     polygons: [
       { vertices: [[1, 0, 1], [1, 0, 0], [0, 0, 0]] }
     ],
     transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
-  const geometry = fromPoints(points)
+  const geometry = fromPoints(vertices)
   const another = invert(geometry)
   t.not(another, geometry)
   t.true(comparePolygons(another.polygons[0], expected.polygons[0]))

@@ -4,9 +4,9 @@ import * as poly3 from '../geometries/poly3/index.js'
 import { isNumberArray } from './commonChecks.js'
 
 /**
- * Construct a polyhedron in three dimensional space from the given set of 3D points and faces.
+ * Construct a polyhedron in three dimensional space from the given set of 3D vertices and faces.
  * The faces can define outward or inward facing polygons (orientation).
- * However, each face must define a counterclockwise rotation of points which follows the right hand rule.
+ * However, each face must define a counterclockwise rotation of vertices which follows the right hand rule.
  * @param {Object} options - options for construction
  * @param {Array} options.points - list of points in 3D space
  * @param {Array} options.faces - list of faces, where each face is a set of indexes into the points
@@ -46,8 +46,8 @@ export const polyhedron = (options) => {
       throw new Error('faces and colors must have the same length')
     }
   }
-  points.forEach((point, i) => {
-    if (!isNumberArray(point, 3)) throw new Error(`point ${i} must be an array of X, Y, Z values`)
+  points.forEach((vertex, i) => {
+    if (!isNumberArray(vertex, 3)) throw new Error(`vertex ${i} must be an array of X, Y, Z values`)
   })
   faces.forEach((face, i) => {
     if (face.length < 3) throw new Error(`face ${i} must contain 3 or more indexes`)

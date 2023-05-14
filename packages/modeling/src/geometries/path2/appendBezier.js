@@ -116,7 +116,7 @@ export const appendBezier = (options, geometry) => {
     newPointsT.push(t)
   }
 
-  // subdivide each segment until the angle at each vertex becomes small enough:
+  // subdivide each segment until the angle becomes small enough:
   let subdivideBase = 1
   const maxAngle = TAU / segments
   const maxSinAngle = Math.sin(maxAngle)

@@ -106,11 +106,11 @@ export const expandShell = (options, geometry) => {
   edges2planes.forEach((item) => {
     const edge = item[0]
     const planes = item[1]
-    const startPoint = edge[0]
-    const endPoint = edge[1]
+    const startVertex = edge[0]
+    const endVertex = edge[1]
 
     // our x,y and z vectors:
-    const zBase = vec3.subtract(vec3.create(), endPoint, startPoint)
+    const zBase = vec3.subtract(vec3.create(), endVertex, startVertex)
     vec3.normalize(zBase, zBase)
     const xBase = planes[0]
     const yBase = vec3.cross(vec3.create(), xBase, zBase)
@@ -154,8 +154,8 @@ export const expandShell = (options, geometry) => {
       vec3.scale(v1, xBase, co * delta)
       vec3.scale(v2, yBase, si * delta)
       vec3.add(v1, v1, v2)
-      const p1 = vec3.add(vec3.create(), startPoint, v1)
-      const p2 = vec3.add(vec3.create(), endPoint, v1)
+      const p1 = vec3.add(vec3.create(), startVertex, v1)
+      const p2 = vec3.add(vec3.create(), endVertex, v1)
       let skip = false
       if (i >= 0) {
         if (vec3.distance(p1, prevP1) < EPS) {
@@ -166,8 +166,8 @@ export const expandShell = (options, geometry) => {
         if (i >= 0) {
           startFaceVertices.push(p1)
           endFaceVertices.push(p2)
-          const points = [prevP2, p2, p1, prevP1]
-          const polygon = poly3.create(points)
+          const vertices = [prevP2, p2, p1, prevP1]
+          const polygon = poly3.create(vertices)
           polygons.push(polygon)
         }
         prevP1 = p1

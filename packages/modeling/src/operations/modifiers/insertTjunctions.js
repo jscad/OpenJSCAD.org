@@ -239,9 +239,9 @@ export const insertTjunctions = (polygons) => {
                 // Now we need to check if endPos is on the line startPos-checkPos:
                 const t = vec3.dot(vec3.subtract(vec3.create(), endPos, startPos), direction) / vec3.dot(direction, direction)
                 if ((t > 0) && (t < 1)) {
-                  const closestPoint = vec3.scale(vec3.create(), direction, t)
-                  vec3.add(closestPoint, closestPoint, startPos)
-                  const distanceSquared = vec3.squaredDistance(closestPoint, endPos)
+                  const closestVertex = vec3.scale(vec3.create(), direction, t)
+                  vec3.add(closestVertex, closestVertex, startPos)
+                  const distanceSquared = vec3.squaredDistance(closestVertex, endPos)
                   if (distanceSquared < (EPS * EPS)) {
                     // Yes it's a t-junction! We need to split matchingSide in two:
                     const polygonIndex = matchingSide.polygonIndex

@@ -5,7 +5,7 @@ import { measureBoundingBox } from './measureBoundingBox.js'
 /**
  * Measure the center of the given geometries.
  * @param {...Object} geometries - the geometries to measure
- * @return {Array} the center point for each geometry, i.e. [X, Y, Z]
+ * @return {Array} the center vertex for each geometry, i.e. [X, Y, Z]
  * @alias module:modeling/measurements.measureCenter
  *
  * @example

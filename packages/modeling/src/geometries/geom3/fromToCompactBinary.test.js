@@ -20,9 +20,9 @@ test('toCompactBinary: converts geom3 (default)', (t) => {
 })
 
 test('toCompactBinary: converts geom3 into a compact form', (t) => {
-  // two polygons; 3 points, 4 points
-  const points = [[[0, 0, 0], [1, 0, 0], [2, 0, 2]], [[0, 0, 0], [1, 0, 0], [2, 0, 2], [-3, 0, 3]]]
-  const geometry = fromPoints(points)
+  // two polygons; 3 vertices, 4 vertices
+  const vertices = [[[0, 0, 0], [1, 0, 0], [2, 0, 2]], [[0, 0, 0], [1, 0, 0], [2, 0, 2], [-3, 0, 3]]]
+  const geometry = fromPoints(vertices)
   const compacted = toCompactBinary(geometry)
   const expected = new Float32Array(
     [
@@ -107,8 +107,8 @@ test('fromCompactBinary: convert a compact form into a geom3', (t) => {
     2, 0, 2,
     -3, 0, 3
   ]
-  const points = [[[0, 0, 0], [1, 0, 0], [2, 0, 2]], [[0, 0, 0], [1, 0, 0], [2, 0, 2], [-3, 0, 3]]]
-  expected = fromPoints(points)
+  const vertices = [[[0, 0, 0], [1, 0, 0], [2, 0, 2]], [[0, 0, 0], [1, 0, 0], [2, 0, 2], [-3, 0, 3]]]
+  expected = fromPoints(vertices)
   geometry = fromCompactBinary(compacted1)
 
   t.deepEqual(geometry, expected)

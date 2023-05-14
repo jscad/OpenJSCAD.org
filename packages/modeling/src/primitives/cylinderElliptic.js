@@ -76,7 +76,7 @@ export const cylinderElliptic = (options) => {
   const v1 = vec3.create()
   const v2 = vec3.create()
   const v3 = vec3.create()
-  const point = (stack, slice, radius) => {
+  const genVertex = (stack, slice, radius) => {
     const angle = slice * rotation + startAngle
     vec3.scale(v1, axisX, radius[0] * cos(angle))
     vec3.scale(v2, axisY, radius[1] * sin(angle))
@@ -87,10 +87,10 @@ export const cylinderElliptic = (options) => {
     return vec3.add(vec3.create(), v1, v3)
   }
 
-  // adjust the points to center
-  const fromPoints = (...points) => {
-    const newPoints = points.map((point) => vec3.add(vec3.create(), point, center))
-    return poly3.create(newPoints)
+  // adjust the vertices to center
+  const fromVertices = (...vertices) => {
+    const newVertices = vertices.map((vertex) => vec3.add(vec3.create(), vertex, center))
+    return poly3.create(newVertices)
   }
 
   const polygons = []
@@ -101,29 +101,29 @@ export const cylinderElliptic = (options) => {
     if (rotation === TAU && i === slices - 1) t1 = 0
 
     if (endRadius[0] === startRadius[0] && endRadius[1] === startRadius[1]) {
-      polygons.push(fromPoints(start, point(0, t1, endRadius), point(0, t0, endRadius)))
-      polygons.push(fromPoints(point(0, t1, endRadius), point(1, t1, endRadius), point(1, t0, endRadius), point(0, t0, endRadius)))
-      polygons.push(fromPoints(end, point(1, t0, endRadius), point(1, t1, endRadius)))
+      polygons.push(fromVertices(start, genVertex(0, t1, endRadius), genVertex(0, t0, endRadius)))
+      polygons.push(fromVertices(genVertex(0, t1, endRadius), genVertex(1, t1, endRadius), genVertex(1, t0, endRadius), genVertex(0, t0, endRadius)))
+      polygons.push(fromVertices(end, genVertex(1, t0, endRadius), genVertex(1, t1, endRadius)))
     } else {
       if (startRadius[0] > 0 && startRadius[1] > 0) {
-        polygons.push(fromPoints(start, point(0, t1, startRadius), point(0, t0, startRadius)))
+        polygons.push(fromVertices(start, genVertex(0, t1, startRadius), genVertex(0, t0, startRadius)))
       }
       if (startRadius[0] > 0 || startRadius[1] > 0) {
-        polygons.push(fromPoints(point(0, t0, startRadius), point(0, t1, startRadius), point(1, t0, endRadius)))
+        polygons.push(fromVertices(genVertex(0, t0, startRadius), genVertex(0, t1, startRadius), genVertex(1, t0, endRadius)))
       }
       if (endRadius[0] > 0 && endRadius[1] > 0) {
-        polygons.push(fromPoints(end, point(1, t0, endRadius), point(1, t1, endRadius)))
+        polygons.push(fromVertices(end, genVertex(1, t0, endRadius), genVertex(1, t1, endRadius)))
       }
       if (endRadius[0] > 0 || endRadius[1] > 0) {
-        polygons.push(fromPoints(point(1, t0, endRadius), point(0, t1, startRadius), point(1, t1, endRadius)))
+        polygons.push(fromVertices(genVertex(1, t0, endRadius), genVertex(0, t1, startRadius), genVertex(1, t1, endRadius)))
       }
     }
   }
   if (rotation < TAU) {
-    polygons.push(fromPoints(start, point(0, 0, startRadius), end))
-    polygons.push(fromPoints(point(0, 0, startRadius), point(1, 0, endRadius), end))
-    polygons.push(fromPoints(start, end, point(0, 1, startRadius)))
-    polygons.push(fromPoints(point(0, 1, startRadius), end, point(1, 1, endRadius)))
+    polygons.push(fromVertices(start, genVertex(0, 0, startRadius), end))
+    polygons.push(fromVertices(genVertex(0, 0, startRadius), genVertex(1, 0, endRadius), end))
+    polygons.push(fromVertices(start, end, genVertex(0, 1, startRadius)))
+    polygons.push(fromVertices(genVertex(0, 1, startRadius), end, genVertex(1, 1, endRadius)))
   }
   const result = geom3.create(polygons)
   return result
