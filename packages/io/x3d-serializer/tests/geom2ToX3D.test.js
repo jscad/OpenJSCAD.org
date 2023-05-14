@@ -24,7 +24,7 @@ test('serialize 2D geometry to X3D Polyline2D', (t) => {
 
   const shape2 = primitives.rectangle()
 
-  results = serialize({metadata: false}, shape2)
+  results = serialize({ metadata: false }, shape2)
   t.is(results.length, 1)
 
   obs = results[0]
@@ -41,7 +41,7 @@ test('serialize 2D geometry to X3D Polyline2D', (t) => {
 
   const shape3 = colors.colorize([0, 0, 0], shape2)
 
-  results = serialize({metadata: false}, shape3)
+  results = serialize({ metadata: false }, shape3)
   t.is(results.length, 1)
 
   obs = results[0]
@@ -61,8 +61,7 @@ test('serialize 2D geometry to X3D Polyline2D', (t) => {
   t.is(countOf('diffuseColor', obs), 0)
   t.is(countOf('emissiveColor', obs), 1)
 
-
-  results = serialize({metadata: false}, shape2, shape3)
+  results = serialize({ metadata: false }, shape2, shape3)
   t.is(results.length, 1)
 
   obs = results[0]
@@ -80,6 +79,6 @@ test('serialize 2D geometry to X3D Polyline2D', (t) => {
   t.is(countOf('Appearance', obs), 2)
   t.is(countOf('Material', obs), 1)
   t.is(countOf('diffuseColor', obs), 0)
+  t.is(countOf('specularColor', obs), 0)
   t.is(countOf('emissiveColor', obs), 1)
 })
-

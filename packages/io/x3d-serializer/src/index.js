@@ -43,11 +43,13 @@ const stringify = require('onml/lib/stringify')
 // https://x3dgraphics.com/examples/X3dForWebAuthors/Chapter13GeometryTrianglesQuadrilaterals/
 
 const mimeType = 'model/x3d+xml'
+const defNames = new Map()
 
 /**
  * Serialize the give objects to X3D elements (XML).
  * @param {Object} options - options for serialization, REQUIRED
  * @param {Array} [options.color=[0,0,1,1]] - default color for objects
+ * @param {Number} [options.shininess=8/256] - x3d shininess for specular highlights
  * @param {Boolean} [options.smooth=false] - use averaged vertex normals
  * @param {Number} [options.decimals=1000] - multiplier before rounding to limit precision
  * @param {Boolean} [options.metadata=true] - add metadata to 3MF contents, such at CreationDate
@@ -63,6 +65,7 @@ const mimeType = 'model/x3d+xml'
 const serialize = (options, ...objects) => {
   const defaults = {
     color: [0, 0, 1, 1.0], // default colorRGBA specification
+    shininess: 8 / 256,
     smooth: false,
     decimals: 1000,
     metadata: true,
@@ -141,7 +144,7 @@ const convertObjects = (objects, options) => {
 const convertPath2 = (object, options) => {
   const points = path2.toPoints(object).slice()
   if (points.length > 1 && object.isClosed) points.push(points[0])
-  const shape = ['Shape', {}, convertPolyline2D(poly2.create(points), options)]
+  const shape = ['Shape', shapeAttributes(object), convertPolyline2D(poly2.create(points), options)]
   if (object.color) {
     shape.push(convertAppearance(object, 'emissiveColor', options))
   }
@@ -156,13 +159,31 @@ const convertGeom2 = (object, options) => {
   const group = ['Group', {}]
   outlines.forEach((outline) => {
     if (outline.length > 1) outline.push(outline[0]) // close the outline for conversion
-    const shape = ['Shape', {}, convertPolyline2D(poly2.create(outline), options)]
+    const shape = ['Shape', shapeAttributes(object), convertPolyline2D(poly2.create(outline), options)]
     if (object.color) {
       shape.push(convertAppearance(object, 'emissiveColor', options))
     }
     group.push(shape)
   })
   return group
+}
+
+/*
+ * generate attributes for Shape node
+ */
+
+const shapeAttributes = (object, attributes = {}) => {
+  if (object.id) {
+    Object.assign(attributes, { DEF: checkDefName(object.id) })
+  }
+  return attributes
+}
+
+const checkDefName = (defName) => {
+  const count = defNames.get(defName) || 0
+  defNames.set(defName, count + 1)
+  if (count > 0) console.warn(`Warning: object.id set as DEF but not unique. ${defName} set ${count + 1} times.`)
+  return defName
 }
 
 /*
@@ -180,14 +201,20 @@ const convertAppearance = (object, colorField, options) => {
   const colorRGB = object.color.slice(0, 3)
   const color = colorRGB.join(' ')
   const transparency = roundToDecimals(1.0 - object.color[3], options)
-  return ['Appearance', ['Material', { [colorField]: color, transparency }]]
+  const materialFields = { [colorField]: color, transparency }
+  if (colorField === 'diffuseColor') {
+    Object.assign(
+      materialFields,
+      { specularColor: '0.2 0.2 0.2', shininess: options.shininess })
+  }
+  return ['Appearance', ['Material', materialFields]]
 }
 
 /*
  * Convert the given object (geom3) to X3D source
  */
 const convertGeom3 = (object, options) => {
-  const shape = ['Shape', {}, convertMesh(object, options)]
+  const shape = ['Shape', shapeAttributes(object), convertMesh(object, options)]
   let appearance = ['Appearance', {}, ['Material']]
   if (object.color) {
     appearance = convertAppearance(object, 'diffuseColor', options)
