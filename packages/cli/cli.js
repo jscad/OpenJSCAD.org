@@ -55,7 +55,11 @@ console.log(`${clicolors.blue}JSCAD: generating output ${clicolors.red}
 `)
 
 // read input data
-const src = fs.readFileSync(inputFile, inputFile.match(/\.stl$/i) ? 'binary' : 'UTF8')
+let encoding = 'UTF8'
+if (inputFile.match(/\.stl$/i)) encoding = 'binary'
+if (inputFile.match(/\.3mf$/i)) encoding = null // force raw buffer
+
+const src = fs.readFileSync(inputFile, encoding)
 
 // -- convert from JSCAD script into the desired output format
 // -- and write it to disk

@@ -1,9 +1,9 @@
-## @jscad/io
+## @jscad/3mf-deserializer
 
-> Input/Output format handling for the JSCAD project.
+> Deserializer of 3MF data to JSCAD geometries
 
-[![NPM version](https://badge.fury.io/js/%40jscad%2Fio.svg)](https://www.npmjs.com/package/@jscad/io)
-[![NPM downloads](https://img.shields.io/npm/dw/@jscad/io)](https://www.npmjs.com/package/@jscad/io)
+[![NPM version](https://badge.fury.io/js/%40jscad%2F3mf-deserializer.svg)](https://www.npmjs.com/package/@jscad/3mf-deserializer)
+[![NPM downloads](https://img.shields.io/npm/dw/@jscad/3mf-deserializer)](https://www.npmjs.com/package/@jscad/3mf-deserializer)
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
 [![Stability](https://img.shields.io/badge/stability-stable-success)](https://github.com/emersion/stability-badges#stable)
 [![License](https://img.shields.io/github/license/jscad/OpenJSCAD.org)](https://github.com/jscad/OpenJSCAD.org/blob/master/LICENSE)
@@ -19,33 +19,19 @@
 
 ## Overview
 
-This package is a metapackage and includes all the input/output format handling for the JSCAD projects, and can also be used separately.
+This deserializer converts 3MF data (OPC archives or XML strings) to JSCAD scripts or geometries.
 
-### Inputs / Deserializers
+This deserializer converts only what is supported by JSCAD libraries.
+Full document conversion of models and materials are NOT supported, so don't even try.
+However, conversion of 3MF objects and materials are possible:
 
-ie: file data => JSCAD code or JSCAD geometry
+| 3MF Entity      | JSCAD Geometry | Notes |
+| --------------- | ----------- | ------ |
+| object          | to geom3    | conversion of mesh with vertices and triangles |
+| basematerials   | RGBA colors | convertion of materials found on objects and triangles |
+| colorgroups     | RGBA colors | convertion of materials found on objects and triangles |
 
-Following formats are supported as inputs
-- [DXF](../dxf-deserializer)
-- [JSON](../json-deserializer)
-- [OBJ](../obj-deserializer)
-- [STL (binary, ASCII)](../stl-deserializer)
-- [SVG](../svg-deserializer)
-- [X3D](../x3d-deserializer)
-- [3MF](../3mf-deserializer)
-
-### Outputs/ Serializers
-
-ie: geometry => blob
-
-Following formats are supported as outputs
-- [DXF](../dxf-serializer)
-- [JSON](../json-serializer)
-- [OBJ](../obj-serializer)
-- [STL (binary, ASCII)](../stl-serializer)
-- [SVG](../svg-serializer)
-- [X3D](../x3d-serializer)
-- [3MF](../3mf-serializer)
+Also, many attributes as found on objects are transferred to the geometry, e.g. id, type, etc.
 
 ## Table of Contents
 
@@ -57,15 +43,19 @@ Following formats are supported as outputs
 ## Installation
 
 ```
-npm install @jscad/io
+npm install @jscad/3mf-deserializer
 ```
 
 ## Usage
 
-- As a Node module :
+```javascript
+// note: javascript variable names cannot start with a number
+import { deserializer } from '@jscad/3mf-deserializer'
 
-```
-const io = require('@jscad/io')
+const rawData = fs.readFileSync('PATH/TO/file.3mf')
+const jscadScript = deserialize({output: 'script'}, rawData)
+// OR
+const geometries = deserialize({output: 'geometry'}, rawData)
 ```
 
 ## Contributing
@@ -87,5 +77,5 @@ Small Note: If editing this README, please conform to the [standard-readme](http
 
 ## License
 
-[The MIT License (MIT)](../../../../LICENSE)
+[The MIT License (MIT)](../../LICENSE)
 (unless specified otherwise)

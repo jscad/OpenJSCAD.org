@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<model xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02" requiredextensions="" unit="millimeter" xml:lang="en-US">
+    <metadata name="Copyright">Copyright (c) 2018 3MF Consortium. All rights reserved.</metadata>
+    <metadata name="Description">3MF Test Case - Do not modify</metadata>
+    <resources>
+        <basematerials id="1">
+            <base displaycolor="#FF00000F" name="material_0"/>
+            <base displaycolor="#0018ECFF" name="material_1"/>
+            <base displaycolor="#7718ECFF" name="material_2"/>
+            <base displaycolor="#80FF6CFF" name="material_3"/>         
+        </basematerials>
+        <basematerials id="33">
+            <base displaycolor="#65AF85FF" name="material_5"/>
+            <base displaycolor="#4800ECFF" name="material_6"/>
+        </basematerials>
+        <object id="2" name="PC_303_01.3_colormf" pid="1" pindex="0">
+            <mesh>
+                <vertices>
+                    <vertex x="18.541" y="0.000" z="99.999"/>
+                    <vertex x="0.000" y="57.062" z="99.999"/>
+                    <vertex x="18.541" y="0.000" z="0.000"/>
+                    <vertex x="78.541" y="0.000" z="0.000"/>
+                    <vertex x="48.541" y="92.331" z="0.000"/>
+                    <vertex x="0.000" y="57.062" z="0.000"/>
+                    <vertex x="48.541" y="92.331" z="99.999"/>
+                    <vertex x="97.082" y="57.062" z="99.999"/>
+                    <vertex x="97.082" y="57.062" z="0.000"/>
+                    <vertex x="78.541" y="0.000" z="99.999"/>
+                </vertices>
+                <triangles>
+                    <triangle v1="0" v2="1" v3="2"/>
+                    <triangle p1="1" p2="1" p3="1" pid="1" v1="3" v2="0" v3="2"/>
+                    <triangle v1="4" v2="3" v3="2"/>
+                    <triangle v1="4" v2="2" v3="5"/>
+                    <triangle v1="5" v2="6" v3="4"/>
+                    <triangle v1="6" v2="7" v3="4"/>
+                    <triangle v1="4" v2="7" v3="8"/>
+                    <triangle v1="7" v2="9" v3="8"/>
+                    <triangle v1="8" v2="9" v3="3"/>
+                    <triangle v1="6" v2="9" v3="7"/>
+                    <triangle p1="3" p2="3" p3="3" v1="6" v2="0" v3="9"/>
+                    <triangle v1="1" v2="6" v3="5"/>
+                    <triangle v1="8" v2="3" v3="4"/>
+                    <triangle pid="33" v1="9" v2="0" v3="3"/>
+                    <triangle v1="2" v2="1" v3="5"/>
+                    <triangle v1="1" v2="0" v3="6"/>
+                </triangles>
+            </mesh>
+        </object>
+    </resources>
+    <build>
+        <item objectid="2" transform="1.0000 0.0000 0.0000 0.0000 1.0000 0.0000 0.0000 0.0000 1.0000 33.8000 30.2500 50.1000"/>
+    </build>
+</model>
