@@ -11,7 +11,7 @@ import { create } from './create.js'
  * @alias module:modeling/geometries/slice.fromGeom2
  */
 export const fromGeom2 = (geometry) => {
-  // Convert from 2D points to 3D
+  // Convert from 2D points to 3D vertices
   const contours = toOutlines(geometry).map((outline) => outline.map((point) => vec3.fromVec2(vec3.create(), point)))
   return create(contours)
 }

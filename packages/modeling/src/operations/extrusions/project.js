@@ -29,8 +29,8 @@ const projectGeom3 = (options, geometry) => {
   const polygons = geom3.toPolygons(geometry)
   let projPolys = []
   for (let i = 0; i < polygons.length; i++) {
-    const newPoints = polygons[i].vertices.map((v) => plane.projectionOfPoint(projPlane, v))
-    const newPoly = poly3.create(newPoints)
+    const newVertices = polygons[i].vertices.map((v) => plane.projectionOfPoint(projPlane, v))
+    const newPoly = poly3.create(newVertices)
     // only keep projections that face the same direction as the plane
     const newPlane = poly3.plane(newPoly)
     if (!aboutEqualNormals(projPlane, newPlane)) continue

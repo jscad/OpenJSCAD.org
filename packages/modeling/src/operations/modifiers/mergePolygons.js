@@ -6,19 +6,19 @@ import * as poly3 from '../../geometries/poly3/index.js'
 
 // create a set of edges from the given polygon, and link the edges as well
 const createEdges = (polygon) => {
-  const points = poly3.toVertices(polygon)
+  const vertices = poly3.toVertices(polygon)
   const edges = []
-  for (let i = 0; i < points.length; i++) {
-    const j = (i + 1) % points.length
+  for (let i = 0; i < vertices.length; i++) {
+    const j = (i + 1) % vertices.length
     const edge = {
-      v1: points[i],
-      v2: points[j]
+      v1: vertices[i],
+      v2: vertices[j]
     }
     edges.push(edge)
   }
   // link the edges together
   for (let i = 0; i < edges.length; i++) {
-    const j = (i + 1) % points.length
+    const j = (i + 1) % vertices.length
     edges[i].next = edges[j]
     edges[j].prev = edges[i]
   }
@@ -58,9 +58,9 @@ const calculateAnglesBetween = (current, opposite, normal) => {
 const v1 = vec3.create()
 const v2 = vec3.create()
 
-const calculateAngle = (prevPoint, point, nextPoint, normal) => {
-  const d0 = vec3.subtract(v1, point, prevPoint)
-  const d1 = vec3.subtract(v2, nextPoint, point)
+const calculateAngle = (prevVertex, midVertex, nextVertex, normal) => {
+  const d0 = vec3.subtract(v1, midVertex, prevVertex)
+  const d1 = vec3.subtract(v2, nextVertex, midVertex)
   vec3.cross(d0, d0, d1)
   return vec3.dot(d0, normal)
 }
@@ -68,11 +68,11 @@ const calculateAngle = (prevPoint, point, nextPoint, normal) => {
 // create a polygon starting from the given edge (if possible)
 const createPolygonAnd = (edge) => {
   let polygon
-  const points = []
+  const vertices = []
   while (edge.next) {
     const next = edge.next
 
-    points.push(edge.v1)
+    vertices.push(edge.v1)
 
     edge.v1 = null
     edge.v2 = null
@@ -81,7 +81,7 @@ const createPolygonAnd = (edge) => {
 
     edge = next
   }
-  if (points.length > 0) polygon = poly3.create(points)
+  if (vertices.length > 0) polygon = poly3.create(vertices)
   return polygon
 }
 

@@ -7,8 +7,8 @@ import * as geom3 from '../../geometries/geom3/index.js'
 // returns array numerically sorted and duplicates removed
 const sortNb = (array) => array.sort((a, b) => a - b).filter((item, pos, ary) => !pos || item !== ary[pos - 1])
 
-const insertMapping = (map, point, index) => {
-  const key = `${point}`
+const insertMapping = (map, vertex, index) => {
+  const key = `${vertex}`
   const mapping = map.get(key)
   if (mapping === undefined) {
     map.set(key, [index])
@@ -17,8 +17,8 @@ const insertMapping = (map, point, index) => {
   }
 }
 
-const findMapping = (map, point) => {
-  const key = `${point}`
+const findMapping = (map, vertex) => {
+  const key = `${vertex}`
   return map.get(key)
 }
 
@@ -29,23 +29,23 @@ export const scissionGeom3 = (geometry) => {
   const polygons = geom3.toPolygons(geometry)
   const pl = polygons.length
 
-  const indexesPerPoint = new Map()
+  const indexesPerVertex = new Map()
   const temp = vec3.create()
   polygons.forEach((polygon, index) => {
-    polygon.vertices.forEach((point) => {
-      insertMapping(indexesPerPoint, vec3.snap(temp, point, eps), index)
+    polygon.vertices.forEach((vertex) => {
+      insertMapping(indexesPerVertex, vec3.snap(temp, vertex, eps), index)
     })
   })
 
   const indexesPerPolygon = polygons.map((polygon) => {
     let indexes = []
-    polygon.vertices.forEach((point) => {
-      indexes = indexes.concat(findMapping(indexesPerPoint, vec3.snap(temp, point, eps)))
+    polygon.vertices.forEach((vertex) => {
+      indexes = indexes.concat(findMapping(indexesPerVertex, vec3.snap(temp, vertex, eps)))
     })
     return { e: 1, d: sortNb(indexes) } // for each polygon, push the list of indexes
   })
 
-  indexesPerPoint.clear()
+  indexesPerVertex.clear()
 
   // regroupe les correspondances des polygones se touchant
   // boucle ne s'arrêtant que quand deux passages retournent le même nb de polygones

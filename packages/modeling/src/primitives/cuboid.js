@@ -35,7 +35,7 @@ export const cuboid = (options) => {
       [[0, 2, 3, 1], [0, 0, -1]],
       [[4, 5, 7, 6], [0, 0, +1]]
     ].map((info) => {
-      const points = info[0].map((i) => {
+      const vertices = info[0].map((i) => {
         const pos = [
           center[0] + (size[0] / 2) * (2 * !!(i & 1) - 1),
           center[1] + (size[1] / 2) * (2 * !!(i & 2) - 1),
@@ -43,7 +43,7 @@ export const cuboid = (options) => {
         ]
         return pos
       })
-      return poly3.create(points)
+      return poly3.create(vertices)
     })
   )
   return result

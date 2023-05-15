@@ -3,31 +3,32 @@ import * as vec3 from '../../maths/vec3/index.js'
 import { create } from './create.js'
 
 /**
- * Create a slice from the given points.
+ * Create a slice from the given vertices.
  *
- * @param {Array} points - list of points, where each point is either 2D or 3D
+ * @param {Array} vertices - list of vertices, where each vertex is either 2D or 3D
  * @returns {slice} a new slice
  * @alias module:modeling/geometries/slice.fromPoints
  *
  * @example
- * const points = [
+ * const vertices = [
  *   [0,  0, 3],
  *   [0, 10, 3],
  *   [0, 10, 6]
  * ]
- * const slice = fromPoints(points)
+ * const slice = fromPoints(vertices)
  */
-export const fromPoints = (points) => {
-  if (!Array.isArray(points)) throw new Error('the given points must be an array')
-  if (points.length < 3) throw new Error('the given points must contain THREE or more points')
+export const fromPoints = (vertices) => {
+  if (!Array.isArray(vertices)) throw new Error('the given vertices must be an array')
+  if (vertices.length < 3) throw new Error('the given vertices must contain THREE or more vertices')
 
-  // Convert from 2D points to 3D if needed
-  const cloned = points.map((point) => {
-    if (point.length === 3) {
-      return point
+  // Convert from 2D points to 3D vertices if needed
+  const cloned = vertices.map((vertex) => {
+    if (vertex.length === 3) {
+      return vertex
     } else {
-      return vec3.fromVec2(vec3.create(), point)
+      return vec3.fromVec2(vec3.create(), vertex)
     }
   })
+  // create a slice with one contour containing all vertices
   return create([cloned])
 }

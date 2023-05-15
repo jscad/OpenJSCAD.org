@@ -115,21 +115,15 @@ export const boolean = (subjectGeom, clippingGeom, operation) => {
   const sbbox = [Infinity, Infinity, -Infinity, -Infinity]
   const cbbox = [Infinity, Infinity, -Infinity, -Infinity]
 
-  // console.time('fill queue')
   const eventQueue = fillQueue(subject, clipping, sbbox, cbbox, operation)
-  // console.timeEnd('fill queue')
 
   trivial = compareBBoxes(subject, clipping, sbbox, cbbox, operation)
   if (trivial) {
     return trivial
   }
-  // console.time('subdivide edges')
   const sortedEvents = subdivideSegments(eventQueue, subject, clipping, sbbox, cbbox, operation)
-  // console.timeEnd('subdivide edges')
 
-  // console.time('connect vertices')
   const contours = connectEdges(sortedEvents, operation)
-  // console.timeEnd('connect vertices')
 
   // Convert contours to geom2
   const polygons = []

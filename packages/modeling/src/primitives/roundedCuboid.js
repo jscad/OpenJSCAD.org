@@ -25,31 +25,32 @@ const createCorners = (center, size, radius, segments, slice, positive) => {
   const corner1 = vec3.add(vec3.create(), center, [radius - size[0], size[1] - radius, layerOffset])
   const corner2 = vec3.add(vec3.create(), center, [radius - size[0], radius - size[1], layerOffset])
   const corner3 = vec3.add(vec3.create(), center, [size[0] - radius, radius - size[1], layerOffset])
-  const corner0Points = []
-  const corner1Points = []
-  const corner2Points = []
-  const corner3Points = []
+  const corner0Vertices = []
+  const corner1Vertices = []
+  const corner2Vertices = []
+  const corner3Vertices = []
   for (let i = 0; i <= layerSegments; i++) {
     const radians = layerSegments > 0 ? TAU / 4 * i / layerSegments : 0
+    // FIXME allocate only once
     const point2d = vec2.fromAngleRadians(vec2.create(), radians)
     vec2.scale(point2d, point2d, layerRadius)
     const point3d = vec3.fromVec2(vec3.create(), point2d)
-    corner0Points.push(vec3.add(vec3.create(), corner0, point3d))
+    corner0Vertices.push(vec3.add(vec3.create(), corner0, point3d))
     vec3.rotateZ(point3d, point3d, [0, 0, 0], TAU / 4)
-    corner1Points.push(vec3.add(vec3.create(), corner1, point3d))
+    corner1Vertices.push(vec3.add(vec3.create(), corner1, point3d))
     vec3.rotateZ(point3d, point3d, [0, 0, 0], TAU / 4)
-    corner2Points.push(vec3.add(vec3.create(), corner2, point3d))
+    corner2Vertices.push(vec3.add(vec3.create(), corner2, point3d))
     vec3.rotateZ(point3d, point3d, [0, 0, 0], TAU / 4)
-    corner3Points.push(vec3.add(vec3.create(), corner3, point3d))
+    corner3Vertices.push(vec3.add(vec3.create(), corner3, point3d))
   }
   if (!positive) {
-    corner0Points.reverse()
-    corner1Points.reverse()
-    corner2Points.reverse()
-    corner3Points.reverse()
-    return [corner3Points, corner2Points, corner1Points, corner0Points]
+    corner0Vertices.reverse()
+    corner1Vertices.reverse()
+    corner2Vertices.reverse()
+    corner3Vertices.reverse()
+    return [corner3Vertices, corner2Vertices, corner1Vertices, corner0Vertices]
   }
-  return [corner0Points, corner1Points, corner2Points, corner3Points]
+  return [corner0Vertices, corner1Vertices, corner2Vertices, corner3Vertices]
 }
 
 const stitchCorners = (previousCorners, currentCorners) => {
@@ -92,20 +93,20 @@ const stitchSides = (bottomCorners, topCorners) => {
   bottomCorners = [bottomCorners[3], bottomCorners[2], bottomCorners[1], bottomCorners[0]]
   bottomCorners = bottomCorners.map((corner) => corner.slice().reverse())
 
-  const bottomPoints = []
+  const bottomVertices = []
   bottomCorners.forEach((corner) => {
-    corner.forEach((point) => bottomPoints.push(point))
+    corner.forEach((vertex) => bottomVertices.push(vertex))
   })
 
-  const topPoints = []
+  const topVertices = []
   topCorners.forEach((corner) => {
-    corner.forEach((point) => topPoints.push(point))
+    corner.forEach((vertex) => topVertices.push(vertex))
   })
 
   const polygons = []
-  for (let i = 0; i < topPoints.length; i++) {
-    const j = (i + 1) % topPoints.length
-    polygons.push(poly3.create([bottomPoints[i], bottomPoints[j], topPoints[j], topPoints[i]]))
+  for (let i = 0; i < topVertices.length; i++) {
+    const j = (i + 1) % topVertices.length
+    polygons.push(poly3.create([bottomVertices[i], bottomVertices[j], topVertices[j], topVertices[i]]))
   }
   return polygons
 }
@@ -168,11 +169,11 @@ export const roundedCuboid = (options) => {
 
     if (slice === segments) {
       // add the top
-      let points = cornersPos.map((corner) => corner[0])
-      polygons.push(poly3.create(points))
+      let vertices = cornersPos.map((corner) => corner[0])
+      polygons.push(poly3.create(vertices))
       // add the bottom
-      points = cornersNeg.map((corner) => corner[0])
-      polygons.push(poly3.create(points))
+      vertices = cornersNeg.map((corner) => corner[0])
+      polygons.push(poly3.create(vertices))
     }
 
     prevCornersPos = cornersPos

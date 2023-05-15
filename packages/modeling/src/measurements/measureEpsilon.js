@@ -27,7 +27,7 @@ const measureEpsilonOfGeom3 = (geometry) => calculateEpsilonFromBounds(measureBo
 
 /**
  * Measure the epsilon of the given geometries.
- * Epsilon values are used in various functions to determine minimum distances between points, planes, etc.
+ * Epsilon values are used in various functions to determine minimum distances between vertices, planes, etc.
  * @param {...Object} geometries - the geometries to measure
  * @return {Number|Array} the epsilon, or a list of epsilons for each geometry
  * @alias module:modeling/measurements.measureEpsilon

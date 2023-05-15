@@ -2,7 +2,7 @@ import { ellipsoid } from './ellipsoid.js'
 import { isGT } from './commonChecks.js'
 
 /**
- * Construct a sphere in three dimensional space where all points are at the same distance from the center.
+ * Construct a sphere in three dimensional space where all vertices are at the same distance from the center.
  * @see [ellipsoid]{@link module:modeling/primitives.ellipsoid} for more options
  * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of sphere

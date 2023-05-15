@@ -105,7 +105,7 @@ export const geodesicSphere = (options) => {
         }
       }
     }
-    return { points: c, triangles: f, offset: n }
+    return { vertices: c, triangles: f, offset: n }
   }
 
   const mix3 = (a, b, f) => {
@@ -117,18 +117,18 @@ export const geodesicSphere = (options) => {
     return c
   }
 
-  let points = []
+  let vertices = []
   let faces = []
   let offset = 0
 
   for (let i = 0; i < ti.length; i++) {
     const g = geodesicSubDivide([ci[ti[i][0]], ci[ti[i][1]], ci[ti[i][2]]], frequency, offset)
-    points = points.concat(g.points)
+    vertices = vertices.concat(g.vertices)
     faces = faces.concat(g.triangles)
     offset = g.offset
   }
 
-  let geometry = polyhedron({ points: points, faces: faces, orientation: 'inward' })
+  let geometry = polyhedron({ points: vertices, faces: faces, orientation: 'inward' })
   if (radius !== 1) geometry = geom3.transform(mat4.fromScaling(mat4.create(), [radius, radius, radius]), geometry)
   return geometry
 }

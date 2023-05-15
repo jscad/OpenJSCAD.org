@@ -5,7 +5,7 @@ import { fromPoints } from './index.js'
 import { comparePolygons, compareVectors } from '../../../test/helpers/index.js'
 
 test('fromPoints: Creates a populated geom3', (t) => {
-  const points = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]
+  const vertices = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]
   const expected = {
     polygons: [
       { vertices: [[0, 0, 0], [1, 0, 0], [1, 0, 1]] }
@@ -13,12 +13,12 @@ test('fromPoints: Creates a populated geom3', (t) => {
     isRetesselated: false,
     transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
-  const obs = fromPoints(points)
+  const obs = fromPoints(vertices)
   t.true(comparePolygons(obs.polygons[0], expected.polygons[0]))
   t.true(compareVectors(obs.transforms, expected.transforms))
 })
 
-test('fromPoints: throws for improper points', (t) => {
+test('fromPoints: throws for improper vertices', (t) => {
   t.throws(() => fromPoints(), { instanceOf: Error })
   t.throws(() => fromPoints(0, 0, 0), { instanceOf: Error })
 })

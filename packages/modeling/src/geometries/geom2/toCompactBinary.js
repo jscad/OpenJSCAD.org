@@ -16,7 +16,7 @@ export const toCompactBinary = (geometry) => {
   })
 
   // FIXME why Float32Array?
-  const compacted = new Float32Array(size) // type + transforms + color + vertex data
+  const compacted = new Float32Array(size) // type + transforms + color + points
 
   compacted[0] = 0 // type code: 0 => geom2, 1 => geom3 , 2 => path2
 

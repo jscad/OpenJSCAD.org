@@ -16,14 +16,14 @@ test('clone: Creates a clone on an empty geom3', (t) => {
 })
 
 test('clone: Creates a clone of a populated geom3', (t) => {
-  const points = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]
+  const vertices = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]
   const expected = {
     polygons: [
       { vertices: [[0, 0, 0], [1, 0, 0], [1, 0, 1]] }
     ],
     transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
-  const geometry = fromPoints(points)
+  const geometry = fromPoints(vertices)
   const another = clone(geometry)
   t.not(another, geometry)
   t.true(comparePolygons(another.polygons[0], expected.polygons[0]))

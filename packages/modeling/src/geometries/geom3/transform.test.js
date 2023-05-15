@@ -7,7 +7,7 @@ import { transform, fromPoints, toPolygons } from './index.js'
 import { comparePolygons, compareVectors } from '../../../test/helpers/index.js'
 
 test('transform: Adjusts the transforms of a populated geom3', (t) => {
-  const points = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]
+  const vertices = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]
   const rotation = 90 * 0.017453292519943295
   const rotate90 = mat4.fromZRotation(mat4.create(), rotation)
 
@@ -20,7 +20,7 @@ test('transform: Adjusts the transforms of a populated geom3', (t) => {
     ],
     transforms: [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
-  const geometry = fromPoints(points)
+  const geometry = fromPoints(vertices)
   let another = transform(rotate90, geometry)
   t.not(geometry, another)
   t.true(comparePolygons(another.polygons[0], expected.polygons[0]))

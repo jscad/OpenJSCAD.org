@@ -85,24 +85,24 @@ const measureBoundingBoxOfGeom3 = (geometry) => {
 
   const polygons = geom3.toPolygons(geometry)
 
-  let minPoint = vec3.create()
+  let minVertex = vec3.create()
   if (polygons.length > 0) {
-    const points = poly3.toVertices(polygons[0])
-    vec3.copy(minPoint, points[0])
+    const vertices = poly3.toVertices(polygons[0])
+    vec3.copy(minVertex, vertices[0])
   }
-  let maxPoint = vec3.clone(minPoint)
+  let maxVertex = vec3.clone(minVertex)
 
   polygons.forEach((polygon) => {
-    poly3.toVertices(polygon).forEach((point) => {
-      vec3.min(minPoint, minPoint, point)
-      vec3.max(maxPoint, maxPoint, point)
+    poly3.toVertices(polygon).forEach((vertex) => {
+      vec3.min(minVertex, minVertex, vertex)
+      vec3.max(maxVertex, maxVertex, vertex)
     })
   })
 
-  minPoint = [minPoint[0], minPoint[1], minPoint[2]]
-  maxPoint = [maxPoint[0], maxPoint[1], maxPoint[2]]
+  minVertex = [minVertex[0], minVertex[1], minVertex[2]]
+  maxVertex = [maxVertex[0], maxVertex[1], maxVertex[2]]
 
-  boundingBox = [minPoint, maxPoint]
+  boundingBox = [minVertex, maxVertex]
 
   cache.set(geometry, boundingBox)
 

@@ -48,16 +48,16 @@ export const toCompactBinary = (geometry) => {
   let ci = 22
   let vi = ci + numberOfPolygons
   polygons.forEach((polygon) => {
-    const points = poly3.toVertices(polygon)
+    const vertices = poly3.toVertices(polygon)
     // record the number of vertices per polygon
-    compacted[ci] = points.length
+    compacted[ci] = vertices.length
     ci++
     // convert the vertices
-    for (let i = 0; i < points.length; i++) {
-      const point = points[i]
-      compacted[vi + 0] = point[0]
-      compacted[vi + 1] = point[1]
-      compacted[vi + 2] = point[2]
+    for (let i = 0; i < vertices.length; i++) {
+      const vertex = vertices[i]
+      compacted[vi + 0] = vertex[0]
+      compacted[vi + 1] = vertex[1]
+      compacted[vi + 2] = vertex[2]
       vi += 3
     }
   })
