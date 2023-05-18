@@ -1,17 +1,9 @@
 const geom3 = require('../../geometries/geom3')
 const poly3 = require('../../geometries/poly3')
 
-const aboutEqualNormals = require('../../maths/utils/aboutEqualNormals')
-
 const reTesselateCoplanarPolygons = require('./reTesselateCoplanarPolygons')
 
-const coplanar = (plane1, plane2) => {
-  // expect the same distance from the origin, within tolerance
-  if (Math.abs(plane1[3] - plane2[3]) < 0.00000015) {
-    return aboutEqualNormals(plane1, plane2)
-  }
-  return false
-}
+const tolerance = 0.000000015
 
 /*
   After boolean operations all coplanar polygon fragments are joined by a retesselating
@@ -26,29 +18,77 @@ const retessellate = (geometry) => {
     return geometry
   }
 
-  const polygons = geom3.toPolygons(geometry)
-  const polygonsPerPlane = [] // elements: [plane, [poly3...]]
-  polygons.forEach((polygon) => {
-    const mapping = polygonsPerPlane.find((element) => coplanar(element[0], poly3.plane(polygon)))
-    if (mapping) {
-      const polygons = mapping[1]
-      polygons.push(polygon)
+  const polygons = geom3.toPolygons(geometry).map((polygon, index) => ({vertices: polygon.vertices, plane: poly3.plane(polygon), index: index}))
+  const classified = classifyPolygons(polygons)
+
+  const destPolygons = []
+  classified.forEach((group) => {
+    if (Array.isArray(group)) {
+      const reTessellateCoplanarPolygons = reTesselateCoplanarPolygons(group)
+      destPolygons.push(...reTessellateCoplanarPolygons)
     } else {
-      polygonsPerPlane.push([poly3.plane(polygon), [polygon]])
+      destPolygons.push(group)
     }
   })
 
-  let destpolygons = []
-  polygonsPerPlane.forEach((mapping) => {
-    const sourcepolygons = mapping[1]
-    const retesselayedpolygons = reTesselateCoplanarPolygons(sourcepolygons)
-    destpolygons = destpolygons.concat(retesselayedpolygons)
-  })
-
-  const result = geom3.create(destpolygons)
+  const result = geom3.create(destPolygons)
   result.isRetesselated = true
 
   return result
+}
+
+const classifyPolygons = (polygons) => {
+  let clusters = [polygons] // a cluster is an array of potentially coplanar polygons
+  const nonCoplanar = [] // polygons that are known to be non-coplanar
+  // go through each component of the plane starting with the last one (the distance from origin)
+  for (let component = 3; component >= 0; component--) {
+    const maybeCoplanar = []
+    clusters.forEach(cluster => {
+      // sort the cluster by the current component
+      cluster.sort(byPlaneComponent(component))
+      // iterate through the cluster and check if there are polygons which are not coplanar with the others 
+      // or if there are sub-clusters of coplanar polygons
+      let startIndex = 0
+      for (let i = 1; i < cluster.length; i++) {
+        // if there's a difference larger than the tolerance, split the cluster
+        if (cluster[i].plane[component] - cluster[startIndex].plane[component] > tolerance) {
+          // if there's a single polygon it's definitely not coplanar with any others
+          if (i - startIndex == 1) {
+            nonCoplanar.push(cluster[startIndex])
+          } else { // we have a new sub cluster of potentially coplanar polygons
+            maybeCoplanar.push(cluster.slice(startIndex, i))
+          }
+          startIndex = i
+        }
+      }
+      // handle the last elements of the cluster
+      if (cluster.length - startIndex == 1) {
+        nonCoplanar.push(cluster[startIndex])
+      } else {
+        maybeCoplanar.push(cluster.slice(startIndex))
+      }
+    })
+    // replace previous clusters with the new ones
+    clusters = maybeCoplanar
+  }
+  // restore the original order of the polygons
+  const result = []
+  // polygons inside the cluster should already be sorted by index
+  clusters.forEach(cluster => result[cluster[0]?.index] = cluster)
+  nonCoplanar.forEach(polygon => result[polygon.index] = polygon)
+
+  return result
+}
+
+const byPlaneComponent = (component) => {
+  return (a, b) => {
+    if (a.plane[component] - b.plane[component] > tolerance) {
+      return 1
+    } else if (b.plane[component] - a.plane[component] > tolerance) {
+      return -1
+    }
+    return 0
+  }
 }
 
 module.exports = retessellate
