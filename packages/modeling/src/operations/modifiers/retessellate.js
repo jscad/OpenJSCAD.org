@@ -1,9 +1,7 @@
 const geom3 = require('../../geometries/geom3')
 const poly3 = require('../../geometries/poly3')
-
+const { NEPS } = require('../../maths/constants')
 const reTesselateCoplanarPolygons = require('./reTesselateCoplanarPolygons')
-
-const tolerance = 0.000000015
 
 /*
   After boolean operations all coplanar polygon fragments are joined by a retesselating
@@ -43,9 +41,10 @@ const classifyPolygons = (polygons) => {
   // go through each component of the plane starting with the last one (the distance from origin)
   for (let component = 3; component >= 0; component--) {
     const maybeCoplanar = []
+    const tolerance = component == 3 ? 0.000000015 : NEPS
     clusters.forEach(cluster => {
       // sort the cluster by the current component
-      cluster.sort(byPlaneComponent(component))
+      cluster.sort(byPlaneComponent(component, tolerance))
       // iterate through the cluster and check if there are polygons which are not coplanar with the others 
       // or if there are sub-clusters of coplanar polygons
       let startIndex = 0
@@ -80,7 +79,7 @@ const classifyPolygons = (polygons) => {
   return result
 }
 
-const byPlaneComponent = (component) => {
+const byPlaneComponent = (component, tolerance) => {
   return (a, b) => {
     if (a.plane[component] - b.plane[component] > tolerance) {
       return 1
