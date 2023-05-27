@@ -1,19 +1,31 @@
+import { mat4 } from '../maths/index.js'
+import { path2 } from '../geometries/index.js'
+
 import { vectorChar } from './vectorChar.js'
 import { vectorParams } from './vectorParams.js'
 
-// translate text line
+/**
+ * Represents a line of characters as an anonymous object containing a list of VectorChar.
+ * @typedef {Object} VectorLine
+ * @property {number} width - sum of character width and letter spacing
+ * @property {number} height - maximum height of character heights
+ * @property {Array} characters - list of vector characters
+ */
+
+const matrix = mat4.create()
+
 const translateLine = (options, line) => {
-  const { x, y } = Object.assign({ x: 0, y: 0 }, options || {})
-  const segments = line.segments
-  let segment = null
-  let point = null
-  for (let i = 0, il = segments.length; i < il; i++) {
-    segment = segments[i]
-    for (let j = 0, jl = segment.length; j < jl; j++) {
-      point = segment[j]
-      segment[j] = [point[0] + x, point[1] + y]
-    }
-  }
+  const { x, y } = Object.assign({ x: 0, y: 0 }, options)
+
+  mat4.identity(matrix)
+  mat4.translate(matrix, matrix, [x, y, 0])
+
+  line.chars = line.chars.map((vchar) => {
+    vchar.paths = vchar.paths.map((path) => {
+      return path2.transform(matrix, path)
+    })
+    return vchar
+  })
   return line
 }
 
@@ -23,71 +35,85 @@ const translateLine = (options, line) => {
  * @param {Object|String} [options] - options for construction or ascii string
  * @param {Float} [options.xOffset=0] - x offset
  * @param {Float} [options.yOffset=0] - y offset
- * @param {Float} [options.height=21] - font size (uppercase height)
- * @param {Float} [options.lineSpacing=1.4] - line spacing expressed as a percentage of font size
- * @param {Float} [options.letterSpacing=1] - extra letter spacing expressed as a percentage of font size
+ * @param {Float} [options.height=14] - height of requested characters (uppercase height), i.e. font height in points
+ * @param {Float} [options.lineSpacing=30/14] - line spacing expressed as a percentage of height
+ * @param {Float} [options.letterSpacing=0] - extra letter spacing, expressed as a proportion of height, i.e. like CSS em
  * @param {String} [options.align='left'] - multi-line text alignment: left, center, right
  * @param {Float} [options.extrudeOffset=0] - width of the extrusion that will be applied (manually) after the creation of the character
  * @param {String} [options.input='?'] - ascii string (ignored/overwrited if provided as seconds parameter)
  * @param {String} [text='?'] - ascii string
- * @returns {Array} characters segments [[[x, y], ...], ...]
+ * @returns {Array} list of vector line objects, where each line contains a list of vector character objects
  * @alias module:modeling/text.vectorText
  *
  * @example
- * let textSegments = vectorText()
+ * let mylines = vectorText()
  * or
- * let textSegments = vectorText('OpenJSCAD')
+ * let mylines = vectorText('OpenJSCAD')
  * or
- * let textSegments = vectorText({ yOffset: -50 }, 'OpenJSCAD')
+ * let mylines = vectorText({ yOffset: -50 }, 'OpenJSCAD')
  * or
- * let textSegments = vectorText({ yOffset: -80, input: 'OpenJSCAD' })
+ * let mylines = vectorText({ yOffset: -80, input: 'OpenJSCAD' })
  */
 export const vectorText = (options, text) => {
   const {
     xOffset, yOffset, input, font, height, align, extrudeOffset, lineSpacing, letterSpacing
   } = vectorParams(options, text)
-  let [x, y] = [xOffset, yOffset]
-  let i, il, char, vect, width, diff
-  let line = { width: 0, segments: [] }
-  const lines = []
-  let output = []
-  let maxWidth = 0
-  const lineStart = x
+
+  // NOTE: Just like CSS letter-spacing, the spacing could be positive or negative
+  const extraLetterSpacing = (height * letterSpacing)
+
+  // manage the list of lines
+  let maxWidth = 0 // keep track of max width for final alignment
+  let line = { width: 0, height: 0, chars: [] }
+  let lines = []
+
   const pushLine = () => {
-    lines.push(line)
     maxWidth = Math.max(maxWidth, line.width)
-    line = { width: 0, segments: [] }
+
+    if (line.chars.length) lines.push(line)
+    line = { width: 0, height: 0, chars: [] }
   }
-  for (i = 0, il = input.length; i < il; i++) {
-    char = input[i]
-    vect = vectorChar({ xOffset: x, yOffset: y, font, height, extrudeOffset }, char)
-    if (char === '\n') {
-      x = lineStart
-      y -= vect.height * lineSpacing
+
+  // convert the text into a list of vector lines
+  let x = xOffset
+  let y = yOffset
+  let vchar
+  let il = input.length
+  for (let i = 0; i < il; i++) {
+    const character = input[i]
+    if (character === '\n') {
       pushLine()
+
+      // reset x and y for a new line
+      x = xOffset
+      y -= height * lineSpacing
       continue
     }
-    width = vect.width * letterSpacing
-    line.width += width
+    // convert the character
+    vchar = vectorChar({ xOffset: x, yOffset: y, font, height, extrudeOffset }, character)
+
+    let width = vchar.width + extraLetterSpacing
     x += width
-    if (char !== ' ') {
-      line.segments = line.segments.concat(vect.segments)
+
+    // update current line
+    line.width += width
+    line.height = Math.max(line.height, vchar.height)
+    if (character !== ' ') {
+      line.chars = line.chars.concat(vchar)
     }
   }
-  if (line.segments.length) {
-    pushLine()
-  }
-  for (i = 0, il = lines.length; i < il; i++) {
-    line = lines[i]
-    if (maxWidth > line.width) {
-      diff = maxWidth - line.width
-      if (align === 'right') {
-        line = translateLine({ x: diff }, line)
-      } else if (align === 'center') {
-        line = translateLine({ x: diff / 2 }, line)
-      }
+  if (line.chars.length) pushLine()
+
+  // align all lines as requested
+  lines = lines.map((line) => {
+    const diff = maxWidth - line.width
+    if (align === 'right') {
+      return translateLine({ x: diff }, line)
+    } else if (align === 'center') {
+      return translateLine({ x: diff / 2 }, line)
+    } else {
+      return line
     }
-    output = output.concat(line.segments)
-  }
-  return output
+  })
+  return lines
 }
