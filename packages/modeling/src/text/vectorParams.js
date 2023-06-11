@@ -6,9 +6,9 @@ const defaultsVectorParams = {
   input: '?',
   align: 'left',
   font: simplex,
-  height: 14, // == old vector_xxx simplex font height
-  lineSpacing: 2.142857142857143, // == 30/14 == old vector_xxx ratio
-  letterSpacing: 1,
+  height: 14, // old vector_xxx simplex font height
+  lineSpacing: 30/14, // old vector_xxx ratio
+  letterSpacing: 0, // proportion of font size, i.e. CSS em
   extrudeOffset: 0
 }
 
