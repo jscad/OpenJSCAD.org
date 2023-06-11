@@ -10,7 +10,7 @@ import { extrudeWalls } from './extrudeWalls.js'
 const defaultCallback = (progress, index, base) => {
   let baseSlice = null
   if (geom2.isA(base)) baseSlice = slice.fromGeom2(base)
-  if (poly3.isA(base)) baseSlice = slice.fromPoints(poly3.toVertices(base))
+  if (poly3.isA(base)) baseSlice = slice.fromVertices(poly3.toVertices(base))
 
   return progress === 0 || progress === 1 ? slice.transform(mat4.fromTranslation(mat4.create(), [0, 0, progress]), baseSlice) : null
 }
