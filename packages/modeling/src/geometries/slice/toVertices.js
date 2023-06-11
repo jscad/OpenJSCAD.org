@@ -3,12 +3,12 @@
  * The returned array should not be modified as the data is shared with the slice.
  * @param {slice} slice - the slice
  * @returns {Array} an array of 3D vertices
- * @alias module:modeling/geometries/slice.toPoints
+ * @alias module:modeling/geometries/slice.toVertices
  *
  * @example
- * let sharedPoints = toPoints(slice)
+ * let sharedVertices = toVertices(slice)
  */
-export const toPoints = (slice) => {
+export const toVertices = (slice) => {
   const vertices = []
   slice.contours.forEach((contour) => {
     contour.forEach((vertex) => {

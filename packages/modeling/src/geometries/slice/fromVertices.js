@@ -7,7 +7,7 @@ import { create } from './create.js'
  *
  * @param {Array} vertices - list of vertices, where each vertex is either 2D or 3D
  * @returns {slice} a new slice
- * @alias module:modeling/geometries/slice.fromPoints
+ * @alias module:modeling/geometries/slice.fromVertices
  *
  * @example
  * const vertices = [
@@ -15,9 +15,9 @@ import { create } from './create.js'
  *   [0, 10, 3],
  *   [0, 10, 6]
  * ]
- * const slice = fromPoints(vertices)
+ * const slice = fromVertices(vertices)
  */
-export const fromPoints = (vertices) => {
+export const fromVertices = (vertices) => {
   if (!Array.isArray(vertices)) throw new Error('the given vertices must be an array')
   if (vertices.length < 3) throw new Error('the given vertices must contain THREE or more vertices')
 

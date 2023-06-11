@@ -1,11 +1,11 @@
 import test from 'ava'
 
-import { equals, fromPoints } from './index.js'
+import { equals, fromVertices } from './index.js'
 
 test('slice: equals() should return proper value', (t) => {
-  const sliceA = fromPoints([[0, 0], [1, 0], [1, 1]])
-  const sliceB = fromPoints([[0, 1], [1, 0], [1, 1]])
-  const sliceC = fromPoints([[0, 0], [1, 0], [1, 1], [0, 0]])
+  const sliceA = fromVertices([[0, 0], [1, 0], [1, 1]])
+  const sliceB = fromVertices([[0, 1], [1, 0], [1, 1]])
+  const sliceC = fromVertices([[0, 0], [1, 0], [1, 1], [0, 0]])
 
   t.true(equals(sliceA, sliceA))
 
