@@ -25,7 +25,7 @@ class PolygonTreeNode {
     this.parent = parent
     this.children = []
     this.polygon = polygon
-    this.removed = false  // state of branch or leaf
+    this.removed = false // state of branch or leaf
   }
 
   // fill the tree with polygons. Should be called on the root node only; child nodes must
