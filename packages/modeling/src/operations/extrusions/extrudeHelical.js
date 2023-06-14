@@ -40,7 +40,7 @@ const extrudeHelical = (options, geometry) => {
 
   let pitch
   // ignore height if pitch is set
-  if(!options.pitch && options.height) {
+  if (!options.pitch && options.height) {
     pitch = options.height / (angle / TAU)
   } else {
     pitch = options.pitch ? options.pitch : defaults.pitch
@@ -49,18 +49,17 @@ const extrudeHelical = (options, geometry) => {
   // needs at least 3 segments for each revolution
   const minNumberOfSegments = 3
 
-  if (segmentsPerRotation < minNumberOfSegments)
-    throw new Error(`The number of segments per rotation needs to be at least 3.`)
+  if (segmentsPerRotation < minNumberOfSegments) { throw new Error('The number of segments per rotation needs to be at least 3.') }
 
-  let shapeSides = geom2.toSides(geometry)
+  const shapeSides = geom2.toSides(geometry)
   if (shapeSides.length === 0) throw new Error('the given geometry cannot be empty')
 
   // const pointsWithNegativeX = shapeSides.filter((s) => (s[0][0] < 0))
   const pointsWithPositiveX = shapeSides.filter((s) => (s[0][0] >= 0))
-  
+
   let baseSlice = slice.fromSides(shapeSides)
-  
-  if(pointsWithPositiveX.length === 0) {
+
+  if (pointsWithPositiveX.length === 0) {
     // only points in negative x plane, reverse
     baseSlice = slice.reverse(baseSlice)
   }

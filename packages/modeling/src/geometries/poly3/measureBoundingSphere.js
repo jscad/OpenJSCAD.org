@@ -1,4 +1,3 @@
-const vec3 = require('../../maths/vec3')
 const vec4 = require('../../maths/vec4')
 
 const cache = new WeakMap()
@@ -10,7 +9,7 @@ const cache = new WeakMap()
  * @alias module:modeling/geometries/poly3.measureBoundingSphere
  */
 const measureBoundingSphere = (polygon) => {
-  let boundingSphere = cache.get(polygon)
+  const boundingSphere = cache.get(polygon)
   if (boundingSphere) return boundingSphere
 
   const vertices = polygon.vertices

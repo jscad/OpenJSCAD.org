@@ -53,7 +53,7 @@ test('expand: round-expanding a bent line produces expected geometry', (t) => {
   const expandedPoints = geom2.toPoints(expandedPathGeom2)
 
   t.notThrows(() => geom2.validate(expandedPathGeom2))
-  const expectedArea = 56 + TAU  * delta * 1.25 // shape will have 1 and 1/4 circles
+  const expectedArea = 56 + TAU * delta * 1.25 // shape will have 1 and 1/4 circles
   nearlyEqual(t, area(expandedPoints), expectedArea, 0.01, 'Measured area should be pretty close')
   const boundingBox = measureBoundingBox(expandedPathGeom2)
   t.true(comparePoints(boundingBox, [[-7, -2, 0], [2, 12, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))

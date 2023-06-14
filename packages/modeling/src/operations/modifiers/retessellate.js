@@ -16,7 +16,7 @@ const retessellate = (geometry) => {
     return geometry
   }
 
-  const polygons = geom3.toPolygons(geometry).map((polygon, index) => ({vertices: polygon.vertices, plane: poly3.plane(polygon), index: index}))
+  const polygons = geom3.toPolygons(geometry).map((polygon, index) => ({ vertices: polygon.vertices, plane: poly3.plane(polygon), index: index }))
   const classified = classifyPolygons(polygons)
 
   const destPolygons = []
@@ -41,18 +41,18 @@ const classifyPolygons = (polygons) => {
   // go through each component of the plane starting with the last one (the distance from origin)
   for (let component = 3; component >= 0; component--) {
     const maybeCoplanar = []
-    const tolerance = component == 3 ? 0.000000015 : NEPS
-    clusters.forEach(cluster => {
+    const tolerance = component === 3 ? 0.000000015 : NEPS
+    clusters.forEach((cluster) => {
       // sort the cluster by the current component
       cluster.sort(byPlaneComponent(component, tolerance))
-      // iterate through the cluster and check if there are polygons which are not coplanar with the others 
+      // iterate through the cluster and check if there are polygons which are not coplanar with the others
       // or if there are sub-clusters of coplanar polygons
       let startIndex = 0
       for (let i = 1; i < cluster.length; i++) {
         // if there's a difference larger than the tolerance, split the cluster
         if (cluster[i].plane[component] - cluster[startIndex].plane[component] > tolerance) {
           // if there's a single polygon it's definitely not coplanar with any others
-          if (i - startIndex == 1) {
+          if (i - startIndex === 1) {
             nonCoplanar.push(cluster[startIndex])
           } else { // we have a new sub cluster of potentially coplanar polygons
             maybeCoplanar.push(cluster.slice(startIndex, i))
@@ -61,7 +61,7 @@ const classifyPolygons = (polygons) => {
         }
       }
       // handle the last elements of the cluster
-      if (cluster.length - startIndex == 1) {
+      if (cluster.length - startIndex === 1) {
         nonCoplanar.push(cluster[startIndex])
       } else {
         maybeCoplanar.push(cluster.slice(startIndex))
@@ -73,21 +73,19 @@ const classifyPolygons = (polygons) => {
   // restore the original order of the polygons
   const result = []
   // polygons inside the cluster should already be sorted by index
-  clusters.forEach(cluster => result[cluster[0]?.index] = cluster)
-  nonCoplanar.forEach(polygon => result[polygon.index] = polygon)
+  clusters.forEach((cluster) => { result[cluster[0]?.index] = cluster })
+  nonCoplanar.forEach((polygon) => { result[polygon.index] = polygon })
 
   return result
 }
 
-const byPlaneComponent = (component, tolerance) => {
-  return (a, b) => {
-    if (a.plane[component] - b.plane[component] > tolerance) {
-      return 1
-    } else if (b.plane[component] - a.plane[component] > tolerance) {
-      return -1
-    }
-    return 0
+const byPlaneComponent = (component, tolerance) => (a, b) => {
+  if (a.plane[component] - b.plane[component] > tolerance) {
+    return 1
+  } else if (b.plane[component] - a.plane[component] > tolerance) {
+    return -1
   }
+  return 0
 }
 
 module.exports = retessellate

@@ -3,7 +3,7 @@ const lengths = require('./lengths')
 /**
  * Convert a given arc length along a bezier curve to a t value.
  * Useful for generating equally spaced points along a bezier curve.
- * 
+ *
  * @example
  * const points = [];
  * const segments = 9; // this will generate 10 equally spaced points
@@ -14,7 +14,7 @@ const lengths = require('./lengths')
  *   points.push(point);
  * }
  * return points;
- * 
+ *
  * @param {Object} [options] options for construction
  * @param {Number} [options.distance=0] the distance along the bezier curve for which we want to find the corresponding t value.
  * @param {Number} [options.segments=100] the number of segments to use when approximating the curve length.
@@ -27,8 +27,8 @@ const arcLengthToT = (options, bezier) => {
     distance: 0,
     segments: 100
   }
-  const {distance, segments} = Object.assign({}, defaults, options)
-  
+  const { distance, segments } = Object.assign({}, defaults, options)
+
   const arcLengths = lengths(segments, bezier)
   // binary search for the index with largest value smaller than target arcLength
   let startIndex = 0
@@ -58,6 +58,6 @@ const arcLengthToT = (options, bezier) => {
   const segmentFraction = (distance - lengthBefore) / segmentLength
   // add that fractional amount and return
   return (targetIndex + segmentFraction) / segments
-};
+}
 
 module.exports = arcLengthToT

@@ -7,7 +7,7 @@ const { nearlyEqual } = require('../../../test/helpers/index')
 
 test('calculate the length of an 1D linear bezier with numeric control points', (t) => {
   const bezierCurve = bezier.create([0, 10])
-  nearlyEqual(t, length(100, bezierCurve), 10, 0.0001) 
+  nearlyEqual(t, length(100, bezierCurve), 10, 0.0001)
   t.true(true)
 })
 
