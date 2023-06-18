@@ -7,8 +7,9 @@
   "type": "module",
   "main": "src/index.js",
   "unpkg": "dist/jscad-regl-renderer.min.js",
+  "module": "dist/jscad-regl-renderer.es.js",
   "scripts": {
-    "build": "browserify src/index.js -o dist/jscad-regl-renderer.min.js -g uglifyify --standalone jscadReglRenderer",
+    "build": "rollup --config",
     "version": "npm run build && git add dist",
     "dev": "budo ./demo-web.js --title regl-renderer --live",
     "demo-cli": "node ./demo-cli.js",
@@ -16,7 +17,23 @@
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
     "coverage": "nyc --all --reporter=html --reporter=text npm test"
   },
-  "author": "Mark 'kaosat-dev' Moissette",
+  "contributors": [
+    {
+      "name": "Z3 Development"
+    },
+    {
+      "name": "Davor Hrg"
+    },
+    {
+      "name": "Kenny"
+    },
+    {
+      "name": "Timothy Johnson"
+    },
+    {
+      "name": "Mark 'kaosat-dev' Moissette"
+    }
+  ],
   "keywords": [
     "openjscad",
     "jscad",
@@ -27,7 +44,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "types": "types",
   "dependencies": {
     "@jscad/array-utils": "workspace:2.1.4",
     "camera-unproject": "1.0.1",
@@ -38,11 +54,13 @@
   "devDependencies": {
     "@jscad/img-utils": "workspace:2.0.5",
     "@jscad/modeling": "workspace:2.10.0",
+    "@rollup/plugin-commonjs": "^23.0.4",
+    "@rollup/plugin-node-resolve": "^15.0.1",
     "ava": "4.3.3",
-    "browserify": "16.5.1",
-    "budo": "11.6.4",
     "nyc": "15.1.0",
-    "uglifyify": "5.0.2"
+    "rollup": "2.79.1",
+    "rollup-plugin-banner": "^0.2.1",
+    "rollup-plugin-version-injector": "^1.3.3"
   },
   "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"
 }
