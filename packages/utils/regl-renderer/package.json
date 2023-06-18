@@ -8,6 +8,7 @@
   "main": "src/index.js",
   "unpkg": "dist/jscad-regl-renderer.min.js",
   "module": "dist/jscad-regl-renderer.es.js",
+  "types": "types",
   "scripts": {
     "build": "rollup --config",
     "version": "npm run build && git add dist",
