@@ -1,11 +1,11 @@
-import mat4 from 'gl-mat4'
+import * as mat4 from 'gl-mat4'
 
 /** function that injects most of the uniforms into the regl context:
  * ie keeps track of all regl global state.
  * @param  {} regl
  * @param  {} params={}
  */
-export const renderWrapper = (regl, params = {}) => {
+export const renderContext = (regl, params = {}) => {
   const { fbo } = params
 
   const commandParams = {

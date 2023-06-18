@@ -1,5 +1,5 @@
-import vec3 from 'gl-vec3'
-import mat4 from 'gl-mat4'
+import * as vec3 from 'gl-vec3'
+import * as mat4 from 'gl-mat4'
 
 import * as orthographicCamera from './orthographicCamera.js'
 import * as perspectiveCamera from './perspectiveCamera.js'
