@@ -237,7 +237,7 @@ test('cli (single input file, multiple output files)', (t) => {
 
   const cliPath = t.context.cliPath
 
-  const cmd = `node ${cliPath} ${inputPath} -p`
+  const cmd = `node ${cliPath} ${inputPath} -gp`
   execSync(cmd, { stdio: [0,1,2] })
   t.true(fs.existsSync(outputPath1))
   t.true(fs.existsSync(outputPath2))
@@ -262,7 +262,7 @@ test('cli (single input file, zipped output file)', (t) => {
 
   const cliPath = t.context.cliPath
 
-  const cmd = `node ${cliPath} ${inputPath} -p -z`
+  const cmd = `node ${cliPath} ${inputPath} -gp -z`
   execSync(cmd, { stdio: [0,1,2] })
   t.true(fs.existsSync(outputPath))
 })

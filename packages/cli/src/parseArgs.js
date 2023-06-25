@@ -24,7 +24,7 @@ const parseArgs = (args) => {
   let inputFormat
   let outputFile
   let outputFormat
-  let parts = false
+  let generateParts = false
   let zip = false
   const params = {} // parameters to feed the script if applicable
   let addMetaData = false // wether to add metadata to outputs or not : ie version info, timestamp etc
@@ -43,8 +43,8 @@ const parseArgs = (args) => {
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '-of') { // -of <format>
       outputFormat = args[++i]
-    } else if (args[i] === '-p') {
-      parts = true
+    } else if (args[i] === '-gp') {
+      generateParts = true
     } else if (args[i] === '-z') {
       zip = true
     } else if (args[i].match(/^-o(\S.+)/)) { // -o<output>
@@ -98,7 +98,7 @@ const parseArgs = (args) => {
     inputFormat,
     outputFile,
     outputFormat,
-    parts,
+    generateParts,
     zip,
     params,
     addMetaData,

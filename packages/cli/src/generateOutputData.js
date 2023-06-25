@@ -19,10 +19,11 @@ const generateOutputData = (source, params, options) => {
     outputFormat: 'stl',
     inputFile: '',
     version: '',
-    addMetaData: true
+    addMetaData: true,
+    generateParts: false
   }
   options = Object.assign({}, defaults, options)
-  const { outputFormat, inputFile, inputFormat, parts } = options
+  const { outputFormat, inputFile, inputFormat, generateParts } = options
 
   options.filename = inputFile // for deserializers
 
@@ -62,7 +63,7 @@ const generateOutputData = (source, params, options) => {
   })
     .then((solids) => {
       const serializerOptions = Object.assign({ format: outputFormat }, params)
-      if (parts) {
+      if (generateParts) {
         let blobs = []
         for (let i = 0; i < solids.length; i++) {
           blobs.push(solidsAsBlob(solids[i], serializerOptions))

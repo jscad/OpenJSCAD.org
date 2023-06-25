@@ -34,7 +34,7 @@ const parseArgs = require('./src/parseArgs')
 
 // handle arguments (inputs, outputs, etc)
 const args = process.argv.splice(2)
-let { inputFile, inputFormat, outputFile, outputFormat, parts, zip, params, addMetaData, inputIsDirectory } = parseArgs(args)
+let { inputFile, inputFormat, outputFile, outputFormat, generateParts, zip, params, addMetaData, inputIsDirectory } = parseArgs(args)
 
 // outputs
 const output = determineOutputNameAndFormat(outputFormat, outputFile, inputFile)
@@ -61,7 +61,7 @@ const src = fs.readFileSync(inputFile, inputFile.match(/\.stl$/i) ? 'binary' : '
 
 // -- convert from JSCAD script into the desired output format
 // -- and write it to disk
-generateOutputData(src, params, { outputFile, outputFormat, inputFile, inputFormat, parts, version, addMetaData, inputIsDirectory })
+generateOutputData(src, params, { outputFile, outputFormat, inputFile, inputFormat, generateParts, version, addMetaData, inputIsDirectory })
   .then((outputData) => {
     if (outputData instanceof Array) {
       if (zip) {
