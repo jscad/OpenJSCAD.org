@@ -77,7 +77,9 @@ For multi-part models, you can pass the `generateParts` flag `-gp` to output eac
 
 ```jscad mydesign.js -gp                         # -- convert mydesign.js into mydesign-part-1-of-2.stl and mydesign-part-2-of-2.stl```
 
-If you pass `-gp` you may also pass the `zip` flag `-z` to zip multi-part files into one .zip file:
+You may also pass the `zip` flag `-z` to zip generated files into one .zip file:
+
+```jscad mydesign.js -z                          # -- convert mydesign.js into mydesign.zip which contains: mydesign.stl```
 
 ```jscad mydesign.js -gp -z                      # -- convert mydesign.js into mydesign.zip which contains: mydesign-part-1-of-2.stl and mydesign-part-2-of-2.stl```
 

@@ -74,7 +74,7 @@ generateOutputData(src, params, { outputFile, outputFormat, inputFile, inputForm
           const zipFilename = outputFile.replace(/\.(\w+)$/, '.zip')
           fs.writeFile(zipFilename, content, (err) => {
             if (err) {
-              console.log('err', err)
+              console.error(err)
             } else {
               logFileOutput(zipFilename)              
             }
@@ -88,8 +88,23 @@ generateOutputData(src, params, { outputFile, outputFormat, inputFile, inputForm
         }
       }
     } else {
-      logFileOutput(outputFile)
-      writeOutput(outputFile, outputData)
+      if (zip) {
+        const zip = new JSZip()
+        zip.file(outputFile, outputData.asBuffer())
+        zip.generateAsync({ type: 'nodebuffer' }).then((content) => {
+          const zipFilename = outputFile.replace(/\.(\w+)$/, '.zip')
+          fs.writeFile(zipFilename, content, (err) => {
+            if (err) {
+              console.error(err)
+            } else {
+              logFileOutput(zipFilename)              
+            }
+          })
+        })
+      } else {
+        logFileOutput(outputFile)
+        writeOutput(outputFile, outputData)
+      }
     }
   })
   .catch((error) => {

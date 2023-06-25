@@ -1,4 +1,5 @@
 const test = require('ava')
+const JSZip = require('jszip')
 
 const path = require('path')
 const { execSync } = require('child_process')
@@ -244,7 +245,7 @@ test('cli (single input file, multiple output files)', (t) => {
   t.true(fs.existsSync(outputPath3))
 })
 
-test('cli (single input file, zipped output file)', (t) => {
+test('cli (single multipart input file, zipped output file)', async (t) => {
   const testID = 8
 
   const inputPath = createJscad(testID, true)
@@ -252,7 +253,6 @@ test('cli (single input file, zipped output file)', (t) => {
 
   t.context.inputPath = inputPath
 
-  
   const outputName = `./test${testID}.zip`
   const outputPath = path.resolve(__dirname, outputName)
 
@@ -265,4 +265,38 @@ test('cli (single input file, zipped output file)', (t) => {
   const cmd = `node ${cliPath} ${inputPath} -gp -z`
   execSync(cmd, { stdio: [0,1,2] })
   t.true(fs.existsSync(outputPath))
+
+  // check contents of zip file
+  const data = await fs.promises.readFile(outputPath)
+  const content = await JSZip.loadAsync(data)
+  t.true(content.files[path.resolve(__dirname, `./test${testID}-part-1-of-3.stl`)] !== undefined)
+  t.true(content.files[path.resolve(__dirname, `./test${testID}-part-2-of-3.stl`)] !== undefined)
+  t.true(content.files[path.resolve(__dirname, `./test${testID}-part-3-of-3.stl`)] !== undefined)
+})
+
+test('cli (single input file, zipped output file)', async (t) => {
+  const testID = 9
+
+  const inputPath = createJscad(testID, true)
+  t.true(fs.existsSync(inputPath))
+
+  t.context.inputPath = inputPath
+  
+  const outputName = `./test${testID}.zip`
+  const outputPath = path.resolve(__dirname, outputName)
+
+  t.false(fs.existsSync(outputPath))
+  
+  t.context.outputPath = outputPath
+
+  const cliPath = t.context.cliPath
+
+  const cmd = `node ${cliPath} ${inputPath} -z`
+  execSync(cmd, { stdio: [0,1,2] })
+  t.true(fs.existsSync(outputPath))
+
+  // check contents of zip file
+  const data = await fs.promises.readFile(outputPath)
+  const content = await JSZip.loadAsync(data)
+  t.true(content.files[path.resolve(__dirname, `./test${testID}.stl`)] !== undefined)
 })
