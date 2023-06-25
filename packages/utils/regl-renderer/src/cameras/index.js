@@ -1,3 +1,9 @@
-export camera from './camera.js'
-export orthographic from './orthographicCamera.js'
-export perspective from './perspectiveCamera.js'
+import * as camera from './camera.js'
+import * as orthographic from './orthographicCamera.js'
+import * as perspective from './perspectiveCamera.js'
+
+export {
+  camera,
+  orthographic,
+  perspective,
+}
