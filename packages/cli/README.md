@@ -73,6 +73,14 @@ Examples:
 
 ```jscad mydesign.js -of amf                    # -- convert mydesign.js into mydesign.amf```
 
+For multi-part models, you can pass the parts flag `-p` to output each part as a separate, numbered file:
+
+```jscad mydesign.js -p                         # -- convert mydesign.js into mydesign-part-1-of-2.stl and mydesign-part-2-of-2.stl```
+
+You may also pass the zip flag `-z` to zip multi-part files into one .zip file:
+
+```jscad mydesign.js -p -z                      # -- convert mydesign.js into mydesign.zip which contains: mydesign-part-1-of-2.stl and mydesign-part-2-of-2.stl```
+
 The '-o' option can be used to control where the output will be placed.
 While, the '-of' option can be used to control the format of the output.
 

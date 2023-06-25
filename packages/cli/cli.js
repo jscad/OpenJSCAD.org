@@ -22,6 +22,7 @@
 //   jscad name_plate.jscad --name "Just Me" --title "CEO" -o amf test.amf
 //
 const fs = require('fs')
+const JSZip = require('jszip')
 
 const { formats } = require('@jscad/io/formats')
 
@@ -33,7 +34,7 @@ const parseArgs = require('./src/parseArgs')
 
 // handle arguments (inputs, outputs, etc)
 const args = process.argv.splice(2)
-let { inputFile, inputFormat, outputFile, outputFormat, params, addMetaData, inputIsDirectory } = parseArgs(args)
+let { inputFile, inputFormat, outputFile, outputFormat, parts, zip, params, addMetaData, inputIsDirectory } = parseArgs(args)
 
 // outputs
 const output = determineOutputNameAndFormat(outputFormat, outputFile, inputFile)
@@ -48,18 +49,49 @@ const clicolors = {
   black: '\u{1b}[0m'
 }
 
-console.log(`${clicolors.blue}JSCAD: generating output ${clicolors.red}
- from: ${clicolors.green} ${inputFile} ${clicolors.red}
- to: ${clicolors.green} ${outputFile} ${clicolors.yellow}(${formats[outputFormat].description}) ${clicolors.black}
-`)
+const logFileOutput = (outputFile) => {
+  console.log(`${clicolors.blue}JSCAD: generating output ${clicolors.red}
+    from: ${clicolors.green} ${inputFile} ${clicolors.red}
+    to: ${clicolors.green} ${outputFile} ${clicolors.yellow}(${formats[outputFormat].description}) ${clicolors.black}
+  `)
+}
 
 // read input data
 const src = fs.readFileSync(inputFile, inputFile.match(/\.stl$/i) ? 'binary' : 'UTF8')
 
 // -- convert from JSCAD script into the desired output format
 // -- and write it to disk
-generateOutputData(src, params, { outputFile, outputFormat, inputFile, inputFormat, version, addMetaData, inputIsDirectory })
-  .then((outputData) => writeOutput(outputFile, outputData))
+generateOutputData(src, params, { outputFile, outputFormat, inputFile, inputFormat, parts, version, addMetaData, inputIsDirectory })
+  .then((outputData) => {
+    if (outputData instanceof Array) {
+      if (zip) {
+        const zip = new JSZip()
+        for (let i = 0; i < outputData.length; i++) {
+          const filename = outputFile.replace(/\.(\w+)$/, `-part-${i + 1}-of-${outputData.length}.$1`)
+          zip.file(filename, outputData[i].asBuffer())
+        }
+        zip.generateAsync({ type: 'nodebuffer' }).then((content) => {
+          const zipFilename = outputFile.replace(/\.(\w+)$/, '.zip')
+          fs.writeFile(zipFilename, content, (err) => {
+            if (err) {
+              console.log('err', err)
+            } else {
+              logFileOutput(zipFilename)              
+            }
+          })
+        })
+      } else {
+        for (let i = 0; i < outputData.length; i++) {
+          const filename = outputFile.replace(/\.(\w+)$/, `-part-${i + 1}-of-${outputData.length}.$1`)        
+          logFileOutput(filename)
+          writeOutput(filename, outputData[i])
+        }
+      }
+    } else {
+      logFileOutput(outputFile)
+      writeOutput(outputFile, outputData)
+    }
+  })
   .catch((error) => {
     console.error(error)
     process.exit(1)
