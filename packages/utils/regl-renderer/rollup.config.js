@@ -10,7 +10,7 @@ export default {
     {
       file: 'dist/jscad-regl-renderer.min.js',
       format: 'umd',
-      name: 'jscadSvgDeserializer'
+      name: 'jscadReglRenderer'
     },
     {
       file: 'dist/jscad-regl-renderer.es.js',
