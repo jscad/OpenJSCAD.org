@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.11.1...@jscad/modeling@2.12.0) (2023-06-27)
+
+
+### Bug Fixes
+
+* **modeling:** add missing extrudeHelical typing definition ([7f5f8e1](https://github.com/jscad/OpenJSCAD.org/commit/7f5f8e1d777ced7bc4ee5989f895ca06b30bd6d8))
+
+
+### Features
+
+* **modeling:** allow zero size in primitives ([76b7369](https://github.com/jscad/OpenJSCAD.org/commit/76b73690ec2ae8000ab00a19f692569fe3595fe3))
+
+
+### Performance Improvements
+
+* **modeling:** performance improvements for retessellate as part of booleans ([12157ac](https://github.com/jscad/OpenJSCAD.org/commit/12157ac886b714214223074d2f0a413c99da0a29))
+
+
+
+
+
 ## [2.11.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.11.0...@jscad/modeling@2.11.1) (2023-04-30)
 
 

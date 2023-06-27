@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.3.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.2.26...@jscad/cli@2.3.0) (2023-06-27)
+
+
+### Features
+
+* **cli:** added options to output designs as individual parts, and create zip archive of parts ([a20b9cf](https://github.com/jscad/OpenJSCAD.org/commit/a20b9cf0edaaeca051427372d237af4c3522b04c))
+
+
+
+
+
 ## [2.2.26](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@2.2.25...@jscad/cli@2.2.26) (2023-04-30)
 
 
