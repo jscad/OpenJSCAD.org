@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.15](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.1.14...@jscad/dxf-serializer@2.1.15) (2023-06-27)
+
+**Note:** Version bump only for package @jscad/dxf-serializer
+
+
+
+
+
 ## [2.1.14](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-serializer@2.1.13...@jscad/dxf-serializer@2.1.14) (2023-04-30)
 
 **Note:** Version bump only for package @jscad/dxf-serializer
