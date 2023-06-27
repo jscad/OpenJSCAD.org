@@ -73,7 +73,9 @@ const classifyPolygons = (polygons) => {
   // restore the original order of the polygons
   const result = []
   // polygons inside the cluster should already be sorted by index
-  clusters.forEach((cluster, index) => { result[cluster[0] ? index] = cluster })
+  clusters.forEach((cluster) => {
+    if (cluster[0]) result[cluster[0].index] = cluster
+  })
   nonCoplanar.forEach((polygon) => { result[polygon.index] = polygon })
 
   return result
