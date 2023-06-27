@@ -38,7 +38,8 @@
     "@jscad/array-utils": "2.1.4",
     "@jscad/core": "2.6.6",
     "@jscad/io": "2.4.5",
-    "@jscad/modeling": "2.11.1"
+    "@jscad/modeling": "2.11.1",
+    "jszip": "^3.10.1"
   },
   "devDependencies": {
     "ava": "3.15.0",
