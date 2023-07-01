@@ -3,10 +3,10 @@ import * as mat4 from 'gl-mat4'
 
 import { unproject } from 'camera-unproject'
 
-const { max, min, sqrt, PI, sin, cos, atan2 } = Math
-
 import { computeBounds } from '../bound-utils/computeBounds.js'
 import { setProjection } from '../cameras/orthographicCamera.js'
+
+const { max, min, sqrt, PI, sin, cos, atan2 } = Math
 
 // TODO: make it more data driven ?
 /*

@@ -12,7 +12,7 @@ const defaultTransforms = Float32Array.from([
 test('geom2ToGeometries (empty solid)', (t) => {
   const solid = {
     outlines: [],
-    transforms: [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
+    transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   const expected = []
   let geometries = geom2ToGeometries({ color: [1, 2, 3, 4] }, solid)
@@ -39,7 +39,7 @@ test('geom2ToGeometries (solid with outlines)', (t) => {
     outlines: [
       [[0, 0], [1, 0], [1, 1]]
     ],
-    transforms: [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
+    transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   const expected = [{
     color: [1, 2, 3, 0.8],
@@ -61,7 +61,7 @@ test('geom2ToGeometries (solid with > 65000 outlines)', (t) => {
   }
   const solid = {
     outlines: [outline],
-    transforms: [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
+    transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
 
   const geometries = geom2ToGeometries({ color: [1, 2, 3, 0.8] }, solid)

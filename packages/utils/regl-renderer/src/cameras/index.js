@@ -5,5 +5,5 @@ import * as perspective from './perspectiveCamera.js'
 export {
   camera,
   orthographic,
-  perspective,
+  perspective
 }
