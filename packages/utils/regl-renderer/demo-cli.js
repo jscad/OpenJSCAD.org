@@ -4,7 +4,7 @@ import { colors, primitives, booleans } from '@jscad/modeling'
 
 import { writeContextToFile } from '@jscad/img-utils'
 
-import { prepareRender, commands, cameras, entitiesFromSolids } from './src/index.js'
+import { prepareRender, commands, cameras, entitiesFromSolids } from './dist/jscad-regl-renderer.es.js'
 
 // setup demo solids data
 const demoSolids = (parameters) => {
@@ -34,8 +34,8 @@ const demoSolids = (parameters) => {
     [0, 1, 0],
     [0, 0, 0.7]
   ]
-  star2D.sides.forEach((side, i) => {
-    if (i >= 2) side.color = colorChange[i % colorChange.length]
+  star2D.outlines.forEach((outline, i) => {
+    outline.color = colorChange[i % colorChange.length]
   })
 
   return [transpCube, star2D, line2D, ...logo]
@@ -113,9 +113,9 @@ const options = {
   ]
 }
 
-// prepare
+// render the contents
 const render = prepareRender(options)
-// do the actual render
 render(options)
+
 // output to file
 writeContextToFile(context, width, height, 4, './test.png')
