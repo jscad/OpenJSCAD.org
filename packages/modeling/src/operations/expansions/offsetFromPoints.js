@@ -1,6 +1,7 @@
 import { EPS, TAU } from '../../maths/constants.js'
 
-import { area, intersect } from '../../maths/utils/index.js'
+import { area } from '../../maths/utils/area.js'
+import { intersect } from '../../maths/utils/intersect.js'
 
 import * as line2 from '../../maths/line2/index.js'
 import * as vec2 from '../../maths/vec2/index.js'

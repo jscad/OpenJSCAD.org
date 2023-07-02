@@ -1,4 +1,4 @@
-import { flatten } from '../../utils/index.js'
+import { flatten } from '../../utils/flatten.js'
 
 import { DIFFERENCE } from './martinez/operation.js'
 import { boolean } from './martinez/index.js'

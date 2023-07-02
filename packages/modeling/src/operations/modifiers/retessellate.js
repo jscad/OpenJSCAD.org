@@ -1,4 +1,4 @@
-import { aboutEqualNormals } from '../../maths/utils/index.js'
+import { aboutEqualNormals } from '../../maths/utils/aboutEqualNormals.js'
 
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as poly3 from '../../geometries/poly3/index.js'

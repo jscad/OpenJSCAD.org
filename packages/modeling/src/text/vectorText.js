@@ -1,5 +1,5 @@
-import { mat4 } from '../maths/index.js'
-import { path2 } from '../geometries/index.js'
+import * as mat4 from '../maths/mat4/index.js'
+import * as path2 from '../geometries/path2/index.js'
 
 import { vectorChar } from './vectorChar.js'
 import { vectorParams } from './vectorParams.js'

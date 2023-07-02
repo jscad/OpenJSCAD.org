@@ -1,6 +1,6 @@
 import * as geom3 from '../../geometries/geom3/index.js'
 
-import { union } from '../booleans/index.js'
+import { union } from '../booleans/union.js'
 
 import { expandShell } from './expandShell.js'
 

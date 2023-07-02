@@ -1,4 +1,4 @@
-import { intersect } from '../../maths/utils/index.js'
+import { intersect } from '../../maths/utils/intersect.js'
 
 /**
  * Check whether the given polygon is simple, i.e. does not intersect itself.

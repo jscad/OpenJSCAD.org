@@ -4,7 +4,8 @@ import { interpolateBetween2DPointsForY, OrthonormalFormula } from '../../maths/
 import * as line2 from '../../maths/line2/index.js'
 import * as vec2 from '../../maths/vec2/index.js'
 
-import { insertSorted, fnNumberSort } from '../../utils/index.js'
+import { insertSorted } from '../../utils/insertSorted.js'
+import { fnNumberSort } from '../../utils/fnNumberSort.js'
 
 import * as poly3 from '../../geometries/poly3/index.js'
 
