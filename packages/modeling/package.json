@@ -14,7 +14,7 @@
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
     "test:tsd": "tsd",
-    "version": "npm run build && git add dist"
+    "version": "pnpm run build && git add dist"
   },
   "contributors": [
     {
