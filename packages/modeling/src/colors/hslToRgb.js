@@ -1,4 +1,4 @@
-import { flatten } from '../utils/index.js'
+import { flatten } from '../utils/flatten.js'
 
 import { hueToColorComponent } from './hueToColorComponent.js'
 

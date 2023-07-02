@@ -1,6 +1,7 @@
-import { flatten, padArrayToLength } from '../../utils/index.js'
+import { flatten } from '../../utils/flatten.js'
+import { padArrayToLength } from '../../utils/padArrayToLength.js'
 
-import { measureAggregateBoundingBox } from '../../measurements/index.js'
+import { measureAggregateBoundingBox } from '../../measurements/measureAggregateBoundingBox.js'
 
 import { translate } from './translate.js'
 

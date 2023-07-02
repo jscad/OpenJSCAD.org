@@ -1,6 +1,7 @@
-import { flatten } from '../../utils/index.js'
+import { flatten } from '../../utils/flatten.js'
 
-import { aboutEqualNormals } from '../../maths/utils/index.js'
+import { aboutEqualNormals } from '../../maths/utils/aboutEqualNormals.js'
+
 import * as plane from '../../maths/plane/index.js'
 import * as mat4 from '../../maths/mat4/index.js'
 import * as vec2 from '../../maths/vec2/index.js'
@@ -9,7 +10,7 @@ import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as poly3 from '../../geometries/poly3/index.js'
 
-import { measureEpsilon } from '../../measurements/index.js'
+import { measureEpsilon } from '../../measurements/measureEpsilon.js'
 
 import { unionGeom2 } from '../booleans/unionGeom2.js'
 

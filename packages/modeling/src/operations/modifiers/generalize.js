@@ -1,6 +1,6 @@
-import { flatten } from '../../utils/index.js'
+import { flatten } from '../../utils/flatten.js'
 
-import { measureEpsilon } from '../../measurements/index.js'
+import { measureEpsilon } from '../../measurements/measureEpsilon.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'

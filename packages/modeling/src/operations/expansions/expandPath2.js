@@ -1,4 +1,4 @@
-import { area } from '../../maths/utils/index.js'
+import { area } from '../../maths/utils/area.js'
 
 import * as vec2 from '../../maths/vec2/index.js'
 
