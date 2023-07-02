@@ -11,10 +11,9 @@
   "types": "types",
   "scripts": {
     "build": "rollup --config",
-    "version": "npm run build && git add dist",
-    "dev": "budo ./demo-web.js --title regl-renderer --live",
+    "version": "pnpm run build && git add dist",
+    "dev": "http-server",
     "demo-cli": "node ./demo-cli.js",
-    "demo-web": "budo ./demo-web.js --title regl-renderer --live",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
     "coverage": "nyc --all --reporter=html --reporter=text npm test"
   },
@@ -58,6 +57,7 @@
     "@rollup/plugin-commonjs": "^23.0.4",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "ava": "4.3.3",
+    "http-server": "14.1.1",
     "nyc": "15.1.0",
     "rollup": "2.79.1",
     "rollup-plugin-banner": "^0.2.1",
