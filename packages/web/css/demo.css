@@ -444,3 +444,11 @@ input.error::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   width: 16px;
   height: 16px;
 }
+
+.renderHotkeyHelp {
+  position: absolute;
+  top: 0rem;
+  right: 1rem;
+  color: gray;
+  user-select: none;
+}

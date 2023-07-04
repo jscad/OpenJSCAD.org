@@ -19,7 +19,7 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   t.is(countOf('name', obs), 3)
   t.is(countOf('content', obs), 3)
   t.is(countOf('Created by JSCAD', obs), 1)
-  t.is(countOf('Scene', obs), 1)
+  t.is(countOf('Scene', obs), 2)
 
   const geom2 = primitives.cube()
 
@@ -34,12 +34,15 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   t.is(countOf('content', obs), 1)
   t.is(countOf('Created by JSCAD', obs), 1)
   t.is(countOf('Scene', obs), 2)
+  t.is(countOf('Transform', obs), 2)
   t.is(countOf('Shape', obs), 2)
+  t.is(countOf('DEF', obs), 0)
   t.is(countOf('IndexedTriangleSet', obs), 2)
   t.is(countOf('Coordinate', obs), 1)
   t.is(countOf('Color', obs), 1)
 
   const geom3 = colors.colorize([0.5, 1, 0.5, 1.0], transforms.center({ relativeTo: [5, 5, 5] }, primitives.cube()))
+  geom2.id = geom3.id = 'g23'
 
   results = serialize({ metadata: false }, geom2, geom3)
   t.is(results.length, 1)
@@ -53,9 +56,15 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   t.is(countOf('Created by JSCAD', obs), 1)
   t.is(countOf('Scene', obs), 2)
   t.is(countOf('Shape', obs), 4)
+  t.is(countOf('DEF', obs), 2)
   t.is(countOf('IndexedTriangleSet', obs), 4)
   t.is(countOf('Coordinate', obs), 2)
   // for color
-  t.is(countOf('Color', obs), 3)
-  t.is(countOf('Appearance', obs), 2)
+  t.is(countOf('<Color', obs), 1)
+  t.is(countOf('Appearance', obs), 4)
+  // for RGB
+  t.is(countOf('diffuseColor="0.5 1 0.5"', obs), 1)
+  t.is(countOf('specularColor', obs), 1)
+  // for facets
+  t.is(countOf('normalPerVertex="false"', obs), 2)
 })

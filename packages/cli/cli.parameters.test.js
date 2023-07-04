@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { execSync } from 'child_process'
 import { cwd } from 'process'
+import JSZip from 'jszip'
 
 import test from 'ava'
 
@@ -13,6 +14,12 @@ test.afterEach.always((t) => {
 
   try {
     if (t.context.outputPath) fs.unlinkSync(t.context.outputPath)
+  } catch (err) {}
+  try {
+    if (t.context.outputPath2) fs.unlinkSync(t.context.outputPath2)
+  } catch (err) {}
+  try {
+    if (t.context.outputPath3) fs.unlinkSync(t.context.outputPath3)
   } catch (err) {}
 
   try {
@@ -33,7 +40,7 @@ test.beforeEach((t) => {
 
 // create a simple JSCAD script for input
 // the script should produce ALL geometry types
-const createJscad = (id) => {
+const createJscad = (id, multipart = false) => {
   const jscadScript = `// test script ${id}
 import { primitives } from '@jscad/modeling'
 
@@ -52,7 +59,7 @@ export const main = (params) => {
   let ageom2 = primitives.ellipse()
   let ageom3 = primitives.ellipsoid()
 
-  return [apath2, ageom2, ageom3]
+  ${multipart ? `return [ageom3, ageom3, ageom3]` : `return [apath2, ageom2, ageom3]`}
 }
 `
 
@@ -205,4 +212,90 @@ test('cli (single input file, invalid jscad)', (t) => {
   t.throws(() => {
     execSync(cmd, { stdio: [0, 1, 2] })
   })
+})
+
+
+test('cli (single input file, multiple output files)', (t) => {
+  const testID = 7
+
+  const inputPath = createJscad(testID, true)
+  t.true(fs.existsSync(inputPath))
+
+  t.context.inputPath = inputPath
+
+  const outputName = (partNum) => `./test${testID}-part-${partNum}-of-3.stl`
+  const outputPath1 = path.resolve(__dirname, outputName(1))
+  const outputPath2 = path.resolve(__dirname, outputName(2))
+  const outputPath3 = path.resolve(__dirname, outputName(3))
+  t.false(fs.existsSync(outputPath1))
+  t.false(fs.existsSync(outputPath2))
+  t.false(fs.existsSync(outputPath3))
+
+  t.context.outputPath = outputPath1
+  t.context.outputPath2 = outputPath2
+  t.context.outputPath3 = outputPath3
+
+  const cliPath = t.context.cliPath
+
+  const cmd = `node ${cliPath} ${inputPath} -gp`
+  execSync(cmd, { stdio: [0,1,2] })
+  t.true(fs.existsSync(outputPath1))
+  t.true(fs.existsSync(outputPath2))
+  t.true(fs.existsSync(outputPath3))
+})
+
+test('cli (single multipart input file, zipped output file)', async (t) => {
+  const testID = 8
+
+  const inputPath = createJscad(testID, true)
+  t.true(fs.existsSync(inputPath))
+
+  t.context.inputPath = inputPath
+
+  const outputName = `./test${testID}.zip`
+  const outputPath = path.resolve(__dirname, outputName)
+
+  t.false(fs.existsSync(outputPath))
+  
+  t.context.outputPath = outputPath
+
+  const cliPath = t.context.cliPath
+
+  const cmd = `node ${cliPath} ${inputPath} -gp -z`
+  execSync(cmd, { stdio: [0,1,2] })
+  t.true(fs.existsSync(outputPath))
+
+  // check contents of zip file
+  const data = await fs.promises.readFile(outputPath)
+  const content = await JSZip.loadAsync(data)
+  t.true(content.files[path.resolve(__dirname, `./test${testID}-part-1-of-3.stl`)] !== undefined)
+  t.true(content.files[path.resolve(__dirname, `./test${testID}-part-2-of-3.stl`)] !== undefined)
+  t.true(content.files[path.resolve(__dirname, `./test${testID}-part-3-of-3.stl`)] !== undefined)
+})
+
+test('cli (single input file, zipped output file)', async (t) => {
+  const testID = 9
+
+  const inputPath = createJscad(testID, true)
+  t.true(fs.existsSync(inputPath))
+
+  t.context.inputPath = inputPath
+  
+  const outputName = `./test${testID}.zip`
+  const outputPath = path.resolve(__dirname, outputName)
+
+  t.false(fs.existsSync(outputPath))
+  
+  t.context.outputPath = outputPath
+
+  const cliPath = t.context.cliPath
+
+  const cmd = `node ${cliPath} ${inputPath} -z`
+  execSync(cmd, { stdio: [0,1,2] })
+  t.true(fs.existsSync(outputPath))
+
+  // check contents of zip file
+  const data = await fs.promises.readFile(outputPath)
+  const content = await JSZip.loadAsync(data)
+  t.true(content.files[path.resolve(__dirname, `./test${testID}.stl`)] !== undefined)
 })

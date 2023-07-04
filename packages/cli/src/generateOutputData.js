@@ -20,7 +20,12 @@ const { registerAllExtensions } = io
  */
 export const generateOutputData = (source, cliparams, options) => {
   const defaults = {
-    inputFile: ''
+    outputFile: undefined,
+    outputFormat: 'stl',
+    inputFile: '',
+    version: '',
+    addMetaData: true,
+    generateParts: false
   }
   options = Object.assign({}, defaults, options)
 
@@ -56,7 +61,13 @@ export const generateOutputData = (source, cliparams, options) => {
     }
   })
     .then((solids) => {
-      if (outputMimeType === 'application/javascript') {
+      if (generateParts) {
+        let blobs = []
+        for (let i = 0; i < solids.length; i++) {
+          blobs.push(convertToBlob({ data: solids[i], mimeType: outputMimeType }))
+        }
+        return blobs
+      } else if (outputMimeType === 'application/javascript') {
         // convert the source (solids) to blob for writing to file
         return convertToBlob({ data: [solids], mimeType: outputMimeType })
       } else {

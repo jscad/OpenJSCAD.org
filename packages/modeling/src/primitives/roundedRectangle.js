@@ -4,7 +4,9 @@ import * as vec2 from '../maths/vec2/index.js'
 
 import * as geom2 from '../geometries/geom2/index.js'
 
-import { isGT, isGTE, isNumberArray } from './commonChecks.js'
+import { isGTE, isNumberArray } from './commonChecks.js'
+
+import { rectangle } from './rectangle.js'
 
 /**
  * Construct an axis-aligned rectangle in two dimensional space with rounded corners.
@@ -30,9 +32,15 @@ export const roundedRectangle = (options) => {
 
   if (!isNumberArray(center, 2)) throw new Error('center must be an array of X and Y values')
   if (!isNumberArray(size, 2)) throw new Error('size must be an array of X and Y values')
-  if (!size.every((n) => n > 0)) throw new Error('size values must be greater than zero')
-  if (!isGT(roundRadius, 0)) throw new Error('roundRadius must be greater than zero')
+  if (!size.every((n) => n >= 0)) throw new Error('size values must be positive')
+  if (!isGTE(roundRadius, 0)) throw new Error('roundRadius must be positive')
   if (!isGTE(segments, 4)) throw new Error('segments must be four or more')
+
+  // if any size is zero return empty geometry
+  if (size[0] === 0 || size[1] === 0) return geom2.create()
+
+  // if roundRadius is zero, return rectangle
+  if (roundRadius === 0) return rectangle({ center, size })
 
   size = size.map((v) => v / 2) // convert to radius
 

@@ -43,7 +43,7 @@ test('geom3ToGeometries (solid with polygons)', (t) => {
       [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4],
       [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4]
     ],
-    isTransparent: true,
+    isTransparent: false,
     transforms: defaultTransforms,
     indices: [
       [0, 1, 2], [0, 2, 3],
@@ -88,7 +88,7 @@ test('geom3ToGeometries (solid with polygons)', (t) => {
 
   // with color
   solid.color = [0, 0, 1, 1]
-  expected[0].isTransparent = true
+  expected[0].isTransparent = false
   expected[0].colors = [
     [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1],
     [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1], [0, 0, 1, 1],

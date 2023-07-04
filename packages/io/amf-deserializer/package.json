@@ -1,6 +1,6 @@
 {
   "name": "@jscad/amf-deserializer",
-  "version": "2.3.2",
+  "version": "2.3.5",
   "description": "AMF Deserializer for JSCAD",
   "repository": "https://github.com/jscad/OpenJSCAD.org/",
   "main": "src/index.js",
@@ -32,7 +32,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/modeling": "workspace:2.10.0",
+    "@jscad/modeling": "workspace:2.12.0",
     "saxes": "6.0.0"
   },
   "devDependencies": {

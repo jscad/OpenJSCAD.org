@@ -1,5 +1,5 @@
 import { rectangle } from './rectangle.js'
-import { isGT } from './commonChecks.js'
+import { isGTE } from './commonChecks.js'
 
 /**
  * Construct an axis-aligned square in two dimensional space with four equal sides at right angles.
@@ -20,7 +20,7 @@ export const square = (options) => {
   }
   let { center, size } = Object.assign({}, defaults, options)
 
-  if (!isGT(size, 0)) throw new Error('size must be greater than zero')
+  if (!isGTE(size, 0)) throw new Error('size must be positive')
 
   size = [size, size]
 

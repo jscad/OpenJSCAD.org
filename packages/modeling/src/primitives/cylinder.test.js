@@ -14,6 +14,20 @@ test('cylinder (defaults)', (t) => {
   t.is(pts.length, 96)
 })
 
+test('cylinder (zero height)', (t) => {
+  const obs = cylinder({ height: 0 })
+  const pts = geom3.toPoints(obs)
+  t.notThrows(() => geom3.validate(obs))
+  t.is(pts.length, 0)
+})
+
+test('cylinder (zero radius)', (t) => {
+  const obs = cylinder({ radius: 0 })
+  const pts = geom3.toPoints(obs)
+  t.notThrows(() => geom3.validate(obs))
+  t.is(pts.length, 0)
+})
+
 test('cylinder (options)', (t) => {
   let obs = cylinder({ height: 10, radius: 4, segments: 5 })
   let pts = geom3.toPoints(obs)

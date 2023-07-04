@@ -4,7 +4,7 @@ import { geom2, geom3, path2 } from '../geometries/index.js'
 
 import { line, rectangle, cuboid } from '../primitives/index.js'
 
-import { measureEpsilon } from './index.js'
+import { measureEpsilon } from './measureEpsilon.js'
 
 test('measureEpsilon (single objects)', (t) => {
   const aline = line([[10, 10], [15, 15]])

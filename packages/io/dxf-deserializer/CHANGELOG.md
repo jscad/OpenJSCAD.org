@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.3.22](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-deserializer@2.3.21...@jscad/dxf-deserializer@2.3.22) (2023-06-27)
+
+**Note:** Version bump only for package @jscad/dxf-deserializer
+
+
+
+
+
+## [2.3.21](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-deserializer@2.3.20...@jscad/dxf-deserializer@2.3.21) (2023-04-30)
+
+**Note:** Version bump only for package @jscad/dxf-deserializer
+
+
+
+
+
+## [2.3.20](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-deserializer@2.3.19...@jscad/dxf-deserializer@2.3.20) (2022-11-26)
+
+**Note:** Version bump only for package @jscad/dxf-deserializer
+
+
+
+
+
 ## [2.3.19](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-deserializer@2.3.18...@jscad/dxf-deserializer@2.3.19) (2022-08-21)
 
 **Note:** Version bump only for package @jscad/dxf-deserializer

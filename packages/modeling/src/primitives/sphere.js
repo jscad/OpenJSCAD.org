@@ -1,5 +1,5 @@
 import { ellipsoid } from './ellipsoid.js'
-import { isGT } from './commonChecks.js'
+import { isGTE } from './commonChecks.js'
 
 /**
  * Construct a sphere in three dimensional space where all vertices are at the same distance from the center.
@@ -24,7 +24,7 @@ export const sphere = (options) => {
   }
   let { center, radius, segments, axes } = Object.assign({}, defaults, options)
 
-  if (!isGT(radius, 0)) throw new Error('radius must be greater than zero')
+  if (!isGTE(radius, 0)) throw new Error('radius must be positive')
 
   radius = [radius, radius, radius]
 

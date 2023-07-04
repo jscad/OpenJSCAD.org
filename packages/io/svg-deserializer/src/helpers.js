@@ -1,9 +1,10 @@
 import { inchMM, ptMM, pcMM, svgColors } from './constants.js'
 
 // Calculate the CAG length/size from the given SVG value (float)
-export const svg2cagX = (v, svgUnitsPmm) => (v / svgUnitsPmm[0])
-
-export const svg2cagY = (v, svgUnitsPmm) => 0 - (v / svgUnitsPmm[1])
+export const svg2cag = (vec, svgUnitsPmm) => [
+  vec[0] / svgUnitsPmm[0],
+  0 - vec[1] / svgUnitsPmm[1]
+]
 
 // Calculate the CAG length/size from the given CSS value (string)
 export const cagLengthX = (css, svgUnitsPmm, svgUnitsX) => {

@@ -1,4 +1,4 @@
-import { svg2cagX, svg2cagY, cagLengthX, cagLengthY, cagLengthP, reflect } from './helpers.js'
+import { svg2cag, cagLengthX, cagLengthY, cagLengthP, reflect } from './helpers.js'
 
 export const shapesMapJscad = (obj, codify, params) => {
   const { level, indent, on, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, target, segments } = params
@@ -167,14 +167,14 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
           pi++
           pc = false
           pathName = on + pi
-          tmpCode += `${indent}${pathName} = geometries.path2.fromPoints({}, [[${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]])\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.fromPoints({}, [[${svg2cag([cx, cy], svgUnitsPmm)}]])\n`
           sx = cx; sy = cy
         }
         // optional implicit relative lineTo (cf SVG spec 8.3.2)
         while (pts.length >= 2) {
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}], ${pathName})\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([${svg2cag([cx, cy], svgUnitsPmm)}], ${pathName})\n`
         }
         break
       case 'M': // absolute move to X,Y
@@ -189,14 +189,14 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
           pi++
           pc = false
           pathName = on + pi
-          tmpCode += `${indent}${pathName} = geometries.path2.fromPoints({}, [[${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]])\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.fromPoints({}, [[${svg2cag([cx, cy], svgUnitsPmm)}]])\n`
           sx = cx; sy = cy
         }
         // optional implicit absolute lineTo (cf SVG spec 8.3.2)
         while (pts.length >= 2) {
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}], ${pathName})\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([${svg2cag([cx, cy], svgUnitsPmm)}], ${pathName})\n`
         }
         break
       case 'a': // relative elliptical arc
@@ -208,7 +208,7 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
           const sf = (pts.shift() === '1')
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendArc({segments: ${segments}, endpoint: [${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}], radius: [${svg2cagX(rx, svgUnitsPmm)}, ${svg2cagY(ry, svgUnitsPmm)}], xaxisrotation: ${ro}, clockwise: ${sf}, large: ${lf}}, ${pathName})\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.appendArc({segments: ${segments}, endpoint: [${svg2cag([cx, cy], svgUnitsPmm)}], radius: [${svg2cag([rx, ry], svgUnitsPmm)}], xaxisrotation: ${ro}, clockwise: ${sf}, large: ${lf}}, ${pathName})\n`
         }
         break
       case 'A': // absolute elliptical arc
@@ -220,7 +220,7 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
           const sf = (pts.shift() === '1')
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendArc({segments: ${segments}, endpoint: [${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}], radius: [${svg2cagX(rx, svgUnitsPmm)}, ${svg2cagY(ry, svgUnitsPmm)}], xaxisrotation: ${ro}, clockwise: ${sf}, large: ${lf}}, ${pathName})\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.appendArc({segments: ${segments}, endpoint: [${svg2cag([cx, cy], svgUnitsPmm)}], radius: [${svg2cag([rx, ry], svgUnitsPmm)}], xaxisrotation: ${ro}, clockwise: ${sf}, large: ${lf}}, ${pathName})\n`
         }
         break
       case 'c': // relative cubic Bézier
@@ -231,7 +231,7 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
           by = cy + parseFloat(pts.shift())
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cagX(x1, svgUnitsPmm)}, ${svg2cagY(y1, svgUnitsPmm)}], [${svg2cagX(bx, svgUnitsPmm)}, ${svg2cagY(by, svgUnitsPmm)}], [${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]]}, ${pathName})\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cag([x1, y1], svgUnitsPmm)}], [${svg2cag([bx, by], svgUnitsPmm)}], [${svg2cag([cx, cy], svgUnitsPmm)}]]}, ${pathName})\n`
           const rf = reflect(bx, by, cx, cy)
           bx = rf[0]
           by = rf[1]
@@ -245,7 +245,7 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
           by = parseFloat(pts.shift())
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cagX(x1, svgUnitsPmm)}, ${svg2cagY(y1, svgUnitsPmm)}], [${svg2cagX(bx, svgUnitsPmm)}, ${svg2cagY(by, svgUnitsPmm)}], [${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]]}, ${pathName})\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cag([x1, y1], svgUnitsPmm)}], [${svg2cag([bx, by], svgUnitsPmm)}], [${svg2cag([cx, cy], svgUnitsPmm)}]]}, ${pathName})\n`
           const rf = reflect(bx, by, cx, cy)
           bx = rf[0]
           by = rf[1]
@@ -253,11 +253,14 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
         break
       case 'q': // relative quadratic Bézier
         while (pts.length >= 4) {
+          const p0 = [cx, cy] // previous point
           qx = cx + parseFloat(pts.shift())
           qy = cy + parseFloat(pts.shift())
           cx = cx + parseFloat(pts.shift()) // end point
           cy = cy + parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cagX(qx, svgUnitsPmm)}, ${svg2cagY(qy, svgUnitsPmm)}], [${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]]}, ${pathName})\n`
+          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cag(q1, svgUnitsPmm)}], [${svg2cag(q2, svgUnitsPmm)}], [${svg2cag([cx, cy], svgUnitsPmm)}]]}, ${pathName})\n`
           const rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
           qy = rf[1]
@@ -265,11 +268,14 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
         break
       case 'Q': // absolute quadratic Bézier
         while (pts.length >= 4) {
+          const p0 = [cx, cy] // previous point
           qx = parseFloat(pts.shift())
           qy = parseFloat(pts.shift())
           cx = parseFloat(pts.shift()) // end point
           cy = parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cagX(qx, svgUnitsPmm)}, ${svg2cagY(qy, svgUnitsPmm)}], [${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]]}, ${pathName})\n`
+          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cag(q1, svgUnitsPmm)}], [${svg2cag(q2, svgUnitsPmm)}], [${svg2cag([cx, cy], svgUnitsPmm)}]]}, ${pathName})\n`
           const rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
           qy = rf[1]
@@ -277,9 +283,12 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
         break
       case 't': // relative quadratic Bézier shorthand
         while (pts.length >= 2) {
+          const p0 = [cx, cy] // previous point
           cx = cx + parseFloat(pts.shift()) // end point
           cy = cy + parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cagX(qx, svgUnitsPmm)}, ${svg2cagY(qy, svgUnitsPmm)}], [${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]]}, ${pathName})\n`
+          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[[${svg2cag(q1, svgUnitsPmm)}], [${svg2cag(q2, svgUnitsPmm)}], [${svg2cag([cx, cy], svgUnitsPmm)}]]}, ${pathName})\n`
           const rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
           qy = rf[1]
@@ -287,9 +296,12 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
         break
       case 'T': // absolute quadratic Bézier shorthand
         while (pts.length >= 2) {
+          const p0 = [cx, cy] // previous point
           cx = parseFloat(pts.shift()) // end point
           cy = parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cagX(qx, svgUnitsPmm)}, ${svg2cagY(qy, svgUnitsPmm)}], [${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]]}, ${pathName})\n`
+          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[[${svg2cag(q1, svgUnitsPmm)}], [${svg2cag(q2, svgUnitsPmm)}], [${svg2cag([cx, cy], svgUnitsPmm)}]]}, ${pathName})\n`
           const rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
           qy = rf[1]
@@ -303,7 +315,7 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
           by = cy + parseFloat(pts.shift())
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cagX(x1, svgUnitsPmm)}, ${svg2cagY(y1, svgUnitsPmm)}], [${svg2cagX(bx, svgUnitsPmm)}, ${svg2cagY(by, svgUnitsPmm)}], [${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]]}, ${pathName})\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cag([x1, y1], svgUnitsPmm)}], [${svg2cag([bx, by], svgUnitsPmm)}], [${svg2cag([cx, cy], svgUnitsPmm)}]]}, ${pathName})\n`
           const rf = reflect(bx, by, cx, cy)
           bx = rf[0]
           by = rf[1]
@@ -317,7 +329,7 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
           by = parseFloat(pts.shift())
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cagX(x1, svgUnitsPmm)}, ${svg2cagY(y1, svgUnitsPmm)}], [${svg2cagX(bx, svgUnitsPmm)}, ${svg2cagY(by, svgUnitsPmm)}], [${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]]}, ${pathName})\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cag([x1, y1], svgUnitsPmm)}], [${svg2cag([bx, by], svgUnitsPmm)}], [${svg2cag([cx, cy], svgUnitsPmm)}]]}, ${pathName})\n`
           const rf = reflect(bx, by, cx, cy)
           bx = rf[0]
           by = rf[1]
@@ -326,39 +338,39 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
       case 'h': // relative Horzontal line to
         while (pts.length >= 1) {
           cx = cx + parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([[${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]], ${pathName})\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([[${svg2cag([cx, cy], svgUnitsPmm)}]], ${pathName})\n`
         }
         break
       case 'H': // absolute Horzontal line to
         while (pts.length >= 1) {
           cx = parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([[${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]], ${pathName})\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([[${svg2cag([cx, cy], svgUnitsPmm)}]], ${pathName})\n`
         }
         break
       case 'l': // relative line to
         while (pts.length >= 2) {
           cx = cx + parseFloat(pts.shift())
           cy = cy + parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([[${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]], ${pathName})\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([[${svg2cag([cx, cy], svgUnitsPmm)}]], ${pathName})\n`
         }
         break
       case 'L': // absolute line to
         while (pts.length >= 2) {
           cx = parseFloat(pts.shift())
           cy = parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([[${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]], ${pathName})\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([[${svg2cag([cx, cy], svgUnitsPmm)}]], ${pathName})\n`
         }
         break
       case 'v': // relative Vertical line to
         while (pts.length >= 1) {
           cy = cy + parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([[${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]], ${pathName})\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([[${svg2cag([cx, cy], svgUnitsPmm)}]], ${pathName})\n`
         }
         break
       case 'V': // absolute Vertical line to
         while (pts.length >= 1) {
           cy = parseFloat(pts.shift())
-          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([[${svg2cagX(cx, svgUnitsPmm)}, ${svg2cagY(cy, svgUnitsPmm)}]], ${pathName})\n`
+          tmpCode += `${indent}${pathName} = geometries.path2.appendPoints([[${svg2cag([cx, cy], svgUnitsPmm)}]], ${pathName})\n`
         }
         break
       case 'z': // close current line

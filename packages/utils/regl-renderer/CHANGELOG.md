@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.6.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.6.6...@jscad/regl-renderer@2.6.7) (2023-06-27)
+
+**Note:** Version bump only for package @jscad/regl-renderer
+
+
+
+
+
+## [2.6.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.6.5...@jscad/regl-renderer@2.6.6) (2023-04-30)
+
+**Note:** Version bump only for package @jscad/regl-renderer
+
+
+
+
+
+## [2.6.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.6.4...@jscad/regl-renderer@2.6.5) (2023-01-09)
+
+
+### Bug Fixes
+
+* **regl-renderer:** corrected rendering of overlapping transparent solid objects ([9a66b2a](https://github.com/jscad/OpenJSCAD.org/commit/9a66b2abaccb6f047c5e4c4505218e7bbac69018))
+
+
+
+
+
+## [2.6.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.6.3...@jscad/regl-renderer@2.6.4) (2022-11-26)
+
+**Note:** Version bump only for package @jscad/regl-renderer
+
+
+
+
+
 ## [2.6.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.6.2...@jscad/regl-renderer@2.6.3) (2022-08-21)
 
 **Note:** Version bump only for package @jscad/regl-renderer
