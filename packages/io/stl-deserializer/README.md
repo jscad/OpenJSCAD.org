@@ -40,7 +40,7 @@ npm install @jscad/stl-deserializer
 const stlDeserializer = require('@jscad/stl-deserializer')
 
 const rawData = fs.readFileSync('PATH/TO/file.stl')
-const geometry = stlDeserializer.deserialize(rawData, 'file.stl', {output: 'geometry'})
+const geometry = stlDeserializer.deserialize({output: 'geometry', filename: 'file.stl'}, rawData)
 
 ```
 

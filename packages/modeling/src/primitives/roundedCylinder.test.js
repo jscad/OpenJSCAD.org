@@ -14,6 +14,27 @@ test('roundedCylinder (defaults)', (t) => {
   t.is(pts.length, 544)
 })
 
+test('roundedCylinder (zero height)', (t) => {
+  const obs = roundedCylinder({ height: 0 })
+  const pts = geom3.toPoints(obs)
+  t.notThrows(() => geom3.validate(obs))
+  t.is(pts.length, 0)
+})
+
+test('roundedCylinder (zero radius)', (t) => {
+  const obs = roundedCylinder({ radius: 0, roundRadius: 0 })
+  const pts = geom3.toPoints(obs)
+  t.notThrows(() => geom3.validate(obs))
+  t.is(pts.length, 0)
+})
+
+test('roundedCylinder (zero roundRadius)', (t) => {
+  const obs = roundedCylinder({ roundRadius: 0 })
+  const pts = geom3.toPoints(obs)
+  t.notThrows(() => geom3.validate(obs))
+  t.is(pts.length, 96)
+})
+
 test('roundedCylinder (options)', (t) => {
   // test segments
   let obs = roundedCylinder({ segments: 5 })

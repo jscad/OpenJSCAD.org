@@ -4,7 +4,7 @@ import { geom2, geom3, path2 } from '../geometries/index.js'
 
 import { line, rectangle, ellipsoid } from '../primitives/index.js'
 
-import { measureBoundingSphere } from './index.js'
+import { measureBoundingSphere } from './measureBoundingSphere.js'
 
 test('measureBoundingSphere (single objects)', (t) => {
   const aline = line([[10, 10], [15, 15]])

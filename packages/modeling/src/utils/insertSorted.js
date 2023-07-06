@@ -1,5 +1,5 @@
 /**
- * Insert the given element into the give array using the compareFunction.
+ * Insert the given element into the given array using the compareFunction.
  * @alias module:modeling/utils.insertSorted
  */
 export const insertSorted = (array, element, compareFunc) => {

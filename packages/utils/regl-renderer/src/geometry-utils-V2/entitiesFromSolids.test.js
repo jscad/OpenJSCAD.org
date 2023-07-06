@@ -47,7 +47,7 @@ test('entitiesFromSolids (various solids)', (t) => {
   t.deepEqual(entities[2].visuals, {
     drawCmd: 'drawMesh',
     show: true,
-    transparent: true,
+    transparent: false,
     useVertexColors: true
   })
 })

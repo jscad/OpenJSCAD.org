@@ -24,4 +24,8 @@ test('line2: origin() should return proper origins', (t) => {
   const line5 = fromPoints(create(), [-5, 5], [5, -5])
   const org5 = origin(line5)
   t.true(compareVectors(org5, [0, 0]))
+
+  const line6 = fromPoints(create(), [10, 0], [0, 10])
+  const org6 = origin(line6)
+  t.true(compareVectors(org6, [5, 5]))
 })

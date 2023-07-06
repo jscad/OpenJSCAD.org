@@ -4,7 +4,7 @@ import { geom2, geom3, path2 } from '../geometries/index.js'
 
 import { ellipsoid, line, rectangle, cuboid } from '../primitives/index.js'
 
-import { measureCenterOfMass } from './index.js'
+import { measureCenterOfMass } from './measureCenterOfMass.js'
 
 test('measureCenterOfMass (single objects)', (t) => {
   const aline = line([[10, 10], [15, 15]])

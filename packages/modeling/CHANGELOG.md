@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.12.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.11.1...@jscad/modeling@2.12.0) (2023-06-27)
+
+
+### Bug Fixes
+
+* **modeling:** add missing extrudeHelical typing definition ([7f5f8e1](https://github.com/jscad/OpenJSCAD.org/commit/7f5f8e1d777ced7bc4ee5989f895ca06b30bd6d8))
+
+
+### Features
+
+* **modeling:** allow zero size in primitives ([76b7369](https://github.com/jscad/OpenJSCAD.org/commit/76b73690ec2ae8000ab00a19f692569fe3595fe3))
+
+
+### Performance Improvements
+
+* **modeling:** performance improvements for retessellate as part of booleans ([12157ac](https://github.com/jscad/OpenJSCAD.org/commit/12157ac886b714214223074d2f0a413c99da0a29))
+
+
+
+
+
+## [2.11.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.11.0...@jscad/modeling@2.11.1) (2023-04-30)
+
+
+### Bug Fixes
+
+* **modeling:** arcLengthToT first argument is required ([fc4ceef](https://github.com/jscad/OpenJSCAD.org/commit/fc4ceef607abfcf3c0076155dd69254d19efab0a))
+* **modeling:** export retessellate from modifiers ([fe40aea](https://github.com/jscad/OpenJSCAD.org/commit/fe40aea35af8cde2934e9fea614a6384b1c291c6))
+* **modeling:** fix line2.closestPoint ([4419fe5](https://github.com/jscad/OpenJSCAD.org/commit/4419fe5a9b08f368fb0df91bd20acc3dc3ca7af7))
+
+
+
+
+
+# [2.11.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.10.0...@jscad/modeling@2.11.0) (2022-11-26)
+
+
+### Bug Fixes
+
+* **modeling:** added TS definitions for missing measurement functions ([acf79ca](https://github.com/jscad/OpenJSCAD.org/commit/acf79ca17223e37f49048b9960c9282dfdf72327))
+
+
+### Features
+
+* **modeling:** added extrudeHelical ([#1164](https://github.com/jscad/OpenJSCAD.org/issues/1164)) ([a202bc9](https://github.com/jscad/OpenJSCAD.org/commit/a202bc94e4e79ac1d1034dc0d9d1854ff19de84d))
+
+
+
+
+
 # [2.10.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.9.6...@jscad/modeling@2.10.0) (2022-08-21)
 
 

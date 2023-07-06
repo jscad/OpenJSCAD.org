@@ -14,6 +14,20 @@ test('roundedCuboid (defaults)', (t) => {
   t.deepEqual(pts.length, 614)
 })
 
+test('roundedCuboid (zero size)', (t) => {
+  const obs = roundedCuboid({ size: [1, 1, 0] })
+  const pts = geom3.toPoints(obs)
+  t.notThrows(() => geom3.validate(obs))
+  t.is(pts.length, 0)
+})
+
+test('roundedCuboid (zero radius)', (t) => {
+  const obs = roundedCuboid({ roundRadius: 0 })
+  const pts = geom3.toPoints(obs)
+  t.notThrows(() => geom3.validate(obs))
+  t.deepEqual(pts.length, 6)
+})
+
 test('roundedCuboid (options)', (t) => {
   // test segments
   let obs = roundedCuboid({ segments: 8 })

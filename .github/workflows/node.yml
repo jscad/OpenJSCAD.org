@@ -24,3 +24,4 @@ jobs:
           cache: 'pnpm'
       - run: pnpm --no-frozen-lockfile install
       - run: pnpm test
+      - run: pnpm run test:tsd

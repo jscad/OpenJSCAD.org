@@ -46,3 +46,10 @@ test('cube (options)', (t) => {
   t.is(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
+
+test('cube (zero size)', (t) => {
+  const obs = cube({ size: 0 })
+  const pts = geom3.toPoints(obs)
+  t.notThrows(() => geom3.validate(obs))
+  t.is(pts.length, 0)
+})

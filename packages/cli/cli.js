@@ -22,6 +22,7 @@
 //   jscad name_plate.jscad --name "Just Me" --title "CEO" -o amf test.amf
 //
 import fs from 'fs'
+import JSZip from 'jszip'
 
 import { supportedFormats } from '@jscad/io'
 
@@ -34,7 +35,7 @@ const version = '[VI]{version}[/VI]' // version is injected by rollup
 
 // handle arguments (inputs, outputs, etc)
 const args = process.argv.splice(2)
-let { inputFile, inputFormat, outputFile, outputFormat, params, addMetaData, inputIsDirectory } = parseArgs(args)
+let { inputFile, inputFormat, outputFile, outputFormat, generateParts, zip, params, addMetaData, inputIsDirectory } = parseArgs(args)
 
 // outputs
 const output = determineOutputNameAndFormat(outputFormat, outputFile, inputFile)
@@ -49,10 +50,12 @@ const clicolors = {
   black: '\u{1b}[0m'
 }
 
-console.log(`${clicolors.blue}JSCAD: generating output ${clicolors.red}
- from: ${clicolors.green} ${inputFile} ${clicolors.red}
- to: ${clicolors.green} ${outputFile} ${clicolors.yellow}(${supportedFormats[outputFormat].description}) ${clicolors.black}
-`)
+const logFileOutput = (outputFile) => {
+  console.log(`${clicolors.blue}JSCAD: generating output ${clicolors.red}
+    from: ${clicolors.green} ${inputFile} ${clicolors.red}
+    to: ${clicolors.green} ${outputFile} ${clicolors.yellow}(${supportedFormats[outputFormat].description}) ${clicolors.black}
+  `)
+}
 
 // read input data
 let encoding = 'UTF8'
@@ -63,8 +66,52 @@ const src = fs.readFileSync(inputFile, encoding)
 
 // -- convert from JSCAD script into the desired output format
 // -- and write it to disk
-generateOutputData(src, params, { outputFile, outputFormat, inputFile, inputFormat, version, addMetaData, inputIsDirectory })
-  .then((outputData) => writeOutput(outputFile, outputData))
+generateOutputData(src, params, { outputFile, outputFormat, inputFile, inputFormat, generateParts, version, addMetaData, inputIsDirectory })
+  .then((outputData) => {
+    if (outputData instanceof Array) {
+      if (zip) {
+        const zip = new JSZip()
+        for (let i = 0; i < outputData.length; i++) {
+          const filename = outputFile.replace(/\.(\w+)$/, `-part-${i + 1}-of-${outputData.length}.$1`)
+          zip.file(filename, outputData[i].asBuffer())
+        }
+        zip.generateAsync({ type: 'nodebuffer' }).then((content) => {
+          const zipFilename = outputFile.replace(/\.(\w+)$/, '.zip')
+          fs.writeFile(zipFilename, content, (err) => {
+            if (err) {
+              console.error(err)
+            } else {
+              logFileOutput(zipFilename)              
+            }
+          })
+        })
+      } else {
+        for (let i = 0; i < outputData.length; i++) {
+          const filename = outputFile.replace(/\.(\w+)$/, `-part-${i + 1}-of-${outputData.length}.$1`)        
+          logFileOutput(filename)
+          writeOutput(filename, outputData[i])
+        }
+      }
+    } else {
+      if (zip) {
+        const zip = new JSZip()
+        zip.file(outputFile, outputData.asBuffer())
+        zip.generateAsync({ type: 'nodebuffer' }).then((content) => {
+          const zipFilename = outputFile.replace(/\.(\w+)$/, '.zip')
+          fs.writeFile(zipFilename, content, (err) => {
+            if (err) {
+              console.error(err)
+            } else {
+              logFileOutput(zipFilename)              
+            }
+          })
+        })
+      } else {
+        logFileOutput(outputFile)
+        writeOutput(outputFile, outputData)
+      }
+    }
+  })
   .catch((error) => {
     console.error(error)
     process.exit(1)

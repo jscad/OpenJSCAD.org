@@ -51,3 +51,10 @@ test('geodesicSphere (options)', (t) => {
   t.notThrows.skip(() => geom3.validate(obs))
   t.is(pts.length, 180)
 })
+
+test('geodesicSphere (zero radius)', (t) => {
+  const obs = geodesicSphere({ radius: 0 })
+  const pts = geom3.toPoints(obs)
+  t.notThrows(() => geom3.validate(obs))
+  t.is(pts.length, 0)
+})

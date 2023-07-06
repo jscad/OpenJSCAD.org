@@ -1,6 +1,6 @@
 {
   "name": "@jscad/json-deserializer",
-  "version": "2.0.23",
+  "version": "2.0.26",
   "description": "JSON Deserializer for JSCAD",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
