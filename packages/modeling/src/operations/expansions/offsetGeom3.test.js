@@ -1,10 +1,51 @@
 import test from 'ava'
 
+import { comparePoints } from '../../../test/helpers/index.js'
+
 import { geom3, poly3 } from '../../geometries/index.js'
 
-import { expandGeom3 } from './expandGeom3.js'
+import { sphere } from '../../primitives/index.js'
 
-test('expandGeom3: expand completes properly, issue 876', async (t) => {
+import { offset } from './index.js'
+
+test('offset: offset of a geom3 produces expected changes to polygons', (t) => {
+  const polygonsAsPoints = [
+    [[-5, -5, -5], [-5, -5, 15], [-5, 15, 15], [-5, 15, -5]],
+    [[15, -5, -5], [15, 15, -5], [15, 15, 15], [15, -5, 15]],
+    [[-5, -5, -5], [15, -5, -5], [15, -5, 15], [-5, -5, 15]],
+    [[-5, 15, -5], [-5, 15, 15], [15, 15, 15], [15, 15, -5]],
+    [[-5, -5, -5], [-5, 15, -5], [15, 15, -5], [15, -5, -5]],
+    [[-5, -5, 15], [15, -5, 15], [15, 15, 15], [-5, 15, 15]]
+  ]
+  const geometry = geom3.fromPoints(polygonsAsPoints)
+
+  const obs = offset({ delta: 2, corners: 'round', segments: 8 }, geometry)
+  const pts = geom3.toPoints(obs)
+  const exp0 = [
+    [-7, -5, -5],
+    [-7, -5, 15],
+    [-7, 15, 15],
+    [-7, 15, -5]
+  ]
+  const exp61 = [
+    [15, -7, 15],
+    [16.414213562373096, -6.414213562373095, 15],
+    [16, -6.414213562373095, 16]
+  ]
+
+  t.notThrows.skip(() => geom3.validate(obs))
+  t.is(pts.length, 62)
+  t.true(comparePoints(pts[0], exp0))
+  t.true(comparePoints(pts[61], exp61))
+
+  const geometry2 = sphere({ radius: 5, segments: 8 })
+  const obs2 = offset({ delta: 5 }, geometry2)
+  const pts2 = geom3.toPoints(obs2)
+  t.notThrows.skip(() => geom3.validate(obs2))
+  t.is(pts2.length, 864)
+})
+
+test('offsetGeom3: offset completes properly, issue 876', async (t) => {
   setTimeout(() => t.fail(), 1000)
   const polies = [
     poly3.create([[-19.61, -0.7999999999999986, 11.855], [-19.61, -0.8000000000000015, -11.855], [-19.61, -2.7500000000000018, -11.855], [-19.61, -2.7499999999999982, 11.855]]),
@@ -26,7 +67,7 @@ test('expandGeom3: expand completes properly, issue 876', async (t) => {
   const sub = geom3.create(polies)
 
   return new Promise((resolve, reject) => {
-    expandGeom3({ delta: 1.3, corners: 'round', segments: 12 }, sub)
+    offset({ delta: 1.3, corners: 'round', segments: 12 }, sub)
     t.pass()
     resolve()
   })

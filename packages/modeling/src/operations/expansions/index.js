@@ -6,5 +6,5 @@
  * import { expansions } from '@jscad/modeling'
  * const { expand, offset } = expansions'
  */
-export { expand } from './expand.js'
 export { offset } from './offset.js'
+export { offsetFromPoints } from './offsetFromPoints.js'

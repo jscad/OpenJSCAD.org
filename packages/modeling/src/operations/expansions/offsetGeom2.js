@@ -16,9 +16,10 @@ export const offsetGeom2 = (options, geometry) => {
   const defaults = {
     delta: 1,
     corners: 'edge',
-    segments: 0
+    segments: 16,
+    expandHoles: false
   }
-  const { delta, corners, segments } = Object.assign({ }, defaults, options)
+  const { delta, corners, segments, expandHoles } = Object.assign({ }, defaults, options)
 
   if (!(corners === 'edge' || corners === 'chamfer' || corners === 'round')) {
     throw new Error('corners must be "edge", "chamfer", or "round"')
@@ -27,8 +28,12 @@ export const offsetGeom2 = (options, geometry) => {
   // convert the geometry to outlines, and generate offsets from each
   const outlines = geom2.toOutlines(geometry)
   const newOutlines = outlines.map((outline) => {
-    const level = outlines.reduce((acc, polygon) => acc + poly2.arePointsInside(outline, poly2.create(polygon)), 0)
-    const outside = (level % 2) === 0
+    let outside = true
+    // if expanding holes, we need to determine if the outline is inside or outside
+    if (expandHoles) {
+      const level = outlines.reduce((acc, polygon) => acc + poly2.arePointsInside(outline, poly2.create(polygon)), 0)
+      outside = (level % 2) === 0
+    }
 
     options = {
       delta: outside ? delta : -delta,
