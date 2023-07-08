@@ -43,7 +43,8 @@ export const path2ToGeometries = (options, solid) => {
       positions.push([point[0], point[1], 0])
     }
     // assemble the geometry
-    const normals = positions.map((x) => [0, 0, -1])
+    const normal = [0, 0, -1]
+    const normals = positions.map((x) => normal)
     const indices = positions.map((x, i) => i) // FIXME: temporary, not really needed, need to change drawLines
     const transforms = solid.transforms ? mat4.clone(solid.transforms) : mat4.create()
 

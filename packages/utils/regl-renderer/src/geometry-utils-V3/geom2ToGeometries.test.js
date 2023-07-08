@@ -11,7 +11,8 @@ const defaultTransforms = Float32Array.from([
 
 test('geom2ToGeometries (empty solid)', (t) => {
   const solid = {
-    sides: []
+    outlines: [],
+    transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   const expected = []
   let geometries = geom2ToGeometries({ color: [1, 2, 3, 4] }, solid)
@@ -33,13 +34,15 @@ test('geom2ToGeometries (empty solid)', (t) => {
   t.deepEqual(geometries, expected)
 })
 
-test('geom2ToGeometries (solid with sides)', (t) => {
+test('geom2ToGeometries (solid with outlines)', (t) => {
   const solid = {
-    sides: [[[0, 0], [1, 0]], [[1, 0], [1, 1]], [[1, 1], [0, 0]]]
+    outlines: [
+      [[0, 0], [1, 0], [1, 1]]
+    ],
+    transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
   const expected = [{
     color: [1, 2, 3, 0.8],
-    colors: [],
     indices: [0, 1, 2, 3, 4, 5],
     normals: [[0, 0, -1], [0, 0, -1], [0, 0, -1], [0, 0, -1], [0, 0, -1], [0, 0, -1]],
     positions: [[0, 0, 0], [1, 0, 0], [1, 0, 0], [1, 1, 0], [1, 1, 0], [0, 0, 0]],
@@ -51,14 +54,15 @@ test('geom2ToGeometries (solid with sides)', (t) => {
   t.deepEqual(geometries, expected)
 })
 
-test('geom2ToGeometries (solid with > 65000 sides)', (t) => {
-  const solid = { sides: [] }
+test('geom2ToGeometries (solid with > 65000 outlines)', (t) => {
+  const outline = []
   for (let i = 0; i < 70000; i++) {
-    solid.sides.push([[i, i], [i + 1, i + 1]])
+    outline.push([i, i])
   }
-  const start = solid.sides[0]
-  const end = solid.sides[solid.sides.length - 1]
-  solid.sides.push([end[1], start[0]])
+  const solid = {
+    outlines: [outline],
+    transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+  }
 
   const geometries = geom2ToGeometries({ color: [1, 2, 3, 0.8] }, solid)
   t.is(geometries.length, 3)

@@ -1,11 +1,11 @@
-import vec3 from 'gl-vec3'
-import mat4 from 'gl-mat4'
+import * as vec3 from 'gl-vec3'
+import * as mat4 from 'gl-mat4'
 
 import * as orthographicCamera from './orthographicCamera.js'
 import * as perspectiveCamera from './perspectiveCamera.js'
 
 export const fromOrthographicToPerspective = (orthographicCamera) => {
-  const { near, far, fov, zoom } = orthographicCamera
+  const { near, far, fov } = orthographicCamera
   // recompute projection matrix to use perspective camera projection matrix
   const { viewport } = orthographicCamera
   const projection = perspectiveCamera.setProjection(orthographicCamera, { width: viewport[2], height: viewport[3] })
@@ -26,9 +26,9 @@ export const fromPerspectiveToOrthographic = (perspectiveCamera) => {
   // we re-use near, far, & projection matrix of orthographicCamera
   const { near, far, viewport } = perspectiveCamera
   const fCam = { zoom: 1, near, far }
-  const orthographicCamera = orthographicCamera.cameraState
+  const projectionType = orthographicCamera.cameraState.projectionType
   const projection = orthographicCamera.setProjection(fCam, { width, height })
-  return Object.assign({}, orthographicCamera, perspectiveCamera, projection, { projectionType: orthographicCamera.projectionType, viewport })
+  return Object.assign({}, orthographicCamera, perspectiveCamera, projection, { projectionType, viewport })
 }
 
 export const toPerspectiveView = ({ camera }) => {

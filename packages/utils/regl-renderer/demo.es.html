@@ -12,8 +12,6 @@
     </style>
 </head>
 <body>
-  <script language="javascript" src="./dist/jscad-regl-renderer.min.js" id="RENDERING"></script>
-
   <div id="jscad"></div>
 
   <script type="module" id="MODELING">
@@ -60,12 +58,8 @@ const main = (parameters) => {
 window.shapes = main()
   </script>
 
-
-  <script type="module", id="RENDERING">
-// ********************
-// Renderer configuration and initiation.
-// ********************
-const { cameras, commands, controls, entitiesFromSolids, prepareRender } = jscadReglRenderer
+  <script type="module">
+import { cameras, commands, controls, entitiesFromSolids, prepareRender } from "./dist/jscad-regl-renderer.es.js"
 
 // HACK... import the results of the design from global space
 const shapes = window.shapes
@@ -236,5 +230,7 @@ containerElement.onpointerup = upHandler
 containerElement.onwheel = wheelHandler
 
   </script>
+
+
 </body>
 </html>

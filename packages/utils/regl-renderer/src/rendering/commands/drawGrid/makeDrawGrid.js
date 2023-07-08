@@ -1,4 +1,4 @@
-import mat4 from 'gl-mat4'
+import * as mat4 from 'gl-mat4'
 
 export const makeDrawGrid = (regl, params = {}) => {
   const positions = []

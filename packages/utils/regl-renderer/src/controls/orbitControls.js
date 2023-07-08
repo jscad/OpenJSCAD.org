@@ -1,12 +1,12 @@
-import vec3 from 'gl-vec3'
-import mat4 from 'gl-mat4'
+import * as vec3 from 'gl-vec3'
+import * as mat4 from 'gl-mat4'
 
-import unproject from 'camera-unproject'
+import { unproject } from 'camera-unproject'
+
+import { computeBounds } from '../bound-utils/computeBounds.js'
+import { setProjection } from '../cameras/orthographicCamera.js'
 
 const { max, min, sqrt, PI, sin, cos, atan2 } = Math
-
-import computeBounds from '../bound-utils/computeBounds.js'
-import { setProjection } from '../cameras/orthographicCamera.js'
 
 // TODO: make it more data driven ?
 /*
@@ -61,7 +61,7 @@ export const controlsProps = {
   autoAdjustPlanes: true // adjust near & far planes when zooming in &out
 }
 
-export constexport const controlsState = {
+export const controlsState = {
   // orbit controls state
   thetaDelta: 0,
   phiDelta: 0,

@@ -1,4 +1,4 @@
-const vColorFrag = `
+const frag = `
 precision mediump float;
 uniform vec4 ucolor;
 
@@ -6,4 +6,4 @@ void main () {
   gl_FragColor = ucolor;
 }
 `
-export { frag: vColorFrag }
+export { frag }

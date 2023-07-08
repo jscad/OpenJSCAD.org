@@ -1,5 +1,5 @@
-import mat4 from 'gl-mat4'
-import vec3 from 'gl-vec3'
+import * as mat4 from 'gl-mat4'
+import * as vec3 from 'gl-vec3'
 
 export const cameraState = {
   view: mat4.identity(new Float32Array(16)),

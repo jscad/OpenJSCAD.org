@@ -48,7 +48,7 @@ export const entitiesFromSolids = (options, ...solids) => {
   const entities = []
   solids.forEach((solid) => {
     let geometries = []
-    if ('sides' in solid) {
+    if ('outlines' in solid) {
       geometries = geom2ToGeometries({ color }, solid)
     } else if ('points' in solid) {
       geometries = path2ToGeometries({ color }, solid)

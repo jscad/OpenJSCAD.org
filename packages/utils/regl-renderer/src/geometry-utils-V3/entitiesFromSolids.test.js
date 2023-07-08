@@ -5,7 +5,7 @@ import { entitiesFromSolids } from './entitiesFromSolids.js'
 test('entitiesFromSolids (various solids)', (t) => {
   const solids = [
     null,
-    { sides: [[[0, 0], [1, 0]], [[1, 0], [1, 1]], [[1, 1], [0, 0]]], color: [1, 0, 0, 0.5] },
+    { outlines: [[[0, 0], [1, 0], [1, 1]]], color: [1, 0, 0, 0.5] },
     { points: [[0, 0], [1, 0], [1, 1]], transforms: [5, 0, 0, 0, 0, 4, 0, 0, 0, 0, 3, 0, 0, 0, 0, 2] },
     {
       polygons: [
@@ -18,7 +18,7 @@ test('entitiesFromSolids (various solids)', (t) => {
       ]
     },
     'hi',
-    { sides: [] },
+    { outlines: [] },
     { points: [] },
     { polygons: [] }
   ]

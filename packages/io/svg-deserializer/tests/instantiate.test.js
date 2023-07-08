@@ -361,7 +361,7 @@ test('deserialize : instantiate svg (path: with bezier) to objects', (t) => {
   observed = deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
   shape = observed[0]
-  t.is(shape.sides.length, 101)
+  t.is(shape.outlines.length, 1)
   t.deepEqual(shape.color, [1, 0, 0, 1])
 
   observed = deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
