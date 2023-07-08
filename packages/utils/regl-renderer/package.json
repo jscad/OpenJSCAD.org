@@ -44,6 +44,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "types": "types",
   "dependencies": {
     "@jscad/array-utils": "workspace:2.1.4",
     "camera-unproject": "1.0.1",
