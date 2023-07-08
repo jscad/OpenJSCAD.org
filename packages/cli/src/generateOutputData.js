@@ -29,7 +29,7 @@ export const generateOutputData = (source, cliparams, options) => {
   }
   options = Object.assign({}, defaults, options)
 
-  const { inputFile, inputFormat, outputFormat } = options
+  const { inputFile, inputFormat, outputFormat, generateParts } = options
 
   const inputMimeType = getMimeType(inputFormat)
   const outputMimeType = getMimeType(outputFormat)
