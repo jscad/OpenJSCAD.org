@@ -7,7 +7,9 @@ import * as vec3 from '../maths/vec3/index.js'
 import * as geom3 from '../geometries/geom3/index.js'
 import * as poly3 from '../geometries/poly3/index.js'
 
-import { isGT, isGTE, isNumberArray } from './commonChecks.js'
+import { isGTE, isNumberArray } from './commonChecks.js'
+
+import { cuboid } from './cuboid.js'
 
 const createCorners = (center, size, radius, segments, slice, positive) => {
   const pitch = (TAU / 4) * slice / segments
@@ -135,9 +137,15 @@ export const roundedCuboid = (options) => {
 
   if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
   if (!isNumberArray(size, 3)) throw new Error('size must be an array of X, Y and Z values')
-  if (!size.every((n) => n > 0)) throw new Error('size values must be greater than zero')
-  if (!isGT(roundRadius, 0)) throw new Error('roundRadius must be greater than zero')
+  if (!size.every((n) => n >= 0)) throw new Error('size values must be positive')
+  if (!isGTE(roundRadius, 0)) throw new Error('roundRadius must be positive')
   if (!isGTE(segments, 4)) throw new Error('segments must be four or more')
+
+  // if any size is zero return empty geometry
+  if (size[0] === 0 || size[1] === 0 || size[2] === 0) return geom3.create()
+
+  // if roundRadius is zero, return cuboid
+  if (roundRadius === 0) return cuboid({ center, size })
 
   size = size.map((v) => v / 2) // convert to radius
 

@@ -6,7 +6,9 @@ import * as vec3 from '../maths/vec3/index.js'
 import * as geom3 from '../geometries/geom3/index.js'
 import * as poly3 from '../geometries/poly3/index.js'
 
-import { isGT, isGTE, isNumberArray } from './commonChecks.js'
+import { isGTE, isNumberArray } from './commonChecks.js'
+
+import { cylinder } from './cylinder.js'
 
 /**
  * Construct a Z axis-aligned solid cylinder in three dimensional space with rounded ends.
@@ -33,11 +35,17 @@ export const roundedCylinder = (options) => {
   const { center, height, radius, roundRadius, segments } = Object.assign({}, defaults, options)
 
   if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
-  if (!isGT(height, 0)) throw new Error('height must be greater then zero')
-  if (!isGT(radius, 0)) throw new Error('radius must be greater then zero')
-  if (!isGT(roundRadius, 0)) throw new Error('roundRadius must be greater then zero')
-  if (roundRadius > (radius - EPS)) throw new Error('roundRadius must be smaller then the radius')
+  if (!isGTE(height, 0)) throw new Error('height must be positive')
+  if (!isGTE(radius, 0)) throw new Error('radius must be positive')
+  if (!isGTE(roundRadius, 0)) throw new Error('roundRadius must be positive')
+  if (roundRadius > radius) throw new Error('roundRadius must be smaller then the radius')
   if (!isGTE(segments, 4)) throw new Error('segments must be four or more')
+
+  // if size is zero return empty geometry
+  if (height === 0 || radius === 0) return geom3.create()
+
+  // if roundRadius is zero, return cylinder
+  if (roundRadius === 0) return cylinder({ center, height, radius })
 
   const start = [0, 0, -(height / 2)]
   const end = [0, 0, height / 2]

@@ -1,6 +1,8 @@
-import { flatten } from '../utils/index.js'
+import { flatten } from '../utils/flatten.js'
 
-import { geom2, geom3, path2 } from '../geometries/index.js'
+import * as geom2 from '../geometries/geom2/index.js'
+import * as geom3 from '../geometries/geom3/index.js'
+import * as path2 from '../geometries/path2/index.js'
 
 import { measureAggregateBoundingBox } from './measureAggregateBoundingBox.js'
 import { calculateEpsilonFromBounds } from './calculateEpsilonFromBounds.js'

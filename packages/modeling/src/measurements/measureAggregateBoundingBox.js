@@ -1,4 +1,5 @@
-import { flatten } from '../utils/index.js'
+import { flatten } from '../utils/flatten.js'
+
 import * as vec3 from '../maths/vec3/index.js'
 
 import { measureBoundingBox } from './measureBoundingBox.js'

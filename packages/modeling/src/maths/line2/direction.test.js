@@ -24,4 +24,8 @@ test('line2: direction() should return proper direction', (t) => {
   const line5 = fromPoints(create(), [-5, 5], [5, -5])
   const dir5 = direction(line5)
   t.true(compareVectors(dir5, [0.7071067811865475, -0.7071067811865475]))
+
+  const line6 = fromPoints(create(), [10, 0], [0, 10])
+  const dir6 = direction(line6)
+  t.true(compareVectors(dir6, [-0.7071067811865475, 0.7071067811865475]))
 })

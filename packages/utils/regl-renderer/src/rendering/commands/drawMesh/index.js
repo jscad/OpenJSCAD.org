@@ -10,16 +10,17 @@ export const drawMesh = (regl, params = { extras: {} }) => {
     useVertexColors: true,
     dynamicCulling: true,
     geometry: undefined,
-    color: meshColor
+    color: meshColor,
+    visuals: {}
   }
-  const { geometry, dynamicCulling, useVertexColors, color, transparent } = Object.assign({}, defaults, params)
-
+  const { geometry, dynamicCulling, useVertexColors, color, visuals } = Object.assign({}, defaults, params)
   // let ambientOcclusion = vao(geometry.indices, geometry.positions, 64, 64)
   const ambientOcclusion = regl.buffer([])
 
   // vertex colors or not ?
   const hasIndices = !!(geometry.indices && geometry.indices.length > 0)
   const hasNormals = !!(geometry.normals && geometry.normals.length > 0)
+  const transparent = 'transparent' in visuals ? visuals.transparent : false
   const hasVertexColors = !!(useVertexColors && geometry.colors && geometry.colors.length > 0)
   const transforms = geometry.transforms || mat4.create()
   const flip = mat4.determinant(transforms) < 0
@@ -56,8 +57,7 @@ export const drawMesh = (regl, params = { extras: {} }) => {
     cull: {
       enable: true,
       face: cullFace
-    },
-    depth: { enable: !transparent }
+    }
   }
 
   // blending is a bit tricky

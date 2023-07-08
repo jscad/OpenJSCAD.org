@@ -31,8 +31,11 @@ export const ellipsoid = (options) => {
 
   if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
   if (!isNumberArray(radius, 3)) throw new Error('radius must be an array of X, Y and Z values')
-  if (!radius.every((n) => n > 0)) throw new Error('radius values must be greater than zero')
+  if (!radius.every((n) => n >= 0)) throw new Error('radius values must be positive')
   if (!isGTE(segments, 4)) throw new Error('segments must be four or more')
+
+  // if any radius is zero return empty geometry
+  if (radius[0] === 0 || radius[1] === 0 || radius[2] === 0) return geom3.create()
 
   const xVector = vec3.scale(vec3.create(), vec3.normalize(vec3.create(), axes[0]), radius[0])
   const yVector = vec3.scale(vec3.create(), vec3.normalize(vec3.create(), axes[1]), radius[1])

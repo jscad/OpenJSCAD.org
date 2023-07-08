@@ -1,5 +1,5 @@
 import { cuboid } from './cuboid.js'
-import { isGT } from './commonChecks.js'
+import { isGTE } from './commonChecks.js'
 
 /**
  * Construct an axis-aligned solid cube in three dimensional space with six square faces.
@@ -19,7 +19,7 @@ export const cube = (options) => {
   }
   let { center, size } = Object.assign({}, defaults, options)
 
-  if (!isGT(size, 0)) throw new Error('size must be greater than zero')
+  if (!isGTE(size, 0)) throw new Error('size must be positive')
 
   size = [size, size, size]
 

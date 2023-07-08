@@ -1,7 +1,8 @@
 import { TAU } from '../maths/constants.js'
 
-import { extrudeRotate } from '../operations/extrusions/index.js'
-import { rotate, translate } from '../operations/transforms/index.js'
+import { extrudeRotate } from '../operations/extrusions/extrudeRotate.js'
+import { rotate } from '../operations/transforms/rotate.js'
+import { translate } from '../operations/transforms/translate.js'
 
 import { circle } from './circle.js'
 

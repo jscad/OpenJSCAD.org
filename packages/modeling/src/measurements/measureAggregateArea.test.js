@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { cube, cuboid } from '../primitives/index.js'
 
-import { measureAggregateArea } from './index.js'
+import { measureAggregateArea } from './measureAggregateArea.js'
 
 test('measureAggregateArea (single objects)', (t) => {
   const aCube = cube({ size: 4, center: [4, 10, 20] })

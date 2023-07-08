@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.5.5...@jscad/svg-deserializer@2.5.6) (2023-06-27)
+
+**Note:** Version bump only for package @jscad/svg-deserializer
+
+
+
+
+
+## [2.5.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.5.4...@jscad/svg-deserializer@2.5.5) (2023-04-30)
+
+
+### Bug Fixes
+
+* **svg-deserializer:** fix conversions of quadratic bezier paths ([2b62d76](https://github.com/jscad/OpenJSCAD.org/commit/2b62d762056aadca75006ac4b1eebd08bd7addaa))
+
+
+
+
+
+## [2.5.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.5.3...@jscad/svg-deserializer@2.5.4) (2022-11-26)
+
+**Note:** Version bump only for package @jscad/svg-deserializer
+
+
+
+
+
 ## [2.5.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.5.2...@jscad/svg-deserializer@2.5.3) (2022-09-23)
 
 

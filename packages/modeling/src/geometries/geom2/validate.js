@@ -1,5 +1,6 @@
 import * as vec2 from '../../maths/vec2/index.js'
-import { intersect } from '../../maths/utils/index.js'
+
+import { intersect } from '../../maths/utils/intersect.js'
 
 import { isA } from './isA.js'
 import { toOutlines } from './toOutlines.js'

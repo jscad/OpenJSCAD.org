@@ -4,7 +4,7 @@ import { geom2, geom3, path2 } from '../geometries/index.js'
 
 import { line, rectangle, cuboid } from '../primitives/index.js'
 
-import { measureDimensions } from './index.js'
+import { measureDimensions } from './measureDimensions.js'
 
 test('measureDimensions (single objects)', (t) => {
   const aline = line([[10, 10], [15, 15]])

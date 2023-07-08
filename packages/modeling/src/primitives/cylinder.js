@@ -1,5 +1,6 @@
 import { cylinderElliptic } from './cylinderElliptic.js'
-import { isGT } from './commonChecks.js'
+import { isGTE } from './commonChecks.js'
+import * as geom3 from '../geometries/geom3/index.js'
 
 /**
  * Construct a Z axis-aligned cylinder in three dimensional space.
@@ -24,7 +25,10 @@ export const cylinder = (options) => {
   }
   const { center, height, radius, segments } = Object.assign({}, defaults, options)
 
-  if (!isGT(radius, 0)) throw new Error('radius must be greater than zero')
+  if (!isGTE(radius, 0)) throw new Error('radius must be positive')
+
+  // if size is zero return empty geometry
+  if (height === 0 || radius === 0) return geom3.create()
 
   const newOptions = {
     center,

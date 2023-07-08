@@ -1,4 +1,4 @@
-import { aboutEqualNormals } from '../../maths/utils/index.js'
+import { aboutEqualNormals } from '../../maths/utils/aboutEqualNormals.js'
 
 import * as vec3 from '../../maths/vec3/index.js'
 

@@ -1,6 +1,6 @@
-import { flatten } from '../../utils/index.js'
+import { flatten } from '../../utils/flatten.js'
 
-import { union } from '../booleans/index.js'
+import { union } from '../booleans/union.js'
 
 import { hull } from './hull.js'
 

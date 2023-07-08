@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-serializer@2.4.4...@jscad/x3d-serializer@2.4.5) (2023-06-27)
+
+
+### Bug Fixes
+
+* **x3d-serializer:** added specular highlights and conversion of shape names ([ba26567](https://github.com/jscad/OpenJSCAD.org/commit/ba26567f207a3e7529778ec89436956cf03592bf))
+
+
+
+
+
+## [2.4.4](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-serializer@2.4.3...@jscad/x3d-serializer@2.4.4) (2023-04-30)
+
+
+### Bug Fixes
+
+* **x3d-serializer:** corrected color and transparency conversions ([cc99548](https://github.com/jscad/OpenJSCAD.org/commit/cc9954853c30c6a82fcd26cda686e7f51f9fa304))
+* **x3d-serializer:** corrected colors, orientation of scene to Y up, and added new option for smoothing ([3444e2d](https://github.com/jscad/OpenJSCAD.org/commit/3444e2d462446694e62da71b130dfb4e56e92f82))
+
+
+
+
+
+## [2.4.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-serializer@2.4.2...@jscad/x3d-serializer@2.4.3) (2022-11-26)
+
+**Note:** Version bump only for package @jscad/x3d-serializer
+
+
+
+
+
 ## [2.4.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-serializer@2.4.1...@jscad/x3d-serializer@2.4.2) (2022-08-21)
 
 **Note:** Version bump only for package @jscad/x3d-serializer
