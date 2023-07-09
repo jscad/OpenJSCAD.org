@@ -2,9 +2,15 @@ import fs from 'fs'
 import path from 'path'
 import { execSync } from 'child_process'
 import { cwd } from 'process'
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
 import JSZip from 'jszip'
 
 import test from 'ava'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename);
 
 test.afterEach.always((t) => {
   // remove files
@@ -46,7 +52,7 @@ import { primitives } from '@jscad/modeling'
 
 export const getParameterDefinitions = () => {
   return [
-    { name: 'segments', caption: 'Segements:', type: 'int', initial: 10, min: 5, max: 20, step: 1 }
+    { name: 'segments', caption: 'Segments:', type: 'int', initial: 10, min: 5, max: 20, step: 1 }
   ]
 }
 
