@@ -1,9 +1,6 @@
 import { Geometry } from '../geometries/types'
 import RecursiveArray from '../utils/recursiveArray'
 
-type Centroid = [number, number, number]
+import { BoundingSphere } from './types'
 
-export default measureBoundingSphere
-
-declare function measureBoundingSphere(geometry: Geometry): [Centroid, number]
-declare function measureBoundingSphere(...geometries: RecursiveArray<Geometry>): [Centroid, number][]
+export function measureBoundingSphere(...geometries: RecursiveArray<Geometry>): BoundingSphere
