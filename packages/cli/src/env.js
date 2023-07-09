@@ -1,3 +1,5 @@
+import os from 'os'
+
 const version = '[VI]{version}[/VI]' // version is injected by rollup
 
 export const env = () => {
@@ -6,10 +8,7 @@ export const env = () => {
     const w = document.defaultView
     env = env + ' [' + w.navigator.userAgent + ']'
   } else {
-    if (typeof require === 'function') {
-      const os = require('os')
-      env = env + ' [' + os.type() + ':' + os.release() + ',' + os.platform() + ':' + os.arch() + ']'
-    }
+    env = env + ' [' + os.type() + ':' + os.release() + ',' + os.platform() + ':' + os.arch() + ']'
   }
   console.log(env)
 }
