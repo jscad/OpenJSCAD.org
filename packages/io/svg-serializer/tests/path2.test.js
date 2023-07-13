@@ -61,7 +61,7 @@ const expected4 = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg width="4mm" height="3mm" viewBox="0 0 4 3" fill="none" fill-rule="evenodd" stroke-width="0.1px" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <path d="M3 3L4 2L0 0" stroke="rgb(127.5,127.5,127.5,127.5)" id="l1" class="gray-line"/>
+    <path d="M3 3L4 2L0 0" stroke="rgba(127.5,127.5,127.5,0.5)" id="l1" class="gray-line"/>
   </g>
 </svg>
 `

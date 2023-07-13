@@ -9,7 +9,7 @@ const { measurements } = require('@jscad/modeling')
 test('deserialize : instantiate svg (rect) to objects', (t) => {
   const sourceSvg = `<svg pxpmm="10" width="500" height="500">
   <rect x="80" y="60" width="250" height="250" color="red"/>
-  <rect x="140" y="120" width="250" height="250" rx="40" color="rgb(0,255,0)"/>
+  <rect x="140" y="120" width="250" height="250" rx="40" color="rgba(0,255,0)"/>
   <rect x="140" y="120" width="250" height="250" ry="40" color="blue"/>
   <rect x="40" y="20" width="250" height="250" transform="translate(60 50) scale(2 3)"/>
 </svg>`

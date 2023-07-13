@@ -203,7 +203,7 @@ const convertPath = (path, offsets, options) => {
   return str
 }
 
-const convertColor = (color) => `rgb(${color[0] * 255},${color[1] * 255},${color[2] * 255},${color[3] * 255})`
+const convertColor = (color) => `rgba(${color[0] * 255},${color[1] * 255},${color[2] * 255},${color[3]})`
 
 module.exports = {
   serialize,

@@ -99,7 +99,7 @@ const expected4 = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg width="10mm" height="20mm" viewBox="0 0 10 20" fill="none" fill-rule="evenodd" stroke-width="0.1px" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <path fill="rgb(127.5,127.5,127.5,127.5)" d="M0 20L10 20L10 0L0 0L0 20" id="r2" class="gray-rect"/>
+    <path fill="rgba(127.5,127.5,127.5,0.5)" d="M0 20L10 20L10 0L0 0L0 20" id="r2" class="gray-rect"/>
   </g>
 </svg>
 `
@@ -109,7 +109,7 @@ const expected5 = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1 Tiny//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11-tiny.dtd">
 <svg width="150mm" height="150mm" viewBox="0 0 150 150" fill="none" fill-rule="evenodd" stroke-width="0.1px" version="1.1" baseProfile="tiny" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
-    <path fill="rgb(127.5,127.5,127.5,127.5)" d="M0 150L150 150L150 0L115 0L115 75L35 75L35 0L0 0L0 150M90 115L83 115L83 100L67 100L67 115L60 115L60 85L90 85L90 115M73 94L77 94L77 90L73 90L73 94"/>
+    <path fill="rgba(127.5,127.5,127.5,0.5)" d="M0 150L150 150L150 0L115 0L115 75L35 75L35 0L0 0L0 150M90 115L83 115L83 100L67 100L67 115L60 115L60 85L90 85L90 115M73 94L77 94L77 90L73 90L73 94"/>
   </g>
 </svg>
 `
