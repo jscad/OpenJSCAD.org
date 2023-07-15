@@ -14,7 +14,7 @@ import { toPoints } from './toPoints.js'
  * In other words, the trailing gradient of the geometry matches the new gradient of the curve.
  * @param {object} options - options for construction
  * @param {Array} options.controlPoints - list of control points (2D) for the Bézier curve
- * @param {number} [options.segment=16] - number of segments per 360 rotation
+ * @param {number} [options.segments=16] - number of segments per 360 rotation
  * @param {Path2} geometry - the path of which to append points
  * @returns {Path2} a new path with the appended points
  * @alias module:modeling/geometries/path2.appendBezier
