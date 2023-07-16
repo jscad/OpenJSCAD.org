@@ -17,7 +17,7 @@ import { offsetPath2 } from './offsetPath2.js'
  * @param {Integer} [options.segments=16] - number of segments when creating round corners
  * @param {...Object} objects - the geometries to offset
  * @return {Object|Array} new geometry, or list of new geometries
- * @alias module:modeling/expansions.offset
+ * @alias module:modeling/offsets.offset
  *
  * @example
  * let small = offset({ delta: -4, corners: 'chamfer' }, square({size: 40})) // contract

@@ -6,7 +6,7 @@ import { intersect } from '../../maths/utils/intersect.js'
 import * as line2 from '../../maths/line2/index.js'
 import * as vec2 from '../../maths/vec2/index.js'
 
-/*
+/**
  * Create a set of offset points from the given points using the given options (if any).
  * @param {Object} options - options for offset
  * @param {Float} [options.delta=1] - delta of offset (+ to exterior, - from interior)
@@ -15,6 +15,7 @@ import * as vec2 from '../../maths/vec2/index.js'
  * @param {Integer} [options.closed=false] - is the last point connected back to the first point?
  * @param {Array} points - array of 2D points
  * @returns {Array} new set of offset points, plus points for each rounded corner
+ * @alias module:modeling/offsets.offsetFromPoints
  */
 export const offsetFromPoints = (options, points) => {
   const defaults = {
