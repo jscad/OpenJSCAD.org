@@ -62,11 +62,9 @@ export const generateOutputData = (source, cliParams, options) => {
   })
     .then((solids) => {
       if (Array.isArray(solids) && generateParts) {
-        return solids.map((s) => {
-          return convertSolidsToBlob({mimeType: outputMimeType, cliParams}, [s])
-        })
+        return solids.map((s) => convertSolidsToBlob({ mimeType: outputMimeType, cliParams }, [s]))
       }
-      return convertSolidsToBlob({mimeType: outputMimeType, cliParams}, solids)
+      return convertSolidsToBlob({ mimeType: outputMimeType, cliParams }, solids)
     })
 }
 
@@ -74,7 +72,7 @@ export const generateOutputData = (source, cliParams, options) => {
  * Convert the given solids to the target mimeType, and return as a blob for writing to file.
  */
 const convertSolidsToBlob = (options, solids) => {
-  const {mimeType, cliParams} = options
+  const { mimeType, cliParams } = options
 
   if (mimeType === 'application/javascript') {
     // convert the solids (source code) to blob without conversion
