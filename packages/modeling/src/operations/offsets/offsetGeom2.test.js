@@ -20,6 +20,24 @@ test('offset: offset an empty geom2', (t) => {
   t.true(comparePoints(pts, exp))
 })
 
+test('offset: offset option validation', (t) => {
+  const empty = geom2.create()
+  t.throws(() => offset({ delta: null }, empty), { message: 'delta must be a finite number' })
+  t.throws(() => offset({ delta: undefined }, empty), { message: 'delta must be a finite number' })
+  t.throws(() => offset({ delta: Infinity }, empty), { message: 'delta must be a finite number' })
+  t.throws(() => offset({ delta: NaN }, empty), { message: 'delta must be a finite number' })
+  t.throws(() => offset({ corners: 'round', segments: null }, empty), { message: 'segments must be a finite number' })
+  t.throws(() => offset({ corners: 'round', segments: undefined }, empty), { message: 'segments must be a finite number' })
+  t.throws(() => offset({ corners: 'round', segments: Infinity }, empty), { message: 'segments must be a finite number' })
+  t.throws(() => offset({ corners: 'round', segments: NaN }, empty), { message: 'segments must be a finite number' })
+  t.throws(() => offset({ corners: 'round', segments: 0 }, empty), { message: 'segments must be greater than zero' })
+  t.throws(() => offset({ corners: 'round', segments: -1 }, empty), { message: 'segments must be greater than zero' })
+  t.throws(() => offset({ corners: null }, empty), { message: 'corners must be "edge", "chamfer", or "round"' })
+  t.throws(() => offset({ corners: undefined }, empty), { message: 'corners must be "edge", "chamfer", or "round"' })
+  t.throws(() => offset({ corners: 4 }, empty), { message: 'corners must be "edge", "chamfer", or "round"' })
+  t.throws(() => offset({ corners: 'fluffy' }, empty), { message: 'corners must be "edge", "chamfer", or "round"' })
+})
+
 test('offset: offset of a geom2 produces expected changes to points', (t) => {
   const geometry = square({ size: 16 })
 
@@ -50,7 +68,7 @@ test('offset (options): offsetting of a simple geom2 produces expected offset ge
   ])
 
   // expand +
-  let obs = offset({ delta: 1, corners: 'round', segments: 0 }, geometry)
+  let obs = offset({ delta: 1, corners: 'round', segments: 4 }, geometry)
   let pts = geom2.toPoints(obs)
   let exp = [
     [-5, -6],
@@ -74,7 +92,7 @@ test('offset (options): offsetting of a simple geom2 produces expected offset ge
   t.true(comparePoints(pts, exp))
 
   // contract -
-  obs = offset({ delta: -0.5, corners: 'round', segments: 0 }, geometry)
+  obs = offset({ delta: -0.5, corners: 'round', segments: 4 }, geometry)
   pts = geom2.toPoints(obs)
   exp = [
     [-4.5, -4.5],

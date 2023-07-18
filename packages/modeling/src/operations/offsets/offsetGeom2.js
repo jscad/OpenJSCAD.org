@@ -24,6 +24,9 @@ export const offsetGeom2 = (options, geometry) => {
   if (!(corners === 'edge' || corners === 'chamfer' || corners === 'round')) {
     throw new Error('corners must be "edge", "chamfer", or "round"')
   }
+  if (!Number.isFinite(delta)) throw new Error('delta must be a finite number')
+  if (corners === 'round' && !Number.isFinite(segments)) throw new Error('segments must be a finite number')
+  if (corners === 'round' && !(segments > 0)) throw new Error('segments must be greater than zero')
 
   // convert the geometry to outlines, and generate offsets from each
   const outlines = geom2.toOutlines(geometry)
