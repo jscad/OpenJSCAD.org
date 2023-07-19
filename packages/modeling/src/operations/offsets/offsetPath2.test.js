@@ -2,13 +2,28 @@ import test from 'ava'
 
 import { comparePoints, nearlyEqual } from '../../../test/helpers/index.js'
 
+import { colorize } from '../../colors/index.js'
 import { geom2, geom3, path2 } from '../../geometries/index.js'
-import { measureBoundingBox } from '../../measurements/index.js'
+import { measureArea, measureBoundingBox } from '../../measurements/index.js'
 import { area } from '../../maths/utils/index.js'
 import { TAU } from '../../maths/constants.js'
 import { sphere, square } from '../../primitives/index.js'
 
 import { offset } from './index.js'
+
+test('offset: offset empty path2', (t) => {
+  const geometry = path2.create()
+  const result = offset({ }, geometry)
+  t.notThrows(() => path2.validate(result))
+  t.is(measureArea(result), 0)
+  t.is(path2.toPoints(result).length, 0)
+})
+
+test('offset: offset path2 preserves color', (t) => {
+  const geometry = colorize([1, 0, 0], path2.create())
+  const result = offset({ }, geometry)
+  t.deepEqual(result.color, [1, 0, 0, 1])
+})
 
 test('offset: edge-expanding a straight line produces rectangle', (t) => {
   const points = [[0, 0], [0, 10]]

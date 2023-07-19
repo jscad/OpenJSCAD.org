@@ -4,9 +4,13 @@ import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/in
 
 import { TAU } from '../../maths/constants.js'
 
+import { colorize } from '../../colors/index.js'
+
 import { geom2, geom3 } from '../../geometries/index.js'
 
 import { measureVolume } from '../../measurements/index.js'
+
+import { square } from '../../primitives/index.js'
 
 import { extrudeRotate } from './index.js'
 
@@ -18,6 +22,12 @@ test('extrudeRotate: (defaults) extruding of a geom2 produces an expected geom3'
   t.notThrows(() => geom3.validate(geometry3))
   t.is(measureVolume(geometry3), 27648.000000000007)
   t.is(pts.length, 96)
+})
+
+test('extrudeRotate: preserves color', (t) => {
+  const red = colorize([1, 0, 0], square())
+  const extruded = extrudeRotate({ }, red)
+  t.deepEqual(extruded.color, [1, 0, 0, 1])
 })
 
 test('extrudeRotate: (angle) extruding of a geom2 produces an expected geom3', (t) => {

@@ -2,11 +2,27 @@ import test from 'ava'
 
 import { comparePoints } from '../../../test/helpers/index.js'
 
+import { colorize } from '../../colors/index.js'
 import { geom3, poly3 } from '../../geometries/index.js'
-
-import { sphere } from '../../primitives/index.js'
+import { measureVolume } from '../../measurements/index.js'
+import { cube, sphere } from '../../primitives/index.js'
 
 import { offset } from './index.js'
+
+test('offset: offset empty geom3', (t) => {
+  const geometry = geom3.create()
+  const result = offset({ }, geometry)
+  t.notThrows(() => geom3.validate(result))
+  t.is(measureVolume(result), 0)
+  t.is(geom3.toPolygons(result).length, 0)
+  t.is(geom3.toPoints(result).length, 0)
+})
+
+test('offset: offset geom3 preserves color', (t) => {
+  const geometry = colorize([1, 0, 0], cube({ }))
+  const result = offset({ }, geometry)
+  t.deepEqual(result.color, [1, 0, 0, 1])
+})
 
 test('offset: offset of a geom3 produces expected changes to polygons', (t) => {
   const polygonsAsPoints = [

@@ -74,17 +74,17 @@ export const offsetPath2 = (options, geometry) => {
 
   const closed = geometry.isClosed
   const points = path2.toPoints(geometry)
-  if (points.length === 0) throw new Error('the given geometry cannot be empty')
+  if (points.length === 0) return geometry
 
   const paths = {
-    points: points,
+    points,
     external: offsetFromPoints({ delta, corners, segments, closed }, points),
     internal: offsetFromPoints({ delta: -delta, corners, segments, closed }, points)
   }
 
-  if (geometry.isClosed) {
-    return createGeometryFromClosedOffsets(paths)
-  } else {
-    return createGeometryFromExpandedOpenPath(paths, segments, corners, delta)
-  }
+  const output = geometry.isClosed ?
+    createGeometryFromClosedOffsets(paths) :
+    createGeometryFromExpandedOpenPath(paths, segments, corners, delta)
+  if (geometry.color) output.color = geometry.color
+  return output
 }

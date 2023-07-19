@@ -46,7 +46,10 @@ export const offsetGeom2 = (options, geometry) => {
     }
     return offsetFromPoints(options, outline)
   })
+  // TODO: union outlines that expanded into each other
 
   // create a composite geometry from the new outlines
-  return geom2.create(newOutlines)
+  const output = geom2.create(newOutlines)
+  if (geometry.color) output.color = geometry.color
+  return output
 }

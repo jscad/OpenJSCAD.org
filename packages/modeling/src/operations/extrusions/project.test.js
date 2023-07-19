@@ -2,6 +2,8 @@ import test from 'ava'
 
 import { comparePoints } from '../../../test/helpers/index.js'
 
+import { colorize } from '../../colors/index.js'
+
 import { geom2, geom3 } from '../../geometries/index.js'
 
 import { measureArea } from '../../measurements/index.js'
@@ -138,4 +140,10 @@ test('project torus (martinez issue #155)', (t) => {
   )
   t.notThrows(() => geom2.validate(result))
   t.is(measureArea(result), 21.15545050788201)
+})
+
+test('project: preserves color', (t) => {
+  const red = colorize([1, 0, 0], cube())
+  const result = project({ }, red)
+  t.deepEqual(result.color, [1, 0, 0, 1])
 })

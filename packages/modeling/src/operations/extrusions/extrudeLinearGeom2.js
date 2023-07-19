@@ -53,5 +53,7 @@ export const extrudeLinearGeom2 = (options, geometry) => {
     repair,
     callback: createTwist
   }
-  return extrudeFromSlices(options, baseSlice)
+  const output = extrudeFromSlices(options, baseSlice)
+  if (geometry.color) output.color = geometry.color
+  return output
 }

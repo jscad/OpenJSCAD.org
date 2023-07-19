@@ -13,5 +13,6 @@ import { clone } from './clone.js'
 export const reverse = (geometry) => {
   const reversed = clone(geometry)
   reversed.outlines = reversed.outlines.map((outline) => outline.slice().reverse())
+  if (geometry.color) reversed.color = geometry.color
   return reversed
 }
