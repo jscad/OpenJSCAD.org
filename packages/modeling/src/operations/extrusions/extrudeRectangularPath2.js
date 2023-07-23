@@ -1,6 +1,6 @@
 import * as path2 from '../../geometries/path2/index.js'
 
-import { expand } from '../expansions/expand.js'
+import { offset } from '../offsets/offset.js'
 
 import { extrudeLinearGeom2 } from './extrudeLinearGeom2.js'
 
@@ -26,6 +26,6 @@ export const extrudeRectangularPath2 = (options, geometry) => {
   const points = path2.toPoints(geometry)
   if (points.length === 0) throw new Error('the given geometry cannot be empty')
 
-  const newGeometry = expand(options, geometry)
+  const newGeometry = offset(options, geometry)
   return extrudeLinearGeom2(options, newGeometry)
 }

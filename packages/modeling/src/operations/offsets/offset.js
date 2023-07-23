@@ -1,9 +1,11 @@
 import { flatten } from '../../utils/flatten.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
 import { offsetGeom2 } from './offsetGeom2.js'
+import { offsetGeom3 } from './offsetGeom3.js'
 import { offsetPath2 } from './offsetPath2.js'
 
 /**
@@ -15,7 +17,7 @@ import { offsetPath2 } from './offsetPath2.js'
  * @param {Integer} [options.segments=16] - number of segments when creating round corners
  * @param {...Object} objects - the geometries to offset
  * @return {Object|Array} new geometry, or list of new geometries
- * @alias module:modeling/expansions.offset
+ * @alias module:modeling/offsets.offset
  *
  * @example
  * let small = offset({ delta: -4, corners: 'chamfer' }, square({size: 40})) // contract
@@ -27,7 +29,7 @@ export const offset = (options, ...objects) => {
   const results = objects.map((object) => {
     if (path2.isA(object)) return offsetPath2(options, object)
     if (geom2.isA(object)) return offsetGeom2(options, object)
-    // if (geom3.isA(object)) return geom3.transform(matrix, object)
+    if (geom3.isA(object)) return offsetGeom3(options, object)
     return object
   })
   return results.length === 1 ? results[0] : results

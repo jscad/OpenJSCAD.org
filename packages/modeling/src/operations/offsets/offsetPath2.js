@@ -50,22 +50,21 @@ const createGeometryFromExpandedOpenPath = (paths, segments, corners, delta) => 
 
 /*
  * Expand the given geometry (path2) using the given options (if any).
- * @param {Object} options - options for expand
+ * @param {Object} options - options for offset
  * @param {Number} [options.delta=1] - delta (+) of expansion
  * @param {String} [options.corners='edge'] - type corner to create during of expansion; edge, chamfer, round
  * @param {Integer} [options.segments=16] - number of segments when creating round corners
- * @param {path2} geometry - the geometry to expand
- * @returns {geom2} expanded geometry
+ * @param {path2} geometry - the geometry to offset
+ * @returns {geom2} offset geometry
  */
-export const expandPath2 = (options, geometry) => {
+export const offsetPath2 = (options, geometry) => {
   const defaults = {
     delta: 1,
     corners: 'edge',
     segments: 16
   }
 
-  options = Object.assign({ }, defaults, options)
-  const { delta, corners, segments } = options
+  const { delta, corners, segments } = Object.assign({ }, defaults, options)
 
   if (delta <= 0) throw new Error('the given delta must be positive for paths')
 

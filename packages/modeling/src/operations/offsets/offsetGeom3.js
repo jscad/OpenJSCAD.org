@@ -2,7 +2,7 @@ import * as geom3 from '../../geometries/geom3/index.js'
 
 import { union } from '../booleans/union.js'
 
-import { expandShell } from './expandShell.js'
+import { offsetShell } from './offsetShell.js'
 
 /*
  * Expand the given geometry (geom3) using the given options (if any).
@@ -13,7 +13,7 @@ import { expandShell } from './expandShell.js'
  * @param {geom3} geometry - the geometry to expand
  * @returns {geom3} expanded geometry
  */
-export const expandGeom3 = (options, geometry) => {
+export const offsetGeom3 = (options, geometry) => {
   const defaults = {
     delta: 1,
     corners: 'round',
@@ -29,6 +29,6 @@ export const expandGeom3 = (options, geometry) => {
   if (polygons.length === 0) throw new Error('the given geometry cannot be empty')
 
   options = { delta, corners, segments }
-  const expanded = expandShell(options, geometry)
+  const expanded = offsetShell(options, geometry)
   return union(geometry, expanded)
 }

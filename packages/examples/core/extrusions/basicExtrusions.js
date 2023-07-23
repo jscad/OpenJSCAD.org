@@ -12,7 +12,7 @@ const jscad = require('@jscad/modeling')
 const { line, polygon, star } = jscad.primitives
 const { extrudeRectangular, extrudeLinear, extrudeRotate } = jscad.extrusions
 const { translate } = jscad.transforms
-const { expand } = jscad.expansions
+const { offset } = jscad.offsets
 
 const main = () => {
   const shapes = []
@@ -22,7 +22,7 @@ const main = () => {
   const aRectangularExtrude = extrudeRectangular({ size: 1, height: 1 }, aLine)
   shapes.push(translate([-12, 0, 0], aRectangularExtrude))
 
-  const anExpandedExtrude = extrudeLinear({ height: 1 }, expand({ delta: 1, corners: 'round', segments: 32 }, aLine))
+  const anExpandedExtrude = extrudeLinear({ height: 1 }, offset({ delta: 1, corners: 'round', segments: 32 }, aLine))
   shapes.push(translate([-7, 0, 0], anExpandedExtrude))
 
   const poly = polygon({ points: [[-1, -1], [3, -1], [3.5, 2], [2, 1], [1, 2], [0, 1], [-1, 2]] })

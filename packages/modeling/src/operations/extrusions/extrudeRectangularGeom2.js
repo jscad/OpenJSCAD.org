@@ -3,13 +3,13 @@ import { area } from '../../maths/utils/area.js'
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
-import { expand } from '../expansions/expand.js'
+import { offset } from '../offsets/offset.js'
 
 import { extrudeLinearGeom2 } from './extrudeLinearGeom2.js'
 
 /*
  * Expand and extrude the given geometry (geom2).
- * @see expand for additional options
+ * @see offset for additional options
  * @param {Object} options - options for extrusion, if any
  * @param {Number} [options.size=1] - size of the rectangle
  * @param {Number} [options.height=1] - height of the extrusion
@@ -37,7 +37,7 @@ export const extrudeRectangularGeom2 = (options, geometry) => {
       outline = outline.slice().reverse() // all outlines must wind counterclockwise
     }
     // expand the outline
-    const part = expand(options, path2.fromPoints({ closed: true }, outline))
+    const part = offset(options, path2.fromPoints({ closed: true }, outline))
     expanded = expanded.concat(geom2.toOutlines(part))
   })
   const newGeometry = geom2.create(expanded)

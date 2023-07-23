@@ -50,7 +50,7 @@ As a Node module:
 
 ```
 const {color, connectors, geometry, math, primitives, text, utils} = require('@jscad/modeling')
-const {booleans, expansions, extrusions, hulls, measurements, transforms} = require('@jscad/modeling')
+const {booleans, extrusions, hulls, measurements, offsets, transforms} = require('@jscad/modeling')
 ```
 
 ## Documentation

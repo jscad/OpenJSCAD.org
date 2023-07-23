@@ -3,34 +3,33 @@ import test from 'ava'
 import { path2 } from '../../geometries/index.js'
 import { measureBoundingBox } from '../../measurements/index.js'
 
-import { offset } from './index.js'
+import { offsetFromPoints } from './index.js'
 
 import { comparePoints } from '../../../test/helpers/index.js'
 
 test('offset: offsetting a straight line produces expected geometry', (t) => {
   const points = [[0, 0], [0, 10]]
-  let linePath2 = path2.fromPoints({ closed: false }, points)
 
   // offset it by 2.
-  let offsetLinePath2 = offset({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
-  let offsetPoints = path2.toPoints(offsetLinePath2)
+  let offsetPoints = offsetFromPoints({ delta: 2, corners: 'edge', segments: 8 }, points)
+  let offsetLinePath2 = path2.create(offsetPoints)
   t.notThrows(() => path2.validate(offsetLinePath2))
   t.is(offsetPoints.length, 2)
   let boundingBox = measureBoundingBox(offsetLinePath2)
   t.true(comparePoints(boundingBox, [[2, 0, 0], [2, 10, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
 
   // offset it by -2.
-  offsetLinePath2 = offset({ delta: -2, corners: 'edge', segments: 8 }, linePath2)
-  offsetPoints = path2.toPoints(offsetLinePath2)
+  offsetPoints = offsetFromPoints({ delta: -2, corners: 'edge', segments: 8 }, points)
+  offsetLinePath2 = path2.create(offsetPoints)
   t.notThrows(() => path2.validate(offsetLinePath2))
   t.is(offsetPoints.length, 2)
   boundingBox = measureBoundingBox(offsetLinePath2)
   t.true(comparePoints(boundingBox, [[-2, 0, 0], [-2, 10, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
 
   // reverse the points, offset it by 2.
-  linePath2 = path2.fromPoints({ closed: false }, points.reverse())
-  offsetLinePath2 = offset({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
-  offsetPoints = path2.toPoints(offsetLinePath2)
+  points.reverse()
+  offsetPoints = offsetFromPoints({ delta: 2, corners: 'edge', segments: 8 }, points)
+  offsetLinePath2 = path2.create(offsetPoints)
   t.notThrows(() => path2.validate(offsetLinePath2))
   t.is(offsetPoints.length, 2)
   boundingBox = measureBoundingBox(offsetLinePath2)
@@ -39,19 +38,18 @@ test('offset: offsetting a straight line produces expected geometry', (t) => {
 
 test('offset: offsetting a bent line produces expected geometry', (t) => {
   const points = [[0, 0], [0, 5], [0, 10], [5, 10], [10, 10]]
-  const linePath2 = path2.fromPoints({ closed: false }, points)
 
   // offset it by 2.
-  let offsetLinePath2 = offset({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
-  let offsetPoints = path2.toPoints(offsetLinePath2)
+  let offsetPoints = offsetFromPoints({ delta: 2, corners: 'edge', segments: 8 }, points)
+  let offsetLinePath2 = path2.create(offsetPoints)
   t.notThrows(() => path2.validate(offsetLinePath2))
   t.is(offsetPoints.length, 5)
   let boundingBox = measureBoundingBox(offsetLinePath2)
   t.true(comparePoints(boundingBox, [[2, 0, 0], [10, 8, 0]]), 'Unexpected bounding box: ' + JSON.stringify(boundingBox))
 
   // offset it by -2.
-  offsetLinePath2 = offset({ delta: -2, corners: 'edge', segments: 8 }, linePath2)
-  offsetPoints = path2.toPoints(offsetLinePath2)
+  offsetPoints = offsetFromPoints({ delta: -2, corners: 'edge', segments: 8 }, points)
+  offsetLinePath2 = path2.create(offsetPoints)
   t.notThrows(() => path2.validate(offsetLinePath2))
   t.is(offsetPoints.length, 5)
   boundingBox = measureBoundingBox(offsetLinePath2)
@@ -60,9 +58,8 @@ test('offset: offsetting a bent line produces expected geometry', (t) => {
 
 test('offset: offsetting a 2 segment straight line produces expected geometry', (t) => {
   const points = [[0, 0], [0, 5], [0, 10]]
-  const linePath2 = path2.fromPoints({ closed: false }, points)
-  const offsetLinePath2 = offset({ delta: 2, corners: 'edge', segments: 8 }, linePath2)
-  const offsetPoints = path2.toPoints(offsetLinePath2)
+  const offsetPoints = offsetFromPoints({ delta: 2, corners: 'edge', segments: 8 }, points)
+  const offsetLinePath2 = path2.create(offsetPoints)
   t.notThrows(() => path2.validate(offsetLinePath2))
   t.is(offsetPoints.length, 3)
   const boundingBox = measureBoundingBox(offsetLinePath2)
@@ -70,21 +67,19 @@ test('offset: offsetting a 2 segment straight line produces expected geometry', 
 })
 
 test('offset (corners: chamfer): offset of a path2 produces expected offset path2', (t) => {
-  const openline = path2.fromPoints({ }, [[0, 0], [5, 0], [0, 5]])
-  const closeline = path2.fromPoints({ }, [[0, 0], [5, 0], [0, 5], [0, 0]])
+  const openline = [[0, 0], [5, 0], [0, 5]]
+  const closeline = [[0, 0], [5, 0], [0, 5], [0, 0]]
 
-  // empty path2
-  const empty = path2.create()
-  let obs = offset({ delta: 1 }, empty)
-  let pts = path2.toPoints(obs)
-  let exp = [
-  ]
+  // empty points
+  let pts = offsetFromPoints({ delta: 1 }, [])
+  let obs = path2.create(pts)
+  let exp = []
   t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 
   // expand +
-  obs = offset({ delta: 1, corners: 'chamfer' }, openline)
-  pts = path2.toPoints(obs)
+  pts = offsetFromPoints({ delta: 1, corners: 'chamfer' }, openline)
+  obs = path2.create(pts)
   exp = [
     [-6.123233995736766e-17, -1],
     [5, -1],
@@ -94,8 +89,8 @@ test('offset (corners: chamfer): offset of a path2 produces expected offset path
   t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 
-  obs = offset({ delta: 1, corners: 'chamfer' }, closeline)
-  pts = path2.toPoints(obs)
+  pts = offsetFromPoints({ delta: 1, corners: 'chamfer' }, closeline)
+  obs = path2.create(pts)
   exp = [
     [-6.123233995736766e-17, -1],
     [5, -1],
@@ -108,8 +103,8 @@ test('offset (corners: chamfer): offset of a path2 produces expected offset path
   t.true(comparePoints(pts, exp))
 
   // contract -
-  obs = offset({ delta: -1, corners: 'chamfer' }, openline)
-  pts = path2.toPoints(obs)
+  pts = offsetFromPoints({ delta: -1, corners: 'chamfer' }, openline)
+  obs = path2.create(pts)
   exp = [
     [6.123233995736766e-17, 1],
     [2.5857864376269046, 1],
@@ -118,8 +113,8 @@ test('offset (corners: chamfer): offset of a path2 produces expected offset path
   t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 
-  obs = offset({ delta: -1, corners: 'chamfer' }, closeline)
-  pts = path2.toPoints(obs)
+  pts = offsetFromPoints({ delta: -1, corners: 'chamfer', closed: true }, openline)
+  obs = path2.create(pts)
   exp = [
     [1, 1],
     [2.5857864376269046, 1],
@@ -130,11 +125,10 @@ test('offset (corners: chamfer): offset of a path2 produces expected offset path
 })
 
 test('offset (corners: edge): offset of a path2 produces expected offset path2', (t) => {
-  const openline = path2.fromPoints({ }, [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5]])
-  const closeline = path2.fromPoints({ }, [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5], [-5, -5]])
+  const openline = [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5]]
 
-  let obs = offset({ delta: 1, corners: 'edge' }, openline)
-  let pts = path2.toPoints(obs)
+  let pts = offsetFromPoints({ delta: 1, corners: 'edge' }, openline)
+  let obs = path2.create(pts)
   let exp = [
     [-5, -6],
     [6, -6],
@@ -148,8 +142,8 @@ test('offset (corners: edge): offset of a path2 produces expected offset path2',
   t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 
-  obs = offset({ delta: 1, corners: 'edge' }, closeline)
-  pts = path2.toPoints(obs)
+  pts = offsetFromPoints({ delta: 1, corners: 'edge', closed: true }, openline)
+  obs = path2.create(pts)
   exp = [
     [6, -6],
     [6, 6],
@@ -163,8 +157,8 @@ test('offset (corners: edge): offset of a path2 produces expected offset path2',
   t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 
-  obs = offset({ delta: -0.5, corners: 'edge' }, openline)
-  pts = path2.toPoints(obs)
+  pts = offsetFromPoints({ delta: -0.5, corners: 'edge' }, openline)
+  obs = path2.create(pts)
   exp = [
     [-5, -4.5],
     [4.5, -4.5],
@@ -178,8 +172,8 @@ test('offset (corners: edge): offset of a path2 produces expected offset path2',
   t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 
-  obs = offset({ delta: -0.5, corners: 'edge' }, closeline)
-  pts = path2.toPoints(obs)
+  pts = offsetFromPoints({ delta: -0.5, corners: 'edge', closed: true }, openline)
+  obs = path2.create(pts)
   exp = [
     [-4.5, -4.5],
     [4.5, -4.5],
@@ -195,11 +189,11 @@ test('offset (corners: edge): offset of a path2 produces expected offset path2',
 })
 
 test('offset (corners: round): offset of a path2 produces expected offset path2', (t) => {
-  const openline = path2.fromPoints({ }, [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5]])
-  const closeline = path2.fromPoints({ }, [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5], [-5, -5]])
+  const openline = [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5]]
+  const closeline = [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5], [-5, -5]]
 
-  let obs = offset({ delta: 1, corners: 'round', segments: 16 }, openline)
-  let pts = path2.toPoints(obs)
+  let pts = offsetFromPoints({ delta: 1, corners: 'round', segments: 16 }, openline)
+  let obs = path2.create(pts)
   let exp = [
     [-5, -6],
     [5, -6],
@@ -229,8 +223,8 @@ test('offset (corners: round): offset of a path2 produces expected offset path2'
   t.notThrows(() => path2.validate(obs))
   t.true(comparePoints(pts, exp))
 
-  obs = offset({ delta: 1, corners: 'round', segments: 16 }, closeline)
-  pts = path2.toPoints(obs)
+  pts = offsetFromPoints({ delta: 1, corners: 'round', segments: 16, closed: true }, openline)
+  obs = path2.create(pts)
   exp = [
     [-5.923879532511287, -5.38268343236509],
     [-5.707106781186548, -5.707106781186548],
@@ -270,10 +264,10 @@ test('offset (corners: round): offset of a path2 produces expected offset path2'
 })
 
 test('offset (corners: round): offset of a CW path2 produces expected offset path2', (t) => {
-  const closeline = path2.fromPoints({ }, [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5], [-5, -5]].reverse())
+  const closeline = [[5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5], [-5, -5]].reverse()
 
-  const obs = offset({ delta: 1, corners: 'round', segments: 16 }, closeline)
-  const pts = path2.toPoints(obs)
+  const pts = offsetFromPoints({ delta: 1, corners: 'round', segments: 16, closed: true }, closeline)
+  const obs = path2.create(pts)
   const exp = [
     [-5.38268343236509, -5.923879532511287],
     [-5.707106781186548, -5.707106781186548],

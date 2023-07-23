@@ -64,7 +64,7 @@ const addUniqueAngle = (map, angle) => {
  * @param  {Number} delta
  * @param  {Integer} segments
  */
-export const expandShell = (options, geometry) => {
+export const offsetShell = (options, geometry) => {
   const defaults = {
     delta: 1,
     segments: 12
