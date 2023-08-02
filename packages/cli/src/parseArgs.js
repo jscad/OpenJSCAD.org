@@ -17,7 +17,8 @@ export const parseArgs = (args) => {
   // hint: https://github.com/substack/node-optimist
   //       https://github.com/visionmedia/commander.js
   if (args.length < 1) {
-    console.log('USAGE:\n\njscad [-v] <file> [-of <format>] [-o <output>]')
+    console.log('USAGE:\n\njscad [-v]\n\n')
+    console.log('jscad [-gp] [-z] <file> [-of <format>] [-o <output>]')
     console.log(`\t<file>  :\tinput (Supported types: folder, .${inputExtensions.join(', .')})`)
     console.log(`\t<output>:\toutput (Supported types: folder, .${outputExtensions.join(', .')})`)
     console.log(`\t<format>:\t${outputFormats.join(', ')}`)

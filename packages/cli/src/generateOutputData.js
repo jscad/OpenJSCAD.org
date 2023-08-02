@@ -14,11 +14,11 @@ const { registerAllExtensions } = io
  * Create a promise to convert the given source in inputFormat to the desired outputFormat.
  * The given CLI params are passed into deserializer, main, and serializer.
  * @param {String} source the original source
- * @param {Object} cliparams - parameters as provided on the command line
+ * @param {Object} cliParams - parameters as provided on the command line
  * @param {Object} options - options for conversion; inputFormat and outputFormat are required
  * @return {Promise} promise function which can convert the given source
  */
-export const generateOutputData = (source, cliparams, options) => {
+export const generateOutputData = (source, cliParams, options) => {
   const defaults = {
     outputFile: undefined,
     outputFormat: 'stl',
@@ -44,7 +44,7 @@ export const generateOutputData = (source, cliparams, options) => {
   return new Promise((resolve, reject) => {
     // convert any inputs
     const prevsource = source
-    const deserializerOptions = Object.assign({ output: 'script', filename: inputFile }, cliparams)
+    const deserializerOptions = Object.assign({ output: 'script', filename: inputFile }, cliParams)
     source = deserialize(deserializerOptions, inputMimeType, source)
     const useFakeFs = (source !== prevsource) // conversion, so use a fake file system when rebuilding
 
@@ -53,7 +53,7 @@ export const generateOutputData = (source, cliparams, options) => {
       resolve(source)
     } else {
       try {
-        const solids = rebuildGeometryCli({ mainPath: inputPath, parameterValues: cliparams, useFakeFs, source })
+        const solids = rebuildGeometryCli({ mainPath: inputPath, parameterValues: cliParams, useFakeFs, source })
         resolve(solids)
       } catch (error) {
         reject(error)
@@ -61,18 +61,25 @@ export const generateOutputData = (source, cliparams, options) => {
     }
   })
     .then((solids) => {
-      if (generateParts) {
-        let blobs = []
-        for (let i = 0; i < solids.length; i++) {
-          blobs.push(convertToBlob({ data: solids[i], mimeType: outputMimeType }))
-        }
-        return blobs
-      } else if (outputMimeType === 'application/javascript') {
-        // convert the source (solids) to blob for writing to file
-        return convertToBlob({ data: [solids], mimeType: outputMimeType })
-      } else {
-        const serializerOptions = Object.assign({}, cliparams)
-        return convertToBlob(serialize(serializerOptions, outputMimeType, solids))
+      if (Array.isArray(solids) && generateParts) {
+        return solids.map((s) => convertSolidsToBlob({ mimeType: outputMimeType, cliParams }, [s]))
       }
+      return convertSolidsToBlob({ mimeType: outputMimeType, cliParams }, solids)
     })
+}
+
+/*
+ * Convert the given solids to the target mimeType, and return as a blob for writing to file.
+ */
+const convertSolidsToBlob = (options, solids) => {
+  const { mimeType, cliParams } = options
+
+  if (mimeType === 'application/javascript') {
+    // convert the solids (source code) to blob without conversion
+    return convertToBlob({ data: [solids], mimeType })
+  } else {
+    // convert the solids into the mimeType via serializers
+    const serializerOptions = Object.assign({}, cliParams)
+    return convertToBlob(serialize(serializerOptions, mimeType, solids))
+  }
 }
