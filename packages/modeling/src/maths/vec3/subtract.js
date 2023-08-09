@@ -1,10 +1,10 @@
 /**
  * Subtracts the coordinates of two vectors (A-B).
  *
- * @param {vec3} out - receiving vector
- * @param {vec3} a - minuend vector
- * @param {vec3} b - subtrahend vector
- * @returns {vec3} out
+ * @param {Vec3} out - receiving vector
+ * @param {Vec3} a - minuend vector
+ * @param {Vec3} b - subtrahend vector
+ * @returns {Vec3} out
  * @alias module:modeling/maths/vec3.subtract
  */
 export const subtract = (out, a, b) => {

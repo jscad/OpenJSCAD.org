@@ -1,8 +1,8 @@
 /**
  * Set a matrix to the identity transform.
  *
- * @param {mat4} out - receiving matrix
- * @returns {mat4} out
+ * @param {Mat4} out - receiving matrix
+ * @returns {Mat4} out
  * @alias module:modeling/maths/mat4.identity
  */
 export const identity = (out) => {

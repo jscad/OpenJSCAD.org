@@ -3,11 +3,11 @@ import { create } from './create.js'
 /**
  * Creates a new vector with the given values.
  *
- * @param {Number} x - X component
- * @param {Number} y - Y component
- * @param {Number} z - Z component
- * @param {Number} w - W component
- * @returns {vec4} a new vector
+ * @param {number} x - X component
+ * @param {number} y - Y component
+ * @param {number} z - Z component
+ * @param {number} w - W component
+ * @returns {Vec4} a new vector
  * @alias module:modeling/maths/vec4.fromValues
  */
 export const fromValues = (x, y, z, w) => {

@@ -6,8 +6,8 @@ import { create } from './create.js'
 /**
  * Create a slice from a geom2.
  *
- * @param {Object} geometry - the 2D geometry to create a slice from
- * @returns {slice} a new slice
+ * @param {object} geometry - the 2D geometry to create a slice from
+ * @returns {Slice} a new slice
  * @alias module:modeling/geometries/slice.fromGeom2
  */
 export const fromGeom2 = (geometry) => {

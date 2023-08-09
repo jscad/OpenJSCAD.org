@@ -1,5 +1,5 @@
-import { Vec2 } from '../maths/vec2/type'
-import { Path2 } from '../geometries/path2/type'
+import type { Vec2 } from '../maths/vec2/type.d.ts'
+import type { Path2 } from '../geometries/path2/type.d.ts'
 
 export interface ArcOptions {
   center?: Vec2

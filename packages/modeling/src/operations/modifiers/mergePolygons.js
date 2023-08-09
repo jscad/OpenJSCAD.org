@@ -87,8 +87,8 @@ const createPolygonAnd = (edge) => {
 
 /*
  * Merge COPLANAR polygons that share common edges.
- * @param {poly3[]} sourcePolygons - list of polygons
- * @returns {poly3[]} new set of polygons
+ * @param {Poly3[]} sourcePolygons - list of polygons
+ * @returns {Poly3[]} new set of polygons
  */
 export const mergeCoplanarPolygons = (sourcePolygons) => {
   if (sourcePolygons.length < 2) return sourcePolygons

@@ -1,8 +1,6 @@
-export { extrudeFromSlices, ExtrudeFromSlicesOptions } from './extrudeFromSlices'
-export { extrudeLinear, ExtrudeLinearOptions } from './extrudeLinear'
-export { extrudeRectangular, ExtrudeRectangularOptions } from './extrudeRectangular'
-export { extrudeRotate, ExtrudeRotateOptions } from './extrudeRotate'
-export { extrudeHelical, ExtrudeHelicalOptions } from './extrudeHelical'
-export { project, ProjectOptions } from './project'
-
-export as namespace extrusions
+export { extrudeFromSlices, ExtrudeFromSlicesOptions } from './extrudeFromSlices.js'
+export { extrudeLinear, ExtrudeLinearOptions } from './extrudeLinear.js'
+export { extrudeRectangular, ExtrudeRectangularOptions } from './extrudeRectangular.js'
+export { extrudeRotate, ExtrudeRotateOptions } from './extrudeRotate.js'
+export { extrudeHelical, ExtrudeHelicalOptions } from './extrudeHelical.js'
+export { project, ProjectOptions } from './project.js'

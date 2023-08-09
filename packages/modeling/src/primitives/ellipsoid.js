@@ -9,12 +9,12 @@ import { isGTE, isNumberArray } from './commonChecks.js'
 
 /**
  * Construct an axis-aligned ellipsoid in three dimensional space.
- * @param {Object} [options] - options for construction
+ * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of ellipsoid
  * @param {Array} [options.radius=[1,1,1]] - radius of ellipsoid, along X, Y and Z
- * @param {Number} [options.segments=32] - number of segments to create per full rotation
+ * @param {number} [options.segments=32] - number of segments to create per full rotation
  * @param {Array} [options.axes] -  an array with three vectors for the x, y and z base vectors
- * @returns {geom3} new 3D geometry
+ * @returns {Geom3} new 3D geometry
  * @alias module:modeling/primitives.ellipsoid
  *
  * @example

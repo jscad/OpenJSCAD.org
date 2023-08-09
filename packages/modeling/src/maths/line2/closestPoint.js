@@ -6,9 +6,9 @@ import { origin } from './origin.js'
 /**
  * Determine the closest point on the given line to the given point.
  *
- * @param {line2} line - line of reference
- * @param {vec2} point - point of reference
- * @returns {vec2} closest point
+ * @param {Line2} line - line of reference
+ * @param {Vec2} point - point of reference
+ * @returns {Vec2} closest point
  * @alias module:modeling/maths/line2.closestPoint
  */
 export const closestPoint = (line, point) => {

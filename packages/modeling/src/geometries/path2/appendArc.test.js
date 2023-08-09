@@ -1,6 +1,7 @@
 import test from 'ava'
 
 import { TAU } from '../../maths/constants.js'
+import * as vec2 from '../../maths/vec2/index.js'
 
 import { appendArc, fromPoints, toPoints } from './index.js'
 
@@ -73,7 +74,7 @@ test('appendArc: appending to a path produces a new path', (t) => {
 
 test('appendArc: appending to a path produces exact endpoint', (t) => {
   let p1 = fromPoints({}, [[18, 1.8], [1, 3]])
-  const endpoint = [1, -3]
+  const endpoint = vec2.fromValues(1, -3)
 
   p1 = appendArc({
     endpoint,

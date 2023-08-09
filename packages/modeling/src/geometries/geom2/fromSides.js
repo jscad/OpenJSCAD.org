@@ -42,7 +42,7 @@ const toPointMap = (sides) => {
 /**
  * Create a new 2D geometry from a list of sides.
  * @param {Array} sides - list of sides to create outlines from
- * @returns {geom2} a new geometry
+ * @returns {Geom2} a new geometry
  *
  * @example
  * let geometry = fromSides([[[0, 0], [1, 0]], [[1, 0], [1, 1]], [[1, 1], [0, 0]]])

@@ -1,11 +1,11 @@
 /**
  * Performs a linear interpolation between two vectors.
  *
- * @param {vec3} out - receiving vector
- * @param {vec3} a - first operand
- * @param {vec3} b - second operand
- * @param {Number} t - interpolant (0.0 to 1.0) applied between the two inputs
- * @returns {vec3} out
+ * @param {Vec3} out - receiving vector
+ * @param {Vec3} a - first operand
+ * @param {Vec3} b - second operand
+ * @param {number} t - interpolant (0.0 to 1.0) applied between the two inputs
+ * @returns {Vec3} out
  * @alias module:modeling/maths/vec3.lerp
  */
 export const lerp = (out, a, b, t) => {

@@ -3,12 +3,12 @@
  * If the endpointTouch parameter is false, intersections at segment end points are excluded.
  * Note: If the line segments do NOT intersect then undefined is returned.
  * @see http://paulbourke.net/geometry/pointlineplane/
- * @param {vec2} p1 - first point of first line segment
- * @param {vec2} p2 - second point of first line segment
- * @param {vec2} p3 - first point of second line segment
- * @param {vec2} p4 - second point of second line segment
- * @param {Boolean} endpointTouch - include intersections at segment endpoints
- * @returns {vec2} intersection point of the two line segments, or undefined
+ * @param {Vec2} p1 - first point of first line segment
+ * @param {Vec2} p2 - second point of first line segment
+ * @param {Vec2} p3 - first point of second line segment
+ * @param {Vec2} p4 - second point of second line segment
+ * @param {boolean} endpointTouch - include intersections at segment endpoints
+ * @returns {Vec2} intersection point of the two line segments, or undefined
  * @alias module:modeling/maths/utils.intersect
  */
 export const intersect = (p1, p2, p3, p4, endpointTouch = true) => {

@@ -7,10 +7,10 @@ import { fromPointAndDirection } from './fromPointAndDirection.js'
 /**
  * Create a line the intersection of the given planes.
  *
- * @param {line3} out - receiving line
- * @param {plane} plane1 - first plane of reference
- * @param {plane} plane2 - second plane of reference
- * @returns {line3} out
+ * @param {Line3} out - receiving line
+ * @param {Plane} plane1 - first plane of reference
+ * @param {Plane} plane2 - second plane of reference
+ * @returns {Line3} out
  * @alias module:modeling/maths/line3.fromPlanes
  */
 export const fromPlanes = (out, plane1, plane2) => {

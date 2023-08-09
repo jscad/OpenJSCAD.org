@@ -6,8 +6,8 @@ import { clone } from './clone.js'
 
 /**
  * Close the given geometry.
- * @param {path2} geometry - the path to close
- * @returns {path2} a new path
+ * @param {Path2} geometry - the path to close
+ * @returns {Path2} a new path
  * @alias module:modeling/geometries/path2.close
  */
 export const close = (geometry) => {

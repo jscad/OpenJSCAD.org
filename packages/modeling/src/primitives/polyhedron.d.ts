@@ -1,6 +1,6 @@
-import { Vec3 } from '../maths/vec3/type'
-import { Geom3 } from '../geometries/geom3/type'
-import { RGB, RGBA } from '../colors/types'
+import type { Vec3 } from '../maths/vec3/type.d.ts'
+import type { Geom3 } from '../geometries/geom3/type.d.ts'
+import type { RGB, RGBA } from '../colors/types.d.ts'
 
 export interface PolyhedronOptions {
   points: Array<Vec3>

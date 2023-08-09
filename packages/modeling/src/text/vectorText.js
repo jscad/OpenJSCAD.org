@@ -32,16 +32,16 @@ const translateLine = (options, line) => {
 /**
  * Construct an array of character segments from an ascii string whose characters code is between 31 and 127,
  * if one character is not supported it is replaced by a question mark.
- * @param {Object|String} [options] - options for construction or ascii string
- * @param {Float} [options.xOffset=0] - x offset
- * @param {Float} [options.yOffset=0] - y offset
- * @param {Float} [options.height=14] - height of requested characters (uppercase height), i.e. font height in points
- * @param {Float} [options.lineSpacing=30/14] - line spacing expressed as a percentage of height
- * @param {Float} [options.letterSpacing=0] - extra letter spacing, expressed as a proportion of height, i.e. like CSS em
- * @param {String} [options.align='left'] - multi-line text alignment: left, center, right
- * @param {Float} [options.extrudeOffset=0] - width of the extrusion that will be applied (manually) after the creation of the character
- * @param {String} [options.input='?'] - ascii string (ignored/overwrited if provided as seconds parameter)
- * @param {String} [text='?'] - ascii string
+ * @param {object|string} [options] - options for construction or ascii string
+ * @param {number} [options.xOffset=0] - x offset
+ * @param {number} [options.yOffset=0] - y offset
+ * @param {number} [options.height=14] - height of requested characters (uppercase height), i.e. font height in points
+ * @param {number} [options.lineSpacing=30/14] - line spacing expressed as a percentage of height
+ * @param {number} [options.letterSpacing=0] - extra letter spacing, expressed as a proportion of height, i.e. like CSS em
+ * @param {string} [options.align='left'] - multi-line text alignment: left, center, right
+ * @param {number} [options.extrudeOffset=0] - width of the extrusion that will be applied (manually) after the creation of the character
+ * @param {string} [options.input='?'] - ascii string (ignored/overwrited if provided as seconds parameter)
+ * @param {string} [text='?'] - ascii string
  * @returns {Array} list of vector line objects, where each line contains a list of vector character objects
  * @alias module:modeling/text.vectorText
  *

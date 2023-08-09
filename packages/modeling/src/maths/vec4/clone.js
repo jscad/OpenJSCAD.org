@@ -3,8 +3,8 @@ import { create } from './create.js'
 /**
  * Create a clone of the given vector.
  *
- * @param {vec4} vector - source vector
- * @returns {vec4} a new vector
+ * @param {Vec4} vector - source vector
+ * @returns {Vec4} a new vector
  * @alias module:modeling/maths/vec4.clone
  */
 export const clone = (vector) => {

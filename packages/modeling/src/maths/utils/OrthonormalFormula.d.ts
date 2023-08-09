@@ -1,6 +1,6 @@
-import { Plane } from '../plane/type'
-import { Vec2 } from '../vec2/type'
-import { Vec3 } from '../vec3/type'
+import type { Plane } from '../plane/type.d.ts'
+import type { Vec2 } from '../vec2/type.d.ts'
+import type { Vec3 } from '../vec3/type.d.ts'
 
 export class OrthonormalFormula {
   constructor (plane: Plane)

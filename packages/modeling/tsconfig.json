@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+     "allowJs": true,
+     "checkJs": true,
+     "noEmit": true,
+     "lib": ["dom", "es2020"],
+     "target": "es2015",
+     "moduleResolution": "nodenext"
+  },
+  "include": [
+    "src/**/*.js",
+    "global.d.ts"
+  ],
+  "exclude": [
+    "src/**/*.test.js"
+  ]
+}

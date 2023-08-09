@@ -6,9 +6,9 @@ import { mayOverlap } from './mayOverlap.js'
 
 /*
  * Return a new 3D geometry representing the space in the given geometries.
- * @param {geom3} geometry1 - geometry to union
- * @param {geom3} geometry2 - geometry to union
- * @returns {geom3} new 3D geometry
+ * @param {Geom3} geometry1 - geometry to union
+ * @param {Geom3} geometry2 - geometry to union
+ * @returns {Geom3} new 3D geometry
  */
 export const unionGeom3Sub = (geometry1, geometry2) => {
   if (!mayOverlap(geometry1, geometry2)) {

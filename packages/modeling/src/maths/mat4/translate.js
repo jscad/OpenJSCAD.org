@@ -1,10 +1,10 @@
 /**
  * Translate the matrix by the given offset vector.
  *
- * @param {mat4} out - receiving matrix
- * @param {mat4} matrix - matrix to translate
- * @param {vec3} offsets - offset vector to translate by
- * @returns {mat4} out
+ * @param {Mat4} out - receiving matrix
+ * @param {Mat4} matrix - matrix to translate
+ * @param {Vec3} offsets - offset vector to translate by
+ * @returns {Mat4} out
  * @alias module:modeling/maths/mat4.translate
  */
 export const translate = (out, matrix, offsets) => {

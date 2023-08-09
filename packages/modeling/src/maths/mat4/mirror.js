@@ -2,10 +2,10 @@
  * m the mat4 by the dimensions in the given vec3
  * create an affine matrix for mirroring into an arbitrary plane:
  *
- * @param {mat4} out - the receiving matrix
- * @param {vec3} vector - the vec3 to mirror the matrix by
- * @param {mat4} matrix - the matrix to mirror
- * @returns {mat4} out
+ * @param {Mat4} out - the receiving matrix
+ * @param {Vec3} vector - the vec3 to mirror the matrix by
+ * @param {Mat4} matrix - the matrix to mirror
+ * @returns {Mat4} out
  */
 export const mirror = (out, vector, matrix) => {
   const x = vector[0]

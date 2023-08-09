@@ -1,9 +1,9 @@
 /**
  * Calculates the Euclidian distance between the given vectors.
  *
- * @param {vec3} a - first operand
- * @param {vec3} b - second operand
- * @returns {Number} distance
+ * @param {Vec3} a - first operand
+ * @param {Vec3} b - second operand
+ * @returns {number} distance
  * @alias module:modeling/maths/vec3.distance
  */
 export const distance = (a, b) => {

@@ -7,10 +7,10 @@ import { fromRotation } from './fromRotation.js'
  *
  * Each vector must be a directional vector with a length greater than zero.
  * @see https://gist.github.com/kevinmoran/b45980723e53edeb8a5a43c49f134724
- * @param {mat4} out - receiving matrix
- * @param {vec3} source - source vector
- * @param {vec3} target - target vector
- * @returns {mat4} a new matrix
+ * @param {Mat4} out - receiving matrix
+ * @param {Vec3} source - source vector
+ * @param {Vec3} target - target vector
+ * @returns {Mat4} a new matrix
  * @alias module:modeling/maths/mat4.fromVectorRotation
  * @example
  * let matrix = fromVectorRotation(create(), [1, 2, 2], [-3, 3, 12])

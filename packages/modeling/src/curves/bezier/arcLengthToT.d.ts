@@ -1,4 +1,4 @@
-import Bezier from './type'
+import type { Bezier } from './type.d.ts'
 
 export interface ArcLengthToTOptions {
   distance?: Number

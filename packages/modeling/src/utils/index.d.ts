@@ -1,10 +1,8 @@
-export { areAllShapesTheSameType } from './areAllShapesTheSameType'
-export { degToRad } from './degToRad'
-export { flatten } from './flatten'
-export { fnNumberSort } from './fnNumberSort'
-export { insertSorted } from './insertSorted'
-export { padArrayToLength } from './padArrayToLength'
-export { radiusToSegments } from './radiusToSegments'
-export { radToDeg } from './radToDeg'
-
-export as namespace utils
+export { areAllShapesTheSameType } from './areAllShapesTheSameType.js'
+export { degToRad } from './degToRad.js'
+export { flatten } from './flatten.js'
+export { fnNumberSort } from './fnNumberSort.js'
+export { insertSorted } from './insertSorted.js'
+export { padArrayToLength } from './padArrayToLength.js'
+export { radiusToSegments } from './radiusToSegments.js'
+export { radToDeg } from './radToDeg.js'

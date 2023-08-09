@@ -2,7 +2,7 @@ import * as poly3 from '../poly3/index.js'
 
 /**
  * Return the given geometry in compact binary representation.
- * @param {geom3} geometry - the geometry
+ * @param {Geom3} geometry - the geometry
  * @return {TypedArray} compact binary representation
  * @alias module:modeling/geometries/geom3.toCompactBinary
  */

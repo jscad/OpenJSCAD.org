@@ -6,7 +6,7 @@ import { create } from './create.js'
  * Create a slice from the given vertices.
  *
  * @param {Array} vertices - list of vertices, where each vertex is either 2D or 3D
- * @returns {slice} a new slice
+ * @returns {Slice} a new slice
  * @alias module:modeling/geometries/slice.fromVertices
  *
  * @example

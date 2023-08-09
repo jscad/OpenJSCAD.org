@@ -1,10 +1,10 @@
 /**
  * Scales the matrix by the given dimensions.
  *
- * @param {mat4} out - receiving matrix
- * @param {mat4} matrix - matrix to scale
- * @param {vec3} dimensions - dimensions to scale the matrix by
- * @returns {mat4} out
+ * @param {Mat4} out - receiving matrix
+ * @param {Mat4} matrix - matrix to scale
+ * @param {Vec3} dimensions - dimensions to scale the matrix by
+ * @returns {Mat4} out
  * @alias module:modeling/maths/mat4.scale
  */
 export const scale = (out, matrix, dimensions) => {

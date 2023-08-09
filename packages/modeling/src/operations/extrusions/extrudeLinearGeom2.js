@@ -8,13 +8,13 @@ import { extrudeFromSlices } from './extrudeFromSlices.js'
 /*
  * Extrude the given geometry using the given options.
  *
- * @param {Object} [options] - options for extrude
+ * @param {object} [options] - options for extrude
  * @param {Array} [options.offset] - the direction of the extrusion as a 3D vector
- * @param {Number} [options.twistAngle] - the final rotation (RADIANS) about the origin
- * @param {Integer} [options.twistSteps] - the number of steps created to produce the twist (if any)
- * @param {Boolean} [options.repair] - repair gaps in the geometry
- * @param {geom2} geometry - the geometry to extrude
- * @returns {geom3} the extruded 3D geometry
+ * @param {number} [options.twistAngle] - the final rotation (RADIANS) about the origin
+ * @param {number} [options.twistSteps] - the number of steps created to produce the twist (if any)
+ * @param {boolean} [options.repair] - repair gaps in the geometry
+ * @param {Geom2} geometry - the geometry to extrude
+ * @returns {Geom3} the extruded 3D geometry
 */
 export const extrudeLinearGeom2 = (options, geometry) => {
   const defaults = {

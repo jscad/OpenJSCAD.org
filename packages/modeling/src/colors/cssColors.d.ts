@@ -1,4 +1,4 @@
-import { RGB } from './types'
+import type { RGB } from './types.d.ts'
 
 export const black: RGB
 export const silver: RGB

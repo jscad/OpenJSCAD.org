@@ -11,7 +11,7 @@ import { signedArea } from './signedArea.js'
 /**
  * @param {SweepEvent} le1
  * @param {SweepEvent} le2
- * @return {Number}
+ * @return {number}
  */
 export const compareSegments = (le1, le2) => {
   if (le1 === le2) return 0

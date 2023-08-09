@@ -1,10 +1,10 @@
 /**
  * Divides the coordinates of two vectors (A/B).
  *
- * @param {vec3} out - receiving vector
- * @param {vec3} a - dividend vector
- * @param {vec3} b - divisor vector
- * @returns {vec3} out
+ * @param {Vec3} out - receiving vector
+ * @param {Vec3} a - dividend vector
+ * @param {Vec3} b - divisor vector
+ * @returns {Vec3} out
  * @alias module:modeling/maths/vec3.divide
  */
 export const divide = (out, a, b) => {

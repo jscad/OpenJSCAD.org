@@ -4,9 +4,9 @@ import { create } from './create.js'
 
 /**
  * Transform the given slice using the given matrix.
- * @param {mat4} matrix - transform matrix
- * @param {slice} slice - slice to transform
- * @returns {slice} the transformed slice
+ * @param {Mat4} matrix - transform matrix
+ * @param {Slice} slice - slice to transform
+ * @returns {Slice} the transformed slice
  * @alias module:modeling/geometries/slice.transform
  *
  * @example

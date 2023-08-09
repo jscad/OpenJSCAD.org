@@ -3,9 +3,9 @@ import * as vec3 from '../vec3/index.js'
 /**
  * Project the given point on to the given plane.
  *
- * @param {plane} plane - plane of reference
- * @param {vec3} point - point of reference
- * @return {vec3} projected point on plane
+ * @param {Plane} plane - plane of reference
+ * @param {Vec3} point - point of reference
+ * @return {Vec3} projected point on plane
  * @alias module:modeling/maths/plane.projectionOfPoint
  */
 export const projectionOfPoint = (plane, point) => {

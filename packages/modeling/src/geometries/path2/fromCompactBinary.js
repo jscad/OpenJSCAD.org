@@ -6,7 +6,7 @@ import { create } from './create.js'
 /**
  * Create a new path from the given compact binary data.
  * @param {TypedArray} data - compact binary data
- * @returns {path2} a new path
+ * @returns {Path2} a new path
  * @alias module:modeling/geometries/path2.fromCompactBinary
  */
 export const fromCompactBinary = (data) => {

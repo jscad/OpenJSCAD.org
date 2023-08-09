@@ -3,10 +3,10 @@ import * as geom2 from '../geometries/geom2/index.js'
 /**
  * Construct a polygon in two dimensional space from a list of points, or a list of points and paths.
  * NOTE: The ordering of points is VERY IMPORTANT.
- * @param {Object} options - options for construction
+ * @param {object} options - options for construction
  * @param {Array} options.points - points of the polygon : either flat or nested array of 2D points
  * @param {Array} [options.paths] - paths of the polygon : either flat or nested array of point indexes
- * @returns {geom2} new 2D geometry
+ * @returns {Geom2} new 2D geometry
  * @alias module:modeling/primitives.polygon
  *
  * @example

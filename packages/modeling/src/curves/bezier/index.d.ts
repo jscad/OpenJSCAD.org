@@ -1,9 +1,8 @@
-export { create } from './create'
-export { tangentAt } from './tangentAt'
-export { valueAt } from './valueAt'
-export { lengths } from './lengths'
-export { length } from './length'
-export { arcLengthToT } from './arcLengthToT'
+export { create } from './create.js'
+export { tangentAt } from './tangentAt.js'
+export { valueAt } from './valueAt.js'
+export { lengths } from './lengths.js'
+export { length } from './length.js'
+export { arcLengthToT } from './arcLengthToT.js'
 
-export { Bezier } from './type'
-export as namespace bezier
+export type { Bezier } from './type.d.ts'

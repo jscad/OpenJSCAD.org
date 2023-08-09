@@ -1,5 +1,3 @@
-export { intersect } from './intersect'
-export { subtract } from './subtract'
-export { union } from './union'
-
-export as namespace booleans
+export { intersect } from './intersect.js'
+export { subtract } from './subtract.js'
+export { union } from './union.js'

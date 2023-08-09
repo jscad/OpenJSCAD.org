@@ -1,9 +1,9 @@
 /**
  * Copy the given line to the receiving line.
  *
- * @param {line2} out - receiving line
- * @param {line2} line - line to copy
- * @returns {line2} out
+ * @param {Line2} out - receiving line
+ * @param {Line2} line - line to copy
+ * @returns {Line2} out
  * @alias module:modeling/maths/line2.copy
  */
 export const copy = (out, line) => {

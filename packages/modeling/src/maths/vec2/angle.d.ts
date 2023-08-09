@@ -1,1 +1,1 @@
-export { angleRadians as angle } from './angleRadians'
+export { angleRadians as angle } from './angleRadians.js'

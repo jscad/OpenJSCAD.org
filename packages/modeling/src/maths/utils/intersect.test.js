@@ -1,5 +1,6 @@
 import test from 'ava'
 
+import * as vec2 from '../vec2/index.js'
 import { intersect } from './index.js'
 
 //   A     __F
@@ -8,13 +9,13 @@ import { intersect } from './index.js'
 //  \ /     \
 //   C       G
 
-const a = [0, 1]
-const b = [-1, 0]
-const c = [0, -1]
-const d = [1, 0]
-const e = [2, 0.5]
-const f = [3, 1]
-const g = [2, -1]
+const a = vec2.fromValues(0, 1)
+const b = vec2.fromValues(-1, 0)
+const c = vec2.fromValues(0, -1)
+const d = vec2.fromValues(1, 0)
+const e = vec2.fromValues(2, 0.5)
+const f = vec2.fromValues(3, 1)
+const g = vec2.fromValues(2, -1)
 
 test('utils: intersect() for intersecting lines', (t) => {
   t.deepEqual(intersect(a, c, b, d), [0, 0])

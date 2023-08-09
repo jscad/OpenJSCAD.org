@@ -4,12 +4,12 @@ import { isGTE } from './commonChecks.js'
 /**
  * Construct a sphere in three dimensional space where all vertices are at the same distance from the center.
  * @see [ellipsoid]{@link module:modeling/primitives.ellipsoid} for more options
- * @param {Object} [options] - options for construction
+ * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of sphere
- * @param {Number} [options.radius=1] - radius of sphere
- * @param {Number} [options.segments=32] - number of segments to create per full rotation
+ * @param {number} [options.radius=1] - radius of sphere
+ * @param {number} [options.segments=32] - number of segments to create per full rotation
  * @param {Array} [options.axes] -  an array with three vectors for the x, y and z base vectors
- * @returns {geom3} new 3D geometry
+ * @returns {Geom3} new 3D geometry
  * @alias module:modeling/primitives.sphere
  *
  * @example

@@ -1,11 +1,11 @@
 /**
  * Rotates the given vector by the given angle.
  *
- * @param {vec2} out - receiving vector
- * @param {vec2} vector - vector to rotate
- * @param {vec2} origin - origin of the rotation
- * @param {Number} radians - angle of rotation (radians)
- * @returns {vec2} out
+ * @param {Vec2} out - receiving vector
+ * @param {Vec2} vector - vector to rotate
+ * @param {Vec2} origin - origin of the rotation
+ * @param {number} radians - angle of rotation (radians)
+ * @returns {Vec2} out
  * @alias module:modeling/maths/vec2.rotate
  */
 export const rotate = (out, vector, origin, radians) => {

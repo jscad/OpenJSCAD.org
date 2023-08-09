@@ -12,11 +12,11 @@ import { toPoints } from './toPoints.js'
  * The first control point may be null to ensure a smooth transition occurs. In this case,
  * the second to last point of the given geometry is mirrored into the control points of the Bézier curve.
  * In other words, the trailing gradient of the geometry matches the new gradient of the curve.
- * @param {Object} options - options for construction
+ * @param {object} options - options for construction
  * @param {Array} options.controlPoints - list of control points (2D) for the Bézier curve
- * @param {Number} [options.segment=16] - number of segments per 360 rotation
- * @param {path2} geometry - the path of which to append points
- * @returns {path2} a new path with the appended points
+ * @param {number} [options.segment=16] - number of segments per 360 rotation
+ * @param {Path2} geometry - the path of which to append points
+ * @returns {Path2} a new path with the appended points
  * @alias module:modeling/geometries/path2.appendBezier
  *
  * @example

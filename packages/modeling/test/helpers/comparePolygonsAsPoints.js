@@ -9,8 +9,8 @@ const comparePolygons = (poly1, poly2) => {
 
 /**
  * Compare two list of points for equality
- * @param (Array} list1 - list of polygons, represented as points
- * @param (Array} list2 - list of polygons, represented as points
+ * @param {Array} list1 - list of polygons, represented as points
+ * @param {Array} list2 - list of polygons, represented as points
  * @returns {boolean} result of comparison
  */
 export const comparePolygonsAsPoints = (list1, list2) => {

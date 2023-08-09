@@ -6,13 +6,12 @@ import * as vec3 from '../vec3/index.js'
  *
  * The array contents are two 3D vectors; origin [0,0,0] and directional vector [0,0,1].
  * @see https://en.wikipedia.org/wiki/Hesse_normal_form
- * @typedef {Array} line3
  */
 
 /**
  * Create a line, positioned at 0,0,0 and lying on the X axis.
  *
- * @returns {line3} a new unbounded line
+ * @returns {Line3} a new unbounded line
  * @alias module:modeling/maths/line3.create
  */
 export const create = () => [

@@ -10,12 +10,12 @@ import { rectangle } from './rectangle.js'
 
 /**
  * Construct an axis-aligned rectangle in two dimensional space with rounded corners.
- * @param {Object} [options] - options for construction
+ * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of rounded rectangle
  * @param {Array} [options.size=[2,2]] - dimension of rounded rectangle; width and length
- * @param {Number} [options.roundRadius=0.2] - round radius of corners
- * @param {Number} [options.segments=32] - number of segments to create per full rotation
- * @returns {geom2} new 2D geometry
+ * @param {number} [options.roundRadius=0.2] - round radius of corners
+ * @param {number} [options.segments=32] - number of segments to create per full rotation
+ * @returns {Geom2} new 2D geometry
  * @alias module:modeling/primitives.roundedRectangle
  *
  * @example

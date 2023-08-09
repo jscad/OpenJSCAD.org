@@ -5,9 +5,9 @@ import { create } from './create.js'
 
 /**
  * Transform the given polygon using the given matrix.
- * @param {mat4} matrix - the matrix to transform with
- * @param {poly3} polygon - the polygon to transform
- * @returns {poly3} a new polygon
+ * @param {Mat4} matrix - the matrix to transform with
+ * @param {Poly3} polygon - the polygon to transform
+ * @returns {Poly3} a new polygon
  * @alias module:modeling/geometries/poly3.transform
  */
 export const transform = (matrix, polygon) => {

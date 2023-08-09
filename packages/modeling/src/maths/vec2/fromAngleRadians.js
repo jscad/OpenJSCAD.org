@@ -3,9 +3,9 @@ import { sin, cos } from '../utils/trigonometry.js'
 /**
  * Create a new vector in the direction of the given angle.
  *
- * @param {vec2} out - receiving vector
- * @param {Number} radians - angle in radians
- * @returns {vec2} out
+ * @param {Vec2} out - receiving vector
+ * @param {number} radians - angle in radians
+ * @returns {Vec2} out
  * @alias module:modeling/maths/vec2.fromAngleRadians
  */
 export const fromAngleRadians = (out, radians) => {

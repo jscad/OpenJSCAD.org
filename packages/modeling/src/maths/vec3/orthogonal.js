@@ -5,9 +5,9 @@ import { cross } from './cross.js'
 /**
  * Create a new vector that is orthogonal to the given vector.
  *
- * @param {vec3} out - receiving vector
- * @param {vec3} vector - vector of reference
- * @returns {vec3} out
+ * @param {Vec3} out - receiving vector
+ * @param {Vec3} vector - vector of reference
+ * @returns {Vec3} out
  * @alias module:modeling/maths/vec3.orthogonal
  */
 export const orthogonal = (out, vector) => {

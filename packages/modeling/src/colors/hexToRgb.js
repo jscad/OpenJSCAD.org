@@ -2,7 +2,7 @@
  * Converts CSS color notations (string of hex values) to RGB values.
  *
  * @see https://www.w3.org/TR/css-color-3/
- * @param {String} notation - color notation
+ * @param {string} notation - color notation
  * @return {Array} RGB color values
  * @alias module:modeling/colors.hexToRgb
  *

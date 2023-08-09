@@ -25,7 +25,7 @@ const centerGeometry = (options, object) => {
 
 /**
  * Center the given objects using the given options.
- * @param {Object} options - options for centering
+ * @param {object} options - options for centering
  * @param {Array} [options.axes=[true,true,true]] - axis of which to center, true or false
  * @param {Array} [options.relativeTo=[0,0,0]] - relative point of which to center the objects
  * @param {...Object} objects - the objects to center

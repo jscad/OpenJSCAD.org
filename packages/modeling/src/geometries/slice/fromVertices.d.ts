@@ -1,6 +1,6 @@
-import { Vec2, Vec3 } from '../../maths/types'
+import type { Vec2, Vec3 } from '../../maths/types.d.ts'
 
-import { Slice } from './type'
+import type { Slice } from './type.d.ts'
 
 type Vertex = Vec2 | Vec3
 

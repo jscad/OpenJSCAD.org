@@ -3,23 +3,23 @@ import { create } from './create.js'
 /**
  * Create a matrix with the given values.
  *
- * @param {Number} m00 Component in column 0, row 0 position (index 0)
- * @param {Number} m01 Component in column 0, row 1 position (index 1)
- * @param {Number} m02 Component in column 0, row 2 position (index 2)
- * @param {Number} m03 Component in column 0, row 3 position (index 3)
- * @param {Number} m10 Component in column 1, row 0 position (index 4)
- * @param {Number} m11 Component in column 1, row 1 position (index 5)
- * @param {Number} m12 Component in column 1, row 2 position (index 6)
- * @param {Number} m13 Component in column 1, row 3 position (index 7)
- * @param {Number} m20 Component in column 2, row 0 position (index 8)
- * @param {Number} m21 Component in column 2, row 1 position (index 9)
- * @param {Number} m22 Component in column 2, row 2 position (index 10)
- * @param {Number} m23 Component in column 2, row 3 position (index 11)
- * @param {Number} m30 Component in column 3, row 0 position (index 12)
- * @param {Number} m31 Component in column 3, row 1 position (index 13)
- * @param {Number} m32 Component in column 3, row 2 position (index 14)
- * @param {Number} m33 Component in column 3, row 3 position (index 15)
- * @returns {mat4} a new matrix
+ * @param {number} m00 Component in column 0, row 0 position (index 0)
+ * @param {number} m01 Component in column 0, row 1 position (index 1)
+ * @param {number} m02 Component in column 0, row 2 position (index 2)
+ * @param {number} m03 Component in column 0, row 3 position (index 3)
+ * @param {number} m10 Component in column 1, row 0 position (index 4)
+ * @param {number} m11 Component in column 1, row 1 position (index 5)
+ * @param {number} m12 Component in column 1, row 2 position (index 6)
+ * @param {number} m13 Component in column 1, row 3 position (index 7)
+ * @param {number} m20 Component in column 2, row 0 position (index 8)
+ * @param {number} m21 Component in column 2, row 1 position (index 9)
+ * @param {number} m22 Component in column 2, row 2 position (index 10)
+ * @param {number} m23 Component in column 2, row 3 position (index 11)
+ * @param {number} m30 Component in column 3, row 0 position (index 12)
+ * @param {number} m31 Component in column 3, row 1 position (index 13)
+ * @param {number} m32 Component in column 3, row 2 position (index 14)
+ * @param {number} m33 Component in column 3, row 3 position (index 15)
+ * @returns {Mat4} a new matrix
  * @alias module:modeling/maths/mat4.fromValues
  * @example
  * let matrix = fromValues(

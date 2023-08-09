@@ -1,10 +1,10 @@
 /**
  * Subtracts matrix b from matrix a. (A-B)
  *
- * @param {mat4} out - receiving matrix
- * @param {mat4} a - first operand
- * @param {mat4} b - second operand
- * @returns {mat4} out
+ * @param {Mat4} out - receiving matrix
+ * @param {Mat4} a - first operand
+ * @param {Mat4} b - second operand
+ * @returns {Mat4} out
  * @alias module:modeling/maths/mat4.subtract
  */
 export const subtract = (out, a, b) => {

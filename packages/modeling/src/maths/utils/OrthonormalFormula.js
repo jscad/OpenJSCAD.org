@@ -10,7 +10,7 @@ import * as vec3 from '../vec3/index.js'
 export class OrthonormalFormula {
   /**
    * Construct the standard basis formula from the given plane.
-   * @param {plane} the plane of which to convert vertices to/from the orthonormal basis
+   * @param {Plane} plane - the plane of which to convert vertices to/from the orthonormal basis
    */
   constructor (plane) {
     // plane normal is one component
@@ -27,7 +27,7 @@ export class OrthonormalFormula {
 
   /**
    * Convert the basis formula to a projection matrix.
-   * return {mat4} matrix which can be used to convert 3D vertices to 2D points
+   * @return {Mat4} matrix which can be used to convert 3D vertices to 2D points
    */
   getProjectionMatrix () {
     return mat4.fromValues(
@@ -40,7 +40,7 @@ export class OrthonormalFormula {
 
   /**
    * Convert the basis formula to an inverse projection matrix.
-   * return {mat4} matrix which can be used to convert 2D points to 3D vertices
+   * @return {Mat4} matrix which can be used to convert 2D points to 3D vertices
    */
   getInverseProjectionMatrix () {
     return mat4.fromValues(
@@ -53,8 +53,8 @@ export class OrthonormalFormula {
 
   /**
    * Convert the given 3D vertex to a 2D point which exists in the orthonormal basis
-   * @param {vec3} - 3D vertex which lies within the original basis (set)
-   * @return {vec2} - 2D point which lies within the orthonormal basis
+   * @param {Vec3} vertex - 3D vertex which lies within the original basis (set)
+   * @return {Vec2} - 2D point which lies within the orthonormal basis
    */
   to2D (vertex) {
     const point = vec2.fromValues(vec3.dot(vertex, this.u), vec3.dot(vertex, this.v))
@@ -64,8 +64,8 @@ export class OrthonormalFormula {
 
   /**
    * Convert the given 2D point to a 3D vertex which exists in the original basis (set)
-   * @param {vec2} - 2D point which lies within the orthonormal basis
-   * @return {vec3} - 3D vertex which lies within the original basis (set)
+   * @param {Vec2} point - 2D point which lies within the orthonormal basis
+   * @return {Vec3} - 3D vertex which lies within the original basis (set)
    */
   to3D (point) {
     // return the original vertex if possible, i.e. no floating point error

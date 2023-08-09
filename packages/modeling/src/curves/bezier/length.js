@@ -8,8 +8,8 @@ import { lengths } from './lengths.js'
  * const b = bezier.create([[0, 0], [0, 10]]);
  * console.log(length(100, b)) // output 10
  *
- * @param {Number} segments the number of segments to use when approximating the curve length.
- * @param {Object} bezier a bezier curve.
+ * @param {number} segments the number of segments to use when approximating the curve length.
+ * @param {object} bezier a bezier curve.
  * @returns an approximation of the curve's length.
  * @alias module:modeling/curves/bezier.length
  */

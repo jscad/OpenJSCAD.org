@@ -7,7 +7,7 @@ import * as poly2 from '../../poly2/index.js'
  * The hierarchy is represented as a forest of trees. All trees shall be depth at most 2.
  * If a solid exists inside the hole of another solid, it will be split out as its own root.
  *
- * @param {geom2} geometry
+ * @param {Geom2} geometry
  * @returns {Array} an array of polygons with associated holes
  * @alias module:modeling/geometries/geom2.toTree
  *

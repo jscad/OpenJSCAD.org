@@ -1,5 +1,6 @@
 import test from 'ava'
 
+import * as vec3 from '../vec3/index.js'
 import { plane } from '../index.js'
 
 import { OrthonormalFormula } from './index.js'
@@ -21,12 +22,12 @@ test('utils: OrthonormalFormula methods', (t) => {
   const p1 = plane.fromNormalAndPoint(plane.create(), [5, 0, 0], [5, 0, 0])
   const o1 = new OrthonormalFormula(p1)
 
-  const v1 = [5, 0, 0]
-  const v2 = [0, 5, 0]
-  const v3 = [0, 0, 5]
-  const v4 = [-5, 0, 0]
-  const v5 = [0, -5, 0]
-  const v6 = [0, 0, -5]
+  const v1 = vec3.fromValues(5, 0, 0)
+  const v2 = vec3.fromValues(0, 5, 0)
+  const v3 = vec3.fromValues(0, 0, 5)
+  const v4 = vec3.fromValues(-5, 0, 0)
+  const v5 = vec3.fromValues(0, -5, 0)
+  const v6 = vec3.fromValues(0, 0, -5)
 
   const t1 = o1.to2D(v1)
   t.deepEqual(t1, [0, 0])

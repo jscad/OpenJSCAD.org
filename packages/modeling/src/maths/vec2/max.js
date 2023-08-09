@@ -1,10 +1,10 @@
 /**
  * Returns the maximum coordinates of two vectors.
  *
- * @param {vec2} out - receiving vector
- * @param {vec2} a - first operand
- * @param {vec2} b - second operand
- * @returns {vec2} out
+ * @param {Vec2} out - receiving vector
+ * @param {Vec2} a - first operand
+ * @param {Vec2} b - second operand
+ * @returns {Vec2} out
  * @alias module:modeling/maths/vec2.max
  */
 export const max = (out, a, b) => {

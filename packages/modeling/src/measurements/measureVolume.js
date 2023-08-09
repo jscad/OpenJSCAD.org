@@ -12,7 +12,7 @@ const cache = new WeakMap()
  * NOTE: paths are infinitely narrow and do not have a volume
  *
  * @param {Path2} geometry - geometry to measure
- * @returns {Number} volume of the geometry
+ * @returns {number} volume of the geometry
  */
 const measureVolumeOfPath2 = () => 0
 
@@ -21,7 +21,7 @@ const measureVolumeOfPath2 = () => 0
  * NOTE: 2D geometry are infinitely thin and do not have a volume
  *
  * @param {Geom2} geometry - 2D geometry to measure
- * @returns {Number} volume of the geometry
+ * @returns {number} volume of the geometry
  */
 const measureVolumeOfGeom2 = () => 0
 
@@ -29,7 +29,7 @@ const measureVolumeOfGeom2 = () => 0
  * Measure the volume of the given geometry.
  *
  * @param {Geom3} geometry - 3D geometry to measure
- * @returns {Number} volume of the geometry
+ * @returns {number} volume of the geometry
  */
 const measureVolumeOfGeom3 = (geometry) => {
   let volume = cache.get(geometry)
@@ -46,7 +46,7 @@ const measureVolumeOfGeom3 = (geometry) => {
 /**
  * Measure the volume of the given geometries.
  * @param {...Object} geometries - the geometries to measure
- * @return {Number|Array} the volume, or a list of volumes for each geometry
+ * @return {number|Array} the volume, or a list of volumes for each geometry
  * @alias module:modeling/measurements.measureVolume
  *
  * @example

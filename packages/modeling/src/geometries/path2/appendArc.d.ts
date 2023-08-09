@@ -1,5 +1,5 @@
-import { Path2 } from './type'
-import { Vec2 } from '../../maths/vec2/type'
+import type { Path2 } from './type.d.ts'
+import type { Vec2 } from '../../maths/vec2/type.d.ts'
 
 export interface AppendArcOptions {
   endpoint: Vec2

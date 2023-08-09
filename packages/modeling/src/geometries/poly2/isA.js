@@ -1,6 +1,6 @@
 /**
  * Determine if the given object is a 2D polygon.
- * @param {Object} object - the object to interrogate
+ * @param {object} object - the object to interrogate
  * @returns {Boolean} true if the object matches a poly2
  * @alias module:modeling/geometries/poly2.isA
  */

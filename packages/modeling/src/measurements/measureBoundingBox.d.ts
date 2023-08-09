@@ -1,7 +1,7 @@
-import { Geometry } from '../geometries/types'
-import RecursiveArray from '../utils/recursiveArray'
+import type { Geometry } from '../geometries/types.d.ts'
+import type { RecursiveArray } from '../utils/recursiveArray.d.ts'
 
-import { BoundingBox } from './types'
+import type { BoundingBox } from './types.d.ts'
 
 export function measureBoundingBox(geometry: Geometry): BoundingBox
 export function measureBoundingBox(geometry: any): [[0, 0, 0], [0, 0, 0]]

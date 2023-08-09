@@ -11,8 +11,8 @@ import * as poly3 from '../../geometries/poly3/index.js'
 
 /*
  * Retesselation for a set of COPLANAR polygons.
- * @param {poly3[]} sourcePolygons - list of polygons
- * @returns {poly3[]} new set of polygons
+ * @param {Poly3[]} sourcePolygons - list of polygons
+ * @returns {Poly3[]} new set of polygons
  */
 export const reTesselateCoplanarPolygons = (sourcePolygons) => {
   if (sourcePolygons.length < 2) return sourcePolygons

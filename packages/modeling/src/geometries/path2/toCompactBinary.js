@@ -1,6 +1,6 @@
 /**
  * Produce a compact binary representation from the given path.
- * @param {path2} geometry - the path geometry
+ * @param {Path2} geometry - the path geometry
  * @returns {TypedArray} compact binary representation
  * @alias module:modeling/geometries/path2.toCompactBinary
  */

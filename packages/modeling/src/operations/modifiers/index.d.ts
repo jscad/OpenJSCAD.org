@@ -1,3 +1,3 @@
-export { generalize } from './generalize'
-export { snap } from './snap'
-export { retessellate } from './retessellate'
+export { generalize } from './generalize.js'
+export { snap } from './snap.js'
+export { retessellate } from './retessellate.js'

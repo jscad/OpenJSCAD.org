@@ -3,7 +3,7 @@
  * If the array is already larger than the target length, it will not be shortened.
  * @param {Array} anArray - the source array to copy into the result.
  * @param {*} padding - the value to add to the new array to reach the desired length.
- * @param {Number} targetLength - The desired length of the returned array.
+ * @param {number} targetLength - The desired length of the returned array.
  * @returns {Array} an array with at least 'target length" elements
  * @alias module:array-utils.padToLength
  * @example

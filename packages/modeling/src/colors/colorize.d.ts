@@ -1,7 +1,7 @@
-import { Colored, Geometry } from '../geometries/types'
-import RecursiveArray from '../utils/recursiveArray'
+import type { Colored, Geometry } from '../geometries/types.d.ts'
+import type { RecursiveArray } from '../utils/recursiveArray.d.ts'
 
-import { RGB, RGBA } from './types'
+import type { RGB, RGBA } from './types.d.ts'
 
 // Single Geom3 returns Colored Geom3
 export function colorize<T extends Geometry>(color: RGB | RGBA, object: T): T & Colored

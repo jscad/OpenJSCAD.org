@@ -1,3 +1,3 @@
-import { Line2 } from './type'
+import type { Line2 } from './type.d.ts'
 
 export function create(): Line2

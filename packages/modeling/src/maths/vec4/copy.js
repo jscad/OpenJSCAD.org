@@ -1,9 +1,9 @@
 /**
  * Create a copy of the given vector.
  *
- * @param {vec4} out - receiving vector
- * @param {vec4} vector - source vector
- * @returns {vec4} out
+ * @param {Vec4} out - receiving vector
+ * @param {Vec4} vector - source vector
+ * @returns {Vec4} out
  * @alias module:modeling/maths/vec4.copy
  */
 export const copy = (out, vector) => {

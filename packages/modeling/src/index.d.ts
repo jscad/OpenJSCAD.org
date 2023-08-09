@@ -13,5 +13,3 @@ export * as hulls from './operations/hulls'
 export * as modifiers from './operations/modifiers'
 export * as offsets from './operations/offsets'
 export * as transforms from './operations/transforms'
-
-export as namespace modeling

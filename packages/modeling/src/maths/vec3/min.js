@@ -1,10 +1,10 @@
 /**
  * Returns the minimum coordinates of the given vectors.
  *
- * @param {vec3} out - receiving vector
- * @param {vec3} a - first operand
- * @param {vec3} b - second operand
- * @returns {vec3} out
+ * @param {Vec3} out - receiving vector
+ * @param {Vec3} a - first operand
+ * @param {Vec3} b - second operand
+ * @returns {Vec3} out
  * @alias module:modeling/maths/vec3.min
  */
 export const min = (out, a, b) => {

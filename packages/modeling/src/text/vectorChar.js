@@ -14,13 +14,13 @@ import { vectorParams } from './vectorParams.js'
  * Construct a {@link VectorChar} from an ASCII character whose code is between 31 and 127.
  * If the character is not supported it is replaced by a question mark.
  *
- * @param {Object} [options] - options for construction
+ * @param {object} [options] - options for construction
  * @param {number} [options.xOffset=0] - x offset
  * @param {number} [options.yOffset=0] - y offset
  * @param {number} [options.height=21] - font size/character height (uppercase height)
  * @param {number} [options.extrudeOffset=0] - width of the extrusion that will be applied (manually) after the creation of the character
- * @param {String} [options.input='?'] - ascii character (ignored/overwritten if provided as second parameter)
- * @param {String} [character='?'] - ascii character
+ * @param {string} [options.input='?'] - ascii character (ignored/overwritten if provided as second parameter)
+ * @param {string} [character='?'] - ascii character
  * @returns {VectorChar} a new vertor char object
  * @alias module:modeling/text.vectorChar
  *

@@ -9,9 +9,9 @@ import { extrudeRectangularGeom2 } from './extrudeRectangularGeom2.js'
 /**
  * Extrude the given geometry by following the outline(s) with a rectangle.
  * @See expand for addition options
- * @param {Object} options - options for extrusion, if any
- * @param {Number} [options.size=1] - size of the rectangle
- * @param {Number} [options.height=1] - height of the extrusion
+ * @param {object} options - options for extrusion, if any
+ * @param {number} [options.size=1] - size of the rectangle
+ * @param {number} [options.height=1] - height of the extrusion
  * @param {...Object} objects - the geometries to extrude
  * @return {Object|Array} the extruded object, or a list of extruded objects
  * @alias module:modeling/extrusions.extrudeRectangular

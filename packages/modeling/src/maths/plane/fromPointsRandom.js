@@ -7,11 +7,11 @@ import * as vec3 from '../vec3/index.js'
  * but allow the vectors to be on one point or one line.
  * In such a case, a random plane through the given points is constructed.
  *
- * @param {plane} out - receiving plane
- * @param {vec3} a - 3D point
- * @param {vec3} b - 3D point
- * @param {vec3} c - 3D point
- * @returns {plane} out
+ * @param {Plane} out - receiving plane
+ * @param {Vec3} a - 3D point
+ * @param {Vec3} b - 3D point
+ * @param {Vec3} c - 3D point
+ * @returns {Plane} out
  * @alias module:modeling/maths/plane.fromPointsRandom
  */
 export const fromPointsRandom = (out, a, b, c) => {

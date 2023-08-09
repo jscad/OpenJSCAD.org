@@ -29,14 +29,14 @@ const getPoints = (vertices, radius, startAngle, center) => {
 /**
  * Construct a star in two dimensional space.
  * @see https://en.wikipedia.org/wiki/Star_polygon
- * @param {Object} [options] - options for construction
+ * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of star
- * @param {Number} [options.vertices=5] - number of vertices (P) on the star
- * @param {Number} [options.density=2] - density (Q) of star
- * @param {Number} [options.outerRadius=1] - outer radius of vertices
- * @param {Number} [options.innerRadius=0] - inner radius of vertices, or zero to calculate
- * @param {Number} [options.startAngle=0] - starting angle for first vertex, in radians
- * @returns {geom2} new 2D geometry
+ * @param {number} [options.vertices=5] - number of vertices (P) on the star
+ * @param {number} [options.density=2] - density (Q) of star
+ * @param {number} [options.outerRadius=1] - outer radius of vertices
+ * @param {number} [options.innerRadius=0] - inner radius of vertices, or zero to calculate
+ * @param {number} [options.startAngle=0] - starting angle for first vertex, in radians
+ * @returns {Geom2} new 2D geometry
  * @alias module:modeling/primitives.star
  *
  * @example

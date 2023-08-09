@@ -15,10 +15,10 @@ import { lengths } from './lengths.js'
  * }
  * return points;
  *
- * @param {Object} [options] options for construction
- * @param {Number} [options.distance=0] the distance along the bezier curve for which we want to find the corresponding t value.
- * @param {Number} [options.segments=100] the number of segments to use when approximating the curve length.
- * @param {Object} bezier a bezier curve.
+ * @param {object} [options] options for construction
+ * @param {number} [options.distance=0] the distance along the bezier curve for which we want to find the corresponding t value.
+ * @param {number} [options.segments=100] the number of segments to use when approximating the curve length.
+ * @param {object} bezier a bezier curve.
  * @returns a number in the [0, 1] interval or NaN if the arcLength is negative or greater than the total length of the curve.
  * @alias module:modeling/curves/bezier.arcLengthToT
  */

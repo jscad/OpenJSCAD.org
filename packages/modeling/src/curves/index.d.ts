@@ -1,3 +1,1 @@
-export * as bezier from './bezier'
-
-export as namespace curves
+export * as bezier from './bezier/index.js'

@@ -1,4 +1,4 @@
-import { HSL, HSLA, RGB, RGBA } from './types'
+import type { HSL, HSLA, RGB, RGBA } from './types.d.ts'
 
 export function hslToRgb(hsl:  HSL): RGB
 export function hslToRgb(hsl:  HSLA): RGBA

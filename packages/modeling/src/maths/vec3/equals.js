@@ -1,8 +1,8 @@
 /**
  * Compare the given vectors for equality.
  *
- * @param {vec3} a - first operand
- * @param {vec3} b - second operand
+ * @param {Vec3} a - first operand
+ * @param {Vec3} b - second operand
  * @returns {Boolean} true if a and b are equal
  * @alias module:modeling/maths/vec3.equals
  */

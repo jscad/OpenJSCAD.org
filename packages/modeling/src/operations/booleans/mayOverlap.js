@@ -6,8 +6,8 @@ import { measureBoundingBox } from '../../measurements/measureBoundingBox.js'
 /*
  * Determine if the given geometries overlap by comparing min and max bounds.
  * NOTE: This is used in union for performance gains.
- * @param {geom3} geometry1 - geometry for comparison
- * @param {geom3} geometry2 - geometry for comparison
+ * @param {Geom3} geometry1 - geometry for comparison
+ * @param {Geom3} geometry2 - geometry for comparison
  * @returns {boolean} true if the geometries overlap
  */
 export const mayOverlap = (geometry1, geometry2) => {

@@ -1,9 +1,9 @@
 /**
  * Create a matrix for mirroring about the given plane.
  *
- * @param {mat4} out - receiving matrix
- * @param {vec4} plane - plane of which to mirror the matrix
- * @returns {mat4} out
+ * @param {Mat4} out - receiving matrix
+ * @param {Vec4} plane - plane of which to mirror the matrix
+ * @returns {Mat4} out
  * @alias module:modeling/maths/mat4.mirrorByPlane
  */
 export const mirrorByPlane = (out, plane) => {

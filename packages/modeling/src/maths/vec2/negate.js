@@ -1,9 +1,9 @@
 /**
  * Negates the coordinates of the given vector.
  *
- * @param {vec2} out - receiving vector
- * @param {vec2} vector - vector to negate
- * @returns {vec2} out
+ * @param {Vec2} out - receiving vector
+ * @param {Vec2} vector - vector to negate
+ * @returns {Vec2} out
  * @alias module:modeling/maths/vec2.negate
  */
 export const negate = (out, vector) => {

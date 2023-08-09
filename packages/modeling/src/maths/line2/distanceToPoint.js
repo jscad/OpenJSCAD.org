@@ -3,9 +3,9 @@ import * as vec2 from '../vec2/index.js'
 /**
  * Calculate the distance (positive) between the given point and line.
  *
- * @param {line2} line - line of reference
- * @param {vec2} point - point of reference
- * @return {Number} distance between line and point
+ * @param {Line2} line - line of reference
+ * @param {Vec2} point - point of reference
+ * @return {number} distance between line and point
  * @alias module:modeling/maths/line2.distanceToPoint
  */
 export const distanceToPoint = (line, point) => {
