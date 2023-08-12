@@ -22,8 +22,7 @@ export const fromPoints = (options, points) => {
   const defaults = { closed: false }
   let { closed } = Object.assign({}, defaults, options)
 
-  let created = create()
-  created.points = points.map((point) => vec2.clone(point))
+  let created = create(points)
 
   // check if first and last points are equal
   if (created.points.length > 1) {

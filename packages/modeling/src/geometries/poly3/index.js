@@ -7,7 +7,6 @@
  * import { geometries } from '@jscad/modeling'
  * const polygon = geometries.poly3.create([[0,0,0], [4,0,0], [4,3,12]])
  */
-export { clone } from './clone.js'
 export { create } from './create.js'
 export { fromVerticesAndPlane } from './fromVerticesAndPlane.js'
 export { invert } from './invert.js'

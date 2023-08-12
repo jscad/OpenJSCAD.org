@@ -1,7 +1,6 @@
 export { appendArc, AppendArcOptions } from './appendArc'
 export { appendBezier, AppendBezierOptions } from './appendBezier'
 export { appendPoints } from './appendPoints'
-export { clone } from './clone'
 export { close } from './close'
 export { concat } from './concat'
 export { create } from './create'

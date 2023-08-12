@@ -1,5 +1,4 @@
 export { calculatePlane } from './calculatePlane'
-export { clone } from './clone'
 export { create } from './create'
 export { equals } from './equals'
 export { fromGeom2 } from './fromGeom2'

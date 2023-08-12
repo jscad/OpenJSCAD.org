@@ -1,5 +1,4 @@
 export { arePointsInside } from './arePointsInside'
-export { clone } from './clone'
 export { create } from './create'
 export { isA } from './isA'
 export { isConvex } from './isConvex'

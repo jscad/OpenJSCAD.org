@@ -14,7 +14,7 @@ export const fromCompactBinary = (data) => {
 
   const created = create()
 
-  created.transforms = mat4.clone(data.slice(1, 17))
+  created.transforms = data.slice(1, 17)
 
   for (let i = 21; i < data.length;) {
     const length = data[i++] // number of points for this polygon

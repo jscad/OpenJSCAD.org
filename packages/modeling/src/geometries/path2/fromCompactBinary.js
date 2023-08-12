@@ -14,7 +14,7 @@ export const fromCompactBinary = (data) => {
 
   const created = create()
 
-  created.transforms = mat4.clone(data.slice(1, 17))
+  created.transforms = data.slice(1, 17)
 
   created.isClosed = !!data[17]
 

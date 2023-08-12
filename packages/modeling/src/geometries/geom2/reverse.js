@@ -1,4 +1,3 @@
-import { clone } from './clone.js'
 
 /**
  * Reverses the given geometry so that the outline points are flipped in the opposite order.
@@ -11,7 +10,7 @@ import { clone } from './clone.js'
  * let newGeometry = reverse(geometry)
  */
 export const reverse = (geometry) => {
-  const reversed = clone(geometry)
+  const reversed = Object.assign({}, geometry)
   reversed.outlines = reversed.outlines.map((outline) => outline.slice().reverse())
   return reversed
 }

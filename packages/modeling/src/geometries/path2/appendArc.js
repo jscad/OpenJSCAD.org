@@ -36,11 +36,10 @@ export const appendArc = (options, geometry) => {
 
   // validate the given options
   if (!Array.isArray(endpoint)) throw new Error('endpoint must be an array of X and Y values')
-  if (endpoint.length < 2) throw new Error('endpoint must contain X and Y values')
-  endpoint = vec2.clone(endpoint)
+  if (endpoint.length !== 2) throw new Error('endpoint must contain X and Y values')
 
   if (!Array.isArray(radius)) throw new Error('radius must be an array of X and Y values')
-  if (radius.length < 2) throw new Error('radius must contain X and Y values')
+  if (radius.length !== 2) throw new Error('radius must contain X and Y values')
 
   if (segments < 4) throw new Error('segments must be four or more')
 

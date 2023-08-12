@@ -1,4 +1,3 @@
-export { clone } from './clone'
 export { create } from './create'
 export { fromVerticesAndPlane } from './fromVerticesAndPlane'
 export { invert } from './invert'

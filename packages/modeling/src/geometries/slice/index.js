@@ -8,7 +8,6 @@
  * const slice = geometries.slice.create([[[0,0,0], [4,0,0], [4,3,12]]])
  */
 export { calculatePlane } from './calculatePlane.js'
-export { clone } from './clone.js'
 export { create } from './create.js'
 export { equals } from './equals.js'
 export { fromGeom2 } from './fromGeom2.js'

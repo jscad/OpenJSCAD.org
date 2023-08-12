@@ -71,10 +71,8 @@ export const star = (options) => {
     innerRadius = outerRadius * getRadiusRatio(vertices, density)
   }
 
-  const centerV = vec2.clone(center)
-
-  const outerPoints = getPoints(vertices, outerRadius, startAngle, centerV)
-  const innerPoints = getPoints(vertices, innerRadius, startAngle + Math.PI / vertices, centerV)
+  const outerPoints = getPoints(vertices, outerRadius, startAngle, center)
+  const innerPoints = getPoints(vertices, innerRadius, startAngle + Math.PI / vertices, center)
 
   const allPoints = []
   for (let i = 0; i < vertices; i++) {
