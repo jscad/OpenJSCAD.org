@@ -143,7 +143,14 @@ test('project torus (martinez issue #155)', (t) => {
 })
 
 test('project: preserves color', (t) => {
-  const red = colorize([1, 0, 0], cube())
-  const result = project({ }, red)
+  const redCube = colorize([1, 0, 0], cube())
+  const result = project({ }, redCube)
   t.deepEqual(result.color, [1, 0, 0, 1])
+})
+
+test('project: empty geometry', (t) => {
+  const obj = geom3.create()
+  const result = project({ }, obj)
+  t.notThrows(() => geom2.validate(result))
+  t.is(measureArea(result), 0)
 })

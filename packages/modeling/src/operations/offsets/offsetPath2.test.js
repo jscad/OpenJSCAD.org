@@ -3,20 +3,35 @@ import test from 'ava'
 import { comparePoints, nearlyEqual } from '../../../test/helpers/index.js'
 
 import { colorize } from '../../colors/index.js'
-import { geom2, geom3, path2 } from '../../geometries/index.js'
+import { geom2, path2 } from '../../geometries/index.js'
 import { measureArea, measureBoundingBox } from '../../measurements/index.js'
 import { area } from '../../maths/utils/index.js'
 import { TAU } from '../../maths/constants.js'
-import { sphere, square } from '../../primitives/index.js'
 
 import { offset } from './index.js'
 
 test('offset: offset empty path2', (t) => {
   const geometry = path2.create()
-  const result = offset({ }, geometry)
-  t.notThrows(() => path2.validate(result))
+  const result = offset({ corners: 'round' }, geometry)
+  t.notThrows(() => geom2.validate(result))
   t.is(measureArea(result), 0)
-  t.is(path2.toPoints(result).length, 0)
+  t.is(geom2.toPoints(result).length, 0)
+})
+
+test('offset: offset empty path2 closed', (t) => {
+  const geometry = path2.fromPoints({ closed: true }, [])
+  const result = offset({ }, geometry)
+  t.notThrows(() => geom2.validate(result))
+  t.is(measureArea(result), 0)
+  t.is(geom2.toPoints(result).length, 0)
+})
+
+test('offset: offset single point path2 round', (t) => {
+  const geometry = path2.create([[2, 2]])
+  const result = offset({ delta: 1, corners: 'round', segments: 16 }, geometry)
+  t.notThrows(() => geom2.validate(result))
+  nearlyEqual(t, measureArea(result), 3.12, 0.01)
+  t.is(geom2.toPoints(result).length, 32)
 })
 
 test('offset: offset path2 preserves color', (t) => {

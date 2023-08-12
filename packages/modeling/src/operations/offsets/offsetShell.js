@@ -71,9 +71,6 @@ export const offsetShell = (options, geometry) => {
   }
   const { delta, segments } = Object.assign({ }, defaults, options)
 
-  const polygons = geom3.toPolygons(geometry)
-  if (polygons.length === 0) return geometry
-
   let result = geom3.create()
   const vertices2planes = new Map() // {vertex: [vertex, [plane, ...]]}
   const edges2planes = new Map() // {edge: [[vertex, vertex], [plane, ...]]}
@@ -85,7 +82,8 @@ export const offsetShell = (options, geometry) => {
   // - extruded the polygon, and add to the composite result
   // - add the plane to the unique vertex map
   // - add the plane to the unique edge map
-  polygons.forEach((polygon, index) => {
+  const polygons = geom3.toPolygons(geometry)
+  polygons.forEach((polygon) => {
     const extrudeVector = vec3.scale(vec3.create(), poly3.plane(polygon), 2 * delta)
     const translatedPolygon = poly3.transform(mat4.fromTranslation(mat4.create(), vec3.scale(vec3.create(), extrudeVector, -0.5)), polygon)
     const extrudedFace = extrudePolygon(extrudeVector, translatedPolygon)

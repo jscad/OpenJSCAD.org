@@ -40,12 +40,12 @@ test('extrudeLinear (defaults)', (t) => {
 })
 
 test('extrudeLinear: preserves color', (t) => {
-  const red = colorize([1, 0, 0], square())
-  const extruded = extrudeLinear({ }, red)
+  const redSquare = colorize([1, 0, 0], square())
+  const extruded = extrudeLinear({ }, redSquare)
   t.deepEqual(extruded.color, [1, 0, 0, 1])
 
   // one red, one blue
-  const out = extrudeLinear({ }, [red, square()])
+  const out = extrudeLinear({ }, [redSquare, square()])
   t.deepEqual(out[0].color, [1, 0, 0, 1])
   t.is(out[1].color, undefined)
 })
