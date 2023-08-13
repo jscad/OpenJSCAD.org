@@ -1,3 +1,4 @@
+import type { Plane } from '../../maths/plane/type.d.ts'
 import type { Vec3 } from '../../maths/vec3/type.d.ts'
 import type { Color } from '../types.d.ts'
 

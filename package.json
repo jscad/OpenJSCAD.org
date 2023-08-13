@@ -43,7 +43,7 @@
     "jsdoc": "4.0.2",
     "nyc": "15.1.0",
     "standardx": "7.0.0",
-    "tsd": "0.23.0"
+    "tsd": "^0.28.1"
   },
   "collective": {
     "type": "opencollective",

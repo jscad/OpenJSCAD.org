@@ -28,7 +28,7 @@ export const arePointsInside = (points, polygon) => {
  * @see http://erich.realtimerendering.com/ptinpoly/ (Crossings Test)
  * @param {Array} point - an array with X and Y values
  * @param {Array} polygon - a list of points, where each point is an array with X and Y values
- * @return {Integer} 1 if the point is inside, 0 if outside
+ * @return {number} 1 if the point is inside, 0 if outside
  */
 const isPointInside = (point, polygon) => {
   const numPoints = polygon.length

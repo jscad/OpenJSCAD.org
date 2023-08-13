@@ -3,7 +3,9 @@ name: Node CI Workflow
 on:
   push:
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
+      - V3
 
 jobs:
   build:
