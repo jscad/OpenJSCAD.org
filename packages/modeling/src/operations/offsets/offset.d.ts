@@ -1,7 +1,5 @@
-import type { Path2, Geom2 } from '../../geometries/types.d.ts'
+import type { Geometry } from '../../geometries/types.d.ts'
 import type { RecursiveArray } from '../../utils/recursiveArray.d.ts'
-
-type Geometry = Path2 | Geom2 | Geom3
 
 export interface OffsetOptions {
   delta?: number

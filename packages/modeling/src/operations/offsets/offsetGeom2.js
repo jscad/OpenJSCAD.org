@@ -6,7 +6,7 @@ import { offsetFromPoints } from './offsetFromPoints.js'
 /*
  * Create an offset geometry from the given geom2 using the given options (if any).
  * @param {object} options - options for offset
- * @param {Float} [options.delta=1] - delta of offset (+ to exterior, - from interior)
+ * @param {number} [options.delta=1] - delta of offset (+ to exterior, - from interior)
  * @param {string} [options.corners='edge'] - type corner to create during of expansion; edge, chamfer, round
  * @param {number} [options.segments=16] - number of segments when creating round corners
  * @param {Geom2} geometry - geometry from which to create the offset

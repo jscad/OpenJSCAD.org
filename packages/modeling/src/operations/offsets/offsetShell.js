@@ -61,8 +61,8 @@ const addUniqueAngle = (map, angle) => {
  * Cylinders are constructed around every side
  * Spheres are placed on every vertex
  * the result is a true expansion of the solid
- * @param  {Number} delta
- * @param  {Integer} segments
+ * @param  {number} delta
+ * @param  {number} segments
  */
 export const offsetShell = (options, geometry) => {
   const defaults = {

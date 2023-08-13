@@ -21,7 +21,7 @@ const measureEpsilonOfGeom2 = (geometry) => calculateEpsilonFromBounds(measureBo
 
 /*
  * Measure the epsilon of the given (geom3) geometry.
- * @return {Float} the epsilon (precision) of the geometry
+ * @return {number} the epsilon (precision) of the geometry
  */
 const measureEpsilonOfGeom3 = (geometry) => calculateEpsilonFromBounds(measureBoundingBox(geometry), 3)
 
