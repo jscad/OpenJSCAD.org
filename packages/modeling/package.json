@@ -11,7 +11,7 @@
   "module": "dist/jscad-modeling.es.js",
   "scripts": {
     "build": "rollup --config",
-    "coverage": "nyc --all --reporter=html --reporter=text npm test",
+    "coverage": "c8 --all --reporter=html --reporter=text npm test",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
     "test:tsd": "tsd",
     "version": "pnpm run build && git add dist"
@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "ava": "4.3.3",
-    "nyc": "15.1.0",
+    "c8": "8.0.0",
     "rollup": "2.79.1",
     "rollup-plugin-banner": "^0.2.1"
   },
