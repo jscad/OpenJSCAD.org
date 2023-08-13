@@ -5,8 +5,8 @@ import * as poly3 from '../poly3/index.js'
 /*
  * Apply the transforms of the given geometry.
  * NOTE: This function must be called BEFORE exposing any data. See toPolygons.
- * @param {geom3} geometry - the geometry to transform
- * @returns {geom3} the given geometry
+ * @param {Geom3} geometry - the geometry to transform
+ * @returns {Geom3} the given geometry
  * @example
  * geometry = applyTransforms(geometry)
  */

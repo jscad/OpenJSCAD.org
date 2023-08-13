@@ -6,7 +6,7 @@ import * as path2 from '../../geometries/path2/index.js'
 
 /**
  * Transform the given objects using the given matrix.
- * @param {mat4} matrix - a transformation matrix
+ * @param {Mat4} matrix - a transformation matrix
  * @param {...Object} objects - the objects to transform
  * @return {Object|Array} the transformed object, or a list of transformed objects
  * @alias module:modeling/transforms.transform

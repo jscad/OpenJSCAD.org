@@ -7,11 +7,11 @@ import { copy } from './copy.js'
 /**
  * Rotates a matrix by the given angle about the given axis.
  *
- * @param {mat4} out - receiving matrix
- * @param {mat4} matrix - matrix to rotate
- * @param {Number} radians - angle to rotate the matrix by
- * @param {vec3} axis - axis to rotate around
- * @returns {mat4} out
+ * @param {Mat4} out - receiving matrix
+ * @param {Mat4} matrix - matrix to rotate
+ * @param {number} radians - angle to rotate the matrix by
+ * @param {Vec3} axis - axis to rotate around
+ * @returns {Mat4} out
  * @alias module:modeling/maths/mat4.rotate
  */
 export const rotate = (out, matrix, radians, axis) => {

@@ -1,4 +1,4 @@
-import Poly2 from './type'
-import { Vec2 } from '../../maths/vec2/type'
+import type { Poly2 } from './type.d.ts'
+import type { Vec2 } from '../../maths/vec2/type.d.ts'
 
 export function toPoints(polygon: Poly2): Array<Vec2>

@@ -1,6 +1,6 @@
-import { Geometry } from '../../geometries/types'
-import { Vec3 } from '../../maths/types'
-import RecursiveArray from '../../utils/recursiveArray'
+import type { Geometry } from '../../geometries/types.d.ts'
+import type { Vec3 } from '../../maths/types.d.ts'
+import type { RecursiveArray } from '../../utils/recursiveArray.d.ts'
 
 export interface MirrorOptions {
   origin?: Vec3

@@ -10,12 +10,12 @@ test('mat4: rotate() called with out parameter should return a new mat4 with cor
   const idn = create()
 
   // invalid condition when axis is 0,0,0
-  const out1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  const out1 = create()
   const ret1 = rotate(out1, idn, rotation, [0, 0, 0])
   t.is(out1, ret1)
   t.true(compareVectors(out1, [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]))
 
-  const out2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  const out2 = create()
   const ret2 = rotate(out2, idn, rotation, [0, 0, 1])
   t.true(compareVectors(out2, [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]))
   t.true(compareVectors(ret2, [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]))

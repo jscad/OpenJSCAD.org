@@ -9,7 +9,7 @@ import * as path2 from '../../geometries/path2/index.js'
 
 /**
  * Mirror the given objects using the given options.
- * @param {Object} options - options for mirror
+ * @param {object} options - options for mirror
  * @param {Array} [options.origin=[0,0,0]] - the origin of the plane
  * @param {Array} [options.normal=[0,0,1]] - the normal vector of the plane
  * @param {...Object} objects - the objects to mirror

@@ -32,7 +32,7 @@ const colorPoly3 = (color, object) => {
 /**
  * Assign the given color to the given objects.
  * @param {Array} color - RGBA color values, where each value is between 0 and 1.0
- * @param {Object|Array} objects - the objects of which to apply the given color
+ * @param {object|Array} objects - the objects of which to apply the given color
  * @return {Object|Array} new object, or list of new objects with an additional attribute 'color'
  * @alias module:modeling/colors.colorize
  *

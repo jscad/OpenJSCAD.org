@@ -9,7 +9,7 @@
  * let position = bezier.valueAt(t,b) // where 0 < t < 1
  *
  * @param {number} t : the position of which to calculate the value; 0 < t < 1
- * @param {Object} bezier : a Bézier curve created with bezier.create().
+ * @param {object} bezier : a Bézier curve created with bezier.create().
  * @returns {array | number} the value at the requested position.
  * @alias module:modeling/curves/bezier.valueAt
  */

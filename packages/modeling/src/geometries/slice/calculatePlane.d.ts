@@ -1,5 +1,5 @@
-import { Plane } from '../../maths/plane/type'
+import type { Plane } from '../../maths/plane/type.d.ts'
 
-import { Slice } from './type'
+import type { Slice } from './type.d.ts'
 
 export function calculatePlane(slice: Slice): Plane

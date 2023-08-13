@@ -1,9 +1,9 @@
 /**
  * Normalize the given vector.
  *
- * @param {vec2} out - receiving vector
- * @param {vec2} vector - vector to normalize
- * @returns {vec2} out
+ * @param {Vec2} out - receiving vector
+ * @param {Vec2} vector - vector to normalize
+ * @returns {Vec2} out
  * @alias module:modeling/maths/vec2.normalize
  */
 export const normalize = (out, vector) => {

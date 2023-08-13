@@ -6,7 +6,7 @@ import { create } from './create.js'
 /**
  * Create a new 2D geometry from the given compact binary data.
  * @param {Array} data - compact binary data
- * @returns {geom2} a new geometry
+ * @returns {Geom2} a new geometry
  * @alias module:modeling/geometries/geom2.fromCompactBinary
  */
 export const fromCompactBinary = (data) => {

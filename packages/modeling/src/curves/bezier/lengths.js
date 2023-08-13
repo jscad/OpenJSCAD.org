@@ -8,8 +8,8 @@ import { valueAt } from './valueAt.js'
  * const b = bezier.create([[0, 0], [0, 10]]);
  * const totalLength = lengths(100, b).pop(); // the last element of the array is the curve's approximate length
  *
- * @param {Number} segments the number of segments to use when approximating the curve length.
- * @param {Object} bezier a bezier curve.
+ * @param {number} segments the number of segments to use when approximating the curve length.
+ * @param {object} bezier a bezier curve.
  * @returns an array containing the cumulative length of the segments.
  */
 export const lengths = (segments, bezier) => {
@@ -34,7 +34,7 @@ export const lengths = (segments, bezier) => {
  *
  * @param {Array} a - first operand.
  * @param {Array} b - second operand.
- * @returns {Number} - distance.
+ * @returns {number} - distance.
  */
 const distanceBetween = (a, b) => {
   if (Number.isFinite(a) && Number.isFinite(b)) {

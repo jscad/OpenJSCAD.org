@@ -6,16 +6,15 @@ import * as vec3 from '../vec3/index.js'
  *
  * The contents of the array are a normal [0,1,2] and a distance [3].
  * @see https://en.wikipedia.org/wiki/Hesse_normal_form
- * @typedef {Array} plane
  */
 
 /**
  * Create a new plane from the given normal and point values.
  *
- * @param {plane} out - receiving plane
- * @param {vec3} normal - directional vector
- * @param {vec3} point - origin of plane
- * @returns {plane} out
+ * @param {Plane} out - receiving plane
+ * @param {Vec3} normal - directional vector
+ * @param {Vec3} point - origin of plane
+ * @returns {Plane} out
  * @alias module:modeling/maths/plane.fromNormalAndPoint
  */
 export const fromNormalAndPoint = (out, normal, point) => {

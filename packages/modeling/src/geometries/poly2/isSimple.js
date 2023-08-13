@@ -3,7 +3,7 @@ import { intersect } from '../../maths/utils/intersect.js'
 /**
  * Check whether the given polygon is simple, i.e. does not intersect itself.
  * @see https://en.wikipedia.org/wiki/Simple_polygon
- * @param {poly2} polygon - the polygon to interrogate
+ * @param {Poly2} polygon - the polygon to interrogate
  * @returns {Boolean} true if simple
  * @alias module:modeling/geometries/poly2.isSimple
  */

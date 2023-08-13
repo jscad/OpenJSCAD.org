@@ -8,14 +8,14 @@ import { isGT, isGTE, isNumberArray } from './commonChecks.js'
 
 /**
  * Construct an arc in two dimensional space where all points are at the same distance from the center.
- * @param {Object} [options] - options for construction
+ * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of arc
- * @param {Number} [options.radius=1] - radius of arc
- * @param {Number} [options.startAngle=0] - starting angle of the arc, in radians
- * @param {Number} [options.endAngle=TAU] - ending angle of the arc, in radians
- * @param {Number} [options.segments=32] - number of segments to create per full rotation
- * @param {Boolean} [options.makeTangent=false] - adds line segments at both ends of the arc to ensure that the gradients at the edges are tangent
- * @returns {path2} new 2D path
+ * @param {number} [options.radius=1] - radius of arc
+ * @param {number} [options.startAngle=0] - starting angle of the arc, in radians
+ * @param {number} [options.endAngle=TAU] - ending angle of the arc, in radians
+ * @param {number} [options.segments=32] - number of segments to create per full rotation
+ * @param {boolean} [options.makeTangent=false] - adds line segments at both ends of the arc to ensure that the gradients at the edges are tangent
+ * @returns {Path2} new 2D path
  * @alias module:modeling/primitives.arc
  */
 export const arc = (options) => {

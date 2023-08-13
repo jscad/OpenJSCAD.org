@@ -7,9 +7,9 @@ import { sin, cos } from '../utils/trigonometry.js'
  *     mat4.identity(dest)
  *     mat4.rotateY(dest, dest, radians)
  *
- * @param {mat4} out - receiving matrix
- * @param {Number} radians - angle to rotate the matrix by
- * @returns {mat4} out
+ * @param {Mat4} out - receiving matrix
+ * @param {number} radians - angle to rotate the matrix by
+ * @returns {Mat4} out
  * @alias module:modeling/maths/mat4.fromYRotation
  * @example
  * let matrix = fromYRotation(create(), TAU / 4)

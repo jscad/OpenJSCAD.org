@@ -2,8 +2,8 @@ import { compareVectors } from './compareVectors.js'
 
 /**
  * Compare two polygons for equality
- * @param (poly3} poly1 - polygon with plane and vertices
- * @param (poly3} poly2 - polygon with plane and vertices
+ * @param {Poly3} poly1 - polygon with plane and vertices
+ * @param {Poly3} poly2 - polygon with plane and vertices
  * @returns {boolean} result of comparison
  */
 export const comparePolygons = (poly1, poly2) => {

@@ -1,10 +1,10 @@
 /**
  * Computes the cross product (3D) of two vectors.
  *
- * @param {vec3} out - receiving vector (3D)
- * @param {vec2} a - first operand
- * @param {vec2} b - second operand
- * @returns {vec3} out
+ * @param {Vec3} out - receiving vector (3D)
+ * @param {Vec2} a - first operand
+ * @param {Vec2} b - second operand
+ * @returns {Vec3} out
  * @alias module:modeling/maths/vec2.cross
  */
 export const cross = (out, a, b) => {

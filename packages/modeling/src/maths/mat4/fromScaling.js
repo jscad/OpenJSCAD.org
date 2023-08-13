@@ -5,9 +5,9 @@
  *     mat4.identity(dest)
  *     mat4.scale(dest, dest, vec)
  *
- * @param {mat4} out - receiving matrix
- * @param {vec3} vector - X, Y, Z factors by which to scale
- * @returns {mat4} out
+ * @param {Mat4} out - receiving matrix
+ * @param {Vec3} vector - X, Y, Z factors by which to scale
+ * @returns {Mat4} out
  * @alias module:modeling/maths/mat4.fromScaling
  * @example
  * let matrix = fromScaling([1, 2, 0.5])

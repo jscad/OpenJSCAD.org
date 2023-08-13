@@ -11,8 +11,8 @@ const cache = new WeakMap()
  * Measure the area of the given geometry.
  * NOTE: paths are infinitely narrow and do not have an area
  *
- * @param {path2} geometry - geometry to measure
- * @returns {Number} area of the geometry
+ * @param {Path2} geometry - geometry to measure
+ * @returns {number} area of the geometry
  */
 const measureAreaOfPath2 = () => 0
 
@@ -21,8 +21,8 @@ const measureAreaOfPath2 = () => 0
  * For a counterclockwise rotating geometry (about Z) the area is positive, otherwise negative.
  *
  * @see http://paulbourke.net/geometry/polygonmesh/
- * @param {geom2} geometry - 2D geometry to measure
- * @returns {Number} area of the geometry
+ * @param {Geom2} geometry - 2D geometry to measure
+ * @returns {number} area of the geometry
  */
 const measureAreaOfGeom2 = (geometry) => {
   let area = cache.get(geometry)
@@ -40,8 +40,8 @@ const measureAreaOfGeom2 = (geometry) => {
 /*
  * Measure the area of the given geometry.
  *
- * @param {geom3} geometry - 3D geometry to measure
- * @returns {Number} area of the geometry
+ * @param {Geom3} geometry - 3D geometry to measure
+ * @returns {number} area of the geometry
  */
 const measureAreaOfGeom3 = (geometry) => {
   let area = cache.get(geometry)
@@ -58,7 +58,7 @@ const measureAreaOfGeom3 = (geometry) => {
 /**
  * Measure the area of the given geometries.
  * @param {...Objects} geometries - the geometries to measure
- * @return {Number|Array} the area, or a list of areas for each geometry
+ * @return {number|Array} the area, or a list of areas for each geometry
  * @alias module:modeling/measurements.measureArea
  *
  * @example

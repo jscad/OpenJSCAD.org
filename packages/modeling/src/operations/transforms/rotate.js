@@ -43,7 +43,7 @@ export const rotate = (angles, ...objects) => {
 
 /**
  * Rotate the given objects about the X axis, using the given options.
- * @param {Number} angle - angle (RADIANS) of rotations about X
+ * @param {number} angle - angle (RADIANS) of rotations about X
  * @param {...Object} objects - the objects to rotate
  * @return {Object|Array} the rotated object, or a list of rotated objects
  * @alias module:modeling/transforms.rotateX
@@ -52,7 +52,7 @@ export const rotateX = (angle, ...objects) => rotate([angle, 0, 0], objects)
 
 /**
  * Rotate the given objects about the Y axis, using the given options.
- * @param {Number} angle - angle (RADIANS) of rotations about Y
+ * @param {number} angle - angle (RADIANS) of rotations about Y
  * @param {...Object} objects - the objects to rotate
  * @return {Object|Array} the rotated object, or a list of rotated objects
  * @alias module:modeling/transforms.rotateY
@@ -61,7 +61,7 @@ export const rotateY = (angle, ...objects) => rotate([0, angle, 0], objects)
 
 /**
  * Rotate the given objects about the Z axis, using the given options.
- * @param {Number} angle - angle (RADIANS) of rotations about Z
+ * @param {number} angle - angle (RADIANS) of rotations about Z
  * @param {...Object} objects - the objects to rotate
  * @return {Object|Array} the rotated object, or a list of rotated objects
  * @alias module:modeling/transforms.rotateZ

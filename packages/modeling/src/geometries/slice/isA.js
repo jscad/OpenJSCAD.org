@@ -1,6 +1,6 @@
 /**
  * Determine if the given object is a slice.
- * @param {slice} object - the object to interrogate
+ * @param {Slice} object - the object to interrogate
  * @returns {Boolean} true if the object matches a slice
  * @alias module:modeling/geometries/slice.isA
  */

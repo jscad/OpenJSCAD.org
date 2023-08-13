@@ -1,4 +1,4 @@
-import { HSV, HSVA, RGB, RGBA } from './types'
+import type { HSV, HSVA, RGB, RGBA } from './types.d.ts'
 
 export function rgbToHsv(rgb: RGB): HSV
 export function rgbToHsv(rgb: RGBA): HSVA

@@ -1,5 +1,5 @@
-import { Path2, Geom2, Geom3 } from '../../geometries/types'
-import RecursiveArray from '../../utils/recursiveArray'
+import type { Path2, Geom2, Geom3 } from '../../geometries/types.d.ts'
+import type { RecursiveArray } from '../../utils/recursiveArray.d.ts'
 
 export interface ExtrudeLinearOptions {
   height?: number

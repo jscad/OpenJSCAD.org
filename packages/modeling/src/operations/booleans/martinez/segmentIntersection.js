@@ -10,10 +10,10 @@ import { dot as dotProduct } from '../../../maths/vec2/index.js'
  * Finds the magnitude of the cross product of two vectors (if we pretend
  * they're in three dimensions)
  *
- * @param {Object} a First vector
- * @param {Object} b Second vector
+ * @param {object} a First vector
+ * @param {object} b Second vector
  * @private
- * @returns {Number} The magnitude of the cross product
+ * @returns {number} The magnitude of the cross product
  */
 const crossProduct = (a, b) => (a[0] * b[1]) - (a[1] * b[0])
 
@@ -29,7 +29,7 @@ const crossProduct = (a, b) => (a[0] * b[1]) - (a[1] * b[0])
  * @param {Array.<Number>} a2 point of first line
  * @param {Array.<Number>} b1 point of second line
  * @param {Array.<Number>} b2 point of second line
- * @param {Boolean=} noEndpointTouch whether to skip single touchpoints (meaning connected segments) as intersections
+ * @param {boolean=} noEndpointTouch whether to skip single touchpoints (meaning connected segments) as intersections
  * @returns {Array.<Array.<Number>>|Null} If the lines intersect, the point of
  * intersection. If they overlap, the two end points of the overlapping segment.
  * Otherwise, null.

@@ -1,9 +1,9 @@
 /**
  * Create a copy of the given vector.
  *
- * @param {vec3} out - receiving vector
- * @param {vec3} vector - vector to copy
- * @returns {vec3} out
+ * @param {Vec3} out - receiving vector
+ * @param {Vec3} vector - vector to copy
+ * @returns {Vec3} out
  * @alias module:modeling/maths/vec3.copy
  */
 export const copy = (out, vector) => {

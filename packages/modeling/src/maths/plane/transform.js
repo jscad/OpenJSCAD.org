@@ -7,10 +7,10 @@ import { flip } from './flip.js'
 /**
  * Transform the given plane using the given matrix
  *
- * @param {plane} out - receiving plane
- * @param {plane} plane - plane to transform
- * @param {mat4} matrix - matrix to transform with
- * @return {plane} out
+ * @param {Plane} out - receiving plane
+ * @param {Plane} plane - plane to transform
+ * @param {Mat4} matrix - matrix to transform with
+ * @return {Plane} out
  * @alias module:modeling/maths/plane.transform
  */
 export const transform = (out, plane, matrix) => {

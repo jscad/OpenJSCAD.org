@@ -1,9 +1,7 @@
-export { align, AlignOptions } from './align'
-export * from './center'
-export * from './mirror'
-export * from './rotate'
-export * from './scale'
-export * from './transform'
-export * from './translate'
-
-export as namespace transforms
+export { align, AlignOptions } from './align.js'
+export * from './center.js'
+export * from './mirror.js'
+export * from './rotate.js'
+export * from './scale.js'
+export * from './transform.js'
+export * from './translate.js'

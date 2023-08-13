@@ -1,7 +1,7 @@
 import * as vec2 from '../../maths/vec2/index.js'
 
 /**
- * @param {poly2} polygon - the polygon to measure
+ * @param {Poly2} polygon - the polygon to measure
  * @returns {Array} an array of two vectors (2D);  minimum and maximum coordinates
  * @alias module:modeling/geometries/poly2.measureBoundingBox
  */

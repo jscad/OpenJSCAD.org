@@ -3,9 +3,9 @@ import { create } from './create.js'
 /**
  * Creates a new vector initialized with the given values.
  *
- * @param {Number} x - X coordinate
- * @param {Number} y - Y coordinate
- * @returns {vec2} a new vector
+ * @param {number} x - X coordinate
+ * @param {number} y - Y coordinate
+ * @returns {Vec2} a new vector
  * @alias module:modeling/maths/vec2.fromValues
  */
 export const fromValues = (x, y) => {

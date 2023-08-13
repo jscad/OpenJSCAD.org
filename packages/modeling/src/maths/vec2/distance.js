@@ -1,9 +1,9 @@
 /**
  * Calculates the distance between two vectors.
  *
- * @param {vec2} a - first operand
- * @param {vec2} b - second operand
- * @returns {Number} distance
+ * @param {Vec2} a - first operand
+ * @param {Vec2} b - second operand
+ * @returns {number} distance
  * @alias module:modeling/maths/vec2.distance
  */
 export const distance = (a, b) => {

@@ -11,10 +11,10 @@ import { identity } from './identity.js'
  *     mat4.identity(dest)
  *     mat4.rotate(dest, dest, rad, axis)
  *
- * @param {mat4} out - receiving matrix
- * @param {Number} rad - angle to rotate the matrix by
- * @param {vec3} axis - axis of which to rotate around
- * @returns {mat4} out
+ * @param {Mat4} out - receiving matrix
+ * @param {number} rad - angle to rotate the matrix by
+ * @param {Vec3} axis - axis of which to rotate around
+ * @returns {Mat4} out
  * @alias module:modeling/maths/mat4.fromRotation
  * @example
  * let matrix = fromRotation(create(), TAU / 4, [0, 0, 3])

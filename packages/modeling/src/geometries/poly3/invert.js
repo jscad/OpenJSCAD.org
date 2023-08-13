@@ -5,8 +5,8 @@ import { create } from './create.js'
 /**
  * Invert the give polygon to face the opposite direction.
  *
- * @param {poly3} polygon - the polygon to invert
- * @returns {poly3} a new poly3
+ * @param {Poly3} polygon - the polygon to invert
+ * @returns {Poly3} a new poly3
  * @alias module:modeling/geometries/poly3.invert
  */
 export const invert = (polygon) => {

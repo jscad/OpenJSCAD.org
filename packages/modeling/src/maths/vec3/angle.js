@@ -3,9 +3,9 @@ import { dot } from './dot.js'
 /**
  * Calculate the angle between two vectors.
  *
- * @param {vec3} a - first operand
- * @param {vec3} b - second operand
- * @returns {Number} angle (radians)
+ * @param {Vec3} a - first operand
+ * @param {Vec3} b - second operand
+ * @returns {number} angle (radians)
  * @alias module:modeling/maths/vec3.angle
  */
 export const angle = (a, b) => {

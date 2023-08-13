@@ -3,9 +3,9 @@ import * as vec3 from '../vec3/index.js'
 /**
  * Create a plane from the given points.
  *
- * @param {plane} out - receiving plane
+ * @param {Plane} out - receiving plane
  * @param {Array} vertices - points on the plane
- * @returns {plane} out
+ * @returns {Plane} out
  * @alias module:modeling/maths/plane.fromPoints
  */
 export const fromPoints = (out, ...vertices) => {

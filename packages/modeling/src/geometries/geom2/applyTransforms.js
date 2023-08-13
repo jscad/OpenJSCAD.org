@@ -4,8 +4,8 @@ import * as vec2 from '../../maths/vec2/index.js'
 /*
  * Apply the transforms of the given geometry.
  * NOTE: This function must be called BEFORE exposing any data. See toOutlines().
- * @param {geom2} geometry - the geometry to transform
- * @returns {geom2} the given geometry
+ * @param {Geom2} geometry - the geometry to transform
+ * @returns {Geom2} the given geometry
  *
  * @example
  * geometry = applyTransforms(geometry)

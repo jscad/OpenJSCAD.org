@@ -5,9 +5,9 @@ import { closestPoint } from './closestPoint.js'
 /**
  * Calculate the distance (positive) between the given point and line.
  *
- * @param {line3} line - line of reference
- * @param {vec3} point - point of reference
- * @return {Number} distance between line and point
+ * @param {Line3} line - line of reference
+ * @param {Vec3} point - point of reference
+ * @return {number} distance between line and point
  * @alias module:modeling/maths/line3.distanceToPoint
  */
 export const distanceToPoint = (line, point) => {

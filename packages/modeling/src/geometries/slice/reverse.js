@@ -3,8 +3,8 @@ import { create } from './create.js'
 /**
  * Reverse the edges of the given slice.
  *
- * @param {slice} slice - slice to reverse
- * @returns {slice} reverse of the slice
+ * @param {Slice} slice - slice to reverse
+ * @returns {Slice} reverse of the slice
  * @alias module:modeling/geometries/slice.reverse
  */
 export const reverse = (slice) => {

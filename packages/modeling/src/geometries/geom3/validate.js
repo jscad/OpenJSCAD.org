@@ -8,7 +8,7 @@ import { isA } from './isA.js'
  *
  * **If the geometry is not valid, an exception will be thrown with details of the geometry error.**
  *
- * @param {Object} object - the object to interrogate
+ * @param {object} object - the object to interrogate
  * @throws {Error} error if the geometry is not valid
  * @alias module:modeling/geometries/geom3.validate
  */

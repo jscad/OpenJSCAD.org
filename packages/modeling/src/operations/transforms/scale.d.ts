@@ -1,10 +1,10 @@
-import { Geometry } from '../../geometries/types'
-import { Vec1, Vec2, Vec3 } from '../../maths/types'
-import RecursiveArray from '../../utils/recursiveArray'
+import type { Geometry } from '../../geometries/types.d.ts'
+import type { Vec } from '../../maths/types.d.ts'
+import type { RecursiveArray } from '../../utils/recursiveArray.d.ts'
 
-export function scale<T extends Geometry>(factors: Vec1 | Vec2 | Vec3, geometry: T): T
-export function scale<T extends Geometry>(factors: Vec1 | Vec2 | Vec3, ...geometries: RecursiveArray<T>): Array<T>
-export function scale(factors: Vec1 | Vec2 | Vec3, ...geometries: RecursiveArray<Geometry>): Array<Geometry>
+export function scale<T extends Geometry>(factors: Vec, geometry: T): T
+export function scale<T extends Geometry>(factors: Vec, ...geometries: RecursiveArray<T>): Array<T>
+export function scale(factors: Vec, ...geometries: RecursiveArray<Geometry>): Array<Geometry>
 
 export function scaleX<T extends Geometry>(factor: number, geometry: T): T
 export function scaleX<T extends Geometry>(factor: number, ...geometries: RecursiveArray<T>): Array<T>

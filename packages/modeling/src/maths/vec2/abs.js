@@ -1,9 +1,9 @@
 /**
  * Calculates the absolute coordinates of the given vector.
  *
- * @param {vec2} out - receiving vector
- * @param {vec2} vector - vector of reference
- * @returns {vec2} out
+ * @param {Vec2} out - receiving vector
+ * @param {Vec2} vector - vector of reference
+ * @returns {Vec2} out
  * @alias module:modeling/maths/vec2.abs
  */
 export const abs = (out, vector) => {

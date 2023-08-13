@@ -1,11 +1,11 @@
 /**
  * Performs a linear interpolation between two vectors.
  *
- * @param {vec2} out - receiving vector
- * @param {vec2} a - first operand
- * @param {vec2} b - second operand
- * @param {Number} t - interpolation amount between the two vectors
- * @returns {vec2} out
+ * @param {Vec2} out - receiving vector
+ * @param {Vec2} a - first operand
+ * @param {Vec2} b - second operand
+ * @param {number} t - interpolation amount between the two vectors
+ * @returns {Vec2} out
  * @alias module:modeling/maths/vec2.lerp
  */
 export const lerp = (out, a, b, t) => {

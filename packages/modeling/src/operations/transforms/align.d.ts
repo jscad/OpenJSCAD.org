@@ -1,5 +1,5 @@
-import { Geometry } from '../../geometries/types'
-import RecursiveArray from '../../utils/recursiveArray'
+import type { Geometry } from '../../geometries/types.d.ts'
+import type { RecursiveArray } from '../../utils/recursiveArray.d.ts'
 
 type NullableNumber = null | number
 

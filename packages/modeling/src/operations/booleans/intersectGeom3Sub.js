@@ -7,9 +7,9 @@ import { mayOverlap } from './mayOverlap.js'
 /*
  * Return a new 3D geometry representing the space in both the first geometry and
  * the second geometry. None of the given geometries are modified.
- * @param {geom3} geometry1 - a geometry
- * @param {geom3} geometry2 - a geometry
- * @returns {geom3} new 3D geometry
+ * @param {Geom3} geometry1 - a geometry
+ * @param {Geom3} geometry2 - a geometry
+ * @returns {Geom3} new 3D geometry
  */
 export const intersectGeom3Sub = (geometry1, geometry2) => {
   if (!mayOverlap(geometry1, geometry2)) {

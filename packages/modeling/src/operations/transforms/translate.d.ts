@@ -1,8 +1,6 @@
-import { Geometry } from '../../geometries/types'
-import { Vec1, Vec2, Vec3 } from '../../maths/types'
-import RecursiveArray from '../../utils/recursiveArray'
-
-type Vec = Vec1 | Vec2 | Vec3
+import type { Geometry } from '../../geometries/types.d.ts'
+import type { Vec } from '../../maths/types.d.ts'
+import type { RecursiveArray } from '../../utils/recursiveArray.d.ts'
 
 export function translate<T extends Geometry>(offset: Vec, geometry: T): T
 export function translate<T extends Geometry>(offset: Vec, ...geometries: RecursiveArray<T>): Array<T>

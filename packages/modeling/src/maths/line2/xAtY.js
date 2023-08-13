@@ -5,9 +5,9 @@ import { origin } from './origin.js'
  *
  * The X coordinate will be Infinity if the line is parallel to the X axis.
  *
- * @param {line2} line - line of reference
- * @param {Number} y - Y coordinate on the line
- * @return {Number} the X coordinate on the line
+ * @param {Line2} line - line of reference
+ * @param {number} y - Y coordinate on the line
+ * @return {number} the X coordinate on the line
  * @alias module:modeling/maths/line2.xAtY
  */
 export const xAtY = (line, y) => {

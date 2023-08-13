@@ -7,11 +7,11 @@ import { extrudeLinearGeom2 } from './extrudeLinearGeom2.js'
 /*
  * Expand and extrude the given geometry (path2).
  * @See expand for addition options
- * @param {Object} options - options for extrusion, if any
- * @param {Number} [options.size=1] - size of the rectangle
- * @param {Number} [options.height=1] - height of the extrusion
- * @param {path2} geometry - the geometry to extrude
- * @return {geom3} the extruded geometry
+ * @param {object} options - options for extrusion, if any
+ * @param {number} [options.size=1] - size of the rectangle
+ * @param {number} [options.height=1] - height of the extrusion
+ * @param {Path2} geometry - the geometry to extrude
+ * @return {Geom3} the extruded geometry
  */
 export const extrudeRectangularPath2 = (options, geometry) => {
   const defaults = {

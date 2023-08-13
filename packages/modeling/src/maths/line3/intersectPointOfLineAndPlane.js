@@ -6,9 +6,9 @@ import * as vec3 from '../vec3/index.js'
  * NOTES:
  * The point of intersection will be invalid if the line is parallel to the plane, e.g. NaN.
  *
- * @param {line3} line - line of reference
- * @param {plane} plane - plane of reference
- * @returns {vec3} a point on the line
+ * @param {Line3} line - line of reference
+ * @param {Plane} plane - plane of reference
+ * @returns {Vec3} a point on the line
  * @alias module:modeling/maths/line3.intersectPointOfLineAndPlane
  */
 export const intersectPointOfLineAndPlane = (line, plane) => {

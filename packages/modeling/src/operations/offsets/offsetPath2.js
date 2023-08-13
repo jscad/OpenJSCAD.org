@@ -54,12 +54,12 @@ const createGeometryFromOpenPath = (paths, segments, corners, delta) => {
 
 /*
  * Expand the given geometry (path2) using the given options (if any).
- * @param {Object} options - options for offset
- * @param {Number} [options.delta=1] - delta (+) of expansion
- * @param {String} [options.corners='edge'] - type corner to create during of expansion; edge, chamfer, round
- * @param {Integer} [options.segments=16] - number of segments when creating round corners
- * @param {path2} geometry - the geometry to offset
- * @returns {geom2} offset geometry
+ * @param {object} options - options for offset
+ * @param {number} [options.delta=1] - delta (+) of expansion
+ * @param {string} [options.corners='edge'] - type corner to create during of expansion; edge, chamfer, round
+ * @param {number} [options.segments=16] - number of segments when creating round corners
+ * @param {Path2} geometry - the geometry to offset
+ * @returns {Geom2} offset geometry
  */
 export const offsetPath2 = (options, geometry) => {
   const defaults = {

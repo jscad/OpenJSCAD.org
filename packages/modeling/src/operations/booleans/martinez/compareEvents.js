@@ -9,7 +9,7 @@ import { signedArea } from './signedArea.js'
 /**
  * @param {SweepEvent} e1
  * @param {SweepEvent} e2
- * @return {Number}
+ * @return {number}
  */
 export const compareEvents = (e1, e2) => {
   const p1 = e1.point

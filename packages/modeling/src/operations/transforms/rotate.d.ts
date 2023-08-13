@@ -1,10 +1,10 @@
-import { Geometry } from '../../geometries/types'
-import { Vec1, Vec2, Vec3 } from '../../maths/types'
-import RecursiveArray from '../../utils/recursiveArray'
+import type { Geometry } from '../../geometries/types.d.ts'
+import type { Vec } from '../../maths/types.d.ts'
+import type { RecursiveArray } from '../../utils/recursiveArray.d.ts'
 
-export function rotate<T extends Geometry>(angles: Vec1 | Vec2 | Vec3, geometry: T): T
-export function rotate<T extends Geometry>(angles: Vec1 | Vec2 | Vec3, ...geometries: RecursiveArray<T>): Array<T>
-export function rotate(angles: Vec1 | Vec2 | Vec3, ...geometries: RecursiveArray<Geometry>): Array<Geometry>
+export function rotate<T extends Geometry>(angles: Vec, geometry: T): T
+export function rotate<T extends Geometry>(angles: Vec, ...geometries: RecursiveArray<T>): Array<T>
+export function rotate(angles: Vec, ...geometries: RecursiveArray<Geometry>): Array<Geometry>
 
 export function rotateX<T extends Geometry>(angle: number, geometry: T): T
 export function rotateX<T extends Geometry>(angle: number, ...geometries: RecursiveArray<T>): Array<T>

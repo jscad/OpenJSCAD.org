@@ -1,9 +1,9 @@
 /**
  * Flip the given plane.
  *
- * @param {plane} out - receiving plane
- * @param {plane} plane - plane to flip
- * @return {plane} out
+ * @param {Plane} out - receiving plane
+ * @param {Plane} plane - plane to flip
+ * @return {Plane} out
  * @alias module:modeling/maths/plane.flip
  */
 export const flip = (out, plane) => {

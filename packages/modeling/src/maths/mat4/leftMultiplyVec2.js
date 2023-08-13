@@ -4,9 +4,9 @@ import { fromValues } from '../vec2/index.js'
  * Multiply the input matrix by a Vector2 (interpreted as 2 column, 1 row)
  * (result = v*M)
  * Fourth element is set to 1
- * @param {vec2} vector the input vector
- * @param {mat4} matrix the input matrix
- * @returns {vec2} output
+ * @param {Vec2} vector the input vector
+ * @param {Mat4} matrix the input matrix
+ * @returns {Vec2} output
  */
 export const leftMultiplyVec2 = (vector, matrix) => {
   const [v0, v1] = vector

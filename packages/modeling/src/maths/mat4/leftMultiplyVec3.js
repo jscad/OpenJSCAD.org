@@ -4,9 +4,9 @@ import { fromValues } from '../vec3/index.js'
  * Multiply the input matrix by a Vector3 (interpreted as 3 column, 1 row)
  * (result = v*M)
  * Fourth element is set to 1
- * @param {vec3} vector the input vector
- * @param {mat4} matrix the input matrix
- * @returns {vec3} output
+ * @param {Vec3} vector the input vector
+ * @param {Mat4} matrix the input matrix
+ * @returns {Vec3} output
  */
 export const leftMultiplyVec3 = (vector, matrix) => {
   const [v0, v1, v2] = vector

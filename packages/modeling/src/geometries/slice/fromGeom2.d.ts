@@ -1,5 +1,5 @@
-import { Geom2 } from '../geom2/type'
+import type { Geom2 } from '../geom2/type.d.ts'
 
-import { Slice } from './type'
+import type { Slice } from './type.d.ts'
 
 export function fromGeom2(geometry: Geom2): Slice

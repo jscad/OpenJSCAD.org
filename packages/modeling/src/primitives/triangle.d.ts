@@ -1,4 +1,4 @@
-import { Geom2 } from '../geometries/geom2/type'
+import type { Geom2 } from '../geometries/geom2/type.d.ts'
 
 export interface TriangleOptions {
   type?: 'AAA' | 'AAS' | 'ASA' | 'SAS' | 'SSA' | 'SSS'

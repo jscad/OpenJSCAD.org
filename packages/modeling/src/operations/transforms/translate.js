@@ -39,7 +39,7 @@ export const translate = (offset, ...objects) => {
 
 /**
  * Translate the given objects along the X axis using the given options.
- * @param {Number} offset - X offset of which to translate the objects
+ * @param {number} offset - X offset of which to translate the objects
  * @param {...Object} objects - the objects to translate
  * @return {Object|Array} the translated object, or a list of translated objects
  * @alias module:modeling/transforms.translateX
@@ -48,7 +48,7 @@ export const translateX = (offset, ...objects) => translate([offset, 0, 0], obje
 
 /**
  * Translate the given objects along the Y axis using the given options.
- * @param {Number} offset - Y offset of which to translate the geometries
+ * @param {number} offset - Y offset of which to translate the geometries
  * @param {...Object} objects - the objects to translate
  * @return {Object|Array} the translated object, or a list of translated objects
  * @alias module:modeling/transforms.translateY
@@ -57,7 +57,7 @@ export const translateY = (offset, ...objects) => translate([0, offset, 0], obje
 
 /**
  * Translate the given objects along the Z axis using the given options.
- * @param {Number} offset - Z offset of which to translate the geometries
+ * @param {number} offset - Z offset of which to translate the geometries
  * @param {...Object} objects - the objects to translate
  * @return {Object|Array} the translated object, or a list of translated objects
  * @alias module:modeling/transforms.translateZ

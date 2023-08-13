@@ -1,8 +1,8 @@
 /**
  * Return a string representing the given line.
  *
- * @param {line3} line - line of reference
- * @returns {String} string representation
+ * @param {Line3} line - line of reference
+ * @returns {string} string representation
  * @alias module:modeling/maths/line3.toString
  */
 export const toString = (line) => {

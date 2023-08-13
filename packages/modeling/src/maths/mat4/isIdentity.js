@@ -4,7 +4,7 @@
  *
  *     mat4.equals(mat4.create(), matrix)
  *
- * @param {mat4} matrix - the matrix
+ * @param {Mat4} matrix - the matrix
  * @returns {Boolean} true if matrix is the identity transform
  * @alias module:modeling/maths/mat4.isIdentity
  * @example

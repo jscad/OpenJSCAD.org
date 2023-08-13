@@ -8,8 +8,8 @@ import { compareEvents } from './compareEvents.js'
 import { Contour } from './contour.js'
 
 /**
- * @param {Array.<SweepEvent>} sortedEvents
- * @return {Array.<SweepEvent>}
+ * @param {SweepEvent[]} sortedEvents
+ * @return {SweepEvent[]}
  */
 const orderEvents = (sortedEvents) => {
   let event, i, len, tmp
@@ -56,10 +56,10 @@ const orderEvents = (sortedEvents) => {
 }
 
 /**
- * @param {Number} pos
- * @param {Array.<SweepEvent>} resultEvents
- * @param {Object>} processed
- * @return {Number}
+ * @param {number} pos
+ * @param {SweepEvent[]} resultEvents
+ * @param {object} processed
+ * @return {number}
  */
 const nextPos = (pos, resultEvents, processed, origPos) => {
   let newPos = pos + 1

@@ -1,7 +1,7 @@
 /**
  * Return the Nth element of the given array.
  * @param {*} array - anything
- * @param {Number} index - index of the element to return
+ * @param {number} index - index of the element to return
  * @returns {*} Nth element of the array, or undefined
  * @alias module:array-utils.nth
  * @example

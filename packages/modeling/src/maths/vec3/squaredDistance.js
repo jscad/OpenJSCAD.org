@@ -1,9 +1,9 @@
 /**
  * Calculates the squared distance between two vectors.
  *
- * @param {vec3} a - first operand
- * @param {vec3} b - second operand
- * @returns {Number} squared distance
+ * @param {Vec3} a - first operand
+ * @param {Vec3} b - second operand
+ * @returns {number} squared distance
  * @alias module:modeling/maths/vec3.squaredDistance
  */
 export const squaredDistance = (a, b) => {

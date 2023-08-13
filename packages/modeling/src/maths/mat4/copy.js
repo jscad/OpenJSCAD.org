@@ -1,9 +1,9 @@
 /**
  * Creates a copy of the given matrix.
  *
- * @param {mat4} out - receiving matrix
- * @param {mat4} matrix - matrix to copy
- * @returns {mat4} out
+ * @param {Mat4} out - receiving matrix
+ * @param {Mat4} matrix - matrix to copy
+ * @returns {Mat4} out
  * @alias module:modeling/maths/mat4.copy
  */
 export const copy = (out, matrix) => {

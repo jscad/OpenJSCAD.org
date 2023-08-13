@@ -1,4 +1,4 @@
-import { Geom2, Geom3 } from '../../geometries/types'
+import type { Geom2, Geom3 } from '../../geometries/types.d.ts'
 
 export interface ExtrudeRotateOptions {
   angle?: number

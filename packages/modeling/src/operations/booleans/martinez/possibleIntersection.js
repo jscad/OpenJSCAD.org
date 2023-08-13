@@ -18,7 +18,7 @@ import {
  * @param {SweepEvent} se1
  * @param {SweepEvent} se2
  * @param {Queue} queue
- * @return {Number}
+ * @return {number}
  */
 export const possibleIntersection = (se1, se2, queue) => {
   // that disallows self-intersecting polygons,

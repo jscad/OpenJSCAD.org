@@ -1,6 +1,6 @@
 /**
  * Check whether the given polygon is convex.
- * @param {poly2} polygon - the polygon to interrogate
+ * @param {Poly2} polygon - the polygon to interrogate
  * @returns {Boolean} true if convex
  * @alias module:modeling/geometries/poly2.isConvex
  */

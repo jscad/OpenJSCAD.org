@@ -6,10 +6,10 @@ export class SweepEvent {
    *
    * @class {SweepEvent}
    * @param {Array.<Number>} point
-   * @param {Boolean} left
+   * @param {boolean} left
    * @param {SweepEvent=} otherEvent
-   * @param {Boolean} isSubject
-   * @param {Number} edgeType
+   * @param {boolean} isSubject
+   * @param {number} edgeType
    */
   constructor (point, left, otherEvent, isSubject, edgeType) {
     /**

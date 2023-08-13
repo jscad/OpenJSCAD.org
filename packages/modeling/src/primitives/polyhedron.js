@@ -7,12 +7,12 @@ import { isNumberArray } from './commonChecks.js'
  * Construct a polyhedron in three dimensional space from the given set of 3D vertices and faces.
  * The faces can define outward or inward facing polygons (orientation).
  * However, each face must define a counterclockwise rotation of vertices which follows the right hand rule.
- * @param {Object} options - options for construction
+ * @param {object} options - options for construction
  * @param {Array} options.points - list of points in 3D space
  * @param {Array} options.faces - list of faces, where each face is a set of indexes into the points
  * @param {Array} [options.colors=undefined] - list of RGBA colors to apply to each face
- * @param {String} [options.orientation='outward'] - orientation of faces
- * @returns {geom3} new 3D geometry
+ * @param {string} [options.orientation='outward'] - orientation of faces
+ * @returns {Geom3} new 3D geometry
  * @alias module:modeling/primitives.polyhedron
  *
  * @example

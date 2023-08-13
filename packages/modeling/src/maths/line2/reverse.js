@@ -6,9 +6,9 @@ import { fromValues } from './fromValues.js'
 /**
  * Create a new line in the opposite direction as the given.
  *
- * @param {line2} out - receiving line
- * @param {line2} line - line to reverse
- * @returns {line2} out
+ * @param {Line2} out - receiving line
+ * @param {Line2} line - line to reverse
+ * @returns {Line2} out
  * @alias module:modeling/maths/line2.reverse
  */
 export const reverse = (out, line) => {

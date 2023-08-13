@@ -41,7 +41,7 @@ export const scale = (factors, ...objects) => {
 
 /**
  * Scale the given objects about the X axis using the given options.
- * @param {Number} factor - X factor by which to scale the objects
+ * @param {number} factor - X factor by which to scale the objects
  * @param {...Object} objects - the objects to scale
  * @return {Object|Array} the scaled object, or a list of scaled objects
  * @alias module:modeling/transforms.scaleX
@@ -50,7 +50,7 @@ export const scaleX = (factor, ...objects) => scale([factor, 1, 1], objects)
 
 /**
  * Scale the given objects about the Y axis using the given options.
- * @param {Number} factor - Y factor by which to scale the objects
+ * @param {number} factor - Y factor by which to scale the objects
  * @param {...Object} objects - the objects to scale
  * @return {Object|Array} the scaled object, or a list of scaled objects
  * @alias module:modeling/transforms.scaleY
@@ -59,7 +59,7 @@ export const scaleY = (factor, ...objects) => scale([1, factor, 1], objects)
 
 /**
  * Scale the given objects about the Z axis using the given options.
- * @param {Number} factor - Z factor by which to scale the objects
+ * @param {number} factor - Z factor by which to scale the objects
  * @param {...Object} objects - the objects to scale
  * @return {Object|Array} the scaled object, or a list of scaled objects
  * @alias module:modeling/transforms.scaleZ

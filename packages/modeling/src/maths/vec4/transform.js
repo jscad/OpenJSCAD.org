@@ -1,10 +1,11 @@
+
 /**
  * Transform the given vector using the given matrix.
  *
- * @param {vec4} out - receiving vector
- * @param {vec4} vector - vector to transform
- * @param {mat4} matrix - matrix to transform with
- * @returns {vec4} out
+ * @param {Vec4} out - receiving vector
+ * @param {Vec4} vector - vector to transform
+ * @param {Mat4} matrix - matrix to transform with
+ * @returns {Vec4} out
  * @alias module:modeling/maths/vec4.transform
  */
 export const transform = (out, vector, matrix) => {

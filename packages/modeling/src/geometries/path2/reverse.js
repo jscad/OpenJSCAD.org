@@ -3,8 +3,8 @@ import { clone } from './clone.js'
 /**
  * Reverses the path so that the points are in the opposite order.
  * This swaps the left (interior) and right (exterior) edges.
- * @param {path2} geometry - the path to reverse
- * @returns {path2} a new path
+ * @param {Path2} geometry - the path to reverse
+ * @returns {Path2} a new path
  * @alias module:modeling/geometries/path2.reverse
  *
  * @example

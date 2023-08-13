@@ -3,9 +3,9 @@ import * as vec3 from '../vec3/index.js'
 /**
  * Copy the given line into the receiving line.
  *
- * @param {line3} out - receiving line
- * @param {line3} line - line to copy
- * @returns {line3} out
+ * @param {Line3} out - receiving line
+ * @param {Line3} line - line to copy
+ * @returns {Line3} out
  * @alias module:modeling/maths/line3.copy
  */
 export const copy = (out, line) => {

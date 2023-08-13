@@ -1,6 +1,6 @@
-import { Path2, Geom2, Geom3 } from '../../geometries/types'
-import { Corners } from '../../utils/corners'
-import RecursiveArray from '../../utils/recursiveArray'
+import type { Path2, Geom2, Geom3 } from '../../geometries/types.d.ts'
+import type { Corners } from '../../utils/corners.d.ts'
+import type { RecursiveArray } from '../../utils/recursiveArray.d.ts'
 
 export interface ExtrudeRectangularOptions {
   size?: number

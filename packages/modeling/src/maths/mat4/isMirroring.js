@@ -1,7 +1,7 @@
 /**
  * Determine whether the given matrix is a mirroring transformation.
  *
- * @param {mat4} matrix - matrix of reference
+ * @param {Mat4} matrix - matrix of reference
  * @returns {Boolean} true if matrix is a mirroring transformation
  * @alias module:modeling/maths/mat4.isMirroring
  */

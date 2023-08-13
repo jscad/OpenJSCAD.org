@@ -8,10 +8,10 @@ import * as vec3 from '../vec3/index.js'
  *
  * See the logic of fromPoints() for appropriate values.
  *
- * @param {line3} out - receiving line
- * @param {vec3} point - start point of the line segment
- * @param {vec3} direction - direction of the line segment
- * @returns {line3} out
+ * @param {Line3} out - receiving line
+ * @param {Vec3} point - start point of the line segment
+ * @param {Vec3} direction - direction of the line segment
+ * @returns {Line3} out
  * @alias module:modeling/maths/line3.fromPointAndDirection
  */
 export const fromPointAndDirection = (out, point, direction) => {

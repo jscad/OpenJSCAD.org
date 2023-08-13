@@ -1,9 +1,9 @@
 /**
  * Create a vector from a single scalar value.
  *
- * @param {vec2} out - receiving vector
- * @param {Number} scalar - the scalar value
- * @returns {vec2} out
+ * @param {Vec2} out - receiving vector
+ * @param {number} scalar - the scalar value
+ * @returns {Vec2} out
  * @alias module:modeling/maths/vec2.fromScalar
  */
 export const fromScalar = (out, scalar) => {
