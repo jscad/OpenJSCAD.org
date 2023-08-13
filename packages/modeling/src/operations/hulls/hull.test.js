@@ -1,9 +1,8 @@
 import test from 'ava'
 
 import { geom2, geom3, path2 } from '../../geometries/index.js'
-
+import { measureArea } from '../../measurements/measureArea.js'
 import { sphere, cuboid, ellipsoid } from '../../primitives/index.js'
-
 import { center } from '../transforms/index.js'
 
 import { hull } from './index.js'
@@ -15,15 +14,15 @@ test('hull (single, geom2)', (t) => {
 
   let obs = hull(geometry)
   let pts = geom2.toPoints(obs)
-
-  t.notThrows(() => geom2.validate(geometry))
+  t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 0)
   t.is(pts.length, 0)
 
   geometry = geom2.create([[[5, 5], [-5, 5], [-5, -5], [5, -5]]])
   obs = hull(geometry)
   pts = geom2.toPoints(obs)
-
-  t.notThrows(() => geom2.validate(geometry))
+  t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 100)
   t.is(pts.length, 4)
 
   // convex C shape
@@ -41,8 +40,7 @@ test('hull (single, geom2)', (t) => {
   ]])
   obs = hull(geometry)
   pts = geom2.toPoints(obs)
-
-  t.notThrows(() => geom2.validate(geometry))
+  t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 7)
 })
 

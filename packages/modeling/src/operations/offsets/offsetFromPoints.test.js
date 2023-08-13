@@ -7,6 +7,16 @@ import { offsetFromPoints } from './index.js'
 
 import { comparePoints } from '../../../test/helpers/index.js'
 
+test('offset: offset empty points', (t) => {
+  const offsetPoints = offsetFromPoints({ }, [])
+  t.is(offsetPoints.length, 0)
+})
+
+test('offset: offset single point', (t) => {
+  const offsetPoints = offsetFromPoints({ corners: 'round' }, [[2, 2]])
+  t.is(offsetPoints.length, 1)
+})
+
 test('offset: offsetting a straight line produces expected geometry', (t) => {
   const points = [[0, 0], [0, 10]]
 

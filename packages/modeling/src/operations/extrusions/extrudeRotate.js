@@ -58,7 +58,8 @@ export const extrudeRotate = (options, geometry) => {
 
   // convert geometry to an array of sides, easier to deal with
   let shapeSides = geom2.toSides(geometry)
-  if (shapeSides.length === 0) throw new Error('the given geometry cannot be empty')
+  if (shapeSides.length === 0) return geometry
+  let sliceGeometry = geometry
 
   // determine if the extrusion can be computed in the first place
   // ie all the points have to be either x > 0 or x < 0
@@ -87,8 +88,8 @@ export const extrudeRotate = (options, geometry) => {
         return [point0, point1]
       })
       // recreate the geometry from the (-) capped points
-      geometry = geom2.reverse(geom2.fromSides(shapeSides))
-      geometry = mirrorX(geometry)
+      sliceGeometry = geom2.reverse(geom2.fromSides(shapeSides))
+      sliceGeometry = mirrorX(sliceGeometry)
     } else if (pointsWithPositiveX.length >= pointsWithNegativeX.length) {
       shapeSides = shapeSides.map((side) => {
         let point0 = side[0]
@@ -98,13 +99,13 @@ export const extrudeRotate = (options, geometry) => {
         return [point0, point1]
       })
       // recreate the geometry from the (+) capped points
-      geometry = geom2.fromSides(shapeSides)
+      sliceGeometry = geom2.fromSides(shapeSides)
     }
   }
 
   const rotationPerSlice = totalRotation / segments
   const isCapped = Math.abs(totalRotation) < TAU
-  let baseSlice = slice.fromGeom2(geometry)
+  let baseSlice = slice.fromGeom2(sliceGeometry)
   baseSlice = slice.reverse(baseSlice)
 
   const matrix = mat4.create()
@@ -126,5 +127,7 @@ export const extrudeRotate = (options, geometry) => {
     close: !isCapped,
     callback: createSlice
   }
-  return extrudeFromSlices(options, baseSlice)
+  const output = extrudeFromSlices(options, baseSlice)
+  if (geometry.color) output.color = geometry.color
+  return output
 }

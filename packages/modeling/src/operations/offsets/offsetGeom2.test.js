@@ -1,9 +1,8 @@
 import test from 'ava'
 
+import { colorize } from '../../colors/index.js'
 import { geom2 } from '../../geometries/index.js'
-
 import { measureArea } from '../../measurements/index.js'
-
 import { roundedRectangle, square } from '../../primitives/index.js'
 
 import { offset } from './index.js'
@@ -12,12 +11,10 @@ import { comparePoints } from '../../../test/helpers/index.js'
 
 test('offset: offset an empty geom2', (t) => {
   const empty = geom2.create()
-  const obs = offset({ delta: 1 }, empty)
-  const pts = geom2.toPoints(obs)
-  const exp = []
-  t.notThrows(() => geom2.validate(obs))
-  t.is(measureArea(obs), 0)
-  t.true(comparePoints(pts, exp))
+  const result = offset({ delta: 1 }, empty)
+  t.notThrows(() => geom2.validate(result))
+  t.is(measureArea(result), 0)
+  t.is(geom2.toPoints(result).length, 0)
 })
 
 test('offset: offset option validation', (t) => {
@@ -36,6 +33,12 @@ test('offset: offset option validation', (t) => {
   t.throws(() => offset({ corners: undefined }, empty), { message: 'corners must be "edge", "chamfer", or "round"' })
   t.throws(() => offset({ corners: 4 }, empty), { message: 'corners must be "edge", "chamfer", or "round"' })
   t.throws(() => offset({ corners: 'fluffy' }, empty), { message: 'corners must be "edge", "chamfer", or "round"' })
+})
+
+test('offset: offset geom2 preserves color', (t) => {
+  const geometry = colorize([1, 0, 0], square({ }))
+  const result = offset({ }, geometry)
+  t.deepEqual(result.color, [1, 0, 0, 1])
 })
 
 test('offset: offset of a geom2 produces expected changes to points', (t) => {

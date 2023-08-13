@@ -18,5 +18,6 @@ export const extrudeLinearPath2 = (options, geometry) => {
   // Convert path2 to geom2
   const points = path2.toPoints(geometry)
   const geometry2 = geom2.create([points])
+  if (geometry.color) geometry2.color = geometry.color
   return extrudeLinearGeom2(options, geometry2)
 }

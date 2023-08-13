@@ -25,10 +25,9 @@ export const offsetGeom3 = (options, geometry) => {
     throw new Error('corners must be "round" for 3D geometries')
   }
 
-  const polygons = geom3.toPolygons(geometry)
-  if (polygons.length === 0) throw new Error('the given geometry cannot be empty')
-
   options = { delta, corners, segments }
   const expanded = offsetShell(options, geometry)
-  return union(geometry, expanded)
+  const output = union(geometry, expanded)
+  if (geometry.color) output.color = geometry.color
+  return output
 }

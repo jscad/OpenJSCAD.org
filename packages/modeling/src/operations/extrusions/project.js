@@ -56,7 +56,9 @@ const projectGeom3 = (options, geometry) => {
     return geom2.create([cloned])
   })
 
-  return unionGeom2(projGeoms)
+  const output = unionGeom2(projGeoms)
+  if (geometry.color) output.color = geometry.color
+  return output
 }
 
 /**

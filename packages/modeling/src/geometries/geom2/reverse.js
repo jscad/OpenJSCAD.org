@@ -1,4 +1,5 @@
-import { clone } from './clone.js'
+import { create } from './create.js'
+import { toOutlines } from './toOutlines.js'
 
 /**
  * Reverses the given geometry so that the outline points are flipped in the opposite order.
@@ -11,7 +12,9 @@ import { clone } from './clone.js'
  * let newGeometry = reverse(geometry)
  */
 export const reverse = (geometry) => {
-  const reversed = clone(geometry)
-  reversed.outlines = reversed.outlines.map((outline) => outline.slice().reverse())
+  const outlines = toOutlines(geometry)
+    .map((outline) => outline.slice().reverse())
+  const reversed = create(outlines)
+  if (geometry.color) reversed.color = geometry.color
   return reversed
 }

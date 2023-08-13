@@ -31,9 +31,11 @@ import { hull } from './hull.js'
  */
 export const hullChain = (...geometries) => {
   geometries = flatten(geometries)
-  if (geometries.length < 2) throw new Error('wrong number of arguments')
-
   const hulls = []
+
+  if (geometries.length === 0) throw new Error('wrong number of arguments')
+  if (geometries.length === 1) hulls.push(geometries[0])
+
   for (let i = 1; i < geometries.length; i++) {
     hulls.push(hull(geometries[i - 1], geometries[i]))
   }

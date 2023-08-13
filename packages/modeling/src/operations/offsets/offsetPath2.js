@@ -4,11 +4,13 @@ import * as vec2 from '../../maths/vec2/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as path2 from '../../geometries/path2/index.js'
+import { circle } from '../../primitives/circle.js'
 
 import { offsetFromPoints } from './offsetFromPoints.js'
 
-const createGeometryFromClosedOffsets = (paths) => {
+const createGeometryFromClosedPath = (paths) => {
   let { external, internal } = paths
+  if (external.length < 2) return geom2.create()
   if (area(external) < 0) {
     external = external.reverse()
   } else {
@@ -17,8 +19,10 @@ const createGeometryFromClosedOffsets = (paths) => {
   return geom2.create([external, internal])
 }
 
-const createGeometryFromExpandedOpenPath = (paths, segments, corners, delta) => {
+const createGeometryFromOpenPath = (paths, segments, corners, delta) => {
   const { points, external, internal } = paths
+  if (points.length === 0) return geom2.create()
+  if (points.length === 1) return circle({ center: points[0], radius: delta })
   const capSegments = Math.floor(segments / 2) // rotation is 180 degrees
   const e2iCap = []
   const i2eCap = []
@@ -74,17 +78,16 @@ export const offsetPath2 = (options, geometry) => {
 
   const closed = geometry.isClosed
   const points = path2.toPoints(geometry)
-  if (points.length === 0) throw new Error('the given geometry cannot be empty')
 
   const paths = {
-    points: points,
+    points,
     external: offsetFromPoints({ delta, corners, segments, closed }, points),
     internal: offsetFromPoints({ delta: -delta, corners, segments, closed }, points)
   }
 
-  if (geometry.isClosed) {
-    return createGeometryFromClosedOffsets(paths)
-  } else {
-    return createGeometryFromExpandedOpenPath(paths, segments, corners, delta)
-  }
+  const output = geometry.isClosed ?
+    createGeometryFromClosedPath(paths) :
+    createGeometryFromOpenPath(paths, segments, corners, delta)
+  if (geometry.color) output.color = geometry.color
+  return output
 }

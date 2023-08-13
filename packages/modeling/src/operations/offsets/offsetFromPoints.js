@@ -27,6 +27,7 @@ export const offsetFromPoints = (options, points) => {
   let { delta, corners, closed, segments } = Object.assign({ }, defaults, options)
 
   if (Math.abs(delta) < EPS) return points
+  if (points.length < 2) return points
 
   let rotation = options.closed ? area(points) : 1.0 // + counter clockwise, - clockwise
   if (rotation === 0) rotation = 1.0

@@ -4,6 +4,8 @@ import { comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
 import { TAU } from '../../maths/constants.js'
 
+import { colorize } from '../../colors/index.js'
+
 import { geom2, geom3, path2 } from '../../geometries/index.js'
 
 import { measureVolume } from '../../measurements/index.js'
@@ -35,6 +37,17 @@ test('extrudeLinear (defaults)', (t) => {
   t.is(measureVolume(geometry3), 100.00000000000001)
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
+})
+
+test('extrudeLinear: preserves color', (t) => {
+  const redSquare = colorize([1, 0, 0], square())
+  const extruded = extrudeLinear({ }, redSquare)
+  t.deepEqual(extruded.color, [1, 0, 0, 1])
+
+  // one red, one blue
+  const out = extrudeLinear({ }, [redSquare, square()])
+  t.deepEqual(out[0].color, [1, 0, 0, 1])
+  t.is(out[1].color, undefined)
 })
 
 test('extrudeLinear (no twist)', (t) => {
