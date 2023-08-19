@@ -7,4 +7,4 @@ export interface OffsetFromPointsOptions {
   closed?: boolean
 }
 
-export function offsetFromPoints(options?: OffsetFromPointsOptions, points: Array<Vec2>): Array<Vec2>
+export function offsetFromPoints(options: OffsetFromPointsOptions, points: Array<Vec2>): Array<Vec2>

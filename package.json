@@ -43,7 +43,7 @@
     "jsdoc": "4.0.2",
     "c8": "8.0.0",
     "standardx": "7.0.0",
-    "tsd": "0.23.0"
+    "tsd": "^0.28.1"
   },
   "collective": {
     "type": "opencollective",

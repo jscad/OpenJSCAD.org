@@ -3,8 +3,9 @@
  * Determine whether the given matrix is only translate and/or scale.
  * This code returns true for TAU / 2 rotation as it can be interpreted as scale.
  *
+ * @typedef {import("./type.d.ts").Mat4} Mat4
  * @param {Mat4} matrix - the matrix
- * @returns {Boolean} true if matrix is for translate and/or scale
+ * @returns {boolean} true if matrix is for translate and/or scale
  * @alias module:modeling/maths/mat4.isOnlyTransformScale
  */
 export const isOnlyTransformScale = (matrix) => (
@@ -17,4 +18,8 @@ export const isOnlyTransformScale = (matrix) => (
   matrix[15] === 1
 )
 
+/**
+ * @param {number} num 
+ * @returns {boolean}
+ */
 const isZero = (num) => Math.abs(num) < Number.EPSILON
