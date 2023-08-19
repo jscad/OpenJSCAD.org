@@ -10,7 +10,7 @@
   "scripts": {
     "build": "browserify src/index.js -o dist/jscad-core.min.js -g uglifyify --standalone jscadCore",
     "version": "npm run build && git add dist",
-    "coverage": "nyc --all --reporter=html --reporter=text npm test",
+    "coverage": "c8 --all --reporter=html --reporter=text npm test",
     "test": "ava './src/**/*.test.js' --verbose --timeout 2m"
   },
   "contributors": [
@@ -46,7 +46,7 @@
   "devDependencies": {
     "ava": "4.3.3",
     "browserify": "16.5.1",
-    "nyc": "15.1.0",
+    "c8": "8.0.0",
     "uglifyify": "5.0.2"
   },
   "collective": {

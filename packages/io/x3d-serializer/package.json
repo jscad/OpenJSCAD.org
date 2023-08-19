@@ -10,7 +10,7 @@
   "module": "dist/jscad-x3d-serializer.es.js",
   "scripts": {
     "build": "rollup --config",
-    "coverage": "nyc --all --reporter=html --reporter=text npm test",
+    "coverage": "c8 --all --reporter=html --reporter=text npm test",
     "test": "ava --verbose --timeout 2m './tests/*.test.js'"
   },
   "contributors": [
@@ -45,7 +45,7 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.0.1",
     "ava": "4.3.3",
-    "nyc": "15.1.0",
+    "c8": "8.0.0",
     "rollup": "2.79.1",
     "rollup-plugin-banner": "^0.2.1"
   },

@@ -9,7 +9,7 @@
     "jscad": "./cli.js"
   },
   "scripts": {
-    "coverage": "nyc --all --reporter=html --reporter=text npm test",
+    "coverage": "c8 --all --reporter=html --reporter=text npm test",
     "test": "ava '*.test.js' --serial --verbose --timeout 2m",
     "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove JSCAD? You can now donate to our open collective:\\u001b[22m\\u001b[39m\\n > \\u001b[34mhttps://opencollective.com/openjscad/donate\\u001b[0m')\""
   },
@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "ava": "4.3.3",
-    "nyc": "15.1.0"
+    "c8": "8.0.0"
   },
   "collective": {
     "type": "opencollective",
