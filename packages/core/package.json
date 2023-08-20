@@ -7,24 +7,26 @@
   "main": "src/index.js",
   "type": "module",
   "unpkg": "dist/jscad-core.min.js",
+  "module": "dist/jscad-core.es.js",
+  "private": true,
   "scripts": {
-    "build": "browserify src/index.js -o dist/jscad-core.min.js -g uglifyify --standalone jscadCore",
-    "version": "npm run build && git add dist",
-    "coverage": "c8 --all --reporter=html --reporter=text npm test",
+    "build": "rollup --config",
+    "version": "pnpm run build && git add dist",
+    "coverage": "c8 --all --reporter=html --reporter=text pnpm test",
     "test": "ava './src/**/*.test.js' --verbose --timeout 2m"
   },
   "contributors": [
     {
       "name": "Rene K. Mueller",
-      "url": "http://renekmueller.com"
+      "url": "https://github.com/Spiritdude"
     },
     {
       "name": "z3dev",
-      "url": "http://www.z3d.jp"
+      "url": "https://github.com/z3dev"
     },
     {
       "name": "Mark 'kaosat-dev' Moissette",
-      "url": "http://kaosat.net"
+      "url": "https://github.com/kaosat-dev"
     }
   ],
   "keywords": [
@@ -45,9 +47,7 @@
   },
   "devDependencies": {
     "ava": "4.3.3",
-    "browserify": "16.5.1",
-    "c8": "8.0.0",
-    "uglifyify": "5.0.2"
+    "c8": "8.0.0"
   },
   "collective": {
     "type": "opencollective",

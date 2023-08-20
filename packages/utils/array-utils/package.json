@@ -4,16 +4,28 @@
   "description": "Array Utilities for JSCAD",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
-  "main": "src/index.js",
   "type": "module",
+  "types": "src/index.d.ts",
+  "main": "src/index.js",
   "unpkg": "dist/jscad-array-utils.min.js",
   "module": "dist/jscad-array-utils.es.js",
   "scripts": {
     "build": "rollup --config",
-    "coverage": "c8 --all --reporter=html --reporter=text npm test",
-    "test": "ava 'src/*.test.js' --verbose --timeout 2m"
+    "coverage": "c8 --all --reporter=html --reporter=text pnpm test",
+    "test": "ava 'src/*.test.js' --verbose --timeout 2m",
+    "test:tsd": "tsd",
+    "version": "pnpm run build && git add dist"
   },
-  "author": "Mark 'kaosat-dev' Moissette",
+  "contributors": [
+    {
+      "name": "z3dev",
+      "url": "https://github.com/z3dev"
+    },
+    {
+      "name": "Mark 'kaosat-dev' Moissette",
+      "url": "https://github.com/kaosat-dev"
+    }
+  ],
   "license": "MIT",
   "keywords": [
     "openjscad",

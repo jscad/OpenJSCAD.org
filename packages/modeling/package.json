@@ -11,7 +11,7 @@
   "module": "dist/jscad-modeling.es.js",
   "scripts": {
     "build": "rollup --config",
-    "coverage": "c8 --all --reporter=html --reporter=text npm test",
+    "coverage": "c8 --all --reporter=html --reporter=text pnpm test",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
     "test:tsd": "tsd",
     "version": "pnpm run build && git add dist"
@@ -23,27 +23,23 @@
     },
     {
       "name": "Evan Wallace",
-      "url": "http://evanw.github.com/csg.js/"
+      "url": "https://github.com/evanw"
     },
     {
       "name": "Joost Nieuwenhuijse",
-      "email": "joost@newhouse.nl"
-    },
-    {
-      "name": "Eduard Bespalov",
-      "url": "http://evanw.github.com/csg.js/"
+      "url": "https://github.com/joostn"
     },
     {
       "name": "bebbi",
-      "email": "elghatta@gmail.com"
+      "url": "https://github.com/bebbi"
     },
     {
       "name": "Spiritdude Rene K Mueller",
-      "url": "http://renekmueller.com"
+      "url": "https://github.com/Spiritdude"
     },
     {
       "name": "Jeff Gay",
-      "url": "http://www.z3d.jp"
+      "url": "https://github.com/z3dev"
     }
   ],
   "keywords": [
@@ -58,6 +54,7 @@
     "access": "public"
   },
   "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.3",
     "ava": "4.3.3",
     "c8": "8.0.0",
     "rollup": "2.79.1",

@@ -1,4 +1,5 @@
 import banner from 'rollup-plugin-banner'
+import terser from '@rollup/plugin-terser'
 
 export default {
   input: 'src/index.js',
@@ -14,6 +15,7 @@ export default {
     }
   ],
   plugins: [
-    banner('<%= pkg.description %>\n<%= pkg.name %>\nVersion <%= pkg.version %>\n<%= pkg.license %> License')
+    banner('<%= pkg.description %>\n<%= pkg.name %>\nVersion <%= pkg.version %>\n<%= pkg.license %> License'),
+    terser({ compress: { module: true }, mangle: false, format: { comments: false} })
   ]
 }

@@ -7,7 +7,13 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {},
-  "author": "Mark 'kaosat-dev' Moissette",
+  "private": true,
+  "contributors": [
+    {
+      "name": "Mark 'kaosat-dev' Moissette",
+      "url": "https://github.com/kaosat-dev"
+    }
+  ],
   "keywords": [
     "openjscad",
     "jscad",
@@ -15,9 +21,6 @@
     "image"
   ],
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
     "pngjs": "6.0.0"
   },

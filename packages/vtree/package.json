@@ -3,10 +3,16 @@
   "version": "2.0.26",
   "description": "Experimental Object Caching for JSCAD",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "output": "node user/index.js"
   },
-  "author": "Mark 'kaosat-dev' Moissette",
+  "contributors": [
+    {
+      "name": "Mark 'kaosat-dev' Moissette",
+      "url": "https://github.com/kaosat-dev"
+    }
+  ],
   "keywords": [
     "openjscad",
     "jscad",
