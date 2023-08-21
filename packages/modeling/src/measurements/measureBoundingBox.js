@@ -7,38 +7,61 @@ import * as geom2 from '../geometries/geom2/index.js'
 import * as geom3 from '../geometries/geom3/index.js'
 import * as path2 from '../geometries/path2/index.js'
 import * as poly3 from '../geometries/poly3/index.js'
+import * as slice from '../geometries/slice/index.js'
 
 const cache = new WeakMap()
+
+/*
+ * Expand bounding box with a 2D point.
+ */
+const expand2 = (bbox, point) => {
+  if (bbox.length === 0) {
+    bbox[0] = vec3.fromVec2(vec3.create(), point)
+    bbox[1] = vec3.fromVec2(vec3.create(), point)
+  } else {
+    vec2.min(bbox[0], bbox[0], point)
+    vec2.max(bbox[1], bbox[1], point)
+  }
+}
+
+/*
+ * Expand bounding box with a 3D vertex.
+ */
+const expand3 = (bbox, vertex) => {
+  if (bbox.length === 0) {
+    bbox[0] = vec3.clone(vertex)
+    bbox[1] = vec3.clone(vertex)
+  } else {
+    vec3.min(bbox[0], bbox[0], vertex)
+    vec3.max(bbox[1], bbox[1], vertex)
+  }
+}
+
+/*
+ * Cache the bounding box of the geometry.
+ */
+const measureCached = (geometry, measureFn) => {
+  let boundingBox = cache.get(geometry)
+  if (boundingBox) return boundingBox
+  boundingBox = measureFn(geometry)
+  if (boundingBox.length === 0) {
+    // bounding box is undefined
+    boundingBox[0] = vec3.create()
+    boundingBox[1] = vec3.create()
+  }
+  cache.set(geometry, boundingBox)
+  return boundingBox
+}
 
 /*
  * Measure the min and max bounds of the given (path2) geometry.
  * @return {Array[]} the min and max bounds for the geometry
  */
 const measureBoundingBoxOfPath2 = (geometry) => {
-  let boundingBox = cache.get(geometry)
-  if (boundingBox) return boundingBox
-
-  const points = path2.toPoints(geometry)
-
-  let minPoint
-  if (points.length === 0) {
-    minPoint = vec2.create()
-  } else {
-    minPoint = vec2.clone(points[0])
-  }
-  let maxPoint = vec2.clone(minPoint)
-
-  points.forEach((point) => {
-    vec2.min(minPoint, minPoint, point)
-    vec2.max(maxPoint, maxPoint, point)
+  const boundingBox = []
+  path2.toPoints(geometry).forEach((point) => {
+    expand2(boundingBox, point)
   })
-  minPoint = [minPoint[0], minPoint[1], 0]
-  maxPoint = [maxPoint[0], maxPoint[1], 0]
-
-  boundingBox = [minPoint, maxPoint]
-
-  cache.set(geometry, boundingBox)
-
   return boundingBox
 }
 
@@ -47,31 +70,10 @@ const measureBoundingBoxOfPath2 = (geometry) => {
  * @return {Array[]} the min and max bounds for the geometry
  */
 const measureBoundingBoxOfGeom2 = (geometry) => {
-  let boundingBox = cache.get(geometry)
-  if (boundingBox) return boundingBox
-
-  const points = geom2.toPoints(geometry)
-
-  let minPoint
-  if (points.length === 0) {
-    minPoint = vec2.create()
-  } else {
-    minPoint = vec2.clone(points[0])
-  }
-  let maxPoint = vec2.clone(minPoint)
-
-  points.forEach((point) => {
-    vec2.min(minPoint, minPoint, point)
-    vec2.max(maxPoint, maxPoint, point)
+  const boundingBox = []
+  geom2.toPoints(geometry).forEach((point) => {
+    expand2(boundingBox, point)
   })
-
-  minPoint = [minPoint[0], minPoint[1], 0]
-  maxPoint = [maxPoint[0], maxPoint[1], 0]
-
-  boundingBox = [minPoint, maxPoint]
-
-  cache.set(geometry, boundingBox)
-
   return boundingBox
 }
 
@@ -80,32 +82,26 @@ const measureBoundingBoxOfGeom2 = (geometry) => {
  * @return {Array[]} the min and max bounds for the geometry
  */
 const measureBoundingBoxOfGeom3 = (geometry) => {
-  let boundingBox = cache.get(geometry)
-  if (boundingBox) return boundingBox
-
-  const polygons = geom3.toPolygons(geometry)
-
-  let minVertex = vec3.create()
-  if (polygons.length > 0) {
-    const vertices = poly3.toVertices(polygons[0])
-    vec3.copy(minVertex, vertices[0])
-  }
-  let maxVertex = vec3.clone(minVertex)
-
-  polygons.forEach((polygon) => {
+  const boundingBox = []
+  geom3.toPolygons(geometry).forEach((polygon) => {
     poly3.toVertices(polygon).forEach((vertex) => {
-      vec3.min(minVertex, minVertex, vertex)
-      vec3.max(maxVertex, maxVertex, vertex)
+      expand3(boundingBox, vertex)
     })
   })
+  return boundingBox
+}
 
-  minVertex = [minVertex[0], minVertex[1], minVertex[2]]
-  maxVertex = [maxVertex[0], maxVertex[1], maxVertex[2]]
-
-  boundingBox = [minVertex, maxVertex]
-
-  cache.set(geometry, boundingBox)
-
+/*
+ * Measure the min and max bounds of the given (slice) geometry.
+ * @return {Array[]} the min and max bounds for the geometry
+ */
+const measureBoundingBoxOfSlice = (geometry) => {
+  const boundingBox = []
+  geometry.contours.forEach((contour) => {
+    contour.forEach((vertex) => {
+      expand3(boundingBox, vertex)
+    })
+  })
   return boundingBox
 }
 
@@ -123,9 +119,10 @@ export const measureBoundingBox = (...geometries) => {
   if (geometries.length === 0) throw new Error('wrong number of arguments')
 
   const results = geometries.map((geometry) => {
-    if (path2.isA(geometry)) return measureBoundingBoxOfPath2(geometry)
-    if (geom2.isA(geometry)) return measureBoundingBoxOfGeom2(geometry)
-    if (geom3.isA(geometry)) return measureBoundingBoxOfGeom3(geometry)
+    if (path2.isA(geometry)) return measureCached(geometry, measureBoundingBoxOfPath2)
+    if (geom2.isA(geometry)) return measureCached(geometry, measureBoundingBoxOfGeom2)
+    if (geom3.isA(geometry)) return measureCached(geometry, measureBoundingBoxOfGeom3)
+    if (slice.isA(geometry)) return measureCached(geometry, measureBoundingBoxOfSlice)
     return [[0, 0, 0], [0, 0, 0]]
   })
   return results.length === 1 ? results[0] : results

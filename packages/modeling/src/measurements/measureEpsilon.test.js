@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { geom2, geom3, path2 } from '../geometries/index.js'
+import { geom2, geom3, path2, slice } from '../geometries/index.js'
 
 import { line, rectangle, cuboid } from '../primitives/index.js'
 
@@ -14,6 +14,7 @@ test('measureEpsilon (single objects)', (t) => {
   const apath2 = path2.create()
   const ageom2 = geom2.create()
   const ageom3 = geom3.create()
+  const aslice = slice.create()
 
   const n = null
   const o = {}
@@ -26,6 +27,7 @@ test('measureEpsilon (single objects)', (t) => {
   const p2epsilon = measureEpsilon(apath2)
   const g2epsilon = measureEpsilon(ageom2)
   const g3epsilon = measureEpsilon(ageom3)
+  const slepsilon = measureEpsilon(aslice)
 
   const nepsilon = measureEpsilon(n)
   const oepsilon = measureEpsilon(o)
@@ -38,6 +40,7 @@ test('measureEpsilon (single objects)', (t) => {
   t.is(p2epsilon, 0)
   t.is(g2epsilon, 0)
   t.is(g3epsilon, 0)
+  t.is(slepsilon, 0)
 
   t.is(nepsilon, 0)
   t.is(oepsilon, 0)

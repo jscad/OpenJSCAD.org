@@ -4,6 +4,7 @@ import * as geom2 from '../geometries/geom2/index.js'
 import * as geom3 from '../geometries/geom3/index.js'
 import * as path2 from '../geometries/path2/index.js'
 import * as poly3 from '../geometries/poly3/index.js'
+import * as slice from '../geometries/slice/index.js'
 
 const cache = new WeakMap()
 
@@ -20,7 +21,7 @@ const measureAreaOfPath2 = () => 0
  * Measure the area of the given geometry.
  * For a counterclockwise rotating geometry (about Z) the area is positive, otherwise negative.
  *
- * @see http://paulbourke.net/geometry/polygonmesh/
+ * @see https://paulbourke.net/geometry/polygonmesh/
  * @param {Geom2} geometry - 2D geometry to measure
  * @returns {number} area of the geometry
  */
@@ -33,7 +34,6 @@ const measureAreaOfGeom2 = (geometry) => {
   area *= 0.5
 
   cache.set(geometry, area)
-
   return area
 }
 
@@ -51,13 +51,32 @@ const measureAreaOfGeom3 = (geometry) => {
   area = polygons.reduce((area, polygon) => area + poly3.measureArea(polygon), 0)
 
   cache.set(geometry, area)
+  return area
+}
 
+/*
+ * Measure the area of the given geometry.
+ *
+ * @param {Slice} geometry - 3D slice geometry to measure
+ * @returns {number} area of the geometry
+ */
+const measureAreaOfSlice = (geometry) => {
+  let area = cache.get(geometry)
+  if (area) return area
+
+  // add the area of all contours
+  area = 0
+  geometry.contours.forEach((contour) => {
+    area += poly3.measureArea(poly3.create(contour))
+  })
+
+  cache.set(geometry, area)
   return area
 }
 
 /**
  * Measure the area of the given geometries.
- * @param {...Objects} geometries - the geometries to measure
+ * @param {...Object} geometries - the geometries to measure
  * @return {number|Array} the area, or a list of areas for each geometry
  * @alias module:modeling/measurements.measureArea
  *
@@ -72,6 +91,7 @@ export const measureArea = (...geometries) => {
     if (path2.isA(geometry)) return measureAreaOfPath2(geometry)
     if (geom2.isA(geometry)) return measureAreaOfGeom2(geometry)
     if (geom3.isA(geometry)) return measureAreaOfGeom3(geometry)
+    if (slice.isA(geometry)) return measureAreaOfSlice(geometry)
     return 0
   })
   return results.length === 1 ? results[0] : results

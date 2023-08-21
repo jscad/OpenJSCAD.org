@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { geom2, geom3, path2 } from '../geometries/index.js'
+import { geom2, geom3, path2, slice } from '../geometries/index.js'
 
 import { line, rectangle, cuboid } from '../primitives/index.js'
 
@@ -14,6 +14,7 @@ test('measureArea: single objects', (t) => {
   const apath2 = path2.create()
   const ageom2 = geom2.create()
   const ageom3 = geom3.create()
+  const aslice = slice.create()
 
   const n = null
   const o = {}
@@ -26,6 +27,7 @@ test('measureArea: single objects', (t) => {
   const p2area = measureArea(apath2)
   const g2area = measureArea(ageom2)
   const g3area = measureArea(ageom3)
+  const slarea = measureArea(aslice)
 
   const narea = measureArea(n)
   const oarea = measureArea(o)
@@ -38,6 +40,7 @@ test('measureArea: single objects', (t) => {
   t.is(p2area, 0)
   t.is(g2area, 0)
   t.is(g3area, 0)
+  t.is(slarea, 0)
 
   t.is(narea, 0)
   t.is(oarea, 0)
@@ -55,4 +58,11 @@ test('measureArea (multiple objects)', (t) => {
 
   allarea = measureArea(aline, arect, acube, o)
   t.deepEqual(allarea, [0, 200, 2800, 0])
+})
+
+test('measureArea of slice', (t) => {
+  // tilted pythagorean rectangle
+  const rect = slice.create([[[0, 0, 0], [4, 0, 0], [4, 4, 3], [0, 4, 3]]])
+  const area = measureArea(rect)
+  t.is(area, 20)
 })

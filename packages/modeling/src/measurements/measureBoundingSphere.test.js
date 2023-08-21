@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { geom2, geom3, path2 } from '../geometries/index.js'
+import { geom2, geom3, path2, slice } from '../geometries/index.js'
 
 import { line, rectangle, ellipsoid } from '../primitives/index.js'
 
@@ -14,6 +14,7 @@ test('measureBoundingSphere (single objects)', (t) => {
   const apath2 = path2.create()
   const ageom2 = geom2.create()
   const ageom3 = geom3.create()
+  const aslice = slice.create()
 
   const n = null
   const o = {}
@@ -26,6 +27,7 @@ test('measureBoundingSphere (single objects)', (t) => {
   const p2bounds = measureBoundingSphere(apath2)
   const g2bounds = measureBoundingSphere(ageom2)
   const g3bounds = measureBoundingSphere(ageom3)
+  const slbounds = measureBoundingSphere(aslice)
 
   const nbounds = measureBoundingSphere(n)
   const obounds = measureBoundingSphere(o)
@@ -38,6 +40,7 @@ test('measureBoundingSphere (single objects)', (t) => {
   t.deepEqual(p2bounds, [[0, 0, 0], 0])
   t.deepEqual(g2bounds, [[0, 0, 0], 0])
   t.deepEqual(g3bounds, [[0, 0, 0], 0])
+  t.deepEqual(slbounds, [[0, 0, 0], 0])
 
   t.deepEqual(nbounds, [[0, 0, 0], 0])
   t.deepEqual(obounds, [[0, 0, 0], 0])

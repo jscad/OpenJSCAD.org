@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { geom2, geom3, path2 } from '../geometries/index.js'
+import { geom2, geom3, path2, slice } from '../geometries/index.js'
 
 import { line, rectangle, cuboid } from '../primitives/index.js'
 
@@ -14,6 +14,7 @@ test('measureVolume: single objects', (t) => {
   const apath2 = path2.create()
   const ageom2 = geom2.create()
   const ageom3 = geom3.create()
+  const aslice = slice.create()
 
   const n = null
   const o = {}
@@ -26,6 +27,7 @@ test('measureVolume: single objects', (t) => {
   const p2volume = measureVolume(apath2)
   const g2volume = measureVolume(ageom2)
   const g3volume = measureVolume(ageom3)
+  const slvolume = measureVolume(aslice)
 
   const nvolume = measureVolume(n)
   const ovolume = measureVolume(o)
@@ -38,6 +40,7 @@ test('measureVolume: single objects', (t) => {
   t.is(p2volume, 0)
   t.is(g2volume, 0)
   t.is(g3volume, 0)
+  t.is(slvolume, 0)
 
   t.is(nvolume, 0)
   t.is(ovolume, 0)

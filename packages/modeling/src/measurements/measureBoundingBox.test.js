@@ -1,10 +1,10 @@
 import test from 'ava'
 
-import { geom2, geom3, path2 } from '../geometries/index.js'
+import { geom2, geom3, path2, slice } from '../geometries/index.js'
 
 import { line, rectangle, cuboid } from '../primitives/index.js'
 
-import { mirror } from '../operations/transforms/index.js'
+import { mirror, scale } from '../operations/transforms/index.js'
 
 import { measureBoundingBox } from './index.js'
 
@@ -16,6 +16,7 @@ test('measureBoundingBox (single objects)', (t) => {
   const apath2 = path2.create()
   const ageom2 = geom2.create()
   const ageom3 = geom3.create()
+  const aslice = slice.create()
 
   const n = null
   const o = {}
@@ -28,6 +29,7 @@ test('measureBoundingBox (single objects)', (t) => {
   const p2bounds = measureBoundingBox(apath2)
   const g2bounds = measureBoundingBox(ageom2)
   const g3bounds = measureBoundingBox(ageom3)
+  const slbounds = measureBoundingBox(aslice)
 
   const nbounds = measureBoundingBox(n)
   const obounds = measureBoundingBox(o)
@@ -40,6 +42,7 @@ test('measureBoundingBox (single objects)', (t) => {
   t.deepEqual(p2bounds, [[0, 0, 0], [0, 0, 0]])
   t.deepEqual(g2bounds, [[0, 0, 0], [0, 0, 0]])
   t.deepEqual(g3bounds, [[0, 0, 0], [0, 0, 0]])
+  t.deepEqual(slbounds, [[0, 0, 0], [0, 0, 0]])
 
   t.deepEqual(nbounds, [[0, 0, 0], [0, 0, 0]])
   t.deepEqual(obounds, [[0, 0, 0], [0, 0, 0]])
@@ -63,4 +66,22 @@ test('measureBoundingBox invert', (t) => {
   const acube = mirror({}, cuboid())
   const cbounds = measureBoundingBox(acube)
   t.deepEqual(cbounds, [[-1, -1, -1], [1, 1, 1]])
+})
+
+test('measureBoundingBox empty', (t) => {
+  const empty = [[0, 0, 0], [0, 0, 0]]
+  t.deepEqual(measureBoundingBox(geom2.create()), empty)
+  t.deepEqual(measureBoundingBox(geom3.create()), empty)
+  t.deepEqual(measureBoundingBox(path2.create()), empty)
+  t.deepEqual(measureBoundingBox(slice.create()), empty)
+})
+
+test('measureBoundingBox scaled', (t) => {
+  const arect = scale([2, 2, 2], rectangle())
+  const rbounds = measureBoundingBox(arect)
+  t.deepEqual(rbounds, [[-2, -2, 0], [2, 2, 0]])
+
+  const acube = scale([2, 2, 2], cuboid())
+  const cbounds = measureBoundingBox(acube)
+  t.deepEqual(cbounds, [[-2, -2, -2], [2, 2, 2]])
 })
