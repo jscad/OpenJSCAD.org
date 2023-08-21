@@ -11,5 +11,6 @@ export { toVertices } from './toVertices.js'
 export { toPolygons } from './toPolygons.js'
 export { toString } from './toString.js'
 export { transform } from './transform.js'
+export { validate } from './validate.js'
 
 export type { Slice } from './type.d.ts'

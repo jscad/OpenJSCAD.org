@@ -28,7 +28,7 @@ export const validate = (object) => {
     for (let i = 0; i < outline.length; i++) {
       const j = (i + 1) % outline.length
       if (vec2.equals(outline[i], outline[j])) {
-        throw new Error(`geom2 outline ${i} found duplicate point ${outline[i]}`)
+        throw new Error(`geom2 outline ${i} duplicate point ${outline[i]}`)
       }
     }
   })
