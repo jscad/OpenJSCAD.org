@@ -42,7 +42,7 @@ export const validate = (object) => {
       // check for duplicate points
       const j = (i + 1) % contour.length
       if (vec3.equals(contour[i], contour[j])) {
-        throw new Error(`slice contour ${i} duplicate vertex ${contour[i]}`)
+        throw new Error(`slice contour ${i} has duplicate vertex ${contour[i]}`)
       }
     }
   })
