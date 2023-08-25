@@ -1,5 +1,5 @@
 import { Geometry } from '@jscad/modeling/src/geometries/types'
-import { Entity } from './entity'
+import { Entity } from '../geometry-utils-V2/entity'
 
 export namespace controlsProps {
   namespace limits {
