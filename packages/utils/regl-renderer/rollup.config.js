@@ -1,6 +1,7 @@
 import banner from 'rollup-plugin-banner'
 import commonjs from '@rollup/plugin-commonjs'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
+import terser from '@rollup/plugin-terser'
 import versionInjector from 'rollup-plugin-version-injector'
 
 export default {
@@ -22,6 +23,7 @@ export default {
     nodeResolve(),
     commonjs(),
     banner('<%= pkg.description %>\n<%= pkg.name %>\nVersion <%= pkg.version %>\n<%= pkg.license %> License'),
-    versionInjector({ injectInComments: { fileRegexp: /\.(html)$/ }, logLevel: 'warn' })
+    versionInjector({ injectInComments: { fileRegexp: /\.(html)$/ }, logLevel: 'warn' }),
+    terser({ compress: { module: true }, mangle: false, format: { comments: false} })
   ]
 }

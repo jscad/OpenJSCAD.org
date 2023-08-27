@@ -6,32 +6,37 @@
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "type": "module",
   "main": "src/index.js",
+  "types": "types",
   "unpkg": "dist/jscad-regl-renderer.min.js",
   "module": "dist/jscad-regl-renderer.es.js",
-  "types": "types",
   "scripts": {
     "build": "rollup --config",
-    "version": "pnpm run build && git add dist",
+    "coverage": "c8 --all --reporter=html --reporter=text pnpm test",
     "dev": "http-server",
     "demo-cli": "node ./demo-cli.js",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
-    "coverage": "c8 --all --reporter=html --reporter=text npm test"
+    "test:tsd": "tsd",
+    "version": "pnpm run build && git add dist"
   },
   "contributors": [
     {
-      "name": "Z3 Development"
+      "name": "z3dev",
+      "url": "https://github.com/z3dev"
     },
     {
-      "name": "Davor Hrg"
+      "name": "Davor Hrg",
+      "url": "https://github.com/hrgdavor"
     },
     {
-      "name": "Kenny"
+      "name": "Kenny",
+      "url": "https://github.com/platypil"
     },
     {
       "name": "Timothy Johnson"
     },
     {
-      "name": "Mark 'kaosat-dev' Moissette"
+      "name": "Mark 'kaosat-dev' Moissette",
+      "url": "https://github.com/kaosat-dev"
     }
   ],
   "keywords": [
@@ -44,7 +49,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "types": "types",
   "dependencies": {
     "@jscad/array-utils": "workspace:2.1.4",
     "camera-unproject": "1.0.1",
@@ -57,6 +61,7 @@
     "@jscad/modeling": "workspace:2.12.0",
     "@rollup/plugin-commonjs": "^23.0.4",
     "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-terser": "^0.4.3",
     "ava": "4.3.3",
     "http-server": "14.1.1",
     "c8": "8.0.0",

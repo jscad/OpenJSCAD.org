@@ -4,19 +4,20 @@
   "description": "3MF serializer for JSCAD project",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
-  "main": "src/index.js",
   "type": "module",
+  "main": "src/index.js",
   "unpkg": "dist/jscad-3mf-serializer.min.js",
   "module": "dist/jscad-3mf-serializer.es.js",
   "scripts": {
     "build": "rollup --config",
-    "coverage": "c8 --reporter=html --reporter=text npm test",
-    "test": "ava --concurrency 3 --verbose --timeout 40000 './tests/*.test.js'"
+    "coverage": "c8 --reporter=html --reporter=text pnpm test",
+    "test": "ava --concurrency 3 --verbose --timeout 40000 './tests/*.test.js'",
+    "version": "pnpm run build && git add dist"
   },
   "contributors": [
     {
       "name": "z3dev",
-      "url": "http://www.z3d.jp"
+      "url": "https://github.com/z3dev"
     }
   ],
   "keywords": [
