@@ -11,22 +11,25 @@
   "module": "dist/jscad-regl-renderer.es.js",
   "scripts": {
     "build": "rollup --config",
-    "version": "pnpm run build && git add dist",
+    "coverage": "c8 --all --reporter=html --reporter=text pnpm test",
     "dev": "http-server",
     "demo-cli": "node ./demo-cli.js",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
-    "coverage": "c8 --all --reporter=html --reporter=text pnpm test"
+    "test:tsd": "tsd",
+    "version": "pnpm run build && git add dist"
   },
   "contributors": [
     {
-      "name": "Z3 Development",
+      "name": "z3dev",
       "url": "https://github.com/z3dev"
     },
     {
-      "name": "Davor Hrg"
+      "name": "Davor Hrg",
+      "url": "https://github.com/hrgdavor"
     },
     {
-      "name": "Kenny"
+      "name": "Kenny",
+      "url": "https://github.com/platypil"
     },
     {
       "name": "Timothy Johnson"

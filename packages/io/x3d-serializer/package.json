@@ -4,27 +4,28 @@
   "description": "X3D Serializer for JSCAD",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
-  "main": "src/index.js",
   "type": "module",
+  "main": "src/index.js",
   "unpkg": "dist/jscad-x3d-serializer.min.js",
   "module": "dist/jscad-x3d-serializer.es.js",
   "scripts": {
     "build": "rollup --config",
-    "coverage": "c8 --all --reporter=html --reporter=text npm test",
-    "test": "ava --verbose --timeout 2m './tests/*.test.js'"
+    "coverage": "c8 --all --reporter=html --reporter=text pnpm test",
+    "test": "ava --verbose --timeout 2m './tests/*.test.js'",
+    "version": "pnpm run build && git add dist"
   },
   "contributors": [
     {
       "name": "Rene K. Mueller",
-      "url": "http://renekmueller.com"
+      "url": "https://github.com/Spiritdude"
     },
     {
       "name": "z3dev",
-      "url": "http://www.z3d.jp"
+      "url": "https://github.com/z3dev"
     },
     {
       "name": "Mark 'kaosat-dev' Moissette",
-      "url": "http://kaosat.net"
+      "url": "https://github.com/kaosat-dev"
     }
   ],
   "keywords": [

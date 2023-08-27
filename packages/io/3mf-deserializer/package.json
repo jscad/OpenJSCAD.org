@@ -2,16 +2,23 @@
   "name": "@jscad/3mf-deserializer",
   "version": "2.0.0",
   "description": "3MF Deserializer for JSCAD",
+  "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org/",
-  "main": "src/index.js",
   "type": "module",
+  "main": "src/index.js",
+  "unpkg": "dist/jscad-3mf-deserializer.min.js",
+  "module": "dist/jscad-3mf-deserializer.es.js",
   "scripts": {
     "build": "rollup --config",
-    "coverage": "c8 --all --reporter=html --reporter=text npm test",
-    "test": "ava --verbose --timeout 2m 'tests/**/*.test.js'"
+    "coverage": "c8 --all --reporter=html --reporter=text pnpm test",
+    "test": "ava --verbose --timeout 2m 'tests/**/*.test.js'",
+    "version": "pnpm run build && git add dist"
   },
   "contributors": [
-    {"name": "z3dev", "url": "http://www.z3d.jp"}
+    {
+      "name": "z3dev",
+      "url": "https://github.com/z3dev"
+    }
   ],
   "keywords": [
     "openjscad",
@@ -21,6 +28,9 @@
     "3mf"
   ],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@jscad/modeling": "workspace:2.12.0",
     "@jscad/array-utils": "workspace:2.1.4",
