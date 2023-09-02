@@ -46,8 +46,8 @@
     "strip-bom": "4.0.0"
   },
   "devDependencies": {
-    "ava": "4.3.3",
-    "c8": "8.0.0"
+    "ava": "^4.3.3",
+    "c8": "^8.0.0"
   },
   "collective": {
     "type": "opencollective",

@@ -22,7 +22,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "pngjs": "6.0.0"
+    "pngjs": "^6.0.0"
   },
   "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"
 }

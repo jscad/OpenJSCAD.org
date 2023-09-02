@@ -37,9 +37,9 @@
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.3",
-    "ava": "4.3.3",
-    "c8": "8.0.0",
-    "rollup": "2.79.1"
+    "ava": "^4.3.3",
+    "c8": "^8.0.0",
+    "rollup": "^2.79.1"
   },
   "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"
 }

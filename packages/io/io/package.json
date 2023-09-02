@@ -14,7 +14,7 @@
   "contributors": [
     {
       "name": "Rene K. Mueller",
-      "url": "http://renekmueller.com"
+      "url": "https://github.com/Spiritdude"
     },
     {
       "name": "z3dev",
@@ -22,7 +22,7 @@
     },
     {
       "name": "Mark 'kaosat-dev' Moissette",
-      "url": "http://kaosat.net"
+      "url": "https://github.com/kaosat-dev"
     }
   ],
   "keywords": [
@@ -54,8 +54,8 @@
     "@jscad/x3d-serializer": "workspace:2.4.5"
   },
   "devDependencies": {
-    "ava": "4.3.3",
-    "c8": "8.0.0"
+    "ava": "^4.3.3",
+    "c8": "^8.0.0"
   },
   "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"
 }
