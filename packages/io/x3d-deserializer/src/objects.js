@@ -89,31 +89,31 @@ const x3dTransform = (element) => {
   }
 
   if (element.center) {
-    const values = element.center.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.center)
     if (values.length > 2) {
       obj.center = values
     }
   }
   if (element.rotation) {
-    const values = element.rotation.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.rotation)
     if (values.length > 3) {
       obj.rotation = values
     }
   }
   if (element.scale) {
-    const values = element.scale.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.scale)
     if (values.length > 2) {
       obj.scale = values
     }
   }
   if (element.scaleorientation) {
-    const values = element.scaleorientation.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.scaleorientation)
     if (values.length > 3) {
       obj.scaleOrientation = values
     }
   }
   if (element.translation) {
-    const values = element.translation.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.translation)
     if (values.length > 2) {
       obj.translation = values
     }
@@ -138,7 +138,7 @@ const x3dBox = (element) => {
   const obj = { definition: x3dTypes.BOX, size: [2, 2, 2] }
 
   if (element.size) {
-    const values = element.size.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.size)
     if (values.length > 2) {
       obj.size = values
     }
@@ -187,7 +187,7 @@ const x3dSphere = (element) => {
     obj.radius = parseFloat(element.radius)
   }
   if (element.subdivision) {
-    const values = element.subdivision.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.subdivision)
     if (values.length > 1) {
       obj.subdivision = Math.max(...values)
     }
@@ -217,7 +217,7 @@ const x3dExtrusion = (element) => {
     obj.endCap = element.endCap.includes('TRUE') || element.endCap.includes('true')
   }
   if (element.crossSection) {
-    const values = element.crossSection.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.crossSection)
     const numpoints = Math.trunc(values.length / 2)
     const points = []
     for (let i = 0; i < numpoints; i++) {
@@ -228,7 +228,7 @@ const x3dExtrusion = (element) => {
     obj.crossSection = points
   }
   if (element.orientation) {
-    const values = element.orientation.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.orientation)
     const numpoints = Math.trunc(values.length / 4)
     const points = []
     for (let i = 0; i < numpoints; i++) {
@@ -238,7 +238,7 @@ const x3dExtrusion = (element) => {
     obj.orientations = points
   }
   if (element.scale) {
-    const values = element.scale.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.scale)
     const numpoints = Math.trunc(values.length / 2)
     const points = []
     for (let i = 0; i < numpoints; i++) {
@@ -251,7 +251,7 @@ const x3dExtrusion = (element) => {
     obj.scales = points
   }
   if (element.spine) {
-    const values = element.spine.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.spine)
     const numpoints = Math.trunc(values.length / 3)
     const points = []
     for (let i = 0; i < numpoints; i++) {
@@ -337,7 +337,7 @@ const x3dPolyline2D = (element) => {
   const obj = { definition: x3dTypes.POLYLINE2D, lineSegments: [] }
 
   if (element.lineSegments) {
-    const values = element.lineSegments.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.lineSegments)
     for (let i = 0; i < values.length; i = i + 2) {
       const point = [values[i], values[i + 1]]
       obj.lineSegments.push(point)
@@ -350,7 +350,7 @@ const x3dRectangle2D = (element) => {
   const obj = { definition: x3dTypes.RECTANGLE2D, size: [2, 2] }
 
   if (element.size) {
-    const values = element.size.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.size)
     if (values.length > 1) {
       obj.size = values
     }
@@ -362,7 +362,7 @@ const x3dTriangleSet2D = (element) => {
   const obj = { definition: x3dTypes.TRIANGLESET2D, vertices: [] }
 
   if (element.vertices) {
-    const values = element.vertices.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.vertices)
     for (let i = 0; i < values.length; i = i + 2) {
       const point = [values[i], values[i + 1]]
       obj.vertices.push(point)
@@ -379,7 +379,7 @@ const x3dLineSet = (element) => {
   const obj = { definition: x3dTypes.LINESET, vertexCount: [], colorPerVertex: true }
 
   if (element.vertexCount) {
-    obj.vertexCount = element.vertexCount.trim().split(/ +/).map((v) => parseFloat(v))
+    obj.vertexCount = parseNumbers(element.vertexCount)
   }
   // color attributes
   if (element.colorPerVertex) {
@@ -393,9 +393,8 @@ const x3dIndexedLineSet = (element) => {
   const obj = { definition: x3dTypes.INDEXEDLINESET, indexes: [], colorPerVertex: true }
 
   if (element.coordIndex) {
-    const indexes = element.coordIndex.trim().split(/ -1/)
-    obj.indexes = indexes.map((index) => index.trim().split(/ +/).map((v) => parseFloat(v)))
-    obj.indexes = obj.indexes.filter((index) => index.length > 1)
+    const indexes = parseIndices(element.coordIndex)
+    obj.indexes = indexes.filter((index) => index.length > 1)
   }
   // color attributes
   if (element.colorPerVertex) {
@@ -413,7 +412,7 @@ const x3dColor = (element) => {
   const obj = { definition: x3dTypes.COLOR, colors: [] }
 
   if (element.color) {
-    const values = element.color.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.color)
     const numvalues = values.length
     const numcolors = Math.trunc(numvalues / 3)
     for (let i = 0; i < numcolors; i++) {
@@ -428,7 +427,7 @@ const x3dCoordinate = (element) => {
   const obj = { definition: x3dTypes.COORDINATE, points: [] }
 
   if (element.point) {
-    const values = element.point.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.point)
     const numvalues = values.length
     const numpoints = Math.trunc(numvalues / 3)
     for (let i = 0; i < numpoints; i++) {
@@ -456,7 +455,7 @@ const x3dTriangleFanSet = (element) => {
     obj.ccw = element.ccw.includes('TRUE') || element.ccw.includes('true')
   }
   if (element.fanCount) {
-    obj.fanCount = element.fanCount.trim().split(/ +/).map((v) => parseFloat(v))
+    obj.fanCount = parseNumbers(element.fanCount)
   }
   obj.objects = []
   return obj
@@ -469,7 +468,7 @@ const x3dTriangleStripSet = (element) => {
     obj.ccw = element.ccw.includes('TRUE') || element.ccw.includes('true')
   }
   if (element.stripCount) {
-    obj.stripCount = element.stripCount.trim().split(/ +/).map((v) => parseFloat(v))
+    obj.stripCount = parseNumbers(element.stripCount)
   }
   obj.objects = []
   return obj
@@ -492,7 +491,7 @@ const x3dIndexedTriangleSet = (element) => {
     obj.ccw = element.ccw.includes('TRUE') || element.ccw.includes('true')
   }
   if (element.index) {
-    obj.index = element.index.trim().split(/ +/).map((v) => parseFloat(v))
+    obj.index = parseNumbers(element.index)
   }
   obj.objects = []
   return obj
@@ -505,8 +504,8 @@ const x3dIndexedTriangleFanSet = (element) => {
     obj.ccw = element.ccw.includes('TRUE') || element.ccw.includes('true')
   }
   if (element.index) {
-    const indexes = element.index.trim().split(/ -1/)
-    obj.fans = indexes.map((index) => index.trim().split(/ +/).map((v) => parseFloat(v))).filter((index) => index.length > 2)
+    const indexes = parseIndices(element.index)
+    obj.fans = indexes.filter((index) => index.length > 2)
   }
   obj.objects = []
   return obj
@@ -520,8 +519,8 @@ const x3dIndexedTriangleStripSet = (element) => {
     obj.ccw = element.ccw.includes('TRUE') || element.ccw.includes('true')
   }
   if (element.index) {
-    const indexes = element.index.trim().split(/ -1/)
-    obj.strips = indexes.map((index) => index.trim().split(/ +/).map((v) => parseFloat(v))).filter((index) => index.length > 2)
+    const indexes = parseIndices(element.index)
+    obj.strips = indexes.filter((index) => index.length > 2)
   }
   return obj
 }
@@ -533,7 +532,7 @@ const x3dIndexedQuadSet = (element) => {
     obj.ccw = element.ccw.includes('TRUE') || element.ccw.includes('true')
   }
   if (element.index) {
-    obj.index = element.index.trim().split(/ +/).map((v) => parseFloat(v))
+    obj.index = parseNumbers(element.index)
   }
   obj.objects = []
   return obj
@@ -549,8 +548,8 @@ const x3dIndexedFaceSet = (element) => {
     obj.convex = element.convex.includes('TRUE') || element.convex.includes('true')
   }
   if (element.coordIndex) {
-    const indexes = element.coordIndex.trim().split(/ -1/)
-    obj.faces = indexes.map((index) => index.trim().split(/ +/).map((v) => parseFloat(v))).filter((index) => index.length > 2)
+    const indexes = parseIndices(element.coordIndex)
+    obj.faces = indexes.filter((index) => index.length > 2)
   }
   // color attributes
   if (element.colorPerVertex) {
@@ -559,11 +558,11 @@ const x3dIndexedFaceSet = (element) => {
   if (element.colorIndex) {
     if (obj.colorPerVertex) {
       // indexes are provided for each VERTEX
-      const indexes = element.colorIndex.trim().split(/ -1/)
-      obj.colorIndex = indexes.map((index) => index.trim().split(/ +/).map((v) => parseFloat(v))).filter((index) => index.length > 2)
+      const indexes = parseIndices(element.colorIndex)
+      obj.colorIndex = indexes.filter((index) => index.length > 2)
     } else {
       // indexes are provided for each FACE
-      obj.colorIndex = element.colorIndex.trim().split(/ +/).map((v) => parseFloat(v))
+      obj.colorIndex = parseNumbers(element.colorIndex)
     }
   } else {
     // reuse the indexes for the FACES
@@ -589,7 +588,7 @@ const x3dElevationGrid = (element) => {
     obj.zSpacing = parseFloat(element.zSpacing)
   }
   if (element.height) {
-    obj.height = element.height.trim().split(/ +/).map((v) => parseFloat(v))
+    obj.height = parseNumbers(element.height)
   }
   if (element.ccw) {
     obj.ccw = element.ccw.includes('TRUE') || element.ccw.includes('true')
@@ -632,14 +631,14 @@ const x3dMaterial = (element) => {
     alpha = 1.0 - element.transparency
   }
   if (element.diffuseColor) {
-    const values = element.diffuseColor.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.diffuseColor)
     if (values.length > 2) {
       if (values.length < 4) values.push(alpha)
       obj.color = values
     }
   }
   if (element.emissiveColor) {
-    const values = element.emissiveColor.trim().split(/ +/).map((v) => parseFloat(v))
+    const values = parseNumbers(element.emissiveColor)
     if (values.length > 2) {
       if (values.length < 4) values.push(alpha)
       obj.color = values
@@ -655,6 +654,14 @@ const x3dGroup = (element) => {
 
   obj.objects = []
   return obj
+}
+
+const parseNumbers = (attribute) =>
+  attribute.trim().replace(/,/g, ' ').split(/ +/).map((v) => parseFloat(v))
+
+const parseIndices = (attribute) => {
+  const indexes = attribute.replace(/,/g, ' ').trim().split(/ -1/)
+  return indexes.map((index) => parseNumbers(index))
 }
 
 module.exports = {
