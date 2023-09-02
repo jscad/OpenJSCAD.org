@@ -1,5 +1,3 @@
-//sed 's|= \(element\..*[^\.]*\).trim().split.*map.*|= parseNumbers(\1)|' objects.js > objects_2.js
-//sed 's|= \(element\..*[^\.]*\).trim().split.*-1.*|= parseIndices(\1)|' objects_2.js | sed 's|.map((index) => index.trim().split(/ +/).map((v) => parseFloat(v)))||' > objects_3.js
 const { maths } = require('@jscad/modeling')
 
 const x3dTypes = {
@@ -658,12 +656,11 @@ const x3dGroup = (element) => {
   return obj
 }
 
-const parseNumbers = (attribute) => {
-  return attribute.trim().replaceAll(","," ").split(/ +/).map((v) => parseFloat(v))
-}
+const parseNumbers = (attribute) =>
+  attribute.trim().replace(/,/g, ' ').split(/ +/).map((v) => parseFloat(v))
 
 const parseIndices = (attribute) => {
-  const indexes = attribute.replaceAll(","," ").trim().split(/ -1/)
+  const indexes = attribute.replace(/,/g, ' ').trim().split(/ -1/)
   return indexes.map((index) => parseNumbers(index))
 }
 
