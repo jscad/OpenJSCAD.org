@@ -31,10 +31,10 @@
   "devDependencies": {
     "@jscad/io-utils": "workspace:2.0.25",
     "@jscad/stl-serializer": "workspace:2.1.15",
-    "decache": "4.4.0",
-    "just-diff": "2.1.1",
-    "serialize-to-js": "3.0.2",
-    "simple-diff": "1.6.0"
+    "decache": "^4.4.0",
+    "just-diff": "^2.1.1",
+    "serialize-to-js": "^3.0.2",
+    "simple-diff": "^1.6.0"
   },
   "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"
 }

@@ -15,7 +15,7 @@ export default {
     }
   ],
   plugins: [
-    banner('<%= pkg.description %>\n<%= pkg.name %>\nVersion <%= pkg.version %>\n<%= pkg.license %> License'),
-    terser({ compress: { module: true }, mangle: false, format: { comments: false} })
+    banner('<%= pkg.description %>\n@module <%= pkg.name %>\n@version <%= pkg.version %>\n@license <%= pkg.license %>'),
+    terser({ compress: { module: true }, mangle: false, format: { comments: 'some'} })
   ]
 }

@@ -44,8 +44,8 @@
     "jszip": "^3.10.1"
   },
   "devDependencies": {
-    "ava": "4.3.3",
-    "c8": "8.0.0"
+    "ava": "^4.3.3",
+    "c8": "^8.0.0"
   },
   "collective": {
     "type": "opencollective",

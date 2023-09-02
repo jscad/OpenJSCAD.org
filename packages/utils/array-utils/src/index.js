@@ -1,5 +1,5 @@
 /**
- * Utility functions for arrays.
+ * JSCAD Utility functions for arrays.
  * @module array-utils
  * @example
  * const { flatten, head } = require('@jscad/array-utils')

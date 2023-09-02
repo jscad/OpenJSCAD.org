@@ -1,20 +1,16 @@
 import banner from 'rollup-plugin-banner'
 import commonjs from '@rollup/plugin-commonjs'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
+import terser from '@rollup/plugin-terser'
 
 export default {
-  external: ['@jscad/modeling'],
-
   input: 'src/index.js',
 
   output: [
     {
       file: 'dist/jscad-3mf-serializer.min.js',
       format: 'umd',
-      name: 'jscad3mfSerializer',
-      globals: {
-        '@jscad/modeling': 'jscadModeling'
-      }
+      name: 'jscad3mfSerializer'
     },
     {
       file: 'dist/jscad-3mf-serializer.es.js',
@@ -24,7 +20,8 @@ export default {
 
   plugins: [
     commonjs(),
-    banner('<%= pkg.description %>\n<%= pkg.name %>\nVersion <%= pkg.version %>\n<%= pkg.license %> License'),
-    nodeResolve()
+    nodeResolve(),
+    banner('<%= pkg.description %>\n@module <%= pkg.name %>\n@version <%= pkg.version %>\n@license <%= pkg.license %>'),
+    terser({ compress: { module: true }, mangle: false, format: { comments: 'some'} })
   ]
 }
