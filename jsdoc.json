@@ -24,7 +24,7 @@
       "packages/modeling/src/maths/vec4",
       "packages/modeling/src/measurements",
       "packages/modeling/src/operations/booleans",
-      "packages/modeling/src/operations/expansions",
+      "packages/modeling/src/operations/offsets",
       "packages/modeling/src/operations/extrusions",
       "packages/modeling/src/operations/hulls",
       "packages/modeling/src/operations/modifiers",
