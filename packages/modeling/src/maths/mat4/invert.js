@@ -5,7 +5,6 @@
  * @author Julian Lloyd
  * code from https://github.com/jlmakes/rematrix/blob/master/src/index.js
  *
- * @typedef {import("./type.d.ts").Mat4} Mat4
  * @param {Mat4} out - receiving matrix
  * @param {Mat4} matrix - matrix to invert
  * @returns {Mat4?} out

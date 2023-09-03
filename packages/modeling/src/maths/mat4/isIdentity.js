@@ -4,7 +4,6 @@
  *
  *     mat4.equals(mat4.create(), matrix)
  *
- * @typedef {import("./type.d.ts").Mat4} Mat4
  * @param {Mat4} matrix - the matrix
  * @returns {boolean} true if matrix is the identity transform
  * @alias module:modeling/maths/mat4.isIdentity
