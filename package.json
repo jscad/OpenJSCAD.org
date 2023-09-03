@@ -14,7 +14,7 @@
     "graph": "lerna list --graph",
     "list": "lerna ls",
     "web": "cd ./packages/web && pnpm run dev",
-    "preversion": "pnpm run test && pnpm run docs",
+    "preversion": "pnpm run test && pnpm run test:tsd && pnpm run docs",
     "publish": "lerna publish --include-merged-tags --no-private --no-push --conventional-prerelease --dist-tag alpha --pre-dist-tag alpha",
     "publish-dryrun": "lerna version premajor --include-merged-tags --no-private --no-push --conventional-prerelease"
   },
