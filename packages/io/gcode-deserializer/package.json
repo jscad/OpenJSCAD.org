@@ -6,6 +6,7 @@
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "index.js",
   "private": true,
+  "types": "types",
   "scripts": {
     "test": "ava './test.js' --verbose --timeout 2m",
     "release-patch": "git checkout master && npm version patch && git commit -a -m 'chore(dist): built dist/'; git push origin master --tags ",

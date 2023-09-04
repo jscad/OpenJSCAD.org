@@ -9,6 +9,7 @@
   "browser": {
     "lapack": false
   },
+  "types": "types",
   "scripts": {
     "test-old": "node tests/all-tests",
     "build-old": "browserify src/parserWrapper.js --ignore lapack  --standalone openscadOpenJscadParser -o dist/web-built.js",

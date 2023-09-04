@@ -5,6 +5,7 @@
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "main": "src/index.js",
+  "types": "types",
   "scripts": {
     "coverage": "nyc --reporter=html --reporter=text npm test",
     "test": "ava --concurrency 3 --verbose --timeout 40000 './tests/*.test.js'"
