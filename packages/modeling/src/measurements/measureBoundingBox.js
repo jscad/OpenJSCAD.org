@@ -38,14 +38,19 @@ const expand3 = (bbox, vertex) => {
 }
 
 /*
- * Cache the bounding box of the geometry.
+ * Measure a geometry using a given measure function.
+ * Uses cached if available. Otherwise, compute bounding box and save to cache.
+ *
+ * @param {Geometry} geometry - the geometry to measure
+ * @param {Function} measureFn - the function to measure the bounding box
+ * @return {Array[]} the min and max bounds for the geometry
  */
 const measureCached = (geometry, measureFn) => {
   let boundingBox = cache.get(geometry)
   if (boundingBox) return boundingBox
   boundingBox = measureFn(geometry)
+  // if bounding box is undefined, default to [0,0,0] and [0,0,0]
   if (boundingBox.length === 0) {
-    // bounding box is undefined
     boundingBox[0] = vec3.create()
     boundingBox[1] = vec3.create()
   }

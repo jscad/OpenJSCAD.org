@@ -12,16 +12,21 @@ import * as slice from '../geometries/slice/index.js'
 const cache = new WeakMap()
 
 /*
- * Cache the bounding box of the geometry.
+ * Measure a geometry using a given measure function.
+ * Uses cached if available. Otherwise, compute bounding sphere and save to cache.
+ *
+ * @param {Geometry} geometry - the geometry to measure
+ * @param {Function} measureFn - the function to measure the bounding sphere
+ * @return {Array[]} the min and max bounds for the geometry
  */
 const measureCached = (geometry, measureFn) => {
   let boundingSphere = cache.get(geometry)
   if (boundingSphere) return boundingSphere
   boundingSphere = measureFn(geometry)
+  // if bounding sphere is undefined, default to [0,0,0] and 0
   if (boundingSphere.length === 0) {
-    // bounding sphere is undefined
     boundingSphere[0] = vec3.create()
-    boundingSphere[1] = vec3.create()
+    boundingSphere[1] = 0
   }
   cache.set(geometry, boundingSphere)
   return boundingSphere
