@@ -17,7 +17,7 @@ const cache = new WeakMap()
  *
  * @param {Geometry} geometry - the geometry to measure
  * @param {Function} measureFn - the function to measure the bounding sphere
- * @return {Array[]} the min and max bounds for the geometry
+ * @return {Array[]} the centroid and radius for the geometry
  */
 const measureCached = (geometry, measureFn) => {
   let boundingSphere = cache.get(geometry)
