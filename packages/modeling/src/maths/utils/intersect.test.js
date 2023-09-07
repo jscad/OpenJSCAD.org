@@ -1,7 +1,7 @@
 import test from 'ava'
 
 import * as vec2 from '../vec2/index.js'
-import { intersect } from './index.js'
+import { intersect } from './intersect.js'
 
 //   A     __F
 //  / \ __E

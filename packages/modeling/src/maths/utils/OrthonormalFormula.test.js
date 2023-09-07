@@ -3,7 +3,7 @@ import test from 'ava'
 import * as vec3 from '../vec3/index.js'
 import { plane } from '../index.js'
 
-import { OrthonormalFormula } from './index.js'
+import { OrthonormalFormula } from './OrthonormalFormula.js'
 
 test('utils: OrthonormalFormula constructor', (t) => {
   const p1 = plane.fromNormalAndPoint(plane.create(), [5, 0, 0], [0, 0, 0])

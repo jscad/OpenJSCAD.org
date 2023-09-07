@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { TAU } from '../constants.js'
 
-import { cos, sin } from './index.js'
+import { cos, sin } from './trigonometry.js'
 
 test('utils: sin() should return rounded values', (t) => {
   t.is(sin(0), 0)

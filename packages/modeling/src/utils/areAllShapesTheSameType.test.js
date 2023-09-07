@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { cube, square } from '../primitives/index.js'
 
-import { areAllShapesTheSameType } from './index.js'
+import { areAllShapesTheSameType } from './areAllShapesTheSameType.js'
 
 test('utils: areAllShapesTheSameType() should return correct values', (t) => {
   const geometry2 = square()

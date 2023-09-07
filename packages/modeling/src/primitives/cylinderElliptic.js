@@ -5,7 +5,7 @@ import * as vec3 from '../maths/vec3/index.js'
 import * as geom3 from '../geometries/geom3/index.js'
 import * as poly3 from '../geometries/poly3/index.js'
 
-import { sin, cos } from '../maths/utils/index.js'
+import { sin, cos } from '../maths/utils/trigonometry.js'
 
 import { isGT, isGTE, isNumberArray } from './commonChecks.js'
 

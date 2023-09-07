@@ -2,7 +2,7 @@
  * All shapes (primitives or the results of operations) can be measured, e.g. calculate volume, etc.
  * @module modeling/measurements
  * @example
- * import { measureArea, measureBoundingBox, measureVolume } from '@jscad/modeling/measurements')
+ * import { measureArea, measureBoundingBox, measureVolume } from '@jscad/modeling')
  */
 export { measureAggregateArea } from './measureAggregateArea.js'
 export { measureAggregateBoundingBox } from './measureAggregateBoundingBox.js'
