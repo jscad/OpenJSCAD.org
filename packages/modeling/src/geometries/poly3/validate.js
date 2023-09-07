@@ -34,7 +34,7 @@ export const validate = (object) => {
   // check for duplicate vertices
   for (let i = 0; i < object.vertices.length; i++) {
     if (vec3.equals(object.vertices[i], object.vertices[(i + 1) % object.vertices.length])) {
-      throw new Error(`poly3 duplicate vertex ${object.vertices[i]}`)
+      throw new Error(`poly3 has duplicate vertex ${object.vertices[i]}`)
     }
   }
 

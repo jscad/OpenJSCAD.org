@@ -16,9 +16,5 @@ export const fromPoints = (listOfLists) => {
     throw new Error('the given vertices must be an array')
   }
 
-  const polygons = listOfLists.map((vertices, index) => {
-    // TODO catch the error, and rethrow with index
-    return poly3.create(vertices)
-  })
-  return create(polygons)
+  return create(listOfLists.map(poly3.create))
 }

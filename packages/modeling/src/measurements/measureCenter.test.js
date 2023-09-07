@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { geom2, geom3, path2 } from '../geometries/index.js'
+import { geom2, geom3, path2, slice } from '../geometries/index.js'
 
 import { line, rectangle, cuboid } from '../primitives/index.js'
 
@@ -14,6 +14,7 @@ test('measureCenter (single objects)', (t) => {
   const apath2 = path2.create()
   const ageom2 = geom2.create()
   const ageom3 = geom3.create()
+  const aslice = slice.create()
 
   const n = null
   const o = {}
@@ -26,6 +27,7 @@ test('measureCenter (single objects)', (t) => {
   const p2center = measureCenter(apath2)
   const g2center = measureCenter(ageom2)
   const g3center = measureCenter(ageom3)
+  const slcenter = measureCenter(aslice)
 
   const ncenter = measureCenter(n)
   const ocenter = measureCenter(o)
@@ -38,6 +40,7 @@ test('measureCenter (single objects)', (t) => {
   t.deepEqual(p2center, [0, 0, 0])
   t.deepEqual(g2center, [0, 0, 0])
   t.deepEqual(g3center, [0, 0, 0])
+  t.deepEqual(slcenter, [0, 0, 0])
 
   t.deepEqual(ncenter, [0, 0, 0])
   t.deepEqual(ocenter, [0, 0, 0])

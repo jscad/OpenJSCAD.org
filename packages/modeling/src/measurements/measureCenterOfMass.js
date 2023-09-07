@@ -10,7 +10,7 @@ const cacheOfCenterOfMass = new WeakMap()
 /*
  * Measure the center of mass for the given geometry.
  *
- * @see http://paulbourke.net/geometry/polygonmesh/
+ * @see https://paulbourke.net/geometry/polygonmesh/
  * @return {Array} the center of mass for the geometry
  */
 const measureCenterOfMassGeom2 = (geometry) => {

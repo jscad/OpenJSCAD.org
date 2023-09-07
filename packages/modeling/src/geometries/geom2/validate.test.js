@@ -12,7 +12,7 @@ const b = vec2.fromValues(1, 0)
 const c = vec2.fromValues(1, 1)
 const d = vec2.fromValues(0, 1)
 
-test('validate: allow valid geometry', (t) => {
+test('validate: allow valid geom2', (t) => {
   const geometry = create([[a, b, c, d]])
   t.notThrows(() => validate(geometry))
 })
@@ -25,5 +25,15 @@ test('validate: throw exception for self-edge', (t) => {
 test('validate: throw exception for self-intersecting polygon', (t) => {
   const bowtie = [a, d, b, c]
   const geometry = create([bowtie])
+  t.throws(() => validate(geometry))
+})
+
+test('validate: throw exception for nan', (t) => {
+  const geometry = create([[a, b, c, [0, NaN]]])
+  t.throws(() => validate(geometry))
+})
+
+test('validate: throw exception for infinity', (t) => {
+  const geometry = create([[a, b, c, [0, Infinity]]])
   t.throws(() => validate(geometry))
 })
