@@ -27,7 +27,6 @@ import { scissionGeom3 } from './scissionGeom3.js'
  */
 export const scission = (...objects) => {
   objects = flatten(objects)
-  if (objects.length === 0) throw new Error('wrong number of arguments')
 
   const results = objects.map((object) => {
     // if (path2.isA(object)) return path2.transform(matrix, object)
