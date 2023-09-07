@@ -5,7 +5,7 @@
  * const { serializer, mimeType } = require('@jscad/stl-serializer')
  */
 
-import { geometries, modifiers } from '@jscad/modeling'
+import { generalize, geom3 } from '@jscad/modeling'
 
 import { flatten, toArray } from '@jscad/array-utils'
 
@@ -24,7 +24,7 @@ const mimeType = 'model/stl'
  * @returns {Array} serialized contents with one STL mesh (either string or binary data)
  * @alias module:io/stl-serializer.serialize
  * @example
- * const geometry = primitives.cube()
+ * const geometry = cube()
  * const stlData = serializer({binary: false}, geometry)
  */
 const serialize = (options, ...objects) => {
@@ -37,13 +37,13 @@ const serialize = (options, ...objects) => {
   objects = flatten(objects)
 
   // convert only 3D geometries
-  let objects3d = objects.filter((object) => geometries.geom3.isA(object))
+  let objects3d = objects.filter((object) => geom3.isA(object))
 
   if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to STL')
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to STL')
 
   // convert to triangles
-  objects3d = toArray(modifiers.generalize({ snap: true, triangulate: true }, objects3d))
+  objects3d = toArray(generalize({ snap: true, triangulate: true }, objects3d))
 
   return options.binary ? serializeBinary(objects3d, options) : serializeText(objects3d, options)
 }

@@ -21,7 +21,7 @@ test('translate simple ascii stl to jscad code', (t) => {
   const inputPath = path.resolve(samplesPath, 'stl/testcube_ascii.stl')
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
-  const expected = `const {primitives} = require('@jscad/modeling')
+  const expected = `import * from '@jscad/modeling'
 
 //
 // solid 1 : 36 points, 12 faces, 0 colors
@@ -80,14 +80,12 @@ const solid1 = () => {
     [33,34,35],
   ]
   const colors = null
-  return primitives.polyhedron({points, faces, colors, orientation: 'inside'})
+  return polyhedron({points, faces, colors, orientation: 'inside'})
 }
 
-const main = () => {
+export const main = () => {
  return [solid1()]
 }
-
-module.exports = {main}
 `
 
   const observed = deserialize({ filename: 'ascii', output: 'script', addMetaData: false }, inputFile)
@@ -98,7 +96,7 @@ test('translate simple binary stl to jscad script', (t) => {
   const inputPath = path.resolve(samplesPath, 'stl/testcube_10mm.stl')
   const inputFile = fs.readFileSync(inputPath)
 
-  const expected = `const {primitives} = require('@jscad/modeling')
+  const expected = `import * from '@jscad/modeling'
 
 //
 // solid 1 : 36 points, 12 faces, 0 colors
@@ -157,14 +155,12 @@ const solid1 = () => {
     [33,34,35],
   ]
   const colors = null
-  return primitives.polyhedron({points, faces, colors, orientation: 'inside'})
+  return polyhedron({points, faces, colors, orientation: 'inside'})
 }
 
-const main = () => {
+export const main = () => {
  return [solid1()]
 }
-
-module.exports = {main}
 `
 
   const observed = deserialize({ output: 'script', addMetaData: false }, inputFile)
@@ -180,5 +176,5 @@ test('translate stl with colors to jscad script', (t) => {
   t.is(countOf('faces', observed), 3)
   t.is(countOf('colors', observed), 3)
   t.is(countOf('colors = [', observed), 1)
-  t.is(countOf('primitives.polyhedron', observed), 1)
+  t.is(countOf('polyhedron', observed), 1)
 })

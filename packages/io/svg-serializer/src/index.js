@@ -13,7 +13,7 @@
  * const { serializer, mimeType } = require('@jscad/svg-serializer')
  */
 
-import { geometries, maths, measurements, utils } from '@jscad/modeling'
+import { geom2, flatten, measureBoundingBox, path2, vec3 } from '@jscad/modeling'
 
 import { stringify } from '@jscad/io-utils'
 
@@ -43,10 +43,10 @@ const serialize = (options, ...objects) => {
   }
   options = Object.assign({}, defaults, options)
 
-  objects = utils.flatten(objects)
+  objects = flatten(objects)
 
   // convert only 2D geometries
-  const objects2d = objects.filter((object) => geometries.geom2.isA(object) || geometries.path2.isA(object))
+  const objects2d = objects.filter((object) => geom2.isA(object) || path2.isA(object))
 
   if (objects2d.length === 0) throw new Error('only 2D geometries can be serialized to SVG')
   if (objects.length !== objects2d.length) console.warn('some objects could not be serialized to SVG')
@@ -94,14 +94,14 @@ ${stringify(body, 2)}`
  * Measure the bounds of the given objects, which is required to offset all points to positive X/Y values.
  */
 const getBounds = (objects) => {
-  const allbounds = measurements.measureBoundingBox(objects)
+  const allbounds = measureBoundingBox(objects)
 
   if (objects.length === 1) return allbounds
 
   // create a sum of the bounds
   const sumofbounds = allbounds.reduce((sum, bounds) => {
-    maths.vec3.min(sum[0], sum[0], bounds[0])
-    maths.vec3.max(sum[1], sum[1], bounds[1])
+    vec3.min(sum[0], sum[0], bounds[0])
+    vec3.max(sum[1], sum[1], bounds[1])
     return sum
   }, [[0, 0, 0], [0, 0, 0]])
   return sumofbounds
@@ -115,10 +115,10 @@ const convertObjects = (objects, bounds, options) => {
   objects.forEach((object, i) => {
     options.statusCallback && options.statusCallback({ progress: 100 * i / objects.length })
 
-    if (geometries.geom2.isA(object)) {
+    if (geom2.isA(object)) {
       contents.push(convertGeom2(object, [xoffset, yoffset], options))
     }
-    if (geometries.path2.isA(object)) {
+    if (path2.isA(object)) {
       contents.push(convertPaths([object], [xoffset, yoffset], options))
     }
   })
@@ -135,8 +135,8 @@ const reflect = (x, y, px, py) => {
 }
 
 const convertGeom2 = (object, offsets, options) => {
-  const outlines = geometries.geom2.toOutlines(object)
-  const paths = outlines.map((outline) => geometries.path2.fromPoints({ closed: true }, outline))
+  const outlines = geom2.toOutlines(object)
+  const paths = outlines.map((outline) => path2.fromPoints({ closed: true }, outline))
 
   options.color = 'black' // SVG initial color
   if (object.color) options.color = convertColor(object.color)

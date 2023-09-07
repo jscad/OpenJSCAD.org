@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { primitives } from '@jscad/modeling'
+import { arc } from '@jscad/modeling'
 
 import { serialize } from '../src/index.js'
 
@@ -15,7 +15,7 @@ const countOf = (search, string) => {
 }
 
 test('2D Path to JSON', (t) => {
-  const path1 = primitives.arc({ center: [5, 5], endAngle: Math.PI / 4, segments: 16 })
+  const path1 = arc({ center: [5, 5], endAngle: Math.PI / 4, segments: 16 })
   const obs1 = serialize({}, path1)
   t.is(countOf('points', obs1[0]), 1)
   t.is(countOf('transforms', obs1[0]), 1)
@@ -23,7 +23,7 @@ test('2D Path to JSON', (t) => {
   t.is(countOf(']', obs1[0]), 7)
   t.is(countOf(',', obs1[0]), 24)
 
-  const path2 = primitives.arc({ segments: 72 })
+  const path2 = arc({ segments: 72 })
   const obs2 = serialize({}, path2)
   t.is(countOf('points', obs2[0]), 1)
   t.is(countOf('transforms', obs2[0]), 1)

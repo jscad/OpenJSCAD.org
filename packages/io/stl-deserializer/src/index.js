@@ -1,4 +1,4 @@
-import { maths, primitives } from '@jscad/modeling'
+import { polyhedron, vec3 } from '@jscad/modeling'
 
 import { BinaryReader } from '@jscad/io-utils'
 
@@ -116,14 +116,12 @@ const formatAsJscad = (data, addMetaData, version, filename) => {
   //
   `
   }
-  code += 'const {primitives} = require(\'@jscad/modeling\')\n'
+  code += `import * from '@jscad/modeling'\n`
   code += data.join('\n')
   code += `
-const main = () => {
+export const main = () => {
  return [${data.map((d, i) => `solid${i + 1}()`)}]
 }
-
-module.exports = {main}
 `
   return code
 }
@@ -248,10 +246,10 @@ const deserializeBinarySTL = (stl, filename, version, elementFormatter) => {
       // E2 = C - A
       // test = dot( Normal, cross( E1, E2 ) )
       // test > 0: cw, test < 0 : ccw
-      const e1 = maths.vec3.subtract(maths.vec3.create(), v2, v1)
-      const e2 = maths.vec3.subtract(maths.vec3.create(), v3, v1)
-      const cr = maths.vec3.cross(maths.vec3.create(), e1, e2)
-      const t = maths.vec3.dot(no, cr)
+      const e1 = vec3.subtract(vec3.create(), v2, v1)
+      const e2 = vec3.subtract(vec3.create(), v3, v1)
+      const cr = vec3.cross(vec3.create(), e1, e2)
+      const t = vec3.dot(no, cr)
       if (t > 0) { // 1,2,3 -> 3,2,1
         const tmp = v3
         v3 = v1
@@ -328,10 +326,10 @@ const deserializeAsciiSTL = (stl, filename, version, elementFormatter) => {
         // E2 = C - A
         // test = dot( Normal, cross( E1, E2 ) )
         // test > 0: cw, test < 0: ccw
-        const e1 = maths.vec3.subtract(maths.vec3.create(), v2, v1)
-        const e2 = maths.vec3.subtract(maths.vec3.create(), v3, v1)
-        const cr = maths.vec3.cross(maths.vec3.create(), e1, e2)
-        const t = maths.vec3.dot(no, cr)
+        const e1 = vec3.subtract(vec3.create(), v2, v1)
+        const e2 = vec3.subtract(vec3.create(), v3, v1)
+        const cr = vec3.cross(vec3.create(), e1, e2)
+        const t = vec3.dot(no, cr)
         if (t > 0) { // 1,2,3 -> 3,2,1
           const tmp = v3
           v3 = v1
@@ -369,7 +367,7 @@ const toPolyhedron = (points, faces, normals, colors) => {
     faces,
     colors
   }
-  return primitives.polyhedron(options)
+  return polyhedron(options)
 }
 
 /*
@@ -406,7 +404,7 @@ const solid${index} = () => {
   } else {
     src += '  const colors = null\n'
   }
-  src += '  return primitives.polyhedron({points, faces, colors, orientation: \'inside\'})\n}\n'
+  src += '  return polyhedron({points, faces, colors, orientation: \'inside\'})\n}\n'
   return src
 }
 

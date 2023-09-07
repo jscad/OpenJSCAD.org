@@ -1,22 +1,22 @@
 import test from 'ava'
 
-import { colors, geometries, primitives } from '@jscad/modeling'
+import { colorize, line, path2 } from '@jscad/modeling'
 
 import { serialize } from '../src/index.js'
 
 test('serialize 2D path (simple) objects to svg', (t) => {
   // simple open path
-  const object1 = primitives.line([[0, 0], [1, 1], [-3, 3]])
+  const object1 = line([[0, 0], [1, 1], [-3, 3]])
   let observed = serialize({}, object1)
   t.deepEqual(observed, [expected1])
 
   // simple closed path
-  let object3 = geometries.path2.fromPoints({}, [
+  let object3 = path2.fromPoints({}, [
     [42.33333, 0],
     [21.166665, -56.44443999999999],
     [63.49999499999999, -56.44443999999999]
   ])
-  object3 = geometries.path2.close(object3)
+  object3 = path2.close(object3)
 
   observed = serialize({}, object3)
   t.deepEqual(observed, [expected3])
@@ -24,8 +24,8 @@ test('serialize 2D path (simple) objects to svg', (t) => {
 
 test('serialize 2D path (color) objects to svg', (t) => {
   // simple open path
-  let object1 = primitives.line([[0, 0], [1, 1], [-3, 3]])
-  object1 = colors.colorize([0.5, 0.5, 0.5, 0.5], object1)
+  let object1 = line([[0, 0], [1, 1], [-3, 3]])
+  object1 = colorize([0.5, 0.5, 0.5, 0.5], object1)
   object1.id = 'l1'
   object1.class = 'gray-line'
   const observed = serialize({}, object1)

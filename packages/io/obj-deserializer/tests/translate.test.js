@@ -12,11 +12,11 @@ test('translate simple obj file to jscad script', (t) => {
   const inputFile = fs.readFileSync(inputPath, 'utf8')
 
   const observed = deserialize({ output: 'script', addMetaData: false }, inputFile)
-  const expected = `const {primitives} = require('@jscad/modeling')
+  const expected = `import * from '@jscad/modeling'
 
 // groups: 1
 // points: 8
-const main = () => {
+export const main = () => {
   // points are common to all geometries
   let points = [
     [-0.5,-0.5,0.5],
@@ -55,10 +55,9 @@ const group0 = (points) => {
     null,
     null,
   ]
-  return primitives.polyhedron({ orientation: 'outward', points, faces, colors })
+  return polyhedron({ orientation: 'outward', points, faces, colors })
 }
 
-module.exports = {main}
 `
 
   t.deepEqual(observed, expected)
@@ -84,11 +83,11 @@ f 5 6 2 1
 f 2 6 7 3
 `
   const observed = deserialize({ filename: 'absolute', output: 'script', addMetaData: false }, data)
-  const expected = `const {primitives} = require('@jscad/modeling')
+  const expected = `import * from '@jscad/modeling'
 
 // groups: 1
 // points: 8
-const main = () => {
+export const main = () => {
   // points are common to all geometries
   let points = [
     [0,2,2],
@@ -127,10 +126,9 @@ const group0 = (points) => {
     [0,0.5019607843137255,0.5019607843137255,1],
     [0,0.5019607843137255,0.5019607843137255,1],
   ]
-  return primitives.polyhedron({ orientation: 'outward', points, faces, colors })
+  return polyhedron({ orientation: 'outward', points, faces, colors })
 }
 
-module.exports = {main}
 `
 
   t.deepEqual(observed, expected)
@@ -170,11 +168,11 @@ v 2.000000 0.000000 2.000000
 f -4 -3 -2 -1
 `
   const observed = deserialize({ output: 'script', addMetaData: false }, data)
-  const expected = `const {primitives} = require('@jscad/modeling')
+  const expected = `import * from '@jscad/modeling'
 
 // groups: 1
 // points: 24
-const main = () => {
+export const main = () => {
   // points are common to all geometries
   let points = [
     [0,2,2],
@@ -229,10 +227,9 @@ const group0 = (points) => {
     null,
     null,
   ]
-  return primitives.polyhedron({ orientation: 'outward', points, faces, colors })
+  return polyhedron({ orientation: 'outward', points, faces, colors })
 }
 
-module.exports = {main}
 `
   t.deepEqual(observed, expected)
 })

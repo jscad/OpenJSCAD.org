@@ -2,18 +2,18 @@ import test from 'ava'
 
 import { countOf } from '../../test/helpers/countOf.js'
 
-import { colors, geometries, primitives } from '@jscad/modeling'
+import { colorize, cube, cuboid, geom3 } from '@jscad/modeling'
 
 import { serialize } from '../src/index.js'
 
 test('serialize empty 3D geometry to obj', (t) => {
-  const emptyShape = geometries.geom3.create()
+  const emptyShape = geom3.create()
   const observed1 = serialize({}, emptyShape)
   t.deepEqual(observed1, expected1)
 })
 
 test('serialize 3D geometry to obj', (t) => {
-  const testCube = primitives.cube()
+  const testCube = cube()
   const observed2 = serialize({}, testCube)
   t.is(observed2.length, 1)
   const obj2 = observed2[0]
@@ -26,7 +26,7 @@ test('serialize 3D geometry to obj', (t) => {
 })
 
 test('serialize non-triangulated 3D geometry to obj', (t) => {
-  const testCube = primitives.cube()
+  const testCube = cube()
   const observed3 = serialize({ triangulate: false }, testCube)
   t.is(observed3.length, 1)
   const obj3 = observed3[0]
@@ -40,8 +40,8 @@ test('serialize non-triangulated 3D geometry to obj', (t) => {
 
 test('serialize color 3D geometry to obj', (t) => {
   const testCubes = [
-    colors.colorize([1, 0.8, 0.8], primitives.cuboid({})),
-    primitives.cuboid({ center: [0, 3, 0] })
+    colorize([1, 0.8, 0.8], cuboid({})),
+    cuboid({ center: [0, 3, 0] })
   ]
   const observed4 = serialize({ triangulate: false }, testCubes)
   t.is(observed4.length, 1)

@@ -47,7 +47,7 @@ test.beforeEach((t) => {
 // the script should produce ALL geometry types
 const createJscad = (id, multipart = false) => {
   const jscadScript = `// test script ${id}
-import { primitives } from '@jscad/modeling'
+import { arc, ellipse, ellipsoid } from '@jscad/modeling'
 
 export const getParameterDefinitions = () => {
   return [
@@ -60,9 +60,9 @@ export const main = (params) => {
   let segments = params.segments || 16
 
   // shapes
-  let apath2 = primitives.arc()
-  let ageom2 = primitives.ellipse()
-  let ageom3 = primitives.ellipsoid()
+  let apath2 = arc()
+  let ageom2 = ellipse()
+  let ageom3 = ellipsoid()
 
   ${multipart ? 'return [ageom3, ageom3, ageom3]' : 'return [apath2, ageom2, ageom3]'}
 }

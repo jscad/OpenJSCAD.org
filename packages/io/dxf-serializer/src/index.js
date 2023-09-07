@@ -1,10 +1,8 @@
 import { flatten, toArray } from '@jscad/array-utils'
-import { geometries, modifiers } from '@jscad/modeling'
+import { generalize, geom3, geom2, path2 } from '@jscad/modeling'
 
 import { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } from './autocad_AC2017.js'
 import { colorIndex } from './colorindex2017.js'
-
-const { geom3, geom2, path2 } = geometries
 
 const mimeType = 'image/vnd.dxf'
 
@@ -46,7 +44,7 @@ const serialize = (options, ...objects) => {
   if (objects.length === 0) throw new Error('only JSCAD geometries can be serialized to DXF')
 
   // convert to triangles
-  objects = toArray(modifiers.generalize({ snap: true, triangulate: true }, objects))
+  objects = toArray(generalize({ snap: true, triangulate: true }, objects))
 
   const dxfContent = `999
 Created by JSCAD

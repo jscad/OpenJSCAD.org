@@ -20,8 +20,9 @@ const countOf = (search, string) => {
 test('deserialize simple X3D to JSCAD script', (t) => {
   const observed = deserialize({ output: 'script', addMetaData: false }, example01)
   t.is(countOf('createObjects', observed), 10)
-  t.is(countOf('primitives', observed), 3)
-  t.is(countOf('applyTransform', observed), 4)
+  t.is(countOf('sphere', observed), 1)
+  t.is(countOf('cuboid', observed), 1)
+  t.is(countOf('transform', observed), 6)
 })
 
 test('deserialize X3D 2D components to JSCAD script', (t) => {
@@ -30,8 +31,11 @@ test('deserialize X3D 2D components to JSCAD script', (t) => {
 
   const observed = deserialize({ output: 'script', addMetaData: false }, inputFile)
   t.is(countOf('createObjects', observed), 46)
-  t.is(countOf('primitives', observed), 10)
-  t.is(countOf('applyTransform', observed), 12)
+  t.is(countOf('arc', observed), 2)
+  t.is(countOf('circle', observed), 3)
+  t.is(countOf('rectangle', observed), 3)
+  t.is(countOf('line', observed), 1)
+  t.is(countOf('transform', observed), 22)
 })
 
 test('deserialize X3D 3D components to JSCAD script', (t) => {
@@ -40,9 +44,10 @@ test('deserialize X3D 3D components to JSCAD script', (t) => {
 
   const observed = deserialize({ output: 'script', addMetaData: false }, inputFile)
   t.is(countOf('createObjects', observed), 20)
-  t.is(countOf('primitives', observed), 5)
+  t.is(countOf('cylinder', observed), 2)
+  t.is(countOf('sphere', observed), 1)
   t.is(countOf('geom3.fromPoints', observed), 1)
-  t.is(countOf('applyTransform', observed), 6)
+  t.is(countOf('transform', observed), 10)
 })
 
 test('deserialize X3D line sets to JSCAD script', (t) => {
@@ -51,7 +56,7 @@ test('deserialize X3D line sets to JSCAD script', (t) => {
 
   const observed = deserialize({ output: 'script', addMetaData: false }, inputFile)
   t.is(countOf('createObjects', observed), 12)
-  t.is(countOf('primitives.line', observed), 32)
+  t.is(countOf('line(', observed), 32)
 })
 
 test('deserialize X3D elevation grids to JSCAD script', (t) => {
@@ -63,8 +68,8 @@ test('deserialize X3D elevation grids to JSCAD script', (t) => {
   t.is(countOf('points', observed), 12)
   t.is(countOf('faces', observed), 12)
   t.is(countOf('orientation', observed), 8)
-  t.is(countOf('primitives.polyhedron', observed), 4)
-  t.is(countOf('applyTransform', observed), 1)
+  t.is(countOf('polyhedron', observed), 4)
+  t.is(countOf('transform', observed), 0)
 })
 
 test('deserialize X3D 3D triangle sets to JSCAD script', (t) => {
@@ -76,8 +81,8 @@ test('deserialize X3D 3D triangle sets to JSCAD script', (t) => {
   t.is(countOf('points', observed), 12)
   t.is(countOf('faces', observed), 12)
   t.is(countOf('orientation', observed), 8)
-  t.is(countOf('primitives.polyhedron', observed), 4)
-  t.is(countOf('applyTransform', observed), 1)
+  t.is(countOf('polyhedron', observed), 4)
+  t.is(countOf('transform', observed), 0)
 })
 
 test('deserialize X3D 3D transforms to JSCAD script', (t) => {
@@ -86,8 +91,9 @@ test('deserialize X3D 3D transforms to JSCAD script', (t) => {
 
   const observed = deserialize({ output: 'script', addMetaData: false }, inputFile)
   t.is(countOf('createObjects', observed), 16)
-  t.is(countOf('primitives', observed), 5)
-  t.is(countOf('applyTransform', observed), 5)
+  t.is(countOf('cuboid', observed), 1)
+  t.is(countOf('cylinder', observed), 2)
+  t.is(countOf('transform', observed), 8)
 })
 
 test('deserialize X3D 3D indexed triangle sets to JSCAD script', (t) => {
@@ -99,8 +105,8 @@ test('deserialize X3D 3D indexed triangle sets to JSCAD script', (t) => {
   t.is(countOf('points', observed), 18)
   t.is(countOf('faces', observed), 20)
   t.is(countOf('orientation', observed), 12)
-  t.is(countOf('primitives.polyhedron', observed), 6)
-  t.is(countOf('applyTransform', observed), 1)
+  t.is(countOf('polyhedron', observed), 6)
+  t.is(countOf('transform', observed), 0)
 })
 
 test('deserialize X3D 3D groups to JSCAD script', (t) => {
@@ -109,8 +115,9 @@ test('deserialize X3D 3D groups to JSCAD script', (t) => {
 
   const observed = deserialize({ output: 'script', addMetaData: false }, inputFile)
   t.is(countOf('createObjects', observed), 20)
-  t.is(countOf('primitives', observed), 4)
-  t.is(countOf('applyTransform', observed), 6)
+  t.is(countOf('cuboid', observed), 1)
+  t.is(countOf('cylinder', observed), 2)
+  t.is(countOf('transform', observed), 10)
 })
 
 // EXAMPLES FOR SIMPLE TESTING

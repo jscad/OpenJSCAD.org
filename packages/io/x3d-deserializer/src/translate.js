@@ -56,22 +56,9 @@ const codify = (x3d, data) => {
 // Units : ${length.name} (${length.factor})
 // Angles : ${angle.name} (${angle.factor})
 
-const {booleans, extrusions, geometries, maths, primitives, transforms, utils} = require('@jscad/modeling')
-const { colorize } =  require('@jscad/modeling').colors
+import * from '@jscad/modeling'
 
-const applyTransform = (matrix, ...objects) => {
-  objects = utils.flatten(objects)
-  if (objects.length === 0) return objects
-
-  return objects.map((object) => {
-    const color = object.color
-    object = transforms.transform(matrix, object)
-    if (color) object.color = color
-    return object
-  })
-}
-
-const main = () => {
+export const main = () => {
   let options = {}
   let objects = []
 `
@@ -84,8 +71,6 @@ const main = () => {
   code += '  return objects\n}\n'
 
   code += translateDefinitions({}, objects)
-
-  code += 'module.exports = {main}\n'
 
   return code
 }

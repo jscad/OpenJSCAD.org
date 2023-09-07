@@ -3,7 +3,7 @@ import path from 'path'
 
 import test from 'ava'
 
-import { geometries } from '@jscad/modeling'
+import { path2 } from '@jscad/modeling'
 
 import { deserialize } from '../src/index.js'
 
@@ -22,8 +22,8 @@ test('ASCII DXF R13 to Object Conversion', (t) => {
   t.true(Array.isArray(objs))
   t.is(objs.length, 16)
 
-  t.true(geometries.path2.isA(objs[0]))
-  t.true(geometries.path2.isA(objs[15]))
+  t.true(path2.isA(objs[0]))
+  t.true(path2.isA(objs[15]))
 })
 
 test('ASCII DXF R14 to Object Conversion', (t) => {
@@ -47,7 +47,7 @@ test('ASCII DXF ANSI to Object Conversion', (t) => {
   t.true(Array.isArray(objs))
   t.is(objs.length, 1)
 
-  t.true(geometries.path2.isA(objs[0]))
+  t.true(path2.isA(objs[0]))
 })
 
 test('ASCII DXF ISO to Object Conversion', (t) => {
@@ -60,6 +60,6 @@ test('ASCII DXF ISO to Object Conversion', (t) => {
   t.true(Array.isArray(objs))
   t.is(objs.length, 14)
 
-  t.true(geometries.path2.isA(objs[0]))
-  t.true(geometries.path2.isA(objs[13]))
+  t.true(path2.isA(objs[0]))
+  t.true(path2.isA(objs[13]))
 })

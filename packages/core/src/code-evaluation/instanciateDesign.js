@@ -1,19 +1,15 @@
-import { geometries } from '@jscad/modeling'
+import { geom2, geom3, path2 } from '@jscad/modeling'
 
 import { flatten, toArray } from '@jscad/array-utils'
 
 import { serializeSolids } from './serializeSolids.js'
-
-const isGeom2 = geometries.geom2.isA
-const isGeom3 = geometries.geom3.isA
-const isPath2 = geometries.path2.isA
 
 /*
  * determine if the given results contain valid geometry
  */
 const isResultGeometry = (results) => {
   if (Array.isArray(results) && results.length > 0) {
-    return results.reduce((acc, result) => acc || (isGeom3(result) || isGeom2(result) || isPath2(result)), false)
+    return results.reduce((acc, result) => acc || (geom3.isA(result) || geom2.isA(result) || path2.isA(result)), false)
   }
   return false
 }

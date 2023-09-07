@@ -2,14 +2,14 @@ import test from 'ava'
 
 import { countOf } from '../../test/helpers/countOf.js'
 
-import { colors, geometries, primitives, transforms } from '@jscad/modeling'
+import { center, colorize, cube, geom3 } from '@jscad/modeling'
 
 import { serialize } from '../src/index.js'
 
 test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
-  const geom1 = geometries.geom3.create()
+  const g1 = geom3.create()
 
-  let results = serialize({}, geom1)
+  let results = serialize({}, g1)
   t.is(results.length, 1)
 
   let obs = results[0]
@@ -21,9 +21,9 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   t.is(countOf('Created by JSCAD', obs), 1)
   t.is(countOf('Scene', obs), 2)
 
-  const geom2 = primitives.cube()
+  const g2 = cube()
 
-  results = serialize({ metadata: false }, geom2)
+  results = serialize({ metadata: false }, g2)
   t.is(results.length, 1)
 
   obs = results[0]
@@ -41,10 +41,10 @@ test('serialize 3D geometry to X3D IndexedTriangleSet', (t) => {
   t.is(countOf('Coordinate', obs), 1)
   t.is(countOf('Color', obs), 1)
 
-  const geom3 = colors.colorize([0.5, 1, 0.5, 1.0], transforms.center({ relativeTo: [5, 5, 5] }, primitives.cube()))
-  geom2.id = geom3.id = 'g23'
+  const g3 = colorize([0.5, 1, 0.5, 1.0], center({ relativeTo: [5, 5, 5] }, cube()))
+  g2.id = g3.id = 'g23'
 
-  results = serialize({ metadata: false }, geom2, geom3)
+  results = serialize({ metadata: false }, g2, g3)
   t.is(results.length, 1)
 
   obs = results[0]

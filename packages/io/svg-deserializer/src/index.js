@@ -1,6 +1,6 @@
 import saxes from 'saxes'
 
-import { colors, transforms } from '@jscad/modeling'
+import { colorize, mirrorX, mirrorY, rotateZ, translate, scale } from '@jscad/modeling'
 import { toArray } from '@jscad/array-utils'
 
 import { pxPmm } from './constants.js'
@@ -47,7 +47,7 @@ const deserialize = (options, input) => {
     version
   }
   options = Object.assign({}, defaults, options)
-  return options.output === 'script' ? translate(input, options) : instantiate(input, options)
+  return options.output === 'script' ? translateScript(input, options) : instantiate(input, options)
 }
 
 /*
@@ -89,7 +89,7 @@ const instantiate = (src, options) => {
  *    at the start of the file
  * @return {string} a string (JSCAD script)
  */
-const translate = (src, options) => {
+const translateScript = (src, options) => {
   const { filename, version, pxPmm, addMetaData } = options
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
@@ -181,29 +181,29 @@ const objectify = (options, group) => {
         if (scaleAttribute !== null) {
           let x = Math.abs(scaleAttribute.scale[0])
           let y = Math.abs(scaleAttribute.scale[1])
-          shape = transforms.scale([x, y, 1], shape)
+          shape = scale([x, y, 1], shape)
           // and mirror if necessary
           x = scaleAttribute.scale[0]
           y = scaleAttribute.scale[1]
           if (x < 0) {
-            shape = transforms.mirrorX(shape)
+            shape = mirrorX(shape)
           }
           if (y < 0) {
-            shape = transforms.mirrorY(shape)
+            shape = mirrorY(shape)
           }
         }
         if (rotateAttribute !== null) {
           const z = 0 - rotateAttribute.rotate * 0.017453292519943295 // radians
-          shape = transforms.rotateZ(z, shape)
+          shape = rotateZ(z, shape)
         }
         if (translateAttribute !== null) {
           const x = cagLengthX(translateAttribute.translate[0], svgUnitsPmm, svgUnitsX)
           const y = (0 - cagLengthY(translateAttribute.translate[1], svgUnitsPmm, svgUnitsY))
-          shape = transforms.translate([x, y, 0], shape)
+          shape = translate([x, y, 0], shape)
         }
       }
       const color = svgColorForTarget(target, obj)
-      if (color) shape = colors.colorize(color, shape)
+      if (color) shape = colorize(color, shape)
       return shape
     })
     geometries = geometries.concat(shapes)

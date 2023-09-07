@@ -1,11 +1,11 @@
 import test from 'ava'
 
-import { primitives } from '@jscad/modeling'
+import { cube } from '@jscad/modeling'
 
 import { serialize } from '../src/index.js'
 
 test('serialize objects to stl (binary)', (t) => {
-  const object1 = primitives.cube()
+  const object1 = cube()
   const observed = serialize({ binary: true }, object1)
 
   // TODO: VERY shallow testing ... improve

@@ -1,4 +1,4 @@
-import { geometries } from '@jscad/modeling'
+import { geom2, geom3, path2 } from '@jscad/modeling'
 
 // handled format descriptions
 // note: order is important as regular expressions are created from extensions
@@ -110,8 +110,8 @@ export const supportedFormatsForObjects = (objects) => {
   let found3Dsolid = false
   let found2Dsolid = false
   for (let i = 0; i < objects.length; i++) {
-    if (geometries.geom3.isA(objects[i])) { found3Dsolid = true }
-    if (geometries.geom2.isA(objects[i]) || geometries.path2.isA(objects[i])) { found2Dsolid = true }
+    if (geom3.isA(objects[i])) { found3Dsolid = true }
+    if (geom2.isA(objects[i]) || path2.isA(objects[i])) { found2Dsolid = true }
   }
   for (const format in supportedFormats) {
     if (found3Dsolid && supportedFormats[format].convertGeom3 === true) {

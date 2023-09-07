@@ -35,7 +35,7 @@ TBD
 
 import { stringify } from '@jscad/io-utils'
 
-import { geometries, modifiers } from '@jscad/modeling'
+import { generalize, geom3 } from '@jscad/modeling'
 
 import { flatten, toArray } from '@jscad/array-utils'
 
@@ -50,7 +50,7 @@ const mimeType = 'application/amf+xml'
  * @returns {Array} serialized contents, AMF source data(XML)
  * @alias module:io/amf-serializer.serialize
  * @example
- * const geometry = primitives.cube()
+ * const geometry = cube()
  * const amfData = serializer({unit: 'meter'}, geometry)
  */
 const serialize = (options, ...objects) => {
@@ -63,13 +63,13 @@ const serialize = (options, ...objects) => {
   objects = flatten(objects)
 
   // convert only 3D geometries
-  let objects3d = objects.filter((object) => geometries.geom3.isA(object))
+  let objects3d = objects.filter((object) => geom3.isA(object))
 
   if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to AMF')
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to AMF')
 
   // convert to triangles
-  objects3d = toArray(modifiers.generalize({ snap: true, triangulate: true }, objects3d))
+  objects3d = toArray(generalize({ snap: true, triangulate: true }, objects3d))
 
   options.statusCallback && options.statusCallback({ progress: 0 })
 
@@ -95,7 +95,7 @@ ${stringify(body, 2)}`
 const translateObjects = (objects, options) => {
   const contents = []
   objects.forEach((object, i) => {
-    const polygons = geometries.geom3.toPolygons(object)
+    const polygons = geom3.toPolygons(object)
     if (polygons.length > 0) {
       options.id = i
       contents.push(convertToObject(object, options))
@@ -123,7 +123,7 @@ const convertToVertices = (object, options) => {
   const contents = ['vertices', {}]
 
   const vertices = []
-  const polygons = geometries.geom3.toPolygons(object)
+  const polygons = geom3.toPolygons(object)
   polygons.forEach((polygon) => {
     for (let i = 0; i < polygon.vertices.length; i++) {
       vertices.push(convertToVertex(polygon.vertices[i], options))
@@ -149,7 +149,7 @@ const convertToCoordinates = (vertex, options) => {
 
 const convertToVolumes = (object, options) => {
   const objectcolor = convertColor(object.color)
-  const polygons = geometries.geom3.toPolygons(object)
+  const polygons = geom3.toPolygons(object)
 
   const contents = []
 

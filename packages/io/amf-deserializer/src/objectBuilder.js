@@ -1,4 +1,4 @@
-import { maths, geometries } from '@jscad/modeling'
+import { geom3, poly3, vec3 } from '@jscad/modeling'
 
 let lastmaterial
 
@@ -115,8 +115,8 @@ export const createObject = (obj, index, data, options) => {
   if (options.instantiate === true) {
     const scale = options.amf.scale
     const vertex = scale !== 1.0
-      ? ([x, y, z]) => maths.vec3.fromValues(x * scale, y * scale, z * scale)
-      : (v) => maths.vec3.clone(v)
+      ? ([x, y, z]) => vec3.fromValues(x * scale, y * scale, z * scale)
+      : (v) => vec3.clone(v)
 
     obj.objects.forEach(addMesh)
     const ocolor = getColor(obj.objects)
@@ -133,12 +133,12 @@ export const createObject = (obj, index, data, options) => {
         }
         subData.push(vertex(vertices[faces[i][j]]))
       }
-      const polygon = geometries.poly3.create(subData)
+      const polygon = poly3.create(subData)
       const pcolor = colors[i] ? colors[i] : undefined
       if (pcolor) polygon.color = pcolor
       polygons.push(polygon)
     }
-    let shape = geometries.geom3.create(polygons)
+    let shape = geom3.create(polygons)
     if (ocolor) {
       shape = shape.color = ocolor
     }
@@ -165,7 +165,7 @@ const createObject${obj.id} = () => {
 
     // convert the results into function calls
     for (let i = 0; i < fcount; i++) {
-      code += '  polygon = geometries.poly3.create([\n'
+      code += '  polygon = poly3.create([\n'
       for (let j = 0; j < faces[i].length; j++) {
         if (faces[i][j] < 0 || faces[i][j] >= vcount) {
           continue
@@ -180,14 +180,14 @@ const createObject${obj.id} = () => {
       }
       code += '  polygons.push(polygon)\n'
     }
-    code += '  let shape = geometries.geom3.create(polygons)\n'
+    code += '  let shape = geom3.create(polygons)\n'
 
     const scale = options.scale ? options.scale : 1.0
     if (scale !== 1.0) {
-      code += `  shape = transforms.scale([${scale},${scale},${scale}], shape)\n`
+      code += `  shape = scale([${scale},${scale},${scale}], shape)\n`
     }
     if (ocolor) {
-      code += `  shape = colors.colorize([${ocolor}], shape)\n`
+      code += `  shape = colorize([${ocolor}], shape)\n`
     }
 
     code += '  return shape\n}\n'

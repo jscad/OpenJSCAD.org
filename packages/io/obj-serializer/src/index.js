@@ -9,7 +9,7 @@
  * const { serializer, mimeType } = require('@jscad/obj-serializer')
  */
 
-import { colors, geometries, modifiers } from '@jscad/modeling'
+import { cssColors, generalize, geom3 } from '@jscad/modeling'
 
 import { flatten, toArray } from '@jscad/array-utils'
 
@@ -24,7 +24,7 @@ const mimeType = 'model/obj'
  * @returns {Array} serialized contents, OBJ source data
  * @alias module:io/obj-serializer.serialize
  * @example
- * const geometry = primitives.cube()
+ * const geometry = cube()
  * const objData = serializer({}, geometry)
  */
 const serialize = (options, ...objects) => {
@@ -37,13 +37,13 @@ const serialize = (options, ...objects) => {
   objects = flatten(objects)
 
   // convert only 3D geometries
-  let objects3d = objects.filter((object) => geometries.geom3.isA(object))
+  let objects3d = objects.filter((object) => geom3.isA(object))
 
   if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to OBJ')
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to OBJ')
 
   // snap to grid and convert to triangles
-  objects3d = toArray(modifiers.generalize({ snap: true, triangulate: options.triangulate }, objects3d))
+  objects3d = toArray(generalize({ snap: true, triangulate: options.triangulate }, objects3d))
 
   options.statusCallback && options.statusCallback({ progress: 0 })
 
@@ -61,7 +61,7 @@ const serialize = (options, ...objects) => {
     body += '\n'
 
     const objectColor = getColorName(object)
-    const polygons = geometries.geom3.toPolygons(object)
+    const polygons = geom3.toPolygons(object)
       .filter((p) => p.vertices.length >= 3)
 
     polygons.forEach((polygon) => {
@@ -112,8 +112,8 @@ const getColorName = (object) => {
     const b = object.color[2]
     // find the closest css color
     let closest = 255 + 255 + 255
-    for (const name in colors.cssColors) {
-      const rgb = colors.cssColors[name]
+    for (const name in cssColors) {
+      const rgb = cssColors[name]
       const diff = Math.abs(r - rgb[0]) + Math.abs(g - rgb[1]) + Math.abs(b - rgb[2])
       if (diff < closest) {
         colorName = name

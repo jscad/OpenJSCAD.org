@@ -1,25 +1,25 @@
 import test from 'ava'
 
-import { geometries, primitives } from '@jscad/modeling'
+import { arc, path2 } from '@jscad/modeling'
 
 import { serialize } from '../src/index.js'
 import { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } from '../src/autocad_AC2017.js'
 
 test('2D Path to DXF LWPOLYLINE', (t) => {
-  const path1 = geometries.path2.create()
+  const p1 = path2.create()
 
-  const obs1 = serialize({}, path1)
+  const obs1 = serialize({}, p1)
   const exp1 = [empty]
   t.deepEqual(obs1, exp1)
 
-  const path2 = primitives.arc({ center: [5, 5], endAngle: 45, segments: 16 })
+  const p2 = arc({ center: [5, 5], endAngle: 45, segments: 16 })
 
-  const obs2 = serialize({}, path2)
+  const obs2 = serialize({}, p2)
   const exp2 = [lwpolyline0]
   t.deepEqual(obs2, exp2)
 
   // TODO
-  // const path3 = geometries.path2.fromPoints({}, [[10, -20]])
+  // const path3 = path2.fromPoints({}, [[10, -20]])
   // path3 = path3.appendBezier([[10, -10], [25, -10], [25, -20]], { resolution: 8 })
   // t.is(path3.points.length, 6)
 

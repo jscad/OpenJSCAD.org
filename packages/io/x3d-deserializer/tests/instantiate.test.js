@@ -3,7 +3,7 @@ import path from 'path'
 
 import test from 'ava'
 
-import { geometries } from '@jscad/modeling'
+import { geom2, geom3, path2 } from '@jscad/modeling'
 
 import { deserialize } from '../src/index.js'
 
@@ -13,8 +13,8 @@ test('deserialize simple X3D to JSCAD geometry', (t) => {
   const observed = deserialize({ output: 'geometry', addMetaData: false }, example01)
   t.true(Array.isArray(observed))
   t.is(observed.length, 2)
-  t.true(geometries.geom3.isA(observed[0]))
-  t.true(geometries.geom3.isA(observed[1]))
+  t.true(geom3.isA(observed[0]))
+  t.true(geom3.isA(observed[1]))
 })
 
 test('deserialize X3D 2D components to JSCAD geometry', (t) => {
@@ -24,17 +24,17 @@ test('deserialize X3D 2D components to JSCAD geometry', (t) => {
   const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 11)
-  t.true(geometries.geom2.isA(observed[0]))
-  t.true(geometries.path2.isA(observed[1]))
-  t.true(geometries.geom2.isA(observed[2]))
-  t.true(geometries.path2.isA(observed[3]))
-  t.true(geometries.geom2.isA(observed[4]))
-  t.true(geometries.geom2.isA(observed[5]))
-  t.true(geometries.geom2.isA(observed[6]))
-  t.true(geometries.path2.isA(observed[7]))
-  t.true(geometries.geom2.isA(observed[8]))
-  t.true(geometries.geom2.isA(observed[9]))
-  t.true(geometries.geom2.isA(observed[10]))
+  t.true(geom2.isA(observed[0]))
+  t.true(path2.isA(observed[1]))
+  t.true(geom2.isA(observed[2]))
+  t.true(path2.isA(observed[3]))
+  t.true(geom2.isA(observed[4]))
+  t.true(geom2.isA(observed[5]))
+  t.true(geom2.isA(observed[6]))
+  t.true(path2.isA(observed[7]))
+  t.true(geom2.isA(observed[8]))
+  t.true(geom2.isA(observed[9]))
+  t.true(geom2.isA(observed[10]))
 })
 
 test('deserialize X3D 3D components to JSCAD geometry', (t) => {
@@ -44,11 +44,11 @@ test('deserialize X3D 3D components to JSCAD geometry', (t) => {
   const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 5)
-  t.true(geometries.geom3.isA(observed[0]))
-  t.true(geometries.geom3.isA(observed[1]))
-  t.true(geometries.geom3.isA(observed[2]))
-  t.true(geometries.geom3.isA(observed[3]))
-  t.true(geometries.geom3.isA(observed[4]))
+  t.true(geom3.isA(observed[0]))
+  t.true(geom3.isA(observed[1]))
+  t.true(geom3.isA(observed[2]))
+  t.true(geom3.isA(observed[3]))
+  t.true(geom3.isA(observed[4]))
 })
 
 test('deserialize X3D line sets to JSCAD geometry', (t) => {
@@ -58,11 +58,11 @@ test('deserialize X3D line sets to JSCAD geometry', (t) => {
   const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 32)
-  t.true(geometries.path2.isA(observed[0]))
-  t.true(geometries.path2.isA(observed[8]))
-  t.true(geometries.path2.isA(observed[16]))
-  t.true(geometries.path2.isA(observed[24]))
-  t.true(geometries.path2.isA(observed[31]))
+  t.true(path2.isA(observed[0]))
+  t.true(path2.isA(observed[8]))
+  t.true(path2.isA(observed[16]))
+  t.true(path2.isA(observed[24]))
+  t.true(path2.isA(observed[31]))
 })
 
 test('deserialize X3D elevation grids to JSCAD geometry', (t) => {
@@ -72,10 +72,10 @@ test('deserialize X3D elevation grids to JSCAD geometry', (t) => {
   const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 4)
-  t.true(geometries.geom3.isA(observed[0]))
-  t.true(geometries.geom3.isA(observed[1]))
-  t.true(geometries.geom3.isA(observed[2]))
-  t.true(geometries.geom3.isA(observed[3]))
+  t.true(geom3.isA(observed[0]))
+  t.true(geom3.isA(observed[1]))
+  t.true(geom3.isA(observed[2]))
+  t.true(geom3.isA(observed[3]))
 })
 
 test('deserialize X3D 3D triangle sets to JSCAD geometry', (t) => {
@@ -85,10 +85,10 @@ test('deserialize X3D 3D triangle sets to JSCAD geometry', (t) => {
   const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 4)
-  t.true(geometries.geom3.isA(observed[0]))
-  t.true(geometries.geom3.isA(observed[1]))
-  t.true(geometries.geom3.isA(observed[2]))
-  t.true(geometries.geom3.isA(observed[3]))
+  t.true(geom3.isA(observed[0]))
+  t.true(geom3.isA(observed[1]))
+  t.true(geom3.isA(observed[2]))
+  t.true(geom3.isA(observed[3]))
 })
 
 test('deserialize X3D 3D transforms to JSCAD geometry', (t) => {
@@ -98,10 +98,10 @@ test('deserialize X3D 3D transforms to JSCAD geometry', (t) => {
   const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 4)
-  t.true(geometries.geom3.isA(observed[0]))
-  t.true(geometries.geom3.isA(observed[1]))
-  t.true(geometries.geom3.isA(observed[2]))
-  t.true(geometries.geom3.isA(observed[3]))
+  t.true(geom3.isA(observed[0]))
+  t.true(geom3.isA(observed[1]))
+  t.true(geom3.isA(observed[2]))
+  t.true(geom3.isA(observed[3]))
 })
 
 test('deserialize X3D 3D indexed triangle sets to JSCAD geometry', (t) => {
@@ -111,12 +111,12 @@ test('deserialize X3D 3D indexed triangle sets to JSCAD geometry', (t) => {
   const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 6)
-  t.true(geometries.geom3.isA(observed[0]))
-  t.true(geometries.geom3.isA(observed[1]))
-  t.true(geometries.geom3.isA(observed[2]))
-  t.true(geometries.geom3.isA(observed[3]))
-  t.true(geometries.geom3.isA(observed[4]))
-  t.true(geometries.geom3.isA(observed[5]))
+  t.true(geom3.isA(observed[0]))
+  t.true(geom3.isA(observed[1]))
+  t.true(geom3.isA(observed[2]))
+  t.true(geom3.isA(observed[3]))
+  t.true(geom3.isA(observed[4]))
+  t.true(geom3.isA(observed[5]))
 })
 
 test('deserialize X3D 3D groups to JSCAD geometry', (t) => {
@@ -126,13 +126,13 @@ test('deserialize X3D 3D groups to JSCAD geometry', (t) => {
   const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 7)
-  t.true(geometries.geom3.isA(observed[0]))
-  t.true(geometries.geom3.isA(observed[1]))
-  t.true(geometries.geom3.isA(observed[2]))
-  t.true(geometries.geom3.isA(observed[3]))
-  t.true(geometries.geom3.isA(observed[4]))
-  t.true(geometries.geom3.isA(observed[5]))
-  t.true(geometries.geom3.isA(observed[6]))
+  t.true(geom3.isA(observed[0]))
+  t.true(geom3.isA(observed[1]))
+  t.true(geom3.isA(observed[2]))
+  t.true(geom3.isA(observed[3]))
+  t.true(geom3.isA(observed[4]))
+  t.true(geom3.isA(observed[5]))
+  t.true(geom3.isA(observed[6]))
 })
 
 // EXAMPLES FOR SIMPLE TESTING

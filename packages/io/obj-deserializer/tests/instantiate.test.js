@@ -3,7 +3,7 @@ import path from 'path'
 
 import test from 'ava'
 
-import { geometries } from '@jscad/modeling'
+import { geom3 } from '@jscad/modeling'
 
 import { deserialize } from '../src/index.js'
 
@@ -17,7 +17,7 @@ test('deserialize simple obj to geometry', (t) => {
 
   const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.is(observed.length, 1)
-  const polygons = geometries.geom3.toPolygons(observed[0])
+  const polygons = geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 6)
 
   const observedVertices = toArray(polygons)

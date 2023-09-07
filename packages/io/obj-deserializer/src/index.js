@@ -1,4 +1,4 @@
-import { colors, primitives } from '@jscad/modeling'
+import { colorNameToRgb, polyhedron } from '@jscad/modeling'
 
 const version = '[VI]{version}[/VI]' // version is injected by rollup
 
@@ -85,7 +85,7 @@ const getGroups = (data, options) => {
     material = null
     if (values && values.length > 0) {
       // try to convert the material to a color by name
-      const c = colors.colorNameToRgb(values[0])
+      const c = colorNameToRgb(values[0])
       if (c) material = [c[0], c[1], c[2], 1] // add alpha
     }
   }
@@ -124,7 +124,7 @@ const getGroups = (data, options) => {
 }
 
 const objectify = (points, groups, options) => {
-  const geometries = groups.map((group) => primitives.polyhedron({ orientation: options.orientation, points, faces: group.faces, colors: group.colors }))
+  const geometries = groups.map((group) => polyhedron({ orientation: options.orientation, points, faces: group.faces, colors: group.colors }))
   return geometries
 }
 
@@ -173,7 +173,7 @@ const translateGroupsToFunctions = (groups, options) => {
     code += `const group${index} = (points) => {
 ${translateFaces(faces)}
 ${translateColors(colors)}
-  return primitives.polyhedron({ orientation: '${options.orientation}', points, faces, colors })
+  return polyhedron({ orientation: '${options.orientation}', points, faces, colors })
 }
 `
   })
@@ -193,11 +193,11 @@ const stringify = (positions, groups, options) => {
     : ''
 
   // create the main function, with a list of points and translated groups
-  code += `const {primitives} = require('@jscad/modeling')
+  code += `import * from '@jscad/modeling'
 
 // groups: ${groups.length}
 // points: ${positions.length}
-const main = () => {
+export const main = () => {
   // points are common to all geometries
 ${translatePoints(positions)}
 
@@ -207,7 +207,6 @@ ${translateGroupsToCalls(groups)}  ]
 }
 
 ${translateGroupsToFunctions(groups, options)}
-module.exports = {main}
 `
 
   // create a function for each group

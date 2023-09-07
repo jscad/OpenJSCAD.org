@@ -1,11 +1,11 @@
-import { colors, maths } from '@jscad/modeling'
+import { hexToRgb, mat4 } from '@jscad/modeling'
 
 import saxes from 'saxes'
 
 const convertTransform = (text) => {
   // convert the list of values (string) to mat4
   const values = text.split(/ +/).map((s) => parseFloat(s))
-  return maths.mat4.fromValues(
+  return mat4.fromValues(
     values[0], values[1], values[2], 0.0,
     values[3], values[4], values[5], 0.0,
     values[6], values[7], values[8], 0.0,
@@ -64,7 +64,7 @@ const parseTriangle = (attributes) => {
 
 // parse the build item, which specifies the contents of the model
 const parseItem = (attributes) => {
-  const obj = { type: 'item', transform: maths.mat4.create() }
+  const obj = { type: 'item', transform: mat4.create() }
 
   obj.objectid = attributes.objectid
 
@@ -95,7 +95,7 @@ const parseComponents = (attributes) => {
 }
 
 const parseComponent = (attributes) => {
-  const obj = { type: 'component', transform: maths.mat4.create() }
+  const obj = { type: 'component', transform: mat4.create() }
 
   obj.objectid = attributes.objectid
 
@@ -117,7 +117,7 @@ const parseBase = (attributes) => {
 
   obj.name = attributes.name
 
-  let color = colors.hexToRgb(attributes.displaycolor)
+  let color = hexToRgb(attributes.displaycolor)
   if (color.length === 3) color = [color[0], color[1], color[2], 1.0] // add alpha
   obj.displaycolor = color
 
@@ -135,7 +135,7 @@ const parseColorGroup = (attributes) => {
 const parseColor = (attributes) => {
   const obj = { type: 'color' }
 
-  let color = colors.hexToRgb(attributes.color)
+  let color = hexToRgb(attributes.color)
   if (color.length === 3) color = [color[0], color[1], color[2], 1.0] // add alpha
   obj.color = color
 
