@@ -5,7 +5,7 @@ export * from './maths/index.js'
 export * from './measurements/index.js'
 export * from './primitives/index.js'
 export * from './text/index.js'
-export { degToRad, flatten, radToDeg } from './utils/index.js'
+export { degToRad, flatten, radiusToSegments, radToDeg } from './utils/index.js'
 
 export * from './operations/booleans/index.js'
 export * from './operations/extrusions/index.js'
