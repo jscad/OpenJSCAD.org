@@ -5,7 +5,7 @@
  * const { serializer, mimeType } = require('@jscad/json-serializer')
  */
 
-import { utils } from '@jscad/modeling'
+import { flatten } from '@jscad/array-utils'
 
 const mimeType = 'application/json'
 
@@ -34,7 +34,7 @@ const replacer = (key, value) => {
  * @returns {Array} serialized contents as JSON string
  * @alias module:io/json-serializer.serialize
  * @example
- * const geometry = primitives.cube()
+ * const geometry = cube()
  * const jsonData = serializer({}, geometry)
  */
 const serialize = (options, ...objects) => {
@@ -43,7 +43,7 @@ const serialize = (options, ...objects) => {
   }
   options = Object.assign({}, defaults, options)
 
-  objects = utils.flatten(objects)
+  objects = flatten(objects)
 
   options.statusCallback && options.statusCallback({ progress: 0 })
 

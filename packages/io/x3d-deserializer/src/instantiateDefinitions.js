@@ -1,4 +1,4 @@
-import { colors, transforms } from '@jscad/modeling'
+import { colorize, transform } from '@jscad/modeling'
 
 import { createTransform } from './createTransform.js'
 
@@ -21,7 +21,7 @@ const instantiateTransform = (options, object) => {
 
   return geometries.map((geometry) => {
     const color = geometry.color
-    geometry = transforms.transform(matrix, geometry)
+    geometry = transform(matrix, geometry)
     if (color) geometry.color = color
     return geometry
   })
@@ -38,7 +38,7 @@ const instantiateShape = (options, object) => {
   if (!geometry) geometry = null
 
   if (geometry && color) {
-    geometry = colors.colorize(color, geometry)
+    geometry = colorize(color, geometry)
   }
   return geometry
 }

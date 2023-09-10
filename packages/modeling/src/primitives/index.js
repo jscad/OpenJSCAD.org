@@ -4,7 +4,7 @@
  * Primitives can be logically combined, transformed, extruded, etc.
  * @module modeling/primitives
  * @example
- * import { cube, ellipse, star } = require('@jscad/modeling/primitives')
+ * import { cube, ellipse, star } from '@jscad/modeling'
  */
 export { arc } from './arc.js'
 export { circle } from './circle.js'

@@ -5,7 +5,7 @@ import { comparePoints, nearlyEqual } from '../../../test/helpers/index.js'
 import { colorize } from '../../colors/index.js'
 import { geom2, path2 } from '../../geometries/index.js'
 import { measureArea, measureBoundingBox } from '../../measurements/index.js'
-import { area } from '../../maths/utils/index.js'
+import { area } from '../../maths/utils/area.js'
 import { TAU } from '../../maths/constants.js'
 
 import { offset } from './index.js'

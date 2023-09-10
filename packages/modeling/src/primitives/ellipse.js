@@ -4,7 +4,7 @@ import * as vec2 from '../maths/vec2/index.js'
 
 import * as geom2 from '../geometries/geom2/index.js'
 
-import { sin, cos } from '../maths/utils/index.js'
+import { sin, cos } from '../maths/utils/trigonometry.js'
 
 import { isGTE, isNumberArray } from './commonChecks.js'
 

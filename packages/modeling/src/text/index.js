@@ -4,7 +4,7 @@
  * Note: Only ASCII characters are supported.
  * @module modeling/text
  * @example
- * import { vectorChar, vectorText } from '@jscad/modeling/text'
+ * import { vectorChar, vectorText } from '@jscad/modeling'
  */
 export { vectorChar } from './vectorChar.js'
 export { vectorText } from './vectorText.js'

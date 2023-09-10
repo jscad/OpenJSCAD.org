@@ -1,4 +1,4 @@
-import { primitives } from '@jscad/modeling'
+import { polyhedron } from '@jscad/modeling'
 
 import { x3dTypes } from './objects.js'
 import { findNode, createColors } from './translateHelpers.js'
@@ -282,7 +282,7 @@ export const instantiateMesh = (options, objects) => {
 
   const components = convertMesh(options, objects)
   if (components) {
-    geometry = primitives.polyhedron(components)
+    geometry = polyhedron(components)
   }
   return geometry
 }

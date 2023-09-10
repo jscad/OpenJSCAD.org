@@ -1,4 +1,4 @@
-import { geometries } from '@jscad/modeling'
+import { geom3, poly3 } from '@jscad/modeling'
 
 import { extrudeX3D } from './extrudeX3D.js'
 
@@ -7,8 +7,6 @@ import { findNode, findColor, pointsToString } from './translateHelpers.js'
 
 import { translateLine } from './translateLine.js'
 import { translateMesh } from './translateMesh.js'
-
-const { geom3, poly3 } = geometries
 
 export const translateShape = (options, object) => {
   let code = `
@@ -27,23 +25,23 @@ const createObjects${object.id} = (options) => {
   // 3D geometries
   let shape = findNode(x3dTypes.BOX, objects)
   if (shape) {
-    primitive = `primitives.cuboid({size: [${shape.size}]})`
+    primitive = `cuboid({size: [${shape.size}]})`
   } else {
     shape = findNode(x3dTypes.CONE, objects)
     if (shape) {
-      code += `  const shape = transforms.rotateX(-Math.PI/2, primitives.cylinderElliptic({startRadius: [${shape.bottomRadius},${shape.bottomRadius}], height: ${shape.height}, segments: ${shape.subdivision}, endRadius: [${shape.topRadius}, ${shape.topRadius}]}))
+      code += `  const shape = rotateX(-Math.PI/2, cylinderElliptic({startRadius: [${shape.bottomRadius},${shape.bottomRadius}], height: ${shape.height}, segments: ${shape.subdivision}, endRadius: [${shape.topRadius}, ${shape.topRadius}]}))
 `
       primitive = 'shape'
     } else {
       shape = findNode(x3dTypes.CYLINDER, objects)
       if (shape) {
-        code += `  const shape = transforms.rotateX(-Math.PI/2, primitives.cylinder({radius: ${shape.radius}, height: ${shape.height}, segments: ${shape.subdivision}}))
+        code += `  const shape = rotateX(-Math.PI/2, cylinder({radius: ${shape.radius}, height: ${shape.height}, segments: ${shape.subdivision}}))
 `
         primitive = 'shape'
       } else {
         shape = findNode(x3dTypes.SPHERE, objects)
         if (shape) {
-          primitive = `primitives.sphere({radius: ${shape.radius}, segments: ${shape.subdivision}})`
+          primitive = `sphere({radius: ${shape.radius}, segments: ${shape.subdivision}})`
         } else {
           shape = findNode(x3dTypes.EXTRUSION, objects)
           if (shape) {
@@ -56,7 +54,7 @@ const createObjects${object.id} = (options) => {
   ${polysAsStrings.join(',\n  ')}
 ]
 `
-            primitive = 'geometries.geom3.fromPoints(polygons)'
+            primitive = 'geom3.fromPoints(polygons)'
           }
         }
       }
@@ -67,41 +65,41 @@ const createObjects${object.id} = (options) => {
     // 2D geometries
     shape = findNode(x3dTypes.ARC2D, objects)
     if (shape) {
-      primitive = `primitives.arc({radius: ${shape.radius}, startAngle: ${shape.startAngle}, endAngle: ${shape.endAngle}, segments: ${shape.subdivision}})`
+      primitive = `arc({radius: ${shape.radius}, startAngle: ${shape.startAngle}, endAngle: ${shape.endAngle}, segments: ${shape.subdivision}})`
     } else {
       shape = findNode(x3dTypes.ARCCLOSE2D, objects)
       if (shape) {
         if (shape.closureType === 'PIE') {
-          primitive = `primitives.circle({radius: ${shape.radius}, startAngle: ${shape.startAngle}, endAngle: ${shape.endAngle}, segments: ${shape.subdivision}})`
+          primitive = `circle({radius: ${shape.radius}, startAngle: ${shape.startAngle}, endAngle: ${shape.endAngle}, segments: ${shape.subdivision}})`
         } else {
-          primitive = `geometries.geom2.create([geometries.path2.toPoints(geometries.path2.close(primitives.arc({radius: ${shape.radius}, startAngle: ${shape.startAngle}, endAngle: ${shape.endAngle}, segments: ${shape.subdivision}})))])`
+          primitive = `geom2.create([path2.toPoints(path2.close(arc({radius: ${shape.radius}, startAngle: ${shape.startAngle}, endAngle: ${shape.endAngle}, segments: ${shape.subdivision}})))])`
         }
       } else {
         shape = findNode(x3dTypes.CIRCLE2D, objects)
         if (shape) {
           // NOTE: X3D circles are really closed arcs (lines)
-          primitive = `primitives.arc({radius: ${shape.radius}, segments: ${shape.subdivision}})`
+          primitive = `arc({radius: ${shape.radius}, segments: ${shape.subdivision}})`
         } else {
           shape = findNode(x3dTypes.DISK2D, objects)
           if (shape) {
             if (shape.innerRadius === shape.outerRadius) {
-              primitive = `primitives.arc({radius: ${shape.outerRadius}, segments: ${shape.subdivision}})`
+              primitive = `arc({radius: ${shape.outerRadius}, segments: ${shape.subdivision}})`
             } else {
               if (shape.innerRadius === 0) {
-                primitive = `primitives.circle({radius: ${shape.outerRadius}, segments: ${shape.subdivision}})`
+                primitive = `circle({radius: ${shape.outerRadius}, segments: ${shape.subdivision}})`
               } else {
-                primitive = `booleans.subtract(primitives.circle({radius: ${shape.outerRadius}, segments: ${shape.subdivision}}), primitives.circle({radius: ${shape.innerRadius}, segments: ${shape.subdivision}}))`
+                primitive = `subtract(circle({radius: ${shape.outerRadius}, segments: ${shape.subdivision}}), primitives.circle({radius: ${shape.innerRadius}, segments: ${shape.subdivision}}))`
               }
             }
           } else {
             shape = findNode(x3dTypes.POLYLINE2D, objects)
             if (shape) {
               const lineSegments = shape.lineSegments.join('], [')
-              primitive = `primitives.line([[${lineSegments}]])`
+              primitive = `line([[${lineSegments}]])`
             } else {
               shape = findNode(x3dTypes.RECTANGLE2D, objects)
               if (shape) {
-                primitive = `primitives.rectangle({size: [${shape.size}]})`
+                primitive = `rectangle({size: [${shape.size}]})`
               } else {
                 shape = findNode(x3dTypes.TRIANGLESET2D, objects)
                 if (shape) {
@@ -112,7 +110,7 @@ const createObjects${object.id} = (options) => {
   const vertices = ${pointsToString(shape.vertices)}
   const triangles = []
   for (let i = 0; i < ${numfaces}; i = i + 3) {
-    triangles.push(geometries.geom2.create([[vertices[i], vertices[i + 1], vertices[i + 2]]]))
+    triangles.push(geom2.create([[vertices[i], vertices[i + 1], vertices[i + 2]]]))
   }
 `
                   primitive = 'triangles'

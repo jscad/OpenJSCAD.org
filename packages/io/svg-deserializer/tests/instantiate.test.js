@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { measurements } from '@jscad/modeling'
+import { measureArea, measureBoundingBox } from '@jscad/modeling'
 
 import { deserialize } from '../src/index.js'
 
@@ -17,16 +17,16 @@ test('deserialize : instantiate svg (rect) to objects', (t) => {
   let shape = observed[0]
   t.is(shape.outlines.length, 1)
   t.is(shape.outlines[0].length, 4)
-  t.is(measurements.measureArea(shape), 625)
+  t.is(measureArea(shape), 625)
   shape = observed[1]
   t.is(shape.outlines.length, 1)
   t.is(shape.outlines[0].length, 36)
-  t.is(measurements.measureArea(shape), 610.943122436129)
+  t.is(measureArea(shape), 610.943122436129)
   shape = observed[3]
   t.is(shape.outlines.length, 1)
   t.is(shape.outlines[0].length, 4)
-  t.is(measurements.measureArea(shape), 3750)
-  t.deepEqual(measurements.measureBoundingBox(shape), [[14, -86, 0], [64, -11, 0]])
+  t.is(measureArea(shape), 3750)
+  t.deepEqual(measureBoundingBox(shape), [[14, -86, 0], [64, -11, 0]])
 
   observed = deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 4)
@@ -39,7 +39,7 @@ test('deserialize : instantiate svg (rect) to objects', (t) => {
   shape = observed[3]
   t.is(shape.points.length, 4)
   t.true(shape.isClosed)
-  t.deepEqual(measurements.measureBoundingBox(shape), [[14, -86, 0], [64, -11, 0]])
+  t.deepEqual(measureBoundingBox(shape), [[14, -86, 0], [64, -11, 0]])
 })
 
 // ################################
@@ -257,10 +257,10 @@ test('deserialize : instantiate svg (path: arc) to objects', (t) => {
   t.is(observed.length, 2)
   shape = observed[0]
   t.is(shape.points.length, 15) // segments double on a 3/4 circle
-  t.deepEqual(measurements.measureBoundingBox(shape), [[64.91110599999999, -77.611105, 0], [90.21850570104527, -52.30370029895471, 0]])
+  t.deepEqual(measureBoundingBox(shape), [[64.91110599999999, -77.611105, 0], [90.21850570104527, -52.30370029895471, 0]])
   shape = observed[1]
   t.is(shape.points.length, 15) // segments double on a 3/4 circle
-  t.deepEqual(measurements.measureBoundingBox(shape), [[50.799996, -136.03302387090216, 0], [72.27222493929787, -110.6793647936299, 0]])
+  t.deepEqual(measureBoundingBox(shape), [[50.799996, -136.03302387090216, 0], [72.27222493929787, -110.6793647936299, 0]])
 })
 
 // ################################

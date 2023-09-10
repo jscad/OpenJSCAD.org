@@ -1,15 +1,15 @@
 import test from 'ava'
 
-import { primitives, transforms } from '@jscad/modeling'
+import { cube, translate } from '@jscad/modeling'
 
 import { serialize } from '../src/index.js'
 
 test('serialize objects to stl (ascii)', (t) => {
-  const object1 = primitives.cube({ size: 10 }) // .setColor([0, 0, 1, 1])
+  const object1 = cube({ size: 10 }) // .setColor([0, 0, 1, 1])
   const observed1 = serialize({ binary: false }, object1)
   t.deepEqual(observed1, [expected1])
 
-  const object2 = transforms.translate([5, 5, 5], object1) // .setColor([1, 0, 0, 1])
+  const object2 = translate([5, 5, 5], object1) // .setColor([1, 0, 0, 1])
   const observed2 = serialize({ binary: false }, object1, object2)
   t.deepEqual(observed2, [expected2])
 })

@@ -23,7 +23,7 @@ const createObjects${object.id} = (options) => {
   // apply the transforms if any
   code += `
   const matrix = [${matrix}]
-  return applyTransform(matrix, objects)
+  return transform(matrix, objects)
 }
 `
 

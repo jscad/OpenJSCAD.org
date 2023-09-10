@@ -5,7 +5,7 @@ export * as maths from './maths'
 export * as measurements from './measurements'
 export * as primitives from './primitives'
 export * as text from './text'
-export * as utils from './utils'
+export { degToRad, flatten, radiusToSegments, radToDeg } from './utils'
 
 export * as booleans from './operations/booleans'
 export * as extrusions from './operations/extrusions'

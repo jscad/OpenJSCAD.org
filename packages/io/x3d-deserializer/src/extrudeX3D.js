@@ -1,7 +1,4 @@
-import { extrusions, geometries, maths } from '@jscad/modeling'
-
-const { mat4, vec3, utils } = maths
-const { extrudeFromSlices } = extrusions
+import { extrudeFromSlices, geom2, mat4, poly2, slice, vec3 } from '@jscad/modeling'
 
 const calculateYaxes = (spine) => {
   const slength = spine.length
@@ -132,7 +129,7 @@ export const extrudeX3D = (x3dshape) => {
   let { beginCap, endCap, crossSection, orientations, scales, spine } = Object.assign({}, x3dshape)
 
   // orientate the crossection for extruding
-  if (utils.area(crossSection) < 0) crossSection.reverse()
+  if (poly2.measureArea(poly2.create(crossSection)) < 0) crossSection.reverse()
 
   // complete scales if necessary
   if (scales.length === 1) {
@@ -150,8 +147,8 @@ export const extrudeX3D = (x3dshape) => {
   }
 
   // Create the initial slice
-  const initialShape = geometries.geom2.create([crossSection])
-  const initialSlice = geometries.slice.fromGeom2(initialShape)
+  const initialShape = geom2.create([crossSection])
+  const initialSlice = slice.fromGeom2(initialShape)
 
   // Calculate SCP values
   let yaxes = calculateYaxes(spine)
@@ -201,8 +198,8 @@ export const extrudeX3D = (x3dshape) => {
       mat4.multiply(rotationMatrix, translationMatrix, rotationMatrix)
 
       let newslice = base
-      newslice = geometries.slice.transform(scaleMatrix, newslice)
-      newslice = geometries.slice.transform(rotationMatrix, newslice)
+      newslice = slice.transform(scaleMatrix, newslice)
+      newslice = slice.transform(rotationMatrix, newslice)
       // newslice = slice.transform(translationMatrix, newslice)
       return newslice
     }

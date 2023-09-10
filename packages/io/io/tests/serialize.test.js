@@ -1,13 +1,13 @@
 import test from 'ava'
 
-import { primitives } from '@jscad/modeling'
+import { line } from '@jscad/modeling'
 
 import { serialize } from '../src/index.js'
 
 test('serialize 2D path (simple) objects to svg', (t) => {
   const mimeType = 'image/svg+xml'
   // simple open path
-  const object1 = primitives.line([[0, 0], [1, 1], [-3, 3]])
+  const object1 = line([[0, 0], [1, 1], [-3, 3]])
   const observed = serialize({}, mimeType, object1)
   t.deepEqual(observed, expected1)
 })

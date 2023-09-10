@@ -1,11 +1,11 @@
 import test from 'ava'
 
-import { primitives } from '@jscad/modeling'
+import { cube } from '@jscad/modeling'
 
 import { serialize } from '../src/index.js'
 
 test('progress status callback', (t) => {
-  const input = primitives.cube()
+  const input = cube()
   const progresses = []
   const statusCallback = (statusObj) => {
     progresses.push(statusObj.progress)

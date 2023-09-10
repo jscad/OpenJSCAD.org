@@ -2,12 +2,12 @@ import test from 'ava'
 
 import { countOf } from '../../test/helpers/countOf.js'
 
-import { colors, geometries, primitives } from '@jscad/modeling'
+import { colorize, geom2, rectangle } from '@jscad/modeling'
 
 import { serialize } from '../src/index.js'
 
 test('serialize 2D geometry to X3D Polyline2D', (t) => {
-  const shape1 = geometries.geom2.create()
+  const shape1 = geom2.create()
 
   let results = serialize({}, shape1)
   t.is(results.length, 1)
@@ -22,7 +22,7 @@ test('serialize 2D geometry to X3D Polyline2D', (t) => {
   t.is(countOf('Scene', obs), 2)
   t.is(countOf('Group', obs), 1)
 
-  const shape2 = primitives.rectangle()
+  const shape2 = rectangle()
 
   results = serialize({ metadata: false }, shape2)
   t.is(results.length, 1)
@@ -39,7 +39,7 @@ test('serialize 2D geometry to X3D Polyline2D', (t) => {
   t.is(countOf('Shape', obs), 2)
   t.is(countOf('Polyline2D', obs), 1)
 
-  const shape3 = colors.colorize([0, 0, 0], shape2)
+  const shape3 = colorize([0, 0, 0], shape2)
 
   results = serialize({ metadata: false }, shape3)
   t.is(results.length, 1)

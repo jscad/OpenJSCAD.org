@@ -1,5 +1,4 @@
-import { geometries } from '@jscad/modeling'
-const { geom2, geom3, path2 } = geometries
+import { geom2, geom3, path2 } from '@jscad/modeling'
 
 /*
  * Serialize the given solids/objects into web worker message content.

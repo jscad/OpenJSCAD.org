@@ -1,5 +1,5 @@
 import { flatten } from '@jscad/array-utils'
-import { geometries, transforms, primitives } from '@jscad/modeling'
+import { geom3, polyhedron, transform } from '@jscad/modeling'
 
 import { parseModel } from './model.js'
 
@@ -35,7 +35,7 @@ const instantiateObject = (options, object, materials, colorgroups) => {
   if (object.mesh) {
     const mesh = object.mesh
     const displaycolors = instantiateProperties(options, mesh.properties, materials, colorgroups)
-    const shape = primitives.polyhedron({ points: mesh.vertices, faces: mesh.triangles, colors: displaycolors })
+    const shape = polyhedron({ points: mesh.vertices, faces: mesh.triangles, colors: displaycolors })
     // add properties from the object to the shape
     shape.id = object.id
     shape.type = object.otype
@@ -46,7 +46,7 @@ const instantiateObject = (options, object, materials, colorgroups) => {
 
     return shape
   }
-  return geometries.geom3.create()
+  return geom3.create()
 }
 
 /*
@@ -73,7 +73,7 @@ const instantiateModel = (options, model) => {
   // but include only those objects which are part of the build items
   const instantiatedItems = buildItems.map((item) => {
     const object = instantiatedObjects[item.oid]
-    return transforms.transform(item.transform, object)
+    return transform(item.transform, object)
   })
   return instantiatedItems
 }

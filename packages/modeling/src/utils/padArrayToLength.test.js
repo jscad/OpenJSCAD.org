@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { padArrayToLength } from './index.js'
+import { padArrayToLength } from './padArrayToLength.js'
 
 test('padArrayToLength: test an array of the proper length is unchanged.', (t) => {
   const srcArray = [2, 3, 4]

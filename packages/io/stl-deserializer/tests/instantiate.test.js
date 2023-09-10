@@ -3,7 +3,7 @@ import path from 'path'
 
 import test from 'ava'
 
-import { geometries } from '@jscad/modeling'
+import { geom3 } from '@jscad/modeling'
 
 import { deserialize } from '../src/index.js'
 
@@ -17,7 +17,7 @@ test('instantiate simple ascii stl to geometry', (t) => {
 
   const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.is(observed.length, 1)
-  const polygons = geometries.geom3.toPolygons(observed[0])
+  const polygons = geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 12) // 6 faces, 12 polygons
 
   const observedPolygons = toArray(polygons)
@@ -44,7 +44,7 @@ test('instantiate simple binary stl to geometry', (t) => {
 
   const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.is(observed.length, 1)
-  const polygons = geometries.geom3.toPolygons(observed[0])
+  const polygons = geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 12) // 6 faces, 12 polygons
 
   const observedPolygons = toArray(polygons)
@@ -71,7 +71,7 @@ test('instantiate medium complexity binary stl to geometry', (t) => {
 
   const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.is(observed.length, 1)
-  const polygons = geometries.geom3.toPolygons(observed[0])
+  const polygons = geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 1052)
 })
 
@@ -81,7 +81,7 @@ test('instantiate complex ascii stl to geometry', (t) => {
 
   const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.is(observed.length, 1)
-  const polygons = geometries.geom3.toPolygons(observed[0])
+  const polygons = geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 17742)
 })
 
@@ -91,6 +91,6 @@ test('instantiate complex binary stl to geometry', (t) => {
 
   const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.is(observed.length, 1)
-  const polygons = geometries.geom3.toPolygons(observed[0])
+  const polygons = geom3.toPolygons(observed[0])
   t.deepEqual(polygons.length, 12744)
 })

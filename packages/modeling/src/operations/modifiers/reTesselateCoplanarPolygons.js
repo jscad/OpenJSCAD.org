@@ -1,5 +1,6 @@
 import { EPS } from '../../maths/constants.js'
-import { interpolateBetween2DPointsForY, OrthonormalFormula } from '../../maths/utils/index.js'
+import { interpolateBetween2DPointsForY } from '../../maths/utils/interpolateBetween2DPointsForY.js'
+import { OrthonormalFormula } from '../../maths/utils/OrthonormalFormula.js'
 
 import * as line2 from '../../maths/line2/index.js'
 import * as vec2 from '../../maths/vec2/index.js'

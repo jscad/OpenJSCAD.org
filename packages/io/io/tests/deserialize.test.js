@@ -24,7 +24,7 @@ test('deserialize svg (simple) to script', (t) => {
   const mimeType = getMimeType('svg')
   const script = deserialize({ output: 'script', addMetaData: false }, mimeType, source1)
   t.is(countOf('main(params)', script), 1)
-  t.is(countOf('geometries.path2', script), 3)
+  t.is(countOf('path2', script), 3)
 })
 
 const source1 = `<?xml version="1.0" encoding="UTF-8"?>

@@ -216,10 +216,10 @@ SEQEND
 0
 ENDSEC`
   const src3 = deserialize({ filename: 'dxf3-test', output: 'script' }, dxf3)
-  t.is(countOf('main', src3), 2)
+  t.is(countOf('main', src3), 1)
   t.is(countOf('createPolygon', src3), 11)
   t.is(countOf('geom3.create', src3), 1)
-  t.is(countOf('color', src3), 6)
+  t.is(countOf('colorize', src3), 1)
 
   // DXF 3D POLYLINE with faces, translates to script with 3D geometry
 })
@@ -293,7 +293,7 @@ ENTITIES
 ENDSEC`
   // expect a script which calls createPolygon for each 3DFACE, and creates a new 3D geometry
   const src1 = deserialize({ filename: 'dxf1-test', output: 'script' }, dxf1)
-  t.is(countOf('main', src1), 2)
+  t.is(countOf('main', src1), 1)
   t.is(countOf('createPolygon', src1), 3)
   t.is(countOf('geom3.create', src1), 1)
 })

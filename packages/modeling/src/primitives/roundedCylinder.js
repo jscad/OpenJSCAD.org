@@ -1,5 +1,5 @@
 import { EPS, TAU } from '../maths/constants.js'
-import { sin, cos } from '../maths/utils/index.js'
+import { sin, cos } from '../maths/utils/trigonometry.js'
 
 import * as vec3 from '../maths/vec3/index.js'
 

@@ -167,7 +167,7 @@ const singleFileJs = [
     fullPath: '/logo.js',
     name: 'logo.js',
     source: `
-      const { cube } = require('@jscad/modeling').primitives
+      const { cube } = require('@jscad/modeling')
 
       const main = () => {
         return cube()
@@ -316,7 +316,7 @@ const directoryWithDependencies = [
         fullPath: '/project/file2.js',
         name: 'file2.js',
         source: `
-          const { cube } = require('@jscad/modeling').primitives
+          const { cube } = require('@jscad/modeling')
 
           const file2 = () => {
             return cube()

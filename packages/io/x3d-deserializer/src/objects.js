@@ -1,4 +1,4 @@
-import { maths } from '@jscad/modeling'
+import { poly2 } from '@jscad/modeling'
 
 export const x3dTypes = {
   X3D: 0,
@@ -224,7 +224,7 @@ export const x3dExtrusion = (element) => {
       const vi = i * 2
       points.push([values[vi], values[vi + 1]])
     }
-    obj.ccw = (maths.utils.area(points) < 0) // WHAT!!!! X3D IS SICK!!!
+    obj.ccw = (poly2.measureArea(poly2.create(points)) < 0) // WHAT!!!! X3D IS SICK!!!
     obj.crossSection = points
   }
   if (element.orientation) {

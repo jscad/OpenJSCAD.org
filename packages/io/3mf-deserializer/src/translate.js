@@ -72,7 +72,7 @@ const translateBuildItem = (options, item) => {
 const createBuildItem${item.sequence} = () => {
   const object = objects["${item.oid}"]
   ${translateTransform(options, item.transform)}
-  return transforms.transform(transform, object)
+  return transform(transform, object)
 }
 
 builditems.push(createBuildItem${item.sequence}())
@@ -110,7 +110,7 @@ const createObject${object.id} = () => {
   ${translateVertices(options, object.mesh.vertices)}
   ${translateTriangles(options, object.mesh.triangles)}
   ${displaycolors}
-  const shape = primitives.polyhedron({points: vertices, faces: triangles, colors: displaycolors})
+  const shape = polyhedron({points: vertices, faces: triangles, colors: displaycolors})
   // add properties from the object to the shape
   shape.id = ${object.id}
   shape.type = "${object.otype}"
@@ -164,7 +164,7 @@ export const translateModels = (options, models) => {
     bodycode += translatedModels[i]
   }
 
-  const code = 'import { colors, geometries, transforms, primitives } from \'@jscad/modeling\'' +
+  const code = 'import * from \'@jscad/modeling\'' +
     metacode +
     `
 const objects = {} // list of objects by ID

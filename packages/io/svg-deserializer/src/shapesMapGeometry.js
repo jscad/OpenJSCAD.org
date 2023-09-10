@@ -1,4 +1,4 @@
-import { geometries, primitives } from '@jscad/modeling'
+import { circle, ellipse, geom2, line, path2, rectangle, roundedRectangle } from '@jscad/modeling'
 
 import { svg2cag, cagLengthX, cagLengthY, cagLengthP, reflect } from './helpers.js'
 
@@ -21,12 +21,12 @@ export const shapesMapGeometry = (obj, objectify, params) => {
         x = (x + (w / 2)) // position the object via the center
         y = (y - (h / 2)) // position the object via the center
         if (rx === 0) {
-          shape = primitives.rectangle({ center: [x, y], size: [w, h] })
+          shape = rectangle({ center: [x, y], size: [w, h] })
         } else {
-          shape = primitives.roundedRectangle({ center: [x, y], segments, size: [w, h], roundRadius: rx })
+          shape = roundedRectangle({ center: [x, y], segments, size: [w, h], roundRadius: rx })
         }
         if (target === 'path') {
-          shape = geometries.path2.fromPoints({ closed: true }, geometries.geom2.toPoints(shape))
+          shape = path2.fromPoints({ closed: true }, geom2.toPoints(shape))
         }
       }
       return shape
@@ -39,9 +39,9 @@ export const shapesMapGeometry = (obj, objectify, params) => {
 
       let shape
       if (r > 0) {
-        shape = primitives.circle({ center: [x, y], segments, radius: r })
+        shape = circle({ center: [x, y], segments, radius: r })
         if (target === 'path') {
-          shape = geometries.path2.fromPoints({ closed: true }, geometries.geom2.toPoints(shape))
+          shape = path2.fromPoints({ closed: true }, geom2.toPoints(shape))
         }
       }
       return shape
@@ -55,9 +55,9 @@ export const shapesMapGeometry = (obj, objectify, params) => {
 
       let shape
       if (rx > 0 && ry > 0) {
-        shape = primitives.ellipse({ center: [cx, cy], segments, radius: [rx, ry] })
+        shape = ellipse({ center: [cx, cy], segments, radius: [rx, ry] })
         if (target === 'path') {
-          shape = geometries.path2.fromPoints({ closed: true }, geometries.geom2.toPoints(shape))
+          shape = path2.fromPoints({ closed: true }, geom2.toPoints(shape))
         }
       }
       return shape
@@ -78,7 +78,7 @@ export const shapesMapGeometry = (obj, objectify, params) => {
       //   }
       // }
 
-      const shape = primitives.line([[x1, y1], [x2, y2]])
+      const shape = line([[x1, y1], [x2, y2]])
       if (target === 'geom2') {
         // TODO expand if 2D target
       }
@@ -96,9 +96,9 @@ export const shapesMapGeometry = (obj, objectify, params) => {
         }
       }
       if (target === 'geom2') {
-        return geometries.geom2.create([points])
+        return geom2.create([points])
       }
-      return geometries.path2.fromPoints({}, points)
+      return path2.fromPoints({}, points)
     },
 
     polyline: (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV) => {
@@ -121,7 +121,7 @@ export const shapesMapGeometry = (obj, objectify, params) => {
         }
       }
 
-      const shape = primitives.line(points)
+      const shape = line(points)
       if (target === 'geom2') {
         // TODO expand if 2D target
         // .expandToCAG(r, CSG.defaultResolution2D)
@@ -136,8 +136,8 @@ export const shapesMapGeometry = (obj, objectify, params) => {
       const shapes = listofentries.map((entry) => {
         const path = entry[1]
         if (target === 'geom2' && path.isClosed) {
-          const points = geometries.path2.toPoints(path)
-          return geometries.geom2.create([points])
+          const points = path2.toPoints(path)
+          return geom2.create([points])
         }
         return path
       })
@@ -149,8 +149,8 @@ export const shapesMapGeometry = (obj, objectify, params) => {
 }
 
 const appendPoints = (points, geometry) => {
-  if (geometry) return geometries.path2.appendPoints(points, geometry)
-  return geometries.path2.fromPoints({ }, points)
+  if (geometry) return path2.appendPoints(points, geometry)
+  return path2.fromPoints({ }, points)
 }
 
 const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, segments, pathSelfClosed) => {
@@ -185,7 +185,8 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
     pc = false
   }
   const ensurePath = () => {
-    if (!paths[pathName]) paths[pathName] = geometries.path2.fromPoints({}, [])
+    if (!paths[pathName]) paths[pathName] = 
+    path2.fromPoints({}, [])
   }
   for (let j = 0; j < obj.commands.length; j++) {
     const co = obj.commands[j]
@@ -246,7 +247,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           cx = cx + parseFloat(pts[i++])
           cy = cy + parseFloat(pts[i++])
           ensurePath()
-          paths[pathName] = geometries.path2.appendArc({
+          paths[pathName] = path2.appendArc({
             segments,
             endpoint: svg2cag([cx, cy], svgUnitsPmm),
             radius: svg2cag([rx, ry], svgUnitsPmm),
@@ -266,7 +267,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           cx = parseFloat(pts[i++])
           cy = parseFloat(pts[i++])
           ensurePath()
-          paths[pathName] = geometries.path2.appendArc({
+          paths[pathName] = path2.appendArc({
             segments,
             endpoint: svg2cag([cx, cy], svgUnitsPmm),
             radius: svg2cag([rx, ry], svgUnitsPmm),
@@ -285,7 +286,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           cx = cx + parseFloat(pts[i++])
           cy = cy + parseFloat(pts[i++])
           ensurePath()
-          paths[pathName] = geometries.path2.appendBezier({
+          paths[pathName] = path2.appendBezier({
             segments,
             controlPoints: [
               svg2cag([x1, y1], svgUnitsPmm),
@@ -307,7 +308,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           cx = parseFloat(pts[i++])
           cy = parseFloat(pts[i++])
           ensurePath()
-          paths[pathName] = geometries.path2.appendBezier({
+          paths[pathName] = path2.appendBezier({
             segments,
             controlPoints: [
               svg2cag([x1, y1], svgUnitsPmm),
@@ -330,7 +331,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
           const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
           ensurePath()
-          paths[pathName] = geometries.path2.appendBezier({
+          paths[pathName] = path2.appendBezier({
             segments,
             controlPoints: [
               svg2cag(q1, svgUnitsPmm),
@@ -353,7 +354,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
           const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
           ensurePath()
-          paths[pathName] = geometries.path2.appendBezier({
+          paths[pathName] = path2.appendBezier({
             segments,
             controlPoints: [
               svg2cag(q1, svgUnitsPmm),
@@ -374,7 +375,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
           const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
           ensurePath()
-          paths[pathName] = geometries.path2.appendBezier({
+          paths[pathName] = path2.appendBezier({
             segments,
             controlPoints: [
               svg2cag(q1, svgUnitsPmm),
@@ -395,7 +396,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
           const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
           ensurePath()
-          paths[pathName] = geometries.path2.appendBezier({
+          paths[pathName] = path2.appendBezier({
             segments,
             controlPoints: [
               svg2cag(q1, svgUnitsPmm),
@@ -417,7 +418,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           cx = cx + parseFloat(pts[i++])
           cy = cy + parseFloat(pts[i++])
           ensurePath()
-          paths[pathName] = geometries.path2.appendBezier({
+          paths[pathName] = path2.appendBezier({
             segments, controlPoints: [
               svg2cag([x1, y1], svgUnitsPmm),
               svg2cag([bx, by], svgUnitsPmm),
@@ -438,7 +439,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           cx = parseFloat(pts[i++])
           cy = parseFloat(pts[i++])
           ensurePath()
-          paths[pathName] = geometries.path2.appendBezier({
+          paths[pathName] = path2.appendBezier({
             segments,
             controlPoints: [
               svg2cag([x1, y1], svgUnitsPmm),
@@ -491,7 +492,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
         break
       case 'z': // close current line
       case 'Z':
-        paths[pathName] = geometries.path2.close(paths[pathName])
+        paths[pathName] = path2.close(paths[pathName])
         cx = sx
         cy = sy // return to the starting point
         pc = true

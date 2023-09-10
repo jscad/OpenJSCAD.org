@@ -1,4 +1,4 @@
-import { geometries } from '@jscad/modeling'
+import { geom3, poly3 } from '@jscad/modeling'
 
 // objects must be an array of 3D geomertries (with polygons)
 export const serializeText = (objects, options) => {
@@ -23,7 +23,7 @@ const convertToStl = (objects, options) => {
 
 const convertToFacets = (object, options) => {
   const result = []
-  const polygons = geometries.geom3.toPolygons(object)
+  const polygons = geom3.toPolygons(object)
   polygons.forEach((polygon, i) => {
     result.push(convertToFacet(polygon))
   })
@@ -40,7 +40,7 @@ const convertToFacet = (polygon) => {
     // STL requires triangular polygons. If our polygon has more vertices, create multiple triangles:
     const firstVertexStl = vertextoStlString(polygon.vertices[0])
     for (let i = 0; i < polygon.vertices.length - 2; i++) {
-      const facet = `facet normal ${vector3DtoStlString(geometries.poly3.plane(polygon))}
+      const facet = `facet normal ${vector3DtoStlString(poly3.plane(polygon))}
 outer loop
 ${firstVertexStl}
 ${vertextoStlString(polygon.vertices[i + 1])}

@@ -1,4 +1,4 @@
-import { maths, geometries } from '@jscad/modeling'
+import { poly3, vec2, vec3 } from '@jscad/modeling'
 
 import { instantiatePolygon, instantiateVector } from './instantiate.js'
 
@@ -24,7 +24,7 @@ const translateVector3D = (vector) => {
 // translate the given polygon into JSCAD script
 //
 const translatePolygon = (polygon) => {
-  const vertices = geometries.poly3.toVertices(polygon)
+  const vertices = poly3.toVertices(polygon)
   let script = 'createPolygon(['
   vertices.forEach((vertice) => {
     script += `[${translateVector3D(vertice)}],`
@@ -56,16 +56,16 @@ const translateLine = (obj, layers, options) => {
 
   let script = ''
   if (!obj.pptz || (obj.pptz === obj.sptz && obj.pptz === 0)) {
-    const p1 = maths.vec2.fromValues(obj.pptx, obj.ppty)
-    const p2 = maths.vec2.fromValues(obj.sptx, obj.spty)
-    script = `  let ${name} = primitives.line([[${translateVector2D(p1)}],[${translateVector2D(p2)}]])\n`
+    const p1 = vec2.fromValues(obj.pptx, obj.ppty)
+    const p2 = vec2.fromValues(obj.sptx, obj.spty)
+    script = `  let ${name} = line([[${translateVector2D(p1)}],[${translateVector2D(p2)}]])\n`
   } else {
-    const p1 = maths.vec3.fromValues(obj.pptx, obj.ppty, obj.pptz)
-    const p2 = maths.vec3.fromValues(obj.sptx, obj.spty, obj.sptz)
-    script = `  let ${name} = primitives.line([[${translateVector3D(p1)}],[${translateVector3D(p2)}]])\n`
+    const p1 = vec3.fromValues(obj.pptx, obj.ppty, obj.pptz)
+    const p2 = vec3.fromValues(obj.sptx, obj.spty, obj.sptz)
+    script = `  let ${name} = line([[${translateVector3D(p1)}],[${translateVector3D(p2)}]])\n`
   }
   if (color) {
-    script += `  ${name} = colors.colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+    script += `  ${name} = colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
   }
   obj.script = script
   addToLayer(obj, layers)
@@ -78,21 +78,21 @@ const translateSection = (name, x1, y1, bulg, px, py) => {
   // console.log('translateSection',x1,y1,bulg,px,py)
   if (bulg === 0) {
   // add straight line to the end of the path
-    return `geometries.path2.appendPoints([[${x1},${y1}]], ${name})
+    return `path2.appendPoints([[${x1},${y1}]], ${name})
 `
   }
 
   // add arc to the end of the path
-  const prev = maths.vec2.fromValues(px, py)
-  const curr = maths.vec2.fromValues(x1, y1)
-  const u = maths.vec2.distance(prev, curr)
+  const prev = vec2.fromValues(px, py)
+  const curr = vec2.fromValues(x1, y1)
+  const u = vec2.distance(prev, curr)
   const r = u * ((1 + Math.pow(bulg, 2)) / (4 * bulg))
   const clockwise = (bulg < 0)
   const large = false // FIXME how to determine?
   const d = Math.atan(bulg) * 4
   // FIXME need to determine segments from object/layer/variables
   const res = 16
-  return `geometries.path2.appendArc({endpoint: [${x1},${y1}],radius: [${r},${r}],xaxisrotation: ${d},clockwise: ${clockwise},large: ${large},segments: ${res}}, ${name})
+  return `path2.appendArc({endpoint: [${x1},${y1}],radius: [${r},${r}],xaxisrotation: ${d},clockwise: ${clockwise},large: ${large},segments: ${res}}, ${name})
 `
 }
 
@@ -114,11 +114,11 @@ const translatePath2D = (obj, layers, options) => {
   const color = getColor(cn, options.colorindex)
 
   // translation
-  let script = `  let ${name} = geometries.path2.create()\n`
+  let script = `  let ${name} = path2.create()\n`
   const isclosed = ((flags & closed) === closed)
   if (vlen === pptxs.length && vlen === pptys.length && vlen === bulgs.length) {
     // add initial point
-    script += `  ${name} = geometries.path2.appendPoints([[${pptxs[0]}, ${pptys[0]}]], ${name})\n`
+    script += `  ${name} = path2.appendPoints([[${pptxs[0]}, ${pptys[0]}]], ${name})\n`
     // add sections
     for (let i = 0; i < pptxs.length; i++) {
       const j = (i + 1) % pptxs.length
@@ -141,12 +141,12 @@ const translatePath2D = (obj, layers, options) => {
     return
   }
   if (isclosed) {
-    script += `  ${name} = geometries.path2.close(${name})\n`
+    script += `  ${name} = path2.close(${name})\n`
   } else {
     script += '\n'
   }
   if (color) {
-    script += `  ${name} = colors.colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+    script += `  ${name} = colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
   }
   obj.script = script
   addToLayer(obj, layers)
@@ -178,18 +178,18 @@ const translateArc = (obj, layers, options) => {
 
   // convert to 2D object
   if (lthk === 0.0) {
-    let script = `  let ${name} = primitives.arc({center: [${pptx}, ${ppty}], radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}})\n`
+    let script = `  let ${name} = arc({center: [${pptx}, ${ppty}], radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}})\n`
     if (color) {
-      script += `  ${name} = colors.colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+      script += `  ${name} = colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
     }
     obj.script = script
     addToLayer(obj, layers)
     return
   }
   // FIXME how to represent 3D arc?
-  let script = `  let ${name} = primitives.arc({center: [${pptx}, ${ppty}], radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}})\n`
+  let script = `  let ${name} = arc({center: [${pptx}, ${ppty}], radius: ${swid}, startAngle: ${ang0}, endAngle: ${ang1}, segements: ${res}})\n`
   if (color) {
-    script += `  ${name} = colors.colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+    script += `  ${name} = colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
   }
   obj.script = script
   addToLayer(obj, layers)
@@ -215,9 +215,9 @@ const translateCircle = (obj, layers, options) => {
 
   // convert to 2D object
   if (lthk === 0.0) {
-    let script = `  let ${name} = primitives.circle({center: [${pptx}, ${ppty}], radius: ${swid}, segments: ${res}})\n`
+    let script = `  let ${name} = circle({center: [${pptx}, ${ppty}], radius: ${swid}, segments: ${res}})\n`
     if (color) {
-      script += `  ${name} = colors.colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+      script += `  ${name} = colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
     }
     obj.script = script
     addToLayer(obj, layers)
@@ -225,9 +225,9 @@ const translateCircle = (obj, layers, options) => {
   }
 
   // convert to 3D object
-  let script = `  let ${name} = primitives.circle({center: [${pptx}, ${ppty}], radius: ${swid}, segments: ${res}}).extrude({offset: [0,0,${lthk}]}))\n`
+  let script = `  let ${name} = circle({center: [${pptx}, ${ppty}], radius: ${swid}, segments: ${res}}).extrude({offset: [0,0,${lthk}]}))\n`
   if (color) {
-    script += `  ${name} = colors.colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+    script += `  ${name} = colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
   }
 
   // FIXME need to use 210/220/230 for direction of rotation
@@ -257,19 +257,19 @@ const translateEllipse = (obj, layers, options) => {
 
   // convert to 2D object
   if (pptz === 0.0 && sptz === 0.0) {
-    const center = maths.vec2.fromValues(0, 0)
-    const mjaxis = maths.vec2.fromValues(sptx, spty)
-    const rx = maths.vec2.distance(center, mjaxis)
+    const center = vec2.fromValues(0, 0)
+    const mjaxis = vec2.fromValues(sptx, spty)
+    const rx = vec2.distance(center, mjaxis)
     const ry = rx * swid
     const angle = Math.atan2(spty, sptx) // * 180 / Math.PI
     // FIXME add start and end angle when supported
 
-    let script = `  let ${name} = primitives.ellipse({center: [0, 0, 0], radius: [${rx}, ${ry}], segments: ${res}})
-  let ${name}matrix = maths.mat4.multiply(maths.mat4.create(), maths.mat4.fromTranslation(maths.mat4.create(), [${pptx}, ${ppty}, 0]), maths.mat4.fromZRotation(maths.mat4.create(), ${angle}))
-  ${name} = geometries.geom2.transform(${name}matrix, ${name})
+    let script = `  let ${name} = ellipse({center: [0, 0, 0], radius: [${rx}, ${ry}], segments: ${res}})
+  let ${name}matrix = mat4.multiply(mat4.create(), mat4.fromTranslation(mat4.create(), [${pptx}, ${ppty}, 0]), mat4.fromZRotation(mat4.create(), ${angle}))
+  ${name} = geom2.transform(${name}matrix, ${name})
 `
     if (color) {
-      script += `  ${name} = colors.colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
+      script += `  ${name} = colorize([${color[0]}, ${color[1]}, ${color[2]}, 1], ${name})\n`
     }
     obj.script = script
     addToLayer(obj, layers)
@@ -337,7 +337,7 @@ const translateMesh = (obj, layers, options) => {
         let vi = 0
         while (vi < face.length) {
           const pi = face[vi]
-          const vector = maths.vec3.clone(points[pi])
+          const vector = vec3.clone(points[pi])
           vertices.push(vector)
           vi++
         }
@@ -346,7 +346,7 @@ const translateMesh = (obj, layers, options) => {
         }
         // FIXME how to correct bad normals?
 
-        const poly = geometries.poly3.create(vertices)
+        const poly = poly3.create(vertices)
         if (color) poly.color = color
         polygons.push(poly)
 
@@ -366,7 +366,7 @@ const translateMesh = (obj, layers, options) => {
     script += '    ' + translatePolygon(polygon) + ',\n'
   }
   script += `  ]
-  let ${name} = geometries.geom3.create(${name}_polygons)
+  let ${name} = geom3.create(${name}_polygons)
 `
   obj.script = script
   addToLayer(obj, layers)
@@ -489,8 +489,8 @@ const instantiateFacets = (meshM, meshN, parts, color, options) => {
       if (options.dxf.angdir === 1) {
         facet = facet.reverse()
       }
-      const polygon = geometries.poly3.create(facet)
-      const plane = geometries.poly3.plane(polygon)
+      const polygon = poly3.create(facet)
+      const plane = poly3.plane(polygon)
       if (Number.isFinite(plane[3])) {
         if (color) polygon.color = color
         facets.push(polygon)
@@ -548,7 +548,7 @@ const instantiatePolyFaces = (meshM, meshN, parts, color, options) => {
       if (options.dxf.angdir === 1) {
         vertices = vertices.reverse()
       }
-      const polygon = geometries.poly3.create(vertices)
+      const polygon = poly3.create(vertices)
       faces.push(polygon)
     }
     i++
@@ -632,7 +632,7 @@ const translateCurrent = (obj, layers, parts, options) => {
     script += '    ' + translatePolygon(polygon) + ',\n'
   }
   script += `  ]
-  let ${name} = geometries.geom3.create(${name}_polygons)
+  let ${name} = geom3.create(${name}_polygons)
 `
   if (color) {
     script += `  ${name}.color = [${color}]
@@ -649,7 +649,7 @@ const translateCurrent = (obj, layers, parts, options) => {
 const translateLayer = (layer) => {
   const name = layer.lnam || 'Unknown'
 
-  let script = `function ${name}() {
+  let script = `const ${name} = () => {
 `
   for (const object of layer.objects) {
     script += object.script
@@ -807,28 +807,23 @@ export const translateAsciiDxf = (reader, options) => {
         break
     }
     // accumlate polygons if necessary
-    if (geometries.poly3.isA(p)) {
-      // console.log('##### push Polygon')
+    if (poly3.isA(p)) {
       parts.push(p)
     }
     // accumlate vectors if necessary
     if (p && 'vec' in p && p.vec.length === 3) {
-      // console.log('##### push vec3')
       parts.push(p)
     }
     if (p && 'vec' in p && p.vec.length === 2) {
-      // console.log('##### push vec2')
       parts.push(p)
     }
   }
   // translate the last object if necessary
   current = translateCurrent(current, layers, parts, options)
 
-  // debug output
-  // console.log('**************************************************')
-  let script = `const {colors, geometries, maths, primitives, transforms} = require('@jscad/modeling')
+  let script = `import * from '@jscad/modeling'
 
-const main = () => {
+export const main = () => {
   let layers = []
   return layers.concat(`
 
@@ -841,10 +836,9 @@ const main = () => {
   // add helper functions for polygons and lines
   script +=
 `
-function createPolygon(listofpoints, color) {
-  let polygon = geometries.poly3.create(listofpoints)
-  if (color) polygon.color = color
-  return polygon
+const createPolygon = (listofpoints, color) => {
+  let polygon = poly3.create(listofpoints)
+  return colorize(color, polygon)
 }
 `
 
@@ -852,9 +846,5 @@ function createPolygon(listofpoints, color) {
     script += translateLayer(layer)
   })
 
-  script += 'module.exports = {main}\n'
-
-  // console.log(script)
-  // console.log('**************************************************')
   return script
 }

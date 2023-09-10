@@ -10,9 +10,9 @@ test('ASCII DXF 2D Entities translated to JSCAD Scripts', (t) => {
   const dxf1 = ''
   const src1 = deserialize({ filename: 'dxf1 test', output: 'script' }, dxf1)
   const ss1 = src1.split('\n')
-  t.is(ss1.length, 16)
+  t.is(ss1.length, 14)
   t.true(src1.indexOf('main = ()') > 0)
-  t.true(src1.indexOf('createPolygon(') > 0)
+  t.true(src1.indexOf('createPolygon = (') > 0)
 
   // DXF CIRCLE, translates to script with a 'circle' function
   const dxf2 = `0
@@ -37,10 +37,10 @@ CIRCLE
 ENDSEC`
   const src2 = deserialize({ filename: 'dxf2 test', output: 'script' }, dxf2)
   const ss2 = src2.split('\n')
-  t.is(ss2.length, 21)
+  t.is(ss2.length, 19)
   t.true(src2.indexOf('main = ()') > 0)
   t.true(src2.indexOf('circle(') > 0)
-  t.true(src2.indexOf('colors.colorize(') > 0)
+  t.true(src2.indexOf('colorize(') > 0)
 
   // DXF LINE, translates to script with a 'line' created from points
   const dxf3 = `0
@@ -65,7 +65,7 @@ LINE
 ENDSEC`
   const src3 = deserialize({ filename: 'dxf3-test', output: 'script' }, dxf3)
   const ss3 = src3.split('\n')
-  t.is(ss3.length, 20)
+  t.is(ss3.length, 18)
   t.true(src3.indexOf('main = ()') > 0)
   t.true(src3.indexOf('line(') > 0)
 
@@ -102,7 +102,7 @@ AcDbArc
 ENDSEC`
   const src4 = deserialize({ filename: 'dxf4-test', output: 'script' }, dxf4)
   const ss4 = src4.split('\n')
-  t.is(ss4.length, 20)
+  t.is(ss4.length, 18)
   t.true(src4.indexOf('main = ()') > 0)
   t.true(src4.indexOf('arc(') > 0)
 
@@ -139,7 +139,7 @@ LWPOLYLINE
 ENDSEC`
   const src5 = deserialize({ filename: 'dxf5-test', output: 'script' }, dxf5)
   const ss5 = src5.split('\n')
-  t.is(ss5.length, 25)
+  t.is(ss5.length, 23)
   t.true(src5.indexOf('main = ()') > 0)
   t.true(src5.indexOf('path2.create(') > 0)
   t.true(src5.indexOf('path2.appendPoints(') > 0)
@@ -186,7 +186,7 @@ LWPOLYLINE
 ENDSEC`
   const src6 = deserialize({ filename: 'dxf6-test', output: 'script' }, dxf6)
   const ss6 = src6.split('\n')
-  t.is(ss6.length, 26)
+  t.is(ss6.length, 24)
   t.true(src6.indexOf('main = ()') > 0)
   t.true(src6.indexOf('path2.create(') > 0)
   t.true(src6.indexOf('path2.appendPoints(') > 0)
@@ -231,7 +231,7 @@ ELLIPSE
 ENDSEC`
   const src7 = deserialize({ filename: 'dxf7-test', output: 'script' }, dxf7)
   const ss7 = src7.split('\n')
-  t.is(ss7.length, 22)
+  t.is(ss7.length, 20)
   t.true(src7.indexOf('main = ()') > 0)
   t.true(src7.indexOf('ellipse(') > 0)
 })
@@ -290,7 +290,7 @@ SEQEND
 ENDSEC`
   const src1 = deserialize({ filename: 'dxf1-test', output: 'script' }, dxf1)
   const ss1 = src1.split('\n')
-  t.is(ss1.length, 23)
+  t.is(ss1.length, 21)
   t.true(src1.indexOf('path2.create(') > 0)
   t.true(src1.indexOf('appendPoints(') > 0)
 
@@ -337,7 +337,7 @@ SEQEND
 ENDSEC`
   const src2 = deserialize({ filename: 'dxf2-test', output: 'script' }, dxf2)
   const ss2 = src2.split('\n')
-  t.is(ss2.length, 24)
+  t.is(ss2.length, 22)
   t.true(src2.indexOf('path2.create(') > 0)
   t.true(src2.indexOf('appendPoints(') > 0)
   t.true(src2.indexOf('appendArc(') > 0)
@@ -389,8 +389,8 @@ SEQEND
 ENDSEC`
   const src3 = deserialize({ filename: 'dxf3-test', output: 'script' }, dxf3)
   const ss3 = src3.split('\n')
-  t.is(ss3.length, 23)
-  t.true(src3.indexOf('function layer0(') > 0)
-  t.true(src3.indexOf('function layer1(') > 0)
+  t.is(ss3.length, 21)
+  t.true(src3.indexOf('const layer0 = (') > 0)
+  t.true(src3.indexOf('const layer1 = (') > 0)
   t.true(src3.indexOf('circle(') > 0)
 })

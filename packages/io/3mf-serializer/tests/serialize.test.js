@@ -1,42 +1,42 @@
 import test from 'ava'
 
-import { colors, geometries, primitives } from '@jscad/modeling'
+import { colorize, cube, cuboid, geom3 } from '@jscad/modeling'
 
 import { serialize } from '../src/index.js'
 
 test('serialize (empty)', (t) => {
-  const emptyShape = geometries.geom3.create()
+  const emptyShape = geom3.create()
   const buffer = serialize({ metadata: false, compress: false }, emptyShape)
   t.deepEqual(buffer, expected1)
 })
 
 test('serialize (single)', (t) => {
-  const cube1 = primitives.cube()
+  const cube1 = cube()
   const buffer = serialize({ metadata: false, compress: false }, cube1)
   t.deepEqual(buffer, expected2)
 })
 
 test('serialize (single, color)', (t) => {
-  let cube1 = primitives.cube()
-  cube1 = colors.colorize([1.0, 0.0, 0.5, 0.8], cube1)
+  let cube1 = cube()
+  cube1 = colorize([1.0, 0.0, 0.5, 0.8], cube1)
   const buffer = serialize({ metadata: false, compress: false, unit: 'inch' }, cube1)
   t.deepEqual(buffer, expected3)
 })
 
 test('serialize (multiple, color)', (t) => {
-  let cube1 = primitives.cuboid({ size: [4, 5, 6], center: [5, 5, 5] })
-  cube1 = colors.colorize([0.0, 0.0, 1.0, 0.8], cube1)
+  let cube1 = cuboid({ size: [4, 5, 6], center: [5, 5, 5] })
+  cube1 = colorize([0.0, 0.0, 1.0, 0.8], cube1)
   cube1.name = 'CUBE A'
-  const cube2 = primitives.cube()
+  const cube2 = cube()
   cube2.name = 'CUBE B'
   const buffer = serialize({ metadata: false, compress: false, defaultcolor: [1, 0, 0, 1] }, cube1, cube2)
   t.deepEqual(buffer, expected4)
 })
 
 test('serialize (multiple, compress)', (t) => {
-  const cube1 = colors.colorize([1.0, 0.0, 0.5, 0.8], primitives.cube())
+  const cube1 = colorize([1.0, 0.0, 0.5, 0.8], cube())
   cube1.name = 'CUBE A'
-  const cube2 = primitives.cuboid({ size: [4, 5, 6], center: [5, 5, 5] })
+  const cube2 = cuboid({ size: [4, 5, 6], center: [5, 5, 5] })
   cube2.name = 'CUBE B'
 
   const results = serialize({ compress: true }, cube1, cube2)

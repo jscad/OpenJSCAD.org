@@ -41,7 +41,7 @@ test.beforeEach((t) => {
 const createJscad = (id) => {
   const jscadScript = `// test script ${id}
 import { flatten } from '@jscad/array-utils'
-import { primitives } from '@jscad/modeling'
+import { arc, ellipse, ellipsoid } from '@jscad/modeling'
 
 export const getParameterDefinitions = () => {
   return flatten([
@@ -54,9 +54,9 @@ export const main = (params) => {
   let segments = params.segments || 16
 
   // shapes
-  let apath2 = primitives.arc()
-  let ageom2 = primitives.ellipse()
-  let ageom3 = primitives.ellipsoid()
+  let apath2 = arc()
+  let ageom2 = ellipse()
+  let ageom3 = ellipsoid()
 
   return [apath2, ageom2, ageom3]
 }

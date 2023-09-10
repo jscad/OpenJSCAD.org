@@ -69,9 +69,9 @@ const codify = (amf, data) => {
 // Materials: ${materials.length}
 // Scale    : ${amf.scale} from Units (${amf.unit})
 
-const {colors, geometries, transforms} = require('@jscad/modeling')
+import * from '@jscad/modeling'
 
-const main = () => {
+export const main = () => {
   let objects = []
 `
 
@@ -85,8 +85,6 @@ const main = () => {
   code += '  return objects\n}\n'
 
   objects.forEach(createDefinition)
-
-  code += 'module.exports = {main}\n'
 
   return code
 }

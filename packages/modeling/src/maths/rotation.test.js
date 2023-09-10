@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { compareVectors } from '../../test/helpers/index.js'
 
-import { constants, mat4, vec2, vec3 } from './index.js'
+import { TAU, mat4, vec2, vec3 } from './index.js'
 
 // ALL POSITIVE ROTATIONS ARE CLOCKWISE
 // see https://webglfundamentals.org/webgl/lessons/webgl-3d-orthographic.html
@@ -13,7 +13,7 @@ import { constants, mat4, vec2, vec3 } from './index.js'
 
 // identity matrices for comparisons
 
-const rad90 = constants.TAU / 4
+const rad90 = TAU / 4
 
 // +90 degree rotation about X
 const cwX90Matrix = [

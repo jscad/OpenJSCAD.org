@@ -1,4 +1,4 @@
-import { maths } from '@jscad/modeling'
+import { mat4 } from '@jscad/modeling'
 
 import { parse } from './parse.js'
 
@@ -50,7 +50,7 @@ const getComponents = (component, objects) => {
     object.components.forEach((c) => {
       const subcomponents = getComponents(c, objects)
       subcomponents.forEach((s) => {
-        maths.mat4.multiply(s.transform, c.transform, s.transform)
+        mat4.multiply(s.transform, c.transform, s.transform)
         components.push(s)
       })
     })

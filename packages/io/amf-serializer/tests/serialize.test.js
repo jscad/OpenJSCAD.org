@@ -2,16 +2,16 @@ import test from 'ava'
 
 import { countOf } from '../../test/helpers/countOf.js'
 
-import { colors, geometries, primitives } from '@jscad/modeling'
+import { colorize, cube, geom3 } from '@jscad/modeling'
 
 import { serialize } from '../src/index.js'
 
 test('serialize 3D geometry to amf', (t) => {
-  const emptyShape = geometries.geom3.create()
+  const emptyShape = geom3.create()
   const observed1 = serialize({}, emptyShape)
   t.deepEqual(observed1, expected1)
 
-  const testCube = primitives.cube()
+  const testCube = cube()
   const observed2 = serialize({}, testCube)
   t.is(observed2.length, 1)
   const xml2 = observed2[0]
@@ -31,7 +31,7 @@ test('serialize 3D geometry to amf', (t) => {
   t.is(countOf('v2', xml2), 24)
   t.is(countOf('v2', xml2), 24)
 
-  const coloredCube = colors.colorize([1.0, 0.0, 0.5, 0.8], testCube)
+  const coloredCube = colorize([1.0, 0.0, 0.5, 0.8], testCube)
   coloredCube.polygons[0].color = [1, 0, 0, 1]
   const observed3 = serialize({ unit: 'inch' }, coloredCube)
   const xml3 = observed3[0]

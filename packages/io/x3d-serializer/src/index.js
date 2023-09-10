@@ -1,4 +1,4 @@
-import { geometries, modifiers } from '@jscad/modeling'
+import { generalize, geom2, geom3, path2, poly2, poly3 } from '@jscad/modeling'
 
 import { flatten } from '@jscad/array-utils'
 
@@ -18,8 +18,6 @@ import { stringify } from '@jscad/io-utils'
  * @example
  * const { serializer, mimeType } = require('@jscad/x3d-serializer')
  */
-
-const { geom2, geom3, path2, poly2, poly3 } = geometries
 
 const mimeType = 'model/x3d+xml'
 const defNames = new Map()
@@ -99,7 +97,7 @@ const convertObjects = (objects, options) => {
 
     if (geom3.isA(object)) {
       // convert to triangles
-      object = modifiers.generalize({ snap: true, triangulate: true }, object)
+      object = generalize({ snap: true, triangulate: true }, object)
       const polygons = geom3.toPolygons(object)
       if (polygons.length > 0) {
         shapes.push(convertGeom3(object, options))

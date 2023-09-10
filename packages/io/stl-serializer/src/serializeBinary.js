@@ -1,4 +1,4 @@
-import { geometries } from '@jscad/modeling'
+import { geom3, poly3 } from '@jscad/modeling'
 
 // see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
 
@@ -18,7 +18,7 @@ export const serializeBinary = (objects, options) => {
   let numtriangles = 0
   let numpolygons = 0
   objects.forEach((object, i) => {
-    const polygons = geometries.geom3.toPolygons(object)
+    const polygons = geom3.toPolygons(object)
     polygons.forEach((polygon) => {
       const numvertices = polygon.vertices.length
       const thisnumtriangles = (numvertices >= 3) ? numvertices - 2 : 0
@@ -53,11 +53,11 @@ export const serializeBinary = (objects, options) => {
   let byteoffset = 0
 
   objects.forEach((object) => {
-    const polygons = geometries.geom3.toPolygons(object)
+    const polygons = geom3.toPolygons(object)
     polygons.forEach((polygon, index) => {
       const vertices = polygon.vertices
       const numvertices = vertices.length
-      const plane = geometries.poly3.plane(polygon)
+      const plane = poly3.plane(polygon)
       for (let i = 0; i < numvertices - 2; i++) {
         triangleFloat32array[0] = plane[0]
         triangleFloat32array[1] = plane[1]

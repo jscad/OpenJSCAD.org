@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { primitives } from '@jscad/modeling'
+import { cube, sphere } from '@jscad/modeling'
 
 import { serialize } from '../src/index.js'
 
@@ -15,7 +15,7 @@ const countOf = (search, string) => {
 }
 
 test('3D Geometry to JSON', (t) => {
-  const geom1 = primitives.cube()
+  const geom1 = cube()
   const obs1 = serialize({}, geom1)
   t.is(countOf('polygons', obs1[0]), 1)
   t.is(countOf('transforms', obs1[0]), 1)
@@ -23,7 +23,7 @@ test('3D Geometry to JSON', (t) => {
   t.is(countOf(']', obs1[0]), 33)
   t.is(countOf(',', obs1[0]), 87)
 
-  const geom2 = primitives.sphere({ segments: 12 })
+  const geom2 = sphere({ segments: 12 })
   const obs2 = serialize({}, geom2)
   t.is(countOf('polygons', obs2[0]), 1)
   t.is(countOf('transforms', obs2[0]), 1)

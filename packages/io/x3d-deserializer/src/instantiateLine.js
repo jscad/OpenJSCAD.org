@@ -1,4 +1,4 @@
-import { colors, primitives } from '@jscad/modeling'
+import { colorize, line } from '@jscad/modeling'
 
 import { createColors, findNode } from './translateHelpers.js'
 import { x3dTypes } from './objects.js'
@@ -78,13 +78,13 @@ export const instantiateLine = (options, objects) => {
   if (components) {
     const { pointsSet, segColors } = components
     geometry = pointsSet.map((points, i) => {
-      let line
+      let l
       if (segColors) {
-        line = colors.colorize(segColors[i], primitives.line(points))
+        l = colorize(segColors[i], line(points))
       } else {
-        line = primitives.line(points)
+        l = line(points)
       }
-      return line
+      return l
     })
   }
 

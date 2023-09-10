@@ -1,7 +1,0 @@
-export { aboutEqualNormals } from './aboutEqualNormals.js'
-export { area } from './area.js'
-export { interpolateBetween2DPointsForY } from './interpolateBetween2DPointsForY.js'
-export { intersect } from './intersect.js'
-export { solve2Linear } from './solve2Linear.js'
-export { sin, cos } from './trigonometry.js'
-export { OrthonormalFormula } from './OrthonormalFormula.js'

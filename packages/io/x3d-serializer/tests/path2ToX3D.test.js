@@ -2,14 +2,14 @@ import test from 'ava'
 
 import { countOf } from '../../test/helpers/countOf.js'
 
-import { colors, geometries, primitives } from '@jscad/modeling'
+import { arc, colorize, path2 } from '@jscad/modeling'
 
 import { serialize } from '../src/index.js'
 
 test('serialize 2D path to X3D Polyline2D', (t) => {
-  const path1 = geometries.path2.create()
+  const p1 = path2.create()
 
-  let results = serialize({}, path1)
+  let results = serialize({}, p1)
   t.is(results.length, 1)
 
   let obs = results[0]
@@ -20,9 +20,9 @@ test('serialize 2D path to X3D Polyline2D', (t) => {
   t.is(countOf('content', obs), 3)
   t.is(countOf('Created by JSCAD', obs), 1)
 
-  const path2 = primitives.arc({ center: [5, 5], endAngle: 45, segments: 16 })
+  const p2 = arc({ center: [5, 5], endAngle: 45, segments: 16 })
 
-  results = serialize({ metadata: false }, path2)
+  results = serialize({ metadata: false }, p2)
   t.is(results.length, 1)
 
   obs = results[0]
@@ -33,9 +33,9 @@ test('serialize 2D path to X3D Polyline2D', (t) => {
   t.is(countOf('Polyline2D', obs), 1)
   t.is(countOf('lineSegments', obs), 1)
 
-  const path3 = colors.colorize([0, 0, 0], path2)
+  const p3 = colorize([0, 0, 0], p2)
 
-  results = serialize({ metadata: false }, path2, path3)
+  results = serialize({ metadata: false }, p2, p3)
   t.is(results.length, 1)
 
   obs = results[0]

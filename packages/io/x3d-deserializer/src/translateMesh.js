@@ -4,7 +4,7 @@ import { convertMesh } from './instantiateMesh.js'
 
 const translateToPolyhedron = (type, points, faces, colors, orientation) => {
   const colorsCode = Array.isArray(colors) ? pointsToString(colors) : 'null'
-  const primitive = 'primitives.polyhedron({points, faces, colors, orientation})'
+  const primitive = 'polyhedron({points, faces, colors, orientation})'
   const code = `
   // 3D ${type} set: ${points.length} points, ${faces.length} faces
   const points = ${pointsToString(points)}
