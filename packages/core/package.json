@@ -11,7 +11,6 @@
   "private": true,
   "scripts": {
     "build": "rollup --config",
-    "version": "pnpm run build && git add dist",
     "coverage": "c8 --all --reporter=html --reporter=text pnpm test",
     "test": "ava './src/**/*.test.js' --verbose --timeout 2m"
   },
