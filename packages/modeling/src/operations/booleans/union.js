@@ -1,5 +1,5 @@
 import { areAllShapesTheSameType } from '../../utils/areAllShapesTheSameType.js'
-import { flatten } from '../../utils/flatten.js'
+import { coalesce } from '../../utils/coalesce.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
@@ -12,7 +12,7 @@ import { unionGeom3 } from './unionGeom3.js'
  * The given geometries should be of the same type, either geom2 or geom3.
  *
  * @param {...Object} geometries - list of geometries
- * @returns {Geom2|geom3} a new geometry
+ * @returns {Geom2|Geom3} a new geometry
  * @alias module:modeling/booleans.union
  *
  * @example
@@ -29,12 +29,13 @@ import { unionGeom3 } from './unionGeom3.js'
  *      +-------+            +-------+
  */
 export const union = (...geometries) => {
-  geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('union wrong number of arguments')
+  geometries = coalesce(geometries)
 
   if (!areAllShapesTheSameType(geometries)) {
     throw new Error('union arguments must be the same geometry type')
   }
+
+  if (geometries.length === 0) return undefined
 
   const geometry = geometries[0]
   // if (path.isA(geometry)) return unionPath(matrix, geometries)

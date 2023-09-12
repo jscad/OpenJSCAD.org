@@ -1,5 +1,5 @@
 import { areAllShapesTheSameType } from '../../utils/areAllShapesTheSameType.js'
-import { flatten } from '../../utils/flatten.js'
+import { coalesce } from '../../utils/coalesce.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
@@ -30,12 +30,13 @@ import { intersectGeom3 } from './intersectGeom3.js'
  *      +-------+
  */
 export const intersect = (...geometries) => {
-  geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('intersect wrong number of arguments')
+  geometries = coalesce(geometries)
 
   if (!areAllShapesTheSameType(geometries)) {
     throw new Error('intersect arguments must be the same geometry type')
   }
+
+  if (geometries.length === 0) return undefined
 
   const geometry = geometries[0]
   // if (path.isA(geometry)) return intersectPath(matrix, geometries)

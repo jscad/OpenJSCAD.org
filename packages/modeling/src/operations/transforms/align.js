@@ -1,4 +1,6 @@
-import { flatten } from '../../utils/flatten.js'
+import * as vec3 from '../../maths/vec3/index.js'
+
+import { coalesce } from '../../utils/coalesce.js'
 import { padArrayToLength } from '../../utils/padArrayToLength.js'
 
 import { measureAggregateBoundingBox } from '../../measurements/measureAggregateBoundingBox.js'
@@ -34,9 +36,9 @@ const populateRelativeToFromBounds = (relativeTo, modes, bounds) => {
   return relativeTo
 }
 
-const alignGeometries = (geometry, modes, relativeTo) => {
-  const bounds = measureAggregateBoundingBox(geometry)
-  const translation = [0, 0, 0]
+const alignGeometries = (geometries, modes, relativeTo) => {
+  const bounds = measureAggregateBoundingBox(geometries)
+  const translation = vec3.create()
   for (let i = 0; i < 3; i++) {
     if (modes[i] === 'center') {
       translation[i] = relativeTo[i] - (bounds[0][i] + bounds[1][i]) / 2
@@ -47,7 +49,7 @@ const alignGeometries = (geometry, modes, relativeTo) => {
     }
   }
 
-  return translate(translation, geometry)
+  return translate(translation, geometries)
 }
 
 /**
@@ -73,14 +75,13 @@ export const align = (options, ...geometries) => {
 
   options = validateOptions(options)
   let { modes, relativeTo, grouped } = options
-  geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('align(): No geometries were provided to act upon')
 
   if (relativeTo.filter((val) => val == null).length) {
     const bounds = measureAggregateBoundingBox(geometries)
     relativeTo = populateRelativeToFromBounds(relativeTo, modes, bounds)
   }
   if (grouped) {
+    geometries = coalesce(geometries)
     geometries = alignGeometries(geometries, modes, relativeTo)
   } else {
     geometries = geometries.map((geometry) => alignGeometries(geometry, modes, relativeTo))

@@ -1,5 +1,3 @@
-import { flatten } from '../../utils/flatten.js'
-
 import { measureEpsilon } from '../../measurements/measureEpsilon.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
@@ -67,14 +65,12 @@ const generalizeGeom3 = (options, geometry) => {
  * @alias module:modeling/modifiers.generalize
  */
 export const generalize = (options, ...geometries) => {
-  geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('wrong number of arguments')
-
   const results = geometries.map((geometry) => {
     if (path2.isA(geometry)) return generalizePath2(options, geometry)
     if (geom2.isA(geometry)) return generalizeGeom2(options, geometry)
     if (geom3.isA(geometry)) return generalizeGeom3(options, geometry)
-    throw new Error('invalid geometry')
+    if (Array.isArray(geometry)) return generalize(options, ...geometry)
+    return geometry
   })
   return results.length === 1 ? results[0] : results
 }

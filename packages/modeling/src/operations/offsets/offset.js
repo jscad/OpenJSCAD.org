@@ -1,5 +1,3 @@
-import { flatten } from '../../utils/flatten.js'
-
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as path2 from '../../geometries/path2/index.js'
@@ -23,13 +21,11 @@ import { offsetPath2 } from './offsetPath2.js'
  * let small = offset({ delta: -4, corners: 'chamfer' }, square({size: 40})) // contract
  */
 export const offset = (options, ...objects) => {
-  objects = flatten(objects)
-  if (objects.length === 0) throw new Error('wrong number of arguments')
-
   const results = objects.map((object) => {
     if (path2.isA(object)) return offsetPath2(options, object)
     if (geom2.isA(object)) return offsetGeom2(options, object)
     if (geom3.isA(object)) return offsetGeom3(options, object)
+    if (Array.isArray(object)) return offset(options, ...object)
     return object
   })
   return results.length === 1 ? results[0] : results

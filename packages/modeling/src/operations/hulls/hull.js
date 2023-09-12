@@ -1,5 +1,5 @@
 import { areAllShapesTheSameType } from '../../utils/areAllShapesTheSameType.js'
-import { flatten } from '../../utils/flatten.js'
+import { coalesce } from '../../utils/coalesce.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
@@ -12,8 +12,8 @@ import { hullGeom3 } from './hullGeom3.js'
 /**
  * Create a convex hull of the given geometries.
  * The given geometries should be of the same type, either geom2 or geom3 or path2.
- * @param {...Objects} geometries - list of geometries from which to create a hull
- * @returns {Geom2|Geom3} new geometry
+ * @param {...Object} geometries - list of geometries from which to create a hull
+ * @returns {Geom2|Geom3|Path2} new geometry
  * @alias module:modeling/hulls.hull
  *
  * @example
@@ -33,8 +33,10 @@ import { hullGeom3 } from './hullGeom3.js'
  *       +-------+           +-------+
  */
 export const hull = (...geometries) => {
-  geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('wrong number of arguments')
+  geometries = coalesce(geometries)
+
+  if (geometries.length === 0) return undefined
+  if (geometries.length === 1) geometries[0]
 
   if (!areAllShapesTheSameType(geometries)) {
     throw new Error('only hulls of the same type are supported')

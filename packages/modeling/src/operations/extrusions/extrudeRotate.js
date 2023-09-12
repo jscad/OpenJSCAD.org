@@ -4,6 +4,7 @@ import * as mat4 from '../../maths/mat4/index.js'
 import { mirrorX } from '../transforms/mirror.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
+import * as geom3 from '../../geometries/geom3/index.js'
 import * as slice from '../../geometries/slice/index.js'
 
 import { extrudeFromSlices } from './extrudeFromSlices.js'
@@ -58,7 +59,7 @@ export const extrudeRotate = (options, geometry) => {
 
   // convert geometry to an array of sides, easier to deal with
   let shapeSides = geom2.toSides(geometry)
-  if (shapeSides.length === 0) return geometry
+  if (shapeSides.length === 0) return geom3.create()
   let sliceGeometry = geometry
 
   // determine if the extrusion can be computed in the first place

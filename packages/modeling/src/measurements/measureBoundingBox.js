@@ -121,7 +121,6 @@ const measureBoundingBoxOfSlice = (geometry) => {
  */
 export const measureBoundingBox = (...geometries) => {
   geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('wrong number of arguments')
 
   const results = geometries.map((geometry) => {
     if (path2.isA(geometry)) return measureCached(geometry, measureBoundingBoxOfPath2)

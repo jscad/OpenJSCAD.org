@@ -18,7 +18,6 @@ import { calculateEpsilonFromBounds } from './calculateEpsilonFromBounds.js'
  */
 export const measureAggregateEpsilon = (...geometries) => {
   geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('measureAggregateEpsilon: no geometries supplied')
   const bounds = measureAggregateBoundingBox(geometries)
 
   let dimensions = 0

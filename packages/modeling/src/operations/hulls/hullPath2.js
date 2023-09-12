@@ -7,7 +7,7 @@ import { toUniquePoints } from './toUniquePoints.js'
 
 /*
  * Create a convex hull of the given geometries (path2).
- * @param {...geometries} geometries - list of path2 geometries
+ * @param {...Path2} geometries - list of path2 geometries
  * @returns {Path2} new geometry
  */
 export const hullPath2 = (...geometries) => {

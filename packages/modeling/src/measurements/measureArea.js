@@ -85,7 +85,6 @@ const measureAreaOfSlice = (geometry) => {
  */
 export const measureArea = (...geometries) => {
   geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('wrong number of arguments')
 
   const results = geometries.map((geometry) => {
     if (path2.isA(geometry)) return measureAreaOfPath2(geometry)

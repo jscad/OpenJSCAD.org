@@ -14,7 +14,6 @@ import { measureVolume } from './measureVolume.js'
  */
 export const measureAggregateVolume = (...geometries) => {
   geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('measureAggregateVolume: no geometries supplied')
   const volumes = measureVolume(geometries)
   if (geometries.length === 1) {
     return volumes

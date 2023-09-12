@@ -1,5 +1,3 @@
-import { flatten } from '../../utils/flatten.js'
-
 import * as mat4 from '../../maths/mat4/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
@@ -19,9 +17,6 @@ import * as path2 from '../../geometries/path2/index.js'
 export const translate = (offset, ...objects) => {
   if (!Array.isArray(offset)) throw new Error('offset must be an array')
 
-  objects = flatten(objects)
-  if (objects.length === 0) throw new Error('wrong number of arguments')
-
   // adjust the offset if necessary
   offset = offset.slice() // don't modify the original
   while (offset.length < 3) offset.push(0)
@@ -32,6 +27,7 @@ export const translate = (offset, ...objects) => {
     if (path2.isA(object)) return path2.transform(matrix, object)
     if (geom2.isA(object)) return geom2.transform(matrix, object)
     if (geom3.isA(object)) return geom3.transform(matrix, object)
+    if (Array.isArray(object)) return translate(offset, ...object)
     return object
   })
   return results.length === 1 ? results[0] : results
@@ -44,7 +40,7 @@ export const translate = (offset, ...objects) => {
  * @return {Object|Array} the translated object, or a list of translated objects
  * @alias module:modeling/transforms.translateX
  */
-export const translateX = (offset, ...objects) => translate([offset, 0, 0], objects)
+export const translateX = (offset, ...objects) => translate([offset, 0, 0], ...objects)
 
 /**
  * Translate the given objects along the Y axis using the given options.
@@ -53,7 +49,7 @@ export const translateX = (offset, ...objects) => translate([offset, 0, 0], obje
  * @return {Object|Array} the translated object, or a list of translated objects
  * @alias module:modeling/transforms.translateY
  */
-export const translateY = (offset, ...objects) => translate([0, offset, 0], objects)
+export const translateY = (offset, ...objects) => translate([0, offset, 0], ...objects)
 
 /**
  * Translate the given objects along the Z axis using the given options.
@@ -62,4 +58,4 @@ export const translateY = (offset, ...objects) => translate([0, offset, 0], obje
  * @return {Object|Array} the translated object, or a list of translated objects
  * @alias module:modeling/transforms.translateZ
  */
-export const translateZ = (offset, ...objects) => translate([0, 0, offset], objects)
+export const translateZ = (offset, ...objects) => translate([0, 0, offset], ...objects)

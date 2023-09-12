@@ -1,5 +1,3 @@
-import { flatten } from '../utils/flatten.js'
-
 import * as geom2 from '../geometries/geom2/index.js'
 import * as geom3 from '../geometries/geom3/index.js'
 import * as path2 from '../geometries/path2/index.js'
@@ -47,14 +45,12 @@ export const colorize = (color, ...objects) => {
   if (color.length < 3) throw new Error('color must contain R, G and B values')
   if (color.length === 3) color = [color[0], color[1], color[2], 1.0] // add alpha
 
-  objects = flatten(objects)
-  if (objects.length === 0) throw new Error('wrong number of arguments')
-
   const results = objects.map((object) => {
     if (geom2.isA(object)) return colorGeom2(color, object)
     if (geom3.isA(object)) return colorGeom3(color, object)
     if (path2.isA(object)) return colorPath2(color, object)
     if (poly3.isA(object)) return colorPoly3(color, object)
+    if (Array.isArray(object)) return colorize(color, ...object)
 
     object.color = color
     return object

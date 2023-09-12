@@ -1,5 +1,3 @@
-import { flatten } from '../../utils/flatten.js'
-
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as path2 from '../../geometries/path2/index.js'
@@ -43,8 +41,6 @@ export const center = (options, ...objects) => {
   }
   const { axes, relativeTo } = Object.assign({}, defaults, options)
 
-  objects = flatten(objects)
-  if (objects.length === 0) throw new Error('wrong number of arguments')
   if (relativeTo.length !== 3) throw new Error('relativeTo must be an array of length 3')
 
   options = { axes, relativeTo }
@@ -64,7 +60,7 @@ export const center = (options, ...objects) => {
  * @return {Object|Array} the centered object, or a list of centered objects
  * @alias module:modeling/transforms.centerX
  */
-export const centerX = (...objects) => center({ axes: [true, false, false] }, objects)
+export const centerX = (...objects) => center({ axes: [true, false, false] }, ...objects)
 
 /**
  * Center the given objects about the Y axis.
@@ -72,7 +68,7 @@ export const centerX = (...objects) => center({ axes: [true, false, false] }, ob
  * @return {Object|Array} the centered object, or a list of centered objects
  * @alias module:modeling/transforms.centerY
  */
-export const centerY = (...objects) => center({ axes: [false, true, false] }, objects)
+export const centerY = (...objects) => center({ axes: [false, true, false] }, ...objects)
 
 /**
  * Center the given objects about the Z axis.
@@ -80,4 +76,4 @@ export const centerY = (...objects) => center({ axes: [false, true, false] }, ob
  * @return {Object|Array} the centered object, or a list of centered objects
  * @alias module:modeling/transforms.centerZ
  */
-export const centerZ = (...objects) => center({ axes: [false, false, true] }, objects)
+export const centerZ = (...objects) => center({ axes: [false, false, true] }, ...objects)
