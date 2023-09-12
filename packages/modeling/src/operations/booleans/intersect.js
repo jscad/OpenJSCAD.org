@@ -31,15 +31,15 @@ import { intersectGeom3 } from './intersectGeom3.js'
  */
 export const intersect = (...geometries) => {
   geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('wrong number of arguments')
+  if (geometries.length === 0) throw new Error('intersect wrong number of arguments')
 
   if (!areAllShapesTheSameType(geometries)) {
-    throw new Error('only intersect of the types are supported')
+    throw new Error('intersect arguments must be the same geometry type')
   }
 
   const geometry = geometries[0]
   // if (path.isA(geometry)) return intersectPath(matrix, geometries)
   if (geom2.isA(geometry)) return intersectGeom2(geometries)
   if (geom3.isA(geometry)) return intersectGeom3(geometries)
-  return geometry
+  throw new Error('intersect unsupported geometry type')
 }

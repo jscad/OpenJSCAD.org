@@ -31,15 +31,15 @@ import { subtractGeom3 } from './subtractGeom3.js'
  */
 export const subtract = (...geometries) => {
   geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('wrong number of arguments')
+  if (geometries.length === 0) throw new Error('subtract wrong number of arguments')
 
   if (!areAllShapesTheSameType(geometries)) {
-    throw new Error('only subtract of the types are supported')
+    throw new Error('subtract arguments must be the same geometry type')
   }
 
   const geometry = geometries[0]
   // if (path.isA(geometry)) return subtractPath(matrix, geometries)
   if (geom2.isA(geometry)) return subtractGeom2(geometries)
   if (geom3.isA(geometry)) return subtractGeom3(geometries)
-  return geometry
+  throw new Error('subtract unsupported geometry type')
 }
