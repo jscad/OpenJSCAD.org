@@ -11,10 +11,6 @@ export interface VectorCharOptions {
   yOffset?: number
   height?: number
   extrudeOffset?: number
-  input?: string
 }
 
-export function vectorChar(): VectorChar
-export function vectorChar(char: string): VectorChar
-export function vectorChar(options: VectorCharOptions): VectorChar
-export function vectorChar(options: Omit<VectorCharOptions, 'input'>, char: string): VectorChar
+export function vectorChar(options: VectorCharOptions, char: string): VectorChar

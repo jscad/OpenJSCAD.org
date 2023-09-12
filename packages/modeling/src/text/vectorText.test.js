@@ -1,13 +1,18 @@
 import test from 'ava'
 
-import { vectorChar, vectorText } from './index.js'
+import { vectorText } from './index.js'
+
+test('vectorText (empty string)', (t) => {
+  const obs = vectorText({}, '')
+  t.is(obs.length, 0)
+})
 
 test('vectorText (text)', (t) => {
-  const obs = vectorText('O I') // one char with one closed path, one char with one open path
+  const obs = vectorText({}, 'O I') // one char with one closed path, one char with one open path
   t.is(obs.length, 1)
 
   const vtext = obs[0]
-  // t.is(vtext.width, 46)
+  t.is(vtext.width, 46)
   t.is(vtext.height, 14)
   t.is(vtext.chars.length, 2)
 
@@ -34,7 +39,7 @@ test('vectorText (text)', (t) => {
 
 test('vectorText (multi-line-text)', (t) => {
   // NOTE: control line spacing to verify '\n' characters are working
-  const obs = vectorText({lineSpacing: 1.0}, '\nROCKS!\n\nOpen\nJSCAD\nROCKS!\n')
+  const obs = vectorText({ lineSpacing: 1 }, '\nROCKS!\n\nOpen\nJSCAD\nROCKS!\n')
   // only those lines with characters will be returned
   t.is(obs.length, 4)
 
@@ -80,7 +85,7 @@ test('vectorText ({ yOffset }, text)', (t) => {
     1, 0, 0, 0,
     0, 1, 0, 0,
     0, 0, 1, 0,
-    0, 0, 0, 1,
+    0, 0, 0, 1
   ]
 
   const obs = vectorText({ yOffset: 20 }, 'y')
@@ -108,7 +113,7 @@ test('vectorText ({ xOffset }, text)', (t) => {
     1, 0, 0, 0,
     0, 1, 0, 0,
     0, 0, 1, 0,
-    0, 0, 0, 1,
+    0, 0, 0, 1
   ]
 
   const obs = vectorText({ xOffset: 20 }, 'y')
@@ -132,7 +137,7 @@ test('vectorText ({ xOffset }, text)', (t) => {
 })
 
 test('vectorText ({ letterSpacing }, text)', (t) => {
-  const obs = vectorText({letterSpacing: 0.5}, 'JSCAD')
+  const obs = vectorText({ letterSpacing: 0.5 }, 'JSCAD')
   t.is(obs.length, 1)
 
   const vtext = obs[0]
@@ -165,19 +170,19 @@ test('vectorText ({ align: center }, text)', (t) => {
     1, 0, 0, 0,
     0, 1, 0, 0,
     0, 0, 1, 0,
-    18.5, 0, 0, 1,
+    18.5, 0, 0, 1
   ]
   const expectedTransformAB = [
     1, 0, 0, 0,
     0, 1, 0, 0,
     0, 0, 1, 0,
-    9, 0, 0, 1,
+    9, 0, 0, 1
   ]
   const expectedTransformABC = [
     1, 0, 0, 0,
     0, 1, 0, 0,
     0, 0, 1, 0,
-    0, 0, 0, 1,
+    0, 0, 0, 1
   ]
 
   const obs = vectorText({ align: 'center' }, 'a\nab\nabc')
@@ -213,19 +218,19 @@ test('vectorText ({ align: right }, text)', (t) => {
     1, 0, 0, 0,
     0, 1, 0, 0,
     0, 0, 1, 0,
-    37, 0, 0, 1,
+    37, 0, 0, 1
   ]
   const expectedTransformAB = [
     1, 0, 0, 0,
     0, 1, 0, 0,
     0, 0, 1, 0,
-    18, 0, 0, 1,
+    18, 0, 0, 1
   ]
   const expectedTransformABC = [
     1, 0, 0, 0,
     0, 1, 0, 0,
     0, 0, 1, 0,
-    0, 0, 0, 1,
+    0, 0, 0, 1
   ]
 
   const obs = vectorText({ align: 'right' }, 'a\nab\nabc')
@@ -254,4 +259,9 @@ test('vectorText ({ align: right }, text)', (t) => {
   vchar = vtext.chars[0]
   t.deepEqual(vchar.paths[0].points[0], [15, -46])
   t.deepEqual(vchar.paths[0].transforms, expectedTransformABC)
+})
+
+test('vectorText required options', (t) => {
+  t.throws(() => vectorText(), { message: 'text must be a string' })
+  t.throws(() => vectorText({}), { message: 'text must be a string' })
 })
