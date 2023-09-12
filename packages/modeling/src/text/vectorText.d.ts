@@ -12,4 +12,4 @@ export interface VectorTextOptions {
   extrudeOffset?: number
 }
 
-export function vectorText(options: VectorTextOptions, text): VectorText
+export function vectorText(options: VectorTextOptions, text: string): VectorText

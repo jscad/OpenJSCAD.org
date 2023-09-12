@@ -13,4 +13,4 @@ export interface VectorCharOptions {
   extrudeOffset?: number
 }
 
-export function vectorChar(options: VectorCharOptions, char: string): VectorChar
+export function vectorChar(options: VectorCharOptions, text: string): VectorChar
