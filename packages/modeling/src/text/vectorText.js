@@ -1,8 +1,19 @@
 import * as mat4 from '../maths/mat4/index.js'
 import * as path2 from '../geometries/path2/index.js'
 
+import { simplex } from './fonts/single-line/hershey/simplex.js'
 import { vectorChar } from './vectorChar.js'
-import { vectorParams } from './vectorParams.js'
+
+const defaultsVectorParams = {
+  xOffset: 0,
+  yOffset: 0,
+  align: 'left',
+  font: simplex,
+  height: 14, // old vector_xxx simplex font height
+  lineSpacing: 30 / 14, // old vector_xxx ratio
+  letterSpacing: 0, // proportion of font size, i.e. CSS em
+  extrudeOffset: 0
+}
 
 /**
  * Represents a line of characters as an anonymous object containing a list of VectorChar.
@@ -21,9 +32,7 @@ const translateLine = (options, line) => {
   mat4.translate(matrix, matrix, [x, y, 0])
 
   line.chars = line.chars.map((vchar) => {
-    vchar.paths = vchar.paths.map((path) => {
-      return path2.transform(matrix, path)
-    })
+    vchar.paths = vchar.paths.map((path) => path2.transform(matrix, path))
     return vchar
   })
   return line
@@ -32,7 +41,7 @@ const translateLine = (options, line) => {
 /**
  * Construct an array of character segments from an ascii string whose characters code is between 31 and 127,
  * if one character is not supported it is replaced by a question mark.
- * @param {object|string} [options] - options for construction or ascii string
+ * @param {object} options - options for text construction
  * @param {number} [options.xOffset=0] - x offset
  * @param {number} [options.yOffset=0] - y offset
  * @param {number} [options.height=14] - height of requested characters (uppercase height), i.e. font height in points
@@ -40,24 +49,19 @@ const translateLine = (options, line) => {
  * @param {number} [options.letterSpacing=0] - extra letter spacing, expressed as a proportion of height, i.e. like CSS em
  * @param {string} [options.align='left'] - multi-line text alignment: left, center, right
  * @param {number} [options.extrudeOffset=0] - width of the extrusion that will be applied (manually) after the creation of the character
- * @param {string} [options.input='?'] - ascii string (ignored/overwrited if provided as seconds parameter)
- * @param {string} [text='?'] - ascii string
+ * @param {string} text - ascii string
  * @returns {Array} list of vector line objects, where each line contains a list of vector character objects
  * @alias module:modeling/text.vectorText
  *
  * @example
- * let mylines = vectorText()
- * or
- * let mylines = vectorText('OpenJSCAD')
- * or
- * let mylines = vectorText({ yOffset: -50 }, 'OpenJSCAD')
- * or
- * let mylines = vectorText({ yOffset: -80, input: 'OpenJSCAD' })
+ * let mylines = vectorText({ yOffset: -50 }, 'JSCAD')
  */
 export const vectorText = (options, text) => {
   const {
-    xOffset, yOffset, input, font, height, align, extrudeOffset, lineSpacing, letterSpacing
-  } = vectorParams(options, text)
+    xOffset, yOffset, font, height, align, extrudeOffset, lineSpacing, letterSpacing
+  } = Object.assign({}, defaultsVectorParams, options)
+
+  if (typeof text !== 'string') throw new Error('text must be a string')
 
   // NOTE: Just like CSS letter-spacing, the spacing could be positive or negative
   const extraLetterSpacing = (height * letterSpacing)
@@ -78,9 +82,9 @@ export const vectorText = (options, text) => {
   let x = xOffset
   let y = yOffset
   let vchar
-  let il = input.length
+  const il = text.length
   for (let i = 0; i < il; i++) {
-    const character = input[i]
+    const character = text[i]
     if (character === '\n') {
       pushLine()
 
@@ -92,7 +96,7 @@ export const vectorText = (options, text) => {
     // convert the character
     vchar = vectorChar({ xOffset: x, yOffset: y, font, height, extrudeOffset }, character)
 
-    let width = vchar.width + extraLetterSpacing
+    const width = vchar.width + extraLetterSpacing
     x += width
 
     // update current line
