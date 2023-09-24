@@ -3,7 +3,7 @@
   "npmClient": "pnpm",
   "command": {
     "version": {
-      "allowBranch": "v3-prerelease-part-4",
+      "allowBranch": "v3-prerelease",
       "conventionalCommits": true,
       "exact": true,
       "message": "chore(release): publish",
