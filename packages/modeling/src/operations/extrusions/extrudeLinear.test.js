@@ -8,7 +8,7 @@ import { colorize } from '../../colors/index.js'
 
 import { geom2, geom3, path2 } from '../../geometries/index.js'
 
-import { measureVolume } from '../../measurements/index.js'
+import { measureArea, measureVolume } from '../../measurements/index.js'
 
 import { square } from '../../primitives/index.js'
 
@@ -34,6 +34,7 @@ test('extrudeLinear (defaults)', (t) => {
     [[5, 5, 0], [5, -5, 0], [-5, -5, 0]]
   ]
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 240)
   t.is(measureVolume(geometry3), 100.00000000000001)
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
@@ -70,6 +71,7 @@ test('extrudeLinear (no twist)', (t) => {
     [[5, 5, 0], [5, -5, 0], [-5, -5, 0]]
   ]
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 800)
   t.is(measureVolume(geometry3), 1500)
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
@@ -91,6 +93,7 @@ test('extrudeLinear (no twist)', (t) => {
     [[5, -5, 0], [5, 5, 0], [-5, 5, 0]]
   ]
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 800)
   t.is(measureVolume(geometry3), 1500)
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
@@ -124,6 +127,7 @@ test('extrudeLinear (twist)', (t) => {
     [[5, 5, 0], [5, -5, 0], [-5, -5, 0]]
   ]
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 805.6920958788816)
   t.is(measureVolume(geometry3), 1707.1067811865476)
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
@@ -166,6 +170,7 @@ test('extrudeLinear (twist)', (t) => {
   geometry3 = extrudeLinear({ height: 15, twistAngle: TAU / 2, twistSteps: 30 }, geometry2)
   pts = geom3.toPoints(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 1091.9932843446968)
   t.is(measureVolume(geometry3), 1444.9967160503095)
   t.is(pts.length, 244)
 })
@@ -212,6 +217,7 @@ test('extrudeLinear (holes)', (t) => {
     [[-2, -2, 0], [2, -2, 0], [-5, -5, 0]]
   ]
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 1008)
   t.is(measureVolume(geometry3), 1260)
   t.is(pts.length, 32)
   t.true(comparePolygonsAsPoints(pts, exp))

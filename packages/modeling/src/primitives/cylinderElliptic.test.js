@@ -1,8 +1,10 @@
 import test from 'ava'
 
+import { geom3 } from '../geometries/index.js'
+
 import { TAU } from '../maths/constants.js'
 
-import { geom3 } from '../geometries/index.js'
+import { measureArea, measureVolume } from '../measurements/index.js'
 
 import { cylinderElliptic } from './index.js'
 
@@ -13,6 +15,8 @@ test('cylinderElliptic (defaults)', (t) => {
   const pts = geom3.toPoints(obs)
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 18.789084266699856)
+  t.is(measureVolume(obs), 6.2428903045161)
   t.is(pts.length, 96)
 })
 
@@ -72,6 +76,8 @@ test('cylinderElliptic (options)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 68.11657082460499)
+  t.is(measureVolume(obs), 30.00000000000001)
   t.is(pts.length, 36)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -130,6 +136,8 @@ test('cylinderElliptic (options)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 32.34210030145122)
+  t.is(measureVolume(obs), 12.999999999999991)
   t.is(pts.length, 48)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -138,6 +146,8 @@ test('cylinderElliptic (options)', (t) => {
   pts = geom3.toPoints(obs)
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 22.17105015072561)
+  t.is(measureVolume(obs), 6.5)
   t.is(pts.length, 28)
 
   // test startAngle and endAngle
@@ -145,6 +155,8 @@ test('cylinderElliptic (options)', (t) => {
   pts = geom3.toPoints(obs)
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 18.78908426669986)
+  t.is(measureVolume(obs), 6.2428903045160995)
   t.is(pts.length, 96)
 
   // test segments
@@ -152,6 +164,8 @@ test('cylinderElliptic (options)', (t) => {
   pts = geom3.toPoints(obs)
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 17.902724085175244)
+  t.is(measureVolume(obs), 5.6568542494923815)
   t.is(pts.length, 24)
 
   // test center
@@ -193,6 +207,8 @@ test('cylinderElliptic (options)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 24.025659003016692)
+  t.is(measureVolume(obs), 8.485281374238578)
   t.is(pts.length, 24)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
@@ -202,6 +218,8 @@ test('cylinderElliptic (cone)', (t) => {
   const pts = geom3.toPoints(obs)
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 10.128239395900382)
+  t.is(measureVolume(obs), 2.080963434838702)
   t.is(pts.length, 64)
 })
 
@@ -210,5 +228,7 @@ test('cylinderElliptic (squished)', (t) => {
   const pts = geom3.toPoints(obs)
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 8.47213595499958)
+  t.is(measureVolume(obs), 0.6666666666666666)
   t.is(pts.length, 8)
 })

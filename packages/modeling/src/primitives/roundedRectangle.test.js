@@ -2,6 +2,8 @@ import test from 'ava'
 
 import { geom2 } from '../geometries/index.js'
 
+import { measureArea } from '../measurements/index.js'
+
 import { roundedRectangle } from './index.js'
 
 import { comparePoints } from '../../test/helpers/index.js'
@@ -11,13 +13,15 @@ test('roundedRectangle (defaults)', (t) => {
   const obs = geom2.toPoints(geometry)
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 36)
+  t.is(measureArea(geometry), 3.964857806090323)
+  t.is(obs.length, 36)
 })
 
 test('roundedRectangle (zero size)', (t) => {
   const obs = roundedRectangle({ size: [1, 0] })
   const pts = geom2.toPoints(obs)
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 0)
   t.is(pts.length, 0)
 })
 
@@ -25,7 +29,8 @@ test('roundedRectangle (zero radius)', (t) => {
   const obs = roundedRectangle({ roundRadius: 0 })
   const pts = geom2.toPoints(obs)
   t.notThrows(() => geom2.validate(obs))
-  t.deepEqual(pts.length, 4)
+  t.is(measureArea(obs), 4)
+  t.is(pts.length, 4)
 })
 
 test('roundedRectangle (options)', (t) => {
@@ -55,7 +60,8 @@ test('roundedRectangle (options)', (t) => {
     [5, 4.2]
   ]
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 20)
+  t.is(measureArea(geometry), 3.962458698356829)
+  t.is(obs.length, 20)
   t.true(comparePoints(obs, exp))
 
   // test size
@@ -84,7 +90,8 @@ test('roundedRectangle (options)', (t) => {
     [5, -2.8]
   ]
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 20)
+  t.is(measureArea(geometry), 59.96245869835682)
+  t.is(obs.length, 20)
   t.true(comparePoints(obs, exp))
 
   // test roundRadius
@@ -113,12 +120,14 @@ test('roundedRectangle (options)', (t) => {
     [5, -1.0000000000000004]
   ]
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 20)
+  t.is(measureArea(geometry), 56.24586983568288)
+  t.is(obs.length, 20)
   t.true(comparePoints(obs, exp))
 
   // test segments
   geometry = roundedRectangle({ size: [10, 6], roundRadius: 2, segments: 64 })
   obs = geom2.toPoints(geometry)
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 68)
+  t.is(measureArea(geometry), 56.546193962183764)
+  t.is(obs.length, 68)
 })

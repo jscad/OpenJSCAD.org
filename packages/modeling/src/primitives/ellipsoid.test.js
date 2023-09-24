@@ -2,6 +2,8 @@ import test from 'ava'
 
 import { geom3 } from '../geometries/index.js'
 
+import { measureArea, measureVolume } from '../measurements/index.js'
+
 import { ellipsoid } from './index.js'
 
 import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
@@ -11,6 +13,8 @@ test('ellipsoid (defaults)', (t) => {
   const pts = geom3.toPoints(obs)
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 12.465694088650583)
+  t.is(measureVolume(obs), 4.121941740785839)
   t.is(pts.length, 512)
 })
 
@@ -141,6 +145,8 @@ test('ellipsoid (options)', (t) => {
     [[0, 0, 7], [1.5000000000000004, 0, 6.06217782649107], [1.2990381056766578, 1.2500000000000013, 6.06217782649107]]
   ]
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 291.2703265603712)
+  t.is(measureVolume(obs), 391.86533479473223)
   t.is(pts.length, 72)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -148,6 +154,8 @@ test('ellipsoid (options)', (t) => {
   obs = ellipsoid({ segments: 8 })
   pts = geom3.toPoints(obs)
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 11.013439076647456)
+  t.is(measureVolume(obs), 3.2189514164974597)
   t.is(pts.length, 32)
 
   obs = ellipsoid({ center: [-3, 5, 7], segments: 8 })
@@ -204,6 +212,8 @@ test('ellipsoid (options)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 11.013439076647467)
+  t.is(measureVolume(obs), 3.218951416497485)
   t.is(pts.length, 32)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
@@ -212,5 +222,7 @@ test('ellipsoid (zero radius)', (t) => {
   const obs = ellipsoid({ radius: [1, 1, 0] })
   const pts = geom3.toPoints(obs)
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 0)
+  t.is(measureVolume(obs), 0)
   t.is(pts.length, 0)
 })

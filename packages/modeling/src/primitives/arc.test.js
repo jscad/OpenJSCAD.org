@@ -13,7 +13,7 @@ test('arc (defaults)', (t) => {
   const obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
-  t.deepEqual(obs.length, 33)
+  t.is(obs.length, 33)
 })
 
 test('arc (options)', (t) => {
@@ -41,7 +41,7 @@ test('arc (options)', (t) => {
   let obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
-  t.deepEqual(obs.length, 17)
+  t.is(obs.length, 17)
   t.true(comparePoints(obs, exp))
 
   // test radius
@@ -68,7 +68,7 @@ test('arc (options)', (t) => {
   obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
-  t.deepEqual(obs.length, 17)
+  t.is(obs.length, 17)
   t.true(comparePoints(obs, exp))
 
   // test startAngle
@@ -92,7 +92,7 @@ test('arc (options)', (t) => {
   obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
-  t.deepEqual(obs.length, 14)
+  t.is(obs.length, 14)
   t.true(comparePoints(obs, exp))
 
   // test endAngle
@@ -108,7 +108,7 @@ test('arc (options)', (t) => {
   obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
-  t.deepEqual(obs.length, 6)
+  t.is(obs.length, 6)
   t.true(comparePoints(obs, exp))
 
   // test makeTangent
@@ -137,7 +137,7 @@ test('arc (options)', (t) => {
   obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
-  t.deepEqual(obs.length, 19)
+  t.is(obs.length, 19)
   t.true(comparePoints(obs, exp))
 
   // test segments
@@ -156,7 +156,7 @@ test('arc (options)', (t) => {
   obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
-  t.deepEqual(obs.length, 9)
+  t.is(obs.length, 9)
   t.true(comparePoints(obs, exp))
 })
 
@@ -173,7 +173,7 @@ test('arc (rotations)', (t) => {
   let obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
-  t.deepEqual(obs.length, 6)
+  t.is(obs.length, 6)
   t.true(comparePoints(obs, exp))
 
   exp = [
@@ -192,7 +192,7 @@ test('arc (rotations)', (t) => {
   obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
-  t.deepEqual(obs.length, 10)
+  t.is(obs.length, 10)
   t.true(comparePoints(obs, exp))
 
   exp = [
@@ -211,7 +211,7 @@ test('arc (rotations)', (t) => {
   obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
-  t.deepEqual(obs.length, 10)
+  t.is(obs.length, 10)
   t.true(comparePoints(obs, exp))
 
   exp = [[-1.8369701987210297e-16, -1]]
@@ -219,6 +219,6 @@ test('arc (rotations)', (t) => {
   obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
-  t.deepEqual(obs.length, 1)
+  t.is(obs.length, 1)
   t.true(comparePoints(obs, exp))
 })

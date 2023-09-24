@@ -1,10 +1,12 @@
 import test from 'ava'
 
-import { TAU } from '../maths/constants.js'
-
 import { degToRad } from '../utils/index.js'
 
 import { geom2 } from '../geometries/index.js'
+
+import { TAU } from '../maths/constants.js'
+
+import { measureArea } from '../measurements/index.js'
 
 import { triangle } from './index.js'
 
@@ -20,7 +22,8 @@ test('triangle (defaults)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 3)
+  t.is(measureArea(geometry), 0.43301270189221935)
+  t.is(obs.length, 3)
   t.true(comparePoints(obs, exp))
 })
 
@@ -35,7 +38,8 @@ test('triangle (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 3)
+  t.is(measureArea(geometry), 20.33316256758894)
+  t.is(obs.length, 3)
   t.true(comparePoints(obs, exp))
 
   // test AAA
@@ -48,7 +52,7 @@ test('triangle (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 3)
+  t.is(obs.length, 3)
   t.true(comparePoints(obs, exp))
 
   // test AAS
@@ -61,7 +65,8 @@ test('triangle (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 3)
+  t.is(measureArea(geometry), 15.796947276180953)
+  t.is(obs.length, 3)
   t.true(comparePoints(obs, exp))
 
   // test ASA
@@ -74,7 +79,8 @@ test('triangle (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 3)
+  t.is(measureArea(geometry), 23.384870895211314)
+  t.is(obs.length, 3)
   t.true(comparePoints(obs, exp))
 
   // test SAS
@@ -87,7 +93,8 @@ test('triangle (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 3)
+  t.is(measureArea(geometry), 13.207417653898512)
+  t.is(obs.length, 3)
   t.true(comparePoints(obs, exp))
 
   // test SSA
@@ -100,6 +107,7 @@ test('triangle (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 3)
+  t.is(measureArea(geometry), 51.962298292283386)
+  t.is(obs.length, 3)
   t.true(comparePoints(obs, exp))
 })

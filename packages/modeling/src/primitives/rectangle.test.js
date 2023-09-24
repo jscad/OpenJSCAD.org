@@ -2,6 +2,8 @@ import test from 'ava'
 
 import { geom2 } from '../geometries/index.js'
 
+import { measureArea } from '../measurements/index.js'
+
 import { rectangle } from './index.js'
 
 import { comparePoints } from '../../test/helpers/index.js'
@@ -17,7 +19,8 @@ test('rectangle (defaults)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 4)
+  t.is(measureArea(geometry), 4)
+  t.is(obs.length, 4)
   t.true(comparePoints(obs, exp))
 })
 
@@ -33,7 +36,8 @@ test('rectangle (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 4)
+  t.is(measureArea(geometry), 4)
+  t.is(obs.length, 4)
   t.true(comparePoints(obs, exp))
 
   // test size
@@ -47,7 +51,8 @@ test('rectangle (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 4)
+  t.is(measureArea(geometry), 60)
+  t.is(obs.length, 4)
   t.true(comparePoints(obs, exp))
 })
 
@@ -55,5 +60,6 @@ test('rectangle (zero size)', (t) => {
   const geometry = rectangle({ size: [1, 0] })
   const obs = geom2.toPoints(geometry)
   t.notThrows(() => geom2.validate(geometry))
+  t.is(measureArea(geometry), 0)
   t.is(obs.length, 0)
 })

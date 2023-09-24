@@ -7,7 +7,7 @@ import { mat4 } from '../../maths/index.js'
 
 import { geom2, geom3, poly3, slice } from '../../geometries/index.js'
 
-import { measureVolume } from '../../measurements/index.js'
+import { measureArea, measureVolume } from '../../measurements/index.js'
 
 import { circle, square } from '../../primitives/index.js'
 
@@ -32,6 +32,8 @@ test('extrudeFromSlices (defaults)', (t) => {
     [[-10, -10, 0], [-10, 10, 0], [10, 10, 0]],
     [[10, 10, 0], [10, -10, 0], [-10, -10, 0]]
   ]
+  t.is(measureArea(geometry3), 880)
+  t.is(measureVolume(geometry3), 400.00000000000006)
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -40,6 +42,7 @@ test('extrudeFromSlices (defaults)', (t) => {
   pts = geom3.toPoints(geometry3)
 
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 880)
   t.is(measureVolume(geometry3), 400.00000000000006)
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
@@ -74,6 +77,7 @@ test('extrudeFromSlices (torus)', (t) => {
   )
   const pts = geom3.toPoints(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 7070.694617452831)
   t.is(measureVolume(geometry3), 29393.876913398108)
   t.is(pts.length, 96)
 })
@@ -95,6 +99,7 @@ test('extrudeFromSlices (same shape, changing dimensions)', (t) => {
   const pts = geom3.toPoints(geometry3)
   // expected to throw because capEnd is false (non-closed geometry)
   t.throws(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 53.70100297794013)
   t.is(measureVolume(geometry3), 8.5)
   t.is(pts.length, 26)
 })
@@ -114,6 +119,7 @@ test('extrudeFromSlices (changing shape, changing dimensions)', (t) => {
   )
   const pts = geom3.toPoints(geometry3)
   t.notThrows.skip(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 1965.8643589631802)
   t.is(measureVolume(geometry3), 5260.067107417433)
   t.is(pts.length, 304)
 })
@@ -160,6 +166,7 @@ test('extrudeFromSlices (holes)', (t) => {
     [[-5, -5, 0], [5, -5, 0], [-10, -10, 0]]
   ]
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 720)
   t.is(measureVolume(geometry3), 300)
   t.is(pts.length, 32)
   t.true(comparePolygonsAsPoints(pts, exp))
