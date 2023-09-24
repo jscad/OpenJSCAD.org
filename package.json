@@ -37,6 +37,7 @@
     "@jscad/sample-files": "github:jscad/sample-files#master",
     "@lerna-lite/changed": "^2.5.1",
     "@lerna-lite/cli": "^2.5.1",
+    "@lerna-lite/publish": "^2.5.1",
     "@lerna-lite/run": "^2.5.1",
     "@lerna-lite/version": "^2.5.1",
     "ava": "4.3.3",
