@@ -2,6 +2,8 @@ import test from 'ava'
 
 import { geom3 } from '../geometries/index.js'
 
+import { measureArea, measureVolume } from '../measurements/index.js'
+
 import { geodesicSphere } from './index.js'
 
 import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
@@ -41,6 +43,8 @@ test('geodesicSphere (options)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 239.3635345818432)
+  t.is(measureVolume(obs), 317.0188387650327)
   t.is(pts.length, 20)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -49,6 +53,8 @@ test('geodesicSphere (options)', (t) => {
   pts = geom3.toPoints(obs)
 
   t.notThrows.skip(() => geom3.validate(obs))
+  t.is(measureArea(obs), 303.76605423529395)
+  t.is(measureVolume(obs), 492.6739732379337)
   t.is(pts.length, 180)
 })
 
@@ -56,5 +62,7 @@ test('geodesicSphere (zero radius)', (t) => {
   const obs = geodesicSphere({ radius: 0 })
   const pts = geom3.toPoints(obs)
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 0)
+  t.is(measureVolume(obs), 0)
   t.is(pts.length, 0)
 })

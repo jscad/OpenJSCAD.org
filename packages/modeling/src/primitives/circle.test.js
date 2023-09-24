@@ -1,8 +1,10 @@
 import test from 'ava'
 
+import { geom2 } from '../geometries/index.js'
+
 import { TAU } from '../maths/constants.js'
 
-import { geom2 } from '../geometries/index.js'
+import { measureArea } from '../measurements/measureArea.js'
 
 import { comparePoints } from '../../test/helpers/index.js'
 
@@ -13,7 +15,8 @@ test('circle (defaults)', (t) => {
   const pts = geom2.toPoints(geometry)
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(pts.length, 32)
+  t.is(measureArea(geometry), 3.1214451522580537)
+  t.is(pts.length, 32)
 })
 
 test('circle (options)', (t) => {
@@ -56,7 +59,8 @@ test('circle (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(pts.length, 32)
+  t.is(measureArea(geometry), 38.23770311516116)
+  t.is(pts.length, 32)
   t.true(comparePoints(pts, exp))
 
   // test radius
@@ -82,7 +86,8 @@ test('circle (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(pts.length, 16)
+  t.is(measureArea(geometry), 37.5029763717788)
+  t.is(pts.length, 16)
   t.true(comparePoints(pts, exp))
 
   // test startAngle
@@ -106,7 +111,8 @@ test('circle (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(pts.length, 14)
+  t.is(measureArea(geometry), 28.127232278834093)
+  t.is(pts.length, 14)
   t.true(comparePoints(pts, exp))
 
   // test endAngle
@@ -122,7 +128,8 @@ test('circle (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(pts.length, 6)
+  t.is(measureArea(geometry), 9.3757440929447)
+  t.is(pts.length, 6)
   t.true(comparePoints(pts, exp))
 
   // test full rotation with non-zero startAngle
@@ -130,7 +137,8 @@ test('circle (options)', (t) => {
   pts = geom2.toPoints(geometry)
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(pts.length, 32)
+  t.is(measureArea(geometry), 3.1214451522580537)
+  t.is(pts.length, 32)
 
   // test segments
   geometry = circle({ radius: 3.5, segments: 5 })
@@ -144,7 +152,8 @@ test('circle (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(pts.length, 5)
+  t.is(measureArea(geometry), 29.126105811539073)
+  t.is(pts.length, 5)
   t.true(comparePoints(pts, exp))
 })
 
@@ -152,5 +161,6 @@ test('circle (radius zero)', (t) => {
   const geometry = circle({ radius: 0 })
   const pts = geom2.toPoints(geometry)
   t.notThrows(() => geom2.validate(geometry))
+  t.is(measureArea(geometry), 0)
   t.is(pts.length, 0)
 })

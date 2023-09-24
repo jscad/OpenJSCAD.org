@@ -2,6 +2,8 @@ import test from 'ava'
 
 import { geom3 } from '../geometries/index.js'
 
+import { measureArea, measureVolume } from '../measurements/index.js'
+
 import { roundedCylinder } from './index.js'
 
 import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
@@ -11,6 +13,8 @@ test('roundedCylinder (defaults)', (t) => {
   const pts = geom3.toPoints(obs)
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 16.844951865908268)
+  t.is(measureVolume(obs), 5.81870059177007)
   t.is(pts.length, 544)
 })
 
@@ -18,6 +22,8 @@ test('roundedCylinder (zero height)', (t) => {
   const obs = roundedCylinder({ height: 0 })
   const pts = geom3.toPoints(obs)
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 0)
+  t.is(measureVolume(obs), 0)
   t.is(pts.length, 0)
 })
 
@@ -25,6 +31,8 @@ test('roundedCylinder (zero radius)', (t) => {
   const obs = roundedCylinder({ radius: 0, roundRadius: 0 })
   const pts = geom3.toPoints(obs)
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 0)
+  t.is(measureVolume(obs), 0)
   t.is(pts.length, 0)
 })
 
@@ -32,6 +40,8 @@ test('roundedCylinder (zero roundRadius)', (t) => {
   const obs = roundedCylinder({ roundRadius: 0 })
   const pts = geom3.toPoints(obs)
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 18.789084266699856)
+  t.is(measureVolume(obs), 6.2428903045161)
   t.is(pts.length, 96)
 })
 
@@ -43,6 +53,8 @@ test('roundedCylinder (options)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 14.303000362787825)
+  t.is(measureVolume(obs), 4.121244903945666)
   t.is(pts.length, 15)
 
   // test center
@@ -72,6 +84,8 @@ test('roundedCylinder (options)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 14.303000362787827)
+  t.is(measureVolume(obs), 4.121244903945658)
   t.is(pts.length, 15)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -102,6 +116,8 @@ test('roundedCylinder (options)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 120.104345775433)
+  t.is(measureVolume(obs), 46.91878813722758)
   t.is(pts.length, 15)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -131,6 +147,8 @@ test('roundedCylinder (options)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 569.7191848255909)
+  t.is(measureVolume(obs), 412.1244903945666)
   t.is(pts.length, 15)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -160,6 +178,8 @@ test('roundedCylinder (options)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 602.8474323274462)
+  t.is(measureVolume(obs), 1030.3112259864165)
   t.is(pts.length, 15)
   t.true(comparePolygonsAsPoints(pts, exp))
 })

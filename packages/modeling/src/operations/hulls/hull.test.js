@@ -1,8 +1,11 @@
 import test from 'ava'
 
 import { geom2, geom3, path2 } from '../../geometries/index.js'
-import { measureArea } from '../../measurements/measureArea.js'
+
+import { measureArea, measureVolume } from '../../measurements/index.js'
+
 import { sphere, cuboid, ellipsoid } from '../../primitives/index.js'
+
 import { center } from '../transforms/index.js'
 
 import { hull } from './index.js'
@@ -41,6 +44,7 @@ test('hull (single, geom2)', (t) => {
   obs = hull(geometry)
   pts = geom2.toPoints(obs)
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 232.09469999999993)
   t.is(pts.length, 7)
 })
 
@@ -68,6 +72,7 @@ test('hull (multiple, overlapping, geom2)', (t) => {
   let pts = geom2.toPoints(obs)
 
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 100)
   t.is(pts.length, 4)
 
   // one inside another
@@ -75,6 +80,7 @@ test('hull (multiple, overlapping, geom2)', (t) => {
   pts = geom2.toPoints(obs)
 
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 100)
   t.is(pts.length, 4)
 
   // one overlapping another
@@ -82,12 +88,14 @@ test('hull (multiple, overlapping, geom2)', (t) => {
   pts = geom2.toPoints(obs)
 
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 116)
   t.is(pts.length, 8)
 
   obs = hull(geometry2, geometry4)
   pts = geom2.toPoints(obs)
 
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 232.09469999999993)
   t.is(pts.length, 7)
 })
 
@@ -114,26 +122,31 @@ test('hull (multiple, various, geom2)', (t) => {
   let obs = hull(geometry1, geometry2)
   let pts = geom2.toPoints(obs)
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 99)
   t.is(pts.length, 5)
 
   obs = hull(geometry1, geometry3)
   pts = geom2.toPoints(obs)
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 308)
   t.is(pts.length, 5)
 
   obs = hull(geometry2, geometry3)
   pts = geom2.toPoints(obs)
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 308)
   t.is(pts.length, 5)
 
   obs = hull(geometry1, geometry2, geometry3)
   pts = geom2.toPoints(obs)
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 341)
   t.is(pts.length, 6)
 
   obs = hull(geometry5, geometry4)
   pts = geom2.toPoints(obs)
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 513.39595)
   t.is(pts.length, 8)
 })
 
@@ -216,6 +229,8 @@ test('hull (single, geom3)', (t) => {
   pts = geom3.toPoints(obs)
 
   t.notThrows.skip(() => geom3.validate(obs))
+  t.is(measureArea(obs), 44.053756306589825)
+  t.is(measureVolume(obs), 25.751611331979678)
   t.is(pts.length, 32)
 })
 
@@ -234,6 +249,8 @@ test('hull (multiple, geom3)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 24)
+  t.is(measureVolume(obs), 7.999999999999999)
   t.is(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -257,6 +274,8 @@ test('hull (multiple, geom3)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 145.59502802663923)
+  t.is(measureVolume(obs), 112.49999999999999)
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
@@ -270,5 +289,7 @@ test('hull (multiple, overlapping, geom3)', (t) => {
   const pts = geom3.toPoints(obs)
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 282.26819685563686)
+  t.is(measureVolume(obs), 366.67641200012866)
   t.is(pts.length, 92)
 })

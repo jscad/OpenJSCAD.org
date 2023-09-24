@@ -2,6 +2,8 @@ import test from 'ava'
 
 import { geom3 } from '../geometries/index.js'
 
+import { measureArea, measureVolume } from '../measurements/index.js'
+
 import { cuboid } from './index.js'
 
 import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
@@ -18,6 +20,8 @@ test('cuboid (defaults)', (t) => {
     [[-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1]]
   ]
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 24)
+  t.is(measureVolume(obs), 7.999999999999999)
   t.is(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
@@ -36,6 +40,8 @@ test('cuboid (options)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 216)
+  t.is(measureVolume(obs), 216)
   t.is(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -52,6 +58,8 @@ test('cuboid (options)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 97.5)
+  t.is(measureVolume(obs), 47.25)
   t.is(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
@@ -60,5 +68,7 @@ test('cuboid (zero size)', (t) => {
   const obs = cuboid({ size: [1, 1, 0] })
   const pts = geom3.toPoints(obs)
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 0)
+  t.is(measureVolume(obs), 0)
   t.is(pts.length, 0)
 })

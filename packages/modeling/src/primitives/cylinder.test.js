@@ -2,6 +2,8 @@ import test from 'ava'
 
 import { geom3 } from '../geometries/index.js'
 
+import { measureArea, measureVolume } from '../measurements/index.js'
+
 import { cylinder } from './index.js'
 
 import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
@@ -11,6 +13,8 @@ test('cylinder (defaults)', (t) => {
   const pts = geom3.toPoints(obs)
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 18.789084266699856)
+  t.is(measureVolume(obs), 6.2428903045161)
   t.is(pts.length, 96)
 })
 
@@ -18,6 +22,8 @@ test('cylinder (zero height)', (t) => {
   const obs = cylinder({ height: 0 })
   const pts = geom3.toPoints(obs)
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 0)
+  t.is(measureVolume(obs), 0)
   t.is(pts.length, 0)
 })
 
@@ -25,6 +31,8 @@ test('cylinder (zero radius)', (t) => {
   const obs = cylinder({ radius: 0 })
   const pts = geom3.toPoints(obs)
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 0)
+  t.is(measureVolume(obs), 0)
   t.is(pts.length, 0)
 })
 
@@ -55,6 +63,8 @@ test('cylinder (options)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 311.1986222206015)
+  t.is(measureVolume(obs), 380.4226065180614)
   t.is(pts.length, 15)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -85,6 +95,8 @@ test('cylinder (options)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 16.51098762732523)
+  t.is(measureVolume(obs), 4.755282581475773)
   t.is(pts.length, 15)
   t.true(comparePolygonsAsPoints(pts, exp))
 })

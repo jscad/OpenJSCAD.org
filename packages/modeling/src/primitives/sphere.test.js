@@ -2,6 +2,8 @@ import test from 'ava'
 
 import { geom3 } from '../geometries/index.js'
 
+import { measureArea, measureVolume } from '../measurements/index.js'
+
 import { sphere } from './index.js'
 
 import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
@@ -11,6 +13,8 @@ test('sphere (defaults)', (t) => {
   const pts = geom3.toPoints(obs)
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 12.465694088650583)
+  t.is(measureVolume(obs), 4.121941740785839)
   t.is(pts.length, 512)
 })
 
@@ -20,6 +24,8 @@ test('sphere (options)', (t) => {
   let pts = geom3.toPoints(obs)
   let exp = []
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 296.5322084069296)
+  t.is(measureVolume(obs), 466.5063509461097)
   t.is(pts.length, 72)
   // t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -103,6 +109,8 @@ test('sphere (options)', (t) => {
       [0.4999999999999999, 0.5000000000000001, 0.7071067811865475]]
   ]
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 11.013439076647456)
+  t.is(measureVolume(obs), 3.2189514164974597)
   t.is(pts.length, 32)
   t.true(comparePolygonsAsPoints(pts, exp))
 
@@ -160,6 +168,8 @@ test('sphere (options)', (t) => {
     [[-3, 5, 8], [-2.2928932188134525, 5, 7.707106781186548], [-2.5, 5.5, 7.707106781186548]]
   ]
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 11.013439076647467)
+  t.is(measureVolume(obs), 3.218951416497485)
   t.is(pts.length, 32)
   t.true(comparePolygonsAsPoints(pts, exp))
 })
@@ -168,5 +178,7 @@ test('sphere (zero radius)', (t) => {
   const obs = sphere({ radius: 0 })
   const pts = geom3.toPoints(obs)
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 0)
+  t.is(measureVolume(obs), 0)
   t.is(pts.length, 0)
 })

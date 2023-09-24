@@ -3,8 +3,11 @@ import test from 'ava'
 import { comparePoints } from '../../../test/helpers/index.js'
 
 import { colorize } from '../../colors/index.js'
+
 import { geom3, poly3 } from '../../geometries/index.js'
-import { measureVolume } from '../../measurements/index.js'
+
+import { measureArea, measureVolume } from '../../measurements/index.js'
+
 import { cube, sphere } from '../../primitives/index.js'
 
 import { offset } from './index.js'
@@ -13,6 +16,7 @@ test('offset: offset empty geom3', (t) => {
   const geometry = geom3.create()
   const result = offset({ }, geometry)
   t.notThrows(() => geom3.validate(result))
+  t.is(measureArea(result), 0)
   t.is(measureVolume(result), 0)
   t.is(geom3.toPolygons(result).length, 0)
   t.is(geom3.toPoints(result).length, 0)
@@ -50,6 +54,8 @@ test('offset: offset of a geom3 produces expected changes to polygons', (t) => {
   ]
 
   t.notThrows.skip(() => geom3.validate(obs))
+  t.is(measureArea(obs), 3178.8059464475555)
+  t.is(measureVolume(obs), 13504.574121271067)
   t.is(pts.length, 62)
   t.true(comparePoints(pts[0], exp0))
   t.true(comparePoints(pts[61], exp61))
@@ -58,6 +64,8 @@ test('offset: offset of a geom3 produces expected changes to polygons', (t) => {
   const obs2 = offset({ delta: 5 }, geometry2)
   const pts2 = geom3.toPoints(obs2)
   t.notThrows.skip(() => geom3.validate(obs2))
+  t.is(measureArea(obs), 3178.8059464475555)
+  t.is(measureVolume(obs), 13504.574121271067)
   t.is(pts2.length, 864)
 })
 

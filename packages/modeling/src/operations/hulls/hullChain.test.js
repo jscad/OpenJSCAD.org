@@ -1,7 +1,9 @@
 import test from 'ava'
 
 import { geom2, geom3 } from '../../geometries/index.js'
-import { measureArea } from '../../measurements/measureArea.js'
+
+import { measureArea, measureVolume } from '../../measurements/index.js'
+
 import { square } from '../../primitives/square.js'
 
 import { hullChain } from './index.js'
@@ -22,6 +24,7 @@ test('hullChain (two, geom2)', (t) => {
   let pts = geom2.toPoints(obs)
 
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 9)
   t.is(pts.length, 4)
 
   // different
@@ -29,6 +32,7 @@ test('hullChain (two, geom2)', (t) => {
   pts = geom2.toPoints(obs)
 
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 81)
   t.is(pts.length, 6)
 })
 
@@ -43,6 +47,7 @@ test('hullChain (three, geom2)', (t) => {
 
   // the sides change based on the bestplane chosen in trees/Node.js
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 126)
   t.is(pts.length, 10)
 
   // closed
@@ -51,6 +56,7 @@ test('hullChain (three, geom2)', (t) => {
 
   // the sides change based on the bestplane chosen in trees/Node.js
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 148.21875)
   t.is(pts.length, 10)
 })
 
@@ -85,6 +91,8 @@ test('hullChain (three, geom3)', (t) => {
   let pts = geom3.toPoints(obs)
 
   t.notThrows.skip(() => geom3.validate(obs))
+  t.is(measureArea(obs), 266.1454764345133)
+  t.is(measureVolume(obs), 239.2012987012987)
   t.is(pts.length, 23)
 
   // closed
@@ -92,5 +100,7 @@ test('hullChain (three, geom3)', (t) => {
   pts = geom3.toPoints(obs)
 
   t.notThrows.skip(() => geom3.validate(obs))
+  t.is(measureArea(obs), 272.2887171436021)
+  t.is(measureVolume(obs), 261.96982218883045)
   t.is(pts.length, 28)
 })

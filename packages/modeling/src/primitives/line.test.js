@@ -12,6 +12,6 @@ test('line (defaults)', (t) => {
   const obs = path2.toPoints(geometry)
 
   t.notThrows(() => path2.validate(geometry))
-  t.deepEqual(obs.length, 3)
+  t.is(obs.length, 3)
   t.true(comparePoints(obs, exp))
 })
