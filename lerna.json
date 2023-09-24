@@ -19,7 +19,6 @@
     "packages/io/*",
     "packages/modeling",
     "packages/web",
-    "packages/utils/*",
-    "packages/vtree"
+    "packages/utils/*"
   ]
 }
