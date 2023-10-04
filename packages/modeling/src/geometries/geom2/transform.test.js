@@ -4,7 +4,7 @@ import { mat4 } from '../../maths/index.js'
 
 import { measureArea } from '../../measurements/index.js'
 
-import { mirrorX, mirrorZ } from '../../operations/transforms/index.js'
+import { mirrorX, mirrorY, mirrorZ } from '../../operations/transforms/index.js'
 
 import { square } from '../../primitives/index.js'
 
@@ -57,9 +57,8 @@ test('transform: adjusts the transforms of geom2', (t) => {
   t.true(compareVectors(another.transforms, expected.transforms))
 })
 
-test('transform: mirroring transform geom2', (t) => {
+test('transform: geom2 mirrorX', (t) => {
   const geometry = square()
-  const matrix = mat4.fromScaling(mat4.create(), [-1, -1, -1])
   const transformed = mirrorX(geometry)
   t.is(measureArea(geometry), 4)
   // area will be negative unless we reversed the points
@@ -75,7 +74,24 @@ test('transform: mirroring transform geom2', (t) => {
   ])
 })
 
-test('transform: don\'t reverse mirrorZ', (t) => {
+test('transform: geom2 mirrorY', (t) => {
+  const geometry = square()
+  const transformed = mirrorY(geometry)
+  t.is(measureArea(geometry), 4)
+  // area will be negative unless we reversed the points
+  t.is(measureArea(transformed), 4)
+  const pts = toOutlines(transformed)[0]
+  const exp = [[-1, -1], [1, -1], [1, 1], [-1, 1]]
+  t.true(comparePoints(pts, exp))
+  t.deepEqual(toSides(transformed), [
+    [[-1, -1], [1, -1]],
+    [[1, -1], [1, 1]],
+    [[1, 1], [-1, 1]],
+    [[-1, 1], [-1, -1]]
+  ])
+})
+
+test('transform: geom2 mirrorZ', (t) => {
   const geometry = square()
   const transformed = mirrorZ(geometry)
   t.is(measureArea(geometry), 4)

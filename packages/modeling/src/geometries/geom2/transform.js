@@ -17,7 +17,7 @@ import { reverse } from './reverse.js'
 export const transform = (matrix, geometry) => {
   const transforms = mat4.multiply(mat4.create(), matrix, geometry.transforms)
   const transformed = Object.assign({}, geometry, { transforms })
-  // 2D determinant
+  // determine if the transform is mirroring in 2D
   if (matrix[0] * matrix[5] - matrix[4] * matrix[1] < 0) {
     // reverse the order to preserve the orientation
     return reverse(transformed)
