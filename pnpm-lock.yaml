@@ -32,11 +32,11 @@ importers:
 
   packages/cli:
     specifiers:
-      '@jscad/array-utils': workspace:2.1.4
-      '@jscad/core': workspace:2.6.7
-      '@jscad/io': workspace:2.4.6
-      '@jscad/io-utils': workspace:2.0.25
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/array-utils': workspace:3.0.0-alpha.0
+      '@jscad/core': workspace:3.0.0-alpha.0
+      '@jscad/io': workspace:3.0.0-alpha.0
+      '@jscad/io-utils': workspace:3.0.0-alpha.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       ava: ^4.3.3
       c8: ^8.0.0
       jszip: ^3.10.1
@@ -53,10 +53,10 @@ importers:
 
   packages/core:
     specifiers:
-      '@jscad/array-utils': workspace:2.1.4
-      '@jscad/io': workspace:2.4.6
-      '@jscad/io-utils': workspace:2.0.25
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/array-utils': workspace:3.0.0-alpha.0
+      '@jscad/io': workspace:3.0.0-alpha.0
+      '@jscad/io-utils': workspace:3.0.0-alpha.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       ava: ^4.3.3
       c8: ^8.0.0
       json5: 2.2.3
@@ -74,8 +74,8 @@ importers:
 
   packages/io/3mf-deserializer:
     specifiers:
-      '@jscad/array-utils': workspace:2.1.4
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/array-utils': workspace:3.0.0-alpha.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       '@rollup/plugin-commonjs': ^23.0.4
       '@rollup/plugin-node-resolve': ^15.0.1
       '@rollup/plugin-terser': ^0.4.3
@@ -103,9 +103,9 @@ importers:
 
   packages/io/3mf-serializer:
     specifiers:
-      '@jscad/array-utils': workspace:2.1.4
-      '@jscad/io-utils': workspace:^2.0.22
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/array-utils': workspace:3.0.0-alpha.0
+      '@jscad/io-utils': workspace:^3.0.0-alpha.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       '@rollup/plugin-commonjs': ^23.0.4
       '@rollup/plugin-node-resolve': ^15.0.1
       '@rollup/plugin-terser': ^0.4.3
@@ -132,7 +132,7 @@ importers:
 
   packages/io/dxf-deserializer:
     specifiers:
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       '@rollup/plugin-node-resolve': ^15.2.1
       '@rollup/plugin-terser': ^0.4.3
       ava: ^4.3.3
@@ -153,8 +153,8 @@ importers:
 
   packages/io/dxf-serializer:
     specifiers:
-      '@jscad/array-utils': workspace:2.1.4
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/array-utils': workspace:3.0.0-alpha.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       '@rollup/plugin-node-resolve': ^15.0.1
       '@rollup/plugin-terser': ^0.4.3
       ava: ^4.3.3
@@ -174,23 +174,23 @@ importers:
 
   packages/io/io:
     specifiers:
-      '@jscad/3mf-deserializer': workspace:2.0.0
-      '@jscad/3mf-serializer': workspace:2.1.9
-      '@jscad/array-utils': workspace:2.1.4
-      '@jscad/dxf-deserializer': workspace:2.3.22
-      '@jscad/dxf-serializer': workspace:2.1.15
-      '@jscad/io-utils': workspace:2.0.25
-      '@jscad/json-deserializer': workspace:2.0.26
-      '@jscad/json-serializer': workspace:2.0.25
-      '@jscad/modeling': workspace:2.12.0
-      '@jscad/obj-deserializer': workspace:2.0.25
-      '@jscad/obj-serializer': workspace:2.1.15
-      '@jscad/stl-deserializer': workspace:2.1.22
-      '@jscad/stl-serializer': workspace:2.1.15
-      '@jscad/svg-deserializer': workspace:2.5.6
-      '@jscad/svg-serializer': workspace:2.3.13
-      '@jscad/x3d-deserializer': workspace:2.2.5
-      '@jscad/x3d-serializer': workspace:2.4.5
+      '@jscad/3mf-deserializer': workspace:3.0.0-alpha.0
+      '@jscad/3mf-serializer': workspace:3.0.0-alpha.0
+      '@jscad/array-utils': workspace:3.0.0-alpha.0
+      '@jscad/dxf-deserializer': workspace:3.0.0-alpha.0
+      '@jscad/dxf-serializer': workspace:3.0.0-alpha.0
+      '@jscad/io-utils': workspace:3.0.0-alpha.0
+      '@jscad/json-deserializer': workspace:3.0.0-alpha.0
+      '@jscad/json-serializer': workspace:3.0.0-alpha.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
+      '@jscad/obj-deserializer': workspace:3.0.0-alpha.0
+      '@jscad/obj-serializer': workspace:3.0.0-alpha.0
+      '@jscad/stl-deserializer': workspace:3.0.0-alpha.0
+      '@jscad/stl-serializer': workspace:3.0.0-alpha.0
+      '@jscad/svg-deserializer': workspace:3.0.0-alpha.0
+      '@jscad/svg-serializer': workspace:3.0.0-alpha.0
+      '@jscad/x3d-deserializer': workspace:3.0.0-alpha.0
+      '@jscad/x3d-serializer': workspace:3.0.0-alpha.0
       ava: ^4.3.3
       c8: ^8.0.0
     dependencies:
@@ -217,7 +217,7 @@ importers:
 
   packages/io/io-utils:
     specifiers:
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       ava: ^4.3.3
       c8: ^8.0.0
     devDependencies:
@@ -227,8 +227,8 @@ importers:
 
   packages/io/json-deserializer:
     specifiers:
-      '@jscad/array-utils': workspace:2.1.4
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/array-utils': workspace:3.0.0-alpha.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       '@rollup/plugin-node-resolve': ^15.0.1
       '@rollup/plugin-terser': ^0.4.3
       ava: ^4.3.3
@@ -250,8 +250,8 @@ importers:
 
   packages/io/json-serializer:
     specifiers:
-      '@jscad/array-utils': workspace:2.1.4
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/array-utils': workspace:3.0.0-alpha.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       '@rollup/plugin-node-resolve': ^15.0.1
       '@rollup/plugin-terser': ^0.4.3
       ava: ^4.3.3
@@ -271,7 +271,7 @@ importers:
 
   packages/io/obj-deserializer:
     specifiers:
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       '@rollup/plugin-node-resolve': ^15.2.1
       '@rollup/plugin-terser': ^0.4.3
       ava: ^4.3.3
@@ -292,8 +292,8 @@ importers:
 
   packages/io/obj-serializer:
     specifiers:
-      '@jscad/array-utils': workspace:2.1.4
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/array-utils': workspace:3.0.0-alpha.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       '@rollup/plugin-node-resolve': ^15.0.1
       '@rollup/plugin-terser': ^0.4.3
       ava: ^4.3.3
@@ -313,8 +313,8 @@ importers:
 
   packages/io/stl-deserializer:
     specifiers:
-      '@jscad/io-utils': workspace:2.0.25
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/io-utils': workspace:3.0.0-alpha.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       '@rollup/plugin-node-resolve': ^15.2.1
       '@rollup/plugin-terser': ^0.4.3
       ava: ^4.3.3
@@ -336,8 +336,8 @@ importers:
 
   packages/io/stl-serializer:
     specifiers:
-      '@jscad/array-utils': workspace:2.1.4
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/array-utils': workspace:3.0.0-alpha.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       '@rollup/plugin-node-resolve': ^15.0.1
       '@rollup/plugin-terser': ^0.4.3
       ava: ^4.3.3
@@ -357,8 +357,8 @@ importers:
 
   packages/io/svg-deserializer:
     specifiers:
-      '@jscad/array-utils': workspace:2.1.4
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/array-utils': workspace:3.0.0-alpha.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       '@rollup/plugin-commonjs': ^23.0.4
       '@rollup/plugin-node-resolve': ^15.0.1
       '@rollup/plugin-terser': ^0.4.3
@@ -384,8 +384,8 @@ importers:
 
   packages/io/svg-serializer:
     specifiers:
-      '@jscad/io-utils': workspace:^2.0.22
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/io-utils': workspace:^3.0.0-alpha.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       '@rollup/plugin-node-resolve': ^15.0.1
       '@rollup/plugin-terser': ^0.4.3
       ava: ^4.3.3
@@ -407,8 +407,8 @@ importers:
 
   packages/io/x3d-deserializer:
     specifiers:
-      '@jscad/array-utils': workspace:2.1.4
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/array-utils': workspace:3.0.0-alpha.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       '@rollup/plugin-commonjs': ^23.0.4
       '@rollup/plugin-node-resolve': ^15.0.1
       '@rollup/plugin-terser': ^0.4.3
@@ -434,9 +434,9 @@ importers:
 
   packages/io/x3d-serializer:
     specifiers:
-      '@jscad/array-utils': workspace:2.1.4
-      '@jscad/io-utils': workspace:^2.0.22
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/array-utils': workspace:3.0.0-alpha.0
+      '@jscad/io-utils': workspace:^3.0.0-alpha.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       '@rollup/plugin-node-resolve': ^15.0.1
       '@rollup/plugin-terser': ^0.4.3
       ava: ^4.3.3
@@ -493,9 +493,9 @@ importers:
 
   packages/utils/regl-renderer:
     specifiers:
-      '@jscad/array-utils': workspace:2.1.4
+      '@jscad/array-utils': workspace:3.0.0-alpha.0
       '@jscad/img-utils': workspace:2.0.5
-      '@jscad/modeling': workspace:2.12.0
+      '@jscad/modeling': workspace:3.0.0-alpha.0
       '@rollup/plugin-commonjs': ^23.0.4
       '@rollup/plugin-node-resolve': ^15.0.1
       '@rollup/plugin-terser': ^0.4.3
