@@ -564,16 +564,12 @@ importers:
 
   packages/vtree:
     specifiers:
-      '@jscad/array-utils': workspace:2.1.4
-      '@jscad/modeling': workspace:2.12.0
       decache: ^4.4.0
       just-diff: ^2.1.1
       object-hash: 2.0.3
       serialize-to-js: ^3.0.2
       simple-diff: ^1.6.0
     dependencies:
-      '@jscad/array-utils': link:../utils/array-utils
-      '@jscad/modeling': link:../modeling
       object-hash: 2.0.3
     devDependencies:
       decache: 4.4.0
