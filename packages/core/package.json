@@ -8,7 +8,6 @@
   "type": "module",
   "unpkg": "dist/jscad-core.min.js",
   "module": "dist/jscad-core.es.js",
-  "private": true,
   "scripts": {
     "build": "rollup --config",
     "coverage": "c8 --all --reporter=html --reporter=text pnpm test",
