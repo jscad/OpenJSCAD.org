@@ -16,10 +16,23 @@
   "packages": [
     "packages/cli",
     "packages/core",
-    "packages/io/*",
+    "packages/io/3mf-deserializer",
+    "packages/io/3mf-serializer",
+    "packages/io/dxf-deserializer",
+    "packages/io/dxf-serializer",
+    "packages/io/json-deserializer",
+    "packages/io/json-serializer",
+    "packages/io/obj-deserializer",
+    "packages/io/obj-serializer",
+    "packages/io/stl-deserializer",
+    "packages/io/stl-serializer",
+    "packages/io/svg-deserializer",
+    "packages/io/svg-serializer",
+    "packages/io/x3d-deserializer",
+    "packages/io/x3d-serializer",
     "packages/modeling",
     "packages/web",
-    "packages/utils/*",
-    "packages/vtree"
+    "packages/utils/array-utils",
+    "packages/utils/regl-renderer"
   ]
 }
