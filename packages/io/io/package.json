@@ -10,7 +10,6 @@
     "coverage": "c8 --all --reporter=html --reporter=text npm test",
     "test": "ava --verbose --timeout 2m './tests/*.test.js'"
   },
-  "private": true,
   "contributors": [
     {
       "name": "Rene K. Mueller",
