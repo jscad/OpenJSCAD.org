@@ -29,8 +29,6 @@
     "object-hash": "2.0.3"
   },
   "devDependencies": {
-    "@jscad/io-utils": "workspace:2.0.25",
-    "@jscad/stl-serializer": "workspace:2.1.15",
     "decache": "^4.4.0",
     "just-diff": "^2.1.1",
     "serialize-to-js": "^3.0.2",

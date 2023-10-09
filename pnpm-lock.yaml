@@ -559,9 +559,7 @@ importers:
   packages/vtree:
     specifiers:
       '@jscad/array-utils': workspace:2.1.4
-      '@jscad/io-utils': workspace:2.0.25
       '@jscad/modeling': workspace:2.12.0
-      '@jscad/stl-serializer': workspace:2.1.15
       decache: ^4.4.0
       just-diff: ^2.1.1
       object-hash: 2.0.3
@@ -572,8 +570,6 @@ importers:
       '@jscad/modeling': link:../modeling
       object-hash: 2.0.3
     devDependencies:
-      '@jscad/io-utils': link:../io/io-utils
-      '@jscad/stl-serializer': link:../io/stl-serializer
       decache: 4.4.0
       just-diff: 2.1.1
       serialize-to-js: 3.0.2
