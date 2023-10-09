@@ -3,6 +3,7 @@
   "version": "2.0.26",
   "description": "Experimental Object Caching for JSCAD",
   "main": "index.js",
+  "type": "module",
   "private": true,
   "scripts": {
     "output": "node user/index.js"
