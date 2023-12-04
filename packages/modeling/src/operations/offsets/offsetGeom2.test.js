@@ -61,6 +61,7 @@ test('offset: offset of a geom2 produces expected changes to points', (t) => {
     [-10, -8]
   ]
   t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 395.3137084989848)
   t.is(pts.length, 12)
   t.true(comparePoints(pts, exp))
 })

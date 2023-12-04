@@ -1,8 +1,10 @@
 import test from 'ava'
 
+import { geom2 } from '../geometries/index.js'
+
 import { TAU } from '../maths/constants.js'
 
-import { geom2 } from '../geometries/index.js'
+import { measureArea } from '../measurements/index.js'
 
 import { comparePoints } from '../../test/helpers/index.js'
 
@@ -13,7 +15,8 @@ test('ellipse (defaults)', (t) => {
   const obs = geom2.toPoints(geometry)
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 32)
+  t.is(measureArea(geometry), 3.1214451522580537)
+  t.is(obs.length, 32)
 })
 
 test('ellipse (options)', (t) => {
@@ -56,7 +59,8 @@ test('ellipse (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 32)
+  t.is(measureArea(geometry), 3.121445152258051)
+  t.is(obs.length, 32)
   t.true(comparePoints(obs, exp))
 
   // test radius
@@ -82,7 +86,8 @@ test('ellipse (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 16)
+  t.is(measureArea(geometry), 45.92201188381077)
+  t.is(obs.length, 16)
   t.true(comparePoints(obs, exp))
 
   // test startAngle
@@ -106,7 +111,8 @@ test('ellipse (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 14)
+  t.is(measureArea(geometry), 34.44150891285808)
+  t.is(obs.length, 14)
   t.true(comparePoints(obs, exp))
 
   // test endAngle
@@ -122,7 +128,8 @@ test('ellipse (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 6)
+  t.is(measureArea(geometry), 11.480502970952696)
+  t.is(obs.length, 6)
   t.true(comparePoints(obs, exp))
 
   // test full rotation with non-zero startAngle
@@ -130,18 +137,21 @@ test('ellipse (options)', (t) => {
   obs = geom2.toPoints(geometry)
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 32)
+  t.is(measureArea(geometry), 3.1214451522580537)
+  t.is(obs.length, 32)
 
   // test segments
   geometry = ellipse({ segments: 72 })
   obs = geom2.toPoints(geometry)
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(obs.length, 72)
+  t.is(measureArea(geometry), 3.1376067389156956)
+  t.is(obs.length, 72)
 })
 
 test('ellipse (zero radius)', (t) => {
   const geometry = ellipse({ radius: [1, 0] })
   const obs = geom2.toPoints(geometry)
   t.notThrows(() => geom2.validate(geometry))
+  t.is(measureArea(geometry), 0)
   t.is(obs.length, 0)
 })

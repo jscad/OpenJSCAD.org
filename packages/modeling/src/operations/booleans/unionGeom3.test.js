@@ -4,7 +4,7 @@ import { comparePolygonsAsPoints } from '../../../test/helpers/index.js'
 
 import { geom3 } from '../../geometries/index.js'
 
-import { measureVolume } from '../../measurements/index.js'
+import { measureArea, measureVolume } from '../../measurements/index.js'
 
 import { sphere, cuboid } from '../../primitives/index.js'
 
@@ -69,6 +69,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
     [[8.65956056235493e-17, 8.659560562354935e-17, 2], [1.4142135623730951, 3.4638242249419736e-16, 1.414213562373095], [0.9999999999999998, 1.0000000000000002, 1.414213562373095]]
   ]
   t.notThrows.skip(() => geom3.validate(result1))
+  t.is(measureArea(result1), 44.053756306589825)
   t.is(measureVolume(result1), 25.751611331979678)
   t.is(obs.length, 32)
   t.true(comparePolygonsAsPoints(obs, exp))
@@ -79,6 +80,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
   const result2 = union(geometry1, geometry2)
   obs = geom3.toPoints(result2)
   t.notThrows.skip(() => geom3.validate(result2))
+  t.is(measureArea(result2), 140.05375630658983)
   t.is(measureVolume(result2), 89.75161133197969)
   t.is(obs.length, 38)
 
@@ -108,6 +110,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
     [[-9, 8, 9], [-9, -9, 9], [9, -9, 9], [9, 8, 9]]
   ]
   t.notThrows.skip(() => geom3.validate(result3))
+  t.is(measureArea(result3), 2034)
   t.is(measureVolume(result3), 5895)
   t.is(obs.length, 18)
   t.true(comparePolygonsAsPoints(obs, exp))
@@ -124,6 +127,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
     [[-9, -9, 9], [9, -9, 9], [9, 9, 9], [-9, 9, 9]]
   ]
   t.notThrows(() => geom3.validate(result4))
+  t.is(measureArea(result4), 1944)
   t.is(measureVolume(result4), 5832)
   t.is(obs.length, 6)
   t.true(comparePolygonsAsPoints(obs, exp))
@@ -136,6 +140,7 @@ test('union of geom3 with rounding issues #137', (t) => {
   const result = union(geometry1, geometry2)
   const pts = geom3.toPoints(result)
   t.notThrows(() => geom3.validate(result))
+  t.is(measureArea(result), 3240.00014)
   t.is(measureVolume(result), 7779.201144000001)
   t.is(pts.length, 6) // number of polygons in union
 })

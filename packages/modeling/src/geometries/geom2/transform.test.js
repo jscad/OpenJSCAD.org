@@ -2,6 +2,12 @@ import test from 'ava'
 
 import { mat4 } from '../../maths/index.js'
 
+import { measureArea } from '../../measurements/index.js'
+
+import { mirrorX, mirrorY, mirrorZ } from '../../operations/transforms/index.js'
+
+import { square } from '../../primitives/index.js'
+
 import { create, transform, toOutlines, toSides } from './index.js'
 
 import { comparePoints, compareVectors } from '../../../test/helpers/index.js'
@@ -49,4 +55,55 @@ test('transform: adjusts the transforms of geom2', (t) => {
   another = transform(mat4.fromTranslation(mat4.create(), [5, 10, 15]), another)
   t.true(comparePoints(another.outlines[0], expected.outlines[0]))
   t.true(compareVectors(another.transforms, expected.transforms))
+})
+
+test('transform: geom2 mirrorX', (t) => {
+  const geometry = square()
+  const transformed = mirrorX(geometry)
+  t.is(measureArea(geometry), 4)
+  // area will be negative unless we reversed the points
+  t.is(measureArea(transformed), 4)
+  const pts = toOutlines(transformed)[0]
+  const exp = [[1, 1], [-1, 1], [-1, -1], [1, -1]]
+  t.true(comparePoints(pts, exp))
+  t.deepEqual(toSides(transformed), [
+    [[1, 1], [-1, 1]],
+    [[-1, 1], [-1, -1]],
+    [[-1, -1], [1, -1]],
+    [[1, -1], [1, 1]]
+  ])
+})
+
+test('transform: geom2 mirrorY', (t) => {
+  const geometry = square()
+  const transformed = mirrorY(geometry)
+  t.is(measureArea(geometry), 4)
+  // area will be negative unless we reversed the points
+  t.is(measureArea(transformed), 4)
+  const pts = toOutlines(transformed)[0]
+  const exp = [[-1, -1], [1, -1], [1, 1], [-1, 1]]
+  t.true(comparePoints(pts, exp))
+  t.deepEqual(toSides(transformed), [
+    [[-1, -1], [1, -1]],
+    [[1, -1], [1, 1]],
+    [[1, 1], [-1, 1]],
+    [[-1, 1], [-1, -1]]
+  ])
+})
+
+test('transform: geom2 mirrorZ', (t) => {
+  const geometry = square()
+  const transformed = mirrorZ(geometry)
+  t.is(measureArea(geometry), 4)
+  // area will be negative unless we DIDN'T reverse the points
+  t.is(measureArea(transformed), 4)
+  const pts = toOutlines(transformed)[0]
+  const exp = [[-1, -1], [1, -1], [1, 1], [-1, 1]]
+  t.true(comparePoints(pts, exp))
+  t.deepEqual(toSides(transformed), [
+    [[-1, -1], [1, -1]],
+    [[1, -1], [1, 1]],
+    [[1, 1], [-1, 1]],
+    [[-1, 1], [-1, -1]]
+  ])
 })

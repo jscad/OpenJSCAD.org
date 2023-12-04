@@ -8,7 +8,7 @@ import { colorize } from '../../colors/index.js'
 
 import { geom2, geom3 } from '../../geometries/index.js'
 
-import { measureVolume } from '../../measurements/index.js'
+import { measureArea, measureVolume } from '../../measurements/index.js'
 
 import { square } from '../../primitives/index.js'
 
@@ -20,6 +20,7 @@ test('extrudeRotate: (defaults) extruding of a geom2 produces an expected geom3'
   const geometry3 = extrudeRotate({ }, geometry2)
   const pts = geom3.toPoints(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 7033.914479497244)
   t.is(measureVolume(geometry3), 27648.000000000007)
   t.is(pts.length, 96)
 })
@@ -51,6 +52,7 @@ test('extrudeRotate: (angle) extruding of a geom2 produces an expected geom3', (
     [[10, 0, -8], [26, 0, -8], [26, 0, 8]]
   ]
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 1360.144820048035)
   t.is(measureVolume(geometry3), 3258.3480477076105)
   t.is(pts.length, 12)
   t.true(comparePolygonsAsPoints(pts, exp))
@@ -58,12 +60,14 @@ test('extrudeRotate: (angle) extruding of a geom2 produces an expected geom3', (
   geometry3 = extrudeRotate({ segments: 4, angle: -250 * 0.017453292519943295 }, geometry2)
   pts = geom3.toPoints(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 4525.850393739846)
   t.is(measureVolume(geometry3), 13730.527057424617)
   t.is(pts.length, 28)
 
   geometry3 = extrudeRotate({ segments: 4, angle: 250 * 0.017453292519943295 }, geometry2)
   pts = geom3.toPoints(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 4525.8503937398455)
   t.is(measureVolume(geometry3), 13730.527057424617)
   t.is(pts.length, 28)
 })
@@ -80,6 +84,7 @@ test('extrudeRotate: (startAngle) extruding of a geom2 produces an expected geom
     [-11.803752993228215, 23.166169628897567, 8]
   ]
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 6124.6858201346895)
   t.is(measureVolume(geometry3), 21912.342135440336)
   t.is(pts.length, 40)
   t.true(comparePoints(pts[6], exp))
@@ -92,6 +97,7 @@ test('extrudeRotate: (startAngle) extruding of a geom2 produces an expected geom
     [23.166169628897567, 11.803752993228215, 8]
   ]
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 6124.685820134688)
   t.is(measureVolume(geometry3), 21912.342135440336)
   t.is(pts.length, 40)
   t.true(comparePoints(pts[6], exp))
@@ -104,12 +110,14 @@ test('extrudeRotate: (segments) extruding of a geom2 produces an expected geom3'
   let geometry3 = extrudeRotate({ segments: 4 }, geometry2)
   let pts = geom3.toPoints(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 5562.34804770761)
   t.is(measureVolume(geometry3), 18432)
   t.is(pts.length, 32)
 
   geometry3 = extrudeRotate({ segments: 64 }, geometry2)
   pts = geom3.toPoints(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 7230.965353920782)
   t.is(measureVolume(geometry3), 28906.430888871357)
   t.is(pts.length, 512)
 
@@ -118,6 +126,7 @@ test('extrudeRotate: (segments) extruding of a geom2 produces an expected geom3'
   geometry3 = extrudeRotate({ segments: 8 }, geometry2)
   pts = geom3.toPoints(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 84.28200374166053)
   t.is(measureVolume(geometry3), 33.94112549695427)
   t.is(pts.length, 64)
 
@@ -126,6 +135,7 @@ test('extrudeRotate: (segments) extruding of a geom2 produces an expected geom3'
   geometry3 = extrudeRotate({ segments: 8 }, geometry2)
   pts = geom3.toPoints(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
+  t.is(measureArea(geometry3), 17692.315375839215)
   t.is(measureVolume(geometry3), 147078.2104868019)
   t.is(pts.length, 80)
 })
@@ -147,6 +157,7 @@ test('extrudeRotate: (overlap +/-) extruding of a geom2 produces an expected geo
     [[7, 0, -8], [7, 0, 8], [0, 0, 8]]
   ]
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 431.3919189857867)
   t.is(measureVolume(obs), 391.99999999999994)
   t.is(pts.length, 8)
   t.true(comparePolygonsAsPoints(pts, exp))
@@ -177,6 +188,7 @@ test('extrudeRotate: (overlap +/-) extruding of a geom2 produces an expected geo
     [[2, 0, 4], [0, 0, 8], [0, 0, -8]]
   ]
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 86.47516025670329)
   t.is(measureVolume(obs), 26.398653164297773)
   t.is(pts.length, 18)
   t.true(comparePolygonsAsPoints(pts, exp))

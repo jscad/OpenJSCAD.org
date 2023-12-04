@@ -1,5 +1,7 @@
 import * as mat4 from '../../maths/mat4/index.js'
 
+import { reverse } from './reverse.js'
+
 /**
  * Transform the given geometry using the given matrix.
  * This is a lazy transform of the outlines, as this function only adjusts the transforms.
@@ -14,5 +16,11 @@ import * as mat4 from '../../maths/mat4/index.js'
  */
 export const transform = (matrix, geometry) => {
   const transforms = mat4.multiply(mat4.create(), matrix, geometry.transforms)
-  return Object.assign({}, geometry, { transforms })
+  const transformed = Object.assign({}, geometry, { transforms })
+  // determine if the transform is mirroring in 2D
+  if (matrix[0] * matrix[5] - matrix[4] * matrix[1] < 0) {
+    // reverse the order to preserve the orientation
+    return reverse(transformed)
+  }
+  return transformed
 }

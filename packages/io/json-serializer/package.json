@@ -1,6 +1,6 @@
 {
   "name": "@jscad/json-serializer",
-  "version": "2.0.25",
+  "version": "3.0.0-alpha.0",
   "description": "JSON Serializer for JSCAD",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
@@ -33,14 +33,16 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/array-utils": "workspace:2.1.4",
-    "@jscad/modeling": "workspace:2.12.0"
+    "@jscad/array-utils": "workspace:3.0.0-alpha.0",
+    "@jscad/modeling": "workspace:3.0.0-alpha.0"
   },
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-terser": "^0.4.3",
     "ava": "^4.3.3",
     "c8": "^8.0.0",
-    "rollup": "^2.79.1"
+    "rollup": "^2.79.1",
+    "rollup-plugin-banner": "^0.2.1"
   },
   "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"
 }

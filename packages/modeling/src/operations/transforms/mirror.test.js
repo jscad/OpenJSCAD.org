@@ -42,29 +42,29 @@ test('mirror: mirroring of geom2 about X/Y produces expected changes to points',
   // mirror about X
   let mirrored = mirror({ normal: [1, 0, 0] }, geometry)
   let obs = geom2.toPoints(mirrored)
-  let exp = [[5, -5], [0, 5], [-10, -5]]
+  let exp = [[-10, -5], [0, 5], [5, -5]]
   t.notThrows(() => geom2.validate(mirrored))
-  t.is(measureArea(mirrored), -measureArea(geometry))
+  t.is(measureArea(mirrored), measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   mirrored = mirrorX(geometry)
   obs = geom2.toPoints(mirrored)
   t.notThrows(() => geom2.validate(mirrored))
-  t.is(measureArea(mirrored), -measureArea(geometry))
+  t.is(measureArea(mirrored), measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   // mirror about Y
   mirrored = mirror({ normal: [0, 1, 0] }, geometry)
   obs = geom2.toPoints(mirrored)
-  exp = [[-5, 5], [0, -5], [10, 5]]
+  exp = [[10, 5], [0, -5], [-5, 5]]
   t.notThrows(() => geom2.validate(mirrored))
-  t.is(measureArea(mirrored), -measureArea(geometry))
+  t.is(measureArea(mirrored), measureArea(geometry))
   t.true(comparePoints(obs, exp))
 
   mirrored = mirrorY(geometry)
   obs = geom2.toPoints(mirrored)
   t.notThrows(() => geom2.validate(mirrored))
-  t.is(measureArea(mirrored), -measureArea(geometry))
+  t.is(measureArea(mirrored), measureArea(geometry))
   t.true(comparePoints(obs, exp))
 })
 
@@ -158,7 +158,7 @@ test('mirror: mirroring of multiple objects produces an array of mirrored object
   t.true(comparePoints(obs, exp))
 
   obs = geom2.toPoints(mirrored[2])
-  exp = [[-5, 5], [0, -5], [10, 5]]
+  exp = [[10, 5], [0, -5], [-5, 5]]
   t.notThrows(() => geom2.validate(mirrored[2]))
   t.true(comparePoints(obs, exp))
 })

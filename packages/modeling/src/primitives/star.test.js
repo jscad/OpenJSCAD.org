@@ -2,6 +2,8 @@ import test from 'ava'
 
 import { geom2 } from '../geometries/index.js'
 
+import { measureArea } from '../measurements/index.js'
+
 import { star } from './index.js'
 
 import { comparePoints } from '../../test/helpers/index.js'
@@ -23,7 +25,8 @@ test('star (defaults)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(pts.length, 10)
+  t.is(measureArea(geometry), 1.1225699414489634)
+  t.is(pts.length, 10)
   t.true(comparePoints(pts, exp))
 })
 
@@ -45,7 +48,8 @@ test('star (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(pts.length, 10)
+  t.is(measureArea(geometry), 28.06424853622408)
+  t.is(pts.length, 10)
   t.true(comparePoints(pts, exp))
 
   // test vertices
@@ -71,7 +75,8 @@ test('star (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(pts.length, 16)
+  t.is(measureArea(geometry), 58.5786437626905)
+  t.is(pts.length, 16)
   t.true(comparePoints(pts, exp))
 
   // test density
@@ -97,7 +102,8 @@ test('star (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(pts.length, 16)
+  t.is(measureArea(geometry), 41.42135623730952)
+  t.is(pts.length, 16)
   t.true(comparePoints(pts, exp))
 
   // test innerRadius
@@ -123,7 +129,8 @@ test('star (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(pts.length, 16)
+  t.is(measureArea(geometry), 15.30733729460359)
+  t.is(pts.length, 16)
   t.true(comparePoints(pts, exp))
 
   // test start angle
@@ -143,6 +150,7 @@ test('star (options)', (t) => {
   ]
 
   t.notThrows(() => geom2.validate(geometry))
-  t.deepEqual(pts.length, 10)
+  t.is(measureArea(geometry), 28.06424853622409)
+  t.is(pts.length, 10)
   t.true(comparePoints(pts, exp))
 })

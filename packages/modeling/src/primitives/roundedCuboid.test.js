@@ -2,6 +2,8 @@ import test from 'ava'
 
 import { geom3 } from '../geometries/index.js'
 
+import { measureArea, measureVolume } from '../measurements/index.js'
+
 import { roundedCuboid } from './index.js'
 
 import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
@@ -11,13 +13,17 @@ test('roundedCuboid (defaults)', (t) => {
   const pts = geom3.toPoints(obs)
 
   t.notThrows(() => geom3.validate(obs))
-  t.deepEqual(pts.length, 614)
+  t.is(measureArea(obs), 21.87859958298585)
+  t.is(measureVolume(obs), 7.800061070935406)
+  t.is(pts.length, 614)
 })
 
 test('roundedCuboid (zero size)', (t) => {
   const obs = roundedCuboid({ size: [1, 1, 0] })
   const pts = geom3.toPoints(obs)
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 0)
+  t.is(measureVolume(obs), 0)
   t.is(pts.length, 0)
 })
 
@@ -25,7 +31,9 @@ test('roundedCuboid (zero radius)', (t) => {
   const obs = roundedCuboid({ roundRadius: 0 })
   const pts = geom3.toPoints(obs)
   t.notThrows(() => geom3.validate(obs))
-  t.deepEqual(pts.length, 6)
+  t.is(measureArea(obs), 24)
+  t.is(measureVolume(obs), 7.999999999999999)
+  t.is(pts.length, 6)
 })
 
 test('roundedCuboid (options)', (t) => {
@@ -35,6 +43,8 @@ test('roundedCuboid (options)', (t) => {
   let exp = []
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 21.65472758198208)
+  t.is(measureVolume(obs), 7.734600480283937)
   t.is(pts.length, 62)
 
   // test center
@@ -44,6 +54,8 @@ test('roundedCuboid (options)', (t) => {
   ]
 
   t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 21.65472758198207)
+  t.is(measureVolume(obs), 7.73460048028392)
   t.is(pts.length, 62)
 
   // test size
@@ -144,7 +156,9 @@ test('roundedCuboid (options)', (t) => {
       [-3.8, 4.8, -6], [3.8, 4.8, -6]]
   ]
   t.notThrows(() => geom3.validate(obs))
-  t.deepEqual(pts.length, 62)
+  t.is(measureArea(obs), 580.6448151876211)
+  t.is(measureVolume(obs), 958.6098905200406)
+  t.is(pts.length, 62)
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // test roundRadius
@@ -243,6 +257,8 @@ test('roundedCuboid (options)', (t) => {
     [[2, -3, -6], [-2, -3, -6], [-2, 3, -6], [2, 3, -6]]
   ]
   t.notThrows(() => geom3.validate(obs))
-  t.deepEqual(pts.length, 62)
+  t.is(measureArea(obs), 470.09666312772333)
+  t.is(measureVolume(obs), 835.1892253143822)
+  t.is(pts.length, 62)
   t.true(comparePolygonsAsPoints(pts, exp))
 })

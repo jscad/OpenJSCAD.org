@@ -89,7 +89,7 @@ export const extrudeRotate = (options, geometry) => {
         return [point0, point1]
       })
       // recreate the geometry from the (-) capped points
-      sliceGeometry = geom2.reverse(geom2.fromSides(shapeSides))
+      sliceGeometry = geom2.fromSides(shapeSides)
       sliceGeometry = mirrorX(sliceGeometry)
     } else if (pointsWithPositiveX.length >= pointsWithNegativeX.length) {
       shapeSides = shapeSides.map((side) => {

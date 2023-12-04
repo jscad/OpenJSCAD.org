@@ -2,6 +2,8 @@ import test from 'ava'
 
 import { geom3 } from '../geometries/index.js'
 
+import { measureArea, measureVolume } from '../measurements/index.js'
+
 import { polyhedron } from './index.js'
 
 import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
@@ -22,7 +24,9 @@ test('polyhedron (points and faces)', (t) => {
     [[-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1]]
   ]
   t.notThrows(() => geom3.validate(obs))
-  t.deepEqual(pts.length, 6)
+  t.is(measureArea(obs), 24)
+  t.is(measureVolume(obs), 7.999999999999999)
+  t.is(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // test orientation
@@ -39,6 +43,8 @@ test('polyhedron (points and faces)', (t) => {
     [[-10, 10, 0], [10, -10, 0], [-10, -10, 0]]
   ]
   t.notThrows(() => geom3.validate(obs))
-  t.deepEqual(pts.length, 6)
+  t.is(measureArea(obs), 965.6854249492379)
+  t.is(measureVolume(obs), 1333.3333333333333)
+  t.is(pts.length, 6)
   t.true(comparePolygonsAsPoints(pts, exp))
 })

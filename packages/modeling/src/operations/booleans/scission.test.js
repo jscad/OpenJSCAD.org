@@ -2,6 +2,8 @@ import test from 'ava'
 
 import { geom3 } from '../../geometries/index.js'
 
+import { measureArea, measureVolume } from '../../measurements/index.js'
+
 import { cube, torus } from '../../primitives/index.js'
 
 import { scission, union } from './index.js'
@@ -42,6 +44,10 @@ test('scission: scission of complex geom3 produces expected geometry', (t) => {
   t.is(result1.length, 2)
   t.notThrows.skip(() => geom3.validate(result1[0]))
   t.notThrows.skip(() => geom3.validate(result1[1]))
+  t.is(measureArea(result1[0]), 7720.0306508548)
+  t.is(measureArea(result1[1]), 3860.0153254273987)
+  t.is(measureVolume(result1[0]), 18745.166004060953)
+  t.is(measureVolume(result1[1]), 9372.583002030477)
 
   const rc1 = geom3.toPolygons(result1[0]).length
   const rc2 = geom3.toPolygons(result1[1]).length
