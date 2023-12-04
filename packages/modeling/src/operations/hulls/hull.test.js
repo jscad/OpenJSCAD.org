@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { geom2, geom3, path2 } from '../../geometries/index.js'
 import { measureArea } from '../../measurements/measureArea.js'
-import { sphere, cuboid, ellipsoid } from '../../primitives/index.js'
+import { cuboid, ellipsoid, sphere, square } from '../../primitives/index.js'
 import { center } from '../transforms/index.js'
 
 import { hull } from './index.js'
@@ -271,4 +271,16 @@ test('hull (multiple, overlapping, geom3)', (t) => {
 
   t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 92)
+})
+
+test('hull (multiple, with undefined/null values)', (t) => {
+  const square1 = square({ size: 4 })
+  const square2 = square({ size: 6 })
+  const square3 = square({ size: 8 })
+  const geometries = [square1, undefined, square2, null, square3]
+
+  const obs = hull(...geometries)
+  const pts = geom2.toPoints(obs)
+  t.notThrows(() => geom2.validate(obs))
+  t.is(pts.length, 4)
 })

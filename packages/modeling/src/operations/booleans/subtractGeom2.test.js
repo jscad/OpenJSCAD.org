@@ -6,7 +6,7 @@ import { geom2 } from '../../geometries/index.js'
 
 import { measureArea } from '../../measurements/index.js'
 
-import { circle, rectangle } from '../../primitives/index.js'
+import { circle, rectangle, square } from '../../primitives/index.js'
 
 import { center } from '../transforms/index.js'
 
@@ -74,4 +74,28 @@ test('subtract: subtract of one or more geom2 objects produces expected geometry
   t.is(measureArea(result4), 0)
   t.is(obs.length, 0)
   t.deepEqual(obs, exp)
+})
+
+test('subtract with undefined/null values', (t) => {
+  const square1 = square({ size: 8 })
+  const square2 = square({ size: 6 })
+  const square3 = square({ size: 4 })
+  const geometries = [square1, undefined, square2, null, square3]
+
+  let obs = subtract(...geometries)
+  let pts = geom2.toPoints(obs)
+  t.notThrows(() => geom2.validate(obs))
+  t.is(pts.length, 8)
+})
+
+test('subtract of nested arrays', (t) => {
+  const square1 = square({ size: 8 })
+  const square2 = square({ size: 6 })
+  const square3 = square({ size: 4 })
+  const geometries = [square1, [square2, [square3]]]
+
+  const obs = subtract(...geometries)
+  const pts = geom2.toPoints(obs)
+  t.notThrows(() => geom2.validate(obs))
+  t.is(pts.length, 8)
 })

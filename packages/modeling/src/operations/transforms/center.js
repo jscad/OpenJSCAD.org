@@ -2,7 +2,7 @@ import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
-import { measureBoundingBox } from '../../measurements/measureBoundingBox.js'
+import { measureAggregateBoundingBox } from '../../measurements/measureAggregateBoundingBox.js'
 
 import { translate } from './translate.js'
 
@@ -13,7 +13,7 @@ const centerGeometry = (options, object) => {
   }
   const { axes, relativeTo } = Object.assign({}, defaults, options)
 
-  const bounds = measureBoundingBox(object)
+  const bounds = measureAggregateBoundingBox(object)
   const offset = [0, 0, 0]
   if (axes[0]) offset[0] = relativeTo[0] - (bounds[0][0] + ((bounds[1][0] - bounds[0][0]) / 2))
   if (axes[1]) offset[1] = relativeTo[1] - (bounds[0][1] + ((bounds[1][1] - bounds[0][1]) / 2))
@@ -49,6 +49,7 @@ export const center = (options, ...objects) => {
     if (path2.isA(object)) return centerGeometry(options, object)
     if (geom2.isA(object)) return centerGeometry(options, object)
     if (geom3.isA(object)) return centerGeometry(options, object)
+    if (Array.isArray(object)) return centerGeometry(options, object)
     return object
   })
   return results.length === 1 ? results[0] : results

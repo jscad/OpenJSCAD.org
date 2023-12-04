@@ -19,6 +19,7 @@ export const transform = (matrix, ...objects) => {
     if (path2.isA(object)) return path2.transform(matrix, object)
     if (geom2.isA(object)) return geom2.transform(matrix, object)
     if (geom3.isA(object)) return geom3.transform(matrix, object)
+    // handle recursive arrays
     if (Array.isArray(object)) return transform(matrix, ...object)
     return object
   })
