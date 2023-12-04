@@ -294,11 +294,24 @@ test('hull (multiple, overlapping, geom3)', (t) => {
   t.is(pts.length, 92)
 })
 
-test('hull (multiple, with undefined/null values)', (t) => {
+test('hull (multiple with undefined/null values)', (t) => {
   const square1 = square({ size: 4 })
   const square2 = square({ size: 6 })
   const square3 = square({ size: 8 })
   const geometries = [square1, undefined, square2, null, square3]
+
+  const obs = hull(...geometries)
+  const pts = geom2.toPoints(obs)
+  t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 64)
+  t.is(pts.length, 4)
+})
+
+test('hull (multiple with nested arrays)', (t) => {
+  const square1 = square({ size: 4 })
+  const square2 = square({ size: 6 })
+  const square3 = square({ size: 8 })
+  const geometries = [square1, [square2, [square3]]]
 
   const obs = hull(...geometries)
   const pts = geom2.toPoints(obs)
