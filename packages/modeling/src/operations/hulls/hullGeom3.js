@@ -6,7 +6,7 @@ import { toUniquePoints } from './toUniquePoints.js'
 
 /*
  * Create a convex hull of the given geometries (geom3).
- * @param {...Geom3} geometries - a flat list of 3D geometries
+ * @param {Geom3[]} geometries - a flat list of 3D geometries
  * @returns {Geom3} new geometry
  */
 export const hullGeom3 = (geometries) => {
