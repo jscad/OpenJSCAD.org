@@ -31,11 +31,10 @@ import { unionGeom3 } from './unionGeom3.js'
 export const union = (...geometries) => {
   geometries = coalesce(geometries)
 
+  if (geometries.length === 0) return undefined
   if (!areAllShapesTheSameType(geometries)) {
     throw new Error('union arguments must be the same geometry type')
   }
-
-  if (geometries.length === 0) return undefined
 
   const geometry = geometries[0]
   // if (path.isA(geometry)) return unionPath(matrix, geometries)

@@ -4,7 +4,7 @@ import { unionGeom3Sub } from './unionGeom3Sub.js'
 
 /*
  * Return a new 3D geometry representing the space in the given 3D geometries.
- * @param {...Geom3} geometries - a flat list of 3D geometries to union
+ * @param {Geom3[]} geometries - a flat list of 3D geometries to union
  * @returns {Geom3} new 3D geometry
  */
 export const unionGeom3 = (geometries) => {

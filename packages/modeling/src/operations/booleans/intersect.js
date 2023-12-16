@@ -13,7 +13,7 @@ import { intersectGeom3 } from './intersectGeom3.js'
  * The given geometries should be of the same type, either geom2 or geom3.
  *
  * @param {...Object} geometries - list of geometries
- * @returns {Geom2|geom3} a new geometry
+ * @returns {Geom2|Geom3} a new geometry
  * @alias module:modeling/booleans.intersect
  *
  * @example
@@ -32,11 +32,10 @@ import { intersectGeom3 } from './intersectGeom3.js'
 export const intersect = (...geometries) => {
   geometries = coalesce(geometries)
 
+  if (geometries.length === 0) return undefined
   if (!areAllShapesTheSameType(geometries)) {
     throw new Error('intersect arguments must be the same geometry type')
   }
-
-  if (geometries.length === 0) return undefined
 
   const geometry = geometries[0]
   // if (path.isA(geometry)) return intersectPath(matrix, geometries)

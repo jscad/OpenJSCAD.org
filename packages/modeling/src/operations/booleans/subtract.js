@@ -13,7 +13,7 @@ import { subtractGeom3 } from './subtractGeom3.js'
  * The given geometries should be of the same type, either geom2 or geom3.
  *
  * @param {...Object} geometries - list of geometries
- * @returns {Geom2|geom3} a new geometry
+ * @returns {Geom2|Geom3} a new geometry
  * @alias module:modeling/booleans.subtract
  *
  * @example
@@ -32,11 +32,10 @@ import { subtractGeom3 } from './subtractGeom3.js'
 export const subtract = (...geometries) => {
   geometries = coalesce(geometries)
 
+  if (geometries.length === 0) return undefined
   if (!areAllShapesTheSameType(geometries)) {
     throw new Error('subtract arguments must be the same geometry type')
   }
-
-  if (geometries.length === 0) return undefined
 
   const geometry = geometries[0]
   // if (path.isA(geometry)) return subtractPath(matrix, geometries)
