@@ -1,5 +1,3 @@
-import { flatten } from '../../utils/flatten.js'
-
 import * as vec2 from '../../maths/vec2/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
@@ -55,13 +53,11 @@ const snapGeom3 = (geometry) => {
  * @alias module:modeling/modifiers.snap
  */
 export const snap = (...geometries) => {
-  geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('wrong number of arguments')
-
   const results = geometries.map((geometry) => {
     if (path2.isA(geometry)) return snapPath2(geometry)
     if (geom2.isA(geometry)) return snapGeom2(geometry)
     if (geom3.isA(geometry)) return snapGeom3(geometry)
+    if (Array.isArray(geometry)) return snap(...geometry)
     return geometry
   })
   return results.length === 1 ? results[0] : results

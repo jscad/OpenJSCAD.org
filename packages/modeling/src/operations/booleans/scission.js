@@ -1,5 +1,3 @@
-import { flatten } from '../../utils/flatten.js'
-
 import * as geom3 from '../../geometries/geom3/index.js'
 
 import { scissionGeom3 } from './scissionGeom3.js'
@@ -26,13 +24,11 @@ import { scissionGeom3 } from './scissionGeom3.js'
  *      +-------+            +-------+
  */
 export const scission = (...objects) => {
-  objects = flatten(objects)
-  if (objects.length === 0) throw new Error('wrong number of arguments')
-
   const results = objects.map((object) => {
     // if (path2.isA(object)) return path2.transform(matrix, object)
     // if (geom2.isA(object)) return geom2.transform(matrix, object)
     if (geom3.isA(object)) return scissionGeom3(object)
+    if (Array.isArray(object)) return scission(...object)
     return object
   })
   return results.length === 1 ? results[0] : results

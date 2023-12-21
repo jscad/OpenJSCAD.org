@@ -1,4 +1,5 @@
-import { flatten } from '../../utils/flatten.js'
+import { areAllShapesTheSameType } from '../../utils/areAllShapesTheSameType.js'
+import { coalesce } from '../../utils/coalesce.js'
 
 import { union } from '../booleans/union.js'
 
@@ -10,7 +11,7 @@ import { hull } from './hull.js'
  * The given geometries should be of the same type, either geom2 or geom3 or path2.
  *
  * @param {...Objects} geometries - list of geometries from which to create a hull
- * @returns {Geom2|Geom3} new geometry
+ * @returns {Geom2|Geom3|Path2} new geometry
  * @alias module:modeling/hulls.hullChain
  *
  * @example
@@ -30,12 +31,16 @@ import { hull } from './hull.js'
  *       +-------+                +-------+
  */
 export const hullChain = (...geometries) => {
-  geometries = flatten(geometries)
+  geometries = coalesce(geometries)
+
+  if (geometries.length === 0) return undefined
+  if (geometries.length === 1) return geometries[0]
+
+  if (!areAllShapesTheSameType(geometries)) {
+    throw new Error('only hulls of the same type are supported')
+  }
+
   const hulls = []
-
-  if (geometries.length === 0) throw new Error('wrong number of arguments')
-  if (geometries.length === 1) hulls.push(geometries[0])
-
   for (let i = 1; i < geometries.length; i++) {
     hulls.push(hull(geometries[i - 1], geometries[i]))
   }

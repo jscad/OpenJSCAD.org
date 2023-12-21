@@ -53,7 +53,7 @@ test('align: multiple objects ungrouped returns geometry aligned, different mode
     cube({ size: 4, center: [10, 10, 10] }),
     cube({ size: 2, center: [4, 4, 4] })
   ]
-  const aligned = align({ modes: ['center', 'min', 'max'], relativeTo: [30, 30, 30] }, original)
+  const aligned = align({ modes: ['center', 'min', 'max'], relativeTo: [30, 30, 30] }, ...original)
   const bounds = measureAggregateBoundingBox(aligned)
   const expectedBounds = [[28, 30, 26], [32, 34, 30]]
   t.notThrows(() => geom3.validate(aligned[0]))
@@ -79,7 +79,7 @@ test('align: multiple objects ungrouped, relativeTo is nulls, returns geometry a
     cube({ size: 2, center: [4, 4, 4] }),
     cube({ size: 4, center: [10, 10, 10] })
   ]
-  const aligned = align({ modes: ['center', 'min', 'max'], relativeTo: [null, null, null], grouped: false }, original)
+  const aligned = align({ modes: ['center', 'min', 'max'], relativeTo: [null, null, null], grouped: false }, ...original)
   const bounds = measureAggregateBoundingBox(aligned)
   const expectedBounds = [[5.5, 3, 8], [9.5, 7, 12]]
   t.notThrows(() => geom3.validate(aligned[0]))

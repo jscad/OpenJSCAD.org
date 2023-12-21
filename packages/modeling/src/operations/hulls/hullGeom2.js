@@ -1,5 +1,3 @@
-import { flatten } from '../../utils/flatten.js'
-
 import * as geom2 from '../../geometries/geom2/index.js'
 
 import { hullPoints2 } from './hullPoints2.js'
@@ -7,12 +5,10 @@ import { toUniquePoints } from './toUniquePoints.js'
 
 /*
  * Create a convex hull of the given geom2 geometries.
- * @param {...geometries} geometries - list of geom2 geometries
+ * @param {Geom2[]} geometries - a flat list of 2D geometries
  * @returns {Geom2} new geometry
  */
-export const hullGeom2 = (...geometries) => {
-  geometries = flatten(geometries)
-
+export const hullGeom2 = (geometries) => {
   // extract the unique points from the geometries
   const unique = toUniquePoints(geometries)
 

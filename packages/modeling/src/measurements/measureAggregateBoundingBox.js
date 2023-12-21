@@ -15,7 +15,6 @@ import { measureBoundingBox } from './measureBoundingBox.js'
  */
 export const measureAggregateBoundingBox = (...geometries) => {
   geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('measureAggregateBoundingBox: no geometries supplied')
   const bounds = measureBoundingBox(geometries)
   if (geometries.length === 1) {
     return bounds

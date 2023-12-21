@@ -9,7 +9,7 @@ import { square } from '../../primitives/square.js'
 import { hullChain } from './index.js'
 
 test('hullChain: hullChain single geometry', (t) => {
-  const result = hullChain([ square({ size: 1 }) ])
+  const result = hullChain([square({ size: 1 })])
   t.notThrows(() => geom2.validate(result))
   t.is(measureArea(result), 1)
   t.is(geom2.toPoints(result).length, 4)

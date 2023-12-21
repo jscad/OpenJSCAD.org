@@ -1,5 +1,3 @@
-import { flatten } from '../../utils/flatten.js'
-
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as path2 from '../../geometries/path2/index.js'
 
@@ -30,15 +28,13 @@ export const extrudeLinear = (options, ...objects) => {
   }
   const { height, twistAngle, twistSteps, repair } = Object.assign({ }, defaults, options)
 
-  objects = flatten(objects)
-  if (objects.length === 0) throw new Error('wrong number of arguments')
-
   options = { offset: [0, 0, height], twistAngle, twistSteps, repair }
 
   const results = objects.map((object) => {
     if (path2.isA(object)) return extrudeLinearPath2(options, object)
     if (geom2.isA(object)) return extrudeLinearGeom2(options, object)
     // if (geom3.isA(object)) return geom3.extrude(options, object)
+    if (Array.isArray(object)) return extrudeLinear(options, ...object)
     return object
   })
   return results.length === 1 ? results[0] : results

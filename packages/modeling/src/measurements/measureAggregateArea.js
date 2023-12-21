@@ -14,7 +14,6 @@ import { measureArea } from './measureArea.js'
  */
 export const measureAggregateArea = (...geometries) => {
   geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('measureAggregateArea: no geometries supplied')
   const areas = measureArea(geometries)
   if (geometries.length === 1) {
     return areas

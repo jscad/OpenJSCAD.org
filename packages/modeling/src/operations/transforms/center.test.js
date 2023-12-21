@@ -4,7 +4,9 @@ import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/in
 
 import { geom2, geom3, path2 } from '../../geometries/index.js'
 
-import { measureArea, measureVolume } from '../../measurements/index.js'
+import { measureArea, measureAggregateBoundingBox, measureCenter, measureVolume } from '../../measurements/index.js'
+
+import { square } from '../../primitives/index.js'
 
 import { center, centerX, centerY, centerZ } from './index.js'
 
@@ -135,4 +137,20 @@ test('center: centering of multiple objects produces expected changes', (t) => {
   const exp2 = [[2.5, 10], [7.5, 20], [17.5, 10]]
   t.notThrows(() => geom2.validate(centered[2]))
   t.true(comparePoints(pts2, exp2))
+})
+
+test('center multiple separate', (t) => {
+  const square1 = square({ size: 4, center: [10, 10] })
+  const square2 = square({ size: 6, center: [-10, -10] })
+  const obs = center({}, square1, square2)
+  t.notThrows(() => obs.map(geom2.validate))
+  t.deepEqual([[-3, -3, 0], [3, 3, 0]], measureAggregateBoundingBox(obs))
+})
+
+test('center multiple grouped', (t) => {
+  const square1 = square({ size: 4, center: [10, 10] })
+  const square2 = square({ size: 6, center: [-10, -10] })
+  const obs = center({}, [square1, square2])
+  t.notThrows(() => obs.map(geom2.validate))
+  t.deepEqual([[-12.5, -12.5, 0], [12.5, 12.5, 0]], measureAggregateBoundingBox(obs))
 })

@@ -34,7 +34,6 @@ const measureVolumeOfGeom3 = (geometry) => {
  */
 export const measureVolume = (...geometries) => {
   geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('wrong number of arguments')
 
   const results = geometries.map((geometry) => {
     if (geom3.isA(geometry)) return measureVolumeOfGeom3(geometry)

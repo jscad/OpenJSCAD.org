@@ -4,7 +4,7 @@ import { geom2, geom3, path2 } from '../../geometries/index.js'
 
 import { measureArea, measureVolume } from '../../measurements/index.js'
 
-import { sphere, cuboid, ellipsoid } from '../../primitives/index.js'
+import { cuboid, ellipsoid, sphere, square } from '../../primitives/index.js'
 
 import { center } from '../transforms/index.js'
 
@@ -292,4 +292,30 @@ test('hull (multiple, overlapping, geom3)', (t) => {
   t.is(measureArea(obs), 282.26819685563686)
   t.is(measureVolume(obs), 366.67641200012866)
   t.is(pts.length, 92)
+})
+
+test('hull (multiple with undefined/null values)', (t) => {
+  const square1 = square({ size: 4 })
+  const square2 = square({ size: 6 })
+  const square3 = square({ size: 8 })
+  const geometries = [square1, undefined, square2, null, square3]
+
+  const obs = hull(...geometries)
+  const pts = geom2.toPoints(obs)
+  t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 64)
+  t.is(pts.length, 4)
+})
+
+test('hull (multiple with nested arrays)', (t) => {
+  const square1 = square({ size: 4 })
+  const square2 = square({ size: 6 })
+  const square3 = square({ size: 8 })
+  const geometries = [square1, [square2, [square3]]]
+
+  const obs = hull(...geometries)
+  const pts = geom2.toPoints(obs)
+  t.notThrows(() => geom2.validate(obs))
+  t.is(measureArea(obs), 64)
+  t.is(pts.length, 4)
 })

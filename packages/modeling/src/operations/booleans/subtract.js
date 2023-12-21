@@ -1,5 +1,5 @@
 import { areAllShapesTheSameType } from '../../utils/areAllShapesTheSameType.js'
-import { flatten } from '../../utils/flatten.js'
+import { coalesce } from '../../utils/coalesce.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
@@ -13,7 +13,7 @@ import { subtractGeom3 } from './subtractGeom3.js'
  * The given geometries should be of the same type, either geom2 or geom3.
  *
  * @param {...Object} geometries - list of geometries
- * @returns {Geom2|geom3} a new geometry
+ * @returns {Geom2|Geom3} a new geometry
  * @alias module:modeling/booleans.subtract
  *
  * @example
@@ -30,9 +30,9 @@ import { subtractGeom3 } from './subtractGeom3.js'
  *      +-------+
  */
 export const subtract = (...geometries) => {
-  geometries = flatten(geometries)
-  if (geometries.length === 0) throw new Error('subtract wrong number of arguments')
+  geometries = coalesce(geometries)
 
+  if (geometries.length === 0) return undefined
   if (!areAllShapesTheSameType(geometries)) {
     throw new Error('subtract arguments must be the same geometry type')
   }

@@ -11,14 +11,12 @@ test('color (rgb on objects)', (t) => {
   const obs = colorize([1, 0, 0], obj1, obj2)
   const exp1 = { color: [1, 0, 0, 1] }
   const exp2 = { id: 'a', color: [1, 0, 0, 1] }
+  const exp3 = { id: 'b', color: [1, 0, 0, 1] }
 
-  t.is(obs.length, 3)
+  t.is(obs.length, 2)
   t.deepEqual(obs[0], exp1)
-  t.deepEqual(obs[1], exp2)
-
-  const obs3 = colorize([1, 0, 0], obj1)
-  const exp3 = { color: [1, 0, 0, 1] }
-  t.deepEqual(obs3, exp3)
+  t.deepEqual(obs[1][0], exp2)
+  t.deepEqual(obs[1][1], exp3)
 })
 
 test('color (rgba on objects)', (t) => {
@@ -28,10 +26,12 @@ test('color (rgba on objects)', (t) => {
   const obs = colorize([1, 1, 0.5, 0.8], obj1, obj2)
   const exp1 = { color: [1, 1, 0.5, 0.8] }
   const exp2 = { id: 'a', color: [1, 1, 0.5, 0.8] }
+  const exp3 = { id: 'b', color: [1, 1, 0.5, 0.8] }
 
-  t.is(obs.length, 3)
+  t.is(obs.length, 2)
   t.deepEqual(obs[0], exp1)
-  t.deepEqual(obs[1], exp2)
+  t.deepEqual(obs[1][0], exp2)
+  t.deepEqual(obs[1][1], exp3)
 })
 
 test('color (rgba on geometry)', (t) => {

@@ -1,5 +1,3 @@
-import { flatten } from '../../utils/flatten.js'
-
 import * as mat4 from '../../maths/mat4/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
@@ -19,9 +17,6 @@ import * as path2 from '../../geometries/path2/index.js'
 export const rotate = (angles, ...objects) => {
   if (!Array.isArray(angles)) throw new Error('angles must be an array')
 
-  objects = flatten(objects)
-  if (objects.length === 0) throw new Error('wrong number of arguments')
-
   // adjust the angles if necessary
   angles = angles.slice() // don't modify the original
   while (angles.length < 3) angles.push(0)
@@ -36,6 +31,8 @@ export const rotate = (angles, ...objects) => {
     if (path2.isA(object)) return path2.transform(matrix, object)
     if (geom2.isA(object)) return geom2.transform(matrix, object)
     if (geom3.isA(object)) return geom3.transform(matrix, object)
+    // handle recursive arrays
+    if (Array.isArray(object)) return rotate(angles, ...object)
     return object
   })
   return results.length === 1 ? results[0] : results
@@ -48,7 +45,7 @@ export const rotate = (angles, ...objects) => {
  * @return {Object|Array} the rotated object, or a list of rotated objects
  * @alias module:modeling/transforms.rotateX
  */
-export const rotateX = (angle, ...objects) => rotate([angle, 0, 0], objects)
+export const rotateX = (angle, ...objects) => rotate([angle, 0, 0], ...objects)
 
 /**
  * Rotate the given objects about the Y axis, using the given options.
@@ -57,7 +54,7 @@ export const rotateX = (angle, ...objects) => rotate([angle, 0, 0], objects)
  * @return {Object|Array} the rotated object, or a list of rotated objects
  * @alias module:modeling/transforms.rotateY
  */
-export const rotateY = (angle, ...objects) => rotate([0, angle, 0], objects)
+export const rotateY = (angle, ...objects) => rotate([0, angle, 0], ...objects)
 
 /**
  * Rotate the given objects about the Z axis, using the given options.
@@ -66,4 +63,4 @@ export const rotateY = (angle, ...objects) => rotate([0, angle, 0], objects)
  * @return {Object|Array} the rotated object, or a list of rotated objects
  * @alias module:modeling/transforms.rotateZ
  */
-export const rotateZ = (angle, ...objects) => rotate([0, 0, angle], objects)
+export const rotateZ = (angle, ...objects) => rotate([0, 0, angle], ...objects)
