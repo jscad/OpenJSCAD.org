@@ -13,6 +13,7 @@
     "build": "rollup --config",
     "coverage": "c8 --all --reporter=html --reporter=text pnpm test",
     "test": "ava 'src/*.test.js' --verbose --timeout 2m",
+    "test:tsd": "tsd",
     "version": "pnpm run build && git add dist"
   },
   "contributors": [
