@@ -1,6 +1,7 @@
 const test = require('ava')
 
 const geom2 = require('../geometries/geom2')
+const measureArea = require('../measurements/measureArea')
 
 const { polygon } = require('./index')
 
@@ -50,4 +51,13 @@ test('polygon: providing object.points (array) and object.path (array) creates e
 
   t.notThrows(() => geom2.validate(geometry))
   t.true(comparePoints(obs, exp))
+})
+
+test('polygon: clockwise points', (t) => {
+  const poly = polygon({
+    points: [[-10, -0], [-10, -10], [-15, -5]],
+    orientation: "clockwise",
+  })
+  t.is(poly.sides.length, 3)
+  t.is(measureArea(poly), 25)
 })

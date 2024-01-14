@@ -2,10 +2,13 @@ const geom2 = require('../geometries/geom2')
 
 /**
  * Construct a polygon in two dimensional space from a list of points, or a list of points and paths.
- * NOTE: The ordering of points is VERY IMPORTANT.
+ *
+ * NOTE: The ordering of points is important, and must define a counter clockwise rotation of points.
+ *
  * @param {Object} options - options for construction
  * @param {Array} options.points - points of the polygon : either flat or nested array of 2D points
  * @param {Array} [options.paths] - paths of the polygon : either flat or nested array of point indexes
+ * @param {String} [options.orientation='counterclockwise'] - orientation of points
  * @returns {geom2} new 2D geometry
  * @alias module:modeling/primitives.polygon
  *
@@ -24,9 +27,10 @@ const geom2 = require('../geometries/geom2')
 const polygon = (options) => {
   const defaults = {
     points: [],
-    paths: []
+    paths: [],
+    orientation: 'counterclockwise'
   }
-  const { points, paths } = Object.assign({}, defaults, options)
+  const { points, paths, orientation } = Object.assign({}, defaults, options)
 
   if (!(Array.isArray(points) && Array.isArray(paths))) throw new Error('points and paths must be arrays')
 
@@ -58,13 +62,20 @@ const polygon = (options) => {
   const allpoints = []
   listofpolys.forEach((list) => list.forEach((point) => allpoints.push(point)))
 
+  // convert the list of paths into a list of sides, and accumulate
   let sides = []
   listofpaths.forEach((path) => {
     const setofpoints = path.map((index) => allpoints[index])
     const geometry = geom2.fromPoints(setofpoints)
     sides = sides.concat(geom2.toSides(geometry))
   })
-  return geom2.create(sides)
+
+  // convert the list of sides into a geometry
+  let geometry =  geom2.create(sides)
+  if (orientation == "clockwise") {
+    geometry = geom2.reverse(geometry)
+  }
+  return geometry
 }
 
 module.exports = polygon
