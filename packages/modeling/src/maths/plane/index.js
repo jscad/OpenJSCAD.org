@@ -32,6 +32,7 @@ module.exports = {
    * @function fromValues
    */
   fromValues: require('../vec4/fromValues'),
+  fromNoisyPoints: require('./fromNoisyPoints'),
   fromPoints: require('./fromPoints'),
   fromPointsRandom: require('./fromPointsRandom'),
   projectionOfPoint: require('./projectionOfPoint'),
