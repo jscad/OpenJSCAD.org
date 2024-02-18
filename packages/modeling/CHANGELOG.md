@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.12.0...@jscad/modeling@2.12.1) (2024-02-18)
+
+
+### Bug Fixes
+
+* **modeling:** added fromNoisyPoints() to plane ([1d9efb5](https://github.com/jscad/OpenJSCAD.org/commit/1d9efb506503cde581421f11a6eea9d33f89e4fc))
+* **modeling:** added orientation option to polygon ([6c7be85](https://github.com/jscad/OpenJSCAD.org/commit/6c7be85d7e208a2b100c3bce10380ada8f9d7e32))
+* **modeling:** corrected geom2 mirroring transform ([8b0306e](https://github.com/jscad/OpenJSCAD.org/commit/8b0306e06cc42d1850c137c7221bcc122851f53d))
+
+
+
+
+
 # [2.12.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.11.1...@jscad/modeling@2.12.0) (2023-06-27)
 
 

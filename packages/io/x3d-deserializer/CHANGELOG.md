@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-deserializer@2.2.5...@jscad/x3d-deserializer@2.2.6) (2024-02-18)
+
+
+### Bug Fixes
+
+* **x3d-deserializer:** corrected to accept commas as MF value delimiters ([03a1145](https://github.com/jscad/OpenJSCAD.org/commit/03a114543303c17afc50908cdc0946a38197058d))
+
+
+
+
+
 - allow commas as delimiter in MF fields
 
 
