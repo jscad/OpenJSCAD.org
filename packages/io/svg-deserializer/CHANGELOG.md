@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.5.6...@jscad/svg-deserializer@2.5.7) (2024-02-18)
+
+
+### Bug Fixes
+
+* **svg-serializer:** fix conversion of alpha colors to SVG RGBA opacity ([4c1f372](https://github.com/jscad/OpenJSCAD.org/commit/4c1f37271764649e192300c66d263a1fee52303c))
+
+
+
+
+
 ## [2.5.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.5.5...@jscad/svg-deserializer@2.5.6) (2023-06-27)
 
 **Note:** Version bump only for package @jscad/svg-deserializer
