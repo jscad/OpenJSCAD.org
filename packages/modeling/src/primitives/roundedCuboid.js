@@ -151,7 +151,7 @@ export const roundedCuboid = (options) => {
 
   if (roundRadius > (size[0] - EPS) ||
       roundRadius > (size[1] - EPS) ||
-      roundRadius > (size[2] - EPS)) throw new Error('roundRadius must be smaller then the radius of all dimensions')
+      roundRadius > (size[2] - EPS)) throw new Error('roundRadius must be smaller than the radius of all dimensions')
 
   segments = Math.floor(segments / 4)
 

@@ -38,7 +38,7 @@ export const roundedCylinder = (options) => {
   if (!isGTE(height, 0)) throw new Error('height must be positive')
   if (!isGTE(radius, 0)) throw new Error('radius must be positive')
   if (!isGTE(roundRadius, 0)) throw new Error('roundRadius must be positive')
-  if (roundRadius > radius) throw new Error('roundRadius must be smaller then the radius')
+  if (roundRadius > radius) throw new Error('roundRadius must be smaller than the radius')
   if (!isGTE(segments, 4)) throw new Error('segments must be four or more')
 
   // if size is zero return empty geometry
