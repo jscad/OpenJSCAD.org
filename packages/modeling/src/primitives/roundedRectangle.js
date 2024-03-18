@@ -44,7 +44,7 @@ const roundedRectangle = (options) => {
   size = size.map((v) => v / 2) // convert to radius
 
   if (roundRadius > (size[0] - EPS) ||
-      roundRadius > (size[1] - EPS)) throw new Error('roundRadius must be smaller then the radius of all dimensions')
+      roundRadius > (size[1] - EPS)) throw new Error('roundRadius must be smaller than the radius of all dimensions')
 
   const cornersegments = Math.floor(segments / 4)
 
