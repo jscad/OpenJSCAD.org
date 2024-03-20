@@ -1,0 +1,1 @@
+declare module '@jscad/x3d-serializer';
