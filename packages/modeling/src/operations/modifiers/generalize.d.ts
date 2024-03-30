@@ -7,6 +7,6 @@ export interface GeneralizeOptions {
   triangulate?: boolean
 }
 
-export function generalize<T extends Geometry>(options: GeneralizeOptions, geometry: T): T
-export function generalize<T extends Geometry>(options: GeneralizeOptions, ...geometries: RecursiveArray<T>): Array<T>
-export function generalize(options: GeneralizeOptions, ...geometries: RecursiveArray<Geometry>): Array<Geometry>
+export default function generalize<T extends Geometry>(options: GeneralizeOptions, geometry: T): T
+export default function generalize<T extends Geometry>(options: GeneralizeOptions, ...geometries: RecursiveArray<T>): Array<T>
+export default function generalize(options: GeneralizeOptions, ...geometries: RecursiveArray<Geometry>): Array<Geometry>
