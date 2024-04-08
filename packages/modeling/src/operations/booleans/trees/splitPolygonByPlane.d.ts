@@ -14,8 +14,8 @@ enum ResType
 interface SplitRes
 {
     type: ResType,
-    front: Poly3[],
-    back: Poly3[];
+    front: Poly3,
+    back: Poly3;
 }
 
 // Returns object:
