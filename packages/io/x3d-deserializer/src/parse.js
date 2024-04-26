@@ -50,7 +50,6 @@ let x3dDefinition = x3dTypes.X3D // what kind of object beinging created
 
 // high level elements / definitions
 const x3dObjects = [] // list of objects
-const x3dDefs = new Map() // list of named objects
 
 const x3dMaterials = [] // list of materials
 const x3dTextures = [] // list of textures
@@ -110,6 +109,7 @@ const getObjectId = () => ('0000' + objectId++).slice(-4)
 const createX3DParser = (src, pxPmm) => {
   // create a parser for the XML
   const parser = new saxes.SaxesParser()
+  const x3dDefs = new Map() // list of named objects
 
   parser.on('error', (e) => {
     console.log(`error: line ${e.line}, column ${e.column}, bad character [${e.c}]`)
