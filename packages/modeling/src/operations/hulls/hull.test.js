@@ -203,6 +203,22 @@ test('hull (multiple, various, path2)', (t) => {
   t.is(pts.length, 8)
 })
 
+test('hull (single, listOfPoints3)', (t) => {
+  let out = []
+  for(x=-2;x<=2;++x)
+    for(y=-2;y<=2;++y)
+     for(z=-2;z<=2;++z)
+        if (x*x+y*y+z*z <= 5)
+          out.push([x,y,z])
+
+  let obs = hull(out)
+  t.is(obs.polygons.length, 14)
+  t.true(obs.polygons.every((f) => (f.vertices.length === 4 || f.vertices.length === 6)))
+  let c = 0
+  obs.polygons.forEach((f) => c += (f.vertices.length === 4) ? 1 : 0)
+  t.is(c, 6);
+})
+
 test('hull (single, geom3)', (t) => {
   let geometry = geom3.create()
 
