@@ -1,4 +1,4 @@
-const saxes = require('saxes');
+const saxes = require('saxes')
 
 const {
   x3dTypes,
@@ -42,8 +42,8 @@ const {
   x3dIndexedLineSet,
 
   x3dAppearance,
-  x3dMaterial,
-} = require('./objects');
+  x3dMaterial
+} = require('./objects')
 
 const nodeToObjectMap = {
   X3D: x3dX3D,
@@ -86,69 +86,69 @@ const nodeToObjectMap = {
   INDEXEDLINESET: x3dIndexedLineSet,
 
   APPEARANCE: x3dAppearance,
-  MATERIAL: x3dMaterial,
-};
+  MATERIAL: x3dMaterial
+}
 
-let objectId = 1;
-const getObjectId = () => ('0000' + objectId++).slice(-4);
+let objectId = 1
+const getObjectId = () => ('0000' + objectId++).slice(-4)
 
 const createX3DParser = (src, pxPmm) => {
   // create a parser for the XML
-  const parser = new saxes.SaxesParser();
-  const x3dDefs = new Map(); // list of named objects
-  let x3dLast = null; // last object found
-  let x3dDefinition = x3dTypes.X3D; // what kind of object beinging created
-  let x3dObj = null; // x3d in object form
+  const parser = new saxes.SaxesParser()
+  const x3dDefs = new Map() // list of named objects
+  let x3dLast = null // last object found
+  let x3dDefinition = x3dTypes.X3D // what kind of object beinging created
+  let x3dObj = null // x3d in object form
 
   // high level elements / definitions
-  const x3dObjects = []; // list of objects
-  const x3dMaterials = []; // list of materials
-  const x3dTextures = []; // list of textures
+  const x3dObjects = [] // list of objects
+  const x3dMaterials = [] // list of materials
+  const x3dTextures = [] // list of textures
 
-  const x3dLength = { factor: 1.0, name: 'meters' };
-  const x3dAngle = { factor: 1.0, name: 'radians' };
+  const x3dLength = { factor: 1.0, name: 'meters' }
+  const x3dAngle = { factor: 1.0, name: 'radians' }
 
   parser.on('error', (e) => {
     console.log(
       `error: line ${e.line}, column ${e.column}, bad character [${e.c}]`
-    );
-  });
+    )
+  })
 
   parser.on('opentag', (node) => {
     // convert known XML tags to objects
-    const elementname = node.name.toUpperCase();
+    const elementname = node.name.toUpperCase()
     let obj = nodeToObjectMap[elementname]
       ? nodeToObjectMap[elementname](node.attributes, { x3dObjects })
-      : null;
+      : null
 
     if (obj) {
-      obj.id = getObjectId();
+      obj.id = getObjectId()
 
       // handle named objects (DEF/USE)
       if (node.attributes.USE) {
-        const objectname = node.attributes.USE;
+        const objectname = node.attributes.USE
         if (x3dDefs.has(objectname)) {
-          const def = x3dDefs.get(objectname);
+          const def = x3dDefs.get(objectname)
           if (def.definition !== obj.definition) {
             console.log(
               `WARNING: using a definition "${objectname}" of a different type; ${obj.definition} vs ${def.definition}`
-            );
+            )
           }
-          obj = def;
+          obj = def
         } else {
           console.log(
             `WARNING: definition "${objectname}" does not exist, using default for ${obj.definition}`
-          );
+          )
         }
       } else {
         if (node.attributes.DEF) {
-          const objectname = node.attributes.DEF;
+          const objectname = node.attributes.DEF
           if (x3dDefs.has(objectname)) {
             console.log(
               `WARNING: redefintion of ${objectname} has been ignored`
-            );
+            )
           } else {
-            x3dDefs.set(objectname, obj);
+            x3dDefs.set(objectname, obj)
           }
         }
       }
@@ -173,10 +173,10 @@ const createX3DParser = (src, pxPmm) => {
         case x3dTypes.LINESET:
         case x3dTypes.INDEXEDLINESET:
         case x3dTypes.GROUP:
-          x3dDefinition = obj.definition;
-          break;
+          x3dDefinition = obj.definition
+          break
         default:
-          break;
+          break
       }
 
       // console.log('definition',x3dDefinition)
@@ -187,20 +187,20 @@ const createX3DParser = (src, pxPmm) => {
         case x3dTypes.X3D: // definition of X3D
           if ('objects' in obj) {
             // console.log('object group ['+obj.definition+']')
-            x3dObjects.push(obj);
+            x3dObjects.push(obj)
           }
           // handle special meta and unit nodes
           if (obj.definition === x3dTypes.UNIT) {
             if (obj.category === 'length') {
-              x3dLength.factor = obj.conversionFactor;
-              x3dLength.name = obj.name;
+              x3dLength.factor = obj.conversionFactor
+              x3dLength.name = obj.name
             }
             if (obj.category === 'angle') {
-              x3dAngle.factor = obj.conversionFactor;
-              x3dAngle.name = obj.name;
+              x3dAngle.factor = obj.conversionFactor
+              x3dAngle.name = obj.name
             }
           }
-          break;
+          break
         case x3dTypes.SCENE:
         case x3dTypes.TRANSFORM:
         case x3dTypes.SHAPE:
@@ -219,30 +219,30 @@ const createX3DParser = (src, pxPmm) => {
         case x3dTypes.LINESET:
         case x3dTypes.INDEXEDLINESET:
           if (x3dObjects.length > 0) {
-            const group = x3dObjects.pop();
+            const group = x3dObjects.pop()
             // add the object to the active group if necessary
             if ('objects' in group) {
               // console.log('object '+group.definition+' adding ['+obj.definition+']')
-              group.objects.push(obj);
+              group.objects.push(obj)
             }
-            x3dObjects.push(group);
+            x3dObjects.push(group)
             // and push this object as a group object if necessary
             if ('objects' in obj) {
               // console.log('object group ['+obj.definition+']')
-              x3dObjects.push(obj);
+              x3dObjects.push(obj)
             }
           }
-          break;
+          break
         default:
-          console.log('WARNING: invalid X3D definition');
-          break;
+          console.log('WARNING: invalid X3D definition')
+          break
       }
-      x3dLast = obj; // retain this object in order to add values
+      x3dLast = obj // retain this object in order to add values
     }
-  });
+  })
 
   parser.on('closetag', (node) => {
-    const elementname = node.name.toUpperCase();
+    const elementname = node.name.toUpperCase()
     switch (elementname) {
       // list those which have a list of objects
       case 'X3D':
@@ -264,36 +264,36 @@ const createX3DParser = (src, pxPmm) => {
       case 'ELEVATIONGRID':
       case 'LINESET':
       case 'INDEXEDLINESET':
-        break;
+        break
       default:
         // console.log('closetag: '+node)
-        return;
+        return
     }
 
     const popDefinition = () => {
       if (x3dObjects.length > 0) {
-        x3dDefinition = x3dObjects[x3dObjects.length - 1].definition;
+        x3dDefinition = x3dObjects[x3dObjects.length - 1].definition
       }
-    };
+    }
 
     // complete the definition
 
-    let obj = null;
+    let obj = null
     switch (x3dDefinition) {
       case x3dTypes.X3D:
         if (x3dObjects.length > 0) {
-          obj = x3dObjects.pop();
+          obj = x3dObjects.pop()
           // console.log('pop object ['+obj.definition+']')
-          popDefinition();
+          popDefinition()
         }
         // check for completeness
         if (x3dObjects.length === 0) {
           // console.log('completed',obj)
-          obj.length = x3dLength;
-          obj.angle = x3dAngle;
-          x3dObj = obj;
+          obj.length = x3dLength
+          obj.angle = x3dAngle
+          x3dObj = obj
         }
-        break;
+        break
       case x3dTypes.SCENE:
       case x3dTypes.TRANSFORM:
       case x3dTypes.SHAPE:
@@ -312,38 +312,38 @@ const createX3DParser = (src, pxPmm) => {
       case x3dTypes.LINESET:
       case x3dTypes.INDEXEDLINESET:
         if (x3dObjects.length > 0) {
-          obj = x3dObjects.pop();
+          obj = x3dObjects.pop()
           // console.log('pop object ['+obj.definition+']')
-          popDefinition();
+          popDefinition()
         }
-        break;
+        break
       default:
-        console.log('WARNING: unhandled definition', x3dDefinition);
-        break;
+        console.log('WARNING: unhandled definition', x3dDefinition)
+        break
     }
-  });
+  })
 
   parser.on('text', (value) => {
     if (value !== null) {
-      value = value.trim();
+      value = value.trim()
       if (value.length > 0 && x3dLast && x3dDefinition !== 0) {
-        x3dLast.value = value;
+        x3dLast.value = value
       }
     }
-  });
+  })
 
   parser.on('end', () => {
     // console.log('X3D parsing completed')
-  });
+  })
 
   // start the parser
-  parser.write(src).close();
+  parser.write(src).close()
 
   return {
     x3dObj,
     x3dMaterials,
-    x3dTextures,
-  };
-};
+    x3dTextures
+  }
+}
 
-module.exports = createX3DParser;
+module.exports = createX3DParser
