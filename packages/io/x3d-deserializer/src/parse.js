@@ -45,21 +45,6 @@ const {
   x3dMaterial
 } = require('./objects')
 
-let x3dLast = null // last object found
-let x3dDefinition = x3dTypes.X3D // what kind of object beinging created
-
-// high level elements / definitions
-const x3dObjects = [] // list of objects
-const x3dDefs = new Map() // list of named objects
-
-const x3dMaterials = [] // list of materials
-const x3dTextures = [] // list of textures
-
-const x3dLength = { factor: 1.0, name: 'meters' }
-const x3dAngle = { factor: 1.0, name: 'radians' }
-
-let x3dObj = null // x3d in object form
-
 const nodeToObjectMap = {
   X3D: x3dX3D,
   UNIT: x3dUnit,
@@ -110,15 +95,31 @@ const getObjectId = () => ('0000' + objectId++).slice(-4)
 const createX3DParser = (src, pxPmm) => {
   // create a parser for the XML
   const parser = new saxes.SaxesParser()
+  const x3dDefs = new Map() // list of named objects
+  let x3dLast = null // last object found
+  let x3dDefinition = x3dTypes.X3D // what kind of object beinging created
+  let x3dObj = null // x3d in object form
+
+  // high level elements / definitions
+  const x3dObjects = [] // list of objects
+  const x3dMaterials = [] // list of materials
+  const x3dTextures = [] // list of textures
+
+  const x3dLength = { factor: 1.0, name: 'meters' }
+  const x3dAngle = { factor: 1.0, name: 'radians' }
 
   parser.on('error', (e) => {
-    console.log(`error: line ${e.line}, column ${e.column}, bad character [${e.c}]`)
+    console.log(
+      `error: line ${e.line}, column ${e.column}, bad character [${e.c}]`
+    )
   })
 
   parser.on('opentag', (node) => {
     // convert known XML tags to objects
     const elementname = node.name.toUpperCase()
-    let obj = nodeToObjectMap[elementname] ? nodeToObjectMap[elementname](node.attributes, { x3dObjects }) : null
+    let obj = nodeToObjectMap[elementname]
+      ? nodeToObjectMap[elementname](node.attributes, { x3dObjects })
+      : null
 
     if (obj) {
       obj.id = getObjectId()
@@ -129,17 +130,23 @@ const createX3DParser = (src, pxPmm) => {
         if (x3dDefs.has(objectname)) {
           const def = x3dDefs.get(objectname)
           if (def.definition !== obj.definition) {
-            console.log(`WARNING: using a definition "${objectname}" of a different type; ${obj.definition} vs ${def.definition}`)
+            console.log(
+              `WARNING: using a definition "${objectname}" of a different type; ${obj.definition} vs ${def.definition}`
+            )
           }
           obj = def
         } else {
-          console.log(`WARNING: definition "${objectname}" does not exist, using default for ${obj.definition}`)
+          console.log(
+            `WARNING: definition "${objectname}" does not exist, using default for ${obj.definition}`
+          )
         }
       } else {
         if (node.attributes.DEF) {
           const objectname = node.attributes.DEF
           if (x3dDefs.has(objectname)) {
-            console.log(`WARNING: redefintion of ${objectname} has been ignored`)
+            console.log(
+              `WARNING: redefintion of ${objectname} has been ignored`
+            )
           } else {
             x3dDefs.set(objectname, obj)
           }
@@ -331,12 +338,12 @@ const createX3DParser = (src, pxPmm) => {
 
   // start the parser
   parser.write(src).close()
+
+  return {
+    x3dObj,
+    x3dMaterials,
+    x3dTextures
+  }
 }
 
-const parse = (src, pxPmm) => {
-  createX3DParser(src, pxPmm)
-  // console.log(JSON.stringify(x3dObj))
-  return { x3dObj, x3dMaterials, x3dTextures }
-}
-
-module.exports = parse
+module.exports = createX3DParser
