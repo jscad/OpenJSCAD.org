@@ -9,8 +9,11 @@ const hullPath2 = require('./hullPath2')
 const hullGeom2 = require('./hullGeom2')
 const hullGeom3 = require('./hullGeom3')
 
+const isListOfPoints3 = (L) => (Array.isArray(L) && L.every((g) =>
+  (Array.isArray(g) && g.length===3 && g.every((c) => (typeof(c)==="number")))))
+
 /**
- * Create a convex hull of the given geometries.
+ * Create a convex hull of the given geometries or listOfPoints3.
  * The given geometries should be of the same type, either geom2 or geom3 or path2.
  * @param {...Objects} geometries - list of geometries from which to create a hull
  * @returns {geom2|geom3} new geometry
@@ -33,6 +36,11 @@ const hullGeom3 = require('./hullGeom3')
  *       +-------+           +-------+
  */
 const hull = (...geometries) => {
+  if (geometries.length === 1 && isListOfPoints3(geometries[0])) {
+     return hullGeom3([[ geom3.create(),
+       geom3.fromPoints(geometries[0].map((p) => [p,p,p])) ]])
+  }
+
   geometries = flatten(geometries)
   if (geometries.length === 0) throw new Error('wrong number of arguments')
 
