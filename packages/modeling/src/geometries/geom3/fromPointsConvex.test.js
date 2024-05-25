@@ -1,0 +1,25 @@
+const test = require('ava')
+
+const { fromPointsConvex } = require('./index')
+
+test('fromPointsConvex (listofpoints)', (t) => {
+  let out = []
+  for(x=-9;x<=9;++x)
+    for(y=-9;y<=9;++y)
+     for(z=-9;z<=9;++z)
+        if (x*x+y*y+z*z <= 96)
+          out.push([x,y,z])
+
+  let obs = fromPointsConvex(out)
+  t.is(obs.polygons.length, 170)
+  t.true(obs.polygons.every((f) => ([3,4,8,9].indexOf(f.vertices.length) !== -1)))
+  let c = [0,0,0,0,0,0,0,0,0,0]
+  obs.polygons.forEach((f) => c[f.vertices.length]++)
+  t.is(c[3], 120);
+  t.is(c[4], 24);
+  t.is(c[8], 18);
+  t.is(c[9], 8);
+  let edges2 = 336*2
+  obs.polygons.forEach((f) => edges2 -= f.vertices.length)
+  t.is(edges2, 0);
+})
