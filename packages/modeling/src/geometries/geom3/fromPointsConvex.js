@@ -3,20 +3,20 @@ const create = require('./create')
 const poly3 = require('../poly3')
 
 /**
- * Construct a new convex 3D geometry from a list of points.
- * @param {Array} listofpoints - list of points to construct convex 3D geometry
+ * Construct a new convex 3D geometry from a list of unique points.
+ * @param {Array} uniquePoints - list of points to construct convex 3D geometry
  * @returns {geom3} a new geometry
  * @alias module:modeling/geometries/geom3.fromPointsConvex
  */
-const fromPointsConvex = (listofpoints) => {
-  if (!Array.isArray(listofpoints)) {
+const fromPointsConvex = (uniquePoints) => {
+  if (!Array.isArray(uniquePoints)) {
     throw new Error('the given points must be an array')
   }
 
-  const faces = quickhull(listofpoints, { skipTriangulation: true })
+  const faces = quickhull(uniquePoints, { skipTriangulation: true })
 
   const polygons = faces.map((face) => {
-    const vertices = face.map((index) => listofpoints[index])
+    const vertices = face.map((index) => uniquePoints[index])
     return poly3.create(vertices)
   })
 

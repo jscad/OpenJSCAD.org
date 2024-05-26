@@ -1,8 +1,8 @@
 const test = require('ava')
 
-const { fromPointsConvex } = require('./index')
+const { fromPointsConvex, validate } = require('./index')
 
-test('fromPointsConvex (listofpoints)', (t) => {
+test('fromPointsConvex (uniquePoints)', (t) => {
   let out = []
   for(x=-9;x<=9;++x)
     for(y=-9;y<=9;++y)
@@ -11,6 +11,7 @@ test('fromPointsConvex (listofpoints)', (t) => {
           out.push([x,y,z])
 
   let obs = fromPointsConvex(out)
+  validate(obs)
   t.is(obs.polygons.length, 170)
   t.true(obs.polygons.every((f) => ([3,4,8,9].indexOf(f.vertices.length) !== -1)))
   let c = [0,0,0,0,0,0,0,0,0,0]
