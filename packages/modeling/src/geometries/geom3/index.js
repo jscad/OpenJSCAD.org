@@ -23,6 +23,7 @@
 module.exports = {
   clone: require('./clone'),
   create: require('./create'),
+  fromPointsConvex: require('./fromPointsConvex'),
   fromPoints: require('./fromPoints'),
   fromCompactBinary: require('./fromCompactBinary'),
   invert: require('./invert'),
