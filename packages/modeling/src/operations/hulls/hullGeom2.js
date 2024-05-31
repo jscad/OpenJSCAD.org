@@ -5,8 +5,11 @@ const geom2 = require('../../geometries/geom2')
 const hullPoints2 = require('./hullPoints2')
 const toUniquePoints = require('./toUniquePoints')
 
-/*
+/**
  * Create a convex hull of the given geom2 geometries.
+ *
+ * NOTE: The given geometries must be valid geom2 geometries.
+ *
  * @param {...geometries} geometries - list of geom2 geometries
  * @returns {geom2} new geometry
  */
