@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.12.1...@jscad/modeling@2.12.2) (2024-06-02)
+
+
+### Bug Fixes
+
+* **modeling:** added geom3.fromPointsConvex() ([e1af657](https://github.com/jscad/OpenJSCAD.org/commit/e1af6579498e9bce118d66b47f6cffbb875e9639))
+* **modeling:** added TS definitions for mat4.isIdentity() ([0d02c83](https://github.com/jscad/OpenJSCAD.org/commit/0d02c8343127270380f0474815f4f24fe8a04763))
+* **modeling:** create scission.d.ts and update index.d.ts ([7f02f7d](https://github.com/jscad/OpenJSCAD.org/commit/7f02f7d9474358d68bee9803d53a7c422e6e22dd))
+* **modeling:** created TS definitions for splitPolygonByPlane ([0998e7e](https://github.com/jscad/OpenJSCAD.org/commit/0998e7e933e1583331e20086fb05795bd08df5a6))
+* **typo:** fix typo in rounded error messages ([f6d5286](https://github.com/jscad/OpenJSCAD.org/commit/f6d52860f19587d4fb6d006308d7ad43bf213e0f))
+
+
+
+
+
 ## [2.12.1](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.12.0...@jscad/modeling@2.12.1) (2024-02-18)
 
 

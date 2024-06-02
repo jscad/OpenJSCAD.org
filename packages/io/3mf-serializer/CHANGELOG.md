@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.11](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/3mf-serializer@2.1.10...@jscad/3mf-serializer@2.1.11) (2024-06-02)
+
+**Note:** Version bump only for package @jscad/3mf-serializer
+
+
+
+
+
 ## [2.1.10](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/3mf-serializer@2.1.9...@jscad/3mf-serializer@2.1.10) (2024-02-18)
 
 **Note:** Version bump only for package @jscad/3mf-serializer
