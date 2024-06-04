@@ -2,10 +2,13 @@ import * as geom2 from '../geometries/geom2/index.js'
 
 /**
  * Construct a polygon in two dimensional space from a list of points, or a list of points and paths.
- * NOTE: The ordering of points is VERY IMPORTANT.
+ *
+ * NOTE: The ordering of points is important, and must define a counter clockwise rotation of points.
+ *
  * @param {object} options - options for construction
  * @param {Array} options.points - points of the polygon : either flat or nested array of 2D points
  * @param {Array} [options.paths] - paths of the polygon : either flat or nested array of point indexes
+ * @param {String} [options.orientation='counterclockwise'] - orientation of points
  * @returns {Geom2} new 2D geometry
  * @alias module:modeling/primitives.polygon
  *
@@ -24,9 +27,10 @@ import * as geom2 from '../geometries/geom2/index.js'
 export const polygon = (options) => {
   const defaults = {
     points: [],
-    paths: []
+    paths: [],
+    orientation: 'counterclockwise'
   }
-  const { points, paths } = Object.assign({}, defaults, options)
+  const { points, paths, orientation } = Object.assign({}, defaults, options)
 
   if (!(Array.isArray(points) && Array.isArray(paths))) throw new Error('points and paths must be arrays')
 
@@ -63,5 +67,10 @@ export const polygon = (options) => {
     const setOfPoints = path.map((index) => allPoints[index])
     outlines.push(setOfPoints)
   })
-  return geom2.create(outlines)
+
+  let geometry = geom2.create(outlines)
+  if (orientation == "clockwise") {
+    geometry = geom2.reverse(geometry)
+  }
+  return geometry
 }
