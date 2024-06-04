@@ -85,6 +85,18 @@ test('deserialize X3D 3D triangle sets to JSCAD script', (t) => {
   t.is(countOf('transform', observed), 0)
 })
 
+test('deserialize X3D 3D triangle sets with comma delimiters to JSCAD script', (t) => {
+  const inputPath = path.resolve(samplesPath, 'tests/TriangleSets_CommaMF.x3d')
+  const inputFile = fs.readFileSync(inputPath)
+
+  const observed = deserialize({ output: 'script', addMetaData: false }, inputFile)
+  t.is(countOf('createObjects', observed), 18)
+  t.is(countOf('points', observed), 12)
+  t.is(countOf('faces', observed), 12)
+  t.is(countOf('orientation', observed), 8)
+  t.is(countOf('polyhedron', observed), 4)
+})
+
 test('deserialize X3D 3D transforms to JSCAD script', (t) => {
   const inputPath = path.resolve(samplesPath, 'tests/Transforms.x3d')
   const inputFile = fs.readFileSync(inputPath)
@@ -107,6 +119,18 @@ test('deserialize X3D 3D indexed triangle sets to JSCAD script', (t) => {
   t.is(countOf('orientation', observed), 12)
   t.is(countOf('polyhedron', observed), 6)
   t.is(countOf('transform', observed), 0)
+})
+
+test('deserialize X3D 3D indexed triangle sets with comma delimiters to JSCAD script', (t) => {
+  const inputPath = path.resolve(samplesPath, 'tests/IndexedTriangleSets_CommaMF.x3d')
+  const inputFile = fs.readFileSync(inputPath)
+
+  const observed = deserialize({ output: 'script', addMetaData: false }, inputFile)
+  t.is(countOf('createObjects', observed), 24)
+  t.is(countOf('points', observed), 18)
+  t.is(countOf('faces', observed), 20)
+  t.is(countOf('orientation', observed), 12)
+  t.is(countOf('polyhedron', observed), 6)
 })
 
 test('deserialize X3D 3D groups to JSCAD script', (t) => {

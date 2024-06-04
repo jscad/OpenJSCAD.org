@@ -17,6 +17,7 @@
 export { clone } from './clone.js'
 export { create } from './create.js'
 export { fromPoints } from './fromPoints.js'
+export { fromPointsConvex } from './fromPointsConvex.js'
 export { fromCompactBinary } from './fromCompactBinary.js'
 export { invert } from './invert.js'
 export { isA } from './isA.js'

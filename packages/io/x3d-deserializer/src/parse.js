@@ -45,21 +45,6 @@ import {
   x3dMaterial
 } from './objects.js'
 
-let x3dLast = null // last object found
-let x3dDefinition = x3dTypes.X3D // what kind of object being created
-
-// high level elements / definitions
-const x3dObjects = [] // list of objects
-const x3dDefs = new Map() // list of named objects
-
-const x3dMaterials = [] // list of materials
-const x3dTextures = [] // list of textures
-
-const x3dLength = { factor: 1.0, name: 'meters' }
-const x3dAngle = { factor: 1.0, name: 'radians' }
-
-let x3dObj = null // x3d in object form
-
 const nodeToObjectMap = {
   X3D: x3dX3D,
   UNIT: x3dUnit,
@@ -107,9 +92,24 @@ const nodeToObjectMap = {
 let objectId = 1
 const getObjectId = () => ('0000' + objectId++).slice(-4)
 
-const createX3DParser = (src) => {
+export const parse = (src) => {
   // create a parser for the XML
   const parser = new saxes.SaxesParser()
+
+  // high level elements / definitions
+  let x3dLast = null // last object found
+  let x3dDefinition = x3dTypes.X3D // what kind of object being created
+
+  const x3dObjects = [] // list of objects
+  const x3dDefs = new Map() // list of named objects
+
+  const x3dMaterials = [] // list of materials
+  const x3dTextures = [] // list of textures
+
+  const x3dLength = { factor: 1.0, name: 'meters' }
+  const x3dAngle = { factor: 1.0, name: 'radians' }
+
+  let x3dObj = null // x3d in object form
 
   parser.on('error', (e) => {
     console.log(`error: line ${e.line}, column ${e.column}, bad character [${e.c}]`)
@@ -331,10 +331,8 @@ const createX3DParser = (src) => {
 
   // start the parser
   parser.write(src).close()
-}
 
-export const parse = (src) => {
-  createX3DParser(src)
+  // return the results
   // console.log(JSON.stringify(x3dObj))
   return { x3dObj, x3dMaterials, x3dTextures }
 }

@@ -1,4 +1,5 @@
 import { Geometry } from '@jscad/modeling/src/geometries/types'
+import { Entity } from '../geometry-utils-V2/entity'
 
 export namespace controlsProps {
   namespace limits {
@@ -100,7 +101,7 @@ export function pan({ controls, camera, speed }: {
 export function zoomToFit({ controls, camera, entities }: {
   controls: typeof controlsState;
   camera: typeof import('../cameras/orthographicCamera').cameraState | typeof import('../cameras/perspectiveCamera').cameraState;
-  entities: { geometry: Geometry; visuals: { drawCmd: string; show: boolean; transparent: boolean; useVertexColors: boolean } }[];
+  entities: Entity[];
 }): {
   controls: typeof controlsState;
   camera: typeof import('../cameras/orthographicCamera').cameraState | typeof import('../cameras/perspectiveCamera').cameraState;

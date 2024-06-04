@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.0//EN" "http://www.web3d.org/specifications/x3d-3.0.dtd">
+<X3D profile='Interchange' version='3.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance'>
+  <head>
+    <component level='2' name='TriangleSets'/>
+    <unit category='length' conversionFactor='0.001' name='millimeters'/>
+    <meta content='TriangleSets.x3d' name='title'/>
+  </head>
+  <!-- ==================== -->
+  <Scene>
+    <!-- Default Shapes -->
+    <Group>
+      <Shape>
+        <TriangleFanSet/>
+      </Shape>
+      <Shape>
+        <TriangleSet/>
+      </Shape>
+      <Shape>
+        <TriangleStripSet/>
+      </Shape>
+    </Group>
+    <Group>
+      <Shape containerField='shape'>
+        <Appearance>
+          <Material emissiveColor='0.0 1.0 0.0'/>
+        </Appearance>
+        <TriangleSet ccw='true' colorPerVertex='true' normalPerVertex='true' solid='true'>
+          <Coordinate point='-10.0 0.0 10.0, 10.0 0.0 10.0, 10.0 0.0 -10.0, -10.0 0.0 10.0, 10.0 0.0 -10.0, -10.0 0.0 -10.0'/>
+        </TriangleSet>
+      </Shape>
+      <Shape>
+        <TriangleFanSet ccw='true' colorPerVertex='false' fanCount='6 6' normalPerVertex='true' solid='false'>
+          <Coordinate point='0 0 0, -.5 -2 .5, -1.5 -2 1, -2.5 -1.5 0.5, -2.5 -.5 0, -2.5 1 .5, 0 0 0, -2.5 1 .5, .5 2 0, 1.5 1.5 .5, 2.5 .5 0, -.5 -2 .5'/>
+          <Color color='0.5 0.1 0.5, 0.8 0.3 0.8'/>
+        </TriangleFanSet>
+      </Shape>
+      <Shape>
+        <TriangleStripSet ccw='true' colorPerVertex='true' normalPerVertex='true' solid='false' stripCount='13'>
+          <Coordinate point='-4.0 -1.0 -.5, -4.5 -2.0 -.5, -3.0 -.5 0, -2.5 -1.5 -.5, -2.0 -.5 -1, -1.5 -1.5 -.5, -.5 .5 -.5, 0 0 0, 1 .5 -.5, 1.5 -2.0 -1, 2.5 -2.0 -.5, 2.5 -2.5 -.5, 3.5 -2.0 -1.0,'/>
+        </TriangleStripSet>
+        <Appearance>
+          <Material diffuseColor='0.5 0.5 0.5'/>
+        </Appearance>
+      </Shape>
+      <Shape>
+        <QuadSet ccw='true' colorPerVertex='true' normalPerVertex='true' solid='false'>
+          <Coordinate point='-6 -2 0, -1 -2 0, -1 2 0, -6 2 0, 1 -2 0, 6 -2 0, 6 2 0, 1 2 0'/>
+          <Color color='0.2 0.2 0.2, 1 0.058824 0.227451, 0.4 1 0.121569, 0 0.007843 0.960784, 0.6 0.235294 0, 0.94902 1 0.380392, 0.239216 1 0.886275, 1 0.121569 0.964706'/>
+        </QuadSet>
+      </Shape>
+    </Group>
+  </Scene>
+</X3D>
