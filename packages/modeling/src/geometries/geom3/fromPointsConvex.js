@@ -1,4 +1,4 @@
-import { runner } from '../../quickhull/index.js'
+import { runner } from '../../operations/hulls/quickhull/index.js'
 import { create } from './create.js'
 import * as poly3 from '../poly3/index.js'
 

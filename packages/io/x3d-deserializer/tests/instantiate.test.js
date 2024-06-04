@@ -95,13 +95,13 @@ test('deserialize X3D 3D triangle sets with comma delimiters to JSCAD geometry',
   const inputPath = path.resolve(samplesPath, 'tests/TriangleSets_CommaMF.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
-  const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
+  const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 4)
-  t.true(geometries.geom3.isA(observed[0]))
-  t.true(geometries.geom3.isA(observed[1]))
-  t.true(geometries.geom3.isA(observed[2]))
-  t.true(geometries.geom3.isA(observed[3]))
+  t.true(geom3.isA(observed[0]))
+  t.true(geom3.isA(observed[1]))
+  t.true(geom3.isA(observed[2]))
+  t.true(geom3.isA(observed[3]))
 })
 
 test('deserialize X3D 3D transforms to JSCAD geometry', (t) => {
@@ -136,15 +136,15 @@ test('deserialize X3D 3D indexed triangle sets with comma delimiters to JSCAD ge
   const inputPath = path.resolve(samplesPath, 'tests/IndexedTriangleSets_CommaMF.x3d')
   const inputFile = fs.readFileSync(inputPath)
 
-  const observed = deserializer.deserialize({ output: 'geometry', addMetaData: false }, inputFile)
+  const observed = deserialize({ output: 'geometry', addMetaData: false }, inputFile)
   t.true(Array.isArray(observed))
   t.is(observed.length, 6)
-  t.true(geometries.geom3.isA(observed[0]))
-  t.true(geometries.geom3.isA(observed[1]))
-  t.true(geometries.geom3.isA(observed[2]))
-  t.true(geometries.geom3.isA(observed[3]))
-  t.true(geometries.geom3.isA(observed[4]))
-  t.true(geometries.geom3.isA(observed[5]))
+  t.true(geom3.isA(observed[0]))
+  t.true(geom3.isA(observed[1]))
+  t.true(geom3.isA(observed[2]))
+  t.true(geom3.isA(observed[3]))
+  t.true(geom3.isA(observed[4]))
+  t.true(geom3.isA(observed[5]))
 })
 
 test('deserialize X3D 3D groups to JSCAD geometry', (t) => {

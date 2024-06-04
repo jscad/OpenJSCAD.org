@@ -92,7 +92,7 @@ const nodeToObjectMap = {
 let objectId = 1
 const getObjectId = () => ('0000' + objectId++).slice(-4)
 
-const createX3DParser = (src) => {
+export const parse = (src) => {
   // create a parser for the XML
   const parser = new saxes.SaxesParser()
 
@@ -331,10 +331,8 @@ const createX3DParser = (src) => {
 
   // start the parser
   parser.write(src).close()
-}
 
-export const parse = (src) => {
-  createX3DParser(src)
+  // return the results
   // console.log(JSON.stringify(x3dObj))
   return { x3dObj, x3dMaterials, x3dTextures }
 }

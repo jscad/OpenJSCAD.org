@@ -4,9 +4,9 @@ import { fromPointsConvex, validate } from './index.js'
 
 test('fromPointsConvex (uniquePoints)', (t) => {
   let out = []
-  for(x=-9;x<=9;++x)
-    for(y=-9;y<=9;++y)
-     for(z=-9;z<=9;++z)
+  for(let x=-9;x<=9;++x)
+    for(let y=-9;y<=9;++y)
+     for(let z=-9;z<=9;++z)
         if (x*x+y*y+z*z <= 96)
           out.push([x,y,z])
 
