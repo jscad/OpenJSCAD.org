@@ -9,7 +9,7 @@ export default {
     {
       file: 'dist/jscad-dxf-serializer.min.js',
       format: 'umd',
-      name: 'jscadDxfSerializer',
+      name: 'jscadDxfSerializer'
     },
     {
       file: 'dist/jscad-dxf-serializer.es.js',
@@ -20,6 +20,6 @@ export default {
   plugins: [
     nodeResolve(),
     banner('<%= pkg.description %>\n@module <%= pkg.name %>\n@version <%= pkg.version %>\n@license <%= pkg.license %>'),
-    terser({ compress: { module: true }, mangle: false, format: { comments: 'some'} })
+    terser({ compress: { module: true }, mangle: false, format: { comments: 'some' } })
   ]
 }

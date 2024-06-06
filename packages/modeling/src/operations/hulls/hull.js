@@ -36,7 +36,6 @@ export const hull = (...geometries) => {
   geometries = coalesce(geometries)
 
   if (geometries.length === 0) return undefined
-  if (geometries.length === 1) geometries[0]
 
   if (!areAllShapesTheSameType(geometries)) {
     throw new Error('only hulls of the same type are supported')

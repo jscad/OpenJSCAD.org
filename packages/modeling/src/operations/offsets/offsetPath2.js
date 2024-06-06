@@ -85,9 +85,9 @@ export const offsetPath2 = (options, geometry) => {
     internal: offsetFromPoints({ delta: -delta, corners, segments, closed }, points)
   }
 
-  const output = geometry.isClosed ?
-    createGeometryFromClosedPath(paths) :
-    createGeometryFromOpenPath(paths, segments, corners, delta)
+  const output = geometry.isClosed
+    ? createGeometryFromClosedPath(paths)
+    : createGeometryFromOpenPath(paths, segments, corners, delta)
   if (geometry.color) output.color = geometry.color
   return output
 }

@@ -1,4 +1,4 @@
-import { area, poly2 } from '@jscad/modeling'
+import { area } from '@jscad/modeling'
 
 export const x3dTypes = {
   X3D: 0,

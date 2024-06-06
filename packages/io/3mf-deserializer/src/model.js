@@ -16,8 +16,8 @@ export const parseModel = (options, source) => {
   // parse the 3MF contents (XML)
   const { objects, materials, colorgroups, items } = parse(source)
   if (objects.length === 0) {
-     throw new Error('3MF parsing failed, no valid 3MF objects retrieved')
-   }
+    throw new Error('3MF parsing failed, no valid 3MF objects retrieved')
+  }
 
   // get a list of objects to include in the results
   const buildItems = []

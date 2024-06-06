@@ -116,7 +116,7 @@ const formatAsJscad = (data, addMetaData, version, filename) => {
   //
   `
   }
-  code += `import * from '@jscad/modeling'\n`
+  code += 'import * from \'@jscad/modeling\'\n'
   code += data.join('\n')
   code += `
 export const main = () => {

@@ -185,8 +185,9 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
     pc = false
   }
   const ensurePath = () => {
-    if (!paths[pathName]) paths[pathName] = 
-    path2.fromPoints({}, [])
+    if (!paths[pathName]) {
+      paths[pathName] = path2.fromPoints({}, [])
+    }
   }
   for (let j = 0; j < obj.commands.length; j++) {
     const co = obj.commands[j]
@@ -328,8 +329,8 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           qy = cy + parseFloat(pts[i++])
           cx = cx + parseFloat(pts[i++])
           cy = cy + parseFloat(pts[i++])
-          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
-          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          const q1 = [p0[0] + (2 / 3) * (qx - p0[0]), p0[1] + (2 / 3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1 / 3) * (cx - p0[0]), q1[1] + (1 / 3) * (cy - p0[1])]
           ensurePath()
           paths[pathName] = path2.appendBezier({
             segments,
@@ -351,8 +352,8 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           qy = parseFloat(pts[i++])
           cx = parseFloat(pts[i++])
           cy = parseFloat(pts[i++])
-          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
-          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          const q1 = [p0[0] + (2 / 3) * (qx - p0[0]), p0[1] + (2 / 3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1 / 3) * (cx - p0[0]), q1[1] + (1 / 3) * (cy - p0[1])]
           ensurePath()
           paths[pathName] = path2.appendBezier({
             segments,
@@ -372,8 +373,8 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           const p0 = [cx, cy] // previous point
           cx = cx + parseFloat(pts[i++])
           cy = cy + parseFloat(pts[i++])
-          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
-          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          const q1 = [p0[0] + (2 / 3) * (qx - p0[0]), p0[1] + (2 / 3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1 / 3) * (cx - p0[0]), q1[1] + (1 / 3) * (cy - p0[1])]
           ensurePath()
           paths[pathName] = path2.appendBezier({
             segments,
@@ -393,8 +394,8 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           const p0 = [cx, cy] // previous point
           cx = parseFloat(pts[i++])
           cy = parseFloat(pts[i++])
-          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
-          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          const q1 = [p0[0] + (2 / 3) * (qx - p0[0]), p0[1] + (2 / 3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1 / 3) * (cx - p0[0]), q1[1] + (1 / 3) * (cy - p0[1])]
           ensurePath()
           paths[pathName] = path2.appendBezier({
             segments,
@@ -419,7 +420,8 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           cy = cy + parseFloat(pts[i++])
           ensurePath()
           paths[pathName] = path2.appendBezier({
-            segments, controlPoints: [
+            segments,
+            controlPoints: [
               svg2cag([x1, y1], svgUnitsPmm),
               svg2cag([bx, by], svgUnitsPmm),
               svg2cag([cx, cy], svgUnitsPmm)

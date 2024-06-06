@@ -28,9 +28,8 @@ export const validate = (object) => {
     // contours must be coplanar
     const contourPlane = poly3.plane(poly3.create(contour))
     if (!plane.equals(slicePlane, contourPlane)) {
-      throw new Error(`slice contours must be coplanar`)
+      throw new Error('slice contours must be coplanar')
     }
-
 
     for (let i = 0; i < contour.length; i++) {
       const vertex = contour[i]

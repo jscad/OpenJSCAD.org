@@ -69,7 +69,7 @@ export const polygon = (options) => {
   })
 
   let geometry = geom2.create(outlines)
-  if (orientation == "clockwise") {
+  if (orientation === 'clockwise') {
     geometry = geom2.reverse(geometry)
   }
   return geometry

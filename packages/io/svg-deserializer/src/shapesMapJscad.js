@@ -258,8 +258,8 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
           qy = cy + parseFloat(pts.shift())
           cx = cx + parseFloat(pts.shift()) // end point
           cy = cy + parseFloat(pts.shift())
-          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
-          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          const q1 = [p0[0] + (2 / 3) * (qx - p0[0]), p0[1] + (2 / 3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1 / 3) * (cx - p0[0]), q1[1] + (1 / 3) * (cy - p0[1])]
           tmpCode += `${indent}${pathName} = path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cag(q1, svgUnitsPmm)}], [${svg2cag(q2, svgUnitsPmm)}], [${svg2cag([cx, cy], svgUnitsPmm)}]]}, ${pathName})\n`
           const rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
@@ -273,8 +273,8 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
           qy = parseFloat(pts.shift())
           cx = parseFloat(pts.shift()) // end point
           cy = parseFloat(pts.shift())
-          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
-          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          const q1 = [p0[0] + (2 / 3) * (qx - p0[0]), p0[1] + (2 / 3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1 / 3) * (cx - p0[0]), q1[1] + (1 / 3) * (cy - p0[1])]
           tmpCode += `${indent}${pathName} = path2.appendBezier({segments: ${segments}, controlPoints: [[${svg2cag(q1, svgUnitsPmm)}], [${svg2cag(q2, svgUnitsPmm)}], [${svg2cag([cx, cy], svgUnitsPmm)}]]}, ${pathName})\n`
           const rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
@@ -286,8 +286,8 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
           const p0 = [cx, cy] // previous point
           cx = cx + parseFloat(pts.shift()) // end point
           cy = cy + parseFloat(pts.shift())
-          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
-          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          const q1 = [p0[0] + (2 / 3) * (qx - p0[0]), p0[1] + (2 / 3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1 / 3) * (cx - p0[0]), q1[1] + (1 / 3) * (cy - p0[1])]
           tmpCode += `${indent}${pathName} = path2.appendBezier({segments: ${segments}, controlPoints: [[[${svg2cag(q1, svgUnitsPmm)}], [${svg2cag(q2, svgUnitsPmm)}], [${svg2cag([cx, cy], svgUnitsPmm)}]]}, ${pathName})\n`
           const rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
@@ -299,8 +299,8 @@ const path = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, params, svgGrou
           const p0 = [cx, cy] // previous point
           cx = parseFloat(pts.shift()) // end point
           cy = parseFloat(pts.shift())
-          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
-          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          const q1 = [p0[0] + (2 / 3) * (qx - p0[0]), p0[1] + (2 / 3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1 / 3) * (cx - p0[0]), q1[1] + (1 / 3) * (cy - p0[1])]
           tmpCode += `${indent}${pathName} = path2.appendBezier({segments: ${segments}, controlPoints: [[[${svg2cag(q1, svgUnitsPmm)}], [${svg2cag(q2, svgUnitsPmm)}], [${svg2cag([cx, cy], svgUnitsPmm)}]]}, ${pathName})\n`
           const rf = reflect(qx, qy, cx, cy)
           qx = rf[0]
