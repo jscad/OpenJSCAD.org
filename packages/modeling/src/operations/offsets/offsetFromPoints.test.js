@@ -200,7 +200,6 @@ test('offset (corners: edge): offset of a path2 produces expected offset path2',
 
 test('offset (corners: round): offset of a path2 produces expected offset path2', (t) => {
   const openline = [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5]]
-  const closeline = [[-5, -5], [5, -5], [5, 5], [3, 5], [3, 0], [-3, 0], [-3, 5], [-5, 5], [-5, -5]]
 
   let pts = offsetFromPoints({ delta: 1, corners: 'round', segments: 16 }, openline)
   let obs = path2.create(pts)

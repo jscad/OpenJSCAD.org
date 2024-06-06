@@ -18,7 +18,7 @@ export const isOnlyTransformScale = (matrix) => (
 )
 
 /**
- * @param {number} num 
+ * @param {number} num
  * @returns {boolean}
  */
 const isZero = (num) => Math.abs(num) < Number.EPSILON

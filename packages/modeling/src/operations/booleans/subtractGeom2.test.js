@@ -82,8 +82,8 @@ test('subtract with undefined/null values', (t) => {
   const square3 = square({ size: 4 })
   const geometries = [square1, undefined, square2, null, square3]
 
-  let obs = subtract(...geometries)
-  let pts = geom2.toPoints(obs)
+  const obs = subtract(...geometries)
+  const pts = geom2.toPoints(obs)
   t.notThrows(() => geom2.validate(obs))
   t.is(pts.length, 8)
 })

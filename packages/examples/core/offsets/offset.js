@@ -69,7 +69,7 @@ const main = () => {
       expandedGeom2Edge,
       expandedGeom2Chamfer,
       expandedGeom2Round,
-      contractedGeom2,
+      contractedGeom2
     ]),
 
     translate([50, 10, 0], [

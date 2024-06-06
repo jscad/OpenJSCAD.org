@@ -2,7 +2,6 @@ import { EPS } from '../../maths/constants.js'
 
 import { measureBoundingBox } from '../../measurements/measureBoundingBox.js'
 
-
 /*
  * Determine if the given geometries overlap by comparing min and max bounds.
  * NOTE: This is used in union for performance gains.

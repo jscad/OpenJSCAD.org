@@ -22,6 +22,6 @@ export default {
     nodeResolve(),
     banner('<%= pkg.description %>\n@module <%= pkg.name %>\n@version <%= pkg.version %>\n@license <%= pkg.license %>'),
     versionInjector({ injectInComments: { fileRegexp: /\.(html)$/ }, logLevel: 'warn' }),
-    terser({ compress: { module: true }, mangle: false, format: { comments: 'some'} })
+    terser({ compress: { module: true }, mangle: false, format: { comments: 'some' } })
   ]
 }

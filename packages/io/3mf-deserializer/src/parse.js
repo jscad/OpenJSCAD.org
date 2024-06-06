@@ -160,11 +160,10 @@ const getProperty = (object, triangle) => {
 }
 
 const create3mfParser = (src, storage) => {
-  let { items, materials, colorgroups, objects } = storage
+  const { items, materials, colorgroups, objects } = storage
 
   let model = null
   let objLast = null // last object found
-  let objList = []
 
   // create a parser for the XML
   const parser = new saxes.SaxesParser()
@@ -272,10 +271,10 @@ const create3mfParser = (src, storage) => {
 }
 
 export const parse = (src) => {
-  let items = [] // build items list
-  let materials = [] // materials list
-  let colorgroups = [] // colorgroups list
-  let objects = [] // objects list
+  const items = [] // build items list
+  const materials = [] // materials list
+  const colorgroups = [] // colorgroups list
+  const objects = [] // objects list
 
   create3mfParser(src, { items, materials, colorgroups, objects })
   return { items, materials, colorgroups, objects }

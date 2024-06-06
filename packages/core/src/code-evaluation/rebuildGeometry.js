@@ -70,7 +70,7 @@ export const rebuildGeometry = (data, callback) => {
       lookupCounts: solidsData.lookupCounts
     })
   } catch (error) {
-    callback({
+    callback(null, {
       type: 'errors',
       name: error.name ? error.name : 'Error',
       message: error.message ? error.message : error.toString(),
@@ -80,6 +80,6 @@ export const rebuildGeometry = (data, callback) => {
       lineNumber: error.lineNumber ? error.lineNumber : '',
       columnNumber: error.columnNumber ? error.columnNumber : '',
       stack: error.stack ? error.stack : ''
-    }, null)
+    })
   }
 }

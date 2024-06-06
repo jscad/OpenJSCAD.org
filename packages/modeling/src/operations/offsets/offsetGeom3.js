@@ -1,5 +1,3 @@
-import * as geom3 from '../../geometries/geom3/index.js'
-
 import { union } from '../booleans/union.js'
 
 import { offsetShell } from './offsetShell.js'

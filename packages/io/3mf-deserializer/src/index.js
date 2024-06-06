@@ -72,8 +72,6 @@ const deserialize = (options, input) => {
   return options.output === 'script' ? translateModels(options, models) : instantiateModels(options, models)
 }
 
-const isBuffer = (obj) => (obj.byteLength !== undefined && typeof obj.slice === 'function')
-
 const mimeType = 'model/3mf'
 
 export {

@@ -62,7 +62,7 @@ test('polygon: providing object.points (array) and object.path (array) creates e
 test('polygon: clockwise points', (t) => {
   const poly = polygon({
     points: [[-10, -0], [-10, -10], [-15, -5]],
-    orientation: "clockwise",
+    orientation: 'clockwise'
   })
   t.is(measureArea(poly), 25)
 })
