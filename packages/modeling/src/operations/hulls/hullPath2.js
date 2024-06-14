@@ -5,7 +5,7 @@ const path2 = require('../../geometries/path2')
 const hullPoints2 = require('./hullPoints2')
 const toUniquePoints = require('./toUniquePoints')
 
-/**
+/*
  * Create a convex hull of the given path2 geometries.
  *
  * NOTE: The given geometries must be valid path2 geometry.

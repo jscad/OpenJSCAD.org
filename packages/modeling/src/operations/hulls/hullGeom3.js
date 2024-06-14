@@ -5,7 +5,7 @@ const geom3 = require('../../geometries/geom3')
 const toUniquePoints = require('./toUniquePoints')
 const hullPoints3 = require('./hullPoints3')
 
-/**
+/*
  * Create a convex hull of the given geom3 geometries.
  *
  * NOTE: The given geometries must be valid geom3 geometries.

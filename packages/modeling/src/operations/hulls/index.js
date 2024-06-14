@@ -8,5 +8,7 @@
  */
 module.exports = {
   hull: require('./hull'),
-  hullChain: require('./hullChain')
+  hullChain: require('./hullChain'),
+  hullPoints2: require('./hullPoints2'),
+  hullPoints3: require('./hullPoints3')
 }
