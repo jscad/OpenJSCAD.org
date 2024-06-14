@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-deserializer@2.2.6...@jscad/x3d-deserializer@2.2.7) (2024-06-02)
+
+
+### Bug Fixes
+
+* **x3d-deserializer:** correcting caching of x3d attributes in createX3DParser, allowing continuous parsing of X3D files ([7f44197](https://github.com/jscad/OpenJSCAD.org/commit/7f4419776e2b0d485a4b2621d9f12927d31a0bbc))
+
+
+
+
+
 ## [2.2.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-deserializer@2.2.5...@jscad/x3d-deserializer@2.2.6) (2024-02-18)
 
 
