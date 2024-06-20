@@ -7,6 +7,7 @@ const quickhull = require('./quickhull')
  *
  * @param {Array} uniquePoints - list of UNIQUE points from which to create a hull
  * @returns {Array} a list of polygons (poly3)
+ * @alias module:modeling/hulls.hullPoints3
  */
 const hullPoints3 = (uniquePoints) => {
   const faces = quickhull(uniquePoints, { skipTriangulation: true })

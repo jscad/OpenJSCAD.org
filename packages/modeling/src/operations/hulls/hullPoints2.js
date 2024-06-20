@@ -6,6 +6,7 @@ const vec2 = require('../../maths/vec2')
  *
  * @param {Array} uniquePoints - list of UNIQUE points from which to create a hull
  * @returns {Array} a list of points that form the hull
+ * @alias module:modeling/hulls.hullPoints2
  */
 const hullPoints2 = (uniquePoints) => {
   // find min point
