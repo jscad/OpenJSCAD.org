@@ -9,6 +9,7 @@
     "coverage": "nyc --all --reporter=html --reporter=text npm test",
     "test": "ava --verbose --timeout 2m './tests/*.test.js'"
   },
+  "types": "types",
   "contributors": [
     {
       "name": "Rene K. Mueller",
