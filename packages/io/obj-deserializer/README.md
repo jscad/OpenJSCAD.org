@@ -54,7 +54,7 @@ npm install @jscad/obj-deserializer
 const objDeserializer = require('@jscad/obj-deserializer')
 
 const rawData = fs.readFileSync('PATH/TO/file.obj')
-const geometries = objDeserializer.deserialize(rawData, 'file.obj', {output: 'geometry'})
+const geometries = objDeserializer.deserialize({output: 'geometry'}, rawData.toString())
 
 ```
 
