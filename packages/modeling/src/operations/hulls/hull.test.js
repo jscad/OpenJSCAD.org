@@ -2,7 +2,9 @@ const test = require('ava')
 
 const { geom2, geom3, path2 } = require('../../geometries')
 
-const { sphere, cuboid, ellipsoid } = require('../../primitives')
+const { measureVolume } = require('../../measurements')
+
+const { sphere, cuboid, ellipsoid, torus } = require('../../primitives')
 
 const { center } = require('../transforms/center')
 
@@ -273,4 +275,10 @@ test('hull (multiple, overlapping, geom3)', (t) => {
 
   t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 92)
+})
+
+test('hull (single, unconvex, geom3)', (t) => {
+  const geometry = torus()
+  const obs = hull(geometry)
+  t.assert(measureVolume(obs) > measureVolume(geometry))
 })

@@ -16,10 +16,10 @@ const hullPoints3 = require('./hullPoints3')
 const hullGeom3 = (...geometries) => {
   geometries = flatten(geometries)
 
-  if (geometries.length === 1) return geometries[0]
-
   // extract the unique vertices from the geometries
   const unique = toUniquePoints(geometries)
+
+  if (unique.length === 0) return geom3.create()
 
   return geom3.create(hullPoints3(unique))
 }
