@@ -1,0 +1,1 @@
+declare module '@jscad/3mf-serializer';
