@@ -171,6 +171,7 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
       // update activepolygons by adding any polygons that start here:
       const startingpolygonindexes = topy2polygonindexes.get(ycoordinate)
       for (const polygonindexKey in startingpolygonindexes) {
+        if(isNaN(polygonindexKey)) continue
         const polygonindex = startingpolygonindexes[polygonindexKey]
         const vertices2d = polygonvertices2d[polygonindex]
         const numvertices = vertices2d.length
@@ -219,6 +220,7 @@ const reTesselateCoplanarPolygons = (sourcepolygons) => {
     // Now activepolygons is up to date
     // Build the output polygons for the next row in newoutpolygonrow:
     for (const activepolygonKey in activepolygons) {
+      if(isNaN(activepolygonKey)) continue
       const activepolygon = activepolygons[activepolygonKey]
 
       let x = interpolateBetween2DPointsForY(activepolygon.topleft, activepolygon.bottomleft, ycoordinate)
