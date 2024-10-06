@@ -1,6 +1,6 @@
 {
   "name": "@jscad/vtree",
-  "version": "2.0.28",
+  "version": "2.0.29",
   "description": "Experimental Object Caching for JSCAD",
   "main": "index.js",
   "scripts": {
@@ -19,12 +19,12 @@
   },
   "dependencies": {
     "@jscad/array-utils": "2.1.4",
-    "@jscad/modeling": "2.12.2",
+    "@jscad/modeling": "2.12.3",
     "object-hash": "2.0.3"
   },
   "devDependencies": {
-    "@jscad/io-utils": "2.0.27",
-    "@jscad/stl-serializer": "2.1.17",
+    "@jscad/io-utils": "2.0.28",
+    "@jscad/stl-serializer": "2.1.18",
     "decache": "4.4.0",
     "just-diff": "2.1.1",
     "serialize-to-js": "3.0.2",
