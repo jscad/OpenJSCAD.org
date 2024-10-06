@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.3](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.12.2...@jscad/modeling@2.12.3) (2024-10-06)
+
+
+### Bug Fixes
+
+* **modeling:** added optional plane to poly3 TS definition  ([2a3337a](https://github.com/jscad/OpenJSCAD.org/commit/2a3337a4b6d06d9072cb7f193eb0ef8de446c8c0))
+* **modeling:** corrected hull of single unconvex solid ([b3901f2](https://github.com/jscad/OpenJSCAD.org/commit/b3901f2b61a64a82a687f6f6062f15a20d35611b))
+* **modeling:** corrected TS definition of scission ([ad3d37d](https://github.com/jscad/OpenJSCAD.org/commit/ad3d37d32c308e99141d9ff0d8965e4d1d166123))
+* **modeling:** expose hullPoints2 and hullPoints3  ([01ceae8](https://github.com/jscad/OpenJSCAD.org/commit/01ceae89570dcaf40f9676aadd4ced515e41c291))
+
+
+
+
+
 ## [2.12.2](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.12.1...@jscad/modeling@2.12.2) (2024-06-02)
 
 
