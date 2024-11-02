@@ -16,11 +16,13 @@ const registerDeserializer = (extension, fs, _require) => {
   const deserializer = deserializers[extension]
   const fileExtension = '.' + extension
   _require.extensions[fileExtension] = (module, filename) => {
-    const contentBuffer = fs.readFileSync(filename);
-    const contentArrayBuffer = contentBuffer.buffer.slice(
-      contentBuffer.byteOffset,
-      contentBuffer.byteOffset + contentBuffer.length);
-    const parsed = deserializer({ filename, output: 'geometry' }, contentArrayBuffer)
+    const fileReadResult = fs.readFileSync(filename);
+    const fileContent = fileReadResult.buffer
+      ? fileReadResult.buffer.slice(
+        fileReadResult.byteOffset,
+        fileReadResult.byteOffset + fileReadResult.length)
+      : fileReadResult;
+    const parsed = deserializer({ filename, output: 'geometry' }, fileContent)
     module.exports = parsed
   }
 }
