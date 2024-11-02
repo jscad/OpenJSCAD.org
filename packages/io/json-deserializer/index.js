@@ -21,6 +21,7 @@ All code released under MIT license
  */
 
 const { flatten, toArray } = require('@jscad/array-utils')
+const { ensureString } = require('../io-utils')
 
 const version = require('./package.json').version
 
@@ -45,6 +46,7 @@ const deserialize = (options, input) => {
   options = Object.assign({}, defaults, options)
 
   // convert the JSON notation into anonymous object(s)
+  input = ensureString(input);
   let objects = JSON.parse(input)
 
   // cleanup the objects
@@ -69,7 +71,7 @@ const translate = (options, objects) => {
     : ''
 
   script +=
-`
+    `
 const { geometries } = require('@jscad/modeling')
 
 const main = () => {

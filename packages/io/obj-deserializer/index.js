@@ -1,4 +1,5 @@
 const { colors, primitives } = require('@jscad/modeling')
+const { ensureString } = require('../io-utils')
 
 const version = require('./package.json').version
 
@@ -31,6 +32,8 @@ const deserialize = (options, input) => {
   }
   options = Object.assign({}, defaults, options)
   const { output } = options
+
+  input = ensureString(input);
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 

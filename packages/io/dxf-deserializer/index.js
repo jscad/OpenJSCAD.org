@@ -8,6 +8,7 @@ All code released under MIT license
 */
 
 const version = require('./package.json').version
+const { ensureString } = require('../io-utils')
 const { BYLAYER, getTLA } = require('./autocad')
 const colorIndex = require('./colorindex2017')
 const dxf = require('./DxfReader')
@@ -275,7 +276,7 @@ const handleXcoord = (reader, group, value) => {
   const obj = reader.objstack.pop()
   if ('type' in obj) {
     if (obj.type === 'lwpolyline') {
-    // special handling to build a list of vertices
+      // special handling to build a list of vertices
       if (obj.pptxs === undefined) {
         obj.pptxs = []
         obj.bulgs = []
@@ -284,7 +285,7 @@ const handleXcoord = (reader, group, value) => {
       obj.bulgs.push(0)
     } else {
       if (obj.type === 'mesh') {
-      // special handling to build a list of vertices
+        // special handling to build a list of vertices
         if (obj.pptxs === undefined) {
           obj.pptxs = []
         }
@@ -307,7 +308,7 @@ const handleYcoord = (reader, group, value) => {
   const obj = reader.objstack.pop()
   if ('type' in obj) {
     if (obj.type === 'lwpolyline' || obj.type === 'mesh') {
-    // special handling to build a list of vertices
+      // special handling to build a list of vertices
       if (obj.pptys === undefined) {
         obj.pptys = []
       }
@@ -329,7 +330,7 @@ const handleZcoord = (reader, group, value) => {
   const obj = reader.objstack.pop()
   if ('type' in obj) {
     if (obj.type === 'mesh') {
-    // special handling to build a list of vertices
+      // special handling to build a list of vertices
       if (obj.pptzs === undefined) {
         obj.pptzs = []
       }
@@ -351,7 +352,7 @@ const handleBulge = (reader, group, value) => {
   const obj = reader.objstack.pop()
   if ('type' in obj) {
     if (obj.type === 'lwpolyline') {
-    // special handling to build a list of vertices
+      // special handling to build a list of vertices
       const bulgs = obj.bulgs
       if (bulgs !== undefined) {
         const pptxs = obj.pptxs
@@ -376,7 +377,7 @@ const handleLen = (reader, group, value) => {
   const obj = reader.objstack.pop()
   if ('type' in obj) {
     if (obj.type === 'mesh') {
-    // mesh has an order of lengths
+      // mesh has an order of lengths
       const state = obj.state
       // console.log('mesh len: '+group+','+value+','+state)
       switch (group) {
@@ -600,6 +601,8 @@ const deserialize = (options, src) => {
     }
   }
   options = Object.assign({}, defaults, options)
+
+  src = ensureString(src);
   return options.output === 'script' ? translate(src, options) : instantiate(src, options)
 }
 
