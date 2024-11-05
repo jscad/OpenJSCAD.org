@@ -14,6 +14,7 @@ const saxes = require('saxes')
 
 const { colors, transforms } = require('@jscad/modeling')
 const { toArray } = require('@jscad/array-utils')
+const { ensureString } = require('@jscad/io-utils')
 
 const version = require('../package.json').version
 
@@ -21,7 +22,7 @@ const { cagLengthX, cagLengthY, svgColorForTarget } = require('./helpers')
 const { svgSvg, svgRect, svgCircle, svgGroup, svgLine, svgPath, svgEllipse, svgPolygon, svgPolyline, svgUse } = require('./svgElementHelpers')
 const shapesMapGeometry = require('./shapesMapGeometry')
 const shapesMapJscad = require('./shapesMapJscad')
-const { ensureString } = require('../../io-utils')
+
 
 /**
  * Deserializer of SVG source data to JSCAD geometries.

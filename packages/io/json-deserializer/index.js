@@ -21,7 +21,7 @@ All code released under MIT license
  */
 
 const { flatten, toArray } = require('@jscad/array-utils')
-const { ensureString } = require('../io-utils')
+const { ensureString } = require('@jscad/io-utils')
 
 const version = require('./package.json').version
 

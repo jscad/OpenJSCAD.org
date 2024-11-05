@@ -1,5 +1,5 @@
 const { colors, primitives } = require('@jscad/modeling')
-const { ensureString } = require('../io-utils')
+const { ensureString } = require('@jscad/io-utils')
 
 const version = require('./package.json').version
 

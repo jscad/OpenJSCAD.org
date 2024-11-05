@@ -7,8 +7,10 @@ All code released under MIT license
 
 */
 
+const { ensureString } = require('@jscad/io-utils')
+
 const version = require('./package.json').version
-const { ensureString } = require('../io-utils')
+
 const { BYLAYER, getTLA } = require('./autocad')
 const colorIndex = require('./colorindex2017')
 const dxf = require('./DxfReader')

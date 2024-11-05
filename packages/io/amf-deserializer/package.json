@@ -32,6 +32,7 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/modeling": "2.12.3",
+    "@jscad/io-utils": "2.0.28",
     "saxes": "5.0.1"
   },
   "devDependencies": {

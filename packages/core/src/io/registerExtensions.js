@@ -17,11 +17,15 @@ const registerDeserializer = (extension, fs, _require) => {
   const fileExtension = '.' + extension
   _require.extensions[fileExtension] = (module, filename) => {
     const fileReadResult = fs.readFileSync(filename);
+
+    // https://nodejs.org/api/buffer.html#bufbuffer: Buffer.buffer is not 
+    // guaranteed to correspond exactly to the original Buffer.     
     const fileContent = fileReadResult.buffer
       ? fileReadResult.buffer.slice(
         fileReadResult.byteOffset,
         fileReadResult.byteOffset + fileReadResult.length)
       : fileReadResult;
+
     const parsed = deserializer({ filename, output: 'geometry' }, fileContent)
     module.exports = parsed
   }
