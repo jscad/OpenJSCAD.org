@@ -59,7 +59,8 @@
       "**/old/",
       "**/ui/csg-viewer",
       "**/io/scad-deserializer",
-      "**/io/gcode-deserializer"
+      "**/io/gcode-deserializer",
+      "**/desktop"
     ],
     "env": {
       "browser": true,
