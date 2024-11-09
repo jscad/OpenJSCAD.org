@@ -71,8 +71,8 @@ const polygon = (options) => {
   })
 
   // convert the list of sides into a geometry
-  let geometry =  geom2.create(sides)
-  if (orientation == "clockwise") {
+  let geometry = geom2.create(sides)
+  if (orientation === 'clockwise') {
     geometry = geom2.reverse(geometry)
   }
   return geometry

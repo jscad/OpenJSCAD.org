@@ -106,7 +106,7 @@ OrthoNormalBasis.GetCartesian = function (xaxisid, yaxisid) {
   } else {
     throw new Error('OrthoNormalBasis.GetCartesian: invalid combination of axis identifiers. Should pass two string arguments from [X,Y,Z,-X,-Y,-Z], being two different axes.')
   }
-  return new OrthoNormalBasis(new Plane(new Vector3D(planenormal), 0), new Vector3D(rightvector))
+  // return new OrthoNormalBasis(new Plane(new Vector3D(planenormal), 0), new Vector3D(rightvector))
 }
 
 /*
@@ -137,11 +137,13 @@ OrthoNormalBasis.GetCartesian_Test=function() {
 };
 */
 
+/*
 // The z=0 plane, with the 3D x and y vectors mapped to the 2D x and y vector
 OrthoNormalBasis.Z0Plane = function () {
   const plane = new Plane(new Vector3D([0, 0, 1]), 0)
   return new OrthoNormalBasis(plane, new Vector3D([1, 0, 0]))
 }
+*/
 
 OrthoNormalBasis.prototype = {
 
@@ -175,8 +177,9 @@ OrthoNormalBasis.prototype = {
     const v3 = vec3.add(v1, v1, this.planeorigin)
     const v4 = vec3.add(v2, v2, v3)
     return v4
-  },
+  }
 
+/*
   line3Dto2D: function (line3d) {
     const a = line3d.point
     const b = line3d.direction.plus(a)
@@ -202,6 +205,7 @@ OrthoNormalBasis.prototype = {
     const newbasis = new OrthoNormalBasis(newplane, newrighthandvector)
     return newbasis
   }
+*/
 }
 
 module.exports = OrthoNormalBasis
