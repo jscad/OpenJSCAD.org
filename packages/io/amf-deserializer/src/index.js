@@ -50,7 +50,7 @@ const deserialize = (options, input) => {
   }
   options = Object.assign({}, defaults, options)
 
-  input = ensureString(input);
+  input = ensureString(input)
   return options.output === 'script' ? translate(options, input) : instantiate(options, input)
 }
 
