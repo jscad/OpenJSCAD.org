@@ -58,7 +58,7 @@ const main = (params) => {
   let ageom2 = primitives.ellipse()
   let ageom3 = primitives.ellipsoid()
 
-  ${multipart ? `return [ageom3, ageom3, ageom3]` : `return [apath2, ageom2, ageom3]`}
+  ${multipart ? 'return [ageom3, ageom3, ageom3]' : 'return [apath2, ageom2, ageom3]'}
 }
 
 module.exports = { main, getParameterDefinitions }
@@ -215,7 +215,6 @@ test('cli (single input file, invalid jscad)', (t) => {
   })
 })
 
-
 test('cli (single input file, multiple output files)', (t) => {
   const testID = 7
 
@@ -239,7 +238,7 @@ test('cli (single input file, multiple output files)', (t) => {
   const cliPath = t.context.cliPath
 
   const cmd = `node ${cliPath} ${inputPath} -gp`
-  execSync(cmd, { stdio: [0,1,2] })
+  execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(outputPath1))
   t.true(fs.existsSync(outputPath2))
   t.true(fs.existsSync(outputPath3))
@@ -257,13 +256,13 @@ test('cli (single multipart input file, zipped output file)', async (t) => {
   const outputPath = path.resolve(__dirname, outputName)
 
   t.false(fs.existsSync(outputPath))
-  
+
   t.context.outputPath = outputPath
 
   const cliPath = t.context.cliPath
 
   const cmd = `node ${cliPath} ${inputPath} -gp -z`
-  execSync(cmd, { stdio: [0,1,2] })
+  execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(outputPath))
 
   // check contents of zip file
@@ -281,18 +280,18 @@ test('cli (single input file, zipped output file)', async (t) => {
   t.true(fs.existsSync(inputPath))
 
   t.context.inputPath = inputPath
-  
+
   const outputName = `./test${testID}.zip`
   const outputPath = path.resolve(__dirname, outputName)
 
   t.false(fs.existsSync(outputPath))
-  
+
   t.context.outputPath = outputPath
 
   const cliPath = t.context.cliPath
 
   const cmd = `node ${cliPath} ${inputPath} -z`
-  execSync(cmd, { stdio: [0,1,2] })
+  execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(outputPath))
 
   // check contents of zip file

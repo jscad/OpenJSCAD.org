@@ -76,13 +76,13 @@ generateOutputData(src, params, { outputFile, outputFormat, inputFile, inputForm
             if (err) {
               console.error(err)
             } else {
-              logFileOutput(zipFilename)              
+              logFileOutput(zipFilename)
             }
           })
         })
       } else {
         for (let i = 0; i < outputData.length; i++) {
-          const filename = outputFile.replace(/\.(\w+)$/, `-part-${i + 1}-of-${outputData.length}.$1`)        
+          const filename = outputFile.replace(/\.(\w+)$/, `-part-${i + 1}-of-${outputData.length}.$1`)
           logFileOutput(filename)
           writeOutput(filename, outputData[i])
         }
@@ -97,7 +97,7 @@ generateOutputData(src, params, { outputFile, outputFormat, inputFile, inputForm
             if (err) {
               console.error(err)
             } else {
-              logFileOutput(zipFilename)              
+              logFileOutput(zipFilename)
             }
           })
         })
