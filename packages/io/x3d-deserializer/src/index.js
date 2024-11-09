@@ -20,11 +20,13 @@ All code released under MIT license
  * @example
  * const { deserializer, extension } = require('@jscad/x3d-deserializer')
  */
+const { ensureString } = require('@jscad/io-utils')
 
 const version = require('../package.json').version
 
 const translate = require('./translate')
 const instantiate = require('./instantiate')
+
 
 /**
  * Deserialize the given X3D source (XML Encoding) into either a script or an array of geometry
@@ -48,7 +50,7 @@ const deserialize = (options, input) => {
     addMetaData: true
   }
   options = Object.assign({}, defaults, options)
-
+  input = ensureString(input);
   return options.output === 'script' ? translate(options, input) : instantiate(options, input)
 }
 

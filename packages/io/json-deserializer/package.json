@@ -28,7 +28,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/array-utils": "2.1.4"
+    "@jscad/array-utils": "2.1.4",
+    "@jscad/io-utils": "2.0.28"
   },
   "devDependencies": {
     "@jscad/modeling": "2.12.3",

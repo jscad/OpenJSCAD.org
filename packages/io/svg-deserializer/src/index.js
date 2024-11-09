@@ -14,6 +14,7 @@ const saxes = require('saxes')
 
 const { colors, transforms } = require('@jscad/modeling')
 const { toArray } = require('@jscad/array-utils')
+const { ensureString } = require('@jscad/io-utils')
 
 const version = require('../package.json').version
 
@@ -21,6 +22,7 @@ const { cagLengthX, cagLengthY, svgColorForTarget } = require('./helpers')
 const { svgSvg, svgRect, svgCircle, svgGroup, svgLine, svgPath, svgEllipse, svgPolygon, svgPolyline, svgUse } = require('./svgElementHelpers')
 const shapesMapGeometry = require('./shapesMapGeometry')
 const shapesMapJscad = require('./shapesMapJscad')
+
 
 /**
  * Deserializer of SVG source data to JSCAD geometries.
@@ -58,6 +60,7 @@ const deserialize = (options, input) => {
     version
   }
   options = Object.assign({}, defaults, options)
+  input = ensureString(input);
   return options.output === 'script' ? translate(input, options) : instantiate(input, options)
 }
 
@@ -395,7 +398,7 @@ const createSvgParser = (src, pxPmm) => {
           if (svgGroups.length > 0) {
             const group = svgGroups.pop()
             if ('objects' in group) {
-            // TBD apply presentation attributes from the group
+              // TBD apply presentation attributes from the group
               group.objects.push(obj)
             }
             svgGroups.push(group)
@@ -422,7 +425,7 @@ const createSvgParser = (src, pxPmm) => {
       DEFS: () => { svgInDefs = false },
       USE: popGroup,
       G: popGroup,
-      undefined: () => {}
+      undefined: () => { }
     }
     const elementName = node.name.toUpperCase()
     const obj = objMap[elementName] ? objMap[elementName]() : undefined

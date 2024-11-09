@@ -22,6 +22,8 @@ All code released under MIT license
  * const { deserializer, extension } = require('@jscad/amf-serializer')
  */
 
+const { ensureString } = require('@jscad/io-utils')
+
 const version = require('../package.json').version
 const translate = require('./translate')
 const instantiate = require('./deserialize')
@@ -48,6 +50,7 @@ const deserialize = (options, input) => {
   }
   options = Object.assign({}, defaults, options)
 
+  input = ensureString(input);
   return options.output === 'script' ? translate(options, input) : instantiate(options, input)
 }
 
