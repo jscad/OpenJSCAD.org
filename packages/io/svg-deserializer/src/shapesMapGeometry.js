@@ -330,8 +330,8 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           qy = cy + parseFloat(pts[i++])
           cx = cx + parseFloat(pts[i++])
           cy = cy + parseFloat(pts[i++])
-          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
-          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          const q1 = [p0[0] + (2 / 3) * (qx - p0[0]), p0[1] + (2 / 3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1 / 3) * (cx - p0[0]), q1[1] + (1 / 3) * (cy - p0[1])]
           ensurePath()
           paths[pathName] = geometries.path2.appendBezier({
             segments,
@@ -353,8 +353,8 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           qy = parseFloat(pts[i++])
           cx = parseFloat(pts[i++])
           cy = parseFloat(pts[i++])
-          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
-          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          const q1 = [p0[0] + (2 / 3) * (qx - p0[0]), p0[1] + (2 / 3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1 / 3) * (cx - p0[0]), q1[1] + (1 / 3) * (cy - p0[1])]
           ensurePath()
           paths[pathName] = geometries.path2.appendBezier({
             segments,
@@ -374,8 +374,8 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           const p0 = [cx, cy] // previous point
           cx = cx + parseFloat(pts[i++])
           cy = cy + parseFloat(pts[i++])
-          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
-          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          const q1 = [p0[0] + (2 / 3) * (qx - p0[0]), p0[1] + (2 / 3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1 / 3) * (cx - p0[0]), q1[1] + (1 / 3) * (cy - p0[1])]
           ensurePath()
           paths[pathName] = geometries.path2.appendBezier({
             segments,
@@ -395,8 +395,8 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           const p0 = [cx, cy] // previous point
           cx = parseFloat(pts[i++])
           cy = parseFloat(pts[i++])
-          const q1 = [p0[0] + (2/3) * (qx - p0[0]), p0[1] + (2/3) * (qy - p0[1])]
-          const q2 = [q1[0] + (1/3) * (cx - p0[0]), q1[1] + (1/3) * (cy - p0[1])]
+          const q1 = [p0[0] + (2 / 3) * (qx - p0[0]), p0[1] + (2 / 3) * (qy - p0[1])]
+          const q2 = [q1[0] + (1 / 3) * (cx - p0[0]), q1[1] + (1 / 3) * (cy - p0[1])]
           ensurePath()
           paths[pathName] = geometries.path2.appendBezier({
             segments,
@@ -420,13 +420,13 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           cx = cx + parseFloat(pts[i++])
           cy = cy + parseFloat(pts[i++])
           ensurePath()
-          paths[pathName] = geometries.path2.appendBezier({
-            segments, controlPoints: [
-              svg2cag([x1, y1], svgUnitsPmm),
-              svg2cag([bx, by], svgUnitsPmm),
-              svg2cag([cx, cy], svgUnitsPmm)
-            ]
-          }, paths[pathName])
+          paths[pathName] = geometries.path2.appendBezier(
+            {
+              segments,
+              controlPoints: [svg2cag([x1, y1], svgUnitsPmm), svg2cag([bx, by], svgUnitsPmm), svg2cag([cx, cy], svgUnitsPmm)]
+            },
+            paths[pathName]
+          )
           const rf = reflect(bx, by, cx, cy)
           bx = rf[0]
           by = rf[1]
@@ -509,7 +509,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
     if (pc !== true && paths[pathName] && paths[pathName].isClosed) {
       let coNext = obj.commands[j + 1]
       // allow self close in the last command #1135 (coNext is null or undefined)
-      // if do have a next command use pathSelfClosed to decide how to react to closing in the middle of a path 
+      // if do have a next command use pathSelfClosed to decide how to react to closing in the middle of a path
       if (coNext && !isCloseCmd(coNext.c)) {
         if (pathSelfClosed === 'trim') {
           while (coNext && !isCloseCmd(coNext.c)) {
@@ -518,7 +518,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           }
         } else if (pathSelfClosed === 'split') {
           newPath()
-        }else{ 
+        } else {
           throw new Error(`Malformed svg path at ${obj.position[0]}:${co.pos}. Path closed itself with command #${j} ${co.c}${pts.join(' ')}`)
         }
       }
