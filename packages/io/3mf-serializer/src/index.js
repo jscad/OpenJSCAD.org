@@ -30,7 +30,6 @@ Notes:
  * const { serializer, mimeType } = require('@jscad/3mf-serializer')
  */
 
-
 const zipSync = require('fflate').zipSync
 const strToU8 = require('fflate').strToU8
 
@@ -38,7 +37,6 @@ const stringify = require('onml/lib/stringify')
 
 const { colors, geometries, modifiers } = require('@jscad/modeling')
 const { flatten, toArray } = require('@jscad/array-utils')
-
 
 const mimeType = 'model/3mf'
 const fileExtension = '3mf'
@@ -61,7 +59,7 @@ const serialize = (options, ...objects) => {
   const defaults = {
     unit: 'millimeter', // micron, millimeter, centimeter, inch, foot, meter
     metadata: true,
-    defaultcolor: [255/255, 160/255, 0, 1], // JSCAD Orange
+    defaultcolor: [255 / 255, 160 / 255, 0, 1], // JSCAD Orange
     compress: true
   }
   options = Object.assign({}, defaults, options)
@@ -69,7 +67,7 @@ const serialize = (options, ...objects) => {
   objects = flatten(objects)
 
   // convert only 3D geometries
-  let objects3d = objects.filter((object) => geometries.geom3.isA(object))
+  const objects3d = objects.filter((object) => geometries.geom3.isA(object))
 
   if (objects3d.length === 0) throw new Error('only 3D geometries can be serialized to 3MF')
   if (objects.length !== objects3d.length) console.warn('some objects could not be serialized to 3MF')
