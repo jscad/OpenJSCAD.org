@@ -82,46 +82,45 @@ const main = () => {
 module.exports = { main }
 `
 
-  const fileName = `./test${id}-import.jscad`;
-  const filePath = path.resolve(__dirname, fileName);
-  fs.writeFileSync(filePath, jscadScript);
-  return filePath;
+  const fileName = `./test${id}-import.jscad`
+  const filePath = path.resolve(__dirname, fileName)
+  fs.writeFileSync(filePath, jscadScript)
+  return filePath
 }
 
 const testBackImport = (t, testID, extension) => {
-  const cliPath = t.context.cliPath;
+  const cliPath = t.context.cliPath
 
-  const file4Path = createImportJscad(testID, extension);
-  t.context.file4Path = file4Path;
-  t.true(fs.existsSync(file4Path));
+  const file4Path = createImportJscad(testID, extension)
+  t.context.file4Path = file4Path
+  t.true(fs.existsSync(file4Path))
 
-  const file5Name = `./test${testID}-import.stl`;
-  const file5Path = path.resolve(__dirname, file5Name);
-  t.context.file5Path = file5Path;
-  t.false(fs.existsSync(file5Path));
+  const file5Name = `./test${testID}-import.stl`
+  const file5Path = path.resolve(__dirname, file5Name)
+  t.context.file5Path = file5Path
+  t.false(fs.existsSync(file5Path))
 
-  cmd = `node ${cliPath} ${file4Path}`
+  const cmd = `node ${cliPath} ${file4Path}`
   execSync(cmd, { stdio: [0, 1, 2] })
-  t.true(fs.existsSync(file5Path));
+  t.true(fs.existsSync(file5Path))
 }
 
 const runOnFixture = (t, fixtureName) => {
   const inputFile = path.resolve(
     __dirname,
-    path.join('test_fixtures', fixtureName, 'index.js'));
+    path.join('test_fixtures', fixtureName, 'index.js'))
 
-  const outputFile = inputFile.replace('.js', '.stl');
-  t.context.file1Path = outputFile;
+  const outputFile = inputFile.replace('.js', '.stl')
+  t.context.file1Path = outputFile
 
-  t.false(fs.existsSync(outputFile));
+  t.false(fs.existsSync(outputFile))
 
   const cmd = `node ${t.context.cliPath} ${inputFile}`
-  execSync(cmd, { stdio: [0, 1, 2] });
+  execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(outputFile))
 
-  return outputFile;
+  return outputFile
 }
-
 
 test('cli (conversions STL)', (t) => {
   const testID = 11
@@ -142,20 +141,20 @@ test('cli (conversions STL)', (t) => {
 
   let cmd = `node ${cliPath} ${file1Path}`
   execSync(cmd, { stdio: [0, 1, 2] })
-  t.true(fs.existsSync(file2Path));
+  t.true(fs.existsSync(file2Path))
 
   // convert from STL to JSCAD script
   const file3Name = `./test${testID}.js`
   const file3Path = path.resolve(__dirname, file3Name)
-  t.false(fs.existsSync(file3Path));
+  t.false(fs.existsSync(file3Path))
 
   t.context.file3Path = file3Path
 
   cmd = `node ${cliPath} ${file2Path} -o ${file3Path} -v -add-metadata false`
   execSync(cmd, { stdio: [0, 1, 2] })
-  t.true(fs.existsSync(file3Path));
+  t.true(fs.existsSync(file3Path))
 
-  testBackImport(t, testID, 'stl');
+  testBackImport(t, testID, 'stl')
 })
 
 test('cli (conversions DXF)', (t) => {
@@ -190,7 +189,7 @@ test('cli (conversions DXF)', (t) => {
   execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(file3Path))
 
-  testBackImport(t, testID, 'dxf');
+  testBackImport(t, testID, 'dxf')
 })
 
 test('cli (conversions AMF)', (t) => {
@@ -225,7 +224,7 @@ test('cli (conversions AMF)', (t) => {
   execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(file3Path))
 
-  testBackImport(t, testID, 'amf');
+  testBackImport(t, testID, 'amf')
 })
 
 test('cli (conversions JSON)', (t) => {
@@ -260,7 +259,7 @@ test('cli (conversions JSON)', (t) => {
   execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(file3Path))
 
-  testBackImport(t, testID, 'json');
+  testBackImport(t, testID, 'json')
 })
 
 test('cli (conversions SVG)', (t) => {
@@ -328,11 +327,11 @@ test('cli (conversions X3D)', (t) => {
   execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(file3Path))
 
-  testBackImport(t, testID, 'x3d');
+  testBackImport(t, testID, 'x3d')
 })
 
 test('cli (import STL)', (t) => {
-  const testID = 17
+  // const testID = 17
 
   runOnFixture(t, 'stl_import')
 })

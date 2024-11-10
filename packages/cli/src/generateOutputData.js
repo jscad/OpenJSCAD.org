@@ -64,7 +64,7 @@ const generateOutputData = (source, params, options) => {
     .then((solids) => {
       const serializerOptions = Object.assign({ format: outputFormat }, params)
       if (generateParts) {
-        let blobs = []
+        const blobs = []
         for (let i = 0; i < solids.length; i++) {
           blobs.push(solidsAsBlob(solids[i], serializerOptions))
         }

@@ -33,7 +33,7 @@ const deserialize = (options, input) => {
   options = Object.assign({}, defaults, options)
   const { output } = options
 
-  input = ensureString(input);
+  input = ensureString(input)
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 

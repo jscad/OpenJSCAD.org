@@ -23,7 +23,6 @@ const { svgSvg, svgRect, svgCircle, svgGroup, svgLine, svgPath, svgEllipse, svgP
 const shapesMapGeometry = require('./shapesMapGeometry')
 const shapesMapJscad = require('./shapesMapJscad')
 
-
 /**
  * Deserializer of SVG source data to JSCAD geometries.
  * @see {@link https://github.com/jscad/OpenJSCAD.org/blob/master/packages/io/svg-deserializer/README.md|README} for supported conversion of SVG elements.
@@ -60,7 +59,7 @@ const deserialize = (options, input) => {
     version
   }
   options = Object.assign({}, defaults, options)
-  input = ensureString(input);
+  input = ensureString(input)
   return options.output === 'script' ? translate(input, options) : instantiate(input, options)
 }
 

@@ -27,7 +27,6 @@ const version = require('../package.json').version
 const translate = require('./translate')
 const instantiate = require('./instantiate')
 
-
 /**
  * Deserialize the given X3D source (XML Encoding) into either a script or an array of geometry
  * @see {@link https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html|X3D File Format}
@@ -50,7 +49,7 @@ const deserialize = (options, input) => {
     addMetaData: true
   }
   options = Object.assign({}, defaults, options)
-  input = ensureString(input);
+  input = ensureString(input)
   return options.output === 'script' ? translate(options, input) : instantiate(options, input)
 }
 
