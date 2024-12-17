@@ -43,7 +43,7 @@ const torus = (options) => {
   if (!isGTE(startAngle, 0)) throw new Error('startAngle must be positive')
   if (!isGT(outerRotation, 0)) throw new Error('outerRotation must be greater than zero')
 
-  if (innerRadius >= outerRadius) throw new Error('inner circle is two large to rotate about the outer circle')
+  if (innerRadius >= outerRadius) throw new Error('inner circle is too large to rotate about the outer circle')
 
   let innerCircle = circle({ radius: innerRadius, segments: innerSegments })
 
