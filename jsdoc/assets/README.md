@@ -16,10 +16,10 @@ Check out the Tutorials section for tips on getting started, and best practises.
 
 There are different 'flavors' of JSCAD that you can use based on your needs
 - For browser-based modelling (no install) simply go to [https://openjscad.xyz/](https://openjscad.xyz/)
+- For the command line interface, install as part of a project using NPM. See [JSCAD Command Line Interface](https://www.npmjs.com/package/@jscad/cli) at NPM
 - For other usage options, the first step is to visit [JSCAD on GitHub](https://github.com/jscad/OpenJSCAD.org/)
-  * Command line interface : can be found in ./packages/cli
-  * Desktop app : pre-pre-alpha work in progress can be found  at ./packages/desktop
-  * For custom mix and match of packages, all the packages are available [on NPM](https://www.npmjs.com/search?q=%40jscad) under the '@jscad' name
+  * Review the available [list of packages](https://github.com/jscad/OpenJSCAD.org/tree/master/packages) at GitHub
+  * Packages are also available [on NPM](https://www.npmjs.com/search?q=%40jscad) under the '@jscad' name
 
 ## Documentation
 
@@ -29,8 +29,13 @@ There are different 'flavors' of JSCAD that you can use based on your needs
 
 ## Community
 
+Discuss designs or issues
 * [JSCAD User Group](https://openjscad.xyz/forum.html)
+
+Or chat with other users
 * [Discord Community](https://openjscad.xyz/discord.html)
+
+HUGE THANKS and SHOUTOUT to [nodeBB](https://nodebb.org/) for hosting our (awesome) forum for free ! Thanks a lot !
 
 ## Contributing
 
@@ -47,8 +52,22 @@ We welcome and encourage anyone to pitch in but please take a moment to read the
 
 * If you have a change or new feature in mind, please start a conversation with the [Core Developers](https://openjscad.xyz/forum.html) and start contributing changes.
 
-A BIG THANKS to all the people who have already contributed to the JSCAD project!
+A BIG THANKS to all the people who have already contributed changes to the JSCAD project!
 <a href="https://github.com/jscad/OpenJSCAD.org/graphs/contributors"><img src="https://opencollective.com/openjscad/contributors.svg?width=890" alt="Open Collective"></a>
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/openjscad#backer)]
+
+<a href="https://opencollective.com/openjscad#backers" target="_blank"><img src="https://opencollective.com/openjscad/backers.svg?width=890"></a>
+
+## Sponsors
+
+This project has some awesome sponsors! [[Become a sponsor](https://opencollective.com/openjscad#sponsor)]
+Your logo will show up here with a link to your website.
+
+<a href="https://opencollective.com/openjscad#backers" target="_blank"><object type="image/svg+xml" data="https://opencollective.com/openjscad/tiers/sponsors.svg?avatarHeight=36&width=600"></object></a>
+
 
 ## License
 
