@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file.
 
+## CHANGE LOGS ARE NOW FOUND IN EACH PACKAGE
+
 ## 0.6.0 (2017-05-xx)
 total rework of application and library structure:
 - modular, smaller codebase (node.js modules) instead of monolithic files
