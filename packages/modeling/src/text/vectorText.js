@@ -35,11 +35,8 @@ const translateLine = (options, line) => {
  *
  * @example
  * let textSegments = vectorText()
- * or
  * let textSegments = vectorText('OpenJSCAD')
- * or
  * let textSegments = vectorText({ yOffset: -50 }, 'OpenJSCAD')
- * or
  * let textSegments = vectorText({ yOffset: -80, input: 'OpenJSCAD' })
  */
 const vectorText = (options, text) => {

@@ -1,8 +1,8 @@
 /**
- * Utility functions of various sorts.
+ * Utility functions of various sorts, including conversions from different angular measures.
  * @module modeling/utils
  * @example
- * const { flatten, insertSorted } = require('@jscad/modeling').utils
+ * const { areAllShapesTheSameType, degToRad, radiusToSegments, radToDeg } = require('@jscad/modeling').utils
  */
 module.exports = {
   areAllShapesTheSameType: require('./areAllShapesTheSameType'),
