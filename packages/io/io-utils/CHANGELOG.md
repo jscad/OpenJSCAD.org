@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.30](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io-utils@2.0.29...@jscad/io-utils@2.0.30) (2024-12-29)
+
+**Note:** Version bump only for package @jscad/io-utils
+
+
+
+
+
 ## [2.0.29](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io-utils@2.0.28...@jscad/io-utils@2.0.29) (2024-11-10)
 
 **Note:** Version bump only for package @jscad/io-utils

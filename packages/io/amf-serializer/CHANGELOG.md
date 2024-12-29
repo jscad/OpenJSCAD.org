@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.20](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/amf-serializer@2.1.19...@jscad/amf-serializer@2.1.20) (2024-12-29)
+
+**Note:** Version bump only for package @jscad/amf-serializer
+
+
+
+
+
 ## [2.1.19](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/amf-serializer@2.1.18...@jscad/amf-serializer@2.1.19) (2024-11-10)
 
 **Note:** Version bump only for package @jscad/amf-serializer
