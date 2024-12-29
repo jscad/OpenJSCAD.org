@@ -4,8 +4,7 @@
  * @see Most computations are based upon the glMatrix library (glmatrix.net)
  * @module modeling/maths
  * @example
- * const { constants, line2, mat4, vec2, vec3 } = require('@jscad/modeling').maths
-
+ * const { constants, line2, line3, mat4, plane, utils, vec2, vec3, vec4 } = require('@jscad/modeling').maths
  */
 module.exports = {
   constants: require('./constants'),

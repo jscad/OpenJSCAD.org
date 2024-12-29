@@ -4,7 +4,7 @@
  * In all cases, the function returns the results, and never changes the original shapes.
  * @module modeling/hulls
  * @example
- * const { hull, hullChain } = require('@jscad/modeling').hulls
+ * const { hull, hullChain, hullPoints2, hullPoints3 } = require('@jscad/modeling').hulls
  */
 module.exports = {
   hull: require('./hull'),

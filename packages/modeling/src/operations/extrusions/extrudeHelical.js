@@ -19,14 +19,8 @@ const geom2 = require('../../geometries/geom2')
  * @alias module:modeling/extrusions.extrudeHelical
  *
  * @example
- * const myshape = extrudeHelical(
- *  {
- *      angle: Math.PI * 4,
- *      pitch: 10,
- *      segmentsPerRotation: 64
- *  },
- *  circle({size: 3, center: [10, 0]})
- * )
+ * const myshape = circle({size: 3, center: [10, 0]}) // position for extrusion about Z
+ * const mycoil = extrudeHelical({angle: TAU*2, pitch: 10, segmentsPerRotation: 64}, myshape))
  */
 const extrudeHelical = (options, geometry) => {
   const defaults = {

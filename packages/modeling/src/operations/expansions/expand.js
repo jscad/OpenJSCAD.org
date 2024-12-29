@@ -24,7 +24,7 @@ const expandPath2 = require('./expandPath2')
  * @example
  * let newarc = expand({delta: 5, corners: 'edge'}, arc({}))
  * let newsquare = expand({delta: 5, corners: 'chamfer'}, square({size: 30}))
- * let newsphere = expand({delta: 2, corners: 'round'}, cuboid({size: [20, 25, 5]}))
+ * let newcuboid = expand({delta: 2, corners: 'round'}, cuboid({size: [20, 25, 5]}))
  */
 const expand = (options, ...objects) => {
   objects = flatten(objects)

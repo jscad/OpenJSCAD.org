@@ -9,6 +9,8 @@ const scissionGeom3 = require('./scissionGeom3')
 /**
  * Scission (divide) the given geometry into the component pieces.
  *
+ * NOTE: Currently only 3D geometries are supported.
+ *
  * @param {...Object} objects - list of geometries
  * @returns {Array} list of pieces from each geometry
  * @alias module:modeling/booleans.scission

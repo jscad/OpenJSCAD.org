@@ -3,7 +3,6 @@
  * @module modeling/curves
  * @example
  * const { bezier } = require('@jscad/modeling').curves
-
  */
 module.exports = {
   bezier: require('./bezier')

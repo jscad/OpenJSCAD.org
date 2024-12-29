@@ -5,6 +5,7 @@ const { isNumberArray } = require('./commonChecks')
 
 /**
  * Construct a polyhedron in three dimensional space from the given set of 3D points and faces.
+ *
  * The faces can define outward or inward facing polygons (orientation).
  * However, each face must define a counter clockwise rotation of points which follows the right hand rule.
  * @param {Object} options - options for construction
@@ -18,7 +19,7 @@ const { isNumberArray } = require('./commonChecks')
  * @example
  * let mypoints = [ [10, 10, 0], [10, -10, 0], [-10, -10, 0], [-10, 10, 0], [0, 0, 10] ]
  * let myfaces = [ [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4], [1, 0, 3], [2, 1, 3] ]
- * let myshape = polyhedron({points: mypoint, faces: myfaces, orientation: 'inward'})
+ * let myshape = polyhedron({points: mypoints, faces: myfaces, orientation: 'inward'})
  */
 const polyhedron = (options) => {
   const defaults = {
