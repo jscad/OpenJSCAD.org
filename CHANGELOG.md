@@ -1,5 +1,7 @@
 # Change Log
 
+## CHANGE LOGS ARE NOW FOUND IN EACH PACKAGE
+
 All notable changes to this project will be documented in this file.
 
 ## 0.6.0 (2017-05-xx)
