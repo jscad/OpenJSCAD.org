@@ -14,6 +14,7 @@
  */
 
 import { flatten, toArray } from '@jscad/array-utils'
+import { ensureString } from '@jscad/io-utils'
 
 const version = '[VI]{version}[/VI]' // version is injected by rollup
 
@@ -38,6 +39,7 @@ const deserialize = (options, input) => {
   options = Object.assign({}, defaults, options)
 
   // convert the JSON notation into anonymous object(s)
+  input = ensureString(input);
   let objects = JSON.parse(input)
 
   // cleanup the objects

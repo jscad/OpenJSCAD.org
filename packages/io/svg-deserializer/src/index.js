@@ -2,6 +2,7 @@ import saxes from 'saxes'
 
 import { colorize, mirrorX, mirrorY, rotateZ, translate, scale } from '@jscad/modeling'
 import { toArray } from '@jscad/array-utils'
+import { ensureString } from '@jscad/io-utils'
 
 import { pxPmm } from './constants.js'
 import { cagLengthX, cagLengthY, svgColorForTarget } from './helpers.js'
@@ -47,6 +48,8 @@ const deserialize = (options, input) => {
     version
   }
   options = Object.assign({}, defaults, options)
+
+  input = ensureString(input)
   return options.output === 'script' ? translateScript(input, options) : instantiate(input, options)
 }
 

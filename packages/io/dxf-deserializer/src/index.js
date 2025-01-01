@@ -1,3 +1,5 @@
+import { ensureString } from '@jscad/io-utils'
+
 import { BYLAYER, getTLA } from './autocad.js'
 import { colorIndex } from './colorindex2017.js'
 import { DxfReader } from './DxfReader.js'
@@ -593,6 +595,8 @@ const deserialize = (options, src) => {
     }
   }
   options = Object.assign({}, defaults, options)
+
+  src = ensureString(src);
   return options.output === 'script' ? translate(src, options) : instantiate(src, options)
 }
 
