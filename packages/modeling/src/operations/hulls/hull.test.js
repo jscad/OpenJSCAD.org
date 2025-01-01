@@ -4,7 +4,7 @@ import { geom2, geom3, path2 } from '../../geometries/index.js'
 
 import { measureArea, measureVolume } from '../../measurements/index.js'
 
-import { cuboid, ellipsoid, sphere, square } from '../../primitives/index.js'
+import { cuboid, ellipsoid, sphere, square, torus } from '../../primitives/index.js'
 
 import { center } from '../transforms/index.js'
 
@@ -228,9 +228,9 @@ test('hull (single, geom3)', (t) => {
   obs = hull(geometry)
   pts = geom3.toPoints(obs)
 
-  t.notThrows.skip(() => geom3.validate(obs))
-  t.is(measureArea(obs), 44.053756306589825)
-  t.is(measureVolume(obs), 25.751611331979678)
+  t.notThrows(() => geom3.validate(obs))
+  t.is(measureArea(obs), 44.05375630658983)
+  t.is(measureVolume(obs), 25.75161133197968)
   t.is(pts.length, 32)
 })
 
@@ -318,4 +318,10 @@ test('hull (multiple with nested arrays)', (t) => {
   t.notThrows(() => geom2.validate(obs))
   t.is(measureArea(obs), 64)
   t.is(pts.length, 4)
+})
+
+test('hull (single, unconvex, geom3)', (t) => {
+  const geometry = torus()
+  const obs = hull(geometry)
+  t.assert(measureVolume(obs) > measureVolume(geometry))
 })

@@ -5,6 +5,7 @@ import { isNumberArray } from './commonChecks.js'
 
 /**
  * Construct a polyhedron in three dimensional space from the given set of 3D vertices and faces.
+ *
  * The faces can define outward or inward facing polygons (orientation).
  * However, each face must define a counterclockwise rotation of vertices which follows the right hand rule.
  * @param {object} options - options for construction

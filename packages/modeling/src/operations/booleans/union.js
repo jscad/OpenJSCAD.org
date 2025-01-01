@@ -16,7 +16,7 @@ import { unionGeom3 } from './unionGeom3.js'
  * @alias module:modeling/booleans.union
  *
  * @example
- * let myshape = union(cube({size: [5,5,5]}), cube({size: [5,5,5], center: [5,5,5]}))
+ * let myshape = union(cube({size: 5}), cube({size: 5, center: [3,3,3]}))
  *
  * @example
  * +-------+            +-------+

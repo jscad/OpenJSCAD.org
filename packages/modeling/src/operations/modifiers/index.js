@@ -3,7 +3,7 @@
  * In all cases, these functions returns the results, and never changes the original geometry.
  * @module modeling/modifiers
  * @example
- * import { generalize, snap } from '@jscad/modeling'
+ * import { generalize, snap, retessellate } from '@jscad/modeling'
  */
 export { generalize } from './generalize.js'
 export { snap } from './snap.js'

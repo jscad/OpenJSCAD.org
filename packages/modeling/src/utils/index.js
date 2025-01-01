@@ -1,8 +1,8 @@
 /**
- * Utility functions of various sorts.
+ * Utility functions of various sorts, including conversions from different angular measures.
  * @module modeling/utils
  * @example
- * import { degToRad } from '@jscad/modeling'
+ * import { degToRad, flatten, radiusToSegments, radToDeg } from '@jscad/modeling'
  */
 export { degToRad } from './degToRad.js'
 export { flatten } from './flatten.js'

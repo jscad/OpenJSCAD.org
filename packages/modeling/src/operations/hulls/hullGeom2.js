@@ -5,6 +5,9 @@ import { toUniquePoints } from './toUniquePoints.js'
 
 /*
  * Create a convex hull of the given geom2 geometries.
+ *
+ * NOTE: The given geometries must be valid geom2 geometries.
+ *
  * @param {Geom2[]} geometries - a flat list of 2D geometries
  * @returns {Geom2} new geometry
  */
