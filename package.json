@@ -14,8 +14,8 @@
     "graph": "lerna list --graph",
     "list": "lerna ls",
     "preversion": "pnpm run test && pnpm run test:tsd && pnpm run docs",
-    "publish": "lerna publish premajor --include-merged-tags --no-private --no-push --conventional-prerelease --dist-tag alpha --pre-dist-tag alpha",
-    "publish-dryrun": "lerna version premajor --include-merged-tags --no-push --conventional-prerelease"
+    "publish": "lerna publish prepatch --include-merged-tags --no-private --no-push --conventional-prerelease --dist-tag alpha --pre-dist-tag alpha",
+    "publish-dryrun": "lerna version prepatch --include-merged-tags --no-private --no-push --conventional-prerelease"
   },
   "contributors": [
     {
