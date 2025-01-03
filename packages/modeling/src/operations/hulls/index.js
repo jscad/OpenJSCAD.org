@@ -4,7 +4,9 @@
  * In all cases, the function returns the results, and never changes the original shapes.
  * @module modeling/hulls
  * @example
- * import { hull, hullChain } from '@jscad/modeling'
+ * import { hull, hullChain, hullPoints2, hullPoints3 } from '@jscad/modeling'
  */
 export { hull } from './hull.js'
 export { hullChain } from './hullChain.js'
+export { hullPoints2 } from './hullPoints2.js'
+export { hullPoints3 } from './hullPoints3.js'

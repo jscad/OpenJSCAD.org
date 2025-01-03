@@ -17,7 +17,7 @@ import { subtractGeom3 } from './subtractGeom3.js'
  * @alias module:modeling/booleans.subtract
  *
  * @example
- * let myshape = subtract(cuboid({size: [5,5,5]}), cuboid({size: [5,5,5], center: [5,5,5]}))
+ * let myshape = subtract(cuboid({size: 5}), cuboid({size: 5, center: [3,3,3]}))
  *
  * @example
  * +-------+            +-------+

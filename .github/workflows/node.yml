@@ -4,7 +4,6 @@ on:
   push:
   pull_request:
     branches:
-      - master
       - V3
 
 jobs:
@@ -16,7 +15,7 @@ jobs:
     name: Node ${{ matrix.node }} test
     steps:
       - uses: actions/checkout@v2
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: pnpm/action-setup@v4
         with:
           version: 7
       - name: Setup Node ${{ matrix.node }}

@@ -38,6 +38,7 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/array-utils": "workspace:3.0.0-alpha.0",
+    "@jscad/io-utils": "workspace:3.0.0-alpha.0",
     "@jscad/modeling": "workspace:3.0.0-alpha.0",
     "saxes": "6.0.0"
   },

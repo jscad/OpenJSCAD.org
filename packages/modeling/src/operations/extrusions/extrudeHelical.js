@@ -19,14 +19,8 @@ import { extrudeFromSlices } from './extrudeFromSlices.js'
  * @alias module:modeling/extrusions.extrudeHelical
  *
  * @example
- * const myshape = extrudeHelical(
- *  {
- *      angle: Math.PI * 4,
- *      pitch: 10,
- *      segmentsPerRotation: 64
- *  },
- *  circle({size: 3, center: [10, 0]})
- * )
+ * const myshape = circle({size: 3, center: [10, 0]}) // position for extrusion about Z
+ * const mycoil = extrudeHelical({angle: TAU*2, pitch: 10, segmentsPerRotation: 64}, myshape))
  */
 export const extrudeHelical = (options, geometry) => {
   const defaults = {

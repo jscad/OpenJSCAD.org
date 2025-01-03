@@ -4,7 +4,10 @@ import { hullPoints2 } from './hullPoints2.js'
 import { toUniquePoints } from './toUniquePoints.js'
 
 /*
- * Create a convex hull of the given geometries (path2).
+ * Create a convex hull of the given path2 geometries.
+ *
+ * NOTE: The given geometries must be valid path2 geometry.
+ *
  * @param {Path2[]} geometries - a flat list of path2 geometries
  * @returns {Path2} new geometry
  */

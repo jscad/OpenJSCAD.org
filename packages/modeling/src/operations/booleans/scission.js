@@ -5,6 +5,8 @@ import { scissionGeom3 } from './scissionGeom3.js'
 /**
  * Scission (divide) the given geometry into the component pieces.
  *
+ * NOTE: Currently only 3D geometries are supported.
+ *
  * @param {...Object} objects - list of geometries
  * @returns {Array} list of pieces from each geometry
  * @alias module:modeling/booleans.scission

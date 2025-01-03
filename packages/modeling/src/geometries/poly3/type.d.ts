@@ -6,6 +6,6 @@ export interface Poly3 {
   vertices: Array<Vec3>
   color?: Color
 
-  // used internally for caching:
+  // used internally for calculations
   plane?: Plane
 }

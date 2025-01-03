@@ -1,3 +1,4 @@
+import { ensureString } from '@jscad/io-utils'
 import { colorNameToRgb, polyhedron } from '@jscad/modeling'
 
 const version = '[VI]{version}[/VI]' // version is injected by rollup
@@ -34,6 +35,7 @@ const deserialize = (options, input) => {
 
   options && options.statusCallback && options.statusCallback({ progress: 0 })
 
+  input = ensureString(input)
   const { positions, groups } = getGroups(input, options)
 
   const result = output === 'script' ? stringify(positions, groups, options) : objectify(positions, groups, options)
