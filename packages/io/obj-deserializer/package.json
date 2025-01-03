@@ -1,6 +1,6 @@
 {
   "name": "@jscad/obj-deserializer",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.1-alpha.0",
   "description": "OBJ Deserializer for JSCAD",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
@@ -37,8 +37,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/modeling": "workspace:3.0.0-alpha.0",
-    "@jscad/io-utils": "workspace:3.0.0-alpha.0"
+    "@jscad/io-utils": "workspace:3.0.1-alpha.0",
+    "@jscad/modeling": "workspace:3.0.1-alpha.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.1",

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io-utils@2.0.22...@jscad/io-utils@3.0.1-alpha.0) (2025-01-03)
+
+### Bug Fixes
+
+* **io:** fix io after V3 refactoring ([7a12bbd](https://github.com/jscad/OpenJSCAD.org/commit/7a12bbdb7b4b3df792a4c5b3c8b30a6a985a48f0))
+
 # [3.0.0-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/io-utils@2.0.22...@jscad/io-utils@3.0.0-alpha.0) (2023-10-09)
 
 ### Bug Fixes

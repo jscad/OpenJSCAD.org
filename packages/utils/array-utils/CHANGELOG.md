@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/array-utils@2.1.4...@jscad/array-utils@3.0.1-alpha.0) (2025-01-03)
+
+### Bug Fixes
+
+* **array-utils:** corrected typescript definitions, added test:tsd script ([#1316](https://github.com/jscad/OpenJSCAD.org/issues/1316)) ([9582d18](https://github.com/jscad/OpenJSCAD.org/commit/9582d18e76d89793b38fd1c98fe52ba27ac1af21))
+* **modeling:** use modern typescript imports ([0a0d2e8](https://github.com/jscad/OpenJSCAD.org/commit/0a0d2e8e4ac5db50cf9a6f05a33dba9bdd68c98a))
+
 # [3.0.0-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/array-utils@2.1.4...@jscad/array-utils@3.0.0-alpha.0) (2023-10-09)
 
 ### Bug Fixes

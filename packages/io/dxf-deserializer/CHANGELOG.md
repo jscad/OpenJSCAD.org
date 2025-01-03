@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-deserializer@2.3.19...@jscad/dxf-deserializer@3.0.1-alpha.0) (2025-01-03)
+
+### Bug Fixes
+
+* **io:** fix io after V3 refactoring ([7a12bbd](https://github.com/jscad/OpenJSCAD.org/commit/7a12bbdb7b4b3df792a4c5b3c8b30a6a985a48f0))
+
+### Features
+
+* **modeling:** renamed poly3 toVertices and fromVerticesAndPlane ([58621b9](https://github.com/jscad/OpenJSCAD.org/commit/58621b9d23d8e0905eff23faf8e9dddb2c4023fb))
+* **modeling:** reworked exports to expose a flattened API ([8235238](https://github.com/jscad/OpenJSCAD.org/commit/8235238ad63d063f1e501478cae1208deb130a9c))
+* **regl-renderer:** added rollup configuration to create ES6 bundle, adjusted imports and exports ([#1259](https://github.com/jscad/OpenJSCAD.org/issues/1259)) ([47a66bc](https://github.com/jscad/OpenJSCAD.org/commit/47a66bc07a137a748ce8571ea5d043ebaab9418d))
+
 # [3.0.0-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/dxf-deserializer@2.3.19...@jscad/dxf-deserializer@3.0.0-alpha.0) (2023-10-09)
 
 ### Bug Fixes
