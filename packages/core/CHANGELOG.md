@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.6.4...@jscad/core@3.0.1-alpha.0) (2025-01-03)
+
+### Features
+
+* **cli:** reworked logic to use new io package exports and functions ([#1199](https://github.com/jscad/OpenJSCAD.org/issues/1199)) ([71a3d27](https://github.com/jscad/OpenJSCAD.org/commit/71a3d27a4cf416b1a9fea57a1fe40f5cfdaa905c))
+* **modeling:** reworked exports to expose a flattened API ([8235238](https://github.com/jscad/OpenJSCAD.org/commit/8235238ad63d063f1e501478cae1208deb130a9c))
+
 # [3.0.0-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/core@2.6.4...@jscad/core@3.0.0-alpha.0) (2023-10-09)
 
 ### Features

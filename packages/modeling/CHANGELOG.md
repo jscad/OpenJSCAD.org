@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.10.0...@jscad/modeling@3.0.1-alpha.0) (2025-01-03)
+
+### Bug Fixes
+
+* **all:** various fixes to pass tests ([5cb1d64](https://github.com/jscad/OpenJSCAD.org/commit/5cb1d648d3af1a4448d2c9a6a6acc701d38f36d3))
+* **cli:** rework logic for generating blobs, both singular and multiple as parts ([f88669b](https://github.com/jscad/OpenJSCAD.org/commit/f88669b286d9564165f5c33944703fce730dfc1f))
+* **modeling:** added geom3.fromPointsConvex() ([e23a5ab](https://github.com/jscad/OpenJSCAD.org/commit/e23a5ab55bb78d5e94b3562529fd100a5f163cf9))
+* **modeling:** added new TS definitions for mat4, and adjusted doc strings ([9fa56b7](https://github.com/jscad/OpenJSCAD.org/commit/9fa56b7b72fc40d49794ee153fd9d29b2fede785))
+* **modeling:** added orientation option to polygon ([cfa0e91](https://github.com/jscad/OpenJSCAD.org/commit/cfa0e9124c0df70d57502e4be7b29af31e03c2b9))
+* **modeling:** corrected checks of parameters to booleans ([29788a1](https://github.com/jscad/OpenJSCAD.org/commit/29788a14cefd142d6c0544871a606ea742ad0c39))
+* **modeling:** corrected geom2 mirroring transform ([8a1f04b](https://github.com/jscad/OpenJSCAD.org/commit/8a1f04b18bc866781ed08c2f38de3a495ea9581c))
+* **modeling:** corrected parameter names to follow standards ([4c35d41](https://github.com/jscad/OpenJSCAD.org/commit/4c35d41289ff4633a7e1a8b58e87e00fd565ce14))
+* **modeling:** create scission.d.ts and update index.d.ts ([5917d67](https://github.com/jscad/OpenJSCAD.org/commit/5917d6759889e9394a6cf4fd42065b0ff07750b1))
+* **modeling:** created TS definitions for splitPolygonByPlane ([f9a3715](https://github.com/jscad/OpenJSCAD.org/commit/f9a3715fc8b6528c1f1dde1599897cc30e2fe758))
+* **modeling:** fix ts definitions and ts hints in comments ([6855c73](https://github.com/jscad/OpenJSCAD.org/commit/6855c73c7835ef9e255355ff56a7b38fdd26d0f8))
+* **modeling:** small fixes to comments and tests ([d59217e](https://github.com/jscad/OpenJSCAD.org/commit/d59217eb550093d650e9df8d9e178d3b796ccaba))
+* **modeling:** use modern typescript imports ([0a0d2e8](https://github.com/jscad/OpenJSCAD.org/commit/0a0d2e8e4ac5db50cf9a6f05a33dba9bdd68c98a))
+* **typo:** fix typo in rounded error messages ([8870b43](https://github.com/jscad/OpenJSCAD.org/commit/8870b434c7508074dcfacd5a2c616518bc35d3b2))
+
+### Features
+
+* **modeling:** added Martinez library for 2D booleans, refactored 2D booleans ([e035291](https://github.com/jscad/OpenJSCAD.org/commit/e035291fb4577d1a4c9f98f0c7b2de11711caf43))
+* **modeling:** added validate to slice, as well as measurements ([5cfb4d2](https://github.com/jscad/OpenJSCAD.org/commit/5cfb4d21edf1ac5b52ece776e6dd3760d3e28d87))
+* **modeling:** corrected vectorChar and vectorText options to align with the common API ([c3a950f](https://github.com/jscad/OpenJSCAD.org/commit/c3a950f2615d938243fde55d323b94dd0fd9f06c))
+* **modeling:** enhanced poly2 into a complete geometry ([7180c35](https://github.com/jscad/OpenJSCAD.org/commit/7180c35f95b8a36f78117a86e4ae26f5ed6bab12))
+* **modeling:** preserve color for offset and extrude ([48606fc](https://github.com/jscad/OpenJSCAD.org/commit/48606fc32fff26dd8bde6ec03ce10b3c7086ee37))
+* **modeling:** remove unused mat4 functions ([3602faf](https://github.com/jscad/OpenJSCAD.org/commit/3602fafea32506e35f75b74f94ecd9d762116da6))
+* **modeling:** removed extrudeRectangular ([6c0cb4a](https://github.com/jscad/OpenJSCAD.org/commit/6c0cb4aae6f03a38f6f77f82db2d8e5b1166d8d8))
+* **modeling:** rename expansions to offsets, and unify expand into offset ([f2b3e31](https://github.com/jscad/OpenJSCAD.org/commit/f2b3e3162fedbd7c438bb2925abeac73342e62c6))
+* **modeling:** renamed poly3 toVertices and fromVerticesAndPlane ([58621b9](https://github.com/jscad/OpenJSCAD.org/commit/58621b9d23d8e0905eff23faf8e9dddb2c4023fb))
+* **modeling:** rework orthonormal formula ([008a462](https://github.com/jscad/OpenJSCAD.org/commit/008a4623b73ea95112c33cd9b48831055961bb96))
+* **modeling:** reworked exports to expose a flattened API ([8235238](https://github.com/jscad/OpenJSCAD.org/commit/8235238ad63d063f1e501478cae1208deb130a9c))
+* **modeling:** reworked vectorChar and vectorText to return segments as path2 objects ([d388fab](https://github.com/jscad/OpenJSCAD.org/commit/d388fab1c6341265f01db2b24360186de07f5c58))
+* **modeling:** support nested array structures in the API ([b8d8fb8](https://github.com/jscad/OpenJSCAD.org/commit/b8d8fb856f76985f9954eb70ea759dc6c07af07e))
+
 # [3.0.0-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.10.0...@jscad/modeling@3.0.0-alpha.0) (2023-10-09)
 
 ### Bug Fixes

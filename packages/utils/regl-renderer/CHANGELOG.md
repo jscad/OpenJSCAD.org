@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.6.3...@jscad/regl-renderer@3.0.1-alpha.0) (2025-01-03)
+
+### Bug Fixes
+
+* **regl-renderer:** define the entity type and corrected TS definitions ([156929b](https://github.com/jscad/OpenJSCAD.org/commit/156929bbbeae028e91b5b4bc1d1fda682931af06))
+
+### Features
+
+* **regl-renderer:** added rollup configuration to create ES6 bundle, adjusted imports and exports ([#1259](https://github.com/jscad/OpenJSCAD.org/issues/1259)) ([47a66bc](https://github.com/jscad/OpenJSCAD.org/commit/47a66bc07a137a748ce8571ea5d043ebaab9418d))
+
 # [3.0.0-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/regl-renderer@2.6.3...@jscad/regl-renderer@3.0.0-alpha.0) (2023-10-09)
 
 ### Features

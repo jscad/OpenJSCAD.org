@@ -1,6 +1,6 @@
 {
   "name": "@jscad/array-utils",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.1-alpha.0",
   "description": "JSCAD Utility functions for arrays",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",

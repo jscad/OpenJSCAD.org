@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-deserializer@2.2.2...@jscad/x3d-deserializer@3.0.1-alpha.0) (2025-01-03)
+
+### Bug Fixes
+
+* **all:** various fixes to pass tests ([5cb1d64](https://github.com/jscad/OpenJSCAD.org/commit/5cb1d648d3af1a4448d2c9a6a6acc701d38f36d3))
+* **io:** fix io after V3 refactoring ([7a12bbd](https://github.com/jscad/OpenJSCAD.org/commit/7a12bbdb7b4b3df792a4c5b3c8b30a6a985a48f0))
+* **x3d-deserializer:** corrected to accept commas as MF value delimiters ([ffe36d2](https://github.com/jscad/OpenJSCAD.org/commit/ffe36d2e1b39fa67fa7159b751d9d3e30380e466))
+* **x3d-deserializer:** correcting caching of x3d attributes in createX3DParser, allowing continuous parsing of X3D files ([e9cd527](https://github.com/jscad/OpenJSCAD.org/commit/e9cd527b8de27a918504e388434934142eb83a65))
+
+### Features
+
+* **modeling:** renamed poly3 toVertices and fromVerticesAndPlane ([58621b9](https://github.com/jscad/OpenJSCAD.org/commit/58621b9d23d8e0905eff23faf8e9dddb2c4023fb))
+* **modeling:** reworked exports to expose a flattened API ([8235238](https://github.com/jscad/OpenJSCAD.org/commit/8235238ad63d063f1e501478cae1208deb130a9c))
+
 # [3.0.0-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-deserializer@2.2.2...@jscad/x3d-deserializer@3.0.0-alpha.0) (2023-10-09)
 
 ### Bug Fixes
