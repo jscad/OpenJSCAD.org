@@ -42,7 +42,7 @@ const demo = (parameters) => {
   const transpCube = colorize([1, 0, 0, 0.75], cuboid({ size: [100 * parameters.scale, 100, 210 + (200 * parameters.scale)] }))
   const star2D = star({ vertices: 8, innerRadius: 300, outerRadius: 400 })
   const line2D = colorize([1.0, 0, 0], line([[260, 260], [-260, 260], [-260, -260], [260, -260], [260, 260]]))
-  // some colors are intentionally without alpfa channel to test geom2ToGeometries will add alpha channel
+  // some colors are intentionally without alpha channel to test geom2ToGeometries will add alpha channel
   const colorChange = [
     [1, 0, 0, 1],
     [1, 0.5, 0],
