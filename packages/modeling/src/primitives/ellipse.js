@@ -11,6 +11,7 @@ import { isGTE, isNumberArray } from './commonChecks.js'
 /**
  * Construct an axis-aligned ellipse in two dimensional space.
  * @see https://en.wikipedia.org/wiki/Ellipse
+ * @function
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of ellipse
  * @param {Array} [options.radius=[1,1]] - radius of ellipse, along X and Y

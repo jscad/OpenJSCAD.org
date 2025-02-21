@@ -7,6 +7,7 @@ import { isGTE } from './commonChecks.js'
 /**
  * Construct a circle in two dimensional space where all points are at the same distance from the center.
  * @see [ellipse]{@link module:modeling/primitives.ellipse} for more options
+ * @function
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of circle
  * @param {number} [options.radius=1] - radius of circle

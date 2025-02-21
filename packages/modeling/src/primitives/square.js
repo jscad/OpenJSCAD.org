@@ -4,6 +4,7 @@ import { isGTE } from './commonChecks.js'
 /**
  * Construct an axis-aligned square in two dimensional space with four equal sides at right angles.
  * @see [rectangle]{@link module:modeling/primitives.rectangle} for more options
+ * @function
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of square
  * @param {number} [options.size=2] - dimension of square

@@ -7,7 +7,9 @@ import * as path2 from '../geometries/path2/index.js'
 import { isGT, isGTE, isNumberArray } from './commonChecks.js'
 
 /**
+ *
  * Construct an arc in two dimensional space where all points are at the same distance from the center.
+ * @function
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of arc
  * @param {number} [options.radius=1] - radius of arc

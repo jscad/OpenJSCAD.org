@@ -8,6 +8,7 @@ import { isGTE } from './commonChecks.js'
 
 /**
  * Construct a geodesic sphere based on icosahedron symmetry.
+ * @function
  * @param {object} [options] - options for construction
  * @param {number} [options.radius=1] - target radius of sphere
  * @param {number} [options.frequency=6] - subdivision frequency per face, multiples of 6

@@ -4,6 +4,7 @@ import { isGTE } from './commonChecks.js'
 /**
  * Construct a sphere in three dimensional space where all vertices are at the same distance from the center.
  * @see [ellipsoid]{@link module:modeling/primitives.ellipsoid} for more options
+ * @function
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of sphere
  * @param {number} [options.radius=1] - radius of sphere
