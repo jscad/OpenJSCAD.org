@@ -117,6 +117,7 @@ const createTriangle = (A, B, C, a, b, c) => {
  * Construct a triangle in two dimensional space from the given options.
  * The triangle is always constructed CCW from the origin, [0, 0, 0].
  * @see https://www.mathsisfun.com/algebra/trig-solving-triangles.html
+ * @function
  * @param {object} [options] - options for construction
  * @param {string} [options.type='SSS'] - type of triangle to construct; A ~ angle, S ~ side
  * @param {Array} [options.values=[1,1,1]] - angle (radians) of corners or length of sides

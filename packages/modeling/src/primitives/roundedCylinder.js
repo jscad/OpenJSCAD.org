@@ -12,6 +12,7 @@ import { cylinder } from './cylinder.js'
 
 /**
  * Construct a Z axis-aligned solid cylinder in three dimensional space with rounded ends.
+ * @function
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of cylinder
  * @param {number} [options.height=2] - height of cylinder

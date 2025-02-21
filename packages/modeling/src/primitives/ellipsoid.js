@@ -9,6 +9,7 @@ import { isGTE, isNumberArray } from './commonChecks.js'
 
 /**
  * Construct an axis-aligned ellipsoid in three dimensional space.
+ * @function
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of ellipsoid
  * @param {Array} [options.radius=[1,1,1]] - radius of ellipsoid, along X, Y and Z
