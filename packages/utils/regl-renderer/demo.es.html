@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Demo Application</title>
-    <style>
+  <title>Demo Application ES6</title>
+  <style>
       #jscad{
         width: 15cm;
         height: 15cm;
@@ -12,53 +12,15 @@
     </style>
 </head>
 <body>
+  <span>How to use regl-renderer as ES6 Module</span>
   <div id="jscad"></div>
+  <script type="module" id="MODELING" src="model.js"></script>
 
-  <script type="module" id="MODELING">
+
+  <script type="module" id="RENDERING">
 // ********************
-// The design to render.
+// Renderer configuration and initiation.
 // ********************
-import { booleans, colors, primitives } from "./jscad-modeling.es.js"
-
-const { intersect, subtract } = booleans
-const { colorize } = colors
-const { cube, cuboid, line, sphere, star } = primitives
-
-const main = (parameters) => {
-  parameters = {scale: 1}
-  const logo = [
-    colorize([1.0, 0.4, 1.0], subtract(
-      cube({ size: 300 }),
-      sphere({ radius: 200 })
-    )),
-    colorize([1.0, 1.0, 0], intersect(
-      sphere({ radius: 130 }),
-      cube({ size: 210 })
-    ))
-  ]
-
-  const transpCube = colorize([1, 0, 0, 0.25], cuboid({ size: [100 * parameters.scale, 100, 210 + (200 * parameters.scale)] }))
-  const star2D = star({ vertices: 8, innerRadius: 300, outerRadius: 400 })
-  const line2D = colorize([1.0, 0, 0], line([[260, 260], [-260, 260], [-260, -260], [260, -260], [260, 260]]))
-  // some colors are intentionally without alpfa channel to test geom2ToGeometries will add alpha channel
-  const colorChange = [
-    [1, 0, 0, 1],
-    [1, 0.5, 0],
-    [1, 0, 1],
-    [0, 1, 0],
-    [0, 0, 0.7]
-  ]
-  star2D.outlines.forEach((outline, i) => {
-    outline.color = colorChange[i % colorChange.length]
-  })
-
-  return [star2D, line2D, ...logo]
-}
-// HACK... export the results of the design to global space
-window.shapes = main()
-  </script>
-
-  <script type="module">
 import { cameras, commands, controls, entitiesFromSolids, prepareRender } from "./dist/jscad-regl-renderer.es.js"
 
 // HACK... import the results of the design from global space
@@ -230,7 +192,5 @@ containerElement.onpointerup = upHandler
 containerElement.onwheel = wheelHandler
 
   </script>
-
-
 </body>
 </html>
