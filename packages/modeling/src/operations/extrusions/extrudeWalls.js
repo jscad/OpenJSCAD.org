@@ -25,10 +25,11 @@ const repartitionEdges = (newLength, edges) => {
   }
 
   const divisor = vec3.fromValues(multiple, multiple, multiple)
+  const increment = vec3.create()
 
   const newEdges = []
   edges.forEach((edge) => {
-    const increment = vec3.subtract(vec3.create(), edge[1], edge[0])
+    vec3.subtract(increment, edge[1], edge[0])
     vec3.divide(increment, increment, divisor)
 
     // repartition the edge
@@ -48,6 +49,7 @@ const EPSAREA = (EPS * EPS / 2) * Math.sin(Math.PI / 3)
  * Extrude (build) walls between the given slices.
  * Each wall consists of two triangles, which may be invalid if slices are overlapping.
  */
+// FIXME this function should take an eps parameter
 export const extrudeWalls = (slice0, slice1) => {
   let edges0 = slice.toEdges(slice0)
   let edges1 = slice.toEdges(slice1)
