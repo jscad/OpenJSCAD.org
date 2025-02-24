@@ -122,6 +122,7 @@ export class Node {
 
         // unable to split by any of the current nodes
         const stopCondition = len === frontNodes.length && backNodes.length === 0
+
         if (stopCondition) node.front.polygontreenodes = frontNodes
         else stack.push({ node: node.front, polygonTreeNodes: frontNodes })
       }

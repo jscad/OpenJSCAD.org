@@ -7,7 +7,7 @@ import { PolygonTreeNode } from './PolygonTreeNode.js'
 // The actual tree is kept in this.rootnode
 export class Tree {
   constructor (polygons) {
-    this.polygonTree = new PolygonTreeNode()
+    this.polygonTree = new PolygonTreeNode(null, null)
     this.rootnode = new Node(null)
     if (polygons) this.addPolygons(polygons)
   }

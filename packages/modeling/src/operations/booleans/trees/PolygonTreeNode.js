@@ -6,6 +6,9 @@ import * as poly3 from '../../../geometries/poly3/index.js'
 
 import { splitPolygonByPlane } from './splitPolygonByPlane.js'
 
+// cached values to boost performance
+const splitResult = { type: 0, front: null, back: null }
+
 // # class PolygonTreeNode
 // This class manages hierarchical splits of polygons.
 // At the top is a root node which does not hold a polygon, only child PolygonTreeNodes.
@@ -32,9 +35,7 @@ export class PolygonTreeNode {
   // always be a derivate (split) of the parent node.
   addPolygons (polygons) {
     // new polygons can only be added to root node; children can only be split polygons
-    if (!this.isRootNode()) {
-      throw new Error('Assertion failed')
-    }
+    if (!this.isRootNode()) throw new Error('PolygonTreeNode01')
     const _this = this
     polygons.forEach((polygon) => {
       _this.addChild(polygon)
@@ -52,7 +53,7 @@ export class PolygonTreeNode {
       // remove ourselves from the parent's children list:
       const parentschildren = this.parent.children
       const i = parentschildren.indexOf(this)
-      if (i < 0) throw new Error('Assertion failed')
+      if (i < 0) throw new Error('PolyTreeNode02')
       parentschildren.splice(i, 1)
 
       // invalidate the parent's polygon, and of all parents above it:
@@ -70,12 +71,12 @@ export class PolygonTreeNode {
 
   // invert all polygons in the tree. Call on the root node
   invert () {
-    if (!this.isRootNode()) throw new Error('Assertion failed') // can only call this on the root node
+    if (!this.isRootNode()) throw new Error('PolyTreeNode03')
     this.invertSub()
   }
 
   getPolygon () {
-    if (!this.polygon) throw new Error('Assertion failed') // doesn't have a polygon, which means that it has been broken down
+    if (!this.polygon) throw new Error('PolyTreeNode04')
     return this.polygon
   }
 
@@ -88,7 +89,7 @@ export class PolygonTreeNode {
       for (j = 0, l = children.length; j < l; j++) { // ok to cache length
         node = children[j]
         if (node.polygon) {
-          // the polygon hasn't been broken yet. We can ignore the children and return our polygon:
+          // the polygon hasn't been broken yet. We can ignore the children and return our polygon
           result.push(node.polygon)
         } else {
           // our polygon has been split up and broken, so gather all subpolygons from the children
@@ -109,20 +110,21 @@ export class PolygonTreeNode {
       let j
       let l
       let node
-      let nodes
       for (i = 0; i < queue.length; i++) { // queue.length can increase, do not cache
-        nodes = queue[i]
-        for (j = 0, l = nodes.length; j < l; j++) { // ok to cache length
-          node = nodes[j]
-          if (node.children.length > 0) {
+        const children = queue[i]
+        for (j = 0, l = children.length; j < l; j++) { // ok to cache length
+          node = children[j]
+          if (node.children.length) {
+            // more children so add to the queue
             queue.push(node.children)
           } else {
-            // no children. Split the polygon:
+            // no children so split the current node (leaf) by the given plane
             node._splitByPlane(plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes)
           }
         }
       }
     } else {
+      // no children, so split this node (leaf) by the given plane
       this._splitByPlane(plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes)
     }
   }
@@ -133,14 +135,13 @@ export class PolygonTreeNode {
     if (polygon) {
       const bound = poly3.measureBoundingSphere(polygon)
       const sphereRadius = bound[3] + EPS // ensure radius is LARGER then polygon
-      const sphereCenter = bound
-      const d = vec3.dot(splane, sphereCenter) - splane[3]
+      const d = vec3.dot(splane, bound) - splane[3]
       if (d > sphereRadius) {
         frontNodes.push(this)
       } else if (d < -sphereRadius) {
         backNodes.push(this)
       } else {
-        const splitResult = splitPolygonByPlane(splane, polygon)
+        splitPolygonByPlane(splitResult, splane, polygon)
         switch (splitResult.type) {
           case 0:
             // coplanar front:
