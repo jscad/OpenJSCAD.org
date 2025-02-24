@@ -34,7 +34,7 @@ const crossProduct = (a, b) => (a[0] * b[1]) - (a[1] * b[0])
  * intersection. If they overlap, the two end points of the overlapping segment.
  * Otherwise, null.
  */
-export const segmentIntersection = (a1, a2, b1, b2, noEndpointTouch) => {
+export const segmentIntersection = (a1, a2, b1, b2, noEndpointTouch = false) => {
   // The algorithm expects our lines in the form P + sd, where P is a point,
   // s is on the interval [0, 1], and d is a vector.
   // We are passed two points. P can be the first point of each pair. The
@@ -51,11 +51,9 @@ export const segmentIntersection = (a1, a2, b1, b2, noEndpointTouch) => {
   ]
 
   // The rest is pretty much a straight port of the algorithm.
-  const e = [b1[0] - a1[0], b1[1] - a1[1]]
+  const v1 = [b1[0] - a1[0], b1[1] - a1[1]]
   let kross = crossProduct(va, vb)
   let sqrKross = kross * kross
-  const sqrLenA = dotProduct(va, va)
-  // const sqrLenB  = dotProduct(vb, vb)
 
   // Check for line intersection. This works because of the properties of the
   // cross product -- specifically, two vectors are parallel if and only if the
@@ -66,12 +64,12 @@ export const segmentIntersection = (a1, a2, b1, b2, noEndpointTouch) => {
     // If they're not parallel, then (because these are line segments) they
     // still might not actually intersect. This code checks that the
     // intersection point of the lines is actually on both line segments.
-    const s = crossProduct(e, vb) / kross
+    const s = crossProduct(v1, vb) / kross
     if (s < 0 || s > 1) {
       // not on line segment a
       return null
     }
-    const t = crossProduct(e, va) / kross
+    const t = crossProduct(v1, va) / kross
     if (t < 0 || t > 1) {
       // not on line segment b
       return null
@@ -93,8 +91,7 @@ export const segmentIntersection = (a1, a2, b1, b2, noEndpointTouch) => {
   // the (vector) difference between the two initial points. If this is parallel
   // with the line itself, then the two lines are the same line, and there will
   // be overlap.
-  // const sqrLenE = dotProduct(e, e)
-  kross = crossProduct(e, va)
+  kross = crossProduct(v1, va)
   sqrKross = kross * kross
 
   if (sqrKross > 0 /* EPS * sqLenB * sqLenE */) {
@@ -102,7 +99,8 @@ export const segmentIntersection = (a1, a2, b1, b2, noEndpointTouch) => {
     return null
   }
 
-  const sa = dotProduct(va, e) / sqrLenA
+  const sqrLenA = dotProduct(va, va)
+  const sa = dotProduct(va, v1) / sqrLenA
   const sb = sa + dotProduct(va, vb) / sqrLenA
   const smin = Math.min(sa, sb)
   const smax = Math.max(sa, sb)

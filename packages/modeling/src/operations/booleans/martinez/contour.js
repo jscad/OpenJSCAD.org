@@ -3,7 +3,7 @@ export class Contour {
     this.points = []
     this.holeIds = []
     this.holeOf = null
-    this.depth = null
+    this.depth = 0
   }
 
   isExterior () {

@@ -12,45 +12,39 @@ import { Contour } from './contour.js'
  * @return {SweepEvent[]}
  */
 const orderEvents = (sortedEvents) => {
-  let event, i, len, tmp
   const resultEvents = []
-  for (i = 0, len = sortedEvents.length; i < len; i++) {
-    event = sortedEvents[i]
-    if ((event.left && event.inResult) ||
-      (!event.left && event.otherEvent.inResult)) {
-      resultEvents.push(event)
+  sortedEvents.forEach((e) => {
+    if ((e.left && e.inResult) || (!e.left && e.otherEvent.inResult)) {
+      resultEvents.push(e)
     }
-  }
+  })
   // Due to overlapping edges the resultEvents array can be not wholly sorted
   let sorted = false
   while (!sorted) {
     sorted = true
-    for (i = 0, len = resultEvents.length; i < len; i++) {
+    const len = resultEvents.length
+    for (let i = 0; i < len; i++) {
       if ((i + 1) < len &&
         compareEvents(resultEvents[i], resultEvents[i + 1]) === 1) {
-        tmp = resultEvents[i]
+        const tmp = resultEvents[i]
         resultEvents[i] = resultEvents[i + 1]
         resultEvents[i + 1] = tmp
         sorted = false
       }
     }
   }
-
-  for (i = 0, len = resultEvents.length; i < len; i++) {
-    event = resultEvents[i]
-    event.otherPos = i
-  }
+  // and index
+  resultEvents.forEach((e, i) => { e.otherPos = i })
 
   // imagine, the right event is found in the beginning of the queue,
   // when his left counterpart is not marked yet
-  for (i = 0, len = resultEvents.length; i < len; i++) {
-    event = resultEvents[i]
-    if (!event.left) {
-      tmp = event.otherPos
-      event.otherPos = event.otherEvent.otherPos
-      event.otherEvent.otherPos = tmp
+  resultEvents.forEach((e) => {
+    if (!e.left) {
+      const otherPos = e.otherPos
+      e.otherPos = e.otherEvent.otherPos
+      e.otherEvent.otherPos = otherPos
     }
-  }
+  })
 
   return resultEvents
 }
@@ -62,14 +56,15 @@ const orderEvents = (sortedEvents) => {
  * @return {number}
  */
 const nextPos = (pos, resultEvents, processed, origPos) => {
-  let newPos = pos + 1
-  const p = resultEvents[pos].point
-  let p1
   const length = resultEvents.length
 
+  const p0 = resultEvents[pos].point
+
+  let newPos = pos + 1
+  let p1
   if (newPos < length) { p1 = resultEvents[newPos].point }
 
-  while (newPos < length && p1[0] === p[0] && p1[1] === p[1]) {
+  while (newPos < length && p1[0] === p0[0] && p1[1] === p0[1]) {
     if (!processed[newPos]) {
       return newPos
     } else {
@@ -81,7 +76,6 @@ const nextPos = (pos, resultEvents, processed, origPos) => {
   }
 
   newPos = pos - 1
-
   while (processed[newPos] && newPos > origPos) {
     newPos--
   }
@@ -90,7 +84,8 @@ const nextPos = (pos, resultEvents, processed, origPos) => {
 }
 
 const initializeContourFromContext = (event, contours, contourId) => {
-  const contour = new Contour()
+  const contour = new Contour() // default is exterior contour of depth 0
+
   if (event.prevInResult != null) {
     const prevInResult = event.prevInResult
     // Note that it is valid to query the "previous in result" for its output contour id,
@@ -99,6 +94,7 @@ const initializeContourFromContext = (event, contours, contourId) => {
     // result".
     const lowerContourId = prevInResult.outputContourId
     const lowerResultTransition = prevInResult.resultTransition
+
     if (lowerContourId < 0) {
       contour.holeOf = null
       contour.depth = 0
@@ -122,30 +118,24 @@ const initializeContourFromContext = (event, contours, contourId) => {
       }
     } else {
       // We are outside => this contour is an exterior contour of same depth.
-      contour.holeOf = null
       contour.depth = contours[lowerContourId].depth
     }
-  } else {
-    // There is no lower/previous contour => this contour is an exterior contour of depth 0.
-    contour.holeOf = null
-    contour.depth = 0
   }
   return contour
 }
 
 /**
  * @param {Array.<SweepEvent>} sortedEvents
- * @return {Array.<*>} polygons
+ * @return array of Contour
  */
 export const connectEdges = (sortedEvents) => {
   const resultEvents = orderEvents(sortedEvents)
-  const len = resultEvents.length
+  const evlen = resultEvents.length
 
-  // "false"-filled array
-  const processed = {}
+  const processed = []
   const contours = []
 
-  for (let i = 0; i < len; i++) {
+  for (let i = 0; i < evlen; i++) {
     if (processed[i]) {
       continue
     }
@@ -156,7 +146,7 @@ export const connectEdges = (sortedEvents) => {
     // Helper function that combines marking an event as processed with assigning its output contour ID
     const markAsProcessed = (pos) => {
       processed[pos] = true
-      if (pos < resultEvents.length && resultEvents[pos]) {
+      if (pos < evlen) {
         resultEvents[pos].outputContourId = contourId
       }
     }
@@ -164,8 +154,7 @@ export const connectEdges = (sortedEvents) => {
     let pos = i
     const origPos = i
 
-    const initial = resultEvents[i].point
-    contour.points.push(initial)
+    contour.points.push(resultEvents[pos].point)
 
     while (true) {
       markAsProcessed(pos)
@@ -177,7 +166,7 @@ export const connectEdges = (sortedEvents) => {
 
       pos = nextPos(pos, resultEvents, processed, origPos)
 
-      if (pos === origPos || pos >= resultEvents.length || !resultEvents[pos]) {
+      if (pos === origPos || pos >= evlen) {
         break
       }
     }
