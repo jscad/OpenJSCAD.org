@@ -135,6 +135,7 @@ export const boolean = (subjectGeom, clippingGeom, operation) => {
       // Followed by holes if any
       for (let j = 0; j < contour.holeIds.length; j++) {
         const holeId = contour.holeIds[j]
+        // Reverse the order of points for holes
         const holePoints = contours[holeId].points
         const hole = []
         for (let k = holePoints.length - 2; k >= 0; k--) {
@@ -146,7 +147,7 @@ export const boolean = (subjectGeom, clippingGeom, operation) => {
     }
   }
 
-  if (polygons) {
+  if (polygons.length) {
     return fromOutlines(polygons.flat())
   } else {
     return geom2.create()

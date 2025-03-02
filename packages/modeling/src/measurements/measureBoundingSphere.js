@@ -64,17 +64,13 @@ const measureBoundingSphereOfPoints = (points) => {
  * Measure the bounding sphere of the given (path2) geometry.
  * @return {[[x, y, z], radius]} the bounding sphere for the geometry
  */
-const measureBoundingSphereOfPath2 = (points) => {
-  return measureBoundingSphereOfPoints(path2.toPoints(points))
-}
+const measureBoundingSphereOfPath2 = (geometry) => measureBoundingSphereOfPoints(path2.toPoints(geometry))
 
 /*
  * Measure the bounding sphere of the given (geom2) geometry.
  * @return {[[x, y, z], radius]} the bounding sphere for the geometry
  */
-const measureBoundingSphereOfGeom2 = (geometry) => {
-  return measureBoundingSphereOfPoints(geom2.toPoints(geometry))
-}
+const measureBoundingSphereOfGeom2 = (geometry) => measureBoundingSphereOfPoints(geom2.toPoints(geometry))
 
 /*
  * Measure the bounding sphere of the given (geom3) geometry.

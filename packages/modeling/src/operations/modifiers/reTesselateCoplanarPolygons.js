@@ -31,7 +31,7 @@ export const reTesselateCoplanarPolygons = (sourcePolygons) => {
   // Make a list of all encountered y coordinates
   // And build a map of all polygons that have a vertex at a certain y coordinate:
   const yCoordinateBins = new Map()
-  const yCoordinateBinningFactor = 10 / EPS
+  const yCoordinateBinningFactor = 10 / EPS // FIXME
   for (let polygonIndex = 0; polygonIndex < numPolygons; polygonIndex++) {
     const poly3d = sourcePolygons[polygonIndex]
     let vertices2d = []
@@ -68,7 +68,7 @@ export const reTesselateCoplanarPolygons = (sourcePolygons) => {
         }
         let polygonIndexes = yCoordinateToPolygonIndexes.get(y)
         if (!polygonIndexes) {
-          polygonIndexes = {} // PERF
+          polygonIndexes = []
           yCoordinateToPolygonIndexes.set(y, polygonIndexes)
         }
         polygonIndexes[polygonIndex] = true
@@ -242,7 +242,7 @@ export const reTesselateCoplanarPolygons = (sourcePolygons) => {
         const prevOutPolygon = newOutPolygonRow[newOutPolygonRow.length - 1]
         const d1 = vec2.distance(outPolygon.topLeft, prevOutPolygon.topRight)
         const d2 = vec2.distance(outPolygon.bottomLeft, prevOutPolygon.bottomRight)
-        if ((d1 < EPS) && (d2 < EPS)) {
+        if ((d1 < EPS) && (d2 < EPS)) { // FIXME
           // we can join this polygon with the one to the left:
           outPolygon.topLeft = prevOutPolygon.topLeft
           outPolygon.leftLine = prevOutPolygon.leftLine
@@ -263,8 +263,8 @@ export const reTesselateCoplanarPolygons = (sourcePolygons) => {
             // We have a match if the sidelines are equal or if the top coordinates
             // are on the sidelines of the previous polygon
             const prevPolygon = prevOutPolygonRow[ii]
-            if (vec2.distance(prevPolygon.bottomLeft, thisPolygon.topLeft) < EPS) {
-              if (vec2.distance(prevPolygon.bottomRight, thisPolygon.topRight) < EPS) {
+            if (vec2.distance(prevPolygon.bottomLeft, thisPolygon.topLeft) < EPS) { // FIXME
+              if (vec2.distance(prevPolygon.bottomRight, thisPolygon.topRight) < EPS) { // FIXME
                 // Yes, the top of this polygon matches the bottom of the previous:
                 matchedIndexes.add(ii)
                 // Now check if the joined polygon would remain convex:
@@ -300,7 +300,7 @@ export const reTesselateCoplanarPolygons = (sourcePolygons) => {
           // Finish the polygon with the last point(s):
           const prevPolygon = prevOutPolygonRow[ii]
           prevPolygon.outPolygon.rightPoints.push(prevPolygon.bottomRight)
-          if (vec2.distance(prevPolygon.bottomRight, prevPolygon.bottomLeft) > EPS) {
+          if (vec2.distance(prevPolygon.bottomRight, prevPolygon.bottomLeft) > EPS) { // FIXME
             // polygon ends with a horizontal line:
             prevPolygon.outPolygon.leftPoints.push(prevPolygon.bottomLeft)
           }
@@ -324,7 +324,7 @@ export const reTesselateCoplanarPolygons = (sourcePolygons) => {
           rightPoints: []
         }
         thisPolygon.outPolygon.leftPoints.push(thisPolygon.topLeft)
-        if (vec2.distance(thisPolygon.topLeft, thisPolygon.topRight) > EPS) {
+        if (vec2.distance(thisPolygon.topLeft, thisPolygon.topRight) > EPS) { // FIXME
           // we have a horizontal line at the top:
           thisPolygon.outPolygon.rightPoints.push(thisPolygon.topRight)
         }

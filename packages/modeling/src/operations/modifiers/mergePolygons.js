@@ -67,7 +67,6 @@ const calculateAngle = (prevVertex, midVertex, nextVertex, normal) => {
 
 // create a polygon starting from the given edge (if possible)
 const createPolygonAnd = (edge) => {
-  let polygon
   const vertices = []
   while (edge.next) {
     const next = edge.next
@@ -81,8 +80,8 @@ const createPolygonAnd = (edge) => {
 
     edge = next
   }
-  if (vertices.length > 0) polygon = poly3.create(vertices)
-  return polygon
+  if (vertices.length > 0) return poly3.create(vertices)
+  return null
 }
 
 /*

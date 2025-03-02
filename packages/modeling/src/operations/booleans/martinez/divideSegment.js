@@ -2,28 +2,29 @@ import { SweepEvent } from './sweepEvent.js'
 import { compareEvents } from './compareEvents.js'
 
 /**
- * @param {SweepEvent} se
- * @param {Array.<Number>} p
+ * Divide the given segment at the given point, push the parts on the given queue.
+ * @param {SweepEvent} segment
+ * @param {Array.<Number>} point
  * @param {Queue} queue
- * @return {Queue}
+ * @return {Queue} given queue
  */
-export const divideSegment = (se, p, queue) => {
-  const r = new SweepEvent(p, false, se, se.isSubject)
-  const l = new SweepEvent(p, true, se.otherEvent, se.isSubject)
+export const divideSegment = (segment, point, queue) => {
+  const r = new SweepEvent(point, false, segment, segment.isSubject)
+  const l = new SweepEvent(point, true, segment.otherEvent, segment.isSubject)
 
-  r.contourId = l.contourId = se.contourId
+  r.contourId = l.contourId = segment.contourId
 
   // avoid a rounding error. The left event would be processed after the right event
-  if (compareEvents(l, se.otherEvent) > 0) {
-    se.otherEvent.left = true
+  if (compareEvents(l, segment.otherEvent) > 0) {
+    segment.otherEvent.left = true
     l.left = false
   }
 
   // avoid a rounding error. The left event would be processed after the right event
   // if (compareEvents(se, r) > 0) {}
 
-  se.otherEvent.otherEvent = l
-  se.otherEvent = r
+  segment.otherEvent.otherEvent = l
+  segment.otherEvent = r
 
   queue.push(l)
   queue.push(r)

@@ -9,9 +9,9 @@ export class SweepEvent {
    * @param {boolean} left
    * @param {SweepEvent=} otherEvent
    * @param {boolean} isSubject
-   * @param {number} edgeType
+   * @param {number} type OPTIONAL
    */
-  constructor (point, left, otherEvent, isSubject, edgeType) {
+  constructor (point, left, otherEvent, isSubject, type = NORMAL) {
     /**
      * Is left endpoint?
      * @type {Boolean}
@@ -39,7 +39,7 @@ export class SweepEvent {
      * Edge contribution type
      * @type {Number}
      */
-    this.type = edgeType || NORMAL
+    this.type = type
 
     /**
      * In-out transition for the sweepline crossing polygon
@@ -114,19 +114,5 @@ export class SweepEvent {
    */
   get inResult () {
     return this.resultTransition !== 0
-  }
-
-  clone () {
-    const copy = new SweepEvent(
-      this.point, this.left, this.otherEvent, this.isSubject, this.type)
-
-    copy.contourId = this.contourId
-    copy.resultTransition = this.resultTransition
-    copy.prevInResult = this.prevInResult
-    copy.isExteriorRing = this.isExteriorRing
-    copy.inOut = this.inOut
-    copy.otherInOut = this.otherInOut
-
-    return copy
   }
 }

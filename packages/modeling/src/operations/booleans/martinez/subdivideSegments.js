@@ -22,7 +22,7 @@ export const subdivideSegments = (eventQueue, subject, clipping, sbbox, cbbox, o
   let prev, next, begin
 
   while (eventQueue.length !== 0) {
-    let event = eventQueue.pop()
+    const event = eventQueue.pop()
     sortedEvents.push(event)
 
     // optimization by bboxes for intersection and difference goes here
@@ -62,15 +62,15 @@ export const subdivideSegments = (eventQueue, subject, clipping, sbbox, cbbox, o
         }
       }
     } else {
-      event = event.otherEvent
-      next = prev = sweepLine.find(event)
+      next = prev = sweepLine.find(event.otherEvent)
 
       if (prev && next) {
+        // FIXME is this correct? begin is assigned if event.left, not every iterration
         if (prev !== begin) prev = sweepLine.prev(prev)
         else prev = null
 
         next = sweepLine.next(next)
-        sweepLine.remove(event)
+        sweepLine.remove(event.otherEvent)
 
         if (next && prev) {
           possibleIntersection(prev.key, next.key, eventQueue)
