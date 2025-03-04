@@ -63,7 +63,10 @@ The source code of the demo can be found in 'demo-cli.js'
 This module has been tested using several browsers, includig Firefox, Chrome, Safari, etc.
 For an exmple of how to use the module, please see 'demo.es.html'
 
-NOTE: 'demo.es.html' cannot be opened from the local file system. This is due to CORS security limitiations. See the next section.
+NOTE: 
+ 
+* 'demo.es.html' cannot be opened from the local file system. This is due to CORS security limitiations. See the next section.
+* One needs to link/copy the file `jscad-dpdeling.es.js` in this directory. For example in Linux: `ln -s ../../modeling/dist/jscad-modeling.es.js`.
 
 ### Developers
 

@@ -1,1 +1,0 @@
-../../modeling/dist/jscad-modeling.es.js
