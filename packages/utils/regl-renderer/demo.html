@@ -4,7 +4,7 @@
   <title>Demo Application</title>
     <style>
       #jscad{
-        width: 15cm;
+        width: 100%;
         height: 15cm;
         margin: 0;
         outline: 1px solid black;
@@ -69,8 +69,11 @@ const orbitControls = controls.orbit
 
 const containerElement = document.getElementById("jscad")
 
-const width = containerElement.clientWidth
-const height = containerElement.clientHeight
+const pixelRatio = window.devicePixelRatio || 1
+const bounds = containerElement.getBoundingClientRect()
+
+const width = (bounds.right - bounds.left) * pixelRatio
+const height = (bounds.bottom - bounds.top) * pixelRatio
 
 const state = {}
 
@@ -133,6 +136,27 @@ const renderOptions = {
 // the heart of rendering, as themes, controls, etc change
 let updateView = true
 
+const doResize = () => {
+  const pixelRatio = window.devicePixelRatio || 1
+  const bounds = containerElement.getBoundingClientRect()
+
+  const width = (bounds.right - bounds.left) * pixelRatio
+  const height = (bounds.bottom - bounds.top) * pixelRatio
+
+  const prevWidth = containerElement.width
+  const prevHeight = containerElement.height
+
+  if (prevWidth !== width || prevHeight !== height) {
+    containerElement.width = width
+    containerElement.height = height
+
+    perspectiveCamera.setProjection(state.camera, state.camera, { width, height })
+    perspectiveCamera.update(state.camera, state.camera)
+  }
+}
+
+window.addEventListener('resize', (evt) => { updateView = true })
+
 const doRotatePanZoom = () => {
 
   if (rotateDelta[0] || rotateDelta[1]) {
@@ -170,6 +194,7 @@ const updateAndRender = (timestamp) => {
     state.camera.position = updates.camera.position
     perspectiveCamera.update(state.camera)
 
+    doResize()
     renderer(renderOptions)
   }
   window.requestAnimationFrame(updateAndRender)
