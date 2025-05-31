@@ -16,11 +16,11 @@ const splitResult = { type: 0, front: null, back: null }
 // The polygons can be in different planes.
 // splitByPlane() splits a node by a plane. If the plane intersects the polygon,
 // two new child nodes are created holding the split polygon.
-// getPolygons() retrieves the polygons from the tree. If for PolygonTreeNode the polygon is split but
+// getPolygons() retrieves the polygons from the node. If for PolygonTreeNode the polygon is split but
 // the two split parts (child nodes) are still intact, then the unsplit polygon is returned.
 // This ensures that we can safely split a polygon into many fragments. If the fragments are untouched,
 // getPolygons() will return the original unsplit polygon instead of the fragments.
-// remove() removes a polygon from the tree. Once a polygon is removed, the parent polygons are invalidated
+// remove() removes a polygon from the node. Once a polygon is removed, the parent polygons are invalidated
 // since they are no longer intact.
 export class PolygonTreeNode {
   // constructor creates the root node
@@ -30,7 +30,7 @@ export class PolygonTreeNode {
     this.children = []
   }
 
-  // fill the tree with polygons. Should be called on the root node only; child nodes must
+  // fill the node with polygons. Should be called on the root node only; child nodes must
   // always be a derivate (split) of the parent node.
   addPolygons (polygons) {
     // new polygons can only be added to root node; children can only be split polygons
@@ -61,14 +61,14 @@ export class PolygonTreeNode {
    * Can the node be split, either base polygon or children
    */
   canSplit () {
-    return (this.polygon != null) || (this.children.length != 0)
+    return (this.polygon !== null) || (this.children.length !== 0)
   }
 
   isRootNode () {
     return !this.parent
   }
 
-  // invert all polygons in the tree. Call on the root node
+  // invert all polygons in the node. Call on the root node
   invert () {
     if (!this.isRootNode()) throw new Error('PolyTreeNode03')
     this._invertSub()
@@ -79,59 +79,43 @@ export class PolygonTreeNode {
     return this.polygon
   }
 
+  /*
+   * Get all polygons from the node, and add to the result
+   */
   getPolygons (result) {
-    let children = [this]
-    const queue = [children]
-    let i, j, l, node
-    for (i = 0; i < queue.length; ++i) { // queue size can change in loop, don't cache length
-      children = queue[i]
-      for (j = 0, l = children.length; j < l; j++) { // ok to cache length
-        node = children[j]
-        if (node.polygon) {
-          // the polygon hasn't been broken yet. We can ignore the children and return our polygon
-          result.push(node.polygon)
-        } else {
-          // our polygon has been split up and broken, so gather all subpolygons from the children
-          if (node.children.length > 0) queue.push(node.children)
-        }
+    if (this.polygon) {
+      // the polygon hasn't been broken yet, so return the original polygon
+      result.push(this.polygon)
+    } else {
+      // the polygon has been split, so gather all polygons from the children
+      for (let i = 0; i < this.children.length; i++) {
+        const node = this.children[i]
+        node.getPolygons(result)
       }
     }
   }
 
-  // split the node by a plane; add the resulting nodes to the frontNodes and backNodes array
-  // If the plane doesn't intersect the polygon, the 'this' object is added to one of the arrays
-  // If the plane does intersect the polygon, two new child nodes are created for the front and back fragments,
-  // and added to both arrays.
+  // split the node by a plane, adding the resulting nodes to the frontNodes and backNodes array
   // Also see canSplit()
   splitByPlane (plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes) {
     if (this.children.length) {
-      const queue = [this.children]
-      let i
-      let j
-      let l
-      let node
-      for (i = 0; i < queue.length; i++) { // queue.length can increase, do not cache
-        const children = queue[i]
-        for (j = 0, l = children.length; j < l; j++) { // ok to cache length
-          node = children[j]
-          if (node.children.length) {
-            // more children so add to the queue
-            queue.push(node.children)
-          } else {
-            // no children so split the current node (leaf) by the given plane
-            if (node.polygon != null) {
-              node._splitByPlane(plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes)
-            }
-          }
-        }
+      // the polygon has been split, so split the children by the given plane
+      for (let i = 0; i < this.children.length; i++) {
+        const node = this.children[i]
+        node.splitByPlane(plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes)
       }
     } else {
-      // no children, so split this node (leaf) by the given plane
-      this._splitByPlane(plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes)
+      if (this.polygon) {
+        // the polygon hasn't be split, so split this node by the given plane
+        this._splitByPlane(plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes)
+      }
     }
   }
 
   // PRIVATE
+  // If the plane doesn't intersect the polygon, the 'this' object is added to one of the arrays
+  // If the plane does intersect the polygon, two new child nodes are created for the front and back fragments,
+  // and added to both arrays.
   // only to be called for nodes with no children
   _splitByPlane (splane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes) {
     const bound = poly3.measureBoundingSphere(this.polygon)
@@ -190,19 +174,14 @@ export class PolygonTreeNode {
   }
 
   // PRIVATE
+  // See invert()
   _invertSub () {
-    let children = [this]
-    const queue = [children]
-    let i, j, l, node
-    for (i = 0; i < queue.length; i++) {
-      children = queue[i]
-      for (j = 0, l = children.length; j < l; j++) {
-        node = children[j]
-        if (node.polygon) {
-          node.polygon = poly3.invert(node.polygon)
-        }
-        if (node.children.length > 0) queue.push(node.children)
-      }
+    if (this.polygon) {
+      this.polygon = poly3.invert(this.polygon)
+    }
+    for (let i = 0; i < this.children.length; i++) {
+      const node = this.children[i]
+      node._invertSub()
     }
   }
 
@@ -217,23 +196,18 @@ export class PolygonTreeNode {
   }
 
   clear () {
-    let children = [this]
-    const queue = [children]
-    for (let i = 0; i < queue.length; ++i) { // queue size can change in loop, don't cache length
-      children = queue[i]
-      const l = children.length
-      for (let j = 0; j < l; j++) {
-        const node = children[j]
-        if (node.polygon) {
-          node.polygon = null
-        }
-        if (node.parent) {
-          node.parent = null
-        }
-        if (node.children.length > 0) queue.push(node.children)
-        node.children = []
-      }
+    // clear children
+    for (let i = 0; i < this.children.length; i++) {
+      const node = this.children[i]
+      node.clear()
     }
+    this.children.length = 0
+    // unlink polygon
+    if (this.polygon) {
+      this.polygon = null
+    }
+    // unlink parent
+    this.parent = null
   }
 
   toString () {

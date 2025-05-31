@@ -5,7 +5,7 @@ import * as poly3 from '../../../geometries/poly3/index.js'
 // # class Node
 // Holds a node in a BSP tree.
 // A BSP tree is built from a collection of polygons by picking a polygon to split along.
-// Polygons are not stored directly in the tree, but in PolygonTreeNodes, stored in this.polygontreenodes.
+// Polygons are not stored directly in the BSP tree, but in PolygonTreeNodes, stored in this.polygontreenodes.
 // Those PolygonTreeNodes are children of the owning Tree.polygonTree.
 // This is not a leafy BSP tree since there is no distinction between internal and leaf nodes.
 export class Node {
@@ -32,8 +32,7 @@ export class Node {
     }
   }
 
-  // clip polygontreenodes to our plane
-  // calls remove() for all clipped PolygonTreeNodes
+  // Clip the given tree nodes to our plane
   clipPolygons (polygonTreeNodes, alsoRemoveCoplanarFront) {
     let current = { node: this, polygonTreeNodes }
     let node
@@ -51,8 +50,8 @@ export class Node {
         const coplanarFrontNodes = alsoRemoveCoplanarFront ? backNodes : frontNodes
         polygonTreeNodes.forEach((treeNode) => {
           if (treeNode.canSplit()) {
-            // split this polygon tree node using the plane
-            // NOTE: children are added to the tree if there are spanning polygons
+            // split this tree node using the plane
+            // NOTE: children are added to the tree node if there are spanning polygons
             treeNode.splitByPlane(plane, coplanarFrontNodes, backNodes, frontNodes, backNodes)
           }
         })
@@ -76,14 +75,13 @@ export class Node {
     } while (current !== undefined)
   }
 
-  // Remove all polygons in this BSP tree that are inside the other BSP tree
-  // `tree`.
-  clipTo (tree, alsoRemoveCoplanarFront) {
+  // Remove all polygons in this BSP tree that are inside the given BSP tree
+  clipTo (bsptree, alsoRemoveCoplanarFront) {
     let node = this
     const stack = []
     do {
       if (node.polygontreenodes.length > 0) {
-        tree.rootnode.clipPolygons(node.polygontreenodes, alsoRemoveCoplanarFront)
+        bsptree.rootnode.clipPolygons(node.polygontreenodes, alsoRemoveCoplanarFront)
       }
       if (node.front) stack.push(node.front)
       if (node.back) stack.push(node.back)
