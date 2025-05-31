@@ -50,7 +50,7 @@ export class Node {
         const frontNodes = []
         const coplanarFrontNodes = alsoRemoveCoplanarFront ? backNodes : frontNodes
         polygonTreeNodes.forEach((treeNode) => {
-          if (!treeNode.isRemoved()) {
+          if (treeNode.canSplit()) {
             // split this polygon tree node using the plane
             // NOTE: children are added to the tree if there are spanning polygons
             treeNode.splitByPlane(plane, coplanarFrontNodes, backNodes, frontNodes, backNodes)

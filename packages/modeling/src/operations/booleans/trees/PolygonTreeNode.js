@@ -26,9 +26,8 @@ export class PolygonTreeNode {
   // constructor creates the root node
   constructor (parent, polygon) {
     this.parent = parent
-    this.children = []
     this.polygon = polygon
-    this.removed = false // state of branch or leaf
+    this.children = []
   }
 
   // fill the tree with polygons. Should be called on the root node only; child nodes must
@@ -46,23 +45,23 @@ export class PolygonTreeNode {
   // - the siblings become toplevel nodes
   // - the parent is removed recursively
   remove () {
-    if (!this.removed) {
-      this.removed = true
-      this.polygon = null
+    this.polygon = null
 
-      // remove ourselves from the parent's children list:
-      const parentschildren = this.parent.children
-      const i = parentschildren.indexOf(this)
-      if (i < 0) throw new Error('PolyTreeNode02')
-      parentschildren.splice(i, 1)
+    // remove ourselves from the parent's children list:
+    const parentschildren = this.parent.children
+    const i = parentschildren.indexOf(this)
+    if (i < 0) throw new Error('PolyTreeNode02')
+    parentschildren.splice(i, 1)
 
-      // invalidate the parent's polygon, and of all parents above it:
-      this.parent.recursivelyInvalidatePolygon()
-    }
+    // invalidate the parent's polygon, and of all parents above it:
+    this.parent._recursivelyInvalidatePolygon()
   }
 
-  isRemoved () {
-    return this.removed
+  /*
+   * Can the node be split, either base polygon or children
+   */
+  canSplit () {
+    return (this.polygon != null) || (this.children.length != 0)
   }
 
   isRootNode () {
@@ -72,7 +71,7 @@ export class PolygonTreeNode {
   // invert all polygons in the tree. Call on the root node
   invert () {
     if (!this.isRootNode()) throw new Error('PolyTreeNode03')
-    this.invertSub()
+    this._invertSub()
   }
 
   getPolygon () {
@@ -102,7 +101,8 @@ export class PolygonTreeNode {
   // split the node by a plane; add the resulting nodes to the frontNodes and backNodes array
   // If the plane doesn't intersect the polygon, the 'this' object is added to one of the arrays
   // If the plane does intersect the polygon, two new child nodes are created for the front and back fragments,
-  //  and added to both arrays.
+  // and added to both arrays.
+  // Also see canSplit()
   splitByPlane (plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes) {
     if (this.children.length) {
       const queue = [this.children]
@@ -119,7 +119,9 @@ export class PolygonTreeNode {
             queue.push(node.children)
           } else {
             // no children so split the current node (leaf) by the given plane
-            node._splitByPlane(plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes)
+            if (node.polygon != null) {
+              node._splitByPlane(plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes)
+            }
           }
         }
       }
@@ -129,57 +131,54 @@ export class PolygonTreeNode {
     }
   }
 
+  // PRIVATE
   // only to be called for nodes with no children
   _splitByPlane (splane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes) {
-    const polygon = this.polygon
-    if (polygon) {
-      const bound = poly3.measureBoundingSphere(polygon)
-      const sphereRadius = bound[3] + EPS // ensure radius is LARGER then polygon
-      const d = vec3.dot(splane, bound) - splane[3]
-      if (d > sphereRadius) {
-        frontNodes.push(this)
-      } else if (d < -sphereRadius) {
-        backNodes.push(this)
-      } else {
-        splitPolygonByPlane(splitResult, splane, polygon)
-        switch (splitResult.type) {
-          case 0:
-            // coplanar front:
-            coplanarFrontNodes.push(this)
-            break
+    const bound = poly3.measureBoundingSphere(this.polygon)
+    const sphereRadius = bound[3] + EPS // ensure radius is LARGER then polygon
+    const d = vec3.dot(splane, bound) - splane[3]
+    if (d > sphereRadius) {
+      frontNodes.push(this)
+    } else if (d < -sphereRadius) {
+      backNodes.push(this)
+    } else {
+      splitPolygonByPlane(splitResult, splane, this.polygon)
+      switch (splitResult.type) {
+        case 0:
+          // coplanar front:
+          coplanarFrontNodes.push(this)
+          break
 
-          case 1:
-            // coplanar back:
-            coplanarBackNodes.push(this)
-            break
+        case 1:
+          // coplanar back:
+          coplanarBackNodes.push(this)
+          break
 
-          case 2:
-            // front:
-            frontNodes.push(this)
-            break
+        case 2:
+          // front:
+          frontNodes.push(this)
+          break
 
-          case 3:
-            // back:
-            backNodes.push(this)
-            break
+        case 3:
+          // back:
+          backNodes.push(this)
+          break
 
-          case 4:
-            // spanning:
-            if (splitResult.front) {
-              const frontNode = this.addChild(splitResult.front)
-              frontNodes.push(frontNode)
-            }
-            if (splitResult.back) {
-              const backNode = this.addChild(splitResult.back)
-              backNodes.push(backNode)
-            }
-            break
-        }
+        case 4:
+          // spanning:
+          if (splitResult.front) {
+            const frontNode = this.addChild(splitResult.front)
+            frontNodes.push(frontNode)
+          }
+          if (splitResult.back) {
+            const backNode = this.addChild(splitResult.back)
+            backNodes.push(backNode)
+          }
+          break
       }
     }
   }
 
-  // PRIVATE methods from here:
   // add child to a node
   // this should be called whenever the polygon is split
   // a child should be created for every fragment of the split polygon
@@ -190,7 +189,8 @@ export class PolygonTreeNode {
     return newChild
   }
 
-  invertSub () {
+  // PRIVATE
+  _invertSub () {
     let children = [this]
     const queue = [children]
     let i, j, l, node
@@ -206,13 +206,13 @@ export class PolygonTreeNode {
     }
   }
 
-  // private method
+  // PRIVATE
   // remove the polygon from the node, and all parent nodes above it
   // called to invalidate parents of removed nodes
-  recursivelyInvalidatePolygon () {
+  _recursivelyInvalidatePolygon () {
     this.polygon = null
     if (this.parent) {
-      this.parent.recursivelyInvalidatePolygon()
+      this.parent._recursivelyInvalidatePolygon()
     }
   }
 
