@@ -14,14 +14,15 @@ jobs:
         node: [ '18', '20' ]
     name: Node ${{ matrix.node }} test
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - name: Install pnpm
       - uses: pnpm/action-setup@v4
         with:
           version: 10
-      - name: Setup Node ${{ matrix.node }}
-        uses: actions/setup-node@v2
+      - name: Setup Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
+          node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
       - run: pnpm --no-frozen-lockfile install
       - run: pnpm test
