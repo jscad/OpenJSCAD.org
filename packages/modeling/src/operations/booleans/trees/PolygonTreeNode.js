@@ -35,9 +35,8 @@ export class PolygonTreeNode {
   addPolygons (polygons) {
     // new polygons can only be added to root node; children can only be split polygons
     if (!this.isRootNode()) throw new Error('PolygonTreeNode01')
-    const _this = this
     polygons.forEach((polygon) => {
-      _this.addChild(polygon)
+      this.addChild(polygon)
     })
   }
 
