@@ -81,7 +81,7 @@ export class Node {
     const stack = []
     do {
       if (node.polygontreenodes.length > 0) {
-        bsptree.rootnode.clipPolygons(node.polygontreenodes, alsoRemoveCoplanarFront)
+        bsptree.clipPolygons(node.polygontreenodes, alsoRemoveCoplanarFront)
       }
       if (node.front) stack.push(node.front)
       if (node.back) stack.push(node.back)
