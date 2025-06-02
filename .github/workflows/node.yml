@@ -14,7 +14,8 @@ jobs:
         node-version: [ '18', '20' ]
     name: Node ${{ matrix.node }} test
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -25,6 +26,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
       - name: Run tests
-        run: pnpm --no-frozen-lockfile install
-        run: pnpm test
-        run: pnpm run test:tsd
+        run: |
+          pnpm --no-frozen-lockfile install
+          pnpm test
+          pnpm run test:tsd
