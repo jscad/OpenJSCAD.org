@@ -8,6 +8,7 @@ import { splitPolygonByPlane } from './splitPolygonByPlane.js'
 
 // cached values to boost performance
 const splitResult = { type: 0, front: null, back: null }
+const sphereBounds = [0, 0, 0, 0]
 
 // # class PolygonTreeNode
 // This class manages hierarchical splits of polygons.
@@ -118,48 +119,52 @@ export class PolygonTreeNode {
   // and added to both arrays.
   // only to be called for nodes with no children
   _splitByPlane (splane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes) {
-    const bound = poly3.measureBoundingSphere(this.polygon)
+    // perform a quick check to see the plane is outside the bounds of the polygon
+    const bound = poly3.measureBoundingSphere(sphereBounds, this.polygon)
     const sphereRadius = bound[3] + EPS // ensure radius is LARGER then polygon
     const d = vec3.dot(splane, bound) - splane[3]
     if (d > sphereRadius) {
       frontNodes.push(this)
+      return
     } else if (d < -sphereRadius) {
       backNodes.push(this)
-    } else {
-      splitPolygonByPlane(splitResult, splane, this.polygon)
-      switch (splitResult.type) {
-        case 0:
-          // coplanar front:
-          coplanarFrontNodes.push(this)
-          break
+      return
+    }
 
-        case 1:
-          // coplanar back:
-          coplanarBackNodes.push(this)
-          break
+    // the polygon intersects the plane
+    splitPolygonByPlane(splitResult, splane, this.polygon)
+    switch (splitResult.type) {
+      case 0:
+        // coplanar front:
+        coplanarFrontNodes.push(this)
+        break
 
-        case 2:
-          // front:
-          frontNodes.push(this)
-          break
+      case 1:
+        // coplanar back:
+        coplanarBackNodes.push(this)
+        break
 
-        case 3:
-          // back:
-          backNodes.push(this)
-          break
+      case 2:
+        // front:
+        frontNodes.push(this)
+        break
 
-        case 4:
-          // spanning:
-          if (splitResult.front) {
-            const frontNode = this.addChild(splitResult.front)
-            frontNodes.push(frontNode)
-          }
-          if (splitResult.back) {
-            const backNode = this.addChild(splitResult.back)
-            backNodes.push(backNode)
-          }
-          break
-      }
+      case 3:
+        // back:
+        backNodes.push(this)
+        break
+
+      case 4:
+        // spanning:
+        if (splitResult.front) {
+          const frontNode = this.addChild(splitResult.front)
+          frontNodes.push(frontNode)
+        }
+        if (splitResult.back) {
+          const backNode = this.addChild(splitResult.back)
+          backNodes.push(backNode)
+        }
+        break
     }
   }
 
