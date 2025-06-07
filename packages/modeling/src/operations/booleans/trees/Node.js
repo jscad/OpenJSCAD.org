@@ -48,13 +48,14 @@ export class Node {
         const backNodes = []
         const frontNodes = []
         const coplanarFrontNodes = alsoRemoveCoplanarFront ? backNodes : frontNodes
-        polygonTreeNodes.forEach((treeNode) => {
+        for (let i = 0; i < polygonTreeNodes.length; i++) {
+          const treeNode = polygonTreeNodes[i]
           if (treeNode.canSplit()) {
             // split this tree node using the plane
             // NOTE: children are added to the tree node if there are spanning polygons
             treeNode.splitByPlane(plane, coplanarFrontNodes, backNodes, frontNodes, backNodes)
           }
-        })
+        }
 
         if (node.front && (frontNodes.length > 0)) {
           // add front node for further splitting
