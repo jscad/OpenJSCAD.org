@@ -1,6 +1,8 @@
 import * as vec3 from '../../maths/vec3/index.js'
 
 /**
+ * Measure the bounding box of the given polygon.
+ *
  * @param {Poly3} polygon - the polygon to measure
  * @returns {Array} an array of two vectors (3D);  minimum and maximum coordinates
  * @alias module:modeling/geometries/poly3.measureBoundingBox

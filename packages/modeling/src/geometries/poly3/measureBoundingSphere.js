@@ -4,16 +4,14 @@ const cache = new WeakMap()
 
 /**
  * Measure the bounding sphere of the given polygon.
+ *
+ * @param {Vec4} out - receiving vector
  * @param {Poly3} polygon - the polygon to measure
  * @returns {Vec4} the computed bounding sphere; center vertex (3D) and radius
  * @alias module:modeling/geometries/poly3.measureBoundingSphere
  */
-export const measureBoundingSphere = (polygon) => {
-  const boundingSphere = cache.get(polygon)
-  if (boundingSphere) return boundingSphere
-
+export const measureBoundingSphere = (out, polygon) => {
   const vertices = polygon.vertices
-  const out = vec4.create()
 
   if (vertices.length === 0) {
     out[0] = 0
@@ -31,14 +29,15 @@ export const measureBoundingSphere = (polygon) => {
   let maxy = minx
   let maxz = minx
 
-  vertices.forEach((v) => {
+  for (let i = 0; i < vertices.length; i++) {
+    const v = vertices[i]
     if (minx[0] > v[0]) minx = v
     if (miny[1] > v[1]) miny = v
     if (minz[2] > v[2]) minz = v
     if (maxx[0] < v[0]) maxx = v
     if (maxy[1] < v[1]) maxy = v
     if (maxz[2] < v[2]) maxz = v
-  })
+  }
 
   out[0] = (minx[0] + maxx[0]) * 0.5 // center of sphere
   out[1] = (miny[1] + maxy[1]) * 0.5
@@ -47,8 +46,6 @@ export const measureBoundingSphere = (polygon) => {
   const y = out[1] - maxy[1]
   const z = out[2] - maxz[2]
   out[3] = Math.sqrt(x * x + y * y + z * z) // radius of sphere
-
-  cache.set(polygon, out)
 
   return out
 }
