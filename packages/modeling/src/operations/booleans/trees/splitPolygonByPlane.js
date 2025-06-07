@@ -7,22 +7,27 @@ import * as poly3 from '../../../geometries/poly3/index.js'
 
 import { splitLineSegmentByPlane } from './splitLineSegmentByPlane.js'
 
-// Returns object:
-// .type:
-//   0: coplanar-front
-//   1: coplanar-back
-//   2: front
-//   3: back
-//   4: spanning
-// In case the polygon is spanning, returns:
-// .front: a Polygon3 of the front part
-// .back: a Polygon3 of the back part
+/*
+ * Split the given polygon by the given plane.
+ *
+ * @@param (Object} result - object of which to update with the result
+ * @param {Plane} splane - plane to split across
+ * @param {Poly3} ploygon - polygon of which to split
+ * @returns none
+ *
+ * The result is updated in place to improve performance (no allocation)
+ *   result.type:
+ *     0: coplanar-front
+ *     1: coplanar-back
+ *     2: front
+ *     3: back
+ *     4: spanning
+ *
+ * In case the polygon is spanning (4)
+ *   result.front contains null or a ploygon (front part)
+ *   result.back contains null or a polygon (back part)
+ */
 export const splitPolygonByPlane = (result, splane, polygon) => {
-  // clear previous result
-  result.type = 0
-  result.front = null
-  result.back = null
-  // cache in local lets (speedup):
   const vertices = polygon.vertices
   const numVertices = vertices.length
   const pplane = poly3.plane(polygon)
@@ -40,17 +45,20 @@ export const splitPolygonByPlane = (result, splane, polygon) => {
       if (t > EPS) hasFront = true
       if (t < MINEPS) hasBack = true
     }
+
     if ((!hasFront) && (!hasBack)) {
       // all points coplanar
       const t = vec3.dot(splane, pplane)
       result.type = (t >= 0) ? 0 : 1
     } else if (!hasBack) {
+      // points only front of the plane
       result.type = 2
     } else if (!hasFront) {
+      // points only back of the plane
       result.type = 3
     } else {
-      // spanning
-      result.type = 4
+      // points span the plane
+      // split the line segments by the plane
       const frontVertices = []
       const backVertices = []
       let isback = vertexIsBack[0]
@@ -60,14 +68,14 @@ export const splitPolygonByPlane = (result, splane, polygon) => {
         if (nextVertexIndex >= numVertices) nextVertexIndex = 0
         const nextIsBack = vertexIsBack[nextVertexIndex]
         if (isback === nextIsBack) {
-          // line segment is on one side of the plane:
+          // line segment is on one side of the plane
           if (isback) {
             backVertices.push(vertex)
           } else {
             frontVertices.push(vertex)
           }
         } else {
-          // line segment intersects plane:
+          // line segment spans the plane
           const nextPoint = vertices[nextVertexIndex]
           const intersectionPoint = splitLineSegmentByPlane(splane, vertex, nextPoint)
           if (isback) {
@@ -81,8 +89,9 @@ export const splitPolygonByPlane = (result, splane, polygon) => {
           }
         }
         isback = nextIsBack
-      } // for vertexIndex
-      // remove duplicate vertices:
+      }
+
+      // remove duplicate vertices
       const EPS_SQUARED = EPS * EPS
       if (backVertices.length >= 3) {
         let prevVertex = backVertices[backVertices.length - 1]
@@ -106,11 +115,20 @@ export const splitPolygonByPlane = (result, splane, polygon) => {
           prevVertex = vertex
         }
       }
+
+      // assemble the result
+      result.type = 4
+
       if (frontVertices.length >= 3) {
         result.front = poly3.fromVerticesAndPlane(frontVertices, pplane)
+      } else {
+        result.front = null
       }
+
       if (backVertices.length >= 3) {
         result.back = poly3.fromVerticesAndPlane(backVertices, pplane)
+      } else {
+        result.back = null
       }
     }
   }
