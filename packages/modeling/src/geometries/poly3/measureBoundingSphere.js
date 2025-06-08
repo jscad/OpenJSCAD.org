@@ -49,3 +49,14 @@ export const measureBoundingSphere = (out, polygon) => {
 
   return out
 }
+
+export const measureBoundingSphereAndCache = (polygon) => {
+  const boundingSphere = cache.get(polygon)
+  if (boundingSphere) return boundingSphere
+
+  const out = [0, 0, 0, 0]
+  measureBoundingSphere(out, polygon)
+
+  cache.set(polygon, out)
+  return out
+}
