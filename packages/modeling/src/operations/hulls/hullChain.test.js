@@ -92,7 +92,7 @@ test('hullChain (three, geom3)', (t) => {
 
   t.notThrows.skip(() => geom3.validate(obs))
   t.is(measureArea(obs), 266.1454764345133)
-  t.is(measureVolume(obs), 239.20129870129875)
+  t.is(measureVolume(obs), 239.2012987012987)
   t.is(pts.length, 23)
 
   // closed

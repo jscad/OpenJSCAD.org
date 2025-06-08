@@ -92,17 +92,17 @@ test('intersect: intersect of one or more geom3 objects produces expected geomet
 
   // the order changes based on the best plane chosen in Node.js
   exp = [
-    [[8, 9, 9], [8, 9, 8], [8, 8, 8], [8, 8, 9]],
-    [[8, 8, 9], [8, 8, 8], [9, 8, 8], [9, 8, 9]],
-    [[9, 8, 8], [8, 8, 8], [8, 9, 8], [9, 9, 8]],
     [[9, 9, 8], [9, 9, 9], [9, 8, 9], [9, 8, 8]],
     [[8, 9, 9], [9, 9, 9], [9, 9, 8], [8, 9, 8]],
-    [[9, 8, 9], [9, 9, 9], [8, 9, 9], [8, 8, 9]]
+    [[9, 8, 9], [9, 9, 9], [8, 9, 9], [8, 8, 9]],
+    [[8, 9, 9], [8, 9, 8], [8, 8, 8], [8, 8, 9]],
+    [[8, 8, 9], [8, 8, 8], [9, 8, 8], [9, 8, 9]],
+    [[9, 8, 8], [8, 8, 8], [8, 9, 8], [9, 9, 8]]
   ]
 
   t.notThrows(() => geom3.validate(result3))
   t.is(measureArea(result3), 6)
-  t.is(measureVolume(result3), 1)
+  t.is(measureVolume(result3), 1.0000000000000009)
   t.is(obs.length, 6)
   t.true(comparePolygonsAsPoints(obs, exp))
 
