@@ -8,7 +8,6 @@ import { splitPolygonByPlane } from './splitPolygonByPlane.js'
 
 // cached values to boost performance
 const splitResult = { type: 0, front: null, back: null }
-const sphereBounds = [0, 0, 0, 0]
 
 // # class PolygonTreeNode
 // This class manages hierarchical splits of polygons.
@@ -87,12 +86,12 @@ export class PolygonTreeNode {
     let children = [this]
     const queue = [children]
     let i, j, l, node
-    for (i = 0; i < queue.length; ++i) { // queue size can change in loop, don't
+    for (i = 0; i < queue.length; ++i) { // queue size can change in loop, don't cache length
       children = queue[i]
       for (j = 0, l = children.length; j < l; j++) { // ok to cache length
         node = children[j]
         if (node.polygon != null) {
-          // the polygon hasn't been broken yet. We can ignore the children and 
+          // the polygon hasn't been broken yet. We can ignore the children and return our polygon
           result.push(node.polygon)
         } else {
           // our polygon has been split up and broken, so gather all subpolygons
@@ -171,7 +170,6 @@ export class PolygonTreeNode {
   // only to be called for nodes with no children
   _splitByPlane (splane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes) {
     // perform a quick check to see the plane is outside the bounds of the polygon
-    // SLOW const bound = poly3.measureBoundingSphere(sphereBounds, this.polygon)
     const bounds = poly3.measureBoundingSphereAndCache(this.polygon)
     const sphereRadius = bounds[3] + EPS // ensure radius is LARGER then polygon
     const d = vec3.dot(splane, bounds) - splane[3]

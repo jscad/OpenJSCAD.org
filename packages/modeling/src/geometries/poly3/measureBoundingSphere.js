@@ -50,6 +50,15 @@ export const measureBoundingSphere = (out, polygon) => {
   return out
 }
 
+/**
+ * Measure the bounding sphere of the given polygon.
+ *
+ * This version maintains a cache, retrievning previously calculated bounds if found.
+ *
+ * @param {Poly3} polygon - the polygon to measure
+ * @returns {Vec4} the computed bounding sphere; center vertex (3D) and radius
+ * @alias module:modeling/geometries/poly3.measureBoundingSphere
+ */
 export const measureBoundingSphereAndCache = (polygon) => {
   const boundingSphere = cache.get(polygon)
   if (boundingSphere) return boundingSphere
