@@ -62,7 +62,7 @@ export class PolygonTreeNode {
    * Can the node be split, either base polygon or children
    */
   canSplit () {
-    return (this.polygon !== null) || (this.children.length !== 0)
+    return this.polygon != null || this.children.length > 0
   }
 
   isRootNode () {
@@ -76,7 +76,7 @@ export class PolygonTreeNode {
   }
 
   getPolygon () {
-    if (!this.polygon) throw new Error('PolyTreeNode04')
+    if (this.polygon == null) throw new Error('PolyTreeNode04')
     return this.polygon
   }
 
@@ -84,7 +84,29 @@ export class PolygonTreeNode {
    * Get all polygons from the node, and add to the result
    */
   getPolygons (result) {
-    if (this.polygon) {
+    let children = [this]
+    const queue = [children]
+    let i, j, l, node
+    for (i = 0; i < queue.length; ++i) { // queue size can change in loop, don't
+      children = queue[i]
+      for (j = 0, l = children.length; j < l; j++) { // ok to cache length
+        node = children[j]
+        if (node.polygon != null) {
+          // the polygon hasn't been broken yet. We can ignore the children and 
+          result.push(node.polygon)
+        } else {
+          // our polygon has been split up and broken, so gather all subpolygons
+          if (node.children.length > 0) {
+            queue.push(node.children)
+          }
+        }
+      }
+    }
+  }
+
+  // NOTE: This version of getPolygons() is much SLOWER.
+  getPolygonsNew (result) {
+    if (this.polygon != null) {
       // the polygon hasn't been broken yet, so return the original polygon
       result.push(this.polygon)
     } else {
@@ -98,16 +120,45 @@ export class PolygonTreeNode {
 
   // split the node by a plane, adding the resulting nodes to the frontNodes and backNodes array
   // Also see canSplit()
+  splitByPlaneOld (plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes) {
+    if (this.children.length > 0) {
+      const queue = [this.children]
+      let i
+      let j
+      let l
+      let node
+      let nodes
+      for (i = 0; i < queue.length; i++) { // queue.length can increase, do not cache
+        nodes = queue[i]
+        for (j = 0, l = nodes.length; j < l; j++) { // ok to cache length
+          node = nodes[j]
+          if (node.children.length > 0) {
+            queue.push(node.children)
+          } else {
+            if (this.polygon != null) {
+              // no children. Split the polygon:
+              node._splitByPlane(plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes)
+            }
+          }
+        }
+      }
+    } else {
+      if (this.polygon != null) {
+        this._splitByPlane(plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes)
+      }
+    }
+  }
+
   splitByPlane (plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes) {
-    if (this.children.length) {
+    if (this.children.length > 0) {
       // the polygon has been split, so split the children by the given plane
       for (let i = 0; i < this.children.length; i++) {
         const node = this.children[i]
         node.splitByPlane(plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes)
       }
     } else {
-      if (this.polygon) {
-        // the polygon hasn't be split, so split this node by the given plane
+      if (this.polygon != null) {
+        // the polygon hasn't been split, so split this node by the given plane
         this._splitByPlane(plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes)
       }
     }
@@ -120,9 +171,10 @@ export class PolygonTreeNode {
   // only to be called for nodes with no children
   _splitByPlane (splane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes) {
     // perform a quick check to see the plane is outside the bounds of the polygon
-    const bound = poly3.measureBoundingSphere(sphereBounds, this.polygon)
-    const sphereRadius = bound[3] + EPS // ensure radius is LARGER then polygon
-    const d = vec3.dot(splane, bound) - splane[3]
+    // SLOW const bound = poly3.measureBoundingSphere(sphereBounds, this.polygon)
+    const bounds = poly3.measureBoundingSphereAndCache(this.polygon)
+    const sphereRadius = bounds[3] + EPS // ensure radius is LARGER then polygon
+    const d = vec3.dot(splane, bounds) - splane[3]
     if (d > sphereRadius) {
       frontNodes.push(this)
       return
@@ -131,7 +183,7 @@ export class PolygonTreeNode {
       return
     }
 
-    // the polygon intersects the plane
+    // the plane may intersect the polyogn
     splitPolygonByPlane(splitResult, splane, this.polygon)
     switch (splitResult.type) {
       case 0:
@@ -156,11 +208,11 @@ export class PolygonTreeNode {
 
       case 4:
         // spanning:
-        if (splitResult.front) {
+        if (splitResult.front != null) {
           const frontNode = this.addChild(splitResult.front)
           frontNodes.push(frontNode)
         }
-        if (splitResult.back) {
+        if (splitResult.back != null) {
           const backNode = this.addChild(splitResult.back)
           backNodes.push(backNode)
         }
@@ -181,7 +233,24 @@ export class PolygonTreeNode {
   // PRIVATE
   // See invert()
   _invertSub () {
-    if (this.polygon) {
+    let children = [this]
+    const queue = [children]
+    let i, j, l, node
+    for (i = 0; i < queue.length; i++) {
+      children = queue[i]
+      for (j = 0, l = children.length; j < l; j++) {
+        node = children[j]
+        if (node.polygon != null) {
+          node.polygon = poly3.invert(node.polygon)
+        }
+        if (node.children.length > 0) queue.push(node.children)
+      }
+    }
+  }
+
+  // NOTE: This verison is SLOWER
+  _invertSubNew () {
+    if (this.polygon != null) {
       this.polygon = poly3.invert(this.polygon)
     }
     for (let i = 0; i < this.children.length; i++) {
@@ -195,7 +264,7 @@ export class PolygonTreeNode {
   // called to invalidate parents of removed nodes
   _recursivelyInvalidatePolygon () {
     this.polygon = null
-    if (this.parent) {
+    if (this.parent != null) {
       this.parent._recursivelyInvalidatePolygon()
     }
   }
@@ -208,7 +277,7 @@ export class PolygonTreeNode {
     }
     this.children.length = 0
     // unlink polygon
-    if (this.polygon) {
+    if (this.polygon != null) {
       this.polygon = null
     }
     // unlink parent
@@ -226,7 +295,7 @@ export class PolygonTreeNode {
       for (j = 0, l = children.length; j < l; j++) { // ok to cache length
         node = children[j]
         result += `${prefix}PolygonTreeNode (${node.isRootNode()}): ${node.children.length}`
-        if (node.polygon) {
+        if (node.polygon != null) {
           result += `\n ${prefix}polygon: ${node.polygon.vertices}\n`
         } else {
           result += '\n'

@@ -29,6 +29,15 @@ export class Tree {
   }
 
   addPolygons (polygons) {
+    const polygonTreeNodes = new Array(polygons.length)
+    for (let i = 0; i < polygons.length; i++) {
+      polygonTreeNodes[i] = this.polygonTree.addChild(polygons[i])
+    }
+    this.rootnode.addPolygonTreeNodes(polygonTreeNodes)
+  }
+
+  // NOTE: This version is SLOWER
+  addPolygonsNew (polygons) {
     this.polygonTree.addPolygons(polygons)
     this.rootnode.addPolygonTreeNodes(this.polygonTree.children)
   }
