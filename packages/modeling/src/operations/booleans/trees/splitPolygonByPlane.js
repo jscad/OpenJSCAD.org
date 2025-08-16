@@ -69,11 +69,7 @@ export const splitPolygonByPlane = (result, splane, polygon) => {
         const nextIsBack = vertexIsBack[nextVertexIndex]
         if (isback === nextIsBack) {
           // line segment is on one side of the plane
-          if (isback) {
-            backVertices.push(vertex)
-          } else {
-            frontVertices.push(vertex)
-          }
+          isback ? backVertices.push(vertex) : frontVertices.push(vertex)
         } else {
           // line segment spans the plane
           const nextPoint = vertices[nextVertexIndex]
@@ -119,17 +115,9 @@ export const splitPolygonByPlane = (result, splane, polygon) => {
       // assemble the result
       result.type = 4
 
-      if (frontVertices.length >= 3) {
-        result.front = poly3.fromVerticesAndPlane(frontVertices, pplane)
-      } else {
-        result.front = null
-      }
+      frontVertices.length >= 3 ? result.front = poly3.fromVerticesAndPlane(frontVertices, pplane) : result.front = null
 
-      if (backVertices.length >= 3) {
-        result.back = poly3.fromVerticesAndPlane(backVertices, pplane)
-      } else {
-        result.back = null
-      }
+      backVertices.length >= 3 ? result.back = poly3.fromVerticesAndPlane(backVertices, pplane) : result.back = null
     }
   }
   return result

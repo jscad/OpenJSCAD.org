@@ -23,9 +23,9 @@ export class Node {
     let node
     for (let i = 0; i < queue.length; i++) {
       node = queue[i]
-      if (node.plane != null) node.plane = plane.flip(plane.create(), node.plane)
-      if (node.front != null) queue.push(node.front)
-      if (node.back != null) queue.push(node.back)
+      if (node.plane !== null) node.plane = plane.flip(plane.create(), node.plane)
+      if (node.front !== null) queue.push(node.front)
+      if (node.back !== null) queue.push(node.back)
       const temp = node.front
       node.front = node.back
       node.back = temp
@@ -42,7 +42,7 @@ export class Node {
       node = current.node
       polygonTreeNodes = current.polygonTreeNodes
 
-      if (node.plane != null) {
+      if (node.plane !== null) {
         const plane = node.plane
 
         const backNodes = []
@@ -57,12 +57,12 @@ export class Node {
           }
         }
 
-        if (node.front != null && frontNodes.length > 0) {
+        if (node.front !== null && frontNodes.length > 0) {
           // add front node for further splitting
           stack.push({ node: node.front, polygonTreeNodes: frontNodes })
         }
         const numBackNodes = backNodes.length
-        if (node.back != null && numBackNodes > 0) {
+        if (node.back !== null && numBackNodes > 0) {
           // add back node for further splitting
           stack.push({ node: node.back, polygonTreeNodes: backNodes })
         } else {
@@ -84,8 +84,8 @@ export class Node {
       if (node.polygontreenodes.length > 0) {
         bsptree.clipPolygons(node.polygontreenodes, alsoRemoveCoplanarFront)
       }
-      if (node.front != null) stack.push(node.front)
-      if (node.back != null) stack.push(node.back)
+      if (node.front !== null) stack.push(node.front)
+      if (node.back !== null) stack.push(node.back)
       node = stack.pop()
     } while (node !== undefined)
   }
@@ -102,7 +102,7 @@ export class Node {
         current = stack.pop()
         continue
       }
-      if (node.plane == null) {
+      if (node.plane === null) {
         let index = 0 // default
         index = Math.floor(len / 2)
         // index = len >> 1
@@ -117,22 +117,20 @@ export class Node {
       }
 
       if (frontNodes.length > 0) {
-        if (node.front == null) node.front = new Node(node)
+        if (node.front === null) node.front = new Node(node)
 
         // unable to split by any of the current nodes
         const stopCondition = len === frontNodes.length && backNodes.length === 0
 
-        if (stopCondition) node.front.polygontreenodes = frontNodes
-        else stack.push({ node: node.front, polygonTreeNodes: frontNodes })
+        stopCondition ? node.front.polygontreenodes = frontNodes : stack.push({ node: node.front, polygonTreeNodes: frontNodes })
       }
       if (backNodes.length > 0) {
-        if (node.back == null) node.back = new Node(node)
+        if (node.back === null) node.back = new Node(node)
 
         // unable to split by any of the current nodes
         const stopCondition = len === backNodes.length && frontNodes.length === 0
 
-        if (stopCondition) node.back.polygontreenodes = backNodes
-        else stack.push({ node: node.back, polygonTreeNodes: backNodes })
+        stopCondition ? node.back.polygontreenodes = backNodes : stack.push({ node: node.back, polygonTreeNodes: backNodes })
       }
 
       current = stack.pop()

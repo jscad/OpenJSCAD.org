@@ -75,7 +75,7 @@ export class PolygonTreeNode {
   }
 
   getPolygon () {
-    if (this.polygon == null) throw new Error('PolyTreeNode04')
+    if (this.polygon === null) throw new Error('PolyTreeNode04')
     return this.polygon
   }
 
@@ -90,7 +90,7 @@ export class PolygonTreeNode {
       children = queue[i]
       for (j = 0, l = children.length; j < l; j++) { // ok to cache length
         node = children[j]
-        if (node.polygon != null) {
+        if (node.polygon !== null) {
           // the polygon hasn't been broken yet. We can ignore the children and return our polygon
           result.push(node.polygon)
         } else {
@@ -105,7 +105,7 @@ export class PolygonTreeNode {
 
   // NOTE: This version of getPolygons() is much SLOWER.
   getPolygonsNew (result) {
-    if (this.polygon != null) {
+    if (this.polygon !== null) {
       // the polygon hasn't been broken yet, so return the original polygon
       result.push(this.polygon)
     } else {
@@ -134,7 +134,7 @@ export class PolygonTreeNode {
           if (node.children.length > 0) {
             queue.push(node.children)
           } else {
-            if (this.polygon != null) {
+            if (this.polygon !== null) {
               // no children. Split the polygon:
               node._splitByPlane(plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes)
             }
@@ -142,7 +142,7 @@ export class PolygonTreeNode {
         }
       }
     } else {
-      if (this.polygon != null) {
+      if (this.polygon !== null) {
         this._splitByPlane(plane, coplanarfrontnodes, coplanarbacknodes, frontnodes, backnodes)
       }
     }
@@ -156,7 +156,7 @@ export class PolygonTreeNode {
         node.splitByPlane(plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes)
       }
     } else {
-      if (this.polygon != null) {
+      if (this.polygon !== null) {
         // the polygon hasn't been split, so split this node by the given plane
         this._splitByPlane(plane, coplanarFrontNodes, coplanarBackNodes, frontNodes, backNodes)
       }
@@ -206,11 +206,11 @@ export class PolygonTreeNode {
 
       case 4:
         // spanning:
-        if (splitResult.front != null) {
+        if (splitResult.front !== null) {
           const frontNode = this.addChild(splitResult.front)
           frontNodes.push(frontNode)
         }
-        if (splitResult.back != null) {
+        if (splitResult.back !== null) {
           const backNode = this.addChild(splitResult.back)
           backNodes.push(backNode)
         }
@@ -238,7 +238,7 @@ export class PolygonTreeNode {
       children = queue[i]
       for (j = 0, l = children.length; j < l; j++) {
         node = children[j]
-        if (node.polygon != null) {
+        if (node.polygon !== null) {
           node.polygon = poly3.invert(node.polygon)
         }
         if (node.children.length > 0) queue.push(node.children)
@@ -248,7 +248,7 @@ export class PolygonTreeNode {
 
   // NOTE: This verison is SLOWER
   _invertSubNew () {
-    if (this.polygon != null) {
+    if (this.polygon !== null) {
       this.polygon = poly3.invert(this.polygon)
     }
     for (let i = 0; i < this.children.length; i++) {
@@ -262,7 +262,7 @@ export class PolygonTreeNode {
   // called to invalidate parents of removed nodes
   _recursivelyInvalidatePolygon () {
     this.polygon = null
-    if (this.parent != null) {
+    if (this.parent !== null) {
       this.parent._recursivelyInvalidatePolygon()
     }
   }
@@ -275,7 +275,7 @@ export class PolygonTreeNode {
     }
     this.children.length = 0
     // unlink polygon
-    if (this.polygon != null) {
+    if (this.polygon !== null) {
       this.polygon = null
     }
     // unlink parent
@@ -293,7 +293,7 @@ export class PolygonTreeNode {
       for (j = 0, l = children.length; j < l; j++) { // ok to cache length
         node = children[j]
         result += `${prefix}PolygonTreeNode (${node.isRootNode()}): ${node.children.length}`
-        if (node.polygon != null) {
+        if (node.polygon !== null) {
           result += `\n ${prefix}polygon: ${node.polygon.vertices}\n`
         } else {
           result += '\n'
