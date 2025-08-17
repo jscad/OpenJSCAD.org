@@ -115,9 +115,9 @@ export const splitPolygonByPlane = (result, splane, polygon) => {
       // assemble the result
       result.type = 4
 
-      frontVertices.length >= 3 ? result.front = poly3.fromVerticesAndPlane(frontVertices, pplane) : result.front = null
+      result.front = frontVertices.length >= 3 ? poly3.fromVerticesAndPlane(frontVertices, pplane) : null
 
-      backVertices.length >= 3 ? result.back = poly3.fromVerticesAndPlane(backVertices, pplane) : result.back = null
+      result.back = backVertices.length >= 3 ? poly3.fromVerticesAndPlane(backVertices, pplane) : null
     }
   }
   return result
