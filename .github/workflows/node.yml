@@ -11,18 +11,22 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '16', '18' ]
+        node-version: [ '18', '20' ]
     name: Node ${{ matrix.node }} test
     steps:
-      - uses: actions/checkout@v2
-      - uses: pnpm/action-setup@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
-          version: 7
-      - name: Setup Node ${{ matrix.node }}
-        uses: actions/setup-node@v2
+          version: 10
+      - name: Setup Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
+          node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-      - run: pnpm --no-frozen-lockfile install
-      - run: pnpm test
-      - run: pnpm run test:tsd
+      - name: Run tests
+        run: |
+          pnpm --no-frozen-lockfile install
+          pnpm test
+          pnpm run test:tsd

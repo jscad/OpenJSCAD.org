@@ -7,19 +7,22 @@ import { measureBoundingSphere, create, transform } from './index.js'
 test('poly3: measureBoundingSphere() should return correct values', (t) => {
   let ply1 = create()
   let exp1 = [0, 0, 0, 0]
-  let ret1 = measureBoundingSphere(ply1)
+  let ret1 = [0, 0, 0, 0]
+  ret1 = measureBoundingSphere(ret1, ply1)
   t.deepEqual(ret1, exp1)
 
   // simple triangle
   let ply2 = create([[0, 0, 0], [0, 10, 0], [0, 10, 10]])
   let exp2 = [0, 5, 5, 7.0710678118654755]
-  let ret2 = measureBoundingSphere(ply2)
+  let ret2 = [0, 0, 0, 0]
+  ret2 = measureBoundingSphere(ret2, ply2)
   t.deepEqual(ret2, exp2)
 
   // simple square
   let ply3 = create([[0, 0, 0], [0, 10, 0], [0, 10, 10], [0, 0, 10]])
   let exp3 = [0, 5, 5, 7.0710678118654755]
-  let ret3 = measureBoundingSphere(ply3)
+  let ret3 = [0, 0, 0, 0]
+  ret3 = measureBoundingSphere(ret3, ply3)
   t.deepEqual(ret3, exp3)
 
   // V-shape
@@ -37,7 +40,8 @@ test('poly3: measureBoundingSphere() should return correct values', (t) => {
   ]
   let ply4 = create(vertices)
   let exp4 = [0, 4.5, 3, 4.6097722286464435]
-  let ret4 = measureBoundingSphere(ply4)
+  let ret4 = [0, 0, 0, 0]
+  ret4 = measureBoundingSphere(ret4, ply4)
   t.deepEqual(ret4, exp4)
 
   // rotated to various angles
@@ -46,10 +50,10 @@ test('poly3: measureBoundingSphere() should return correct values', (t) => {
   ply2 = transform(rotation, ply2)
   ply3 = transform(rotation, ply3)
   ply4 = transform(rotation, ply4)
-  ret1 = measureBoundingSphere(ply1)
-  ret2 = measureBoundingSphere(ply2)
-  ret3 = measureBoundingSphere(ply3)
-  ret4 = measureBoundingSphere(ply4)
+  ret1 = measureBoundingSphere(ret1, ply1)
+  ret2 = measureBoundingSphere(ret2, ply2)
+  ret3 = measureBoundingSphere(ret3, ply3)
+  ret4 = measureBoundingSphere(ret4, ply4)
   exp1 = [0, 0, 0, 0]
   t.deepEqual(ret1, exp1)
   exp2 = [-3.5355339059327373, 3.5355339059327378, 5, 7.0710678118654755]

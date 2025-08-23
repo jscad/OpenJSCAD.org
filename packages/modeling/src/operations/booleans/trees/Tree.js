@@ -17,10 +17,9 @@ export class Tree {
     this.rootnode.invert()
   }
 
-  // Remove all polygons in this BSP tree that are inside the other BSP tree
-  // `tree`.
+  // Remove all polygons in this tree that are inside the given tree
   clipTo (tree, alsoRemoveCoplanarFront = false) {
-    this.rootnode.clipTo(tree, alsoRemoveCoplanarFront)
+    this.rootnode.clipTo(tree.rootnode, alsoRemoveCoplanarFront)
   }
 
   allPolygons () {
@@ -35,6 +34,12 @@ export class Tree {
       polygonTreeNodes[i] = this.polygonTree.addChild(polygons[i])
     }
     this.rootnode.addPolygonTreeNodes(polygonTreeNodes)
+  }
+
+  // NOTE: This version is SLOWER
+  addPolygonsNew (polygons) {
+    this.polygonTree.addPolygons(polygons)
+    this.rootnode.addPolygonTreeNodes(this.polygonTree.children)
   }
 
   clear () {

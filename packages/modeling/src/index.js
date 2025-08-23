@@ -31,8 +31,8 @@ export const geometries = {
     ...poly3,
     fromPoints: (points) => poly3.create([points]),
     fromPointsAndPlane: poly3.fromVerticesAndPlane,
-    toPoints: poly3.toVertices,
-  },
+    toPoints: poly3.toVertices
+  }
 }
 export * as maths from './maths/index.js'
 export * as measurements from './measurements/index.js'
@@ -40,17 +40,17 @@ export * as primitives from './primitives/index.js'
 export * as text from './text/index.js'
 export * as booleans from './operations/booleans/index.js'
 import * as extrusion from './operations/extrusions/index.js'
+import * as offsets from './operations/offsets/index.js'
 export const extrusions = {
   ...extrusion,
   extrudeRectangular: (opt, geom) => extrusions.extrudeLinear(opt, offsets.offset(opt, geom)),
-  slice: geometries.slice,
+  slice: geometries.slice
 }
 export * as hulls from './operations/hulls/index.js'
 export * as modifiers from './operations/modifiers/index.js'
-import * as offsets from './operations/offsets/index.js'
 export const expansions = {
   ...offsets,
-  expand: offsets.offset,
+  expand: offsets.offset
 }
 export * as transforms from './operations/transforms/index.js'
 export * as utils from './utils/index.js'
