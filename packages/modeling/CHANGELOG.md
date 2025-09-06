@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.2-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@3.0.1-alpha.0...@jscad/modeling@3.0.2-alpha.0) (2025-09-06)
+
+### Bug Fixes
+
+* **svg-deserializer:** svg path should return one geom2 ([e642de4](https://github.com/jscad/OpenJSCAD.org/commit/e642de4a6d9bfef09e33a2f7151731169e668324))
+
+### Features
+
+* **modeling:** V2 api compatibility shim ([c96e6d4](https://github.com/jscad/OpenJSCAD.org/commit/c96e6d417f410a15578258c824d1c1a41ffbe721))
+
+### Performance Improvements
+
+* **modeling:** changes to improve performance in booleans and extrusions ([#1384](https://github.com/jscad/OpenJSCAD.org/issues/1384)) ([9a1aa7a](https://github.com/jscad/OpenJSCAD.org/commit/9a1aa7ae0f65f55f3df06eb89bd69bf8335e1a48))
+
 ## [3.0.1-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.10.0...@jscad/modeling@3.0.1-alpha.0) (2025-01-03)
 
 ### Bug Fixes

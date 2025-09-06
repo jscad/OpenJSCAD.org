@@ -1,7 +1,7 @@
 /**
  * JSON Serializer for JSCAD
  * @module @jscad/json-serializer
- * @version 3.0.1-alpha.0
+ * @version 3.0.2-alpha.0
  * @license MIT
  */
 /**
