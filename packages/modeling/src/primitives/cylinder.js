@@ -5,6 +5,7 @@ import * as geom3 from '../geometries/geom3/index.js'
 /**
  * Construct a Z axis-aligned cylinder in three dimensional space.
  * @see [cylinderElliptic]{@link module:modeling/primitives.cylinderElliptic} for more options
+ * @function
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of cylinder
  * @param {number} [options.height=2] - height of cylinder

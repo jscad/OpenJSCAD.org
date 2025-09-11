@@ -10,6 +10,7 @@ import { isGT, isGTE } from './commonChecks.js'
 
 /**
  * Construct a torus by revolving a small circle (inner) about the circumference of a large (outer) circle.
+ * @function
  * @param {object} [options] - options for construction
  * @param {number} [options.innerRadius=1] - radius of small (inner) circle
  * @param {number} [options.outerRadius=4] - radius of large (outer) circle

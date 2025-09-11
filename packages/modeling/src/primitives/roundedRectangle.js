@@ -10,6 +10,7 @@ import { rectangle } from './rectangle.js'
 
 /**
  * Construct an axis-aligned rectangle in two dimensional space with rounded corners.
+ * @function
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of rounded rectangle
  * @param {Array} [options.size=[2,2]] - dimension of rounded rectangle; width and length

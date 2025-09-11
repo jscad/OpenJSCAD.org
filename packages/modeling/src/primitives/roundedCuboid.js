@@ -115,6 +115,7 @@ const stitchSides = (bottomCorners, topCorners) => {
 
 /**
  * Construct an axis-aligned solid cuboid in three dimensional space with rounded corners.
+ * @function
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of rounded cube
  * @param {Array} [options.size=[2,2,2]] - dimension of rounded cube; width, depth, height
