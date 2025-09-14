@@ -2,7 +2,7 @@ const test = require('ava')
 
 const deserializer = require('../src/index.js')
 
-const { measurements } = require('@jscad/modeling')
+const { geometries, measurements } = require('@jscad/modeling')
 
 // deserializer
 
@@ -173,7 +173,8 @@ test('deserialize : instantiate svg (path: simple) to objects', (t) => {
   let observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
   let shape = observed[0]
-  t.is(shape.sides.length, 3)
+  t.is(shape.sides.length, 1)
+  t.true(geometries.geom2.isA(shape))
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
@@ -190,7 +191,8 @@ test('deserialize : instantiate svg (path: simple) to objects', (t) => {
   observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
   shape = observed[0]
-  t.is(shape.sides.length, 3)
+  t.is(shape.sides.length, 1)
+  t.true(geometries.geom2.isA(shape))
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
@@ -204,7 +206,8 @@ test('deserialize : instantiate svg (path: simple) to objects', (t) => {
   observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
   shape = observed[0]
-  t.is(shape.sides.length, 3)
+  t.is(shape.sides.length, 1)
+  t.true(geometries.geom2.isA(shape))
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
@@ -218,7 +221,8 @@ test('deserialize : instantiate svg (path: simple) to objects', (t) => {
   observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
   shape = observed[0]
-  t.is(shape.sides.length, 8)
+  t.is(shape.sides.length, 1)
+  t.true(geometries.geom2.isA(shape))
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
@@ -237,7 +241,11 @@ test('deserialize : instantiate svg (path: arc) to objects', (t) => {
   let observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 2)
   let shape = observed[0]
-  t.is(shape.sides.length, 27)
+  t.is(shape.sides.length, 1)
+  t.true(geometries.geom2.isA(shape))
+  shape = observed[1]
+  t.is(shape.sides.length, 1)
+  t.true(geometries.geom2.isA(shape))
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 2)
@@ -264,7 +272,8 @@ test('deserialize : instantiate svg (path: with bezier) to objects', (t) => {
   let observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
   let shape = observed[0]
-  t.is(shape.sides.length, 14)
+  t.is(shape.sides.length, 1)
+  t.true(geometries.geom2.isA(shape))
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
@@ -285,7 +294,8 @@ test('deserialize : instantiate svg (path: with bezier) to objects', (t) => {
   observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
   shape = observed[0]
-  t.is(shape.sides.length, 62)
+  t.is(shape.sides.length, 1)
+  t.true(geometries.geom2.isA(shape))
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
@@ -300,7 +310,8 @@ test('deserialize : instantiate svg (path: with bezier) to objects', (t) => {
   observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
   shape = observed[0]
-  t.is(shape.sides.length, 28)
+  t.is(shape.sides.length, 1)
+  t.true(geometries.geom2.isA(shape))
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
@@ -314,9 +325,7 @@ test('deserialize : instantiate svg (path: with bezier) to objects', (t) => {
 </svg>`
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
-  t.is(observed.length, 2)
-  shape = observed[0]
-  t.is(shape.points.length, 14) // open path
+  t.is(observed.length, 0) // open path
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 2)
@@ -332,9 +341,7 @@ test('deserialize : instantiate svg (path: with bezier) to objects', (t) => {
 </svg>`
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
-  t.is(observed.length, 1)
-  shape = observed[0]
-  t.is(shape.points.length, 29) // open path
+  t.is(observed.length, 0) // open path
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
@@ -349,7 +356,7 @@ test('deserialize : instantiate svg (path: with bezier) to objects', (t) => {
   observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
   t.is(observed.length, 1)
   shape = observed[0]
-  t.is(shape.sides.length, 101)
+  t.is(shape.sides.length, 1)
   t.deepEqual(shape.color, [1, 0, 0, 1])
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
@@ -408,11 +415,10 @@ test('deserialize : instantiate svg produced by inkscape to objects', (t) => {
 `
 
   let observed = deserializer.deserialize({ filename: 'inkscape', output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
-  t.is(observed.length, 2)
+  t.is(observed.length, 1)
   let shape = observed[0]
-  t.is(shape.sides.length, 19)
-  shape = observed[1]
-  t.is(shape.sides.length, 20)
+  t.is(shape.sides.length, 2)
+  t.true(geometries.geom2.isA(shape))
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 2)
@@ -432,11 +438,10 @@ test('deserialize : instantiate shape with a hole to objects', (t) => {
 `
 
   let observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
-  t.is(observed.length, 2)
+  t.is(observed.length, 1)
   let shape = observed[0]
-  t.is(shape.sides.length, 38)
-  shape = observed[1]
-  t.is(shape.sides.length, 38)
+  t.is(shape.sides.length, 2)
+  t.true(geometries.geom2.isA(shape))
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 2)
@@ -456,9 +461,10 @@ test('deserialize : instantiate shape with a nested hole to objects', (t) => {
 `
 
   let observed = deserializer.deserialize({ output: 'geometry', target: 'geom2', addMetaData: false }, sourceSvg)
-  t.is(observed.length, 4)
+  t.is(observed.length, 1)
   let shape = observed[0]
-  t.is(shape.sides.length, 38)
+  t.is(shape.sides.length, 4)
+  t.true(geometries.geom2.isA(shape))
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 4)

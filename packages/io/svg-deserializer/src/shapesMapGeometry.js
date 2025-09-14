@@ -133,16 +133,23 @@ const shapesMapGeometry = (obj, objectify, params) => {
       const listofpaths = expandPath(obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, segments, pathSelfClosed)
       // order is important
       const listofentries = Object.entries(listofpaths).sort((a, b) => a[0].localeCompare(b[0]))
-      const shapes = listofentries.map((entry) => {
-        const path = entry[1]
-        if (target === 'geom2' && path.isClosed) {
-          const points = geometries.path2.toPoints(path).slice()
-          points.push(points[0]) // add first point again to create closing sides
-          return geometries.geom2.fromPoints(points)
-        }
-        return path
-      })
-      return shapes
+
+      if (target === 'geom2') {
+        // concatenate all sides to a single geom2
+        const outlines = []
+        listofentries.forEach((entry) => {
+          const path = entry[1]
+          // discard unclosed paths
+          if (path.isClosed) {
+            const points = geometries.path2.toPoints(path)
+            outlines.push(points)
+          }
+        })
+        if (outlines.length === 0) return []
+        return geometries.geom2.create(outlines)
+      } else {
+        return listofentries.map((entry) => entry[1])
+      }
     }
   }
 
@@ -156,6 +163,18 @@ const appendPoints = (points, geometry) => {
   return geometries.path2.fromPoints({ }, points)
 }
 
+/*
+ * Expands the given SVG path object into a set of path segments.
+ * @param {object} obj - SVG path object to expand
+ * @param {number} svgUnitsPmm - SVG units per millimeter
+ * @param {number} svgUnitsX - X-axis SVG units
+ * @param {number} svgUnitsY - Y-axis SVG units
+ * @param {number} svgUnitsV - SVG units value
+ * @param {object} svgGroups - SVG groups object
+ * @param {number} segments - number of segments per full rotation
+ * @param {boolean} pathSelfClosed - Whether the path is self-closed
+ * @returns {object} a object containing the named paths
+ */
 const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups, segments, pathSelfClosed) => {
   const paths = {}
   const on = 'path'
@@ -454,13 +473,13 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
           by = rf[1]
         }
         break
-      case 'h': // relative Horzontal line to
+      case 'h': // relative Horizontal line to
         while (pts.length >= i + 1) {
           cx = cx + parseFloat(pts[i++])
           paths[pathName] = appendPoints([svg2cag([cx, cy], svgUnitsPmm)], paths[pathName])
         }
         break
-      case 'H': // absolute Horzontal line to
+      case 'H': // absolute Horizontal line to
         while (pts.length >= i + 1) {
           cx = parseFloat(pts[i++])
           paths[pathName] = appendPoints([svg2cag([cx, cy], svgUnitsPmm)], paths[pathName])
@@ -500,7 +519,7 @@ const expandPath = (obj, svgUnitsPmm, svgUnitsX, svgUnitsY, svgUnitsV, svgGroups
         pc = true
         break
       default:
-        console.log('Warning: Unknow PATH command [' + co.c + ']')
+        console.log('Warning: Unknown PATH command [' + co.c + ']')
         break
     }
 
