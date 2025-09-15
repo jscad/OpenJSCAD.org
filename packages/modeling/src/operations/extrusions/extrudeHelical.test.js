@@ -34,7 +34,17 @@ test('extrudeHelical: (pitch) extruding of a circle produces an expected geom3',
   const geometry2 = circle({ size: 3, center: [10, 0] })
   for (const index of [...Array(20).keys()]) {
     // also test negative pitches
-    const geometry3 = extrudeHelical({ pitch: startPitch + index }, geometry2)
+    const geometry3 = extrudeHelical({ pitch: startPitch + index, startAngle: TAU * index }, geometry2)
+    t.notThrows(() => geom3.validate(geometry3))
+  }
+})
+
+test('extrudeHelical: (height) extruding of a circle produces an expected geom3', (t) => {
+  const startHeight = -5
+  const geometry2 = circle({ size: 3, center: [10, 0] })
+  for (const index of [...Array(10).keys()]) {
+    // also test negative heights
+    const geometry3 = extrudeHelical({ height: startHeight + index, angle: TAU * (index + 1) }, geometry2)
     t.notThrows(() => geom3.validate(geometry3))
   }
 })
@@ -49,12 +59,12 @@ test('extrudeHelical: (endRadiusOffset) extruding of a circle produces an expect
   }
 })
 
-test('extrudeHelical: (segments) extruding of a circle produces an expected geom3', (t) => {
+test('extrudeHelical: (segmentsPerRotation) extruding of a circle produces an expected geom3', (t) => {
   const startSegments = 3
   const geometry2 = circle({ size: 3, center: [10, 0] })
   for (const index of [...Array(30).keys()]) {
     // also test negative pitches
-    const geometry3 = extrudeHelical({ segments: startSegments + index }, geometry2)
+    const geometry3 = extrudeHelical({ segmentsPerRotation: startSegments + index }, geometry2)
     t.notThrows(() => geom3.validate(geometry3))
   }
 })
