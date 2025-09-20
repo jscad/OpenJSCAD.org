@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.12](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.5.11...@jscad/svg-deserializer@2.5.12) (2025-09-20)
+
+
+### Bug Fixes
+
+* **svg-deserializer:** svg path should return one geom2 ([4500b71](https://github.com/jscad/OpenJSCAD.org/commit/4500b71579fd805e5f740a7b4605b14986bbe14e))
+
+
+
+
+
 ## [2.5.11](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.5.10...@jscad/svg-deserializer@2.5.11) (2024-12-29)
 
 **Note:** Version bump only for package @jscad/svg-deserializer
