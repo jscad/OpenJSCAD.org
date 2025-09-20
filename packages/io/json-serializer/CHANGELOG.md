@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.31](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/json-serializer@2.0.30...@jscad/json-serializer@2.0.31) (2025-09-20)
+
+**Note:** Version bump only for package @jscad/json-serializer
+
+
+
+
+
 ## [2.0.30](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/json-serializer@2.0.29...@jscad/json-serializer@2.0.30) (2024-12-29)
 
 **Note:** Version bump only for package @jscad/json-serializer

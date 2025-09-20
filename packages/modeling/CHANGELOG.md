@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.12.6](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.12.5...@jscad/modeling@2.12.6) (2025-09-20)
+
+
+### Bug Fixes
+
+* **modeling:** corrected handling of pitch vs height in extrudeHelical ([074f05a](https://github.com/jscad/OpenJSCAD.org/commit/074f05aa5432fbdc8277088e9a45f003f2f978c7))
+
+
+
+
+
 ## [2.12.5](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.12.4...@jscad/modeling@2.12.5) (2024-12-29)
 
 **Note:** Version bump only for package @jscad/modeling
