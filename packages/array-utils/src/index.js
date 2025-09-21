@@ -1,10 +1,13 @@
 /**
  * JSCAD Utility functions for arrays.
+ *
  * @module array-utils
+ *
  * @example
- * const { flatten, head } = require('@jscad/array-utils')
+ * import { flatten, head } from '@jscad/array-utils'
  */
 
+export { coalesce } from './coalesce.js'
 export { flatten } from './flatten.js'
 export { fnNumberSort } from './fnNumberSort.js'
 export { head } from './head.js'
