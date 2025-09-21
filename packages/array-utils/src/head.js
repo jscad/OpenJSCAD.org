@@ -1,8 +1,12 @@
 /**
  * Return the first element of the given array.
+ *
  * @param {*} array - anything
  * @returns {*} first element of the array, or undefined
+ *
  * @alias module:array-utils.head
+ * @function
+ *
  * @example
  * let element = head([1, 2])
  */
