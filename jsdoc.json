@@ -1,7 +1,7 @@
 {
   "source" : {
     "include": [
-      "packages/utils/array-utils/src",
+      "packages/array-utils/src",
 
       "packages/modeling/src/colors",
       "packages/modeling/src/curves",

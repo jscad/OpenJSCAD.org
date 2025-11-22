@@ -4,6 +4,7 @@
   "description": "",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "type": "module",
   "scripts": {
     "docs": "jsdoc --configure jsdoc.json",
     "coverage": "lerna run --concurrency 1 --stream coverage",

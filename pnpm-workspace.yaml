@@ -1,5 +1,6 @@
 prefer-workspace-packages: true
 packages:
+  - "packages/array-utils"
   - "packages/cli"
   - "packages/core"
   - "packages/io/io"
@@ -19,6 +20,5 @@ packages:
   - "packages/io/x3d-deserializer"
   - "packages/io/x3d-serializer"
   - "packages/modeling"
-  - "packages/utils/array-utils"
   - "packages/utils/img"
   - "packages/utils/regl-renderer"
