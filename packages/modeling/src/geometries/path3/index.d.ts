@@ -1,0 +1,13 @@
+export { close } from './close.js'
+export { concat } from './concat.js'
+export { create } from './create.js'
+export { equals } from './equals.js'
+export { fromVertices, FromVerticesOptions } from './fromVertices.js'
+export { isA } from './isA.js'
+export { reverse } from './reverse.js'
+export { toString } from './toString.js'
+export { toVertices } from './toVertices.js'
+export { transform } from './transform.js'
+export { validate } from './validate.js'
+
+export type { Path3 } from './type.d.ts'
