@@ -10,7 +10,7 @@ import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
 
 test('cylinder (defaults)', (t) => {
   const obs = cylinder()
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 18.789084266699856)
@@ -20,7 +20,7 @@ test('cylinder (defaults)', (t) => {
 
 test('cylinder (zero height)', (t) => {
   const obs = cylinder({ height: 0 })
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 0)
   t.is(measureVolume(obs), 0)
@@ -29,7 +29,7 @@ test('cylinder (zero height)', (t) => {
 
 test('cylinder (zero radius)', (t) => {
   const obs = cylinder({ radius: 0 })
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 0)
   t.is(measureVolume(obs), 0)
@@ -38,7 +38,7 @@ test('cylinder (zero radius)', (t) => {
 
 test('cylinder (options)', (t) => {
   let obs = cylinder({ height: 10, radius: 4, segments: 5 })
-  let pts = geom3.toPoints(obs)
+  let pts = geom3.toVertices(obs)
   let exp = [
     [[0, 0, -5], [1.2360679774997898, 3.804226065180614, -5], [4, 0, -5]],
     [[1.2360679774997898, 3.804226065180614, -5], [1.2360679774997898, 3.804226065180614, 5],
@@ -70,7 +70,7 @@ test('cylinder (options)', (t) => {
 
   // test center
   obs = cylinder({ center: [-5, -5, -5], segments: 5 })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
   exp = [
     [[-5, -5, -6], [-4.6909830056250525, -4.048943483704846, -6], [-4, -5, -6]],
     [[-4.6909830056250525, -4.048943483704846, -6], [-4.6909830056250525, -4.048943483704846, -4],

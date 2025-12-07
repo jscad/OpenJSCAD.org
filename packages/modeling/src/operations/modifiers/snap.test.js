@@ -117,11 +117,11 @@ test('snap: snap of a geom3 produces an expected geom3', (t) => {
   const results = snap(geometry1, geometry2, geometry3, geometry4)
   t.is(results.length, 4)
 
-  let pts = geom3.toPoints(results[0])
+  let pts = geom3.toVertices(results[0])
   let exp = []
   t.true(comparePolygonsAsPoints(pts, exp))
 
-  pts = geom3.toPoints(results[1])
+  pts = geom3.toVertices(results[1])
   exp = [
     [[-0.5, -0.5, -0.5], [-0.5, -0.5, 0.5], [-0.5, 0.5, 0.5], [-0.5, 0.5, -0.5]],
     [[0.5, -0.5, -0.5], [0.5, 0.5, -0.5], [0.5, 0.5, 0.5], [0.5, -0.5, 0.5]],
@@ -132,7 +132,7 @@ test('snap: snap of a geom3 produces an expected geom3', (t) => {
   ]
   t.true(comparePolygonsAsPoints(pts, exp))
 
-  pts = geom3.toPoints(results[2])
+  pts = geom3.toVertices(results[2])
   exp = [
     [[-0.6666666666666667, -0.6666666666666667, -0.6666666666666667], [-0.6666666666666667, -0.6666666666666667, 0.6666666666666667],
       [-0.6666666666666667, 0.6666666666666667, 0.6666666666666667], [-0.6666666666666667, 0.6666666666666667, -0.6666666666666667]],
@@ -149,7 +149,7 @@ test('snap: snap of a geom3 produces an expected geom3', (t) => {
   ]
   t.true(comparePolygonsAsPoints(pts, exp))
 
-  pts = geom3.toPoints(results[3])
+  pts = geom3.toVertices(results[3])
   exp = [
     [[-1570.7963267948967, -1570.7963267948967, -1570.7963267948967], [-1570.7963267948967, -1570.7963267948967, 1570.7963267948967],
       [-1570.7963267948967, 1570.7963267948967, 1570.7963267948967], [-1570.7963267948967, 1570.7963267948967, -1570.7963267948967]],

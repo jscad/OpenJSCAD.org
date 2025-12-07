@@ -77,11 +77,11 @@ test('mirror: mirroring of geom3 about X/Y/Z produces expected changes to polygo
     [[-2, -7, -12], [-2, 13, -12], [8, 13, -12], [8, -7, -12]],
     [[-2, -7, 18], [8, -7, 18], [8, 13, 18], [-2, 13, 18]]
   ]
-  const geometry = geom3.fromPoints(points)
+  const geometry = geom3.fromVertices(points)
 
   // mirror about X
   let mirrored = mirror({ normal: [1, 0, 0] }, geometry)
-  let obs = geom3.toPoints(mirrored)
+  let obs = geom3.toVertices(mirrored)
   let exp = [
     [[2, 13, -12], [2, 13, 18], [2, -7, 18], [2, -7, -12]],
     [[-8, -7, 18], [-8, 13, 18], [-8, 13, -12], [-8, -7, -12]],
@@ -96,14 +96,14 @@ test('mirror: mirroring of geom3 about X/Y/Z produces expected changes to polygo
   t.deepEqual(obs, exp)
 
   mirrored = mirrorX(geometry)
-  obs = geom3.toPoints(mirrored)
+  obs = geom3.toVertices(mirrored)
   t.notThrows(() => geom3.validate(mirrored))
   t.is(measureVolume(mirrored), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // mirror about Y
   mirrored = mirror({ normal: [0, 1, 0] }, geometry)
-  obs = geom3.toPoints(mirrored)
+  obs = geom3.toVertices(mirrored)
   exp = [
     [[-2, -13, -12], [-2, -13, 18], [-2, 7, 18], [-2, 7, -12]],
     [[8, 7, 18], [8, -13, 18], [8, -13, -12], [8, 7, -12]],
@@ -117,14 +117,14 @@ test('mirror: mirroring of geom3 about X/Y/Z produces expected changes to polygo
   t.true(comparePolygonsAsPoints(obs, exp))
 
   mirrored = mirrorY(geometry)
-  obs = geom3.toPoints(mirrored)
+  obs = geom3.toVertices(mirrored)
   t.notThrows(() => geom3.validate(mirrored))
   t.is(measureVolume(mirrored), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // mirror about Z
   mirrored = mirror({ normal: [0, 0, 1] }, geometry)
-  obs = geom3.toPoints(mirrored)
+  obs = geom3.toVertices(mirrored)
   exp = [
     [[-2, 13, 12], [-2, 13, -18], [-2, -7, -18], [-2, -7, 12]],
     [[8, -7, -18], [8, 13, -18], [8, 13, 12], [8, -7, 12]],
@@ -138,7 +138,7 @@ test('mirror: mirroring of geom3 about X/Y/Z produces expected changes to polygo
   t.true(comparePolygonsAsPoints(obs, exp))
 
   mirrored = mirrorZ(geometry)
-  obs = geom3.toPoints(mirrored)
+  obs = geom3.toVertices(mirrored)
   t.notThrows(() => geom3.validate(mirrored))
   t.is(measureVolume(mirrored), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))

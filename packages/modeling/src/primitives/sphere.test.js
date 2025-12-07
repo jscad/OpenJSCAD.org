@@ -10,7 +10,7 @@ import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
 
 test('sphere (defaults)', (t) => {
   const obs = sphere()
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 12.465694088650583)
@@ -21,7 +21,7 @@ test('sphere (defaults)', (t) => {
 test('sphere (options)', (t) => {
   // test radius
   let obs = sphere({ radius: 5, segments: 12 })
-  let pts = geom3.toPoints(obs)
+  let pts = geom3.toVertices(obs)
   let exp = []
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 296.5322084069296)
@@ -31,7 +31,7 @@ test('sphere (options)', (t) => {
 
   // test segments
   obs = sphere({ segments: 8 })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
   exp = [
     [[1, 0, 0], [0.7071067811865476, -0.7071067811865475, 0],
       [0.5000000000000001, -0.5, -0.7071067811865475], [0.7071067811865476, 0, -0.7071067811865475]],
@@ -116,7 +116,7 @@ test('sphere (options)', (t) => {
 
   // test center
   obs = sphere({ center: [-3, 5, 7], segments: 8 })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
   exp = [
     [[-2, 5, 7], [-2.2928932188134525, 4.292893218813452, 7],
       [-2.5, 4.5, 6.292893218813452], [-2.2928932188134525, 5, 6.292893218813452]],
@@ -176,7 +176,7 @@ test('sphere (options)', (t) => {
 
 test('sphere (zero radius)', (t) => {
   const obs = sphere({ radius: 0 })
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 0)
   t.is(measureVolume(obs), 0)

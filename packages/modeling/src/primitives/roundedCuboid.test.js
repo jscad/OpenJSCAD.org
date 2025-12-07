@@ -10,7 +10,7 @@ import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
 
 test('roundedCuboid (defaults)', (t) => {
   const obs = roundedCuboid()
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 21.87859958298585)
@@ -20,7 +20,7 @@ test('roundedCuboid (defaults)', (t) => {
 
 test('roundedCuboid (zero size)', (t) => {
   const obs = roundedCuboid({ size: [1, 1, 0] })
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 0)
   t.is(measureVolume(obs), 0)
@@ -29,7 +29,7 @@ test('roundedCuboid (zero size)', (t) => {
 
 test('roundedCuboid (zero radius)', (t) => {
   const obs = roundedCuboid({ roundRadius: 0 })
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 24)
   t.is(measureVolume(obs), 7.999999999999999)
@@ -39,7 +39,7 @@ test('roundedCuboid (zero radius)', (t) => {
 test('roundedCuboid (options)', (t) => {
   // test segments
   let obs = roundedCuboid({ segments: 8 })
-  let pts = geom3.toPoints(obs)
+  let pts = geom3.toVertices(obs)
   let exp = []
 
   t.notThrows(() => geom3.validate(obs))
@@ -49,7 +49,7 @@ test('roundedCuboid (options)', (t) => {
 
   // test center
   obs = roundedCuboid({ center: [4, 5, 6], segments: 8 })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
   exp = [
   ]
 
@@ -60,7 +60,7 @@ test('roundedCuboid (options)', (t) => {
 
   // test size
   obs = roundedCuboid({ size: [8, 10, 12], segments: 8 })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
   exp = [
     [[4, 4.8, -5.8], [3.9414213562373095, 4.941421356237309, -5.8],
       [3.9414213562373095, 4.941421356237309, 5.8], [4, 4.8, 5.8]],
@@ -163,7 +163,7 @@ test('roundedCuboid (options)', (t) => {
 
   // test roundRadius
   obs = roundedCuboid({ size: [8, 10, 12], roundRadius: 2, segments: 8 })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
   exp = [
     [[4, 3, -4], [3.414213562373095, 4.414213562373095, -4],
       [3.414213562373095, 4.414213562373095, 4], [4, 3, 4]],

@@ -10,7 +10,7 @@ import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
 
 test('cube (defaults)', (t) => {
   const obs = cube()
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 24)
   t.is(measureVolume(obs), 7.999999999999999)
@@ -20,7 +20,7 @@ test('cube (defaults)', (t) => {
 test('cube (options)', (t) => {
   // test center
   let obs = cube({ size: 7, center: [6.5, 6.5, 6.5] })
-  let pts = geom3.toPoints(obs)
+  let pts = geom3.toVertices(obs)
   let exp = [
     [[3, 3, 3], [3, 3, 10], [3, 10, 10], [3, 10, 3]],
     [[10, 3, 3], [10, 10, 3], [10, 10, 10], [10, 3, 10]],
@@ -38,7 +38,7 @@ test('cube (options)', (t) => {
 
   // test size
   obs = cube({ size: 7 })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
   exp = [
     [[-3.5, -3.5, -3.5], [-3.5, -3.5, 3.5], [-3.5, 3.5, 3.5], [-3.5, 3.5, -3.5]],
     [[3.5, -3.5, -3.5], [3.5, 3.5, -3.5], [3.5, 3.5, 3.5], [3.5, -3.5, 3.5]],
@@ -57,7 +57,7 @@ test('cube (options)', (t) => {
 
 test('cube (zero size)', (t) => {
   const obs = cube({ size: 0 })
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 0)
   t.is(measureVolume(obs), 0)

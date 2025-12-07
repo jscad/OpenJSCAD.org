@@ -17,7 +17,7 @@ test('extrudeFromSlices (defaults)', (t) => {
   const geometry2 = square({ size: 20 })
 
   let geometry3 = extrudeFromSlices({ }, geometry2)
-  let pts = geom3.toPoints(geometry3)
+  let pts = geom3.toVertices(geometry3)
   const exp = [
     [[-10, -10, 0], [10, -10, 0], [10, -10, 1]],
     [[-10, -10, 0], [10, -10, 1], [-10, -10, 1]],
@@ -39,7 +39,7 @@ test('extrudeFromSlices (defaults)', (t) => {
 
   const poly2 = poly3.create([[-10, -10, 0], [10, -10, 0], [10, 10, 0], [-10, 10, 0]])
   geometry3 = extrudeFromSlices({ }, poly2)
-  pts = geom3.toPoints(geometry3)
+  pts = geom3.toVertices(geometry3)
 
   t.notThrows(() => geom3.validate(geometry3))
   t.is(measureArea(geometry3), 880)
@@ -75,7 +75,7 @@ test('extrudeFromSlices (torus)', (t) => {
       }
     }, hex
   )
-  const pts = geom3.toPoints(geometry3)
+  const pts = geom3.toVertices(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
   t.is(measureArea(geometry3), 7070.694617452831)
   t.is(measureVolume(geometry3), 29393.876913398108)
@@ -96,7 +96,7 @@ test('extrudeFromSlices (same shape, changing dimensions)', (t) => {
       }
     }, base
   )
-  const pts = geom3.toPoints(geometry3)
+  const pts = geom3.toVertices(geometry3)
   // expected to throw because capEnd is false (non-closed geometry)
   t.throws(() => geom3.validate(geometry3))
   t.is(measureArea(geometry3), 53.70100297794013)
@@ -117,7 +117,7 @@ test('extrudeFromSlices (changing shape, changing dimensions)', (t) => {
       }
     }, base
   )
-  const pts = geom3.toPoints(geometry3)
+  const pts = geom3.toVertices(geometry3)
   t.notThrows.skip(() => geom3.validate(geometry3))
   t.is(measureArea(geometry3), 1965.8643589631802)
   t.is(measureVolume(geometry3), 5260.067107417433)
@@ -130,7 +130,7 @@ test('extrudeFromSlices (holes)', (t) => {
     [[-5, -5], [-5, 5], [5, 5], [5, -5]]
   ])
   const geometry3 = extrudeFromSlices({ }, geometry2)
-  const pts = geom3.toPoints(geometry3)
+  const pts = geom3.toVertices(geometry3)
   const exp = [
     [[-10, 10, 0], [-10, -10, 0], [-10, -10, 1]],
     [[-10, 10, 0], [-10, -10, 1], [-10, 10, 1]],

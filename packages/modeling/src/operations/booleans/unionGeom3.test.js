@@ -17,7 +17,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
 
   // union of one object
   const result1 = union(geometry1)
-  let obs = geom3.toPoints(result1)
+  let obs = geom3.toVertices(result1)
   let exp = [
     [[2, 0, 0], [1.4142135623730951, -1.414213562373095, 0],
       [1.0000000000000002, -1, -1.414213562373095], [1.4142135623730951, 0, -1.414213562373095]],
@@ -78,7 +78,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
   const geometry2 = center({ relativeTo: [10, 10, 10] }, cuboid({ size: [4, 4, 4] }))
 
   const result2 = union(geometry1, geometry2)
-  obs = geom3.toPoints(result2)
+  obs = geom3.toVertices(result2)
   t.notThrows.skip(() => geom3.validate(result2))
   t.is(measureArea(result2), 140.05375630658983)
   t.is(measureVolume(result2), 89.75161133197969)
@@ -88,7 +88,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
   const geometry3 = cuboid({ size: [18, 18, 18] })
 
   const result3 = union(geometry2, geometry3)
-  obs = geom3.toPoints(result3)
+  obs = geom3.toVertices(result3)
   exp = [
     [[12, 8, 8], [12, 12, 8], [12, 12, 12], [12, 8, 12]],
     [[8, 12, 8], [8, 12, 12], [12, 12, 12], [12, 12, 8]],
@@ -117,7 +117,7 @@ test('union of one or more geom3 objects produces expected geometry', (t) => {
 
   // union of two completely overlapping objects
   const result4 = union(geometry1, geometry3)
-  obs = geom3.toPoints(result4)
+  obs = geom3.toVertices(result4)
   exp = [
     [[-9, -9, -9], [-9, -9, 9], [-9, 9, 9], [-9, 9, -9]],
     [[9, -9, -9], [9, 9, -9], [9, 9, 9], [9, -9, 9]],
@@ -138,7 +138,7 @@ test('union of geom3 with rounding issues #137', (t) => {
   const geometry2 = center({ relativeTo: [0, 0, -4.400001] }, cuboid({ size: [44, 26, 1.8] })) // introduce precision error
 
   const result = union(geometry1, geometry2)
-  const pts = geom3.toPoints(result)
+  const pts = geom3.toVertices(result)
   t.notThrows(() => geom3.validate(result))
   t.is(measureArea(result), 3240.00014)
   t.is(measureVolume(result), 7779.201144000001)

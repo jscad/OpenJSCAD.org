@@ -12,7 +12,7 @@ import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
 
 test('cylinderElliptic (defaults)', (t) => {
   const obs = cylinderElliptic()
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 18.789084266699856)
@@ -23,7 +23,7 @@ test('cylinderElliptic (defaults)', (t) => {
 test('cylinderElliptic (options)', (t) => {
   // test height
   let obs = cylinderElliptic({ height: 10, segments: 12 })
-  let pts = geom3.toPoints(obs)
+  let pts = geom3.toVertices(obs)
   let exp = [
     [[0, 0, -5], [0.8660254037844387, 0.49999999999999994, -5], [1, 0, -5]],
     [[0.8660254037844387, 0.49999999999999994, -5], [0.8660254037844387, 0.49999999999999994, 5],
@@ -83,7 +83,7 @@ test('cylinderElliptic (options)', (t) => {
 
   // test startRadius and endRadius
   obs = cylinderElliptic({ startRadius: [1, 2], endRadius: [2, 1], segments: 12 })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
   exp = [
     [[0, 0, -1], [0.8660254037844387, 0.9999999999999999, -1], [1, 0, -1]],
     [[1, 0, -1], [0.8660254037844387, 0.9999999999999999, -1], [2, 0, 1]],
@@ -143,7 +143,7 @@ test('cylinderElliptic (options)', (t) => {
 
   // test startAngle and endAngle
   obs = cylinderElliptic({ startRadius: [1, 2], endRadius: [2, 1], startAngle: TAU / 4, endAngle: TAU * 0.75, segments: 12 })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 22.17105015072561)
@@ -152,7 +152,7 @@ test('cylinderElliptic (options)', (t) => {
 
   // test startAngle and endAngle
   obs = cylinderElliptic({ startAngle: 1, endAngle: 1 + TAU })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 18.78908426669986)
@@ -161,7 +161,7 @@ test('cylinderElliptic (options)', (t) => {
 
   // test segments
   obs = cylinderElliptic({ segments: 8 })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 17.902724085175244)
@@ -170,7 +170,7 @@ test('cylinderElliptic (options)', (t) => {
 
   // test center
   obs = cylinderElliptic({ center: [-5, -5, -5], height: 3, segments: 8 })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
   exp = [
     [[-5, -5, -6.5], [-4.292893218813452, -4.292893218813452, -6.5], [-4, -5, -6.5]],
     [[-4.292893218813452, -4.292893218813452, -6.5], [-4.292893218813452, -4.292893218813452, -3.5],
@@ -215,7 +215,7 @@ test('cylinderElliptic (options)', (t) => {
 
 test('cylinderElliptic (cone)', (t) => {
   const obs = cylinderElliptic({ endRadius: [0, 0] })
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 10.128239395900382)
@@ -225,7 +225,7 @@ test('cylinderElliptic (cone)', (t) => {
 
 test('cylinderElliptic (squished)', (t) => {
   const obs = cylinderElliptic({ startRadius: [1, 0], endRadius: [0, 1], segments: 4 })
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 8.47213595499958)

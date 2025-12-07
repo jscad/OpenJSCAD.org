@@ -61,7 +61,7 @@ test('hullChain (three, geom2)', (t) => {
 })
 
 test('hullChain (three, geom3)', (t) => {
-  const geometry1 = geom3.fromPoints(
+  const geometry1 = geom3.fromVertices(
     [[[-1, -1, -1], [-1, -1, 1], [-1, 1, 1], [-1, 1, -1]],
       [[1, -1, -1], [1, 1, -1], [1, 1, 1], [1, -1, 1]],
       [[-1, -1, -1], [1, -1, -1], [1, -1, 1], [-1, -1, 1]],
@@ -69,7 +69,7 @@ test('hullChain (three, geom3)', (t) => {
       [[-1, -1, -1], [-1, 1, -1], [1, 1, -1], [1, -1, -1]],
       [[-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1]]]
   )
-  const geometry2 = geom3.fromPoints(
+  const geometry2 = geom3.fromVertices(
     [[[3.5, 3.5, 3.5], [3.5, 3.5, 6.5], [3.5, 6.5, 6.5], [3.5, 6.5, 3.5]],
       [[6.5, 3.5, 3.5], [6.5, 6.5, 3.5], [6.5, 6.5, 6.5], [6.5, 3.5, 6.5]],
       [[3.5, 3.5, 3.5], [6.5, 3.5, 3.5], [6.5, 3.5, 6.5], [3.5, 3.5, 6.5]],
@@ -77,7 +77,7 @@ test('hullChain (three, geom3)', (t) => {
       [[3.5, 3.5, 3.5], [3.5, 6.5, 3.5], [6.5, 6.5, 3.5], [6.5, 3.5, 3.5]],
       [[3.5, 3.5, 6.5], [6.5, 3.5, 6.5], [6.5, 6.5, 6.5], [3.5, 6.5, 6.5]]]
   )
-  const geometry3 = geom3.fromPoints(
+  const geometry3 = geom3.fromVertices(
     [[[-4.5, 1.5, -4.5], [-4.5, 1.5, -1.5], [-4.5, 4.5, -1.5], [-4.5, 4.5, -4.5]],
       [[-1.5, 1.5, -4.5], [-1.5, 4.5, -4.5], [-1.5, 4.5, -1.5], [-1.5, 1.5, -1.5]],
       [[-4.5, 1.5, -4.5], [-1.5, 1.5, -4.5], [-1.5, 1.5, -1.5], [-4.5, 1.5, -1.5]],
@@ -88,7 +88,7 @@ test('hullChain (three, geom3)', (t) => {
 
   // open
   let obs = hullChain(geometry1, geometry2, geometry3)
-  let pts = geom3.toPoints(obs)
+  let pts = geom3.toVertices(obs)
 
   t.notThrows.skip(() => geom3.validate(obs))
   t.is(measureArea(obs), 266.1454764345133)
@@ -97,7 +97,7 @@ test('hullChain (three, geom3)', (t) => {
 
   // closed
   obs = hullChain(geometry1, geometry2, geometry3, geometry1)
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
 
   t.notThrows.skip(() => geom3.validate(obs))
   t.is(measureArea(obs), 272.2887171436021)

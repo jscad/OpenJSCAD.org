@@ -21,8 +21,8 @@ export const toUniquePoints = (geometries) => {
     if (geom2.isA(geometry)) {
       geom2.toPoints(geometry).forEach(addPoint)
     } else if (geom3.isA(geometry)) {
-      // points are grouped by polygon
-      geom3.toPoints(geometry).forEach((points) => points.forEach(addPoint))
+      // vertices are grouped by polygon
+      geom3.toVertices(geometry).forEach((vertices) => vertices.forEach(addPoint))
     } else if (path2.isA(geometry)) {
       path2.toPoints(geometry).forEach(addPoint)
     }

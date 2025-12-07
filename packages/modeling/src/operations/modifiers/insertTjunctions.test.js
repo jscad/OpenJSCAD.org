@@ -11,7 +11,7 @@ import { insertTjunctions } from './insertTjunctions.js'
 test('insertTjunctions: insertTjunctions produces expected polygons', (t) => {
   const geometry1 = geom3.create()
   const geometry2 = cuboid({ size: [2, 2, 2] })
-  const geometry3 = geom3.fromPoints(
+  const geometry3 = geom3.fromVertices(
     [
       [[-1, -1, -1], [-1, -1, 1], [-1, 1, 1], [-1, 1, -1]],
       [[1, -1, -1], [1, 1, -1], [1, 1, 1], [1, -1, 1]],
@@ -24,7 +24,7 @@ test('insertTjunctions: insertTjunctions produces expected polygons', (t) => {
       [[-1, 1, 1], [-1, -1, 1], [0, 0, 1]]
     ]
   )
-  const geometry4 = geom3.fromPoints(
+  const geometry4 = geom3.fromVertices(
     [
       [[-1, -1, -1], [-1, -1, 1], [-1, 1, 1], [-1, 1, -1]],
       [[1, -1, -1], [1, 1, -1], [1, 1, 1], [1, -1, 1]],
