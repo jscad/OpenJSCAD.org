@@ -2,7 +2,7 @@ import test from 'ava'
 
 import { mat4 } from '../../maths/index.js'
 
-import { transform, fromPoints, toPolygons } from './index.js'
+import { transform, fromVertices, toPolygons } from './index.js'
 
 import { comparePolygons, compareVectors } from '../../../test/helpers/index.js'
 
@@ -20,7 +20,7 @@ test('transform: Adjusts the transforms of a populated geom3', (t) => {
     ],
     transforms: [0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
-  const geometry = fromPoints(vertices)
+  const geometry = fromVertices(vertices)
   let another = transform(rotate90, geometry)
   t.not(geometry, another)
   t.true(comparePolygons(another.polygons[0], expected.polygons[0]))

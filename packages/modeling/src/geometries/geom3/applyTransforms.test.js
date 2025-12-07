@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { fromPoints } from './index.js'
+import { fromVertices } from './index.js'
 
 import { applyTransforms } from './applyTransforms.js'
 
@@ -15,7 +15,7 @@ test('applyTransforms: Updates a geom3 with transformed polygons', (t) => {
     isRetesselated: false,
     transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
-  const geometry = fromPoints(vertices)
+  const geometry = fromVertices(vertices)
   const updated = applyTransforms(geometry)
   t.is(geometry, updated)
   t.true(comparePolygons(updated.polygons[0], expected.polygons[0]))

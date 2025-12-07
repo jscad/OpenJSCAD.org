@@ -1,10 +1,10 @@
 import test from 'ava'
 
-import { fromPoints } from './index.js'
+import { fromVertices } from './index.js'
 
 import { comparePolygons, compareVectors } from '../../../test/helpers/index.js'
 
-test('fromPoints: Creates a populated geom3', (t) => {
+test('fromVertices: Creates a populated geom3', (t) => {
   const vertices = [[[0, 0, 0], [1, 0, 0], [1, 0, 1]]]
   const expected = {
     polygons: [
@@ -13,12 +13,12 @@ test('fromPoints: Creates a populated geom3', (t) => {
     isRetesselated: false,
     transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
-  const obs = fromPoints(vertices)
+  const obs = fromVertices(vertices)
   t.true(comparePolygons(obs.polygons[0], expected.polygons[0]))
   t.true(compareVectors(obs.transforms, expected.transforms))
 })
 
-test('fromPoints: throws for improper vertices', (t) => {
-  t.throws(() => fromPoints(), { instanceOf: Error })
-  t.throws(() => fromPoints(0, 0, 0), { instanceOf: Error })
+test('fromVertices: throws for improper vertices', (t) => {
+  t.throws(() => fromVertices(), { instanceOf: Error })
+  t.throws(() => fromVertices(0, 0, 0), { instanceOf: Error })
 })

@@ -1,8 +1,8 @@
 import test from 'ava'
 
-import { fromPointsConvex, validate } from './index.js'
+import { fromVerticesConvex, validate } from './index.js'
 
-test('fromPointsConvex (uniquePoints)', (t) => {
+test('fromVerticesConvex (uniqueVertices)', (t) => {
   const out = []
   for (let x = -9; x <= 9; ++x) {
     for (let y = -9; y <= 9; ++y) {
@@ -14,7 +14,7 @@ test('fromPointsConvex (uniquePoints)', (t) => {
     }
   }
 
-  const obs = fromPointsConvex(out)
+  const obs = fromVerticesConvex(out)
   validate(obs)
   t.is(obs.polygons.length, 170)
   t.true(obs.polygons.every((f) => ([3, 4, 8, 9].indexOf(f.vertices.length) !== -1)))
