@@ -54,7 +54,7 @@ const createObjects${object.id} = (options) => {
   ${polysAsStrings.join(',\n  ')}
 ]
 `
-            primitive = 'geom3.fromPoints(polygons)'
+            primitive = 'geom3.fromVertices(polygons)'
           }
         }
       }
