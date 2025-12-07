@@ -10,6 +10,7 @@
       "packages/modeling/src/geometries/geom2",
       "packages/modeling/src/geometries/geom3",
       "packages/modeling/src/geometries/path2",
+      "packages/modeling/src/geometries/path3",
       "packages/modeling/src/geometries/poly2",
       "packages/modeling/src/geometries/poly3",
       "packages/modeling/src/geometries/slice",
