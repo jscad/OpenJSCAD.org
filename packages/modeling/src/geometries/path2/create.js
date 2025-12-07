@@ -21,13 +21,4 @@ import * as mat4 from '../../maths/mat4/index.js'
  * @example
  * let newPath = create()
  */
-export const create = (points) => {
-  if (points === undefined) {
-    points = []
-  }
-  return {
-    points: points,
-    isClosed: false,
-    transforms: mat4.create()
-  }
-}
+export const create = (points = []) => ({ points: points, isClosed: false, transforms: mat4.create() })
