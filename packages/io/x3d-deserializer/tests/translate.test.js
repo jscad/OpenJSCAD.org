@@ -46,7 +46,7 @@ test('deserialize X3D 3D components to JSCAD script', (t) => {
   t.is(countOf('createObjects', observed), 20)
   t.is(countOf('cylinder', observed), 2)
   t.is(countOf('sphere', observed), 1)
-  t.is(countOf('geom3.fromPoints', observed), 1)
+  t.is(countOf('geom3.fromVertices', observed), 1)
   t.is(countOf('transform', observed), 10)
 })
 
