@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { clone, create, fromPoints } from './index.js'
+import { clone, create, fromVertices } from './index.js'
 
 import { comparePolygons, compareVectors } from '../../../test/helpers/index.js'
 
@@ -23,7 +23,7 @@ test('clone: Creates a clone of a populated geom3', (t) => {
     ],
     transforms: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
   }
-  const geometry = fromPoints(vertices)
+  const geometry = fromVertices(vertices)
   const another = clone(geometry)
   t.not(another, geometry)
   t.true(comparePolygons(another.polygons[0], expected.polygons[0]))

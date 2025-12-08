@@ -218,7 +218,7 @@ test('hull (single, geom3)', (t) => {
   let geometry = geom3.create()
 
   let obs = hull(geometry)
-  let pts = geom3.toPoints(obs)
+  let pts = geom3.toVertices(obs)
 
   t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 0)
@@ -226,7 +226,7 @@ test('hull (single, geom3)', (t) => {
   geometry = sphere({ radius: 2, segments: 8 })
 
   obs = hull(geometry)
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 44.05375630658983)
@@ -238,7 +238,7 @@ test('hull (multiple, geom3)', (t) => {
   const geometry1 = cuboid({ size: [2, 2, 2] })
 
   let obs = hull(geometry1, geometry1) // same
-  let pts = geom3.toPoints(obs)
+  let pts = geom3.toVertices(obs)
   let exp = [
     [[-1, 1, -1], [-1, 1, 1], [1, 1, 1], [1, 1, -1]],
     [[-1, 1, -1], [1, 1, -1], [1, -1, -1], [-1, -1, -1]],
@@ -257,7 +257,7 @@ test('hull (multiple, geom3)', (t) => {
   const geometry2 = center({ relativeTo: [5, 5, 5] }, cuboid({ size: [3, 3, 3] }))
 
   obs = hull(geometry1, geometry2)
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
   exp = [
     [[1, -1, -1], [6.5, 3.5, 3.5], [6.5, 3.5, 6.5], [1, -1, 1]],
     [[-1, -1, 1], [-1, -1, -1], [1, -1, -1], [1, -1, 1]],
@@ -286,7 +286,7 @@ test('hull (multiple, overlapping, geom3)', (t) => {
   const geometry3 = center({ relativeTo: [-3, -3, -3] }, ellipsoid({ radius: [3, 3, 3], segments: 12 }))
 
   const obs = hull(geometry1, geometry2, geometry3)
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 282.26819685563686)

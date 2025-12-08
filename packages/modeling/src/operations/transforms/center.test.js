@@ -53,11 +53,11 @@ test('center: centering of a geom3 produces expected changes to polygons', (t) =
     [[-2, -7, -12], [-2, 13, -12], [8, 13, -12], [8, -7, -12]],
     [[-2, -7, 18], [8, -7, 18], [8, 13, 18], [-2, 13, 18]]
   ]
-  const geometry = geom3.fromPoints(points)
+  const geometry = geom3.fromVertices(points)
 
   // center about X
   let centered = center({ axes: [true, false, false] }, geometry)
-  let pts = geom3.toPoints(centered)
+  let pts = geom3.toVertices(centered)
   let exp = [
     [[-5, -7, -12], [-5, -7, 18], [-5, 13, 18], [-5, 13, -12]],
     [[5, -7, -12], [5, 13, -12], [5, 13, 18], [5, -7, 18]],
@@ -71,14 +71,14 @@ test('center: centering of a geom3 produces expected changes to polygons', (t) =
   t.true(comparePolygonsAsPoints(pts, exp))
 
   centered = centerX(geometry)
-  pts = geom3.toPoints(centered)
+  pts = geom3.toVertices(centered)
   t.notThrows(() => geom3.validate(centered))
   t.is(measureVolume(centered), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // center about Y
   centered = center({ axes: [false, true, false] }, geometry)
-  pts = geom3.toPoints(centered)
+  pts = geom3.toVertices(centered)
   exp = [
     [[-2, -10, -12], [-2, -10, 18], [-2, 10, 18], [-2, 10, -12]],
     [[8, -10, -12], [8, 10, -12], [8, 10, 18], [8, -10, 18]],
@@ -92,14 +92,14 @@ test('center: centering of a geom3 produces expected changes to polygons', (t) =
   t.true(comparePolygonsAsPoints(pts, exp))
 
   centered = centerY(geometry)
-  pts = geom3.toPoints(centered)
+  pts = geom3.toVertices(centered)
   t.notThrows(() => geom3.validate(centered))
   t.is(measureVolume(centered), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(pts, exp))
 
   // center about Z
   centered = center({ axes: [false, false, true] }, geometry)
-  pts = geom3.toPoints(centered)
+  pts = geom3.toVertices(centered)
   exp = [
     [[-2, -7, -15], [-2, -7, 15], [-2, 13, 15], [-2, 13, -15]],
     [[8, -7, -15], [8, 13, -15], [8, 13, 15], [8, -7, 15]],
@@ -113,7 +113,7 @@ test('center: centering of a geom3 produces expected changes to polygons', (t) =
   t.true(comparePolygonsAsPoints(pts, exp))
 
   centered = centerZ(geometry)
-  pts = geom3.toPoints(centered)
+  pts = geom3.toVertices(centered)
   t.notThrows(() => geom3.validate(centered))
   t.is(measureVolume(centered), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(pts, exp))

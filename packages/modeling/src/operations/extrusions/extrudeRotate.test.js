@@ -18,7 +18,7 @@ test('extrudeRotate: (defaults) extruding of a geom2 produces an expected geom3'
   const geometry2 = geom2.create([[[10, 8], [10, -8], [26, -8], [26, 8]]])
 
   const geometry3 = extrudeRotate({ }, geometry2)
-  const pts = geom3.toPoints(geometry3)
+  const pts = geom3.toVertices(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
   t.is(measureArea(geometry3), 7033.914479497244)
   t.is(measureVolume(geometry3), 27648.000000000007)
@@ -36,7 +36,7 @@ test('extrudeRotate: (angle) extruding of a geom2 produces an expected geom3', (
 
   // test angle
   let geometry3 = extrudeRotate({ segments: 4, angle: TAU / 8 }, geometry2)
-  let pts = geom3.toPoints(geometry3)
+  let pts = geom3.toVertices(geometry3)
   const exp = [
     [[26, 0, 8], [26, 0, -8], [18.38477631085024, 18.384776310850235, -8]],
     [[26, 0, 8], [18.38477631085024, 18.384776310850235, -8], [18.38477631085024, 18.384776310850235, 8]],
@@ -58,14 +58,14 @@ test('extrudeRotate: (angle) extruding of a geom2 produces an expected geom3', (
   t.true(comparePolygonsAsPoints(pts, exp))
 
   geometry3 = extrudeRotate({ segments: 4, angle: -250 * 0.017453292519943295 }, geometry2)
-  pts = geom3.toPoints(geometry3)
+  pts = geom3.toVertices(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
   t.is(measureArea(geometry3), 4525.850393739846)
   t.is(measureVolume(geometry3), 13730.527057424617)
   t.is(pts.length, 28)
 
   geometry3 = extrudeRotate({ segments: 4, angle: 250 * 0.017453292519943295 }, geometry2)
-  pts = geom3.toPoints(geometry3)
+  pts = geom3.toVertices(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
   t.is(measureArea(geometry3), 4525.8503937398455)
   t.is(measureVolume(geometry3), 13730.527057424617)
@@ -77,7 +77,7 @@ test('extrudeRotate: (startAngle) extruding of a geom2 produces an expected geom
 
   // test startAngle
   let geometry3 = extrudeRotate({ segments: 5, startAngle: TAU / 8 }, geometry2)
-  let pts = geom3.toPoints(geometry3)
+  let pts = geom3.toVertices(geometry3)
   let exp = [
     [7.0710678118654755, 7.071067811865475, 8],
     [18.38477631085024, 18.384776310850235, 8],
@@ -90,7 +90,7 @@ test('extrudeRotate: (startAngle) extruding of a geom2 produces an expected geom
   t.true(comparePoints(pts[6], exp))
 
   geometry3 = extrudeRotate({ segments: 5, startAngle: -TAU / 8 }, geometry2)
-  pts = geom3.toPoints(geometry3)
+  pts = geom3.toVertices(geometry3)
   exp = [
     [7.0710678118654755, -7.071067811865475, 8],
     [18.38477631085024, -18.384776310850235, 8],
@@ -108,14 +108,14 @@ test('extrudeRotate: (segments) extruding of a geom2 produces an expected geom3'
 
   // test segments
   let geometry3 = extrudeRotate({ segments: 4 }, geometry2)
-  let pts = geom3.toPoints(geometry3)
+  let pts = geom3.toVertices(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
   t.is(measureArea(geometry3), 5562.34804770761)
   t.is(measureVolume(geometry3), 18432)
   t.is(pts.length, 32)
 
   geometry3 = extrudeRotate({ segments: 64 }, geometry2)
-  pts = geom3.toPoints(geometry3)
+  pts = geom3.toVertices(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
   t.is(measureArea(geometry3), 7230.965353920782)
   t.is(measureVolume(geometry3), 28906.430888871357)
@@ -124,7 +124,7 @@ test('extrudeRotate: (segments) extruding of a geom2 produces an expected geom3'
   // test overlapping edges
   geometry2 = geom2.create([[[0, 0], [2, 1], [1, 2], [1, 3], [3, 4], [0, 5]]])
   geometry3 = extrudeRotate({ segments: 8 }, geometry2)
-  pts = geom3.toPoints(geometry3)
+  pts = geom3.toVertices(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
   t.is(measureArea(geometry3), 84.28200374166053)
   t.is(measureVolume(geometry3), 33.94112549695427)
@@ -133,7 +133,7 @@ test('extrudeRotate: (segments) extruding of a geom2 produces an expected geom3'
   // test overlapping edges that produce hollow shape
   geometry2 = geom2.create([[[30, 0], [30, 60], [0, 60], [0, 50], [10, 40], [10, 30], [0, 20], [0, 10], [10, 0]]])
   geometry3 = extrudeRotate({ segments: 8 }, geometry2)
-  pts = geom3.toPoints(geometry3)
+  pts = geom3.toVertices(geometry3)
   t.notThrows(() => geom3.validate(geometry3))
   t.is(measureArea(geometry3), 17692.315375839215)
   t.is(measureVolume(geometry3), 147078.2104868019)
@@ -145,7 +145,7 @@ test('extrudeRotate: (overlap +/-) extruding of a geom2 produces an expected geo
   let geometry = geom2.create([[[-1, 8], [-1, -8], [7, -8], [7, 8]]])
 
   let obs = extrudeRotate({ segments: 4, angle: TAU / 4 }, geometry)
-  let pts = geom3.toPoints(obs)
+  let pts = geom3.toVertices(obs)
   let exp = [
     [[0, 0, 8], [7, 0, 8], [0, 7, 8]],
     [[7, 0, 8], [7, 0, -8], [0, 7, -8]],
@@ -166,7 +166,7 @@ test('extrudeRotate: (overlap +/-) extruding of a geom2 produces an expected geo
   geometry = geom2.create([[[-1, 8], [-2, 4], [-1, -8], [7, -8], [7, 8]]])
 
   obs = extrudeRotate({ segments: 8, angle: TAU / 4 }, geometry)
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
   exp = [
     [[2, 0, 4], [1, 0, -8], [0.7071067811865476, 0.7071067811865475, -8]],
     [[2, 0, 4], [0.7071067811865476, 0.7071067811865475, -8], [1.4142135623730951, 1.414213562373095, 4]],

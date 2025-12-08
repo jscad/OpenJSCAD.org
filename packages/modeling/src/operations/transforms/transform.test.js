@@ -40,9 +40,9 @@ test('transform: transforming of a geom3 produces expected changes to polygons',
     [[-2, -7, -12], [-2, 13, -12], [8, 13, -12], [8, -7, -12]],
     [[-2, -7, 18], [8, -7, 18], [8, 13, 18], [-2, 13, 18]]
   ]
-  let geometry = geom3.fromPoints(points)
+  let geometry = geom3.fromVertices(points)
   geometry = transform(matrix, geometry)
-  const obs = geom3.toPoints(geometry)
+  const obs = geom3.toVertices(geometry)
   const exp = [
     [[-5, -10, -15], [-5, -10, 15], [-5, 10, 15], [-5, 10, -15]],
     [[5, -10, -15], [5, 10, -15], [5, 10, 15], [5, -10, 15]],

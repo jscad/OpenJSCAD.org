@@ -10,7 +10,7 @@ import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
 
 test('roundedCylinder (defaults)', (t) => {
   const obs = roundedCylinder()
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 16.844951865908268)
@@ -20,7 +20,7 @@ test('roundedCylinder (defaults)', (t) => {
 
 test('roundedCylinder (zero height)', (t) => {
   const obs = roundedCylinder({ height: 0 })
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 0)
   t.is(measureVolume(obs), 0)
@@ -29,7 +29,7 @@ test('roundedCylinder (zero height)', (t) => {
 
 test('roundedCylinder (zero radius)', (t) => {
   const obs = roundedCylinder({ radius: 0, roundRadius: 0 })
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 0)
   t.is(measureVolume(obs), 0)
@@ -38,7 +38,7 @@ test('roundedCylinder (zero radius)', (t) => {
 
 test('roundedCylinder (zero roundRadius)', (t) => {
   const obs = roundedCylinder({ roundRadius: 0 })
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 18.789084266699856)
   t.is(measureVolume(obs), 6.2428903045161)
@@ -48,7 +48,7 @@ test('roundedCylinder (zero roundRadius)', (t) => {
 test('roundedCylinder (options)', (t) => {
   // test segments
   let obs = roundedCylinder({ segments: 5 })
-  let pts = geom3.toPoints(obs)
+  let pts = geom3.toVertices(obs)
   let exp = [
   ]
 
@@ -59,7 +59,7 @@ test('roundedCylinder (options)', (t) => {
 
   // test center
   obs = roundedCylinder({ segments: 5, center: [-5, -5, -5] })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
   exp = [
     [[-4.048943483704846, -4.6909830056250525, -5.8], [-5, -4, -5.8],
       [-5, -4, -4.2], [-4.048943483704846, -4.6909830056250525, -4.2]],
@@ -91,7 +91,7 @@ test('roundedCylinder (options)', (t) => {
 
   // test height
   obs = roundedCylinder({ segments: 5, height: 20 })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
   exp = [
     [[0.9510565162951535, 0.30901699437494745, -9.8], [0, 1, -9.8],
       [0, 1, 9.8], [0.9510565162951535, 0.30901699437494745, 9.8]],
@@ -123,7 +123,7 @@ test('roundedCylinder (options)', (t) => {
 
   // test radius
   obs = roundedCylinder({ segments: 5, radius: 10 })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
   exp = [
     [[9.510565162951535, 3.0901699437494745, -0.8], [0, 10, -0.8],
       [0, 10, 0.8], [9.510565162951535, 3.0901699437494745, 0.8]],
@@ -154,7 +154,7 @@ test('roundedCylinder (options)', (t) => {
 
   // test round radius
   obs = roundedCylinder({ segments: 5, height: 20, radius: 5, roundRadius: 2 })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
   exp = [
     [[4.755282581475767, 1.5450849718747373, -8], [0, 5, -8],
       [0, 5, 8], [4.755282581475767, 1.5450849718747373, 8]],

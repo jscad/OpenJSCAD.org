@@ -10,7 +10,7 @@ import { comparePolygonsAsPoints } from '../../test/helpers/index.js'
 
 test('geodesicSphere (defaults)', (t) => {
   const obs = geodesicSphere()
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
   t.notThrows(() => geom3.validate(obs))
   t.is(pts.length, 20)
 })
@@ -18,7 +18,7 @@ test('geodesicSphere (defaults)', (t) => {
 test('geodesicSphere (options)', (t) => {
   // test radius
   let obs = geodesicSphere({ radius: 5 })
-  let pts = geom3.toPoints(obs)
+  let pts = geom3.toVertices(obs)
   const exp = [
     [[4.253254557317035, 0, 2.628654726407001], [2.628654726407001, -4.253254557317035, 0], [4.253254557317035, 0, -2.628654726407001]],
     [[4.253254557317035, 0, -2.628654726407001], [2.628654726407001, 4.253254557317035, 0], [4.253254557317035, 0, 2.628654726407001]],
@@ -50,7 +50,7 @@ test('geodesicSphere (options)', (t) => {
 
   // test frequency
   obs = geodesicSphere({ radius: 5, frequency: 18 })
-  pts = geom3.toPoints(obs)
+  pts = geom3.toVertices(obs)
 
   t.notThrows.skip(() => geom3.validate(obs))
   t.is(measureArea(obs), 303.76605423529395)
@@ -60,7 +60,7 @@ test('geodesicSphere (options)', (t) => {
 
 test('geodesicSphere (zero radius)', (t) => {
   const obs = geodesicSphere({ radius: 0 })
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 0)
   t.is(measureVolume(obs), 0)

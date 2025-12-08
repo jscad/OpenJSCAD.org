@@ -77,11 +77,11 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
     [[-2, -7, -12], [-2, 13, -12], [8, 13, -12], [8, -7, -12]],
     [[-2, -7, 18], [8, -7, 18], [8, 13, 18], [-2, 13, 18]]
   ]
-  const geometry = geom3.fromPoints(points)
+  const geometry = geom3.fromVertices(points)
 
   // translate X
   let translated = translate([3], geometry)
-  let obs = geom3.toPoints(translated)
+  let obs = geom3.toVertices(translated)
   let exp = [
     [[1, -7, -12], [1, -7, 18], [1, 13, 18], [1, 13, -12]],
     [[11, -7, -12], [11, 13, -12], [11, 13, 18], [11, -7, 18]],
@@ -95,14 +95,14 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
   t.true(comparePolygonsAsPoints(obs, exp))
 
   translated = translateX(3, geometry)
-  obs = geom3.toPoints(translated)
+  obs = geom3.toVertices(translated)
   t.notThrows(() => geom3.validate(translated))
   t.is(measureVolume(translated), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // translated Y
   translated = translate([0, 3], geometry)
-  obs = geom3.toPoints(translated)
+  obs = geom3.toVertices(translated)
   exp = [
     [[-2, -4, -12], [-2, -4, 18], [-2, 16, 18], [-2, 16, -12]],
     [[8, -4, -12], [8, 16, -12], [8, 16, 18], [8, -4, 18]],
@@ -116,14 +116,14 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
   t.true(comparePolygonsAsPoints(obs, exp))
 
   translated = translateY(3, geometry)
-  obs = geom3.toPoints(translated)
+  obs = geom3.toVertices(translated)
   t.notThrows(() => geom3.validate(translated))
   t.is(measureVolume(translated), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // translate Z
   translated = translate([0, 0, 3], geometry)
-  obs = geom3.toPoints(translated)
+  obs = geom3.toVertices(translated)
   exp = [
     [[-2, -7, -9], [-2, -7, 21], [-2, 13, 21], [-2, 13, -9]],
     [[8, -7, -9], [8, 13, -9], [8, 13, 21], [8, -7, 21]],
@@ -137,7 +137,7 @@ test('translate: translating of a geom3 produces expected changes to polygons', 
   t.true(comparePolygonsAsPoints(obs, exp))
 
   translated = translateZ(3, geometry)
-  obs = geom3.toPoints(translated)
+  obs = geom3.toVertices(translated)
   t.notThrows(() => geom3.validate(translated))
   t.is(measureVolume(translated), measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))

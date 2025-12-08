@@ -77,11 +77,11 @@ test('scale: scaling of a geom3 produces expected changes to polygons', (t) => {
     [[-2, -7, -12], [-2, 13, -12], [8, 13, -12], [8, -7, -12]],
     [[-2, -7, 18], [8, -7, 18], [8, 13, 18], [-2, 13, 18]]
   ]
-  const geometry = geom3.fromPoints(points)
+  const geometry = geom3.fromVertices(points)
 
   // scale X
   let scaled = scale([3], geometry)
-  let obs = geom3.toPoints(scaled)
+  let obs = geom3.toVertices(scaled)
   let exp = [
     [[-6, -7, -12], [-6, -7, 18], [-6, 13, 18], [-6, 13, -12]],
     [[24, -7, -12], [24, 13, -12], [24, 13, 18], [24, -7, 18]],
@@ -95,14 +95,14 @@ test('scale: scaling of a geom3 produces expected changes to polygons', (t) => {
   t.true(comparePolygonsAsPoints(obs, exp))
 
   scaled = scaleX(3, geometry)
-  obs = geom3.toPoints(scaled)
+  obs = geom3.toVertices(scaled)
   t.notThrows(() => geom3.validate(scaled))
   t.is(measureVolume(scaled), 3 * measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // scale Y
   scaled = scale([1, 0.5], geometry)
-  obs = geom3.toPoints(scaled)
+  obs = geom3.toVertices(scaled)
   exp = [
     [[-2, -3.5, -12], [-2, -3.5, 18], [-2, 6.5, 18], [-2, 6.5, -12]],
     [[8, -3.5, -12], [8, 6.5, -12], [8, 6.5, 18], [8, -3.5, 18]],
@@ -116,14 +116,14 @@ test('scale: scaling of a geom3 produces expected changes to polygons', (t) => {
   t.true(comparePolygonsAsPoints(obs, exp))
 
   scaled = scaleY(0.5, geometry)
-  obs = geom3.toPoints(scaled)
+  obs = geom3.toVertices(scaled)
   t.notThrows(() => geom3.validate(scaled))
   t.is(measureVolume(scaled), 0.5 * measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))
 
   // scale Z
   scaled = scale([1, 1, 5], geometry)
-  obs = geom3.toPoints(scaled)
+  obs = geom3.toVertices(scaled)
   exp = [
     [[-2, -7, -60], [-2, -7, 90], [-2, 13, 90], [-2, 13, -60]],
     [[8, -7, -60], [8, 13, -60], [8, 13, 90], [8, -7, 90]],
@@ -137,7 +137,7 @@ test('scale: scaling of a geom3 produces expected changes to polygons', (t) => {
   t.true(comparePolygonsAsPoints(obs, exp))
 
   scaled = scaleZ(5, geometry)
-  obs = geom3.toPoints(scaled)
+  obs = geom3.toVertices(scaled)
   t.notThrows(() => geom3.validate(scaled))
   t.is(measureVolume(scaled), 5 * measureVolume(geometry))
   t.true(comparePolygonsAsPoints(obs, exp))

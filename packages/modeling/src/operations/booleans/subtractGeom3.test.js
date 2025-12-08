@@ -17,7 +17,7 @@ test('subtract: subtract of one or more geom3 objects produces expected geometry
 
   // subtract of one object
   const result1 = subtract(geometry1)
-  let obs = geom3.toPoints(result1)
+  let obs = geom3.toVertices(result1)
   let exp = [
     [[2, 0, 0], [1.4142135623730951, -1.414213562373095, 0],
       [1.0000000000000002, -1, -1.414213562373095], [1.4142135623730951, 0, -1.414213562373095]],
@@ -78,7 +78,7 @@ test('subtract: subtract of one or more geom3 objects produces expected geometry
   const geometry2 = center({ relativeTo: [10, 10, 10] }, cuboid({ size: [4, 4, 4] }))
 
   const result2 = subtract(geometry1, geometry2)
-  obs = geom3.toPoints(result2)
+  obs = geom3.toVertices(result2)
   t.notThrows.skip(() => geom3.validate(result2))
   t.is(measureArea(result2), 44.053756306589825)
   t.is(measureVolume(result2), 25.751611331979678)
@@ -88,7 +88,7 @@ test('subtract: subtract of one or more geom3 objects produces expected geometry
   const geometry3 = cuboid({ size: [18, 18, 18] })
 
   const result3 = subtract(geometry2, geometry3)
-  obs = geom3.toPoints(result3)
+  obs = geom3.toVertices(result3)
   exp = [
     [[12, 8, 8], [12, 12, 8], [12, 12, 12], [12, 8, 12]],
     [[8, 12, 8], [8, 12, 12], [12, 12, 12], [12, 12, 8]],
@@ -111,7 +111,7 @@ test('subtract: subtract of one or more geom3 objects produces expected geometry
 
   // subtract of two completely overlapping objects
   const result4 = subtract(geometry1, geometry3)
-  obs = geom3.toPoints(result4)
+  obs = geom3.toVertices(result4)
   t.notThrows(() => geom3.validate(result4))
   t.is(measureArea(result4), 0)
   t.is(measureVolume(result4), 0)

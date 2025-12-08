@@ -19,7 +19,7 @@ test('offset: offset empty geom3', (t) => {
   t.is(measureArea(result), 0)
   t.is(measureVolume(result), 0)
   t.is(geom3.toPolygons(result).length, 0)
-  t.is(geom3.toPoints(result).length, 0)
+  t.is(geom3.toVertices(result).length, 0)
 })
 
 test('offset: offset geom3 preserves color', (t) => {
@@ -37,10 +37,10 @@ test('offset: offset of a geom3 produces expected changes to polygons', (t) => {
     [[-5, -5, -5], [-5, 15, -5], [15, 15, -5], [15, -5, -5]],
     [[-5, -5, 15], [15, -5, 15], [15, 15, 15], [-5, 15, 15]]
   ]
-  const geometry = geom3.fromPoints(polygonsAsPoints)
+  const geometry = geom3.fromVertices(polygonsAsPoints)
 
   const obs = offset({ delta: 2, corners: 'round', segments: 8 }, geometry)
-  const pts = geom3.toPoints(obs)
+  const pts = geom3.toVertices(obs)
   const exp0 = [
     [-7, -5, -5],
     [-7, -5, 15],
@@ -62,7 +62,7 @@ test('offset: offset of a geom3 produces expected changes to polygons', (t) => {
 
   const geometry2 = sphere({ radius: 5, segments: 8 })
   const obs2 = offset({ delta: 5 }, geometry2)
-  const pts2 = geom3.toPoints(obs2)
+  const pts2 = geom3.toVertices(obs2)
   t.notThrows.skip(() => geom3.validate(obs2))
   t.is(measureArea(obs), 3178.8059464475555)
   t.is(measureVolume(obs), 13504.574121271067)
