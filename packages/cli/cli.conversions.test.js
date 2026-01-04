@@ -96,7 +96,7 @@ test('cli (conversions STL)', (t) => {
 
   t.context.file3Path = file3Path
 
-  cmd = `node ${cliPath} ${file2Path} -o ${file3Path} -v -add-metadata false`
+  cmd = `node ${cliPath} ${file2Path} -o ${file3Path} -v --add-metadata`
   execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(file3Path))
 })
@@ -129,7 +129,7 @@ test('cli (conversions DXF)', (t) => {
 
   t.context.file3Path = file3Path
 
-  cmd = `node ${cliPath} ${file2Path} -of js`
+  cmd = `node ${cliPath} ${file2Path} -f js`
   execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(file3Path))
 })
@@ -162,7 +162,40 @@ test('cli (conversions JSON)', (t) => {
 
   t.context.file3Path = file3Path
 
-  cmd = `node ${cliPath} ${file2Path} -of js`
+  cmd = `node ${cliPath} ${file2Path} -f js`
+  execSync(cmd, { stdio: [0, 1, 2] })
+  t.true(fs.existsSync(file3Path))
+})
+
+test('cli (conversions OBJ)', (t) => {
+  const testID = 17
+
+  // convert from JSCAD to OBJ
+  const file1Path = createJscad(testID)
+  t.true(fs.existsSync(file1Path))
+
+  t.context.file1Path = file1Path
+
+  const file2Name = `./test${testID}.obj`
+  const file2Path = path.resolve(cwd(), file2Name)
+  t.false(fs.existsSync(file2Path))
+
+  t.context.file2Path = file2Path
+
+  const cliPath = t.context.cliPath
+
+  let cmd = `node ${cliPath} ${file1Path} -o ${file2Path}`
+  execSync(cmd, { stdio: [0, 1, 2] })
+  t.true(fs.existsSync(file2Path))
+
+  // convert from OBJ to JS
+  const file3Name = `./test${testID}.js`
+  const file3Path = path.resolve(cwd(), file3Name)
+  t.false(fs.existsSync(file3Path))
+
+  t.context.file3Path = file3Path
+
+  cmd = `node ${cliPath} ${file2Path} -f js`
   execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(file3Path))
 })
@@ -195,7 +228,7 @@ test('cli (conversions SVG)', (t) => {
 
   t.context.file3Path = file3Path
 
-  cmd = `node ${cliPath} ${file2Path} -of js`
+  cmd = `node ${cliPath} ${file2Path} -f js`
   execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(file3Path))
 })
@@ -228,7 +261,40 @@ test('cli (conversions X3D)', (t) => {
 
   t.context.file3Path = file3Path
 
-  cmd = `node ${cliPath} ${file2Path} -of js`
+  cmd = `node ${cliPath} ${file2Path} -f js`
+  execSync(cmd, { stdio: [0, 1, 2] })
+  t.true(fs.existsSync(file3Path))
+})
+
+test('cli (conversions 3MF)', (t) => {
+  const testID = 16
+
+  // convert from JSCAD to 3MF
+  const file1Path = createJscad(testID)
+  t.true(fs.existsSync(file1Path))
+
+  t.context.file1Path = file1Path
+
+  const file2Name = `./test${testID}.3mf`
+  const file2Path = path.resolve(cwd(), file2Name)
+  t.false(fs.existsSync(file2Path))
+
+  t.context.file2Path = file2Path
+
+  const cliPath = t.context.cliPath
+
+  let cmd = `node ${cliPath} ${file1Path} -o ${file2Path}`
+  execSync(cmd, { stdio: [0, 1, 2] })
+  t.true(fs.existsSync(file2Path))
+
+  // convert from 3MF to JS
+  const file3Name = `./test${testID}.js`
+  const file3Path = path.resolve(cwd(), file3Name)
+  t.false(fs.existsSync(file3Path))
+
+  t.context.file3Path = file3Path
+
+  cmd = `node ${cliPath} ${file2Path} -f js`
   execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(file3Path))
 })

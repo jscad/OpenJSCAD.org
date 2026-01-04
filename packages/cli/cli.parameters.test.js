@@ -111,7 +111,7 @@ test('cli (single input file, output format)', (t) => {
 
   const cliPath = t.context.cliPath
 
-  const cmd = `node ${cliPath} ${inputPath} -of dxf`
+  const cmd = `node ${cliPath} ${inputPath} -f dxf`
   execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(outputPath))
 })
@@ -167,7 +167,7 @@ test('cli (folder, output format)', (t) => {
 
   const cliPath = t.context.cliPath
 
-  const cmd = `node ${cliPath} ${folderPath} -of dxf`
+  const cmd = `node ${cliPath} ${folderPath} -f dxf`
   execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(outputPath))
 })
@@ -188,7 +188,7 @@ test('cli (single input file, parameters)', (t) => {
 
   const cliPath = t.context.cliPath
 
-  const cmd = `node ${cliPath} ${inputPath} --segments 32 --nothing "Yes"`
+  const cmd = `node ${cliPath} ${inputPath} -- --segments 32 --nothing "Yes"`
   execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(outputPath))
 })
@@ -241,7 +241,7 @@ test('cli (single input file, multiple output files)', (t) => {
 
   const cliPath = t.context.cliPath
 
-  const cmd = `node ${cliPath} ${inputPath} -gp`
+  const cmd = `node ${cliPath} -p ${inputPath}`
   execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(outputPath1))
   t.true(fs.existsSync(outputPath2))
@@ -265,7 +265,7 @@ test('cli (single multipart input file, zipped output file)', async (t) => {
 
   const cliPath = t.context.cliPath
 
-  const cmd = `node ${cliPath} ${inputPath} -gp -z`
+  const cmd = `node ${cliPath} ${inputPath} -p -z`
   execSync(cmd, { stdio: [0, 1, 2] })
   t.true(fs.existsSync(outputPath))
 
