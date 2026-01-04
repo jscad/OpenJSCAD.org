@@ -1,4 +1,5 @@
 import path from 'path'
+import url from 'url'
 import { createRequire } from 'module'
 
 import { toArray } from '@jscad/array-utils'
@@ -36,7 +37,8 @@ export const rebuildGeometryCli = async (data) => {
   // rootModule should contain exported main and getParameterDefinitions functions
   // const rootModule = requireDesignFromModule(mainPath, requireFn)
   // FIXME HACK for designs with import / export
-  const rootModule = await import(mainPath)
+  const mainURL = String(url.pathToFileURL(mainPath))
+  const rootModule = await import(mainURL)
 
   // the design (module tree) has been loaded at this stage
   // now we can get our usefull data (definitions and values/defaults)
