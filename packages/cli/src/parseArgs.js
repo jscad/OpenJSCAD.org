@@ -1,6 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 
+import { Command, Option } from 'commander'
+
 import { loading } from '@jscad/core'
 
 import { supportedInputExtensions, supportedOutputExtensions, supportedOutputFormats } from '@jscad/io'
@@ -9,113 +11,105 @@ import { env } from './env.js'
 
 const { getDesignEntryPoint } = loading
 
-export const parseArgs = (args) => {
-  const inputExtensions = supportedInputExtensions()
-  const outputExtensions = supportedOutputExtensions()
-  const outputFormats = supportedOutputFormats()
+const outputFormats = supportedOutputFormats()
+const inputExtensions = supportedInputExtensions()
 
-  // hint: https://github.com/substack/node-optimist
-  //       https://github.com/visionmedia/commander.js
-  if (args.length < 1) {
-    console.log('USAGE:\n\njscad [-v]\n\n')
-    console.log('jscad [-gp] [-z] <file> [-of <format>] [-o <output>]')
-    console.log(`\t<file>  :\tinput (Supported types: folder, .${inputExtensions.join(', .')})`)
-    console.log(`\t<output>:\toutput (Supported types: folder, .${outputExtensions.join(', .')})`)
-    console.log(`\t<format>:\t${outputFormats.join(', ')}`)
-    process.exit(1)
+const isValidInputFileFormat = (input) => {
+  if (input === undefined || input === null || !(typeof input === 'string')) {
+    return false
   }
+  return inputExtensions.reduce((acc, format) => input.toLowerCase().endsWith('.' + format) || acc, false)
+}
 
-  let inputFile
-  let inputFormat
-  let outputFile
-  let outputFormat
-  let generateParts = false
-  let zip = false
-  const params = {} // parameters to feed the script if applicable
-  let addMetaData = false // wether to add metadata to outputs or not : ie version info, timestamp etc
-  let inputIsDirectory = false // did we pass in a folder or a file ?
+export const parseArgs = () => {
+  const filepaths = [] // list of input file paths
+  const parameters = [] // parameter values for main(parameters) and serialize(parameters)
 
-  const isValidInputFileFormat = (input) => {
-    if (input === undefined || input === null || !(typeof input === 'string')) {
-      return false
-    }
-    return inputExtensions.reduce((acc, format) => input.toLowerCase().endsWith('.' + format) || acc, false)
-  }
-  const getFileExtensionFromString = (input) => (input.substring(input.lastIndexOf('.') + 1)).toLowerCase()
-
-  const parseBool = (input) => input.toLowerCase() === 'true'
-
-  for (let i = 0; i < args.length; i++) {
-    if (args[i] === '-of') { // -of <format>
-      outputFormat = args[++i]
-    } else if (args[i] === '-gp') {
-      generateParts = true
-    } else if (args[i] === '-z') {
-      zip = true
-    } else if (args[i].match(/^-o(\S.+)/)) { // -o<output>
-      outputFile = args[i]
-      outputFile = outputFile.replace(/^-o(\S+)$/, '$1')
-    } else if (args[i] === '-o') { // -o <output>
-      outputFile = args[++i]
-    } else if (args[i] === '-add-metadata') { // -metadata true/false
-      addMetaData = parseBool(args[++i])
-    } else if (args[i].match(/^--(\w+)=(.*)/)) { // params for main()
-      params[RegExp.$1] = RegExp.$2
-    } else if (args[i].match(/^--(\w+)$/)) { // params for main()
-      params[RegExp.$1] = args[++i]
-    } else if (isValidInputFileFormat(args[i])) {
-      inputFile = args[i]
-      inputFormat = getFileExtensionFromString(args[i])
-      if (!fs.statSync(inputFile).isFile()) {
-        console.log('ERROR: cannot open input file/directory <' + inputFile + '>')
-        process.exit(1)
+  /*
+   * Setup command line arguments
+   */
+  const program = new Command();
+  program.name('cli.js')
+  program.usage('[options] <files...> -- parameter values')
+  program.argument('[files...]')
+  program.addOption(new Option('-f, --output-format <format>', 'output format').choices(outputFormats).default('stla'))
+  program.option('-p, --generate-parts', 'generate unique parts from the files', false)
+  program.option('-z, --zip', 'zip the output file contents', false)
+  program.option('-o, --output-file <filepath>', 'output file name (optional)')
+  program.option('-m, --add-metadata', 'add metadata to output format', false)
+  program.option('-v, --version', 'show version and environment information', false)
+  program.action((args) => {
+    // handle the provided arguments
+    args.forEach((arg) => {
+      try {
+        fs.statSync(arg)
+        filepaths.push(arg)
+      } catch (e) {
+        parameters.push(arg)
       }
-    } else if (args[i].match(/^-v$/)) { // show the version and the environment information
-      env()
-    } else {
-      inputFile = args[i]
-      if (fs.statSync(inputFile).isDirectory()) {
-        inputIsDirectory = true
-        // get actual design entry point if applicable (if passed a folder as input etc)
-        inputFile = getDesignEntryPoint(fs, inputFile)
-        if (!inputFile) {
-          console.log('ERROR: could not determine entry point of project.')
-          console.log('Verify main or index exists')
-          process.exit(1)
-        }
-        inputFormat = path.extname(inputFile).substring(1)
-      } else {
-        console.log('ERROR: invalid file name or argument <' + args[i] + '>')
-        console.log("Type 'jscad' for a list of supported types")
-        process.exit(1)
-      }
-    }
-  }
-  // exit if a input file was not provided
-  if (!inputFile) process.exit(1)
+    })
+  })
+  program.parse()
 
-  if (!outputFormat && !outputFile) {
-    outputFormat = 'stla'
+  const options = program.opts();
+
+  // show the runtime environment if requested
+  if (options.version) {
+    env()
   }
-  if (!outputFormat && outputFile) {
-    outputFormat = path.extname(outputFile).substring(1)
+
+//console.log(options)
+//console.log(filepaths)
+//console.log(parameters)
+
+  if (filepaths.length === 0) process.exit(1)
+
+  if (options.outputFile) {
+    // check that the output file name implies a valid output format
+    let outputFormat = path.extname(options.outputFile).substring(1)
     if (outputFormat === 'stl') outputFormat = 'stla'
-  }
-  if (!outputFormats.includes(outputFormat)) {
-    console.log('ERROR: invalid output format <' + outputFormat + '>')
-    console.log("Type 'jscad' for a list of supported types")
-    process.exit(1)
+    if (!outputFormats.includes(outputFormat)) {
+      console.log('ERROR: invalid output file format <' + outputFormat + '>')
+      process.exit(1)
+    }
+    // check for toxic combinations
+    if (filepaths.length !== 1) {
+      console.log('ERROR: multiple inputs cannot be converted to a single output file.')
+      process.exit(1)
+    }
+    options.outputFormat = outputFormat
+  } else {
+    options.outputFile = undefined
   }
 
-  return {
-    inputFile,
-    inputFormat,
-    outputFile,
-    outputFormat,
-    generateParts,
-    zip,
-    params,
-    addMetaData,
-    inputIsDirectory
+  // check for use of a directory, and determine the design entry point
+  options.inputIsDirectory = false
+  if (filepaths.length === 1) {
+    if (fs.statSync(filepaths[0]).isDirectory()) {
+      options.inputIsDirectory = true
+      // get actual design entry point
+      const filepath = getDesignEntryPoint(fs, filepaths[0])
+      if (!filepath) {
+        console.log('ERROR: could not determine entry point of project <' + filepaths[0] + '>')
+        console.log('Verify project main or index exists')
+        process.exit(1)
+      }
+      filepaths[0] = filepath // use the entry point for conversion
+    }
   }
+
+  // check that all input files are valid formats for conversion
+  filepaths.forEach((filepath) => {
+    if (!isValidInputFileFormat(filepath)) {
+      console.log('ERROR: invalid input file format <' + filepath + '>')
+      process.exit(1)
+    }
+  })
+
+  options.filepaths = filepaths
+  options.params = parameters
+
+//console.log('RETURN',options)
+
+  return options
 }

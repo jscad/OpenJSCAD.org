@@ -41,7 +41,8 @@
     "@jscad/io": "workspace:3.0.2-alpha.0",
     "@jscad/io-utils": "workspace:3.0.2-alpha.0",
     "@jscad/modeling": "workspace:3.0.2-alpha.0",
-    "jszip": "^3.10.1"
+    "jszip": "^3.10.1",
+    "commander": "^14.0.0"
   },
   "devDependencies": {
     "ava": "^4.3.3",

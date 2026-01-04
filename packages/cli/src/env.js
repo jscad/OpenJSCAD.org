@@ -1,9 +1,12 @@
 import os from 'os'
+import process from 'process'
 
 const version = '[VI]{version}[/VI]' // version is injected by rollup
 
 export const env = () => {
-  let env = 'JSCAD ' + version
+  const nodeVersion = process.version
+
+  let env = 'JSCAD CLI ' + version + ', Node.js ' + nodeVersion
   if (typeof document !== 'undefined') {
     const w = document.defaultView
     env = env + ' [' + w.navigator.userAgent + ']'
