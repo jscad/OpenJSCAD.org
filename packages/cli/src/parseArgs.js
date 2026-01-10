@@ -5,7 +5,7 @@ import { Command, Option } from 'commander'
 
 import { loading } from '@jscad/core'
 
-import { supportedInputExtensions, supportedOutputExtensions, supportedOutputFormats } from '@jscad/io'
+import { supportedInputExtensions, supportedOutputFormats } from '@jscad/io'
 
 import { env } from './env.js'
 
@@ -28,7 +28,7 @@ export const parseArgs = () => {
   /*
    * Setup command line arguments
    */
-  const program = new Command();
+  const program = new Command()
   program.name('cli.js')
   program.usage('[options] <files...> -- parameter values')
   program.argument('[files...]')
@@ -51,16 +51,16 @@ export const parseArgs = () => {
   })
   program.parse()
 
-  const options = program.opts();
+  const options = program.opts()
 
   // show the runtime environment if requested
   if (options.version) {
     env()
   }
 
-//console.log(options)
-//console.log(filepaths)
-//console.log(parameters)
+  // console.log(options)
+  // console.log(filepaths)
+  // console.log(parameters)
 
   if (filepaths.length === 0) process.exit(1)
 
@@ -109,7 +109,7 @@ export const parseArgs = () => {
   options.filepaths = filepaths
   options.params = parameters
 
-//console.log('RETURN',options)
+  // console.log('RETURN',options)
 
   return options
 }

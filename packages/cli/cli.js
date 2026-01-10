@@ -32,16 +32,16 @@ const version = '[VI]{version}[/VI]' // version is injected by rollup
 let { filepaths, outputFile, outputFormat, generateParts, zip, params, addMetaData, inputIsDirectory } = parseArgs()
 
 // FIXME handle N input files
-let inputFile = filepaths[0]
-let inputFormat = path.extname(inputFile).substring(1)
+const inputFile = filepaths[0]
+const inputFormat = path.extname(inputFile).substring(1)
 
 // outputs
 if (!outputFile) {
   // create a base name from the input file
   const fileElements = path.parse(inputFile)
   fileElements.ext = '.' + outputFormat
-  if (fileElements.ext == '.stla') fileElements.ext = '.stl'
-  if (fileElements.ext == '.stlb') fileElements.ext = '.stl'
+  if (fileElements.ext === '.stla') fileElements.ext = '.stl'
+  if (fileElements.ext === '.stlb') fileElements.ext = '.stl'
   fileElements.base = undefined
   outputFile = path.format(fileElements)
 }
