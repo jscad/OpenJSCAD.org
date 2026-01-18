@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3-alpha.0](https://github.com/jscad/OpenJSCAD/compare/@jscad/cli@3.0.2-alpha.0...@jscad/cli@3.0.3-alpha.0) (2026-01-18)
+
+### Features
+
+* **cli:** reworked command line parameter parsing to use commander ([225b541](https://github.com/jscad/OpenJSCAD/commit/225b5412cb92e0faa50c3c67a50b6dc5c24f424e))
+
 ## [3.0.2-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/cli@3.0.1-alpha.0...@jscad/cli@3.0.2-alpha.0) (2025-09-06)
 
 **Note:** Version bump only for package @jscad/cli

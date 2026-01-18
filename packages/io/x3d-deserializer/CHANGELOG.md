@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3-alpha.0](https://github.com/jscad/OpenJSCAD/compare/@jscad/x3d-deserializer@3.0.2-alpha.0...@jscad/x3d-deserializer@3.0.3-alpha.0) (2026-01-18)
+
+### Bug Fixes
+
+* **x3d-deserializer:** small change in source output due to changes in geom3 ([380efc6](https://github.com/jscad/OpenJSCAD/commit/380efc6349d67c75894246156c654539f61c85b1))
+
 ## [3.0.2-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/x3d-deserializer@3.0.1-alpha.0...@jscad/x3d-deserializer@3.0.2-alpha.0) (2025-09-06)
 
 **Note:** Version bump only for package @jscad/x3d-deserializer

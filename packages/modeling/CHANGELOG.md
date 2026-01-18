@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3-alpha.0](https://github.com/jscad/OpenJSCAD/compare/@jscad/modeling@3.0.2-alpha.0...@jscad/modeling@3.0.3-alpha.0) (2026-01-18)
+
+### Features
+
+* **modeling:** geom3 renamed fromVertices and toVertices ([d41afaf](https://github.com/jscad/OpenJSCAD/commit/d41afaf7519d8bea88d74209c7a16760aa821702))
+* **modeling:** new geometry for 3D paths (path3) ([6c1954f](https://github.com/jscad/OpenJSCAD/commit/6c1954f6494ca10d4588cf022839472de2ec5cbb))
+* **modeling:** removed compact binary support ([86c90ae](https://github.com/jscad/OpenJSCAD/commit/86c90ae63a54eaf50fe9e47dad6df161abc8f3f2))
+
 ## [3.0.2-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@3.0.1-alpha.0...@jscad/modeling@3.0.2-alpha.0) (2025-09-06)
 
 ### Bug Fixes
