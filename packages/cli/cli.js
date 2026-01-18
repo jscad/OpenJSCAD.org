@@ -1,46 +1,22 @@
 #!/usr/bin/env node
 // --log_all
 
-// NOTE: this will only run on Node > 6 or needs to be transpiled
-
-// == JSCAD CLI interface, written by Rene K. Mueller <spiritdude@gmail.com>, Licensed under MIT License
-//
-// Description:
-//   jscad <file> [-of <format>] [-o <output>]
-// e.g.
-//   jscad test.jscad
-//   jscad test.jscad -o test.stl
-//   jscad test.jscad -o test.amf
-//   jscad test.jscad -o test.dxf
-//   jscad test.scad -o testFromSCAD.jscad
-//   jscad test.scad -o test.stl
-//   jscad test.stl -o test2.stl      # reprocessed: stl -> jscad -> stl
-//   jscad test.amf -o test2.jscad
-//   jscad test.jscad -of amf
-//   jscad test.jscad -of dxf
-//   jscad test.jscad -of stl
-//   jscad name_plate.jscad --name "Just Me" --title "CEO" -o amf test.amf
-//
+/*
+ * Command Line Interface (CLI) for converting JSCAD designs to differnt external formats.
+ *
+ * Example:
+ *   node ./cli.js --help
+ */
 import fs from 'fs'
+import path from 'path'
+
 import JSZip from 'jszip'
 
 import { supportedFormats } from '@jscad/io'
 
-import { generateOutputData } from './src/generateOutputData.js'
-import { determineOutputNameAndFormat } from './src/determineOutputNameAndFormat.js'
-import { writeOutput } from './src/writeOutput.js'
 import { parseArgs } from './src/parseArgs.js'
-
-const version = '[VI]{version}[/VI]' // version is injected by rollup
-
-// handle arguments (inputs, outputs, etc)
-const args = process.argv.splice(2)
-let { inputFile, inputFormat, outputFile, outputFormat, generateParts, zip, params, addMetaData, inputIsDirectory } = parseArgs(args)
-
-// outputs
-const output = determineOutputNameAndFormat(outputFormat, outputFile, inputFile)
-outputFormat = output.outputFormat
-outputFile = output.outputFile
+import { generateOutputData } from './src/generateOutputData.js'
+import { writeOutput } from './src/writeOutput.js'
 
 const clicolors = {
   red: '\u{1b}[31m',
@@ -50,10 +26,30 @@ const clicolors = {
   black: '\u{1b}[0m'
 }
 
-const logFileOutput = (outputFile) => {
+const version = '[VI]{version}[/VI]' // version is injected by rollup
+
+// handle arguments (inputs, outputs, etc)
+let { filepaths, outputFile, outputFormat, generateParts, zip, params, addMetaData, inputIsDirectory } = parseArgs()
+
+// FIXME handle N input files
+const inputFile = filepaths[0]
+const inputFormat = path.extname(inputFile).substring(1)
+
+// outputs
+if (!outputFile) {
+  // create a base name from the input file
+  const fileElements = path.parse(inputFile)
+  fileElements.ext = '.' + outputFormat
+  if (fileElements.ext === '.stla') fileElements.ext = '.stl'
+  if (fileElements.ext === '.stlb') fileElements.ext = '.stl'
+  fileElements.base = undefined
+  outputFile = path.format(fileElements)
+}
+
+const logFileOutput = (inputPath, outputPath) => {
   console.log(`${clicolors.blue}JSCAD: generating output ${clicolors.red}
-    from: ${clicolors.green} ${inputFile} ${clicolors.red}
-    to: ${clicolors.green} ${outputFile} ${clicolors.yellow}(${supportedFormats[outputFormat].description}) ${clicolors.black}
+    from: ${clicolors.green} ${inputPath} ${clicolors.red}
+    to: ${clicolors.green} ${outputPath} ${clicolors.yellow}(${supportedFormats[outputFormat].description}) ${clicolors.black}
   `)
 }
 
@@ -81,14 +77,14 @@ generateOutputData(src, params, { outputFile, outputFormat, inputFile, inputForm
             if (err) {
               console.error(err)
             } else {
-              logFileOutput(zipFilename)
+              logFileOutput(inputFile, zipFilename)
             }
           })
         })
       } else {
         for (let i = 0; i < outputData.length; i++) {
           const filename = outputFile.replace(/\.(\w+)$/, `-part-${i + 1}-of-${outputData.length}.$1`)
-          logFileOutput(filename)
+          logFileOutput(inputFile, filename)
           writeOutput(filename, outputData[i])
         }
       }
@@ -102,12 +98,12 @@ generateOutputData(src, params, { outputFile, outputFormat, inputFile, inputForm
             if (err) {
               console.error(err)
             } else {
-              logFileOutput(zipFilename)
+              logFileOutput(inputFile, zipFilename)
             }
           })
         })
       } else {
-        logFileOutput(outputFile)
+        logFileOutput(inputFile, outputFile)
         writeOutput(outputFile, outputData)
       }
     }
