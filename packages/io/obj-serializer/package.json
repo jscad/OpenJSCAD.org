@@ -1,6 +1,6 @@
 {
   "name": "@jscad/obj-serializer",
-  "version": "3.0.2-alpha.0",
+  "version": "3.0.3-alpha.0",
   "description": "OBJ Serializer for JSCAD",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@jscad/array-utils": "workspace:3.0.1-alpha.0",
-    "@jscad/modeling": "workspace:3.0.2-alpha.0"
+    "@jscad/modeling": "workspace:3.0.3-alpha.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.0.1",
