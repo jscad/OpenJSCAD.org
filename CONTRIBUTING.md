@@ -51,7 +51,7 @@ This may take some time... relax... have some coffee.
 
 If the tests ran successfully then changes can be made to any package. See the 'packages' directory.
 
-NOTE: All packages and dependencies have been linked together by Lerna. No other magic is required.
+NOTE: All packages and dependencies have been linked together by NPM and Lerna-Lite. No other magic is required.
 
 If you intend to contribute changes back to JSCAD then please follow these guides.
 - follow the [JavaScript Standard Style](https://standardjs.com/index.html) when making changes
