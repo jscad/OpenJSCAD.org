@@ -8,10 +8,10 @@
  * @licence MIT License
  */
 
-const { arc, circle, ellipse, line, polygon, rectangle, roundedRectangle, square, star } = require('@jscad/modeling').primitives
-const { translate } = require('@jscad/modeling').transforms
+import { arc, circle, ellipse, line, polygon, rectangle, roundedRectangle, square, star } from '@jscad/modeling'
+import { translate } from '@jscad/modeling'
 
-const main = () => {
+export const main = () => {
   const allPrimitives = [
     arc({ center: [-1, -1], radius: 2, startAngle: 0, endAngle: (Math.PI / 2), makeTangent: false, segments: 32 }),
     line([[1, 1], [-1, -1], [1, -1]]),
@@ -27,5 +27,3 @@ const main = () => {
 
   return allPrimitives.map((primitive, index) => translate([(index % 4 - 2) * 6, Math.floor(index / 4 - 2) * 6, 0], primitive))
 }
-
-module.exports = { main }

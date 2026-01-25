@@ -7,13 +7,11 @@
 // tags        : project, module, code, files, subfolder
 */
 
-const { cuboid } = require('@jscad/modeling').primitives
+import { cuboid } from '@jscad/modeling'
 
-const getParameterDefinitions = () => [
+export const getParameterDefinitions = () => [
   { name: 'plate-group', type: 'group', initial: 'open', caption: 'Mounting Plate' },
   { name: 'plateLength', type: 'float', initial: 25, caption: 'length', min: 25, max: 200 }
 ]
 
-const create = (length) => cuboid({ size: [length, 10, 1] })
-
-module.exports = { create, getParameterDefinitions }
+export const create = (length) => cuboid({ size: [length, 10, 1] })

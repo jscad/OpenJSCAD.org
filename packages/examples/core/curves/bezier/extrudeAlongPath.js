@@ -8,15 +8,13 @@
  * @licence MIT License
  */
 
-const jscad = require('@jscad/modeling')
-const { colors, geometries, maths, extrusions } = jscad
+import { colors, geometries, maths, extrusions } from '@jscad/modeling'
+import { cuboid, circle } from '@jscad/modeling'
+import { translate } from '@jscad/modeling'
+import { slice } from '@jscad/modeling'
+import { bezier } from '@jscad/modeling'
 
-const { cuboid, circle } = jscad.primitives
-const { translate } = jscad.transforms
-const { slice } = jscad.extrusions
-const { bezier } = jscad.curves
-
-const main = () => [
+export const main = () => [
   box4x4([-8, -4, 2], [1, 0, 0]),
   box4x4([8, 4, 12], [0, 1, 0]),
   tube([
@@ -39,7 +37,7 @@ const tube = (bezierControlPoints) => {
   const circ = circle({ radius: 1, segments: 32 })
   const l = bezierControlPoints.length - 1
   const circPoints = geometries.geom2.toPoints(circ)
-  let tubeSlice = slice.fromPoints(circPoints)
+  let tubeSlice = slice.fromVertices(circPoints)
 
   // Rotate it close to the direction we are going in.  Rotation gets funky around 180˚
   const bezierDelta = maths.vec3.clone([
@@ -89,4 +87,3 @@ const box4x4 = (translation, color) => {
   return colors.colorize(color, translate(translation, b))
 }
 
-module.exports = { main }

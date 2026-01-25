@@ -8,12 +8,12 @@
  * @licence MIT License
  */
 
-const { circle } = require('@jscad/modeling').primitives
-const { geom2 } = require('@jscad/modeling').geometries
-const { extrudeFromSlices, slice } = require('@jscad/modeling').extrusions
-const { mat4 } = require('@jscad/modeling').maths
+import { circle } from '@jscad/modeling'
+import { geom2 } from '@jscad/modeling'
+import { extrudeFromSlices, slice } from '@jscad/modeling'
+import { mat4 } from '@jscad/modeling'
 
-const main = () => {
+export const main = () => {
   // demonstrates manipulating the original base through translation and scale to build a 3D geometry
   const jigglySquare = (height) => {
     let squareWithHole = geom2.create(
@@ -28,7 +28,7 @@ const main = () => {
         [[-8.0, 8.0], [8.0, 8.0]]
       ]
     )
-    squareWithHole = slice.fromSides(geom2.toSides(squareWithHole))
+    squareWithHole = slice.fromGeom2(squareWithHole)
     return extrudeFromSlices({
       numberOfSlices: 32,
       callback: (progress, count, base) => {
@@ -50,7 +50,7 @@ const main = () => {
         numberOfSlices: 6,
         callback: (progress, count, base) => {
           const newPolygon = circle({ radius: 2 + (5 * progress), segments: 4 + (count * count) })
-          let newSlice = slice.fromSides(geom2.toSides(newPolygon))
+          let newSlice = slice.fromGeom2(newPolygon)
           newSlice = slice.transform(mat4.fromTranslation(mat4.create(), [0, 0, progress * height]), newSlice)
           return newSlice
         }
@@ -64,4 +64,3 @@ const main = () => {
   ]
 }
 
-module.exports = { main }

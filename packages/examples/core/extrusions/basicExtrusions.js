@@ -8,19 +8,15 @@
  * @licence MIT License
  */
 
-const jscad = require('@jscad/modeling')
-const { line, polygon, star } = jscad.primitives
-const { extrudeRectangular, extrudeLinear, extrudeRotate } = jscad.extrusions
-const { translate } = jscad.transforms
-const { offset } = jscad.offsets
+import { line, polygon, star } from '@jscad/modeling'
+import { extrudeLinear, extrudeRotate } from '@jscad/modeling'
+import { translate } from '@jscad/modeling'
+import { offset } from '@jscad/modeling'
 
-const main = () => {
+export const main = () => {
   const shapes = []
   const aLine = line([[0, 0], [0, 5], [2, 8], [5, 9]])
   shapes.push(translate([-17, 0, 0], aLine))
-
-  const aRectangularExtrude = extrudeRectangular({ size: 1, height: 1 }, aLine)
-  shapes.push(translate([-12, 0, 0], aRectangularExtrude))
 
   const anExpandedExtrude = extrudeLinear({ height: 1 }, offset({ delta: 1, corners: 'round', segments: 32 }, aLine))
   shapes.push(translate([-7, 0, 0], anExpandedExtrude))
@@ -36,4 +32,3 @@ const main = () => {
   return shapes
 }
 
-module.exports = { main }

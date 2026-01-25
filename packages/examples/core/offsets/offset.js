@@ -8,12 +8,12 @@
  * @licence MIT License
  */
 
-const { cuboid, arc, rectangle } = require('@jscad/modeling').primitives
-const { offset } = require('@jscad/modeling').offsets
-const { colorize, colorNameToRgb } = require('@jscad/modeling').colors
-const { translate } = require('@jscad/modeling').transforms
+import { cuboid, arc, rectangle } from '@jscad/modeling'
+import { offset } from '@jscad/modeling'
+import { colorize, colorNameToRgb } from '@jscad/modeling'
+import { translate } from '@jscad/modeling'
 
-const main = () => {
+export const main = () => {
   // 2d paths can be expanded
   const path2Example = colorize(colorNameToRgb('black'), arc({ radius: 12, endAngle: Math.PI / 2 }))
   const expandedPath2Round = colorize(
@@ -78,5 +78,3 @@ const main = () => {
     ])
   ]
 }
-
-module.exports = { main }

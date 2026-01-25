@@ -8,12 +8,11 @@
  * @licence MIT License
  */
 
-const jscad = require('@jscad/modeling')
-const { colorize, hslToRgb, colorNameToRgb, hexToRgb, hsvToRgb } = jscad.colors
-const { cuboid, sphere } = jscad.primitives
-const { translate } = jscad.transforms
+import { colorize, hslToRgb, colorNameToRgb, hexToRgb, hsvToRgb } from '@jscad/modeling'
+import { cuboid, sphere } from '@jscad/modeling'
+import { translate } from '@jscad/modeling'
 
-const main = () => {
+export const main = () => {
   // the color() function applies a color (rgb, or rgba) to the given object
   const simple = colorize([0, 1, 0, 0.8], cuboid())
 
@@ -52,4 +51,3 @@ const main = () => {
   ]
 }
 
-module.exports = { main }

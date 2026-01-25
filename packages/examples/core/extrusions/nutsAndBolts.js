@@ -8,12 +8,11 @@
  * @licence MIT License
  */
 
-const jscad = require('@jscad/modeling')
-const { cylinder } = jscad.primitives
-const { subtract, union } = jscad.booleans
-const { colorize } = jscad.colors
-const { extrudeFromSlices, slice } = jscad.extrusions
-const { translate } = jscad.transforms
+import { cylinder } from '@jscad/modeling'
+import { subtract, union } from '@jscad/modeling'
+import { colorize } from '@jscad/modeling'
+import { extrudeFromSlices, slice } from '@jscad/modeling'
+import { translate } from '@jscad/modeling'
 
 const options = {
   hexWidth: 10,
@@ -26,7 +25,7 @@ const options = {
   segments: 32
 }
 
-const main = () => [
+export const main = () => [
   colorize([0.9, 0.6, 0.2], bolt(options)),
   colorize([0.4, 0.4, 0.4], translate([30, 0, 0], nut(options)))
 ]
@@ -72,7 +71,7 @@ const threads = (options) => {
         const y = radius * Math.sin(pointAngle)
         points.push([x, y, threadLength * progress])
       }
-      return slice.fromPoints(points)
+      return slice.fromVertices(points)
     }
   }, {})
 }
@@ -85,4 +84,3 @@ const angleDiff = (angle1, angle2) => {
   return diff > Math.PI ? Math.PI * 2 - diff : diff
 }
 
-module.exports = { main }

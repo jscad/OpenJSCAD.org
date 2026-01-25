@@ -8,13 +8,13 @@
  * @licence MIT License
  */
 
-const { cuboid } = require('@jscad/modeling').primitives
-const { translate, rotate } = require('@jscad/modeling').transforms
-const { measureBoundingBox } = require('@jscad/modeling').measurements
-const { colorize } = require('@jscad/modeling').colors
-const { subtract } = require('@jscad/modeling').booleans
+import { cuboid } from '@jscad/modeling'
+import { translate, rotate } from '@jscad/modeling'
+import { measureBoundingBox } from '@jscad/modeling'
+import { colorize } from '@jscad/modeling'
+import { subtract } from '@jscad/modeling'
 
-const getParameterDefinitions = () => [
+export const getParameterDefinitions = () => [
   { name: 'rotatex', type: 'slider', initial: 0, min: -3.14, max: 3.14, step: 0.01, caption: 'X Rotation:' },
   { name: 'rotatey', type: 'slider', initial: 0, min: -3.14, max: 3.14, step: 0.01, caption: 'Y Rotation:' },
   { name: 'rotatez', type: 'slider', initial: 0, min: -3.14, max: 3.14, step: 0.01, caption: 'Z Rotation:' }
@@ -49,11 +49,10 @@ const buildBoundingBox = (bounds) => {
   return boundingBox
 }
 
-const main = (params) => {
+export const main = (params) => {
   let shape = cuboid({ size: [8, 45, 4] })
   shape = rotate([params.rotatex, params.rotatey, params.rotatez], shape)
   const boundingBox = buildBoundingBox(measureBoundingBox(shape))
   return [shape, boundingBox]
 }
 
-module.exports = { main, getParameterDefinitions }

@@ -8,11 +8,10 @@
  * @licence MIT License
  */
 
-const jscad = require('@jscad/modeling')
-const { cube, cuboid, cylinder, cylinderElliptic, ellipsoid, geodesicSphere, roundedCuboid, roundedCylinder, sphere, torus } = jscad.primitives
-const { translate } = jscad.transforms
+import { cube, cuboid, cylinder, cylinderElliptic, ellipsoid, geodesicSphere, roundedCuboid, roundedCylinder, sphere, torus } from '@jscad/modeling'
+import { translate } from '@jscad/modeling'
 
-const main = () => {
+export const main = () => {
   const allPrimitives = [
     cube(),
     cuboid({ size: [1, 2, 3] }),
@@ -31,5 +30,3 @@ const main = () => {
 
   return allPrimitives.map((primitive, index) => translate([(index % 4 - 2) * 6, Math.floor(index / 4 - 2) * 6, 0], primitive))
 }
-
-module.exports = { main }
