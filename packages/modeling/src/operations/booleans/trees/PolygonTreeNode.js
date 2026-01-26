@@ -80,8 +80,11 @@ class PolygonTreeNode {
   }
 
   getPolygons (result) {
-    // Compact root's children array to remove dead nodes (lazy cleanup from remove())
-    // This is called once at the end of boolean operations, so it's a good place to clean up.
+    // Compact root's children array to remove dead nodes (lazy cleanup from remove()).
+    // Note: This method is only called on the root node via Tree.allPolygons() at the
+    // end of boolean operations. The children array is internal and not exposed, so
+    // mutating it here is safe. Non-root nodes are traversed via the queue below,
+    // which skips removed nodes via the `if (node.polygon)` check.
     if (this.isRootNode() && this.children.length > 0) {
       this.children = this.children.filter((c) => !c.removed)
     }
