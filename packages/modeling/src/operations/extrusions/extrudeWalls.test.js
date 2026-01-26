@@ -80,3 +80,75 @@ test('extrudeWalls (different shapes)', (t) => {
   walls = extrudeWalls(slice3, slice.transform(matrix, slice2))
   t.is(walls.length, 24)
 })
+
+// Test for vec3 reuse optimization in repartitionEdges
+// When shapes have different edge counts, edges are repartitioned using vec3 operations
+test('extrudeWalls (repartitionEdges vec3 reuse)', (t) => {
+  const matrix = mat4.fromTranslation(mat4.create(), [0, 0, 5])
+
+  // Triangle (3 edges)
+  const triangle = [
+    [[0, 10], [-8.66, -5]],
+    [[-8.66, -5], [8.66, -5]],
+    [[8.66, -5], [0, 10]]
+  ]
+
+  // Hexagon (6 edges) - LCM with triangle is 6, so triangle edges get split
+  const hexagon = [
+    [[0, 10], [-8.66, 5]],
+    [[-8.66, 5], [-8.66, -5]],
+    [[-8.66, -5], [0, -10]],
+    [[0, -10], [8.66, -5]],
+    [[8.66, -5], [8.66, 5]],
+    [[8.66, 5], [0, 10]]
+  ]
+
+  const sliceTriangle = slice.fromSides(triangle)
+  const sliceHexagon = slice.fromSides(hexagon)
+
+  // Triangle to hexagon requires repartitioning (3 -> 6 edges)
+  // This exercises the vec3 reuse optimization in repartitionEdges
+  const walls = extrudeWalls(sliceTriangle, slice.transform(matrix, sliceHexagon))
+
+  // 6 edges * 2 triangles per edge = 12 wall polygons
+  t.is(walls.length, 12)
+
+  // Verify all walls are valid triangles
+  walls.forEach((wall) => {
+    t.is(wall.vertices.length, 3)
+  })
+})
+
+// Test for vec3 reuse with higher repartition multiple
+test('extrudeWalls (repartitionEdges with high multiple)', (t) => {
+  const matrix = mat4.fromTranslation(mat4.create(), [0, 0, 10])
+
+  // Square (4 edges)
+  const square = [
+    [[-5, 5], [-5, -5]],
+    [[-5, -5], [5, -5]],
+    [[5, -5], [5, 5]],
+    [[5, 5], [-5, 5]]
+  ]
+
+  // Octagon (8 edges) - LCM with square is 8, so square edges get doubled
+  const octagon = [
+    [[0, 5], [-3.54, 3.54]],
+    [[-3.54, 3.54], [-5, 0]],
+    [[-5, 0], [-3.54, -3.54]],
+    [[-3.54, -3.54], [0, -5]],
+    [[0, -5], [3.54, -3.54]],
+    [[3.54, -3.54], [5, 0]],
+    [[5, 0], [3.54, 3.54]],
+    [[3.54, 3.54], [0, 5]]
+  ]
+
+  const sliceSquare = slice.fromSides(square)
+  const sliceOctagon = slice.fromSides(octagon)
+
+  // Square to octagon requires repartitioning (4 -> 8 edges)
+  const walls = extrudeWalls(sliceSquare, slice.transform(matrix, sliceOctagon))
+
+  // 8 edges * 2 triangles per edge = 16 wall polygons
+  t.is(walls.length, 16)
+})
