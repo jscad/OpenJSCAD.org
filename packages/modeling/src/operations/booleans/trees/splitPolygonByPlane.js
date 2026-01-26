@@ -7,6 +7,25 @@ const poly3 = require('../../../geometries/poly3')
 
 const splitLineSegmentByPlane = require('./splitLineSegmentByPlane')
 
+const EPS_SQUARED = EPS * EPS
+
+// Remove consecutive duplicate vertices from a polygon vertex list.
+// Compares last vertex to first to handle wraparound.
+// Returns a new array (does not modify input).
+const removeConsecutiveDuplicates = (vertices) => {
+  if (vertices.length < 3) return vertices
+  const result = []
+  let prevvertex = vertices[vertices.length - 1]
+  for (let i = 0; i < vertices.length; i++) {
+    const vertex = vertices[i]
+    if (vec3.squaredDistance(vertex, prevvertex) >= EPS_SQUARED) {
+      result.push(vertex)
+    }
+    prevvertex = vertex
+  }
+  return result
+}
+
 // Returns object:
 // .type:
 //   0: coplanar-front
@@ -83,35 +102,14 @@ const splitPolygonByPlane = (splane, polygon) => {
         }
         isback = nextisback
       } // for vertexindex
-      // remove duplicate vertices:
-      const EPS_SQUARED = EPS * EPS
-      if (backvertices.length >= 3) {
-        let prevvertex = backvertices[backvertices.length - 1]
-        for (let vertexindex = 0; vertexindex < backvertices.length; vertexindex++) {
-          const vertex = backvertices[vertexindex]
-          if (vec3.squaredDistance(vertex, prevvertex) < EPS_SQUARED) {
-            backvertices.splice(vertexindex, 1)
-            vertexindex--
-          }
-          prevvertex = vertex
-        }
+      // remove consecutive duplicate vertices
+      const backFiltered = removeConsecutiveDuplicates(backvertices)
+      const frontFiltered = removeConsecutiveDuplicates(frontvertices)
+      if (frontFiltered.length >= 3) {
+        result.front = poly3.fromPointsAndPlane(frontFiltered, pplane)
       }
-      if (frontvertices.length >= 3) {
-        let prevvertex = frontvertices[frontvertices.length - 1]
-        for (let vertexindex = 0; vertexindex < frontvertices.length; vertexindex++) {
-          const vertex = frontvertices[vertexindex]
-          if (vec3.squaredDistance(vertex, prevvertex) < EPS_SQUARED) {
-            frontvertices.splice(vertexindex, 1)
-            vertexindex--
-          }
-          prevvertex = vertex
-        }
-      }
-      if (frontvertices.length >= 3) {
-        result.front = poly3.fromPointsAndPlane(frontvertices, pplane)
-      }
-      if (backvertices.length >= 3) {
-        result.back = poly3.fromPointsAndPlane(backvertices, pplane)
+      if (backFiltered.length >= 3) {
+        result.back = poly3.fromPointsAndPlane(backFiltered, pplane)
       }
     }
   }
