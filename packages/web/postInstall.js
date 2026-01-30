@@ -1,6 +1,6 @@
 // this copies the examples folder from the @jscad/examples repository locally
 const path = require('path')
-const examplesSrc = path.resolve('./node_modules/@jscad/examples')
+const examplesSrc = path.resolve('../examples')
 const copydir = require('copy-dir')
 const fs = require('fs')
 const DocBlock = require('docblock')

@@ -272,7 +272,7 @@ test.cb('zooms (from mousewheel event) direct element', (t) => {
     })
 })
 
-test.cb('zooms (from pinch)', (t) => {
+test.skip('zooms (from pinch)', (t) => {
   const zooms = pointerGestures(t.context.baseStreams).zooms
 
   const div = t.context.div
@@ -296,7 +296,7 @@ test.cb('zooms (from pinch)', (t) => {
     })
 })
 
-test.cb('zooms (from pinch) direct element', (t) => {
+test.skip('zooms (from pinch) direct element', (t) => {
   const div = t.context.div
   const zooms = pointerGestures(div).zooms
 

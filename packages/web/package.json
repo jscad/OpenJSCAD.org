@@ -9,7 +9,7 @@
   "scripts": {
     "build": "browserify src/index.js -o dist/jscad-web.min.js -g uglifyify --standalone jscadWeb",
     "dev": "budo demo.js --port=8081 --css ./css/demo.css --live -- -b",
-    "postinstall": "node postInstall.js && node -e \"console.log('\\u001b[35m\\u001b[1mLove JSCAD? You can now donate to our open collective:\\u001b[22m\\u001b[39m\\n > \\u001b[34mhttps://opencollective.com/openjscad/donate\\u001b[0m')\"",
+    "postinstall": "node postInstall.js",
     "test": "ava 'src/**/*.test.js' --verbose --timeout 2m",
     "version": "npm run build && git add dist"
   },
