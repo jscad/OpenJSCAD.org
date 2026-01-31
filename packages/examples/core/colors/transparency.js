@@ -8,9 +8,7 @@
  * @licence MIT License
  */
 
-import { colorize, hslToRgb, colorNameToRgb } from '@jscad/modeling'
-import { cuboid, cylinder } from '@jscad/modeling'
-import { translate } from '@jscad/modeling'
+import { colorize, hslToRgb, colorNameToRgb, cuboid, cylinder, translate } from '@jscad/modeling'
 
 export const main = () => {
   const shapes = []
@@ -29,4 +27,3 @@ export const main = () => {
   )
   return shapes
 }
-

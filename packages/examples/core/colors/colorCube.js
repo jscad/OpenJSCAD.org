@@ -8,9 +8,7 @@
  * @licence MIT License
  */
 
-import { colorize, hslToRgb, hsvToRgb } from '@jscad/modeling'
-import { cuboid } from '@jscad/modeling'
-import { translate } from '@jscad/modeling'
+import { colorize, hslToRgb, hsvToRgb, cuboid, translate } from '@jscad/modeling'
 
 const getTranslation = (x, y, z, steps) => {
   const spacing = 4
@@ -57,4 +55,3 @@ export const getParameterDefinitions = () => [
     initial: 'hsl'
   }
 ]
-

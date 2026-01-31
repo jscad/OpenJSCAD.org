@@ -11,9 +11,7 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-import { translate } from '@jscad/modeling'
-import { extrudeLinear } from '@jscad/modeling'
-import { polygon } from '@jscad/modeling'
+import { translate, extrudeLinear, polygon } from '@jscad/modeling'
 
 import { deserialize } from '@jscad/io'
 
@@ -39,7 +37,7 @@ const loadSvg = (filepath) => {
     ? results.buffer.slice(results.byteOffset, results.byteOffset + results.length)
     : results
 
-  return deserialize({output: 'geometry'}, mimeType, content)
+  return deserialize({ output: 'geometry' }, mimeType, content)
 }
 
 // Load the SVG files

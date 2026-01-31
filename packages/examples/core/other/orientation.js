@@ -8,11 +8,7 @@
  * @licence MIT License
  */
 
-import { cuboid } from '@jscad/modeling'
-import { subtract } from '@jscad/modeling'
-import { colorize } from '@jscad/modeling'
-import { translate, rotate } from '@jscad/modeling'
-import { degToRad } from '@jscad/modeling'
+import { cuboid, subtract, colorize, translate, rotate, degToRad, TAU } from '@jscad/modeling'
 
 export const getParameterDefinitions = () => {
   // UG... only integer steps can be performed reliably
@@ -73,13 +69,13 @@ const axisDirection = (size, axis) => {
     pieces = translate([0, 0, -1], pieces)
   }
   if (axis === 'Y') {
-    pieces = rotate([Math.PI / 2, 0, 0], pieces)
-    pieces = rotate([0, 0, Math.PI / 2], pieces)
+    pieces = rotate([TAU / 4, 0, 0], pieces)
+    pieces = rotate([0, 0, TAU / 4], pieces)
     pieces = translate([-1, 0, 0], pieces)
   }
   if (axis === 'Z') {
-    pieces = rotate([Math.PI / 2, 0, 0], pieces)
-    pieces = rotate([0, -Math.PI / 2, 0], pieces)
+    pieces = rotate([TAU / 4, 0, 0], pieces)
+    pieces = rotate([0, -TAU / 4, 0], pieces)
     pieces = translate([0, -1, 0], pieces)
   }
   return pieces
@@ -96,4 +92,3 @@ const cuboidFrame = (options) => {
     cuboid({ size: [size[0] - d, size[1] - d, size[2]], center })
   )
 }
-

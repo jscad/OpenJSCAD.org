@@ -9,10 +9,7 @@
  * @licence MIT License
  */
 
-import { cuboid } from '@jscad/modeling'
-import { intersect } from '@jscad/modeling'
-import { rotateX, rotateZ, scale } from '@jscad/modeling'
-import { degToRad } from '@jscad/modeling'
+import { cuboid, intersect, rotateX, rotateZ, scale, degToRad } from '@jscad/modeling'
 
 const dodecahedron = (h) => {
   let cuboid1 = cuboid({ size: [20, 20, 10] })

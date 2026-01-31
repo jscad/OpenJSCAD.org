@@ -8,9 +8,7 @@
  * @licence MIT License
  */
 
-import { cuboid } from '@jscad/modeling'
-import { subtract } from '@jscad/modeling'
-import { align } from '@jscad/modeling'
+import { cuboid, subtract, align } from '@jscad/modeling'
 
 export const getParameterDefinitions = () => [
   { name: 'grouped', type: 'checkbox', checked: false, caption: 'Align as group' },

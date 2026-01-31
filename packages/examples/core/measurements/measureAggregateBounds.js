@@ -59,4 +59,3 @@ export const main = (params) => {
   const boundingBox = buildBoundingBox(measureAggregateBoundingBox(shapes))
   return [shapes, boundingBox]
 }
-

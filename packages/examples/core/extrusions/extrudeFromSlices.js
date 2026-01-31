@@ -8,10 +8,7 @@
  * @licence MIT License
  */
 
-import { circle } from '@jscad/modeling'
-import { geom2 } from '@jscad/modeling'
-import { extrudeFromSlices, slice } from '@jscad/modeling'
-import { mat4 } from '@jscad/modeling'
+import { circle, geom2, extrudeFromSlices, slice, mat4, TAU } from '@jscad/modeling'
 
 export const main = () => {
   // demonstrates manipulating the original base through translation and scale to build a 3D geometry
@@ -32,7 +29,7 @@ export const main = () => {
     return extrudeFromSlices({
       numberOfSlices: 32,
       callback: (progress, count, base) => {
-        const scaleFactor = 1 + (0.03 * Math.cos(3 * Math.PI * progress))
+        const scaleFactor = 1 + (0.03 * Math.cos(3 * TAI / 2 * progress))
         const scaleMatrix = mat4.fromScaling(mat4.create(), [scaleFactor, 2 - scaleFactor, 1])
         const transformMatrix = mat4.fromTranslation(mat4.create(), [0, 0, progress * height])
         return slice.transform(mat4.multiply(mat4.create(), scaleMatrix, transformMatrix), base)
@@ -63,4 +60,3 @@ export const main = () => {
     squareToCircleExtrusion(10)
   ]
 }
-

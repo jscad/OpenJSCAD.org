@@ -7,8 +7,6 @@
 // tags        : project, module, code, files, subfolder
 */
 
-import { sphere } from '@jscad/modeling'
-import { colorize } from '@jscad/modeling'
-import { translateZ } from '@jscad/modeling'
+import { sphere, colorize, translateZ } from '@jscad/modeling'
 
 export const sphereShape = (radius) => colorize([1, 0, 0, 1], translateZ(radius, sphere({ radius })))

@@ -11,8 +11,7 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-import { translate, scale, rotateZ } from '@jscad/modeling'
-import { union } from '@jscad/modeling'
+import { translate, scale, rotateZ, union, TAU } from '@jscad/modeling'
 
 import { deserialize } from '@jscad/io'
 
@@ -38,7 +37,7 @@ const loadStl = (filepath) => {
     ? results.buffer.slice(results.byteOffset, results.byteOffset + results.length)
     : results
 
-  return deserialize({output: 'geometry'}, mimeType, content)
+  return deserialize({ output: 'geometry' }, mimeType, content)
 }
 
 // Load the STL files
@@ -47,8 +46,7 @@ const frog = loadStl('./frog-OwenCollins.stl')
 
 export const main = () => {
   return union(
-    translate([0, 0, 13], rotateZ(-Math.PI / 3, scale([0.25, 0.25, 0.25], frog))),
+    translate([0, 0, 13], rotateZ(-TAU / 6, scale([0.25, 0.25, 0.25], frog))),
     translate([-5, 6, 0], sculpture)
   )
 }
-

@@ -8,9 +8,7 @@
  * @licence MIT License
  */
 
-import { circle, rectangle } from '@jscad/modeling'
-import { translate } from '@jscad/modeling'
-import { hull, hullChain } from '@jscad/modeling'
+import { circle, rectangle, translate, hull, hullChain } from '@jscad/modeling'
 
 export const getParameterDefinitions = () => [
   { name: 'doHull', type: 'radio', caption: 'Show:', values: ['shapes', 'hull', 'chain'], captions: ['Original Shapes', 'Hull', 'Hull Chain'], initial: 'shapes' }
@@ -31,4 +29,3 @@ export const main = (params) => {
     return shapes
   }
 }
-

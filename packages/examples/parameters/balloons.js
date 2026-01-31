@@ -11,9 +11,8 @@
 import { subtract, union } from '@jscad/modeling'
 import { colorize, hexToRgb } from '@jscad/modeling'
 import { extrudeFromSlices, extrudeLinear, slice } from '@jscad/modeling'
-import { geom2 } from '@jscad/modeling'
 import { hullChain } from '@jscad/modeling'
-import { mat4 } from '@jscad/modeling'
+import { mat4, TAU } from '@jscad/modeling'
 import { measureBoundingBox } from '@jscad/modeling'
 import { circle, ellipsoid } from '@jscad/modeling'
 import { vectorText } from '@jscad/modeling'
@@ -56,7 +55,7 @@ const text = (message, extrusionHeight, characterLineWidth) => {
 
   const lineSegments = []
 
-  const lines = vectorText({ xOffset: 0, yOffset: 0}, message) // array of lines
+  const lines = vectorText({ xOffset: 0, yOffset: 0 }, message) // array of lines
   lines.forEach((line) => {
     // each line is an array of vectorChar
     line.chars.forEach((character) => {
@@ -75,7 +74,7 @@ const text = (message, extrusionHeight, characterLineWidth) => {
 }
 
 const createSingleBalloon = (params) => {
-  let t = rotateX(Math.PI / 2, text(params.age.toString(), 2, 2))
+  let t = rotateX(TAU / 4, text(params.age.toString(), 2, 2))
   const m = measureBoundingBox(t)
   const x = (options.b_radius * 0.70) / Math.max(m[1][0], m[1][2])
   const y = options.b_radius * 3
@@ -112,8 +111,8 @@ const createBalloons = (params) => {
   const ropeOffset = options.b_radius - 1
   for (let i = 0; i < params.count; i++) {
     const angle = Math.floor(startingAngle + (angleSpread * i)) % 360
-    const x = Math.cos(angle * Math.PI / 180) * 2 * options.b_radius
-    const y = Math.sin(angle * Math.PI / 180) * 2 * options.b_radius
+    const x = Math.cos(angle * TAU / 2 / 180) * 2 * options.b_radius
+    const y = Math.sin(angle * TAU / 2 / 180) * 2 * options.b_radius
     const z = options.b_radius * 4 + (50 * Math.random())
     const aBalloon = colorize(options.b_color, translate([x, y, z], balloon))
     const aRope = createRope([x, y, z - ropeOffset])
@@ -152,4 +151,3 @@ export const main = (params) => {
 
   return balloonScene
 }
-

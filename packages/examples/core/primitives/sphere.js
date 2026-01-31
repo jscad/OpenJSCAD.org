@@ -8,8 +8,7 @@
  * @licence MIT License
  */
 
-import { sphere, geodesicSphere } from '@jscad/modeling'
-import { translate, scale } from '@jscad/modeling'
+import { sphere, geodesicSphere, translate, scale } from '@jscad/modeling'
 
 export const main = () => [
   translate([15, -25, 0], sphere({ radius: 10, segments: 12 })),

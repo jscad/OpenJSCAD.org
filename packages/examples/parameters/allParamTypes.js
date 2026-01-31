@@ -39,4 +39,3 @@ export const main = (params) => {
   console.log(params)
   return primitives.ellipsoid({ radius: [30, 20, 10], segments: 32 })
 }
-

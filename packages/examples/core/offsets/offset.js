@@ -8,14 +8,11 @@
  * @licence MIT License
  */
 
-import { cuboid, arc, rectangle } from '@jscad/modeling'
-import { offset } from '@jscad/modeling'
-import { colorize, colorNameToRgb } from '@jscad/modeling'
-import { translate } from '@jscad/modeling'
+import { cuboid, arc, rectangle, offset, colorize, colorNameToRgb, translate, TAU } from '@jscad/modeling'
 
 export const main = () => {
   // 2d paths can be expanded
-  const path2Example = colorize(colorNameToRgb('black'), arc({ radius: 12, endAngle: Math.PI / 2 }))
+  const path2Example = colorize(colorNameToRgb('black'), arc({ radius: 12, endAngle: TAU / 4 }))
   const expandedPath2Round = colorize(
     [0.5, 0.5, 1],
     offset({ delta: 1.7, corners: 'round', segments: 16 }, path2Example)

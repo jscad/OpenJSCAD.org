@@ -8,9 +8,7 @@
  * @licence MIT License
  */
 
-import { torus } from '@jscad/modeling'
-import { translate } from '@jscad/modeling'
-import { TAU } from '@jscad/modeling'
+import { torus, translate, TAU } from '@jscad/modeling'
 
 export const main = () => [
   // Top Row - Simple Torii

@@ -8,9 +8,7 @@
  * @licence MIT License
  */
 
-import { polygon } from '@jscad/modeling'
-import { extrudeLinear } from '@jscad/modeling'
-import { center } from '@jscad/modeling'
+import { polygon, extrudeLinear, center } from '@jscad/modeling'
 
 export const getParameterDefinitions = () => [
   { name: 'centerx', type: 'checkbox', checked: false, caption: 'Center on X:' },
@@ -44,4 +42,3 @@ const crosshair = () => {
   })
   return extrudeLinear({ height: 5 }, poly)
 }
-

@@ -8,9 +8,7 @@
  * @licence MIT License
  */
 
-import { colorize, hslToRgb, colorNameToRgb, hexToRgb, hsvToRgb } from '@jscad/modeling'
-import { cuboid, sphere } from '@jscad/modeling'
-import { translate } from '@jscad/modeling'
+import { colorize, hslToRgb, colorNameToRgb, hexToRgb, hsvToRgb, cuboid, sphere, translate } from '@jscad/modeling'
 
 export const main = () => {
   // the color() function applies a color (rgb, or rgba) to the given object
@@ -50,4 +48,3 @@ export const main = () => {
     fromHsv
   ]
 }
-

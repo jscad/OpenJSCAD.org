@@ -8,12 +8,7 @@
  * @licence MIT License
  */
 
-import { union } from '@jscad/modeling'
-import { extrudeLinear } from '@jscad/modeling'
-import { hullChain } from '@jscad/modeling'
-import { circle, sphere } from '@jscad/modeling'
-import { vectorText } from '@jscad/modeling'
-import { translate } from '@jscad/modeling'
+import { union, extrudeLinear, hullChain, circle, sphere, vectorText, translate } from '@jscad/modeling'
 
 export const getParameterDefinitions = () => [
   { name: 'outline_string', initial: 'Outline', type: 'text', caption: 'Outline Text', size: 30 },
@@ -46,7 +41,7 @@ const buildOutlineText = (message, characterLineWidth) => {
 
   const lineSegments = []
 
-  const lines = vectorText({ xOffset: 0, yOffset: 0}, message) // array of lines
+  const lines = vectorText({ xOffset: 0, yOffset: 0 }, message) // array of lines
   lines.forEach((line) => {
     // each line is an array of vectorChar
     line.chars.forEach((character) => {
@@ -72,7 +67,7 @@ const buildFlatText = (message, extrusionHeight, characterLineWidth) => {
 
   const lineSegments = []
 
-  const lines = vectorText({ xOffset: 0, yOffset: 0}, message) // array of lines
+  const lines = vectorText({ xOffset: 0, yOffset: 0 }, message) // array of lines
   lines.forEach((line) => {
     // each line is an array of vectorChar
     line.chars.forEach((character) => {
@@ -98,7 +93,7 @@ const buildRoundText = (message, characterDiameter) => {
 
   const lineSegments = []
 
-  const lines = vectorText({ xOffset: 0, yOffset: 0}, message) // array of lines
+  const lines = vectorText({ xOffset: 0, yOffset: 0 }, message) // array of lines
   lines.forEach((line) => {
     // each line is an array of vectorChar
     line.chars.forEach((character) => {
@@ -113,4 +108,3 @@ const buildRoundText = (message, characterDiameter) => {
   const message3D = union(lineSegments)
   return translate([0, -35, 0], message3D)
 }
-

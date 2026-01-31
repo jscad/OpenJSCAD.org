@@ -12,7 +12,6 @@ import { circle, sphere, cube, square, star } from '@jscad/modeling'
 import { translate, scale } from '@jscad/modeling'
 import { measureArea, measureVolume } from '@jscad/modeling'
 import { vectorText } from '@jscad/modeling'
-import { path2 } from '@jscad/modeling'
 
 export const getParameterDefinitions = () => [
   { name: 'shape', type: 'choice', caption: 'Shape:', values: ['circle', 'square', 'star', 'sphere', 'cube'], initial: 'circle' },
@@ -70,4 +69,3 @@ export const main = (params) => {
 
   return [shape, ...areaText, ...volumeText]
 }
-

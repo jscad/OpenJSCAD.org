@@ -13,7 +13,7 @@ import { rotateZ, translateZ } from '@jscad/modeling'
 import { extrudeLinear } from '@jscad/modeling'
 import { union, subtract } from '@jscad/modeling'
 import { vec2 } from '@jscad/modeling'
-import { degToRad } from '@jscad/modeling'
+import { degToRad, TAU } from '@jscad/modeling'
 
 // Here we define the user editable parameters:
 export const getParameterDefinitions = () => [
@@ -67,7 +67,7 @@ const createSingleToothPolygon = (maxAngle, baseRadius, angularToothWidthAtBase)
 
 const createBaseCirclePolygon = (numTeeth, angularToothWidthAtBase, rootRadius) => {
   const points = []
-  const toothAngle = 2 * Math.PI / numTeeth
+  const toothAngle = TAU / numTeeth
   const toothCenterAngle = 0.5 * angularToothWidthAtBase
   for (let k = 0; k < numTeeth; k++) {
     const currentAngle = toothCenterAngle + k * toothAngle
@@ -80,7 +80,7 @@ const createBaseCirclePolygon = (numTeeth, angularToothWidthAtBase, rootRadius) 
 const joinGearTeeth = (numTeeth, tooth3d) => {
   const allTeeth = []
   for (let j = 0; j < numTeeth; j++) {
-    const currentToothAngle = j * 2 * Math.PI / numTeeth
+    const currentToothAngle = j * TAU / numTeeth
     const rotatedTooth = rotateZ(currentToothAngle, tooth3d)
     allTeeth.push(rotatedTooth)
   }
@@ -94,11 +94,11 @@ const joinGearTeeth = (numTeeth, tooth3d) => {
     http://www.cartertools.com/involute.html
 */
 const involuteGear = (numTeeth, circularPitch, pressureAngle, clearance, thickness) => {
-  const addendum = circularPitch / Math.PI
+  const addendum = circularPitch / TAU / 2
   const dedendum = addendum + clearance
 
   // radii of the 4 circles:
-  const pitchRadius = numTeeth * circularPitch / (2 * Math.PI)
+  const pitchRadius = numTeeth * circularPitch / TAU
   const baseRadius = pitchRadius * Math.cos(pressureAngle)
   const outerRadius = pitchRadius + addendum
   const rootRadius = pitchRadius - dedendum
@@ -109,7 +109,7 @@ const involuteGear = (numTeeth, circularPitch, pressureAngle, clearance, thickne
   const tlAtPitchCircle = Math.sqrt(pitchRadius * pitchRadius - baseRadius * baseRadius)
   const angleAtPitchCircle = tlAtPitchCircle / baseRadius
   const diffAngle = angleAtPitchCircle - Math.atan(angleAtPitchCircle)
-  const angularToothWidthAtBase = (Math.PI / numTeeth) + (2 * diffAngle)
+  const angularToothWidthAtBase = (TAU / 2 / numTeeth) + (2 * diffAngle)
 
   // create the polygon for a single tooth.
   const singleTooth2D = createSingleToothPolygon(maxAngle, baseRadius, angularToothWidthAtBase)
@@ -124,4 +124,3 @@ const involuteGear = (numTeeth, circularPitch, pressureAngle, clearance, thickne
 
   return union(rootcircle, allTeeth)
 }
-

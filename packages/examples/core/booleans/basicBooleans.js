@@ -8,10 +8,7 @@
  * @licence MIT License
  */
 
-import { cube, sphere } from '@jscad/modeling'
-import { translate } from '@jscad/modeling'
-import { colorize } from '@jscad/modeling'
-import { union, subtract, intersect } from '@jscad/modeling'
+import { cube, sphere, translate, colorize, union, subtract, intersect } from '@jscad/modeling'
 
 export const main = () => {
   const aCube = colorize([1, 0, 0], translate([-4.5, 0, 0], cube()))
@@ -28,4 +25,3 @@ export const main = () => {
     translate([9, 0, 0], aIntersection)
   ]
 }
-
