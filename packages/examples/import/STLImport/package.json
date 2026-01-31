@@ -9,5 +9,6 @@
   ],
   "author": "Simon Clark",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {},
+  "type": "module"
 }

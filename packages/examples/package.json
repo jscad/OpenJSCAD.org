@@ -4,6 +4,7 @@
   "description": "Example Files for JSCAD",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
+  "type": "module",
   "scripts": {},
   "private": true,
   "contributors": [
@@ -31,5 +32,10 @@
     "type": "opencollective",
     "url": "https://opencollective.com/openjscad",
     "logo": "https://opencollective.com/openjscad/logo.txt"
+  },
+  "devDependencies": {
+    "@jscad/cli": "workspace:3.0.3-alpha.0",
+    "@jscad/modeling": "workspace:3.0.3-alpha.0",
+    "@jscad/io": "workspace:3.0.3-alpha.0"
   }
 }

@@ -7,18 +7,47 @@
  * @authors Simon Clark
  * @licence MIT License
  */
+import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
-const { translate } = require('@jscad/modeling').transforms
-const { extrudeLinear } = require('@jscad/modeling').extrusions
-const { polygon } = require('@jscad/modeling').primitives
+import { translate } from '@jscad/modeling'
+import { extrudeLinear } from '@jscad/modeling'
+import { polygon } from '@jscad/modeling'
 
-// Load the SVG files using require
-const panda = require('./babypanda2.svg')
+import { deserialize } from '@jscad/io'
 
-const main = () => {
-  // SVG shapes are imported as an array of paths. We want to convert those to polygons to extrude.
-  const poly = panda.map((shape) => polygon({ points: shape.points }))
-  return translate([-40, 50, 0], extrudeLinear({ height: 2 }, poly))
+/*
+ * Load the SVG outlines from the given file.
+ *
+ * NOTE: This function is required in V3 as imports of non-standard file types are not possible
+ */
+const loadSvg = (filepath) => {
+  const mimeType = 'image/svg+xml'
+
+  let fullpath = filepath
+  if (!path.isAbsolute(fullpath)) {
+    // Get the directory name of the current module
+    const filename = fileURLToPath(import.meta.url)
+    const dirname = path.dirname(filename)
+
+    fullpath = path.join(dirname, filepath)
+  }
+
+  const results = fs.readFileSync(fullpath)
+  const content = results.buffer
+    ? results.buffer.slice(results.byteOffset, results.byteOffset + results.length)
+    : results
+
+  return deserialize({output: 'geometry'}, mimeType, content)
 }
 
-module.exports = { main }
+// Load the SVG files
+const panda = loadSvg('./babypanda2.svg')
+
+export const main = () => {
+  // SVG shapes are imported as an array of paths. So, convert the paths to polygons.
+  const poly = panda.map((path) => polygon({ points: path.points }))
+
+  return translate([-40, 50, 0], extrudeLinear({ height: 2 }, poly))
+}
