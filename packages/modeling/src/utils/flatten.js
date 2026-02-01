@@ -5,21 +5,6 @@
  * @returns {Array} a flat list of arguments
  * @alias module:modeling/utils.flatten
  */
-const flatten = (arr) => {
-  const result = []
-  const stack = [arr]
-  while (stack.length) {
-    const item = stack.pop()
-    if (Array.isArray(item)) {
-      // Push in reverse order so first element is processed first
-      for (let i = item.length - 1; i >= 0; i--) {
-        stack.push(item[i])
-      }
-    } else {
-      result.push(item)
-    }
-  }
-  return result
-}
+const flatten = (arr) => arr.flat(Infinity)
 
 module.exports = flatten
