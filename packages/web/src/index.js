@@ -110,8 +110,13 @@ const makeJscad = async (targetElement, options) => {
   // increase the count of jscad instances in this page
   instances += 1
 
-  setTimeout(() => { document.getElementById('toggleAxes').click() }, 100)
-  setTimeout(() => { document.getElementById('toggleAxes').click() }, 200)
+  // See ui/flow/viewer.js for the initial states
+  //setTimeout(() => { document.getElementById('toggleAxes').click() }, 100)
+  //setTimeout(() => { document.getElementById('toggleGrid').click() }, 200)
+  //setTimeout(() => { document.getElementById('toggleAutoZoom').click() }, 200)
+
+  // click on an example for the initial view
+  setTimeout(() => { document.getElementById('example1-1').click() }, 200)
 
   // we return a function to allow setting/modifying params
   const mainParams = callbackToObservable()

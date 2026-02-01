@@ -9,10 +9,10 @@ const reducers = {
         background: [1, 1, 1, 1],
         meshColor: [0, 0.6, 1, 1],
         autoRotate: false,
-        autoZoom: false
+        autoZoom: true
       },
       grid: {
-        show: false,
+        show: true,
         color: [1, 1, 1, 0.1]
       },
       axes: {

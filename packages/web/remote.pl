@@ -19,7 +19,7 @@ my $q = new CGI;
 my $maxSize = 10_000_000;     # [bytes], max size of file
 my $maxTime = 60;             # [s], max download time
 
-cacheLocal($q->param('url'));
+cacheLocal(scalar $q->param('url'));
 
 opendir(D,$dir);
 foreach(readdir(D)) {
