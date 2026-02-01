@@ -12,8 +12,8 @@ const EPS_SQUARED = EPS * EPS
 // Remove consecutive duplicate vertices from a polygon vertex list.
 // Compares last vertex to first to handle wraparound.
 // Returns a new array (does not modify input).
+// IMPORTANT: Caller must ensure vertices.length >= 3 before calling.
 const removeConsecutiveDuplicates = (vertices) => {
-  if (vertices.length < 3) return vertices
   const result = []
   let prevvertex = vertices[vertices.length - 1]
   for (let i = 0; i < vertices.length; i++) {
@@ -102,14 +102,18 @@ const splitPolygonByPlane = (splane, polygon) => {
         }
         isback = nextisback
       } // for vertexindex
-      // remove consecutive duplicate vertices
-      const backFiltered = removeConsecutiveDuplicates(backvertices)
-      const frontFiltered = removeConsecutiveDuplicates(frontvertices)
-      if (frontFiltered.length >= 3) {
-        result.front = poly3.fromPointsAndPlane(frontFiltered, pplane)
+      // remove consecutive duplicate vertices (check length before calling to avoid function overhead)
+      if (frontvertices.length >= 3) {
+        const frontFiltered = removeConsecutiveDuplicates(frontvertices)
+        if (frontFiltered.length >= 3) {
+          result.front = poly3.fromPointsAndPlane(frontFiltered, pplane)
+        }
       }
-      if (backFiltered.length >= 3) {
-        result.back = poly3.fromPointsAndPlane(backFiltered, pplane)
+      if (backvertices.length >= 3) {
+        const backFiltered = removeConsecutiveDuplicates(backvertices)
+        if (backFiltered.length >= 3) {
+          result.back = poly3.fromPointsAndPlane(backFiltered, pplane)
+        }
       }
     }
   }
