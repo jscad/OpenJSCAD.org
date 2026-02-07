@@ -8,14 +8,10 @@
  * @licence MIT License
  */
 
-import { subtract, union } from '@jscad/modeling'
-import { colorize, hexToRgb } from '@jscad/modeling'
+import { colorize, hexToRgb, subtract, union, hullChain } from '@jscad/modeling'
 import { extrudeFromSlices, extrudeLinear, slice } from '@jscad/modeling'
-import { hullChain } from '@jscad/modeling'
-import { mat4, TAU } from '@jscad/modeling'
-import { measureBoundingBox } from '@jscad/modeling'
-import { circle, ellipsoid } from '@jscad/modeling'
-import { vectorText } from '@jscad/modeling'
+import { mat4, TAU, measureBoundingBox } from '@jscad/modeling'
+import { circle, ellipsoid, vectorText } from '@jscad/modeling'
 import { translate, scale, rotateX, center } from '@jscad/modeling'
 
 const options = { segments: 32 }

@@ -8,11 +8,8 @@
  * @licence MIT License
  */
 
-import { colorize, geom2, vec3, mat4, extrudeFromSlices } from '@jscad/modeling'
-import { cuboid, circle } from '@jscad/modeling'
-import { translate } from '@jscad/modeling'
-import { slice } from '@jscad/modeling'
-import { bezier } from '@jscad/modeling'
+import { colorize, geom2, vec3, mat4, extrudeFromSlices, slice } from '@jscad/modeling'
+import { cuboid, circle, bezier, translate } from '@jscad/modeling'
 
 export const main = () => [
   box4x4([-8, -4, 2], [1, 0, 0]),

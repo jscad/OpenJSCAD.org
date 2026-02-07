@@ -8,10 +8,8 @@
  * @licence MIT License
  */
 
-import { circle, sphere, cube, square, star } from '@jscad/modeling'
-import { translate, scale } from '@jscad/modeling'
-import { measureArea, measureVolume } from '@jscad/modeling'
-import { vectorText } from '@jscad/modeling'
+import { circle, sphere, cube, square, star, vectorText } from '@jscad/modeling'
+import { translate, scale, measureArea, measureVolume } from '@jscad/modeling'
 
 export const getParameterDefinitions = () => [
   { name: 'shape', type: 'choice', caption: 'Shape:', values: ['circle', 'square', 'star', 'sphere', 'cube'], initial: 'circle' },
@@ -23,7 +21,7 @@ const textPaths = (text, y) => {
   let textSegments = []
 
   // array of lines
-  const lines = vectorText({ x: -20, y: -10}, text)
+  const lines = vectorText({ x: -20, y: -10 }, text)
   lines.forEach((line) => {
     // each line is an array of vectorChar
     line.chars.forEach((character) => {

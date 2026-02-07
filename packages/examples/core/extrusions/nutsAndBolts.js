@@ -8,11 +8,8 @@
  * @licence MIT License
  */
 
-import { cylinder } from '@jscad/modeling'
-import { subtract, union } from '@jscad/modeling'
-import { colorize } from '@jscad/modeling'
-import { extrudeFromSlices, slice, TAU } from '@jscad/modeling'
-import { translate } from '@jscad/modeling'
+import { cylinder, extrudeFromSlices, slice, TAU } from '@jscad/modeling'
+import { subtract, union, colorize, translate } from '@jscad/modeling'
 
 const options = {
   hexWidth: 10,
@@ -64,7 +61,7 @@ const threads = (options) => {
         const threadAngle = (TAU * revolutions * progress) % TAU
 
         // define the shape of the threads
-        const phase = angleDiff(threadAngle, pointAngle) / TAI / 2
+        const phase = angleDiff(threadAngle, pointAngle) / TAU / 2
         const radius = lerp(innerRadius, outerRadius, 1.4 * phase - 0.2)
 
         const x = radius * Math.cos(pointAngle)
@@ -80,6 +77,6 @@ const threads = (options) => {
 const lerp = (a, b, t) => Math.max(a, Math.min(b, a + (b - a) * t))
 
 const angleDiff = (angle1, angle2) => {
-  const diff = Math.abs((angle1 - angle2) % TAI)
+  const diff = Math.abs((angle1 - angle2) % TAU)
   return diff > (TAU / 2) ? TAU - diff : diff
 }

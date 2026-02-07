@@ -8,11 +8,7 @@
  * @licence MIT License
  */
 
-import { cuboid } from '@jscad/modeling'
-import { translate, rotate } from '@jscad/modeling'
-import { measureAggregateBoundingBox } from '@jscad/modeling'
-import { colorize } from '@jscad/modeling'
-import { subtract } from '@jscad/modeling'
+import { cuboid, translate, rotate, colorize, subtract, measureAggregateBoundingBox } from '@jscad/modeling'
 
 export const getParameterDefinitions = () => [
   { name: 'rotatex', type: 'slider', initial: 0, min: -3.14, max: 3.14, step: 0.01, caption: 'X Rotation:' },

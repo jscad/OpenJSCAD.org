@@ -8,12 +8,9 @@
  * @licence MIT License
  */
 
-import { cylinder, polygon } from '@jscad/modeling'
-import { rotateZ, translateZ } from '@jscad/modeling'
-import { extrudeLinear } from '@jscad/modeling'
-import { union, subtract } from '@jscad/modeling'
-import { vec2 } from '@jscad/modeling'
-import { degToRad, TAU } from '@jscad/modeling'
+import { cylinder, polygon, extrudeLinear } from '@jscad/modeling'
+import { rotateZ, translateZ, union, subtract } from '@jscad/modeling'
+import { vec2, degToRad, TAU } from '@jscad/modeling'
 
 // Here we define the user editable parameters:
 export const getParameterDefinitions = () => [
