@@ -49,11 +49,11 @@ class PolygonTreeNode {
       this.removed = true
       this.polygon = null
 
-      // remove ourselves from the parent's children list:
-      const parentschildren = this.parent.children
-      const i = parentschildren.indexOf(this)
-      if (i < 0) throw new Error('Assertion failed')
-      parentschildren.splice(i, 1)
+      // Note: We intentionally do NOT splice from parent.children here.
+      // All iteration paths (getPolygons, splitByPlane, clipPolygons) already
+      // check isRemoved() or polygon !== null, so removed nodes are skipped.
+      // Avoiding splice eliminates O(n²) cost when many nodes are removed.
+      // Dead nodes are cleaned up lazily in getPolygons().
 
       // invalidate the parent's polygon, and of all parents above it:
       this.parent.recursivelyInvalidatePolygon()
@@ -80,6 +80,19 @@ class PolygonTreeNode {
   }
 
   getPolygons (result) {
+    // Compact root's children array to remove dead nodes (lazy cleanup from remove()).
+    // Note: This method is only called on the root node via Tree.allPolygons() at the
+    // end of boolean operations. The children array is internal and not exposed, so
+    // mutating it here is safe. Non-root nodes are traversed via the queue below,
+    // which skips removed nodes via the `if (node.polygon)` check.
+    if (this.isRootNode() && this.children.length > 0) {
+      const compacted = []
+      for (let i = 0; i < this.children.length; i++) {
+        if (!this.children[i].removed) compacted.push(this.children[i])
+      }
+      this.children = compacted
+    }
+
     let children = [this]
     const queue = [children]
     let i, j, l, node

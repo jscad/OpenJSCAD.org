@@ -158,4 +158,37 @@ test('extrudeRotate: (overlap +/-) extruding of a geom2 produces an expected geo
   t.true(comparePolygonsAsPoints(pts, exp))
 })
 
+// Test for mat4 reuse optimization: verify rotation matrices are computed correctly
+// This ensures the optimization of computing xRotationMatrix once doesn't break anything
+test('extrudeRotate: (mat4 reuse) rotation matrices produce correct geometry', (t) => {
+  // Simple rectangle that will be rotated to form a tube-like shape
+  const geometry2 = geom2.fromPoints([[5, -1], [5, 1], [6, 1], [6, -1]])
+
+  // Full rotation with many segments to test matrix reuse across iterations
+  const geometry3 = extrudeRotate({ segments: 32 }, geometry2)
+  const pts = geom3.toPoints(geometry3)
+
+  t.notThrows(() => geom3.validate(geometry3))
+  // 32 segments * 8 walls per segment (4 edges * 2 triangles) = 256 polygons
+  t.is(pts.length, 256)
+
+  // Verify the geometry is closed (first and last slices connect properly)
+  // This tests the Zrotation rounding error fix at index === segments
+  const geometry3b = extrudeRotate({ segments: 16 }, geometry2)
+  t.notThrows(() => geom3.validate(geometry3b))
+})
+
+// Test for mat4 reuse with partial rotation (tests both capped and matrix reuse)
+test('extrudeRotate: (mat4 reuse) partial rotation produces correct caps', (t) => {
+  const geometry2 = geom2.fromPoints([[5, -1], [5, 1], [6, 1], [6, -1]])
+
+  // Quarter rotation - should have start and end caps
+  const geometry3 = extrudeRotate({ segments: 8, angle: TAU / 4 }, geometry2)
+  const pts = geom3.toPoints(geometry3)
+
+  t.notThrows(() => geom3.validate(geometry3))
+  // Should produce valid geometry with caps
+  t.true(pts.length > 0)
+})
+
 // TEST HOLES

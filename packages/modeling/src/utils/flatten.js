@@ -5,6 +5,6 @@
  * @returns {Array} a flat list of arguments
  * @alias module:modeling/utils.flatten
  */
-const flatten = (arr) => arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(flatten(val)) : acc.concat(val), [])
+const flatten = (arr) => arr.flat(Infinity)
 
 module.exports = flatten

@@ -81,7 +81,10 @@ const extrudeFromSlices = (options, base) => {
       if (edges.length === 0) throw new Error('the callback function must return slices with one or more edges')
 
       if (prevSlice) {
-        polygons = polygons.concat(extrudeWalls(prevSlice, currentSlice))
+        const walls = extrudeWalls(prevSlice, currentSlice)
+        for (let i = 0; i < walls.length; i++) {
+          polygons.push(walls[i])
+        }
       }
 
       // save start and end slices for caps if necessary
@@ -95,17 +98,24 @@ const extrudeFromSlices = (options, base) => {
   if (capEnd) {
     // create a cap at the end
     const endPolygons = slice.toPolygons(endSlice)
-    polygons = polygons.concat(endPolygons)
+    for (let i = 0; i < endPolygons.length; i++) {
+      polygons.push(endPolygons[i])
+    }
   }
   if (capStart) {
     // create a cap at the start
     const startPolygons = slice.toPolygons(startSlice).map(poly3.invert)
-    polygons = polygons.concat(startPolygons)
+    for (let i = 0; i < startPolygons.length; i++) {
+      polygons.push(startPolygons[i])
+    }
   }
   if (!capStart && !capEnd) {
     // create walls between end and start slices
     if (close && !slice.equals(endSlice, startSlice)) {
-      polygons = polygons.concat(extrudeWalls(endSlice, startSlice))
+      const walls = extrudeWalls(endSlice, startSlice)
+      for (let i = 0; i < walls.length; i++) {
+        polygons.push(walls[i])
+      }
     }
   }
   return geom3.create(polygons)

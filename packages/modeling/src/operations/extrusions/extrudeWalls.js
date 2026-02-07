@@ -26,10 +26,11 @@ const repartitionEdges = (newlength, edges) => {
   }
 
   const divisor = vec3.fromValues(multiple, multiple, multiple)
+  const increment = vec3.create() // reuse across all edge iterations
 
   const newEdges = []
   edges.forEach((edge) => {
-    const increment = vec3.subtract(vec3.create(), edge[1], edge[0])
+    vec3.subtract(increment, edge[1], edge[0])
     vec3.divide(increment, increment, divisor)
 
     // repartition the edge
