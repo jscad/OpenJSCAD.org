@@ -8,16 +8,13 @@
  * @licence MIT License
  */
 
-const jscad = require('@jscad/modeling')
-const { circle, rectangle } = jscad.primitives
-const { translate } = jscad.transforms
-const { hull, hullChain } = jscad.hulls
+import { circle, rectangle, translate, hull, hullChain } from '@jscad/modeling'
 
-const getParameterDefinitions = () => [
+export const getParameterDefinitions = () => [
   { name: 'doHull', type: 'radio', caption: 'Show:', values: ['shapes', 'hull', 'chain'], captions: ['Original Shapes', 'Hull', 'Hull Chain'], initial: 'shapes' }
 ]
 
-const main = (params) => {
+export const main = (params) => {
   const shapes = [
     translate([15, 0, 0], circle({ radius: 2, segments: 16 })),
     translate([8, 6, 0], circle({ radius: 3.5, segments: 16 })),
@@ -32,5 +29,3 @@ const main = (params) => {
     return shapes
   }
 }
-
-module.exports = { main, getParameterDefinitions }

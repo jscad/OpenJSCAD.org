@@ -8,22 +8,15 @@
  * @licence MIT License
  */
 
-const jscad = require('@jscad/modeling')
-
-const { subtract, union } = jscad.booleans
-const { colorize, hexToRgb } = jscad.colors
-const { extrudeFromSlices, extrudeLinear, slice } = jscad.extrusions
-const { geom2 } = jscad.geometries
-const { hullChain } = jscad.hulls
-const { mat4 } = jscad.maths
-const { measureBoundingBox } = jscad.measurements
-const { circle, ellipsoid } = jscad.primitives
-const { vectorText } = jscad.text
-const { translate, scale, rotateX, center } = jscad.transforms
+import { colorize, hexToRgb, subtract, union, hullChain } from '@jscad/modeling'
+import { extrudeFromSlices, extrudeLinear, slice } from '@jscad/modeling'
+import { mat4, TAU, measureBoundingBox } from '@jscad/modeling'
+import { circle, ellipsoid, vectorText } from '@jscad/modeling'
+import { translate, scale, rotateX, center } from '@jscad/modeling'
 
 const options = { segments: 32 }
 
-const getParameterDefinitions = () => [
+export const getParameterDefinitions = () => [
   { name: 'balloon', type: 'group', caption: 'Balloons' },
   { name: 'isBig', type: 'checkbox', checked: true, initial: '20', caption: 'Big?' },
   { name: 'color', type: 'color', initial: '#FFB431', caption: 'Color?' },
@@ -41,6 +34,14 @@ const initializeOptions = (params) => {
   options.b_color = hexToRgb(params.color)
 }
 
+const pathToSegment = (path, corner) => {
+  const points = path.points.slice()
+  if (path.isClosed) points.push(path.points[0])
+
+  const corners = points.map((point) => translate(point, corner))
+  return hullChain(corners)
+}
+
 // Build text by creating the font strokes (2D), then extruding up (3D).
 const text = (message, extrusionHeight, characterLineWidth) => {
   if (message === undefined || message.length === 0) return []
@@ -48,19 +49,28 @@ const text = (message, extrusionHeight, characterLineWidth) => {
   const lineRadius = characterLineWidth / 2
   const lineCorner = circle({ radius: lineRadius })
 
-  const lineSegmentPointArrays = vectorText({ x: 0, y: 0, input: message }) // line segments for each character
   const lineSegments = []
-  lineSegmentPointArrays.forEach((segmentPoints) => { // process the line segment
-    const corners = segmentPoints.map((point) => translate(point, lineCorner))
-    lineSegments.push(hullChain(corners))
+
+  const lines = vectorText({ xOffset: 0, yOffset: 0 }, message) // array of lines
+  lines.forEach((line) => {
+    // each line is an array of vectorChar
+    line.chars.forEach((character) => {
+      // each character is an array of paths
+      character.paths.forEach((path) => {
+        // convert path to 2D line segment
+        lineSegments.push(pathToSegment(path, lineCorner))
+      })
+    })
   })
+
   const message2D = union(lineSegments)
   const message3D = extrudeLinear({ height: extrusionHeight }, message2D)
+
   return center({ axes: [true, true, false] }, message3D)
 }
 
 const createSingleBalloon = (params) => {
-  let t = rotateX(Math.PI / 2, text(params.age.toString(), 2, 2))
+  let t = rotateX(TAU / 4, text(params.age.toString(), 2, 2))
   const m = measureBoundingBox(t)
   const x = (options.b_radius * 0.70) / Math.max(m[1][0], m[1][2])
   const y = options.b_radius * 3
@@ -75,7 +85,7 @@ const createSingleBalloon = (params) => {
 }
 
 const createRope = (to) => {
-  const base = slice.fromSides(geom2.toSides(circle({ radius: 0.25 })))
+  const base = slice.fromGeom2(circle({ radius: 0.25 }))
   const rope = extrudeFromSlices({
     callback: (p, i, b) => {
       if (i === 1) {
@@ -97,8 +107,8 @@ const createBalloons = (params) => {
   const ropeOffset = options.b_radius - 1
   for (let i = 0; i < params.count; i++) {
     const angle = Math.floor(startingAngle + (angleSpread * i)) % 360
-    const x = Math.cos(angle * Math.PI / 180) * 2 * options.b_radius
-    const y = Math.sin(angle * Math.PI / 180) * 2 * options.b_radius
+    const x = Math.cos(angle * TAU / 2 / 180) * 2 * options.b_radius
+    const y = Math.sin(angle * TAU / 2 / 180) * 2 * options.b_radius
     const z = options.b_radius * 4 + (50 * Math.random())
     const aBalloon = colorize(options.b_color, translate([x, y, z], balloon))
     const aRope = createRope([x, y, z - ropeOffset])
@@ -126,7 +136,7 @@ const createBirthDate = (birthDate) => {
   return birthDate3D
 }
 
-const main = (params) => {
+export const main = (params) => {
   initializeOptions(params)
 
   const balloonScene = []
@@ -137,5 +147,3 @@ const main = (params) => {
 
   return balloonScene
 }
-
-module.exports = { main, getParameterDefinitions }

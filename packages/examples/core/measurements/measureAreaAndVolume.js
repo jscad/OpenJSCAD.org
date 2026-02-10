@@ -8,21 +8,28 @@
  * @licence MIT License
  */
 
-const { circle, sphere, cube, square, star } = require('@jscad/modeling').primitives
-const { translate, scale } = require('@jscad/modeling').transforms
-const { measureArea, measureVolume } = require('@jscad/modeling').measurements
-const { vectorText } = require('@jscad/modeling').text
-const { path2 } = require('@jscad/modeling').geometries
+import { circle, sphere, cube, square, star, vectorText } from '@jscad/modeling'
+import { translate, scale, measureArea, measureVolume } from '@jscad/modeling'
 
-const getParameterDefinitions = () => [
+export const getParameterDefinitions = () => [
   { name: 'shape', type: 'choice', caption: 'Shape:', values: ['circle', 'square', 'star', 'sphere', 'cube'], initial: 'circle' },
   { name: 'size', type: 'number', initial: 10.0, min: 0.1, max: 10.0, step: 0.01, caption: 'Size:' },
   { name: 'segments', type: 'choice', values: [8, 16, 32, 64, 128], initial: 16, caption: 'Segments:' }
 ]
 
 const textPaths = (text, y) => {
-  const lineSegmentPointArrays = vectorText({ x: -20, y: -10, input: text })
-  let textSegments = lineSegmentPointArrays.map((points) => path2.fromPoints({ closed: false }, points))
+  let textSegments = []
+
+  // array of lines
+  const lines = vectorText({ x: -20, y: -10 }, text)
+  lines.forEach((line) => {
+    // each line is an array of vectorChar
+    line.chars.forEach((character) => {
+      // each character is an array of paths
+      textSegments.push(...character.paths)
+    })
+  })
+
   textSegments = scale([0.2, 0.2, 0.2], textSegments)
   return translate([-25, y - 10, 0], textSegments)
 }
@@ -49,7 +56,7 @@ const getShape = (params) => {
  * @param {Number} params.segments - The resolution of the shape to create. Affects only circle and sphere.
  * @returns {[geometry]} The created shape, and text describing its area and volume.
  */
-const main = (params) => {
+export const main = (params) => {
   const shape = getShape(params)
 
   const area = measureArea(shape)
@@ -60,5 +67,3 @@ const main = (params) => {
 
   return [shape, ...areaText, ...volumeText]
 }
-
-module.exports = { main, getParameterDefinitions }

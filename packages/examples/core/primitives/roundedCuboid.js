@@ -8,9 +8,9 @@
  * @licence MIT License
  */
 
-const { cuboid, roundedCuboid } = require('@jscad/modeling').primitives
+import { cuboid, roundedCuboid } from '@jscad/modeling'
 
-const getParameterDefinitions = () => [
+export const getParameterDefinitions = () => [
   { name: 'width', type: 'float', default: 10, caption: 'Width:' },
   { name: 'height', type: 'float', default: 14, caption: 'Height:' },
   { name: 'depth', type: 'float', default: 7, caption: 'Depth:' },
@@ -27,12 +27,10 @@ const getParameterDefinitions = () => [
  * @param {Number} params.radius - The cuboid's corner radius.
  * @returns {geometry}
  */
-const main = (params) => {
+export const main = (params) => {
   if (params.rounded === 1) {
     return roundedCuboid({ size: [params.width, params.height, params.depth], roundRadius: params.radius, segments: 32 })
   } else {
     return cuboid({ size: [params.width, params.height, params.depth] })
   }
 }
-
-module.exports = { main, getParameterDefinitions }

@@ -8,11 +8,9 @@
  * @licence MIT License
  */
 
-const { colorize, hslToRgb, colorNameToRgb } = require('@jscad/modeling').colors
-const { cuboid, cylinder } = require('@jscad/modeling').primitives
-const { translate } = require('@jscad/modeling').transforms
+import { colorize, hslToRgb, colorNameToRgb, cuboid, cylinder, translate } from '@jscad/modeling'
 
-const main = () => {
+export const main = () => {
   const shapes = []
   for (let i = 7; i >= 0; i--) {
     // reverse order for seeing through all cylinders (see http://www.opengl.org/wiki/Transparency_Sorting)
@@ -29,5 +27,3 @@ const main = () => {
   )
   return shapes
 }
-
-module.exports = { main }

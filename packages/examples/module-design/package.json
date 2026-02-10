@@ -9,5 +9,6 @@
   ],
   "author": "Mark 'kaosat-dev' Moissette & sons",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {},
+  "type": "module"
 }

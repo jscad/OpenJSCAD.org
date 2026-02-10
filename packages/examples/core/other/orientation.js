@@ -8,15 +8,9 @@
  * @licence MIT License
  */
 
-const jscad = require('@jscad/modeling')
+import { cuboid, subtract, colorize, translate, rotate, degToRad, TAU } from '@jscad/modeling'
 
-const { cuboid } = jscad.primitives
-const { subtract } = jscad.booleans
-const { colorize } = jscad.colors
-const { translate, rotate } = jscad.transforms
-const { degToRad } = jscad.utils
-
-const getParameterDefinitions = () => {
+export const getParameterDefinitions = () => {
   // UG... only integer steps can be performed reliably
   const max = 360
   const min = -max
@@ -35,7 +29,7 @@ const getParameterDefinitions = () => {
  * @param {Number} params.rotateZ - Rotation (degrees) about the Z axis
  * @returns {geometries}
  */
-const main = (params) => {
+export const main = (params) => {
   const dimension = 20
   const coordinateSystem = colorize([0, 0, 0, 0.5], cuboidFrame({ size: [20, 20, 20] }))
 
@@ -75,13 +69,13 @@ const axisDirection = (size, axis) => {
     pieces = translate([0, 0, -1], pieces)
   }
   if (axis === 'Y') {
-    pieces = rotate([Math.PI / 2, 0, 0], pieces)
-    pieces = rotate([0, 0, Math.PI / 2], pieces)
+    pieces = rotate([TAU / 4, 0, 0], pieces)
+    pieces = rotate([0, 0, TAU / 4], pieces)
     pieces = translate([-1, 0, 0], pieces)
   }
   if (axis === 'Z') {
-    pieces = rotate([Math.PI / 2, 0, 0], pieces)
-    pieces = rotate([0, -Math.PI / 2, 0], pieces)
+    pieces = rotate([TAU / 4, 0, 0], pieces)
+    pieces = rotate([0, -TAU / 4, 0], pieces)
     pieces = translate([0, -1, 0], pieces)
   }
   return pieces
@@ -98,5 +92,3 @@ const cuboidFrame = (options) => {
     cuboid({ size: [size[0] - d, size[1] - d, size[2]], center })
   )
 }
-
-module.exports = { main, getParameterDefinitions }

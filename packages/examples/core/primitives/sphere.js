@@ -8,10 +8,9 @@
  * @licence MIT License
  */
 
-const { sphere, geodesicSphere } = require('@jscad/modeling').primitives
-const { translate, scale } = require('@jscad/modeling').transforms
+import { sphere, geodesicSphere, translate, scale } from '@jscad/modeling'
 
-const main = () => [
+export const main = () => [
   translate([15, -25, 0], sphere({ radius: 10, segments: 12 })),
   translate([-15, -25, 0], geodesicSphere({ radius: 10, frequency: 6 })),
 
@@ -23,5 +22,3 @@ const main = () => [
   scale([0.5, 1, 2], translate([-15, 25, 0], geodesicSphere({ radius: 10, frequency: 18 }))),
   scale([0.5, 2, 1], translate([-30, 25, 0], geodesicSphere({ radius: 10, frequency: 18 })))
 ]
-
-module.exports = { main }

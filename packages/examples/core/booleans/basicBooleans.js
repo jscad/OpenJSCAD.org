@@ -8,13 +8,9 @@
  * @licence MIT License
  */
 
-const jscad = require('@jscad/modeling')
-const { cube, sphere } = jscad.primitives
-const { translate } = jscad.transforms
-const { colorize } = jscad.colors
-const { union, subtract, intersect } = jscad.booleans
+import { cube, sphere, translate, colorize, union, subtract, intersect } from '@jscad/modeling'
 
-const main = () => {
+export const main = () => {
   const aCube = colorize([1, 0, 0], translate([-4.5, 0, 0], cube()))
   const aSphere = colorize([0, 1, 0], translate([-5.2, -0.8, 0.8], sphere({ segments: 32 })))
 
@@ -29,5 +25,3 @@ const main = () => {
     translate([9, 0, 0], aIntersection)
   ]
 }
-
-module.exports = { main }

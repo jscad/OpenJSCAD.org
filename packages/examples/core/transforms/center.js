@@ -8,12 +8,9 @@
  * @licence MIT License
  */
 
-const jscad = require('@jscad/modeling')
-const { polygon } = jscad.primitives
-const { extrudeLinear } = jscad.extrusions
-const { center } = jscad.transforms
+import { polygon, extrudeLinear, center } from '@jscad/modeling'
 
-const getParameterDefinitions = () => [
+export const getParameterDefinitions = () => [
   { name: 'centerx', type: 'checkbox', checked: false, caption: 'Center on X:' },
   { name: 'centery', type: 'checkbox', checked: false, caption: 'Center on Y:' },
   { name: 'centerz', type: 'checkbox', checked: false, caption: 'Center on Z:' }
@@ -26,7 +23,7 @@ const getParameterDefinitions = () => [
  * @param {Boolean} params.centerz - Center the geometry on the Z axis.
  * @returns {geometry}
  */
-const main = (params) => {
+export const main = (params) => {
   let crossHair3D = crosshair()
   if (params.centerx || params.centery || params.centerz) {
     crossHair3D = center({ axes: [params.centerx, params.centery, params.centerz] }, crossHair3D)
@@ -45,5 +42,3 @@ const crosshair = () => {
   })
   return extrudeLinear({ height: 5 }, poly)
 }
-
-module.exports = { main, getParameterDefinitions }

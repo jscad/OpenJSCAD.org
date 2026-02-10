@@ -9,11 +9,7 @@
  * @licence MIT License
  */
 
-const jscad = require('@jscad/modeling')
-const { cuboid } = jscad.primitives
-const { intersect } = jscad.booleans
-const { rotateX, rotateZ, scale } = jscad.transforms
-const { degToRad } = jscad.utils
+import { cuboid, intersect, rotateX, rotateZ, scale, degToRad } from '@jscad/modeling'
 
 const dodecahedron = (h) => {
   let cuboid1 = cuboid({ size: [20, 20, 10] })
@@ -32,6 +28,4 @@ const dodecahedron = (h) => {
   return scale([h, h, h], cuboid1) // scale by height parameter
 }
 
-const main = () => dodecahedron(10)
-
-module.exports = { main }
+export const main = () => dodecahedron(10)

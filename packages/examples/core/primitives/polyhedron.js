@@ -8,9 +8,9 @@
  * @licence MIT License
  */
 
-const { polyhedron } = require('@jscad/modeling').primitives
+import { polyhedron } from '@jscad/modeling'
 
-const main = () => polyhedron({
+export const main = () => polyhedron({
   points: [
     [0, -10, 60], [0, 10, 60], [0, 10, 0], [0, -10, 0], [60, -10, 60], [60, 10, 60],
     [10, -10, 50], [10, 10, 50], [10, 10, 30], [10, -10, 30], [30, -10, 50], [30, 10, 50]
@@ -22,5 +22,3 @@ const main = () => polyhedron({
     [1, 11, 7], [1, 5, 11], [1, 7, 8], [2, 1, 8], [8, 11, 2], [5, 2, 11]
   ]
 })
-
-module.exports = { main }

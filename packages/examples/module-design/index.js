@@ -8,13 +8,13 @@
  * @licence MIT License
  */
 
-const mountPlate = require('./mountPlate.js')
-const sphereShape = require('./subFolder/sphereShape')
+import * as mountPlate from './mountPlate.js'
+import { sphereShape } from './subFolder/sphereShape.js'
 
-const getParameterDefinitions = () => {
+export const getParameterDefinitions = () => {
   const globalParams = [
     { name: 'showPlate', type: 'checkbox', checked: true, caption: 'Show plate:' },
-    { name: 'showSphere', type: 'checkbox', checked: false, caption: 'Show sphere:' }
+    { name: 'showSphere', type: 'checkbox', checked: true, caption: 'Show sphere:' }
   ]
 
   // Load the parameters defined in the mountPlate sub-file, and add them to the project parameters.
@@ -23,13 +23,10 @@ const getParameterDefinitions = () => {
   return globalParams
 }
 
-const main = (params) => {
-  console.log(params)
+export const main = (params) => {
   let results = []
   results = params.showPlate ? results.concat(mountPlate.create(params.plateLength)) : results
   results = params.showSphere ? results.concat(sphereShape(3)) : results
 
   return results
 }
-
-module.exports = { main, getParameterDefinitions }

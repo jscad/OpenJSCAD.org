@@ -8,16 +8,12 @@
  * @licence MIT License
  */
 
-const jscad = require('@jscad/modeling')
-const { cylinder, polygon } = jscad.primitives
-const { rotateZ, translateZ } = jscad.transforms
-const { extrudeLinear } = jscad.extrusions
-const { union, subtract } = jscad.booleans
-const { vec2 } = jscad.maths
-const { degToRad } = jscad.utils
+import { cylinder, polygon, extrudeLinear } from '@jscad/modeling'
+import { rotateZ, translateZ, union, subtract } from '@jscad/modeling'
+import { vec2, degToRad, TAU } from '@jscad/modeling'
 
 // Here we define the user editable parameters:
-const getParameterDefinitions = () => [
+export const getParameterDefinitions = () => [
   { name: 'numTeeth', caption: 'Number of teeth:', type: 'int', initial: 10, min: 5, max: 20, step: 1 },
   { name: 'circularPitch', caption: 'Circular pitch:', type: 'float', initial: 5 },
   { name: 'pressureAngle', caption: 'Pressure angle:', type: 'float', initial: 20 },
@@ -27,7 +23,7 @@ const getParameterDefinitions = () => [
 ]
 
 // Main entry point; here we construct our solid:
-const main = (params) => {
+export const main = (params) => {
   let gear = involuteGear(
     params.numTeeth,
     params.circularPitch,
@@ -68,7 +64,7 @@ const createSingleToothPolygon = (maxAngle, baseRadius, angularToothWidthAtBase)
 
 const createBaseCirclePolygon = (numTeeth, angularToothWidthAtBase, rootRadius) => {
   const points = []
-  const toothAngle = 2 * Math.PI / numTeeth
+  const toothAngle = TAU / numTeeth
   const toothCenterAngle = 0.5 * angularToothWidthAtBase
   for (let k = 0; k < numTeeth; k++) {
     const currentAngle = toothCenterAngle + k * toothAngle
@@ -81,7 +77,7 @@ const createBaseCirclePolygon = (numTeeth, angularToothWidthAtBase, rootRadius) 
 const joinGearTeeth = (numTeeth, tooth3d) => {
   const allTeeth = []
   for (let j = 0; j < numTeeth; j++) {
-    const currentToothAngle = j * 2 * Math.PI / numTeeth
+    const currentToothAngle = j * TAU / numTeeth
     const rotatedTooth = rotateZ(currentToothAngle, tooth3d)
     allTeeth.push(rotatedTooth)
   }
@@ -95,11 +91,11 @@ const joinGearTeeth = (numTeeth, tooth3d) => {
     http://www.cartertools.com/involute.html
 */
 const involuteGear = (numTeeth, circularPitch, pressureAngle, clearance, thickness) => {
-  const addendum = circularPitch / Math.PI
+  const addendum = circularPitch / TAU / 2
   const dedendum = addendum + clearance
 
   // radii of the 4 circles:
-  const pitchRadius = numTeeth * circularPitch / (2 * Math.PI)
+  const pitchRadius = numTeeth * circularPitch / TAU
   const baseRadius = pitchRadius * Math.cos(pressureAngle)
   const outerRadius = pitchRadius + addendum
   const rootRadius = pitchRadius - dedendum
@@ -110,7 +106,7 @@ const involuteGear = (numTeeth, circularPitch, pressureAngle, clearance, thickne
   const tlAtPitchCircle = Math.sqrt(pitchRadius * pitchRadius - baseRadius * baseRadius)
   const angleAtPitchCircle = tlAtPitchCircle / baseRadius
   const diffAngle = angleAtPitchCircle - Math.atan(angleAtPitchCircle)
-  const angularToothWidthAtBase = (Math.PI / numTeeth) + (2 * diffAngle)
+  const angularToothWidthAtBase = (TAU / 2 / numTeeth) + (2 * diffAngle)
 
   // create the polygon for a single tooth.
   const singleTooth2D = createSingleToothPolygon(maxAngle, baseRadius, angularToothWidthAtBase)
@@ -125,5 +121,3 @@ const involuteGear = (numTeeth, circularPitch, pressureAngle, clearance, thickne
 
   return union(rootcircle, allTeeth)
 }
-
-module.exports = { main, getParameterDefinitions }

@@ -8,12 +8,9 @@
  * @licence MIT License
  */
 
-const jscad = require('@jscad/modeling')
-const { cuboid } = jscad.primitives
-const { subtract } = jscad.booleans
-const { align } = jscad.transforms
+import { cuboid, subtract, align } from '@jscad/modeling'
 
-const getParameterDefinitions = () => [
+export const getParameterDefinitions = () => [
   { name: 'grouped', type: 'checkbox', checked: false, caption: 'Align as group' },
   { name: 'modes', type: 'choice', caption: 'modes:', values: ['["none","none","none"]', '["center","center","min"]', '["min","min","min"]', '["max","min","center"]'], initial: '["none","none","none"]' },
   { name: 'relativeTo', type: 'choice', caption: 'relativeTo:', values: ['[0,0,0]', '[null,null,null]', '[10,-10,0]'], initial: '[0,0,0]' }
@@ -26,7 +23,7 @@ const getParameterDefinitions = () => [
  * @param {String} params.relativeTo - The relative point to align geometries. Null to use the group's bounding box.
  * @returns {geometry}
  */
-const main = (params) => {
+export const main = (params) => {
   const shapes = [
     cuboidFrame({ size: [2, 2, 2], center: [9, 4, 4] }),
     cuboidFrame({ size: [5, 12, 8], center: [8, 7, 10] }),
@@ -49,4 +46,3 @@ const cuboidFrame = (opt) => {
     cuboid({ size: [opt.size[0] - d, opt.size[1] - d, opt.size[2]], center })
   )
 }
-module.exports = { main, getParameterDefinitions }

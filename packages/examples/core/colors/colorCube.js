@@ -8,10 +8,7 @@
  * @licence MIT License
  */
 
-const jscad = require('@jscad/modeling')
-const { colorize, hslToRgb, hsvToRgb } = jscad.colors
-const { cuboid } = jscad.primitives
-const { translate } = jscad.transforms
+import { colorize, hslToRgb, hsvToRgb, cuboid, translate } from '@jscad/modeling'
 
 const getTranslation = (x, y, z, steps) => {
   const spacing = 4
@@ -33,7 +30,7 @@ const getColor = (a, b, c, method) => {
  * @param {String} params.method - The spectrum function to use: 'rgb'|'hsv'|'hsl'
  * @returns {[geometry]}
  */
-const main = (params) => {
+export const main = (params) => {
   const o = []
   const rows = 8
   for (let ix = 0; ix <= rows; ix++) {
@@ -48,7 +45,7 @@ const main = (params) => {
   return o
 }
 
-const getParameterDefinitions = () => [
+export const getParameterDefinitions = () => [
   {
     name: 'method',
     type: 'choice',
@@ -58,5 +55,3 @@ const getParameterDefinitions = () => [
     initial: 'hsl'
   }
 ]
-
-module.exports = { main, getParameterDefinitions }

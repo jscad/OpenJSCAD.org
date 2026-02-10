@@ -8,12 +8,8 @@
  * @licence MIT License
  */
 
-const jscad = require('@jscad/modeling')
-const { cylinder } = jscad.primitives
-const { subtract, union } = jscad.booleans
-const { colorize } = jscad.colors
-const { extrudeFromSlices, slice } = jscad.extrusions
-const { translate } = jscad.transforms
+import { cylinder, extrudeFromSlices, slice, TAU } from '@jscad/modeling'
+import { subtract, union, colorize, translate } from '@jscad/modeling'
 
 const options = {
   hexWidth: 10,
@@ -26,7 +22,7 @@ const options = {
   segments: 32
 }
 
-const main = () => [
+export const main = () => [
   colorize([0.9, 0.6, 0.2], bolt(options)),
   colorize([0.4, 0.4, 0.4], translate([30, 0, 0], nut(options)))
 ]
@@ -61,18 +57,18 @@ const threads = (options) => {
       // generate each slice manually
       const points = []
       for (let i = 0; i < segments; i++) {
-        const pointAngle = Math.PI * 2 * i / segments
-        const threadAngle = (2 * Math.PI * revolutions * progress) % (Math.PI * 2)
+        const pointAngle = TAU * i / segments
+        const threadAngle = (TAU * revolutions * progress) % TAU
 
         // define the shape of the threads
-        const phase = angleDiff(threadAngle, pointAngle) / Math.PI
+        const phase = angleDiff(threadAngle, pointAngle) / TAU / 2
         const radius = lerp(innerRadius, outerRadius, 1.4 * phase - 0.2)
 
         const x = radius * Math.cos(pointAngle)
         const y = radius * Math.sin(pointAngle)
         points.push([x, y, threadLength * progress])
       }
-      return slice.fromPoints(points)
+      return slice.fromVertices(points)
     }
   }, {})
 }
@@ -81,8 +77,6 @@ const threads = (options) => {
 const lerp = (a, b, t) => Math.max(a, Math.min(b, a + (b - a) * t))
 
 const angleDiff = (angle1, angle2) => {
-  const diff = Math.abs((angle1 - angle2) % (Math.PI * 2))
-  return diff > Math.PI ? Math.PI * 2 - diff : diff
+  const diff = Math.abs((angle1 - angle2) % TAU)
+  return diff > (TAU / 2) ? TAU - diff : diff
 }
-
-module.exports = { main }
