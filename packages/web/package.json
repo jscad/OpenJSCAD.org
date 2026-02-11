@@ -54,7 +54,7 @@
     "webworkify": "1.5.0"
   },
   "devDependencies": {
-    "ava": "3.15.0",
+    "ava": "6.4.1",
     "browser-env": "^3.2.1",
     "browserify": "16.5.1",
     "budo": "11.6.4",

@@ -31,7 +31,7 @@
     "@jscad/modeling": "2.12.7"
   },
   "devDependencies": {
-    "ava": "3.15.0",
+    "ava": "6.4.1",
     "nyc": "15.1.0"
   },
   "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"

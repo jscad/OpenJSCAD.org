@@ -46,7 +46,7 @@
   ],
   "devDependencies": {
     "@jscad/sample-files": "github:jscad/sample-files#master",
-    "ava": "3.15.0",
+    "ava": "6.4.1",
     "docdash": "1.2.0",
     "jsdoc": "3.6.10",
     "@lerna-lite/changed": "^4.11.2",

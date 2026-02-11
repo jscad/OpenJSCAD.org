@@ -35,6 +35,6 @@
   ],
   "license": "MIT",
   "devDependencies": {
-   "ava": "3.15.0"
+   "ava": "6.4.1"
   }
 }
