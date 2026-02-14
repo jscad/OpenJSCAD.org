@@ -8,6 +8,7 @@
  */
 module.exports = {
   intersect: require('./intersect'),
+  minkowski: require('../minkowski/minkowskiSum'),
   scission: require('./scission'),
   subtract: require('./subtract'),
   union: require('./union')

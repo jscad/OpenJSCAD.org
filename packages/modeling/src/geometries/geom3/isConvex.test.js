@@ -1,6 +1,7 @@
 const test = require('ava')
 
-const { geom3, primitives, booleans } = require('../../index')
+const { geometries, primitives, booleans } = require('../../index')
+const { geom3 } = geometries
 
 test('isConvex: throws for non-geom3 input', (t) => {
   t.throws(() => geom3.isConvex('invalid'), { message: /requires a geom3/ })
