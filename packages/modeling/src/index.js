@@ -12,6 +12,7 @@ module.exports = {
   expansions: require('./operations/expansions'),
   extrusions: require('./operations/extrusions'),
   hulls: require('./operations/hulls'),
+  minkowski: require('./operations/minkowski'),
   modifiers: require('./operations/modifiers'),
   transforms: require('./operations/transforms')
 }

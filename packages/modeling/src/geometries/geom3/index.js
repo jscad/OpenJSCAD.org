@@ -28,6 +28,7 @@ module.exports = {
   fromCompactBinary: require('./fromCompactBinary'),
   invert: require('./invert'),
   isA: require('./isA'),
+  isConvex: require('./isConvex'),
   toPoints: require('./toPoints'),
   toPolygons: require('./toPolygons'),
   toString: require('./toString'),

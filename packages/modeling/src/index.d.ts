@@ -11,6 +11,7 @@ export * as booleans from './operations/booleans'
 export * as expansions from './operations/expansions'
 export * as extrusions from './operations/extrusions'
 export * as hulls from './operations/hulls'
+export * as minkowski from './operations/minkowski'
 export * as modifiers from './operations/modifiers'
 export * as transforms from './operations/transforms'
 
