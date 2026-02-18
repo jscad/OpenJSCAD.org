@@ -250,16 +250,16 @@ test('deserialize : instantiate svg (path: arc) to objects', (t) => {
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 2)
   shape = observed[0]
-  t.is(shape.points.length, 27)
+  t.is(shape.points.length, 26)
 
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false, segments: 16 }, sourceSvg)
   t.is(observed.length, 2)
   shape = observed[0]
-  t.is(shape.points.length, 15) // segments double on a 3/4 circle
-  t.deepEqual(measurements.measureBoundingBox(shape), [[64.91110599999999, -77.611105, 0], [90.21850570104527, -52.30370029895471, 0]])
+  t.is(shape.points.length, 14) // segments double on a 3/4 circle
+  t.deepEqual(measurements.measureBoundingBox(shape), [[64.91110599999999, -77.611105, 0], [90.31110299999999, -52.211102999999994, 0]])
   shape = observed[1]
-  t.is(shape.points.length, 15) // segments double on a 3/4 circle
-  t.deepEqual(measurements.measureBoundingBox(shape), [[50.799996, -136.03302387090216, 0], [72.27222493929787, -110.6793647936299, 0]])
+  t.is(shape.points.length, 14) // segments double on a 3/4 circle
+  t.deepEqual(measurements.measureBoundingBox(shape), [[50.799996, -136.05619433226602, 0], [72.48025212106914, -110.65619433226604, 0]])
 })
 
 // ################################
@@ -446,9 +446,9 @@ test('deserialize : instantiate shape with a hole to objects', (t) => {
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 2)
   shape = observed[0]
-  t.is(shape.points.length, 38)
+  t.is(shape.points.length, 30)
   shape = observed[1]
-  t.is(shape.points.length, 38)
+  t.is(shape.points.length, 30)
 })
 
 // ################################
@@ -469,7 +469,7 @@ test('deserialize : instantiate shape with a nested hole to objects', (t) => {
   observed = deserializer.deserialize({ output: 'geometry', target: 'path', addMetaData: false }, sourceSvg)
   t.is(observed.length, 4)
   shape = observed[0]
-  t.is(shape.points.length, 38)
+  t.is(shape.points.length, 30)
 })
 
 // ################################

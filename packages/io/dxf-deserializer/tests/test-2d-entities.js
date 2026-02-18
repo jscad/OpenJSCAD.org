@@ -107,13 +107,13 @@ test('ASCII DXF 2D Donuts from Autocad 2017 to Object Conversion', (t) => {
   // expect array containing 23 objects (3 path2)
   t.true(Array.isArray(objs))
   t.is(objs.length, 23)
-  // NOTE: the extra ojbects are from the page layout
+  // NOTE: the extra objects are from the page layout
   t.true(geometries.path2.isA(objs[20]))
-  t.is(geometries.path2.toPoints(objs[20]).length, 18) // line
+  t.is(geometries.path2.toPoints(objs[20]).length, 16) // line
   t.true(geometries.path2.isA(objs[21]))
-  t.is(geometries.path2.toPoints(objs[21]).length, 18) // line
+  t.is(geometries.path2.toPoints(objs[21]).length, 16) // line
   t.true(geometries.path2.isA(objs[22]))
-  t.is(geometries.path2.toPoints(objs[22]).length, 18) // arc
+  t.is(geometries.path2.toPoints(objs[22]).length, 16) // arc
 })
 
 test('ASCII DXF 2D Ellipses from Autocad 2017 to Object Conversion', (t) => {
@@ -126,7 +126,7 @@ test('ASCII DXF 2D Ellipses from Autocad 2017 to Object Conversion', (t) => {
   // expect array containing 23 objects (3 CAG)
   t.true(Array.isArray(objs))
   t.is(objs.length, 23)
-  // NOTE: the extra ojbects are from the page layout
+  // NOTE: the extra objects are from the page layout
   t.true(geometries.geom2.isA(objs[20]))
   t.true(geometries.geom2.isA(objs[21]))
   t.true(geometries.geom2.isA(objs[22]))
@@ -142,7 +142,7 @@ test('ASCII DXF 2D Arcs from Autocad 2017 to Object Conversion', (t) => {
   // expect array containing 23 objects (9 path2, 14 path2)
   t.true(Array.isArray(objs))
   t.is(objs.length, 23)
-  // NOTE: the extra ojbects are from the page layout
+  // NOTE: the extra objects are from the page layout
   t.true(geometries.path2.isA(objs[20]))
   t.true(geometries.path2.isA(objs[21]))
   t.true(geometries.path2.isA(objs[22]))
