@@ -56,3 +56,63 @@ test('extrudeWalls (different shapes)', (t) => {
   walls = extrudeWalls(slice3, slice.transform(matrix, slice2))
   t.is(walls.length, 24)
 })
+
+// Test for vec3 reuse optimization in repartitionEdges
+// When shapes have different edge counts, edges are repartitioned using vec3 operations
+test('extrudeWalls (repartitionEdges vec3 reuse)', (t) => {
+  const matrix = mat4.fromTranslation(mat4.create(), [0, 0, 5])
+
+  // Triangle (3 edges)
+  const triangle = slice.create([[
+    [0, 10, 0], [-8.66, -5, 0], [8.66, -5, 0]
+  ]])
+
+  // Hexagon (6 edges) - LCM with triangle is 6, so triangle edges get split
+  const hexagon = slice.create([[
+    [0, 10, 0], [-8.66, 5, 0],
+    [-8.66, -5, 0],
+    [0, -10, 0],
+    [8.66, -5, 0],
+    [8.66, 5, 0],
+  ]])
+
+  // Triangle to hexagon requires repartitioning (3 -> 6 edges)
+  // This exercises the vec3 reuse optimization in repartitionEdges
+  const walls = extrudeWalls(triangle, slice.transform(matrix, hexagon))
+
+  // 6 edges * 2 triangles per edge = 12 wall polygons
+  t.is(walls.length, 12)
+
+  // Verify all walls are valid triangles
+  walls.forEach((wall) => {
+    t.is(wall.vertices.length, 3)
+  })
+})
+
+// Test for vec3 reuse with higher repartition multiple
+test('extrudeWalls (repartitionEdges with high multiple)', (t) => {
+  const matrix = mat4.fromTranslation(mat4.create(), [0, 0, 10])
+
+  // Square (4 edges)
+  const square = slice.create([[
+    [-5, 5, 0], [-5, -5, 0], [5, -5, 0], [5, 5, 0]
+  ]])
+
+  // Octagon (8 edges) - LCM with square is 8, so square edges get doubled
+  const octagon = slice.create([[
+    [0, 5, 0],
+    [-3.54, 3.54, 0],
+    [-5, 0, 0],
+    [-3.54, -3.54, 0],
+    [0, -5, 0],
+    [3.54, -3.54, 0],
+    [5, 0, 0],
+    [3.54, 3.54, 0],
+  ]])
+
+  // Square to octagon requires repartitioning (4 -> 8 edges)
+  const walls = extrudeWalls(square, slice.transform(matrix, octagon))
+
+  // 8 edges * 2 triangles per edge = 16 wall polygons
+  t.is(walls.length, 16)
+})
