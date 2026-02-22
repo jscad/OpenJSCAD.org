@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.5.14](https://github.com/jscad/OpenJSCAD/compare/@jscad/svg-deserializer@2.5.13...@jscad/svg-deserializer@2.5.14) (2026-02-22)
+
+### Bug Fixes
+
+* **modeling:** corrected number of step calculations in arc and appendArc ([fc2f7c4](https://github.com/jscad/OpenJSCAD/commit/fc2f7c413f36095909bd358603d65c71a0c972f0))
+
 ## [2.5.13](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/svg-deserializer@2.5.12...@jscad/svg-deserializer@2.5.13) (2026-02-11)
 
 **Note:** Version bump only for package @jscad/svg-deserializer

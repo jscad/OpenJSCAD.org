@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.33](https://github.com/jscad/OpenJSCAD/compare/@jscad/json-serializer@2.0.32...@jscad/json-serializer@2.0.33) (2026-02-22)
+
+### Bug Fixes
+
+* **modeling:** corrected number of step calculations in arc and appendArc ([fc2f7c4](https://github.com/jscad/OpenJSCAD/commit/fc2f7c413f36095909bd358603d65c71a0c972f0))
+
 ## [2.0.32](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/json-serializer@2.0.31...@jscad/json-serializer@2.0.32) (2026-02-11)
 
 **Note:** Version bump only for package @jscad/json-serializer

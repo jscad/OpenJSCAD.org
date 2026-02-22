@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.13.0](https://github.com/jscad/OpenJSCAD/compare/@jscad/modeling@2.12.7...@jscad/modeling@2.13.0) (2026-02-22)
+
+### Bug Fixes
+
+* **modeling:** corrected number of step calculations in arc and appendArc ([fc2f7c4](https://github.com/jscad/OpenJSCAD/commit/fc2f7c413f36095909bd358603d65c71a0c972f0))
+
+### Features
+
+* **modeling:** add Minkowski sum operation for 3D geometries ([ff6f608](https://github.com/jscad/OpenJSCAD/commit/ff6f60809b5cca939fc50ff5d9b05dbc9e526cf7))
+
 ## [2.12.7](https://github.com/jscad/OpenJSCAD.org/compare/@jscad/modeling@2.12.6...@jscad/modeling@2.12.7) (2026-02-11)
 
 ### Performance Improvements
