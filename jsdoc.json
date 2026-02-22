@@ -27,6 +27,7 @@
       "packages/modeling/src/operations/extrusions",
       "packages/modeling/src/operations/extrusions/slice",
       "packages/modeling/src/operations/hulls",
+      "packages/modeling/src/operations/minkowski",
       "packages/modeling/src/operations/modifiers",
       "packages/modeling/src/operations/transforms",
       "packages/modeling/src/primitives",

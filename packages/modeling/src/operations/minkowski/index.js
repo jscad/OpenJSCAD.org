@@ -7,10 +7,10 @@
  * - Collision detection (shapes collide iff their Minkowski difference contains origin)
  * - Motion planning and swept volumes
  *
- * @module modeling/operations/minkowski
+ * @module modeling/minkowski
  * @example
- * const { minkowski } = require('@jscad/modeling').operations
- * const rounded = minkowski.minkowskiSum(cube, sphere)
+ * const { minkowskiSum } = require('@jscad/modeling').minkowski
+ * const rounded = minkowskiSum(cube, sphere)
  */
 module.exports = {
   minkowskiSum: require('./minkowskiSum')

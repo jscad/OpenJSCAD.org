@@ -22,7 +22,7 @@ const unionGeom3 = require('../booleans/unionGeom3')
  *
  * @param {...Object} geometries - two geom3 geometries (second should be convex for non-convex first)
  * @returns {geom3} new 3D geometry representing the Minkowski sum
- * @alias module:modeling/operations/minkowski.minkowskiSum
+ * @alias module:modeling/minkowski.minkowskiSum
  *
  * @example
  * const { primitives, minkowski } = require('@jscad/modeling')
