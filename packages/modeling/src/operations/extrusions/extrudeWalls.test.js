@@ -73,7 +73,7 @@ test('extrudeWalls (repartitionEdges vec3 reuse)', (t) => {
     [-8.66, -5, 0],
     [0, -10, 0],
     [8.66, -5, 0],
-    [8.66, 5, 0],
+    [8.66, 5, 0]
   ]])
 
   // Triangle to hexagon requires repartitioning (3 -> 6 edges)
@@ -107,7 +107,7 @@ test('extrudeWalls (repartitionEdges with high multiple)', (t) => {
     [0, -5, 0],
     [3.54, -3.54, 0],
     [5, 0, 0],
-    [3.54, 3.54, 0],
+    [3.54, 3.54, 0]
   ]])
 
   // Square to octagon requires repartitioning (4 -> 8 edges)

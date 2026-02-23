@@ -59,7 +59,7 @@ export const extrudeFromSlices = (options, base) => {
   let startSlice = null
   let endSlice = null
   let prevSlice = null
-  let polygons = []
+  const polygons = []
   for (let s = 0; s < numberOfSlices; s++) {
     // invoke the callback function to get the next slice
     // NOTE: callback can return null to skip the slice

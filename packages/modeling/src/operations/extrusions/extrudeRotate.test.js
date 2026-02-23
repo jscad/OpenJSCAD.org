@@ -198,7 +198,7 @@ test('extrudeRotate: (overlap +/-) extruding of a geom2 produces an expected geo
 // This ensures the optimization of computing xRotationMatrix once doesn't break anything
 test('extrudeRotate: (mat4 reuse) rotation matrices produce correct geometry', (t) => {
   // Simple rectangle that will be rotated to form a tube-like shape
-  const geometry2 = geom2.create([[ [6, 1], [5, 1], [5, -1], [6, -1] ]])
+  const geometry2 = geom2.create([[[6, 1], [5, 1], [5, -1], [6, -1]]])
 
   // Full rotation with many segments to test matrix reuse across iterations
   const geometry3 = extrudeRotate({ segments: 32 }, geometry2)
@@ -218,11 +218,10 @@ test('extrudeRotate: (mat4 reuse) rotation matrices produce correct geometry', (
 
 // Test for mat4 reuse with partial rotation (tests both capped and matrix reuse)
 test('extrudeRotate: (mat4 reuse) partial rotation produces correct caps', (t) => {
-  const geometry2 = geom2.create([[ [6, 1], [5, 1], [5, -1], [6, -1] ]])
+  const geometry2 = geom2.create([[[6, 1], [5, 1], [5, -1], [6, -1]]])
 
   // Quarter rotation - should have start and end caps
   const obs = extrudeRotate({ segments: 8, angle: TAU / 4 }, geometry2)
-  const pts = geom3.toVertices(obs)
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 53.232491234231944)

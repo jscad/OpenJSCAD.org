@@ -23,12 +23,12 @@ test('appendArc: appending to a path produces a new path', (t) => {
   const p2 = fromPoints({}, [[27, -22], [27, -3]])
   obs = appendArc({ endpoint: [12, -22], radius: [15, -20] }, p2)
   pts = toPoints(obs)
-  t.is(pts.length, 7)
+  t.is(pts.length, 5)
 
   // test segments
   obs = appendArc({ endpoint: [12, -22], radius: [15, -20], segments: 64 }, p2)
   pts = toPoints(obs)
-  t.is(pts.length, 19)
+  t.is(pts.length, 17)
 
   // test clockwise
   obs = appendArc({ endpoint: [12, -22], radius: [15, -20], clockwise: true }, p2)
@@ -36,19 +36,17 @@ test('appendArc: appending to a path produces a new path', (t) => {
   let exp = [
     [27, -22],
     [27, -3],
-    [26.086451657912605, -8.941047736250177],
-    [23.87938869625451, -14.243872270248309],
-    [20.58174906029909, -18.420882475791835],
-    [16.49674848226545, -21.0880050920699],
-    [11.999999999999998, -22]
+    [24.7485593841743, -12.579008396887021],
+    [19.29019838402471, -19.492932330409836],
+    [12, -22]
   ]
-  t.is(pts.length, 7)
+  t.is(pts.length, 5)
   t.true(comparePoints(pts, exp))
 
   // test large
   obs = appendArc({ endpoint: [12, -22], radius: [15, -20], large: true }, p2)
   pts = toPoints(obs)
-  t.is(pts.length, 16)
+  t.is(pts.length, 14)
 
   // test xaxisRotation
   obs = appendArc({ endpoint: [12, -22], radius: [15, -20], xaxisRotation: TAU / 4 }, p2)
@@ -56,14 +54,12 @@ test('appendArc: appending to a path produces a new path', (t) => {
   exp = [
     [27, -22],
     [27, -3],
-    [21.830323320631795, -4.401628923214028],
-    [17.364704977487236, -6.805886946199115],
+    [19.486852090983938, -5.488140907400943],
     [13.940501387124588, -10.031143708098092],
-    [11.816394990371812, -13.833746263211978],
-    [11.15285201325494, -17.926425912558045],
-    [12, -22.000000000000004]
+    [11.296247566821858, -15.862906638006239],
+    [12, -22]
   ]
-  t.is(pts.length, 8)
+  t.is(pts.length, 6)
   t.true(comparePoints(pts, exp))
 
   // test small arc between far points

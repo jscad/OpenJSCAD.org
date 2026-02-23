@@ -111,7 +111,9 @@ const decomposeIntoTetrahedra = (geometry) => {
     const vertices = polygon.vertices
 
     // Compute polygon center
-    let cx = 0, cy = 0, cz = 0
+    let cx = 0
+    let cy = 0
+    let cz = 0
     for (let k = 0; k < vertices.length; k++) {
       cx += vertices[k][0]
       cy += vertices[k][1]
@@ -123,7 +125,9 @@ const decomposeIntoTetrahedra = (geometry) => {
 
     // Get polygon plane (normal + offset)
     const plane = poly3.plane(polygon)
-    const nx = plane[0], ny = plane[1], nz = plane[2]
+    const nx = plane[0]
+    const ny = plane[1]
+    const nz = plane[2]
 
     // Offset inward along negative normal to create face-local apex
     // The normal points outward, so we go in the negative direction
@@ -153,17 +157,15 @@ const decomposeIntoTetrahedra = (geometry) => {
 
 /**
  * Create the 4 triangular faces of a tetrahedron.
+ *
+ * Tetrahedron has 4 faces, each a triangle
  */
-const createTetrahedronPolygons = (p0, p1, p2, p3) => {
-  // Tetrahedron has 4 faces, each a triangle
-  // We need to ensure consistent winding (outward-facing normals)
-  return [
-    poly3.create([p0, p2, p1]), // base seen from p3
-    poly3.create([p0, p1, p3]), // face opposite p2
-    poly3.create([p1, p2, p3]), // face opposite p0
-    poly3.create([p2, p0, p3])  // face opposite p1
-  ]
-}
+const createTetrahedronPolygons = (p0, p1, p2, p3) => [
+  poly3.create([p0, p2, p1]), // base seen from p3
+  poly3.create([p0, p1, p3]), // face opposite p2
+  poly3.create([p1, p2, p3]), // face opposite p0
+  poly3.create([p2, p0, p3]) // face opposite p1
+]
 
 /**
  * Compute Minkowski sum of two convex polyhedra.
