@@ -1,5 +1,3 @@
-import * as vec4 from '../../maths/vec4/index.js'
-
 const cache = new WeakMap()
 
 /**

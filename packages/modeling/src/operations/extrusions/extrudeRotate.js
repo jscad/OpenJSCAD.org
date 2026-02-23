@@ -110,13 +110,14 @@ export const extrudeRotate = (options, geometry) => {
   baseSlice = slice.reverse(baseSlice)
 
   const matrix = mat4.create()
+  const xRotationMatrix = mat4.fromXRotation(mat4.create(), TAU / 4) // compute once, reuse
   const createSlice = (progress, index, base) => {
     let Zrotation = rotationPerSlice * index + startAngle
     // fix rounding error when rotating TAU radians
     if (totalRotation === TAU && index === segments) {
       Zrotation = startAngle
     }
-    mat4.multiply(matrix, mat4.fromZRotation(matrix, Zrotation), mat4.fromXRotation(mat4.create(), TAU / 4))
+    mat4.multiply(matrix, mat4.fromZRotation(matrix, Zrotation), xRotationMatrix)
 
     return slice.transform(matrix, base)
   }

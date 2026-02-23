@@ -24,8 +24,10 @@ export const retessellate = (geometry) => {
   const destPolygons = []
   classified.forEach((group) => {
     if (Array.isArray(group)) {
-      const reTessellateCoplanarPolygons = reTesselateCoplanarPolygons(group)
-      destPolygons.push(...reTessellateCoplanarPolygons)
+      const coplanarPolygons = reTesselateCoplanarPolygons(group)
+      for (let i = 0; i < coplanarPolygons.length; i++) {
+        destPolygons.push(coplanarPolygons[i])
+      }
     } else {
       destPolygons.push(group)
     }

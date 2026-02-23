@@ -39,7 +39,7 @@ const deserialize = (options, input) => {
   options = Object.assign({}, defaults, options)
 
   // convert the JSON notation into anonymous object(s)
-  input = ensureString(input);
+  input = ensureString(input)
   let objects = JSON.parse(input)
 
   // cleanup the objects
