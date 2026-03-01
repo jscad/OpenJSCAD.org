@@ -121,6 +121,7 @@ export const reTesselateCoplanarPolygons = (sourcePolygons) => {
     //   at the left and right side of the polygon
     // Iterate over all polygons that have a corner at this y coordinate:
     const polygonIndexesWithCorner = yCoordinateToPolygonIndexes.get(yCoordinate)
+    let removeCount = 0 // track removals to filter at end (avoids O(n²) splice)
     for (let activePolygonIndex = 0; activePolygonIndex < activePolygons.length; ++activePolygonIndex) {
       const activePolygon = activePolygons[activePolygonIndex]
       const polygonIndex = activePolygon.polygonIndex
@@ -144,9 +145,9 @@ export const reTesselateCoplanarPolygons = (sourcePolygons) => {
         }
         if ((newLeftVertexIndex !== activePolygon.leftVertexIndex) && (newLeftVertexIndex === newRightVertexIndex)) {
           // We have increased leftVertexIndex or decreased rightVertexIndex, and now they point to the same vertex
-          // This means that this is the bottom point of the polygon. We'll remove it:
-          activePolygons.splice(activePolygonIndex, 1)
-          --activePolygonIndex
+          // This means that this is the bottom point of the polygon, so Mark it for removal
+          activePolygon.remove = true
+          removeCount++
         } else {
           activePolygon.leftVertexIndex = newLeftVertexIndex
           activePolygon.rightVertexIndex = newRightVertexIndex
@@ -161,6 +162,12 @@ export const reTesselateCoplanarPolygons = (sourcePolygons) => {
         }
       } // if polygon has corner here
     } // for activePolygonIndex
+
+    // Filter out marked polygons in single pass (O(n) instead of O(n²) splice)
+    if (removeCount > 0) {
+      activePolygons = activePolygons.filter((p) => !p.remove)
+    }
+
     let nextYcoordinate
     if (yIndex >= yCoordinates.length - 1) {
       // last row, all polygons must be finished here:

@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { arc, path2 } from '@jscad/modeling'
+import { arc, path2, TAU } from '@jscad/modeling'
 
 import { serialize } from '../src/index.js'
 import { dxfHeaders, dxfClasses, dxfTables, dxfBlocks, dxfObjects } from '../src/autocad_AC2017.js'
@@ -12,7 +12,7 @@ test('2D Path to DXF LWPOLYLINE', (t) => {
   const exp1 = [empty]
   t.deepEqual(obs1, exp1)
 
-  const p2 = arc({ center: [5, 5], endAngle: 45, segments: 16 })
+  const p2 = arc({ center: [5, 5], endAngle: TAU / 4, segments: 16 })
 
   const obs2 = serialize({}, p2)
   const exp2 = [lwpolyline0]
@@ -74,7 +74,7 @@ CAD00001
   100
 AcDbPolyline
   90
-4
+5
   70
 0
   10
@@ -82,17 +82,21 @@ AcDbPolyline
   20
 5
   10
-5.943009745777588
+5.923879532511287
   20
-5.33276511140516
+5.38268343236509
   10
-5.778534761263023
+5.707106781186548
   20
-5.627601486219662
+5.707106781186548
   10
-5.525321988817728
+5.38268343236509
   20
-5.850903524534119
+5.923879532511287
+  10
+5
+  20
+6
   0
 ENDSEC
 ${dxfObjects({})}

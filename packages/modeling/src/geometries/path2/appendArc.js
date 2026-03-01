@@ -120,7 +120,7 @@ export const appendArc = (options, geometry) => {
     }
 
     // Ok, we have the center point and angle range (from theta1, deltatheta radians) so we can create the ellipse
-    let numSteps = Math.ceil(Math.abs(deltatheta) / TAU * segments) + 1
+    let numSteps = Math.floor(segments * (Math.abs(deltatheta) / TAU))
     if (numSteps < 1) numSteps = 1
     for (let step = 1; step < numSteps; step++) {
       const theta = theta1 + step / numSteps * deltatheta

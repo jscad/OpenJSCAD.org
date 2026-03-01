@@ -12,4 +12,4 @@
  * @example
  * const flat = flatten([[1], [2, 3, [4, 5]], 6]) // returns [1, 2, 3, 4, 5, 6]
  */
-export const flatten = (arr) => arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(flatten(val)) : acc.concat(val), [])
+export const flatten = (arr) => arr.flat(Infinity)

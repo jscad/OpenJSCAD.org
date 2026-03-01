@@ -60,8 +60,8 @@ export const arc = (options) => {
     vec2.add(point, point, centerV)
     pointArray.push(point)
   } else {
-    // note: add one additional step to achieve full rotation
-    const numSteps = Math.max(1, Math.floor(segments * (rotation / TAU))) + 1
+    const numSteps = Math.floor(segments * (Math.abs(rotation) / TAU))
+
     let edgeStepSize = numSteps * 0.5 / rotation // step size for half a degree
     if (edgeStepSize > 0.25) edgeStepSize = 0.25
 

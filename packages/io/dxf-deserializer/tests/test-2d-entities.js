@@ -110,11 +110,11 @@ test('ASCII DXF 2D Donuts from Autocad 2017 to Object Conversion', (t) => {
   t.is(objs.length, 23)
   // NOTE: the extra ojbects are from the page layout
   t.true(path2.isA(objs[20]))
-  t.is(path2.toPoints(objs[20]).length, 18) // line
+  t.is(path2.toPoints(objs[20]).length, 16) // line
   t.true(path2.isA(objs[21]))
-  t.is(path2.toPoints(objs[21]).length, 18) // line
+  t.is(path2.toPoints(objs[21]).length, 16) // line
   t.true(path2.isA(objs[22]))
-  t.is(path2.toPoints(objs[22]).length, 18) // arc
+  t.is(path2.toPoints(objs[22]).length, 16) // arc
 })
 
 test('ASCII DXF 2D Ellipses from Autocad 2017 to Object Conversion', (t) => {

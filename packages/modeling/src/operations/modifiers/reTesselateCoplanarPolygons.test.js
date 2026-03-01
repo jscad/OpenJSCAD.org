@@ -16,7 +16,7 @@ const rotatePoly3 = (angles, polygon) => {
   return poly3.transform(matrix, polygon)
 }
 
-test.only('retessellateCoplanarPolygons: should merge coplanar polygons', (t) => {
+test('retessellateCoplanarPolygons: should merge coplanar polygons', (t) => {
   const polyA = poly3.create([[-5, -5, 0], [5, -5, 0], [5, 5, 0], [-5, 5, 0]])
   const polyB = poly3.create([[5, -5, 0], [8, 0, 0], [5, 5, 0]])
   const polyC = poly3.create([[-5, 5, 0], [-8, 0, 0], [-5, -5, 0]])
@@ -67,4 +67,39 @@ test.only('retessellateCoplanarPolygons: should merge coplanar polygons', (t) =>
 
   obs = reTesselateCoplanarPolygons([polyH, polyI, polyJ, polyK, polyL])
   t.is(obs.length, 1)
+})
+
+// Test for mark-and-filter optimization: multiple polygons that reach their
+// bottom point at the same y-coordinate (triggering the removal code path)
+test('retessellateCoplanarPolygons: should correctly handle multiple polygon removals', (t) => {
+  // Create multiple triangular polygons that all end at the same y-coordinate
+  // This exercises the mark-and-filter removal optimization
+  const poly1 = poly3.create([[0, 0, 0], [2, 0, 0], [1, 3, 0]]) // triangle pointing up
+  const poly2 = poly3.create([[3, 0, 0], [5, 0, 0], [4, 3, 0]]) // triangle pointing up
+  const poly3a = poly3.create([[6, 0, 0], [8, 0, 0], [7, 3, 0]]) // triangle pointing up
+
+  // These polygons share the same plane and have vertices at y=0 and y=3
+  // During retessellation, all three will be active and then removed at y=3
+  const obs = reTesselateCoplanarPolygons([poly1, poly2, poly3a])
+
+  // Each triangle should be preserved (they don't overlap)
+  t.is(obs.length, 3)
+
+  // Verify each polygon has 3 vertices (triangles)
+  obs.forEach((polygon) => {
+    t.is(polygon.vertices.length, 3)
+  })
+})
+
+// Test for mark-and-filter with overlapping polygons that get merged
+test('retessellateCoplanarPolygons: should merge adjacent polygons with shared edges', (t) => {
+  // Two adjacent squares sharing an edge at x=5
+  const poly1 = poly3.create([[0, 0, 0], [5, 0, 0], [5, 5, 0], [0, 5, 0]])
+  const poly2 = poly3.create([[5, 0, 0], [10, 0, 0], [10, 5, 0], [5, 5, 0]])
+
+  const obs = reTesselateCoplanarPolygons([poly1, poly2])
+
+  // Should merge into a single rectangle
+  t.is(obs.length, 1)
+  t.is(obs[0].vertices.length, 4) // rectangle has 4 vertices
 })
