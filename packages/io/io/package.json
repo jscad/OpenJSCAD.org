@@ -34,27 +34,27 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/3mf-deserializer": "workspace:3.0.3-alpha.0",
-    "@jscad/3mf-serializer": "workspace:3.0.3-alpha.0",
-    "@jscad/array-utils": "workspace:3.0.1-alpha.0",
-    "@jscad/dxf-deserializer": "workspace:3.0.3-alpha.0",
-    "@jscad/dxf-serializer": "workspace:3.0.3-alpha.0",
-    "@jscad/io-utils": "workspace:3.0.3-alpha.0",
-    "@jscad/json-deserializer": "workspace:3.0.3-alpha.0",
-    "@jscad/json-serializer": "workspace:3.0.3-alpha.0",
-    "@jscad/modeling": "workspace:3.0.3-alpha.0",
-    "@jscad/obj-deserializer": "workspace:3.0.3-alpha.0",
-    "@jscad/obj-serializer": "workspace:3.0.3-alpha.0",
-    "@jscad/stl-deserializer": "workspace:3.0.3-alpha.0",
-    "@jscad/stl-serializer": "workspace:3.0.3-alpha.0",
-    "@jscad/svg-deserializer": "workspace:3.0.3-alpha.0",
-    "@jscad/svg-serializer": "workspace:3.0.3-alpha.0",
-    "@jscad/x3d-deserializer": "workspace:3.0.3-alpha.0",
-    "@jscad/x3d-serializer": "workspace:3.0.3-alpha.0"
+    "@jscad/3mf-deserializer": "3.0.3-alpha.0",
+    "@jscad/3mf-serializer": "3.0.3-alpha.0",
+    "@jscad/array-utils": "3.0.1-alpha.0",
+    "@jscad/dxf-deserializer": "3.0.3-alpha.0",
+    "@jscad/dxf-serializer": "3.0.3-alpha.0",
+    "@jscad/io-utils": "3.0.3-alpha.0",
+    "@jscad/json-deserializer": "3.0.3-alpha.0",
+    "@jscad/json-serializer": "3.0.3-alpha.0",
+    "@jscad/modeling": "3.0.3-alpha.0",
+    "@jscad/obj-deserializer": "3.0.3-alpha.0",
+    "@jscad/obj-serializer": "3.0.3-alpha.0",
+    "@jscad/stl-deserializer": "3.0.3-alpha.0",
+    "@jscad/stl-serializer": "3.0.3-alpha.0",
+    "@jscad/svg-deserializer": "3.0.3-alpha.0",
+    "@jscad/svg-serializer": "3.0.3-alpha.0",
+    "@jscad/x3d-deserializer": "3.0.3-alpha.0",
+    "@jscad/x3d-serializer": "3.0.3-alpha.0"
   },
   "devDependencies": {
-    "ava": "^4.3.3",
-    "c8": "^8.0.0"
+    "ava": "^6.3.0",
+    "c8": "^10.1.0"
   },
   "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"
 }

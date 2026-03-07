@@ -2,7 +2,8 @@ import { EPS } from '../../maths/constants.js'
 import { dot } from '../../maths/vec3/dot.js'
 import { plane } from '../poly3/plane.js'
 
-import { isA, toPolygons } from './index.js'
+import { isA } from './isA.js'
+import { toPolygons } from './toPolygons.js'
 
 /**
  * Test if a 3D geometry is convex.

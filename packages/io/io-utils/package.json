@@ -34,9 +34,9 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@jscad/modeling": "workspace:3.0.3-alpha.0",
-    "ava": "^4.3.3",
-    "c8": "^8.0.0"
+    "@jscad/modeling": "3.0.3-alpha.0",
+    "ava": "^6.3.0",
+    "c8": "^10.1.0"
   },
   "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"
 }

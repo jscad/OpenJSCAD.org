@@ -36,17 +36,17 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@jscad/array-utils": "workspace:3.0.1-alpha.0",
-    "@jscad/core": "workspace:3.0.3-alpha.0",
-    "@jscad/io": "workspace:3.0.3-alpha.0",
-    "@jscad/io-utils": "workspace:3.0.3-alpha.0",
-    "@jscad/modeling": "workspace:3.0.3-alpha.0",
+    "@jscad/array-utils": "3.0.1-alpha.0",
+    "@jscad/core": "3.0.3-alpha.0",
+    "@jscad/io": "3.0.3-alpha.0",
+    "@jscad/io-utils": "3.0.3-alpha.0",
+    "@jscad/modeling": "3.0.3-alpha.0",
     "commander": "^14.0.0",
     "jszip": "^3.10.1"
   },
   "devDependencies": {
-    "ava": "^4.3.3",
-    "c8": "^8.0.0"
+    "ava": "^6.3.0",
+    "c8": "^10.1.0"
   },
   "collective": {
     "type": "opencollective",
