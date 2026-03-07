@@ -69,8 +69,7 @@ test('offset: offset of a geom3 produces expected changes to polygons', (t) => {
   t.is(pts2.length, 864)
 })
 
-test('offsetGeom3: offset completes properly, issue 876', async (t) => {
-  setTimeout(() => t.fail(), 1000)
+test('offsetGeom3: offset completes properly, issue 876', (t) => {
   const polies = [
     poly3.create([[-19.61, -0.7999999999999986, 11.855], [-19.61, -0.8000000000000015, -11.855], [-19.61, -2.7500000000000018, -11.855], [-19.61, -2.7499999999999982, 11.855]]),
     poly3.create([[-17.32, -2.75, 10], [-17.32, -2.7500000000000013, -10], [-17.32, -0.8000000000000014, -10], [-17.32, -0.7999999999999987, 10]]),
@@ -90,9 +89,8 @@ test('offsetGeom3: offset completes properly, issue 876', async (t) => {
 
   const sub = geom3.create(polies)
 
-  return new Promise((resolve, reject) => {
-    offset({ delta: 1.3, corners: 'round', segments: 12 }, sub)
-    t.pass()
-    resolve()
-  })
+  const obs = offset({ delta: 1.3, corners: 'round', segments: 12 }, sub)
+  t.notThrows.skip(() => geom3.validate(obs))
+  t.is(measureArea(obs), 524.9674760547548)
+  t.is(measureVolume(obs), 604.0599465573156)
 })

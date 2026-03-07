@@ -1,5 +1,8 @@
-import banner from 'rollup-plugin-banner'
+import * as fs from 'fs'
+
 import terser from '@rollup/plugin-terser'
+
+const {name, version, license} = JSON.parse(fs.readFileSync('package.json'))
 
 export default {
   input: 'src/index.js',
@@ -7,15 +10,16 @@ export default {
     {
       file: 'dist/jscad-array-utils.min.js',
       format: 'umd',
-      name: 'jscadArrayUtils'
+      name: 'jscadArrayUtils',
+      banner: `/*! ${name} V${version} (${license}) */`
     },
     {
       file: 'dist/jscad-array-utils.es.js',
-      format: 'es'
+      format: 'es',
+      banner: `/*! ${name} V${version} (${license}) */`
     }
   ],
   plugins: [
-    banner('<%= pkg.description %>\n@module <%= pkg.name %>\n@version <%= pkg.version %>\n@license <%= pkg.license %>'),
     terser({ compress: { module: true }, mangle: false, format: { comments: 'some' } })
   ]
 }

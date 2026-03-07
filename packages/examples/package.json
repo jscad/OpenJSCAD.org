@@ -34,8 +34,8 @@
     "logo": "https://opencollective.com/openjscad/logo.txt"
   },
   "devDependencies": {
-    "@jscad/cli": "workspace:3.0.3-alpha.0",
-    "@jscad/modeling": "workspace:3.0.3-alpha.0",
-    "@jscad/io": "workspace:3.0.3-alpha.0"
+    "@jscad/cli": "3.0.3-alpha.0",
+    "@jscad/modeling": "3.0.3-alpha.0",
+    "@jscad/io": "3.0.3-alpha.0"
   }
 }
