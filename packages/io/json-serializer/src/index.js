@@ -2,7 +2,7 @@
  * Serializer of JSCAD geometries to JSON strings.
  * @module io/json-serializer
  * @example
- * const { serializer, mimeType } = require('@jscad/json-serializer')
+ * import { serializer, mimeType } from '@jscad/json-serializer'
  */
 
 import { flatten } from '@jscad/array-utils'
@@ -32,7 +32,6 @@ const replacer = (key, value) => {
  * @param {Object} options - options for serialization, REQUIRED
  * @param {Object|Array} objects - objects to serialize as JSON
  * @returns {Array} serialized contents as JSON string
- * @alias module:io/json-serializer.serialize
  * @example
  * const geometry = cube()
  * const jsonData = serializer({}, geometry)

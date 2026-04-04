@@ -36,14 +36,20 @@
       "packages/modeling/src/utils",
 
       "packages/io/io-utils",
-      "packages/io/amf-deserializer/src",
-      "packages/io/amf-serializer",
-      "packages/io/svg-deserializer/src",
-      "packages/io/svg-serializer",
-      "packages/io/x3d-deserializer/src",
-      "packages/io/x3d-serializer/src",
       "packages/io/3mf-deserializer/src",
-      "packages/io/3mf-serializer/src"
+      "packages/io/3mf-serializer/src",
+      "packages/io/dxf-deserializer/src",
+      "packages/io/dxf-serializer/src",
+      "packages/io/json-deserializer/src",
+      "packages/io/json-serializer/src",
+      "packages/io/obj-deserializer/src",
+      "packages/io/obj-serializer/src",
+      "packages/io/stl-deserializer/src",
+      "packages/io/stl-serializer/src",
+      "packages/io/svg-deserializer/src",
+      "packages/io/svg-serializer/src",
+      "packages/io/x3d-deserializer/src",
+      "packages/io/x3d-serializer/src"
     ],
     "includePattern": ".+\\.js(doc|x)?$",
     "excludePattern": ".+test.js$"
@@ -86,8 +92,8 @@
       "url": ""
     },
     "meta": {
-      "title": "JSCAD API Documentation",
-      "description": "JSCAD API Documentation",
+      "title": "JSCAD V3 API Documentation",
+      "description": "JSCAD V3 API Documentation",
       "keyword": "JSCAD OpenJSCAD"
     },
     "search": [true],

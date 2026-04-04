@@ -18,7 +18,7 @@ const version = '[VI]{version}[/VI]' // version is injected by rollup
  * Deserializer of DXF data to JSCAD geometries.
  * @module io/dxf-deserializer
  * @example
- * const { deserialize, extension } = require('@jscad/dxf-deserializer')
+ * import { deserialize, mimeType } from '@jscad/dxf-deserializer'
  */
 
 const handleError = (reader, error) => {
@@ -571,6 +571,7 @@ const translate = (src, options) => {
 
 /**
  * Deserialize the given DXF source into either a script or an array of geometry
+ *
  * @param {Object} options - options used during deserializing, REQUIRED
  * @param {string} [options.filename='dxf'] - filename of original DXF data stream
  * @param {String} [options.version] - version added to the script metadata, default is package version
@@ -578,8 +579,7 @@ const translate = (src, options) => {
  * @param {boolean} [options.strict=true] - obey strict DXF specifications
  * @param {array} [options.colorindex=[]] - list of colors (256) for use during rendering
  * @param {string} src - DXF data stream
- * @return {string|[objects]} a string (script) or array of objects (geometry)
- * @alias module:io/dxf-deserializer.deserialize
+ * @returns {(Array|String)} either an array of objects (geometry) or a string (script)
  */
 const deserialize = (options, src) => {
   const defaults = {

@@ -9,7 +9,7 @@
  *
  * @module io/3mf-serializer
  * @example
- * const { serializer, mimeType } = require('@jscad/3mf-serializer')
+ * import { serializer, mimeType } from '@jscad/3mf-serializer'
  */
 
 import { zipSync, strToU8 } from 'fflate'
@@ -24,6 +24,7 @@ const mimeType = 'model/3mf'
 /**
  * Serialize the give objects to 3MF contents (XML) or 3MF packaging (OPC).
  * @see https://3mf.io/specification/
+ *
  * @param {Object} [options] - options for serialization
  * @param {String} [options.unit='millimeter'] - unit of design; micron, millimeter, inch, feet, meter or micrometer
  * @param {Boolean} [options.metadata=true] - add metadata to 3MF contents, such at CreationDate

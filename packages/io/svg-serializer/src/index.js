@@ -10,7 +10,7 @@
  *
  * @module io/svg-serializer
  * @example
- * const { serializer, mimeType } = require('@jscad/svg-serializer')
+ * import { serializer, mimeType } from '@jscad/svg-serializer'
  */
 
 import { geom2, flatten, measureBoundingBox, path2, vec3 } from '@jscad/modeling'
@@ -29,7 +29,6 @@ const mimeType = 'image/svg+xml'
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
  * @param {Object|Array} objects - objects to serialize as SVG
  * @returns {Array} serialized contents, SVG code (XML string)
- * @alias module:io/svg-serializer.serialize
  * @example
  * const geometry = primitives.square()
  * const svgData = serializer({unit: 'mm'}, geometry)

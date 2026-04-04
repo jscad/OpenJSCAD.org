@@ -6,7 +6,7 @@ const STATES = [
   'error'
 ]
 
-/**
+/*
  * Class DxfReader
  * A class to hold state while reading DXF formatted data.
  * @param {Object} [options] - options for parsing
