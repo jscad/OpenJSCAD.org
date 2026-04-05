@@ -13,7 +13,7 @@ import { unionGeom3 } from './unionGeom3.js'
  *
  * @param {...Object} geometries - list of geometries
  * @returns {Geom2|Geom3} a new geometry
- * @alias module:modeling/booleans.union
+ * @alias module:modeling.union
  *
  * @example
  * let myshape = union(cube({size: 5}), cube({size: 5, center: [3,3,3]}))

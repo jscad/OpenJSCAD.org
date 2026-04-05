@@ -6,7 +6,10 @@ const cache = new WeakMap()
  * @param {Vec4} out - receiving vector
  * @param {Poly3} polygon - the polygon to measure
  * @returns {Vec4} the computed bounding sphere; center vertex (3D) and radius
- * @alias module:modeling/geometries/poly3.measureBoundingSphere
+ * @alias module:modeling/poly3.measureBoundingSphere
+ *
+ * @example
+ * const bounds = poly2.measureBoundingSphere(polyA)
  */
 export const measureBoundingSphere = (out, polygon) => {
   const vertices = polygon.vertices

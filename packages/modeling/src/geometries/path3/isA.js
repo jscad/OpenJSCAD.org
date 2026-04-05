@@ -3,8 +3,10 @@
  *
  * @param {Object} object - the object to interrogate
  * @returns {boolean} true if the object matches a path3
- * @function
- * @alias module:modeling/geometries/path3.isA
+ * @alias module:modeling/path3.isA
+ *
+ * @example
+ * if (path3.isA(geometry)) { ... }
  */
 export const isA = (object) => {
   if (object && typeof object === 'object') {

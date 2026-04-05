@@ -6,7 +6,6 @@ import * as geom3 from '../../geometries/geom3/index.js'
 
 import { intersectGeom2 } from './intersectGeom2.js'
 import { intersectGeom3 } from './intersectGeom3.js'
-
 /**
  * Return a new geometry representing space in both the first geometry and
  * all subsequent geometries.
@@ -14,7 +13,7 @@ import { intersectGeom3 } from './intersectGeom3.js'
  *
  * @param {...Object} geometries - list of geometries
  * @returns {Geom2|Geom3} a new geometry
- * @alias module:modeling/booleans.intersect
+ * @alias module:modeling.intersect
  *
  * @example
  * let myshape = intersect(cube({size: 5}), cube({size: 5, center: [3,3,3]}))

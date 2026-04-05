@@ -3,9 +3,13 @@ import * as vec3 from '../../maths/vec3/index.js'
 
 /**
  * Check whether the given polygon is convex.
+ *
  * @param {Poly3} polygon - the polygon to interrogate
  * @returns {Boolean} true if convex
- * @alias module:modeling/geometries/poly3.isConvex
+ * @alias module:modeling/poly3.isConvex
+ *
+ * @example
+ * if (poly3.isConvex(geometry)) { ... }
  */
 export const isConvex = (polygon) => areVerticesConvex(polygon.vertices)
 

@@ -1,9 +1,14 @@
 import * as vec2 from '../../maths/vec2/index.js'
 
 /**
+ * Measure the min and max bounds of the given polygon.
+ *
  * @param {Poly2} polygon - the polygon to measure
  * @returns {Array} an array of two vectors (2D);  minimum and maximum coordinates
- * @alias module:modeling/geometries/poly2.measureBoundingBox
+ * @alias module:modeling/poly2.measureBoundingBox
+ *
+ * @example
+ * const bounds = poly2.measureBoundingBox(geometry)
  */
 export const measureBoundingBox = (polygon) => {
   const points = polygon.points

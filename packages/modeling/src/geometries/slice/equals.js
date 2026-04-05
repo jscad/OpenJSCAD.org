@@ -2,10 +2,14 @@ import * as vec3 from '../../maths/vec3/index.js'
 
 /**
  * Determine if the given slices have the same contours.
+ *
  * @param {Slice} a - the first slice to compare
  * @param {Slice} b - the second slice to compare
  * @returns {Boolean} true if the slices are equal
- * @alias module:modeling/geometries/slice.equals
+ * @alias module:modeling/slice.equals
+ *
+ * @example
+ * if (slice.equals(sliceA, sliceB)) { ... }
  */
 export const equals = (a, b) => {
   if (a.contours.length !== b.contours.length) {

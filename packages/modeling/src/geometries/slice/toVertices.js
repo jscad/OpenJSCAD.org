@@ -1,12 +1,14 @@
 /**
  * Produces an array of vertices from the given slice.
- * The returned array should not be modified as the data is shared with the slice.
+ *
+ * NOTE: The returned array should not be modified as the data is shared with the slice.
+ *
  * @param {Slice} slice - the slice
  * @returns {Array} an array of 3D vertices
- * @alias module:modeling/geometries/slice.toVertices
+ * @alias module:modeling/slice.toVertices
  *
  * @example
- * let sharedVertices = toVertices(slice)
+ * let sharedVertices = slice.toVertices(slice)
  */
 export const toVertices = (slice) => {
   const vertices = []

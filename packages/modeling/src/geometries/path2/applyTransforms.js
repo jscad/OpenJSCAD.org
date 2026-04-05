@@ -3,9 +3,12 @@ import * as vec2 from '../../maths/vec2/index.js'
 
 /*
  * Apply the transforms of the given geometry.
+ *
  * NOTE: This function must be called BEFORE exposing any data. See toPoints.
+ *
  * @param {path} geometry - the geometry to transform
  * @returns {path} the given geometry
+ *
  * @example
  * geometry = applyTransforms(geometry)
  */

@@ -7,22 +7,24 @@ import { toPoints } from './toPoints.js'
 
 /**
  * Append a series of points to the given geometry that represent a Bézier curve.
+ *
  * The Bézier curve starts at the last point in the given geometry, and ends at the last control point.
  * The other control points are intermediate control points to transition the curve from start to end points.
  * The first control point may be null to ensure a smooth transition occurs. In this case,
  * the second to last point of the given geometry is mirrored into the control points of the Bézier curve.
  * In other words, the trailing gradient of the geometry matches the new gradient of the curve.
+ *
  * @param {object} options - options for construction
  * @param {Array} options.controlPoints - list of control points (2D) for the Bézier curve
  * @param {number} [options.segments=16] - number of segments per 360 rotation
  * @param {Path2} geometry - the path of which to append points
  * @returns {Path2} a new path with the appended points
- * @alias module:modeling/geometries/path2.appendBezier
+ * @alias module:modeling/path2.appendBezier
  *
  * @example
- * let myShape = fromPoints({}, [[10,-20]])
- * myShape = appendBezier({controlPoints: [[10,-10],[25,-10],[25,-20]]}, myShape);
- * myShape = appendBezier({controlPoints: [null, [25,-30],[40,-30],[40,-20]]}, myShape)
+ * let myShape = path2.fromPoints({}, [[10,-20]])
+ * myShape = path2.appendBezier({controlPoints: [[10,-10],[25,-10],[25,-20]]}, myShape);
+ * myShape = path2.appendBezier({controlPoints: [null, [25,-30],[40,-30],[40,-20]]}, myShape)
  */
 export const appendBezier = (options, geometry) => {
   const defaults = {

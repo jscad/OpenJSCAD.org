@@ -7,13 +7,17 @@ import { toOutlines } from './toOutlines.js'
 
 /**
  * Determine if the given object is a valid geom2.
+ *
  * Checks for closedness, self-edges, and valid data points.
  *
- * **If the geometry is not valid, an exception will be thrown with details of the geometry error.**
+ * **NOTE: If the geometry is not valid, an exception will be thrown with details of the geometry error.**
  *
  * @param {object} object - the object to interrogate
  * @throws {Error} error if the geometry is not valid
- * @alias module:modeling/geometries/geom2.validate
+ * @alias module:modeling/geom2.validate
+ *
+ * @example
+ * const geometry = geom2.validate(geometry)
  */
 export const validate = (object) => {
   if (!isA(object)) {

@@ -13,11 +13,10 @@ import { toPolygons } from './toPolygons.js'
  *
  * @param {geom3} geometry - the geometry to test
  * @returns {boolean} true if the geometry is convex
- * @alias module:modeling/geometries/geom3.isConvex
+ * @alias module:modeling/geom3.isConvex
  *
  * @example
- * const { geom3, primitives } = require('@jscad/modeling')
- * const cube = primitives.cuboid({ size: [10, 10, 10] })
+ * const cube = cuboid()
  * console.log(geom3.isConvex(cube)) // true
  */
 export const isConvex = (geometry) => {

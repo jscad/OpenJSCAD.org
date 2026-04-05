@@ -5,9 +5,13 @@ import { toPolygons } from './toPolygons.js'
 
 /**
  * Invert the given geometry, transposing solid and empty space.
+ *
  * @param {Geom3} geometry - the geometry to invert
  * @returns {Geom3} a new geometry
- * @alias module:modeling/geometries/geom3.invert
+ * @alias module:modeling/geom3.invert
+ *
+ * @example
+ * let inverted = geom3.invert(geometry)
  */
 export const invert = (geometry) => {
   const polygons = toPolygons(geometry)

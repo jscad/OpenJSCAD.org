@@ -7,8 +7,10 @@ import * as vec3 from '../../maths/vec3/index.js'
  *
  * @param {Path3} geometry - the path to close
  * @returns {Path3} a new path
- * @function
- * @alias module:modeling/geometries/path3.close
+ * @alias module:modeling/path3.close
+ *
+ * @example
+ * const newPath = path3.close(oldPath)
  */
 export const close = (geometry) => {
   if (geometry.isClosed) return geometry

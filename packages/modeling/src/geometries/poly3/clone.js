@@ -8,7 +8,10 @@ import { create } from './create.js'
  * @param {Poly3} [out] - receiving polygon
  * @param {Poly3} polygon - polygon to clone
  * @returns {Poly3} a new polygon
- * @alias module:modeling/geometries/poly3.clone
+ * @alias module:modeling/poly3.clone
+ *
+ * @example
+ * const newPoly = poly3.clone(oldPoly)
  */
 export const clone = (...params) => {
   let out

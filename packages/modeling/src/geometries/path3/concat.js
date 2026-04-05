@@ -13,11 +13,10 @@ import { toVertices } from './toVertices.js'
  *
  * @param {...Path3} paths - the paths to concatenate
  * @returns {Path3} a new path
- * @function
- * @alias module:modeling/geometries/path3.concat
+ * @alias module:modeling/path3.concat
  *
  * @example
- * let newPath = concat(fromVertices({}, [[1, 2, 3]]), fromVertices({}, [[4, 5, 6]]))
+ * let newPath = path3.concat(path3.fromVertices({}, [[1, 2, 3]]), path3.fromVertices({}, [[4, 5, 6]]))
  */
 export const concat = (...paths) => {
   // Only the last path can be closed, producing a closed path.

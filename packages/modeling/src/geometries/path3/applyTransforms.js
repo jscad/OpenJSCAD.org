@@ -11,7 +11,7 @@ import * as vec3 from '../../maths/vec3/index.js'
  * @function
  *
  * @example
- * geometry = applyTransforms(geometry)
+ * geometry = path3.applyTransforms(geometry)
  */
 export const applyTransforms = (geometry) => {
   if (mat4.isIdentity(geometry.transforms)) return geometry

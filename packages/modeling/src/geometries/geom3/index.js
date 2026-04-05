@@ -1,11 +1,12 @@
 /**
  * Represents a 3D geometry consisting of a list of polygons.
- * @see {@link geom3} for data structure information.
- * @module modeling/geometries/geom3
+ *
+ * @see {@link Geom3} for data structure information
+ * @module modeling/geom3
  *
  * @example
- * import { geometries } from '@jscad/modeling'
- * const myShape = geometries.geom3.fromVertices([
+ * import { geom3 } from '@jscad/modeling'
+ * const myShape = geom3.fromVertices([
  *   [[-1,-1,-1], [-1,-1,1], [-1,1,1], [-1,1,-1]],
  *   [[1,-1,-1], [1,1,-1], [1,1,1], [1,-1,1]],
  *   [[-1,-1,-1], [1,-1,-1], [1,-1,1], [-1,-1,1]]
@@ -13,6 +14,26 @@
  *   [[-1,-1,-1], [-1,1,-1], [1,1,-1], [1,-1,-1]],
  *   [[-1,-1,1], [1,-1,1], [1,1,1], [-1,1,1]]
  * ])
+ */
+
+/**
+ * @typedef Geom3
+ * @type {Object}
+ * @property {Array} polygons - list of polygons, each polygon containing three or more vertices
+ * @property {Mat4} transforms - transforms to apply to the polygons, see transform()
+ *
+ * @example
+ * {
+ *   "polygons": [
+ *     {"vertices": [[-1,-1,-1], [-1,-1,1], [-1,1,1], [-1,1,-1]]},
+ *     {"vertices": [[1,-1,-1], [1,1,-1], [1,1,1], [1,-1,1]]},
+ *     {"vertices": [[-1,-1,-1], [1,-1,-1], [1,-1,1], [-1,-1,1]]},
+ *     {"vertices": [[-1,1,-1], [-1,1,1], [1,1,1], [1,1,-1]]},
+ *     {"vertices": [[-1,-1,-1], [-1,1,-1], [1,1,-1], [1,-1,-1]]},
+ *     {"vertices": [[-1,-1,1], [1,-1,1], [1,1,1], [-1,1,1]]}
+ *   ],
+ *   "transforms": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+ * }
  */
 export { clone } from './clone.js'
 export { create } from './create.js'

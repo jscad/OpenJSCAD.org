@@ -6,8 +6,10 @@ import { toPoints } from './toPoints.js'
 
 /**
  * Append a series of points to the given geometry that represent an arc.
+ *
  * This implementation follows the SVG specifications.
  * @see http://www.w3.org/TR/SVG/paths.html#PathDataEllipticalArcCommands
+ *
  * @param {object} options - options for construction
  * @param {Vec2} options.endpoint - end point of arc (REQUIRED)
  * @param {Vec2} [options.radius=[0,0]] - radius of arc (X and Y)
@@ -17,12 +19,12 @@ import { toPoints } from './toPoints.js'
  * @param {number} [options.segments=16] - number of segments per full rotation
  * @param {Path2} geometry - the path of which to append the arc
  * @returns {Path2} a new path with the appended points
- * @alias module:modeling/geometries/path2.appendArc
+ * @alias module:modeling/path2.appendArc
  *
  * @example
- * let myShape = fromPoints({}, [[27.5,-22.96875]]);
- * myShape = appendPoints([[27.5,-3.28125]], myShape);
- * myShape = appendArc({endpoint: [12.5, -22.96875], radius: [15, -19.6875]}, myShape);
+ * let myShape = path2.fromPoints({}, [[27.5,-22.96875]]);
+ * myShape = path2.appendPoints([[27.5,-3.28125]], myShape);
+ * myShape = path2.appendArc({endpoint: [12.5, -22.96875], radius: [15, -19.6875]}, myShape);
  */
 export const appendArc = (options, geometry) => {
   const defaults = {

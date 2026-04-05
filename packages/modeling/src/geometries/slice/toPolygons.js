@@ -5,9 +5,13 @@ import { PolygonHierarchy } from './earcut/polygonHierarchy.js'
 
 /**
  * Return a list of polygons which are enclosed by the slice.
+ *
  * @param {Slice} slice - the slice
  * @return {Array} a list of polygons (3D)
- * @alias module:modeling/geometries/slice.toPolygons
+ * @alias module:modeling/slice.toPolygons
+ *
+ * @example
+ * const polygons = slice.toPolygons(sliceA)
  */
 export const toPolygons = (slice) => {
   const hierarchy = new PolygonHierarchy(slice)

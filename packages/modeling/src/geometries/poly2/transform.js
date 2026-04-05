@@ -5,10 +5,14 @@ import { create } from './create.js'
 
 /**
  * Transform the given polygon using the given matrix.
+ *
  * @param {Mat4} matrix - the matrix to transform with
  * @param {Poly2} polygon - the polygon to transform
  * @returns {Poly2} a new polygon
- * @alias module:modeling/geometries/poly2.transform
+ * @alias module:modeling/poly2.transform
+ *
+ * @example
+ * let newPoly = poly2.transfrom(oldPoly)
  */
 export const transform = (matrix, polygon) => {
   const points = polygon.points.map((point) => vec2.transform(vec2.create(), point, matrix))

@@ -2,12 +2,28 @@
  * Represents a 3D geometry consisting of a list of ordered vertices.
  *
  * @see {@link Path3} for data structure information.
- * @module modeling/geometries/path3
+ * @module modeling/path3
  *
  * @example
  * import { path3 } from '@jscad/modeling'
  * let myShape = path3.fromVertices({ closed: true }, [[0,0,0], [4,0,0], [4,3,0]])
  */
+
+/**
+ * @typedef {Object} Path3
+ * @property {Array} vertices - list of ordered vertices
+ * @property {boolean} isClosed - true if the path is closed where start and end vertices are the same
+ * @property {Mat4} transforms - transforms to apply to the vertices, see transform()
+ *
+ * @example
+ * // data structure
+ * {
+ *   vertices: [[0,0,0], [4,0,0], [4,3,0]],
+ *   isClosed: true,
+ *   transforms: [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+ * }
+ */
+
 export { close } from './close.js'
 export { concat } from './concat.js'
 export { create } from './create.js'

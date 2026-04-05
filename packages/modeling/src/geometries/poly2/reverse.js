@@ -5,7 +5,10 @@ import { create } from './create.js'
  *
  * @param {Poly2} polygon - the polygon to reverse
  * @returns {Poly2} a new polygon
- * @alias module:modeling/geometries/poly2.reverse
+ * @alias module:modeling/poly2.reverse
+ *
+ * @example
+ * let newPoly = poly2.reverse(oldPoly)
  */
 export const reverse = (polygon) => {
   const points = polygon.points.slice().reverse()

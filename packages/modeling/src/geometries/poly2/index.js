@@ -1,12 +1,24 @@
 /**
  * Represents a 2D polygon consisting of a list of ordered points.
- * @see {@link poly2} for data structure information.
- * @module modeling/geometries/poly2
+ * @see {@link Poly2} for data structure information.
+ * @module modeling/poly2
  *
  * @example
- * import { geometries } from '@jscad/modeling'
- * const p1 = geometries.poly2.create([[0,0], [4,0], [4,3]])
+ * import { poly2 } from '@jscad/modeling'
+ * const p1 = poly2.create([[0,0], [4,0], [4,3]])
  */
+
+/**
+ * @typedef {Object} Poly2
+ * @property {Array} points - list of ordered points (2D)
+ *
+ * @example
+ * // data structure
+ * {
+ *   points: [[0,0], [4,0], [4,3]],
+ * }
+ */
+
 export { arePointsInside } from './arePointsInside.js'
 export { clone } from './clone.js'
 export { create } from './create.js'

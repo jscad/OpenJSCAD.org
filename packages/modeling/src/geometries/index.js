@@ -1,13 +1,15 @@
 /**
  * Geometries are objects that represent the contents of primitives or the results of operations.
+ *
  * Note: Geometries are considered immutable, so never change the contents directly.
  *
- * @see {@link geom2} - 2D geometry consisting of 2D outlines
- * @see {@link geom3} - 3D geometry consisting of polygons
- * @see {@link path2} - 2D geometry consisting of ordered points
- * @see {@link poly2} - 2D polygon consisting of ordered points
- * @see {@link poly3} - 3D polygon consisting of ordered vertices
- * @see {@link slice} - 3D geometry consisting of 3D contours
+ * @see [Geom2]{@link module:modeling/geom2} - 2D geometry consisting of 2D outlines
+ * @see [Geom3]{@link module:modeling/geom3} - 3D geometry consisting of polygons
+ * @see [Path2]{@link module:modeling/path2} - 2D geometry consisting of ordered points
+ * @see [Path3]{@link module:modeling/path3} - 3D geometry consisting of ordered vertices
+ * @see [Poly2]{@link module:modeling/poly2} - 2D polygon consisting of points
+ * @see [Poly3]{@link module:modeling/poly3} - 3D polygon consisting of vertices
+ * @see [Slice]{@link module:modeling/slice} - 3D geometry consisting of 3D contours
  *
  * @module modeling/geometries
  * @example

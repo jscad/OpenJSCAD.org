@@ -1,7 +1,6 @@
 import * as geom3 from '../../geometries/geom3/index.js'
 
 import { scissionGeom3 } from './scissionGeom3.js'
-
 /**
  * Scission (divide) the given geometry into the component pieces.
  *
@@ -9,7 +8,7 @@ import { scissionGeom3 } from './scissionGeom3.js'
  *
  * @param {...Object} objects - list of geometries
  * @returns {Array} list of pieces from each geometry
- * @alias module:modeling/booleans.scission
+ * @alias module:modeling.scission
  *
  * @example
  * let figure = use('./my.stl')

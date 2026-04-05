@@ -4,13 +4,17 @@ import { isA } from './isA.js'
 
 /**
  * Determine if the given object is a valid 3D geometry.
+ *
  * Checks for valid data structure, convex polygon faces, and manifold edges.
  *
- * **If the geometry is not valid, an exception will be thrown with details of the geometry error.**
+ * **NOTE: If the geometry is not valid, an exception will be thrown with details of the geometry error.**
  *
  * @param {object} object - the object to interrogate
  * @throws {Error} error if the geometry is not valid
- * @alias module:modeling/geometries/geom3.validate
+ * @alias module:modeling/geom3.validate
+ *
+ * @example
+ * if (geom3.validate(geometry)) { ... }
  */
 export const validate = (object) => {
   if (!isA(object)) {

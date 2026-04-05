@@ -2,9 +2,13 @@ import * as vec3 from '../../maths/vec3/index.js'
 
 /**
  * Convert the given slice to a readable string.
+ *
  * @param {Slice} slice - the slice
  * @return {String} the string representation
- * @alias module:modeling/geometries/slice.toString
+ * @alias module:modeling/slice.toString
+ *
+ * @example
+ * console.log(slice.toString(sliceA))
  */
 export const toString = (slice) => {
   let result = 'slice (' + slice.contours.length + ' contours):\n[\n'

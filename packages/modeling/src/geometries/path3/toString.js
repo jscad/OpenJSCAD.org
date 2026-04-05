@@ -7,11 +7,10 @@ import { toVertices } from './toVertices.js'
  *
  * @param {path} geometry - the path
  * @returns {string} a representative string
- * @function
- * @alias module:modeling/geometries/path3.toString
+ * @alias module:modeling/path3.toString
  *
  * @example
- * console.out(toString(path))
+ * console.out(path3.toString(geometry))
  */
 export const toString = (geometry) => {
   const vertices = toVertices(geometry)

@@ -2,12 +2,17 @@ import * as vec3 from '../../maths/vec3/index.js'
 
 /**
  * Measure the signed volume of the given polygon, which must be convex.
+ *
  * The volume is that formed by the tetrahedron connected to the axis [0,0,0],
  * and will be positive or negative based on the rotation of the vertices.
  * @see http://chenlab.ece.cornell.edu/Publication/Cha/icip01_Cha.pdf
+ *
  * @param {Poly3} polygon - the polygon to measure
  * @return {number} volume of the polygon
- * @alias module:modeling/geometries/poly3.measureSignedVolume
+ * @alias module:modeling/poly3.measureSignedVolume
+ *
+ * @example
+ * const volume = poly3.measureSignedVolumne(polyA)
  */
 export const measureSignedVolume = (polygon) => {
   let signedVolume = 0

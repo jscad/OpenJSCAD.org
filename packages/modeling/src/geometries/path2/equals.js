@@ -3,13 +3,18 @@ import * as vec2 from '../../maths/vec2/index.js'
 import { toPoints } from './toPoints.js'
 
 /**
-  * Determine if the given paths are equal.
-  * For closed paths, this includes equality under point order rotation.
-  * @param {Path2} a - the first path to compare
-  * @param {Path2} b - the second path to compare
-  * @returns {Boolean}
-  * @alias module:modeling/geometries/path2.equals
-  */
+ * Determine if the given paths are equal.
+ *
+ * For closed paths, this includes equality under point order rotation.
+ *
+ * @param {Path2} a - the first path to compare
+ * @param {Path2} b - the second path to compare
+ * @returns {Boolean}
+ * @alias module:modeling/path2.equals
+ *
+ * @example
+ * if (path2.equals(pathA, pathB)) { ... }
+ */
 export const equals = (a, b) => {
   if (a.isClosed !== b.isClosed) {
     return false

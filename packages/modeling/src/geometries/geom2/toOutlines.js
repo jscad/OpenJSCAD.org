@@ -2,9 +2,10 @@ import { applyTransforms } from './applyTransforms.js'
 
 /**
  * Create the outline(s) of the given geometry.
+ *
  * @param {Geom2} geometry - geometry to create outlines from
  * @returns {Array} an array of outlines, where each outline is an array of ordered points
- * @alias module:modeling/geometries/geom2.toOutlines
+ * @alias module:modeling/geom2.toOutlines
  *
  * @example
  * let geometry = subtract(rectangle({size: [5, 5]}), rectangle({size: [3, 3]}))

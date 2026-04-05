@@ -1,8 +1,12 @@
 /**
  * Check whether the given polygon is convex.
+ *
  * @param {Poly2} polygon - the polygon to interrogate
  * @returns {Boolean} true if convex
- * @alias module:modeling/geometries/poly2.isConvex
+ * @alias module:modeling/poly2.isConvex
+ *
+ * @example
+ * if (poly2.isConvex(geometry)) { ... }
  */
 export const isConvex = (polygon) => {
   const numPoints = polygon.points.length

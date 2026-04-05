@@ -5,11 +5,10 @@
  *
  * @param {Path3} geometry - the path to reverse
  * @returns {Path3} a new path
- * @function
- * @alias module:modeling/geometries/path3.reverse
+ * @alias module:modeling/path3.reverse
  *
  * @example
- * let newPath = reverse(path)
+ * let newPath = path3.reverse(oldPath)
  */
 export const reverse = (geometry) => {
   // NOTE: this only updates the order of the vertices

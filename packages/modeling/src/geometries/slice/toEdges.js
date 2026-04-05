@@ -1,12 +1,14 @@
 /**
  * Produces an array of edges from the given slice.
- * The returned array should not be modified as the data is shared with the slice.
+ *
+ * NOTE: The returned array should not be modified as the data is shared with the slice.
+ *
  * @param {Slice} slice - the slice
  * @returns {Array} an array of edges, each edge contains an array of two vertices (3D)
- * @alias module:modeling/geometries/slice.toEdges
+ * @alias module:modeling/slice.toEdges
  *
  * @example
- * let sharedEdges = toEdges(slice)
+ * let sharedEdges = slice.toEdges(slice)
  */
 export const toEdges = (slice) => {
   const edges = []

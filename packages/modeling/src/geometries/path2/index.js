@@ -1,11 +1,28 @@
 /**
  * Represents a 2D geometry consisting of a list of ordered points.
- * @see {@link path2} for data structure information.
- * @module modeling/geometries/path2
+ *
+ * @see {@link Path2} for data structure information.
+ * @module modeling/path2
  *
  * @example
- * import { geometries } from '@jscad/modeling'
- * let myShape = geometries.path2.fromPoints({ closed: true }, [[0,0], [4,0], [4,3]])
+ * import { path2 } from '@jscad/modeling'
+ * let myShape = path2.fromPoints({ closed: true }, [[0,0], [4,0], [4,3]])
+ */
+
+/**
+ * @typedef Path2
+ * @type {Object}
+ * @property {Array} points - list of ordered points
+ * @property {boolean} isClosed - true if the path is closed where start and end points are the same
+ * @property {Mat4} transforms - transforms to apply to the points, see transform()
+ *
+ * @example
+ * // data structure
+ * {
+ *   "points": [[0,0], [4,0], [4,3]],
+ *   "isClosed": true,
+ *   "transforms": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+ * }
  */
 export { appendArc } from './appendArc.js'
 export { appendBezier } from './appendBezier.js'
