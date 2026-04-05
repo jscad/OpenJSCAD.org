@@ -3,9 +3,7 @@ your designs, so that they can easily adapt to different situations.
 
 ## ParametricBox.js
 ```javascript
-import { primitives, booleans } from  '@jscad/modeling'
-const { cuboid, roundedCuboid } = primitives
-const { subtract } = booleans
+import { cuboid, roundedCuboid, subtract } from  '@jscad/modeling'
 
 export const getParameterDefinitions = () => {
   return [

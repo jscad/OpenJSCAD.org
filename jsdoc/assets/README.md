@@ -23,8 +23,8 @@ There are different 'flavors' of JSCAD that you can use based on your needs
 
 ## Documentation
 
-* [JSCAD User Guide](https://openjscad.xyz/guide.html)
-* [API Reference](https://openjscad.xyz/docs/)
+* [JSCAD User Guide](https://openjscad.xyz/v3/guide.html)
+* [API Reference](https://openjscad.xyz/v3/docs/)
 * [Open Issues](https://openjscad.xyz/issues.html)
 
 ## Community
