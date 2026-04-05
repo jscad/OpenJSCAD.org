@@ -3,6 +3,7 @@
     "include": [
       "packages/array-utils/src",
 
+      "packages/modeling/src",
       "packages/modeling/src/colors",
       "packages/modeling/src/curves",
       "packages/modeling/src/curves/bezier",
