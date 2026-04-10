@@ -23,7 +23,7 @@
     "test": "tests"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
+    "lodash": "^4.18.1",
     "sylvester": "github:kaosat-dev/node-sylvester"
   },
   "devDependencies": {
