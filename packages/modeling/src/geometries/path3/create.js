@@ -3,6 +3,7 @@ import * as mat4 from '../../maths/mat4/index.js'
 /**
  * Create an empty, open path.
  *
+ * @param {Array} [vertices] - a list of vertices of which to create the path
  * @returns {Path3} a new path
  * @alias module:modeling/path3.create
  *

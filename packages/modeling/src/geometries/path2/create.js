@@ -3,6 +3,7 @@ import * as mat4 from '../../maths/mat4/index.js'
 /**
  * Create an empty, open path.
  *
+ * @param {Array} [points] - a list of points of which to create the path
  * @returns {Path2} a new path
  * @alias module:modeling/path2.create
  *
