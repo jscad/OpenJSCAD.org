@@ -1,3 +1,6 @@
+/**
+ * @module io
+ */
 export { deserialize } from './deserialize.js'
 export { deserializers } from './deserializers.js'
 

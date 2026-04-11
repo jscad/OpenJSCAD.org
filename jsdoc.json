@@ -36,6 +36,7 @@
       "packages/modeling/src/text",
       "packages/modeling/src/utils",
 
+      "packages/io/io/src",
       "packages/io/io-utils",
       "packages/io/3mf-deserializer/src",
       "packages/io/3mf-serializer/src",
