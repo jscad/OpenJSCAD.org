@@ -10,7 +10,7 @@
  * @param {number} t : the position of which to calculate the bezier's tangent value; 0 < t < 1
  * @param {object} bezier : an array with at least 2 elements of either all numbers, or all arrays of numbers that are the same size.
  * @return {array | number} the tangent at the requested position.
- * @alias module:modeling/curves/bezier.tangentAt
+ * @alias module:modeling/bezier.tangentAt
  */
 export const tangentAt = (t, bezier) => {
   if (t < 0 || t > 1) {

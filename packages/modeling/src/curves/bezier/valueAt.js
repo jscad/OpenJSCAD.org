@@ -11,7 +11,7 @@
  * @param {number} t : the position of which to calculate the value; 0 < t < 1
  * @param {object} bezier : a Bézier curve created with bezier.create().
  * @returns {array | number} the value at the requested position.
- * @alias module:modeling/curves/bezier.valueAt
+ * @alias module:modeling/bezier.valueAt
  */
 export const valueAt = (t, bezier) => {
   if (t < 0 || t > 1) {

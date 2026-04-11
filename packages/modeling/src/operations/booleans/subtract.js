@@ -14,7 +14,7 @@ import { subtractGeom3 } from './subtractGeom3.js'
  *
  * @param {...Object} geometries - list of geometries
  * @returns {Geom2|Geom3} a new geometry
- * @alias module:modeling.subtract
+ * @alias module:modeling/booleans.subtract
  *
  * @example
  * let myshape = subtract(cuboid({size: 5}), cuboid({size: 5, center: [3,3,3]}))

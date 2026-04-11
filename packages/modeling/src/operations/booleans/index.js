@@ -3,6 +3,8 @@
  * to perform logical operations, e.g. remove a hole from a board.
  *
  * In all cases, the function returns the results, and never changes the original shapes.
+ * @module modeling/booleans
+ *
  * @example
  * import { intersect, scission, subtract, union } from '@jscad/modeling'
  */

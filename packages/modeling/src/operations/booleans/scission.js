@@ -8,7 +8,7 @@ import { scissionGeom3 } from './scissionGeom3.js'
  *
  * @param {...Object} objects - list of geometries
  * @returns {Array} list of pieces from each geometry
- * @alias module:modeling.scission
+ * @alias module:modeling/booleans.scission
  *
  * @example
  * let figure = use('./my.stl')

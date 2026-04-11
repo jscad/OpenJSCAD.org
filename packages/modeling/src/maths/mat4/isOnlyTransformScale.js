@@ -17,7 +17,7 @@ export const isOnlyTransformScale = (matrix) => (
   matrix[15] === 1
 )
 
-/**
+/*
  * @param {number} num
  * @returns {boolean}
  */

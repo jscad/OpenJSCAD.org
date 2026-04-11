@@ -5,13 +5,13 @@
  *
  * @see [Geom2]{@link module:modeling/geom2} - 2D geometry consisting of 2D outlines
  * @see [Geom3]{@link module:modeling/geom3} - 3D geometry consisting of polygons
- * @see [Path2]{@link module:modeling/path2} - 2D geometry consisting of ordered points
- * @see [Path3]{@link module:modeling/path3} - 3D geometry consisting of ordered vertices
- * @see [Poly2]{@link module:modeling/poly2} - 2D polygon consisting of points
- * @see [Poly3]{@link module:modeling/poly3} - 3D polygon consisting of vertices
+ * @see [Path2]{@link module:modeling/path2} - 2D geometry consisting of ordered 2D points
+ * @see [Path3]{@link module:modeling/path3} - 3D geometry consisting of ordered 3D vertices
+ * @see [Poly2]{@link module:modeling/poly2} - 2D polygon consisting of 2D points
+ * @see [Poly3]{@link module:modeling/poly3} - 3D polygon consisting of 3D vertices
  * @see [Slice]{@link module:modeling/slice} - 3D geometry consisting of 3D contours
+ * @alias module:modeling.geometry
  *
- * @module modeling/geometries
  * @example
  * import { geom2, geom3, path2, poly2, poly3, slice } from '@jscad/modeling'
  */

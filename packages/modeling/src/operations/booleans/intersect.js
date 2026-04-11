@@ -13,7 +13,7 @@ import { intersectGeom3 } from './intersectGeom3.js'
  *
  * @param {...Object} geometries - list of geometries
  * @returns {Geom2|Geom3} a new geometry
- * @alias module:modeling.intersect
+ * @alias module:modeling/booleans.intersect
  *
  * @example
  * let myshape = intersect(cube({size: 5}), cube({size: 5, center: [3,3,3]}))

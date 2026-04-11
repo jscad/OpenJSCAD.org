@@ -11,6 +11,6 @@ import { lengths } from './lengths.js'
  * @param {number} segments the number of segments to use when approximating the curve length.
  * @param {object} bezier a bezier curve.
  * @returns an approximation of the curve's length.
- * @alias module:modeling/curves/bezier.length
+ * @alias module:modeling/bezier.length
  */
 export const length = (segments, bezier) => lengths(segments, bezier)[segments]

@@ -20,7 +20,7 @@ import { lengths } from './lengths.js'
  * @param {number} [options.segments=100] the number of segments to use when approximating the curve length.
  * @param {object} bezier a bezier curve.
  * @returns a number in the [0, 1] interval or NaN if the arcLength is negative or greater than the total length of the curve.
- * @alias module:modeling/curves/bezier.arcLengthToT
+ * @alias module:modeling/bezier.arcLengthToT
  */
 export const arcLengthToT = (options, bezier) => {
   const defaults = {
