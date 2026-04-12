@@ -1,12 +1,28 @@
 /**
  * Represents a 2D geometry consisting of outlines, where each outline is an ordered list of points.
- * The outline is always closed between the first and last points.
- * @see {@link geom2} for data structure information.
- * @module modeling/geometries/geom2
+ *
+ * Each outline is always closed between the first and last points.
+ *
+ * @see {@link Geom2} for data structure information.
+ * @module modeling/geom2
  *
  * @example
- * import { geometries } from '@jscad/modeling'
- * let myShape = geometries.geom2.create([ [[-1,-1], [1,-1], [1,1], [-1,1]] ])
+ * import { geom2 } from '@jscad/modeling'
+ * let myShape = geom2.create([ [[-1,-1], [1,-1], [1,1], [-1,1]] ])
+ */
+
+/**
+ * @typedef Geom2
+ * @type {Object}
+ * @property {Array} outlines - list of outlines, each outline is an ordered list of points
+ * @property {Mat4} transforms - transforms to apply to the polygons, see transform()
+ *
+ * @example
+ * // data structure
+ * {
+ *   "outlines": [[[-1,-1],[1,-1],[1,1],[-1,1]]],
+ *   "transforms": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
+ * }
  */
 export { clone } from './clone.js'
 export { create } from './create.js'

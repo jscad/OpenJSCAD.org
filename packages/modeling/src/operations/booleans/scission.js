@@ -1,7 +1,6 @@
 import * as geom3 from '../../geometries/geom3/index.js'
 
 import { scissionGeom3 } from './scissionGeom3.js'
-
 /**
  * Scission (divide) the given geometry into the component pieces.
  *

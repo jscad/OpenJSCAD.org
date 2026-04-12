@@ -17,7 +17,7 @@ const version = '[VI]{version}[/VI]' // version is injected by rollup
  * @see {@link https://github.com/jscad/OpenJSCAD.org/blob/master/packages/io/svg-deserializer/README.md|README} for supported conversion of SVG elements.
  * @module io/svg-deserializer
  * @example
- * const { deserializer, extension } = require('@jscad/svg-deserializer')
+ * import { deserializer, mimeType } from '@jscad/svg-deserializer'
  */
 
 /**
@@ -34,7 +34,6 @@ const version = '[VI]{version}[/VI]' // version is injected by rollup
  * @param {string} [options.pathSelfClosed='error'] - [error||trim||split] if path self-closes with one of commands without stop command right after
  * @param {string} input - SVG source data
  * @returns {(Array|String)} either an array of objects (geometry) or a string (script)
- * @alias module:io/svg-deserializer.deserialize
  */
 const deserialize = (options, input) => {
   const defaults = {

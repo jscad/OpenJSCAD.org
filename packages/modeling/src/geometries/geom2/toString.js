@@ -4,12 +4,13 @@ import { toOutlines } from './toOutlines.js'
 
 /**
  * Create a string representing the contents of the given geometry.
+ *
  * @param {Geom2} geometry - the geometry
  * @returns {string} a representative string
- * @alias module:modeling/geometries/geom2.toString
+ * @alias module:modeling/geom2.toString
  *
  * @example
- * console.out(toString(geometry))
+ * console.out(geom2.toString(geometry))
  */
 export const toString = (geometry) => {
   const outlines = toOutlines(geometry)

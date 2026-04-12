@@ -23,34 +23,17 @@ it with the "Load a JSCAD Project" file dialog.
 The simplest file that will render a cube in JSCAD looks like this:
 ```javascript
 // the import statement allows your code to use JSCAD functions.
-import { primitives } from '@jscad/modeling'
+import { cube } from '@jscad/modeling'
 
 // the export statement defines the entry point of the design.
 export const main = () => {
-  return primitives.cube()
+  return cube()
 }
-```
-JSCAD functions must be imported, but there are several different syntaxes for using the functions:
-```javascript
-// import one or more functional areas from JSCAD:
-import { primitives, booleans } from '@jscad/modeling'
-
-// use functions directly
-let aCube = primitives.cube()
-
-// or
-
-// use the functions by name
-const { cube, sphere } = primitives
-
-let aCube = cube()
-let aSphere = sphere()
 ```
 ## Adding Methods
 Clean, readable code is one of the most important aspects of a useful design. In that respect, it can often be useful to break your code into simple function that do part of the work for your design:
 ```javascript
-import { primitives } from '@jscad/modeling'
-const { cylinder } = primitives
+import { cylinder } from '@jscad/modeling'
 
 const hex = (radius, height) => {
     return cylinder({radius, height, segments: 6})
@@ -63,8 +46,7 @@ export const main = () => {
 ## Re-usable Designs
 A valuable practise when creating models is to store all but the most trivial values as parameters in the code, rather than using the numerical values directly.  This can be done by storing them in constants in your file...
 ```javascript
-import { primitives } from '@jscad/modeling'
-const { cylinder } = primitives
+import { cylinder } from '@jscad/modeling'
 
 const options = {
     height: 5.1,
@@ -78,10 +60,10 @@ export const main = () => {
  
 ... or, even better, to include runtime parameters in your design.  This is done using the getParameterDefinitions function:
 ```javascript
-import { primitives } from '@jscad/modeling'
-const { cylinder } = primitives
+import { cylinder } from '@jscad/modeling'
 
 // Declare a function named "getParameterDefinitions". It will return an array of parameter definitions.
+// You must also export the getParameterDefinitions function.
 export const getParameterDefinitions = () => {
   return [
     { name: 'height', type: 'number', initial: 2.0, min: 1.0, max: 10.0, step: 0.1, caption: 'Hex Height:' },
@@ -93,7 +75,6 @@ export const getParameterDefinitions = () => {
 export const main = (params) => {
   return cylinder({radius: params.radius, height: params.height, segments: 6})
 }
-// You must also export the getParameterDefinitions function.
 ```
 <img src="img/parameters.png" alt="JSCAD Parameters Example">
 

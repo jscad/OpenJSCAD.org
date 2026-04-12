@@ -26,7 +26,7 @@ const toSharedPoints = (sides) => {
  */
 const toPointMap = (sides) => {
   const pointMap = new Map()
-  // first map to edges with shared vertices
+  // first map to edges with shared points
   const edges = toSharedPoints(sides)
   // construct adjacent edges map
   edges.forEach((edge) => {
@@ -41,11 +41,13 @@ const toPointMap = (sides) => {
 
 /**
  * Create a new 2D geometry from a list of sides.
+ *
  * @param {Array} sides - list of sides to create outlines from
  * @returns {Geom2} a new geometry
+ * @alias module:modeling/geom2.fromSides
  *
  * @example
- * let geometry = fromSides([[[0, 0], [1, 0]], [[1, 0], [1, 1]], [[1, 1], [0, 0]]])
+ * let geometry = geom2.fromSides([[[0, 0], [1, 0]], [[1, 0], [1, 1]], [[1, 1], [0, 0]]])
  */
 export const fromSides = (sides) => {
   const pointMap = toPointMap(sides) // {point: [edges]}

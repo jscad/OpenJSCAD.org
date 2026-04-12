@@ -5,13 +5,17 @@ import { measureArea } from './measureArea.js'
 
 /**
  * Determine if the given object is a valid polygon.
+ *
  * Checks for valid data structure, convex polygons, and duplicate points.
  *
- * **If the geometry is not valid, an exception will be thrown with details of the geometry error.**
+ * **NOTE: If the geometry is not valid, an exception will be thrown with details of the geometry error.**
  *
  * @param {object} object - the object to interrogate
  * @throws {Error} error if the geometry is not valid
- * @alias module:modeling/geometries/poly2.validate
+ * @alias module:modeling/poly2.validate
+ *
+ * @example
+ * poly2.validate(geometry)
  */
 export const validate = (object) => {
   if (!isA(object)) {

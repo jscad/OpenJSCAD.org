@@ -3,9 +3,13 @@ import { plane } from './plane.js'
 /**
  * Measure the area of the given polygon.
  * @see 2000 softSurfer http://geomalgorithms.com
+ *
  * @param {Poly3} polygon - the polygon to measure
  * @return {number} area of the polygon
- * @alias module:modeling/geometries/poly3.measureArea
+ * @alias module:modeling/poly3.measureArea
+ *
+ * @example
+ * const area = poly3.measureArea(polyA)
  */
 export const measureArea = (polygon) => {
   const n = polygon.vertices.length

@@ -2,14 +2,15 @@ import { toOutlines } from './toOutlines.js'
 
 /**
  * Produces an array of sides from the given geometry.
- * The returned array should not be modified as the data is shared with the geometry.
+ *
  * NOTE: The sides returned do NOT define an order. Use toOutlines() for ordered points.
+ *
  * @param {Geom2} geometry - the geometry
  * @returns {Array} an array of sides
- * @alias module:modeling/geometries/geom2.toSides
+ * @alias module:modeling/geom2.toSides
  *
  * @example
- * let sharedSides = toSides(geometry)
+ * let sharedSides = geom2.toSides(geometry)
  */
 export const toSides = (geometry) => {
   const sides = []

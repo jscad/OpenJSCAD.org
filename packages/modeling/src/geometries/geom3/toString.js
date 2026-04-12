@@ -4,12 +4,13 @@ import { toPolygons } from './toPolygons.js'
 
 /**
  * Create a string representing the contents of the given geometry.
+ *
  * @param {Geom3} geometry - the geometry
  * @returns {string} a representative string
- * @alias module:modeling/geometries/geom3.toString
+ * @alias module:modeling/geom3.toString
  *
  * @example
- * console.out(toString(geometry))
+ * console.out(geom3.toString(geometry))
  */
 export const toString = (geometry) => {
   const polygons = toPolygons(geometry)

@@ -10,7 +10,7 @@
  * @see https://www.json.org
  * @module io/json-deserializer
  * @example
- * const { deserializer, extension } = require('@jscad/json-deserializer')
+ * import { deserializer, mimeType } from '@jscad/json-deserializer'
  */
 
 import { flatten, toArray } from '@jscad/array-utils'
@@ -20,14 +20,14 @@ const version = '[VI]{version}[/VI]' // version is injected by rollup
 
 /**
  * Deserialize the given JSON notation (string) into either a script or an array of geometry.
+ *
  * @param {Object} options - options used during deserializing, REQUIRED
  * @param {String} [options.filename='json'] - filename of original JSON source
  * @param {String} [options.output='script'] - either 'script' or 'geometry' to set desired output
  * @param {String} [options.version='0.0.0'] - version number to add to the metadata
  * @param {Boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script
  * @param {String} input - JSON source data
- * @return {[geometry]/String} either an array of objects (geometry) or a string (script)
- * @alias module:io/json-deserializer.deserialize
+ * @return {(Array|String)} either an array of objects (geometry) or a string (script)
  */
 const deserialize = (options, input) => {
   const defaults = {

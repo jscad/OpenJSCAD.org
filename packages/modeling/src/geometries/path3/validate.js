@@ -4,14 +4,17 @@ import { isA } from './isA.js'
 
 /**
  * Determine if the given object is a valid path3.
+ *
  * Checks for valid vertices, and duplicate vertices.
  *
- * **If the geometry is not valid, an exception will be thrown with details of the geometry error.**
+ * **NOTE: If the geometry is not valid, an exception will be thrown with details of the geometry error.**
  *
  * @param {Object} object - the object to interrogate
  * @throws {Error} error if the geometry is not valid
- * @function
- * @alias module:modeling/geometries/path3.validate
+ * @alias module:modeling/path3.validate
+ *
+ * @example
+ * path3.vaidate(geometry)
  */
 export const validate = (object) => {
   if (!isA(object)) {

@@ -3,13 +3,15 @@ import { toOutlines } from './toOutlines.js'
 
 /**
  * Reverses the given geometry so that the outline points are flipped in the opposite order.
+ *
  * This swaps the left (interior) and right (exterior) edges.
+ *
  * @param {Geom2} geometry - the geometry to reverse
  * @returns {Geom2} the new reversed geometry
- * @alias module:modeling/geometries/geom2.reverse
+ * @alias module:modeling/geom2.reverse
  *
  * @example
- * let newGeometry = reverse(geometry)
+ * let newGeometry = geom2.reverse(geometry)
  */
 export const reverse = (geometry) => {
   const outlines = toOutlines(geometry)

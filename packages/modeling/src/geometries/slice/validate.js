@@ -6,13 +6,14 @@ import { isA } from './isA.js'
 
 /**
  * Determine if the given object is a valid slice.
+ *
  * Checks for valid data points.
  *
- * **If the geometry is not valid, an exception will be thrown with details of the geometry error.**
+ * **NOTE: If the geometry is not valid, an exception will be thrown with details of the geometry error.**
  *
  * @param {object} object - the object to interrogate
  * @throws {Error} error if the geometry is not valid
- * @alias module:modeling/geometries/slice.validate
+ * @alias module:modeling/slice.validate
  */
 export const validate = (object) => {
   if (!isA(object)) {

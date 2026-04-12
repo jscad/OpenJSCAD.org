@@ -3,13 +3,13 @@ import * as vec3 from '../../maths/vec3/index.js'
 
 /**
  * Calculate the plane of the given slice.
- * NOTE: The slice (and all vertices) are assumed to be planar from the beginning.
+ *
  * @param {Slice} slice - the slice
  * @returns {Plane} the plane of the slice
- * @alias module:modeling/geometries/slice.calculatePlane
+ * @alias module:modeling/slice.calculatePlane
  *
  * @example
- * let myPlane = calculatePlane(slice)
+ * const plane = slice.calculatePlane(sliceA)
  */
 export const calculatePlane = (slice) => {
   if (slice.contours.length < 1) {

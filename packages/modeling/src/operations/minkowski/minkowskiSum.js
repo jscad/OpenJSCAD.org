@@ -64,7 +64,7 @@ export const minkowskiSum = (...geometries) => {
   throw new Error('minkowskiSum of two non-convex geometries is not yet supported')
 }
 
-/**
+/*
  * Compute Minkowski sum of non-convex A with convex B.
  *
  * Decomposes A into tetrahedra, computes Minkowski sum of each with B,
@@ -88,7 +88,7 @@ const minkowskiSumNonConvexConvex = (geomA, geomB) => {
   return unionGeom3(parts)
 }
 
-/**
+/*
  * Decompose a geom3 into tetrahedra using face-local apex points.
  * Each resulting tetrahedron is guaranteed to be convex.
  *
@@ -155,7 +155,7 @@ const decomposeIntoTetrahedra = (geometry) => {
   return tetrahedra
 }
 
-/**
+/*
  * Create the 4 triangular faces of a tetrahedron.
  *
  * Tetrahedron has 4 faces, each a triangle
@@ -167,7 +167,7 @@ const createTetrahedronPolygons = (p0, p1, p2, p3) => [
   poly3.create([p2, p0, p3]) // face opposite p1
 ]
 
-/**
+/*
  * Compute Minkowski sum of two convex polyhedra.
  *
  * For convex polyhedra, the Minkowski sum equals the convex hull of
@@ -198,7 +198,7 @@ const minkowskiSumConvex = (geomA, geomB) => {
   return geom3.create(hullPolygons)
 }
 
-/**
+/*
  * Extract unique vertices from a geom3.
  * Uses a Set with string keys for deduplication.
  */

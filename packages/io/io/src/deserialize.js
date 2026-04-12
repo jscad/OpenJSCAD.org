@@ -14,14 +14,17 @@ const transformers = {
 
 /**
  * Deserialize the given source as per the given mimeType.
+ *
  * Options can be provided to over-ride or suppliment the defaults used during deserialization.
- * Options must include 'output' as either 'script' or 'geometry'.
+ *
  * @param {Object} options - options used during deserializing
  * @param {String} mimeType - MIME type of the file
  * @param {String} source - the contents of the file
- * @return {[objects]|string} a list of objects (geometry) or a string (script)
+ * @returns {(Array|String)} either an array of objects (geometry) or a string (script)
+ * @alias module:io.deserialize
  *
  * @example
+ * import { getMimeType, deserialize } from '@jscad/io'
  * const mimetype = getMimeType('svg')
  * const myobjects = deserialize({output: 'geometry', target: 'path2'}, mimetype, source)
  */

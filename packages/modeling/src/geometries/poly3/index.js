@@ -1,12 +1,27 @@
 /**
  * Represents a convex 3D polygon consisting of a list of ordered vertices.
- * @see {@link poly3} for data structure information.
- * @module modeling/geometries/poly3
+ *
+ * The vertices used to initialize a polygon must be coplanar and form a convex shape.
+ *
+ * @see {@link Poly3} for data structure information.
+ * @module modeling/poly3
  *
  * @example
- * import { geometries } from '@jscad/modeling'
- * const polygon = geometries.poly3.create([[0,0,0], [4,0,0], [4,3,12]])
+ * import { poly3 } from '@jscad/modeling'
+ * const polygon = poly3.create([[0,0,0], [4,0,0], [4,3,12]])
  */
+
+/**
+ * @typedef {Object} Poly3
+ * @property {Array} vertices - list of ordered vertices (3D)
+ *
+ * @example
+ * // data structure
+ * {
+ *   vertices: [[0,0,0], [4,0,0], [4,3,12]]
+ * }
+ */
+
 export { clone } from './clone.js'
 export { create } from './create.js'
 export { fromVerticesAndPlane } from './fromVerticesAndPlane.js'

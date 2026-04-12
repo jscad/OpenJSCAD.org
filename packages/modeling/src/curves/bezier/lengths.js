@@ -11,6 +11,7 @@ import { valueAt } from './valueAt.js'
  * @param {number} segments the number of segments to use when approximating the curve length.
  * @param {object} bezier a bezier curve.
  * @returns an array containing the cumulative length of the segments.
+ * @alias module:modeling/bezier.lengths
  */
 export const lengths = (segments, bezier) => {
   let sum = 0
@@ -25,7 +26,7 @@ export const lengths = (segments, bezier) => {
   return lengths
 }
 
-/**
+/*
  * Calculates the Euclidean distance between two n-dimensional points.
  *
  * @example

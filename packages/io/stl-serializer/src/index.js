@@ -2,7 +2,7 @@
  * Serializer of JSCAD geometries to STL mesh.
  * @module io/stl-serializer
  * @example
- * const { serializer, mimeType } = require('@jscad/stl-serializer')
+ * import { serializer, mimeType } from '@jscad/stl-serializer'
  */
 
 import { generalize, geom3 } from '@jscad/modeling'
@@ -22,7 +22,6 @@ const mimeType = 'model/stl'
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
  * @param {...Object} objects - objects to serialize as STL
  * @returns {Array} serialized contents with one STL mesh (either string or binary data)
- * @alias module:io/stl-serializer.serialize
  * @example
  * const geometry = cube()
  * const stlData = serializer({binary: false}, geometry)

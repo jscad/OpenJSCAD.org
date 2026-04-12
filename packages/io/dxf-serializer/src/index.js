@@ -8,19 +8,20 @@ const mimeType = 'image/vnd.dxf'
 
 /**
  * Serializer of JSCAD geometries to DXF entities.
+ *
  * @module io/dxf-serializer
  * @example
- * const { serializer, mimeType } = require('@jscad/dxf-serializer')
+ * import { serializer, mimeType } from '@jscad/dxf-serializer'
  */
 
 /**
  * Serialize the give objects to AutoCad DXF format.
+ *
  * @param {Object} options - options for serialization, REQUIRED
  * @param {String} [options.geom2To='lypolyline'] - target entity for 2D geometries, 'lwpolyline' or 'polyline'
  * @param {String} [options.geom3To='3dface'] - target entity for 3D geometries, '3dface' or 'polyline'
  * @param {Object|Array} objects - objects to serialize as DXF
  * @returns {Array} serialized contents, DXF format
- * @alias module:io/dxf-serializer.serialize
  * @example
  * const geometry = primitives.cube()
  * const dxfData = serializer({geom3To: '3dface'}, geometry)
@@ -60,7 +61,7 @@ EOF
   return [dxfContent]
 }
 
-/**
+/*
  * Serialize the given objects as a DXF entity section
  * @param {Array} objects - objects to serialize as DXF
  * @param {Object} options - options for serialization

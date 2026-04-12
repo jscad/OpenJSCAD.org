@@ -7,7 +7,7 @@ import * as poly3 from '../poly3/index.js'
  *
  * @param {Array} uniqueVertices - list of vertices to construct convex 3D geometry
  * @returns {geom3} a new geometry
- * @alias module:modeling/geometries/geom3.fromVerticesConvex
+ * @alias module:modeling/geom3.fromVerticesConvex
  */
 export const fromVerticesConvex = (uniqueVertices) => {
   if (!Array.isArray(uniqueVertices)) {

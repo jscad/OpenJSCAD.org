@@ -7,7 +7,10 @@ import { reverse } from './reverse.js'
  * @param {Array} points - a list of points, where each point is an array with X and Y values
  * @param {Poly2} polygon - a 2D polygon
  * @return {number} 1 if all points are inside, 0 if some or none are inside
- * @alias module:modeling/geometries/poly2.arePointsInside
+ * @alias module:modeling/poly2.arePointsInside
+ *
+ * @example
+ * if (poly2.arePointsInside([[0,0], [4,0], [4,3]], geometry) { ... }
  */
 export const arePointsInside = (points, polygon) => {
   if (points.length === 0) return 0 // nothing to check

@@ -6,7 +6,6 @@ import * as geom3 from '../../geometries/geom3/index.js'
 
 import { intersectGeom2 } from './intersectGeom2.js'
 import { intersectGeom3 } from './intersectGeom3.js'
-
 /**
  * Return a new geometry representing space in both the first geometry and
  * all subsequent geometries.

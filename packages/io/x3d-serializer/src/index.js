@@ -16,7 +16,7 @@ import { stringify } from '@jscad/io-utils'
  *
  * @module io/x3d-serializer
  * @example
- * const { serializer, mimeType } = require('@jscad/x3d-serializer')
+ * import { serializer, mimeType } from '@jscad/x3d-serializer'
  */
 
 const mimeType = 'model/x3d+xml'
@@ -24,6 +24,7 @@ const defNames = new Map()
 
 /**
  * Serialize the give objects to X3D elements (XML).
+ *
  * @param {Object} options - options for serialization, REQUIRED
  * @param {Array} [options.color=[0,0,1,1]] - default color for objects
  * @param {Number} [options.shininess=8/256] - x3d shininess for specular highlights
@@ -34,7 +35,6 @@ const defNames = new Map()
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
  * @param {Object|Array} objects - objects to serialize as X3D
  * @returns {Array} serialized contents, X3D format (XML)
- * @alias module:io/x3d-serializer.serialize
  * @example
  * const geometry = primitives.cube()
  * const x3dData = serializer({unit: 'meter'}, geometry)

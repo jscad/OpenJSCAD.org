@@ -1,3 +1,6 @@
+/**
+ * @module modeling
+ */
 export * from './colors/index.js'
 export * from './curves/index.js'
 export * from './geometries/index.js'

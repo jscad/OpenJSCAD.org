@@ -15,11 +15,10 @@ import { create } from './create.js'
  * @param {boolean} [options.closed=false] - if the path should be open or closed
  * @param {Array} vertices - array of vertices (3D) from which to create the path
  * @returns {Path3} a new path
- * @function
- * @alias module:modeling/geometries/path3.fromVertices
+ * @alias module:modeling/path3.fromVertices
  *
  * @example
- * my newPath = fromVertices({closed: true}, [[10, 10, 10], [-10, 10, -10]])
+ * my newPath = path3.fromVertices({closed: true}, [[10, 10, 10], [-10, 10, -10]])
  */
 export const fromVertices = (options, vertices) => {
   const defaults = { closed: false }

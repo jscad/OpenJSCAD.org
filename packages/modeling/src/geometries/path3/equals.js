@@ -10,8 +10,10 @@ import { toVertices } from './toVertices.js'
  * @param {Path3} a - the first path to compare
  * @param {Path3} b - the second path to compare
  * @returns {boolean}
- * @function
- * @alias module:modeling/geometries/path3.equals
+ * @alias module:modeling/path3.equals
+ *
+ * @example
+ * if (path3.equals(pathA, pathB)) { ... }
  */
 export const equals = (a, b) => {
   if (a.isClosed !== b.isClosed) {

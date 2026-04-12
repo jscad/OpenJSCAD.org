@@ -1,10 +1,11 @@
 Importing files in JSCAD is a simple case of loading them using the same import statement used to load javascript modules.  The files you load need to be part of a multifile project, so that JSCAD can access them:
 
 ```javascript
+// import all functions and global constants
 import * as jscad from '@jscad/modeling'
 
-const { translate, scale, rotateZ } = jscad.transforms
-const { union } = jscad.booleans
+// import specific functions and global constants by name
+const { translate, scale, rotateZ, union, TAU } = '@jscad/modeling'
 
 // Load the STL files using require
 const sculpture = require('./3d_sculpture-VernonBussler.stl')

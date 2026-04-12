@@ -10,7 +10,7 @@
  * @see {@link https://github.com/jscad/OpenJSCAD.org/blob/master/packages/io/x3d-deserializer/README.md|README} for supported conversion of X3D entities.
  * @module io/x3d-deserializer
  * @example
- * const { deserializer, extension } = require('@jscad/x3d-deserializer')
+ * import { deserializer, mimeType } from '@jscad/x3d-deserializer'
  */
 import { ensureString } from '@jscad/io-utils'
 
@@ -30,7 +30,6 @@ const version = '[VI]{version}[/VI]' // version is injected by rollup
  * @param {Boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script
  * @param {String} input - X3D source data (XML)
  * @returns {(Array|String)} either an array of objects (geometry) or a string (script)
- * @alias module:io/x3d-deserializer.deserialize
  */
 const deserialize = (options, input) => {
   const defaults = {

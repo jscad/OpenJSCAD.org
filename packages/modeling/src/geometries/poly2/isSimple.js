@@ -3,9 +3,13 @@ import { intersect } from '../../maths/utils/intersect.js'
 /**
  * Check whether the given polygon is simple, i.e. does not intersect itself.
  * @see https://en.wikipedia.org/wiki/Simple_polygon
+ *
  * @param {Poly2} polygon - the polygon to interrogate
  * @returns {Boolean} true if simple
- * @alias module:modeling/geometries/poly2.isSimple
+ * @alias module:modeling/poly2.isSimple
+ *
+ * @example
+ * if (poly2.isSimple(geometry)) { ... }
  */
 export const isSimple = (polygon) => {
   const numPoints = polygon.points.length

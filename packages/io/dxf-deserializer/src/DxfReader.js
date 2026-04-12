@@ -6,7 +6,7 @@ const STATES = [
   'error'
 ]
 
-/**
+/*
  * Class DxfReader
  * A class to hold state while reading DXF formatted data.
  * @param {Object} [options] - options for parsing
@@ -177,7 +177,7 @@ const parse = (reader, data) => {
   return reader
 }
 
-/**
+/*
  * Parse the given line in the context of the given reader, emitting group value pairs
  * @param reader {DxfReader} - context DxfReader to use
  * @param line {String} - line to parse
@@ -200,7 +200,7 @@ const parseLine = (reader, line) => {
   }
 }
 
-/**
+/*
  * Parse the given line in the context of the given reader, and update the group
  * @param reader {DxfReader} - context DxfReader to use
  * @param line {String} - line to parse
@@ -216,7 +216,7 @@ const setDxfGroup = (reader, line) => {
   }
 }
 
-/**
+/*
  * Parse the given line in the context of the given reader, and update the (group) value
  * @param reader {DxfReader} - context DxfReader to use
  * @param line {String} - line to parse

@@ -1,14 +1,14 @@
 /**
  * Represents a bezier easing function.
  * @see {@link bezier} for data structure information.
- * @module modeling/curves/bezier
+ * @module modeling/bezier
+ *
  * @example
- * import { curves } from '@jscad/modeling'
- * const { bezier } = curves
+ * import { bezier } from '@jscad/modeling'
  */
-export { create } from './create.js'
-export { valueAt } from './valueAt.js'
-export { tangentAt } from './tangentAt.js'
-export { lengths } from './lengths.js'
-export { length } from './length.js'
 export { arcLengthToT } from './arcLengthToT.js'
+export { create } from './create.js'
+export { length } from './length.js'
+export { lengths } from './lengths.js'
+export { tangentAt } from './tangentAt.js'
+export { valueAt } from './valueAt.js'

@@ -3,11 +3,11 @@ import * as vec3 from '../../maths/vec3/index.js'
 import { create } from './create.js'
 
 /**
- * Create a slice from the given vertices.
+ * Create a slice with a single contour from the given vertices.
  *
  * @param {Array} vertices - list of vertices, where each vertex is either 2D or 3D
  * @returns {Slice} a new slice
- * @alias module:modeling/geometries/slice.fromVertices
+ * @alias module:modeling/slice.fromVertices
  *
  * @example
  * const vertices = [
@@ -15,7 +15,7 @@ import { create } from './create.js'
  *   [0, 10, 3],
  *   [0, 10, 6]
  * ]
- * const slice = fromVertices(vertices)
+ * const slice = slice.fromVertices(vertices)
  */
 export const fromVertices = (vertices) => {
   if (!Array.isArray(vertices)) throw new Error('the given vertices must be an array')

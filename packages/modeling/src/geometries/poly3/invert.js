@@ -7,7 +7,10 @@ import { create } from './create.js'
  *
  * @param {Poly3} polygon - the polygon to invert
  * @returns {Poly3} a new poly3
- * @alias module:modeling/geometries/poly3.invert
+ * @alias module:modeling/poly3.invert
+ *
+ * @example
+ * const newPoly = poly3.invert(oldPoly)
  */
 export const invert = (polygon) => {
   const vertices = polygon.vertices.slice().reverse()

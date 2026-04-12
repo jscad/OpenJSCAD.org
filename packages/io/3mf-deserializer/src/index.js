@@ -42,7 +42,6 @@ const version = '[VI]{version}[/VI]' // version is injected by rollup
  * @param {String} [options.includedType] - type of 3MF objects to include, default is 'all'
  * @param {String} input - 3MF source data (OPC or XML)
  * @returns {(Array|String)} either an array of objects (geometry) or a string (script)
- * @alias module:io/3mf-deserializer.deserialize
  */
 const deserialize = (options, input) => {
   const defaults = {

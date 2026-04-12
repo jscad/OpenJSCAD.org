@@ -6,7 +6,7 @@
  *
  * @module io/obj-serializer
  * @example
- * const { serializer, mimeType } = require('@jscad/obj-serializer')
+ * import { serializer, mimeType } from '@jscad/obj-serializer'
  */
 
 import { cssColors, generalize, geom3 } from '@jscad/modeling'
@@ -22,7 +22,6 @@ const mimeType = 'model/obj'
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
  * @param {...Object} objects - objects to serialize into OBJ source data
  * @returns {Array} serialized contents, OBJ source data
- * @alias module:io/obj-serializer.serialize
  * @example
  * const geometry = cube()
  * const objData = serializer({}, geometry)
@@ -96,12 +95,12 @@ const serialize = (options, ...objects) => {
   return [body]
 }
 
-/**
+/*
  * Convert a vertex to an obj "v" string
  */
 const convertVertex = (vertex) => `v ${vertex[0]} ${vertex[1]} ${vertex[2]}`
 
-/**
+/*
  * Get the closest css color name
  */
 const getColorName = (object) => {

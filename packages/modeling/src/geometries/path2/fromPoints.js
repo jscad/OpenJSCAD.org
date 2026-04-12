@@ -7,16 +7,18 @@ import { create } from './create.js'
 
 /**
  * Create a new path from the given points.
+ *
  * The points must be provided an array of points,
  * where each point is an array of two numbers.
+ *
  * @param {object} options - options for construction
  * @param {boolean} [options.closed=false] - if the path should be open or closed
  * @param {Array} points - array of points (2D) from which to create the path
  * @returns {Path2} a new path
- * @alias module:modeling/geometries/path2.fromPoints
+ * @alias module:modeling/path2.fromPoints
  *
- * @example:
- * my newPath = fromPoints({closed: true}, [[10, 10], [-10, 10]])
+ * @example
+ * my newPath = path2.fromPoints({closed: true}, [[10, 10], [-10, 10]])
  */
 export const fromPoints = (options, points) => {
   const defaults = { closed: false }

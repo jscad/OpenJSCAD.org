@@ -23,7 +23,7 @@
  *
  * @param {Array} points An array with at least 2 elements of either all numbers, or all arrays of numbers that are the same size.
  * @returns {bezier} a new bezier data object
- * @alias module:modeling/curves/bezier.create
+ * @alias module:modeling/bezier.create
  */
 export const create = (points) => {
   if (!Array.isArray(points)) throw new Error('Bezier points must be a valid array/')

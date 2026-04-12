@@ -7,10 +7,9 @@ import { applyTransforms } from './applyTransforms.js'
  *
  * @param {Path3} geometry - the geometry
  * @returns {Array} an array of vertices
- * @function
- * @alias module:modeling/geometries/path3.toVertices
+ * @alias module:modeling/path3.toVertices
  *
  * @example
- * let sharedVertices = toVertices(path)
+ * let sharedVertices = path3.toVertices(geometry)
  */
 export const toVertices = (geometry) => applyTransforms(geometry).vertices

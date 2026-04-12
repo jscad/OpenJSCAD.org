@@ -5,6 +5,9 @@ import { area } from '../../maths/utils/area.js'
  *
  * @param {Poly2} polygon - the polygon to measure
  * @return {number} the area of the polygon
- * @alias module:modeling/geometries/poly2.measureArea
+ * @alias module:modeling/poly2.measureArea
+ *
+ * @example
+ * const area = poly2.measureArea(geometry)
  */
 export const measureArea = (polygon) => area(polygon.points)

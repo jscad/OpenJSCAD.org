@@ -4,12 +4,13 @@ import { toPoints } from './toPoints.js'
 
 /**
  * Create a string representing the contents of the given path.
+ *
  * @param {Path2} geometry - the path
  * @returns {string} a representative string
- * @alias module:modeling/geometries/path2.toString
+ * @alias module:modeling/path2.toString
  *
  * @example
- * console.out(toString(path))
+ * console.out(path2.toString(path))
  */
 export const toString = (geometry) => {
   const points = toPoints(geometry)

@@ -1,8 +1,8 @@
 /**
  * Curves are n-dimensional mathematical constructs that define a path from vertex 0 to vertex 1.
- * @module modeling/curves
+ * @alias module:modeling.curves
+ *
  * @example
- * import { curves } from '@jscad/modeling'
- * const { bezier } = curves
+ * import { bezier } from '@jscad/modeling'
  */
 export * as bezier from './bezier/index.js'
