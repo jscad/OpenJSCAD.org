@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.4-alpha.0](/compare/@jscad/modeling@3.0.3-alpha.0...@jscad/modeling@3.0.4-alpha.0) (2026-04-12)
+
+### Bug Fixes
+
+* **modeling:** sync V2 changes for flatten 85f006c
+
+### Features
+
+* **modeling:** added isConvex to geom3 d851a7c
+* **modeling:** added minkowskiSum for geom3 c3f4133
+
+### Performance Improvements
+
+* **modeling:** changes to optimize removal of polygons in reTesselateCoplanarPolygons cdea0fd
+* **modeling:** optimized creation of end caps in extrudeFromSlices 4ef3128
+* **modeling:** optimized mat4 creation in extrudeRotate c117cdc
+
 ## [3.0.3-alpha.0](https://github.com/jscad/OpenJSCAD/compare/@jscad/modeling@3.0.2-alpha.0...@jscad/modeling@3.0.3-alpha.0) (2026-01-18)
 
 ### Features
