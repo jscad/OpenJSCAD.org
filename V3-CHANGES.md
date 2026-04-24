@@ -2,18 +2,18 @@
 
 ## General Packaging
 
-JSCAD V3 uses PNPM for managing the JSCAD packages.
+JSCAD V3 uses NPM for managing the JSCAD packages.
 This is a totally new package manager so existing V2 packages are not compatible.
 Be sure to start with a fresh clone of JSCAD.
 
-**IMPORTANT: USE PNPM AT ALL TIMES. DO NOT USE NPM.**
+**IMPORTANT: USE NPM AT ALL TIMES.**
 
 ```
 git clone git@github.com:jscad/OpenJSCAD.org.git
 cd OpenJSCAD.org
 git checkout V3
-pnpm install
-pnpm test
+npm install
+npm test
 ```
 
 

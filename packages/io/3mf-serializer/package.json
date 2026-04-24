@@ -10,9 +10,9 @@
   "module": "dist/jscad-3mf-serializer.es.js",
   "scripts": {
     "build": "rollup --config",
-    "coverage": "c8 --reporter=html --reporter=text pnpm test",
+    "coverage": "c8 --reporter=html --reporter=text npm test",
     "test": "ava --concurrency 3 --verbose --timeout 40000 './tests/*.test.js'",
-    "version": "pnpm run build && git add dist"
+    "version": "npm run build && git add dist"
   },
   "contributors": [
     {

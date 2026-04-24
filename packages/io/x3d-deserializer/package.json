@@ -10,9 +10,9 @@
   "module": "dist/jscad-x3d-deserializer.es.js",
   "scripts": {
     "build": "rollup --config",
-    "coverage": "c8 --all --reporter=html --reporter=text pnpm test",
+    "coverage": "c8 --all --reporter=html --reporter=text npm test",
     "test": "ava --verbose --timeout 2m 'tests/**/*.test.js'",
-    "version": "pnpm run build && git add dist"
+    "version": "npm run build && git add dist"
   },
   "contributors": [
     {

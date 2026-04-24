@@ -10,9 +10,9 @@
   "module": "dist/jscad-json-serializer.es.js",
   "scripts": {
     "build": "rollup --config",
-    "coverage": "c8 --all --reporter=html --reporter=text pnpm test",
+    "coverage": "c8 --all --reporter=html --reporter=text npm test",
     "test": "ava 'tests/*.test.js' --verbose --timeout 2m",
-    "version": "pnpm run build && git add dist"
+    "version": "npm run build && git add dist"
   },
   "contributors": [
     {
