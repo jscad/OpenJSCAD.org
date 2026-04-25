@@ -18,7 +18,7 @@ import * as vec3 from '../vec3/index.js'
  * @alias module:modeling/maths/plane.fromNormalAndPoint
  */
 export const fromNormalAndPoint = (out, normal, point) => {
-  const u = vec3.normalize(vec3.create(), normal)
+  const u = vec3.normalize(out, normal)
   const w = vec3.dot(point, u)
 
   out[0] = u[0]

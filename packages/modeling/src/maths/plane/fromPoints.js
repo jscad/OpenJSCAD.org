@@ -26,14 +26,14 @@ export const fromPoints = (out, ...vertices) => {
     return ba
   }
 
-  out[0] = 0
-  out[1] = 0
-  out[2] = 0
   if (len === 3) {
     // optimization for triangles, which are always coplanar
     vec3.copy(out, vertexNormal(0))
   } else {
     // sum of vertex normals
+    out[0] = 0
+    out[1] = 0
+    out[2] = 0
     vertices.forEach((v, i) => {
       vec3.add(out, out, vertexNormal(i))
     })
