@@ -111,7 +111,7 @@ test('extrudeFromSlices (changing shape, changing dimensions)', (t) => {
       numberOfSlices: 5,
       callback: (progress, count, base) => {
         const newShape = circle({ radius: 5 + count, segments: 4 + count })
-        let newSlice = slice.fromGeom2(newShape)
+        let newSlice = slice.fromOutlines(geom2.toOutlines(newShape))
         newSlice = slice.transform(mat4.fromTranslation(mat4.create(), [0, 0, count * 10]), newSlice)
         return newSlice
       }

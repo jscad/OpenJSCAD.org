@@ -1,6 +1,7 @@
 import * as mat4 from '../../maths/mat4/index.js'
 import * as vec3 from '../../maths/vec3/index.js'
 
+import * as geom2 from '../../geometries/geom2/index.js'
 import * as slice from '../../geometries/slice/index.js'
 
 import { extrudeFromSlices } from './extrudeFromSlices.js'
@@ -34,7 +35,7 @@ export const extrudeLinearGeom2 = (options, geometry) => {
   // convert to vector in order to perform transforms
   const offsetV = vec3.clone(offset)
 
-  let baseSlice = slice.fromGeom2(geometry)
+  let baseSlice = slice.fromOutlines(geom2.toOutlines(geometry))
   if (offsetV[2] < 0) baseSlice = slice.reverse(baseSlice)
 
   const matrix = mat4.create()

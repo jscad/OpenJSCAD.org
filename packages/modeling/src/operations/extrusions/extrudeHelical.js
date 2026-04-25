@@ -1,4 +1,5 @@
 import { TAU } from '../../maths/constants.js'
+import * as geom2 from '../../geometries/geom2/index.js'
 import * as slice from '../../geometries/slice/index.js'
 import * as mat4 from '../../maths/mat4/index.js'
 import { measureBoundingBox } from '../../measurements/measureBoundingBox.js'
@@ -45,7 +46,7 @@ export const extrudeHelical = (options, geometry) => {
 
   if (segmentsPerRotation < minNumberOfSegments) { throw new Error('The number of segments per rotation needs to be at least 3.') }
 
-  let baseSlice = slice.fromGeom2(geometry)
+  let baseSlice = slice.fromOutlines(geom2.toOutlines(geometry))
 
   const bounds = measureBoundingBox(geometry)
   if (bounds[1][0] <= 0) {
