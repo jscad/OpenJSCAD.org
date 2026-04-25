@@ -28,6 +28,4 @@ interface SplitRes
 // In case the polygon is spanning, returns:
 // .front: a Polygon3 of the front part
 // .back: a Polygon3 of the back part
-declare function splitPolygonByPlane(plane: Plane, polygon: Poly3): SplitRes;
-
-export default splitPolygonByPlane;
+export declare function splitPolygonByPlane(plane: Plane, polygon: Poly3): SplitRes;
