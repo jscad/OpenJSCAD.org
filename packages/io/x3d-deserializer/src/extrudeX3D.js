@@ -148,7 +148,7 @@ export const extrudeX3D = (x3dshape) => {
 
   // Create the initial slice
   const initialShape = geom2.create([crossSection])
-  const initialSlice = slice.fromGeom2(initialShape)
+  const initialSlice = slice.fromOutlines(geom2.toOutlines(initialShape))
 
   // Calculate SCP values
   let yaxes = calculateYaxes(spine)
