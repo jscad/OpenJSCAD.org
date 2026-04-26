@@ -115,7 +115,9 @@ const createTriangle = (A, B, C, a, b, c) => {
 
 /**
  * Construct a triangle in two dimensional space from the given options.
+ *
  * The triangle is always constructed CCW from the origin, [0, 0, 0].
+ *
  * @see https://www.mathsisfun.com/algebra/trig-solving-triangles.html
  * @param {object} [options] - options for construction
  * @param {string} [options.type='SSS'] - type of triangle to construct; A ~ angle, S ~ side
@@ -126,12 +128,11 @@ const createTriangle = (A, B, C, a, b, c) => {
  * @example
  * let myshape = triangle({type: 'AAS', values: [degToRad(62), degToRad(35), 7]})
  */
-export const triangle = (options) => {
-  const defaults = {
-    type: 'SSS',
-    values: [1, 1, 1]
-  }
-  let { type, values } = Object.assign({}, defaults, options)
+export const triangle = (options = {}) => {
+  let {
+    type = 'SSS',
+    values = [1, 1, 1]
+  } = options
 
   if (typeof (type) !== 'string') throw new Error('triangle type must be a string')
   type = type.toUpperCase()

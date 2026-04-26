@@ -10,6 +10,7 @@ import { isGT, isGTE } from './commonChecks.js'
 
 /**
  * Construct a torus by revolving a small circle (inner) about the circumference of a large (outer) circle.
+ *
  * @param {object} [options] - options for construction
  * @param {number} [options.innerRadius=1] - radius of small (inner) circle
  * @param {number} [options.outerRadius=4] - radius of large (outer) circle
@@ -24,17 +25,16 @@ import { isGT, isGTE } from './commonChecks.js'
  * @example
  * let myshape = torus({ innerRadius: 10, outerRadius: 100 })
  */
-export const torus = (options) => {
-  const defaults = {
-    innerRadius: 1,
-    innerSegments: 32,
-    outerRadius: 4,
-    outerSegments: 32,
-    innerRotation: 0,
-    startAngle: 0,
-    outerRotation: TAU
-  }
-  const { innerRadius, innerSegments, outerRadius, outerSegments, innerRotation, startAngle, outerRotation } = Object.assign({}, defaults, options)
+export const torus = (options = {}) => {
+  const {
+    innerRadius = 1,
+    innerSegments = 32,
+    outerRadius = 4,
+    outerSegments = 32,
+    innerRotation = 0,
+    startAngle = 0,
+    outerRotation = TAU
+  } = options
 
   if (!isGT(innerRadius, 0)) throw new Error('innerRadius must be greater than zero')
   if (!isGTE(innerSegments, 3)) throw new Error('innerSegments must be three or more')

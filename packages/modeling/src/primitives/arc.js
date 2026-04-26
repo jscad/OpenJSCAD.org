@@ -8,6 +8,7 @@ import { isGT, isGTE, isNumberArray } from './commonChecks.js'
 
 /**
  * Construct an arc in two dimensional space where all points are at the same distance from the center.
+ *
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of arc
  * @param {number} [options.radius=1] - radius of arc
@@ -17,19 +18,19 @@ import { isGT, isGTE, isNumberArray } from './commonChecks.js'
  * @param {boolean} [options.makeTangent=false] - adds line segments at both ends of the arc to ensure that the gradients at the edges are tangent
  * @returns {Path2} new 2D path
  * @alias module:modeling/primitives.arc
+ *
  * @example
  * let myshape = arc({ center: [-1, -1], radius: 2, endAngle: (TAU / 4)})
  */
-export const arc = (options) => {
-  const defaults = {
-    center: [0, 0],
-    radius: 1,
-    startAngle: 0,
-    endAngle: TAU,
-    makeTangent: false,
-    segments: 32
-  }
-  let { center, radius, startAngle, endAngle, makeTangent, segments } = Object.assign({}, defaults, options)
+export const arc = (options = {}) => {
+  let {
+    center = [0, 0],
+    radius = 1,
+    startAngle = 0,
+    endAngle = TAU,
+    makeTangent = false,
+    segments = 32
+  } = options
 
   if (!isNumberArray(center, 2)) throw new Error('center must be an array of X and Y values')
   if (!isGT(radius, 0)) throw new Error('radius must be greater than zero')

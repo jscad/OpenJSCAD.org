@@ -4,6 +4,7 @@ import * as geom3 from '../geometries/geom3/index.js'
 
 /**
  * Construct a Z axis-aligned cylinder in three dimensional space.
+ *
  * @see [cylinderElliptic]{@link module:modeling/primitives.cylinderElliptic} for more options
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of cylinder
@@ -16,14 +17,13 @@ import * as geom3 from '../geometries/geom3/index.js'
  * @example
  * let myshape = cylinder({height: 2, radius: 10})
  */
-export const cylinder = (options) => {
-  const defaults = {
-    center: [0, 0, 0],
-    height: 2,
-    radius: 1,
-    segments: 32
-  }
-  const { center, height, radius, segments } = Object.assign({}, defaults, options)
+export const cylinder = (options = {}) => {
+  const {
+    center = [0, 0, 0],
+    height = 2,
+    radius = 1,
+    segments = 32
+  } = options
 
   if (!isGTE(radius, 0)) throw new Error('radius must be positive')
 

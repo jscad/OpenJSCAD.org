@@ -21,14 +21,13 @@ import { isNumberArray } from './commonChecks.js'
  * let myFaces = [ [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4], [1, 0, 3], [2, 1, 3] ]
  * let myShape = polyhedron({points: myPoints, faces: myFaces, orientation: 'inward'})
  */
-export const polyhedron = (options) => {
-  const defaults = {
-    points: [],
-    faces: [],
-    colors: undefined,
-    orientation: 'outward'
-  }
-  const { points, faces, colors, orientation } = Object.assign({}, defaults, options)
+export const polyhedron = (options = {}) => {
+  const {
+    points = [],
+    faces = [],
+    colors = undefined,
+    orientation = 'outward'
+  } = options
 
   if (!(Array.isArray(points) && Array.isArray(faces))) {
     throw new Error('points and faces must be arrays')

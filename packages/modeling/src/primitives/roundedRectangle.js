@@ -10,6 +10,7 @@ import { rectangle } from './rectangle.js'
 
 /**
  * Construct an axis-aligned rectangle in two dimensional space with rounded corners.
+ *
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of rounded rectangle
  * @param {Array} [options.size=[2,2]] - dimension of rounded rectangle; width and length
@@ -21,14 +22,13 @@ import { rectangle } from './rectangle.js'
  * @example
  * let myshape = roundedRectangle({size: [10, 20], roundRadius: 2})
  */
-export const roundedRectangle = (options) => {
-  const defaults = {
-    center: [0, 0],
-    size: [2, 2],
-    roundRadius: 0.2,
-    segments: 32
-  }
-  let { center, size, roundRadius, segments } = Object.assign({}, defaults, options)
+export const roundedRectangle = (options = {}) => {
+  let {
+    center = [0, 0],
+    size = [2, 2],
+    roundRadius = 0.2,
+    segments = 32
+  } = options
 
   if (!isNumberArray(center, 2)) throw new Error('center must be an array of X and Y values')
   if (!isNumberArray(size, 2)) throw new Error('size must be an array of X and Y values')

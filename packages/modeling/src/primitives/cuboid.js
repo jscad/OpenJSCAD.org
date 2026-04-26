@@ -5,6 +5,7 @@ import { isNumberArray } from './commonChecks.js'
 
 /**
  * Construct an axis-aligned solid cuboid in three dimensional space.
+ *
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of cuboid
  * @param {Array} [options.size=[2,2,2]] - dimensions of cuboid; width, depth, height
@@ -14,12 +15,11 @@ import { isNumberArray } from './commonChecks.js'
  * @example
  * let myshape = cuboid({size: [5, 10, 5]})
  */
-export const cuboid = (options) => {
-  const defaults = {
-    center: [0, 0, 0],
-    size: [2, 2, 2]
-  }
-  const { center, size } = Object.assign({}, defaults, options)
+export const cuboid = (options = {}) => {
+  const {
+    center = [0, 0, 0],
+    size = [2, 2, 2]
+  } = options
 
   if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
   if (!isNumberArray(size, 3)) throw new Error('size must be an array of width, depth and height values')

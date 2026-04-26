@@ -10,6 +10,7 @@ import { isGTE, isNumberArray } from './commonChecks.js'
 
 /**
  * Construct an axis-aligned ellipse in two dimensional space.
+ *
  * @see https://en.wikipedia.org/wiki/Ellipse
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of ellipse
@@ -19,18 +20,18 @@ import { isGTE, isNumberArray } from './commonChecks.js'
  * @param {number} [options.segments=32] - number of segments to create per full rotation
  * @returns {Geom2} new 2D geometry
  * @alias module:modeling/primitives.ellipse
+ *
  * @example
  * let myshape = ellipse({radius: [5,10]})
  */
-export const ellipse = (options) => {
-  const defaults = {
-    center: [0, 0],
-    radius: [1, 1],
-    startAngle: 0,
-    endAngle: TAU,
-    segments: 32
-  }
-  let { center, radius, startAngle, endAngle, segments } = Object.assign({}, defaults, options)
+export const ellipse = (options = {}) => {
+  let {
+    center = [0, 0],
+    radius = [1, 1],
+    startAngle = 0,
+    endAngle = TAU,
+    segments = 32
+  } = options
 
   if (!isNumberArray(center, 2)) throw new Error('center must be an array of X and Y values')
   if (!isNumberArray(radius, 2)) throw new Error('radius must be an array of X and Y values')

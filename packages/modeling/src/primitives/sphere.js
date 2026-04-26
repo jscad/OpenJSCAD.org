@@ -15,14 +15,13 @@ import { isGTE } from './commonChecks.js'
  * @example
  * let myshape = sphere({radius: 5})
  */
-export const sphere = (options) => {
-  const defaults = {
-    center: [0, 0, 0],
-    radius: 1,
-    segments: 32,
-    axes: [[1, 0, 0], [0, -1, 0], [0, 0, 1]]
-  }
-  let { center, radius, segments, axes } = Object.assign({}, defaults, options)
+export const sphere = (options = {}) => {
+  let {
+    center = [0, 0, 0],
+    radius = 1,
+    segments = 32,
+    axes = [[1, 0, 0], [0, -1, 0], [0, 0, 1]]
+  } = options
 
   if (!isGTE(radius, 0)) throw new Error('radius must be positive')
 
