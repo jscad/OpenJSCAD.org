@@ -15,8 +15,8 @@ import * as vec3 from '../vec3/index.js'
  * @alias module:modeling/maths/plane.fromPointsRandom
  */
 export const fromPointsRandom = (out, a, b, c) => {
-  let ba = vec3.subtract(vec3.create(), b, a)
-  let ca = vec3.subtract(vec3.create(), c, a)
+  const ba = vec3.subtract(vec3.create(), b, a)
+  const ca = vec3.subtract(vec3.create(), c, a)
   if (vec3.length(ba) < EPS) {
     vec3.orthogonal(ba, ca)
   }
@@ -25,7 +25,7 @@ export const fromPointsRandom = (out, a, b, c) => {
   }
 
   // calculate plane normal
-  let normal = vec3.cross(out, ba, ca)
+  const normal = vec3.cross(out, ba, ca)
   if (vec3.length(normal) < EPS) {
     // this would mean that ba == ca.negated()
     vec3.orthogonal(ca, ba)

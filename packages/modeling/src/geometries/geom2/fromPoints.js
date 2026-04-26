@@ -17,7 +17,7 @@ export const fromPoints = (points) => {
   if (!Array.isArray(points)) {
     throw new Error('the given points must be an array')
   }
-  let length = points.length
+  const length = points.length
   if (length < 3) {
     throw new Error('the given points must define a closed geometry with three or more points')
   }

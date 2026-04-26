@@ -6,7 +6,7 @@ test('slice: fromOutlines() should return a new slice with correct values', (t) 
   const exp1 = {
     contours: [
       [[0, 0, 0], [1, 0, 0], [1, 1, 0]],
-      [[2, 2, 0], [3, 1, 0], [3, 3, 0]],
+      [[2, 2, 0], [3, 1, 0], [3, 3, 0]]
     ]
   }
   const obs1 = fromOutlines([

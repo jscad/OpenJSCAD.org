@@ -2,7 +2,7 @@ import * as fs from 'fs'
 
 import terser from '@rollup/plugin-terser'
 
-const {name, version, license} = JSON.parse(fs.readFileSync('package.json'))
+const { name, version, license } = JSON.parse(fs.readFileSync('package.json'))
 
 export default {
   input: 'src/index.js',
