@@ -34,8 +34,7 @@ export const fromPointsRandom = (out, a, b, c) => {
   vec3.normalize(normal, normal)
 
   // and distance
-  const w = vec3.dot(normal, a)
-  out[3] = w
+  out[3] = vec3.dot(normal, a)
 
   return out
 }

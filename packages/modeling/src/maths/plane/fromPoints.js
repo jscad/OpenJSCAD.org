@@ -1,10 +1,13 @@
 import * as vec3 from '../vec3/index.js'
 
+const ba = vec3.create()
+const ca = vec3.create()
+
 /**
  * Create a plane from the given points.
  *
  * @param {Plane} out - receiving plane
- * @param {Array} vertices - points on the plane
+ * @param {Array} vertices - list of points on the plane
  * @returns {Plane} out
  * @alias module:modeling/maths/plane.fromPoints
  */
@@ -13,8 +16,6 @@ export const fromPoints = (out, ...vertices) => {
 
   // Calculate normal vector for a single vertex
   // Inline to avoid allocations
-  const ba = vec3.create()
-  const ca = vec3.create()
   const vertexNormal = (index) => {
     const a = vertices[index]
     const b = vertices[(index + 1) % len]
@@ -37,7 +38,7 @@ export const fromPoints = (out, ...vertices) => {
     vertices.forEach((v, i) => {
       vec3.add(out, out, vertexNormal(i))
     })
-    // renormalize normal vector
+    // normalize sum
     vec3.normalize(out, out)
   }
   out[3] = vec3.dot(out, vertices[0])
