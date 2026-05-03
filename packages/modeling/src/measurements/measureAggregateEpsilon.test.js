@@ -13,7 +13,7 @@ test('measureAggregateEpsilon (single objects)', (t) => {
   t.is(calculatedEpsilon, expectedEpsilon)
 })
 
-test('measureAggregateEpsilon (multiple objects)', (t) => {
+test('measureAggregateEpsilon (multiple 3D objects)', (t) => {
   const highCube = cube({ size: 4, center: [-40, 100, 20] })
   const lowCube = cube({ size: 60, center: [20, -10, 20] })
   const calculatedEpsilon = measureAggregateEpsilon(highCube, lowCube)

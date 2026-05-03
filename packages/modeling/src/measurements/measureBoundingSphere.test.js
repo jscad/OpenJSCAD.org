@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { geom2, geom3, path2, slice } from '../geometries/index.js'
+import { geom2, geom3, path2, path3, slice } from '../geometries/index.js'
 
 import { line, rectangle, ellipsoid } from '../primitives/index.js'
 
@@ -12,6 +12,7 @@ test('measureBoundingSphere (single objects)', (t) => {
   const aellipsoid = ellipsoid({ radius: [5, 10, 15], center: [5, 5, 5] })
 
   const apath2 = path2.create()
+  const apath3 = path3.create()
   const ageom2 = geom2.create()
   const ageom3 = geom3.create()
   const aslice = slice.create()
@@ -25,6 +26,7 @@ test('measureBoundingSphere (single objects)', (t) => {
   const cbounds = measureBoundingSphere(aellipsoid)
 
   const p2bounds = measureBoundingSphere(apath2)
+  const p3bounds = measureBoundingSphere(apath3)
   const g2bounds = measureBoundingSphere(ageom2)
   const g3bounds = measureBoundingSphere(ageom3)
   const slbounds = measureBoundingSphere(aslice)
@@ -38,6 +40,7 @@ test('measureBoundingSphere (single objects)', (t) => {
   t.deepEqual(cbounds, [[5.000000000000018, 4.999999999999983, 5.000000000000001], 15])
 
   t.deepEqual(p2bounds, [[0, 0, 0], 0])
+  t.deepEqual(p3bounds, [[0, 0, 0], 0])
   t.deepEqual(g2bounds, [[0, 0, 0], 0])
   t.deepEqual(g3bounds, [[0, 0, 0], 0])
   t.deepEqual(slbounds, [[0, 0, 0], 0])

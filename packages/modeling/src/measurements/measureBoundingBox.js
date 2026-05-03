@@ -6,6 +6,7 @@ import * as vec3 from '../maths/vec3/index.js'
 import * as geom2 from '../geometries/geom2/index.js'
 import * as geom3 from '../geometries/geom3/index.js'
 import * as path2 from '../geometries/path2/index.js'
+import * as path3 from '../geometries/path3/index.js'
 import * as poly3 from '../geometries/poly3/index.js'
 import * as slice from '../geometries/slice/index.js'
 
@@ -71,6 +72,18 @@ const measureBoundingBoxOfPath2 = (geometry) => {
 }
 
 /*
+ * Measure the min and max bounds of the given (path3) geometry.
+ * @return {Array[]} the min and max bounds for the geometry
+ */
+const measureBoundingBoxOfPath3 = (geometry) => {
+  const boundingBox = []
+  path3.toVertices(geometry).forEach((vertice) => {
+    expand3(boundingBox, vertice)
+  })
+  return boundingBox
+}
+
+/*
  * Measure the min and max bounds of the given (geom2) geometry.
  * @return {Array[]} the min and max bounds for the geometry
  */
@@ -123,9 +136,10 @@ export const measureBoundingBox = (...geometries) => {
   geometries = flatten(geometries)
 
   const results = geometries.map((geometry) => {
-    if (path2.isA(geometry)) return measureCached(geometry, measureBoundingBoxOfPath2)
-    if (geom2.isA(geometry)) return measureCached(geometry, measureBoundingBoxOfGeom2)
     if (geom3.isA(geometry)) return measureCached(geometry, measureBoundingBoxOfGeom3)
+    if (geom2.isA(geometry)) return measureCached(geometry, measureBoundingBoxOfGeom2)
+    if (path2.isA(geometry)) return measureCached(geometry, measureBoundingBoxOfPath2)
+    if (path3.isA(geometry)) return measureCached(geometry, measureBoundingBoxOfPath3)
     if (slice.isA(geometry)) return measureCached(geometry, measureBoundingBoxOfSlice)
     return [[0, 0, 0], [0, 0, 0]]
   })
