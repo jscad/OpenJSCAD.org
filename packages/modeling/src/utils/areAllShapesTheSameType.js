@@ -2,6 +2,8 @@
 import * as geom2 from '../geometries/geom2/index.js'
 import * as geom3 from '../geometries/geom3/index.js'
 import * as path2 from '../geometries/path2/index.js'
+import * as path3 from '../geometries/path3/index.js'
+import * as slice from '../geometries/slice/index.js'
 
 /**
  * @param {Array} shapes - list of shapes to compare
@@ -15,6 +17,8 @@ export const areAllShapesTheSameType = (shapes) => {
     if (geom2.isA(shape)) currentType = 1
     if (geom3.isA(shape)) currentType = 2
     if (path2.isA(shape)) currentType = 3
+    if (path3.isA(shape)) currentType = 4
+    if (slice.isA(shape)) currentType = 5
 
     if (previousType && currentType !== previousType) return false
     previousType = currentType

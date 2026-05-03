@@ -42,9 +42,10 @@ export const hull = (...geometries) => {
   }
 
   const geometry = geometries[0]
-  if (path2.isA(geometry)) return hullPath2(geometries)
-  if (geom2.isA(geometry)) return hullGeom2(geometries)
   if (geom3.isA(geometry)) return hullGeom3(geometries)
+  if (geom2.isA(geometry)) return hullGeom2(geometries)
+  if (path2.isA(geometry)) return hullPath2(geometries)
+  // FIXME return geom3? if (path3.isA(geometry)) return hullPath3(geometries)
 
   // FIXME should this throw an error for unknown geometries?
   return geometry

@@ -1,6 +1,7 @@
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as path2 from '../../geometries/path2/index.js'
+import * as path3 from '../../geometries/path3/index.js'
 
 /*
  * Return the unique vertices of a geometry
@@ -25,6 +26,8 @@ export const toUniquePoints = (geometries) => {
       geom3.toVertices(geometry).forEach((vertices) => vertices.forEach(addPoint))
     } else if (path2.isA(geometry)) {
       path2.toPoints(geometry).forEach(addPoint)
+    } else if (path3.isA(geometry)) {
+      path3.toVertices(geometry).forEach(addPoint)
     }
   })
 

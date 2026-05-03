@@ -3,6 +3,8 @@ import { measureEpsilon } from '../../measurements/measureEpsilon.js'
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as path2 from '../../geometries/path2/index.js'
+import * as path3 from '../../geometries/path3/index.js'
+import * as slice from '../../geometries/slice/index.js'
 
 import { snapPolygons } from './snapPolygons.js'
 import { mergePolygons } from './mergePolygons.js'
@@ -12,6 +14,10 @@ import { triangulatePolygons } from './triangulatePolygons.js'
 /*
  */
 const generalizePath2 = (options, geometry) => geometry
+
+/*
+ */
+const generalizePath3 = (options, geometry) => geometry
 
 /*
  */
@@ -66,9 +72,10 @@ const generalizeGeom3 = (options, geometry) => {
  */
 export const generalize = (options, ...geometries) => {
   const results = geometries.map((geometry) => {
-    if (path2.isA(geometry)) return generalizePath2(options, geometry)
-    if (geom2.isA(geometry)) return generalizeGeom2(options, geometry)
     if (geom3.isA(geometry)) return generalizeGeom3(options, geometry)
+    if (geom2.isA(geometry)) return generalizeGeom2(options, geometry)
+    if (path2.isA(geometry)) return generalizePath2(options, geometry)
+    if (path3.isA(geometry)) return generalizePath3(options, geometry)
     if (Array.isArray(geometry)) return generalize(options, ...geometry)
     return geometry
   })

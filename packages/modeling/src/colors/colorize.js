@@ -1,6 +1,8 @@
 import * as geom2 from '../geometries/geom2/index.js'
 import * as geom3 from '../geometries/geom3/index.js'
 import * as path2 from '../geometries/path2/index.js'
+import * as path3 from '../geometries/path3/index.js'
+import * as slice from '../geometries/slice/index.js'
 import * as poly3 from '../geometries/poly3/index.js'
 
 const colorGeom2 = (color, object) => {
@@ -19,6 +21,18 @@ const colorPath2 = (color, object) => {
   const newPath2 = path2.clone(object)
   newPath2.color = color
   return newPath2
+}
+
+const colorPath3 = (color, object) => {
+  const newPath3 = path3.clone(object)
+  newPath3.color = color
+  return newPath3
+}
+
+const colorSlice = (color, object) => {
+  const newSlice = slice.clone(object)
+  newSlice.color = color
+  return newSlice
 }
 
 const colorPoly3 = (color, object) => {
@@ -46,9 +60,11 @@ export const colorize = (color, ...objects) => {
   if (color.length === 3) color = [color[0], color[1], color[2], 1.0] // add alpha
 
   const results = objects.map((object) => {
-    if (geom2.isA(object)) return colorGeom2(color, object)
     if (geom3.isA(object)) return colorGeom3(color, object)
+    if (geom2.isA(object)) return colorGeom2(color, object)
     if (path2.isA(object)) return colorPath2(color, object)
+    if (path3.isA(object)) return colorPath3(color, object)
+    if (slice.isA(object)) return colorSlice(color, object)
     if (poly3.isA(object)) return colorPoly3(color, object)
     if (Array.isArray(object)) return colorize(color, ...object)
 
