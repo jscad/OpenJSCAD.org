@@ -28,6 +28,7 @@ const getPoints = (vertices, radius, startAngle, center) => {
 
 /**
  * Construct a star in two dimensional space.
+ *
  * @see https://en.wikipedia.org/wiki/Star_polygon
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of star
@@ -43,16 +44,15 @@ const getPoints = (vertices, radius, startAngle, center) => {
  * let star1 = star({vertices: 8, outerRadius: 10}) // star with 8/2 density
  * let star2 = star({vertices: 12, outerRadius: 40, innerRadius: 20}) // star with given radius
  */
-export const star = (options) => {
-  const defaults = {
-    center: [0, 0],
-    vertices: 5,
-    outerRadius: 1,
-    innerRadius: 0,
-    density: 2,
-    startAngle: 0
-  }
-  let { center, vertices, outerRadius, innerRadius, density, startAngle } = Object.assign({}, defaults, options)
+export const star = (options = {}) => {
+  let {
+    center = [0, 0],
+    vertices = 5,
+    outerRadius = 1,
+    innerRadius = 0,
+    density = 2,
+    startAngle = 0
+  } = options
 
   if (!isNumberArray(center, 2)) throw new Error('center must be an array of X and Y values')
   if (!isGTE(vertices, 2)) throw new Error('vertices must be two or more')

@@ -12,12 +12,11 @@ import { isGTE } from './commonChecks.js'
  * @example
  * let myshape = cube({size: 10})
  */
-export const cube = (options) => {
-  const defaults = {
-    center: [0, 0, 0],
-    size: 2
-  }
-  let { center, size } = Object.assign({}, defaults, options)
+export const cube = (options = {}) => {
+  let {
+    center = [0, 0, 0],
+    size = 2
+  } = options
 
   if (!isGTE(size, 0)) throw new Error('size must be positive')
 

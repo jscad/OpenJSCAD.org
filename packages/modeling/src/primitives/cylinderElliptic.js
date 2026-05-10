@@ -11,6 +11,7 @@ import { isGT, isGTE, isNumberArray } from './commonChecks.js'
 
 /**
  * Construct a Z axis-aligned elliptic cylinder in three dimensional space.
+ *
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of cylinder
  * @param {number} [options.height=2] - height of cylinder
@@ -25,17 +26,16 @@ import { isGT, isGTE, isNumberArray } from './commonChecks.js'
  * @example
  * let myshape = cylinderElliptic({height: 2, startRadius: [10,5], endRadius: [8,3]})
  */
-export const cylinderElliptic = (options) => {
-  const defaults = {
-    center: [0, 0, 0],
-    height: 2,
-    startRadius: [1, 1],
-    startAngle: 0,
-    endRadius: [1, 1],
-    endAngle: TAU,
-    segments: 32
-  }
-  let { center, height, startRadius, startAngle, endRadius, endAngle, segments } = Object.assign({}, defaults, options)
+export const cylinderElliptic = (options = {}) => {
+  let {
+    center = [0, 0, 0],
+    height = 2,
+    startRadius = [1, 1],
+    startAngle = 0,
+    endRadius = [1, 1],
+    endAngle = TAU,
+    segments = 32
+  } = options
 
   if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
   if (!isGT(height, 0)) throw new Error('height must be greater then zero')

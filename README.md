@@ -6,7 +6,7 @@ There are many ways to use JSCAD:
 
 An [online version](https://openjscad.xyz/), [self hostable web based ui](./packages/web), as [CLI](./packages/cli) (command-line interface) for server-side computations with Node.js, as well as an experimental [desktop app](./packages/desktop) or [individual Node.js packages](./packages/README.md)!!
 
-This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-the-wild-33c6eb246cb9) (container of multiple packages and tools) maintained with [PNPM](https://pnpm.io/) and [Lerna-Lite](https://github.com/ghiscoding/lerna-lite)
+This repository is a [monorepo](https://medium.com/@maoberlehner/monorepos-in-the-wild-33c6eb246cb9) (container of multiple packages and tools) maintained with [NPM](https://www.npmjs.com/) and [Lerna-Lite](https://github.com/ghiscoding/lerna-lite)
 
 [![Build Status](https://travis-ci.org/jscad/OpenJSCAD.org.svg?branch=master)](https://travis-ci.org/jscad/OpenJSCAD.org)
 [![Stability](https://img.shields.io/badge/stability-stable-success)](https://github.com/emersion/stability-badges#stable)

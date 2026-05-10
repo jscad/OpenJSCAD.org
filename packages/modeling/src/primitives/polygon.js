@@ -24,13 +24,12 @@ import * as geom2 from '../geometries/geom2/index.js'
  * or
  * let poly = polygon({ points: [roof, wall], paths: [[0, 1, 2], [3, 4, 5, 6]] })
  */
-export const polygon = (options) => {
-  const defaults = {
-    points: [],
-    paths: [],
-    orientation: 'counterclockwise'
-  }
-  const { points, paths, orientation } = Object.assign({}, defaults, options)
+export const polygon = (options = {}) => {
+  const {
+    points = [],
+    paths = [],
+    orientation = 'counterclockwise'
+  } = options
 
   if (!(Array.isArray(points) && Array.isArray(paths))) throw new Error('points and paths must be arrays')
 

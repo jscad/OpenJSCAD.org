@@ -115,6 +115,7 @@ const stitchSides = (bottomCorners, topCorners) => {
 
 /**
  * Construct an axis-aligned solid cuboid in three dimensional space with rounded corners.
+ *
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of rounded cube
  * @param {Array} [options.size=[2,2,2]] - dimension of rounded cube; width, depth, height
@@ -126,14 +127,13 @@ const stitchSides = (bottomCorners, topCorners) => {
  * @example
  * let myCube = roundedCuboid({size: [10, 20, 10], roundRadius: 2, segments: 16})
  */
-export const roundedCuboid = (options) => {
-  const defaults = {
-    center: [0, 0, 0],
-    size: [2, 2, 2],
-    roundRadius: 0.2,
-    segments: 32
-  }
-  let { center, size, roundRadius, segments } = Object.assign({}, defaults, options)
+export const roundedCuboid = (options = {}) => {
+  let {
+    center = [0, 0, 0],
+    size = [2, 2, 2],
+    roundRadius = 0.2,
+    segments = 32
+  } = options
 
   if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
   if (!isNumberArray(size, 3)) throw new Error('size must be an array of X, Y and Z values')

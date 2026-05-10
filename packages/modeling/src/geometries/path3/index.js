@@ -24,6 +24,7 @@
  * }
  */
 
+export { clone } from './clone.js'
 export { close } from './close.js'
 export { concat } from './concat.js'
 export { create } from './create.js'

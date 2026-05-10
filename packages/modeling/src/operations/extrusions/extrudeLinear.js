@@ -28,7 +28,7 @@ export const extrudeLinear = (options, ...objects) => {
   }
   const { height, twistAngle, twistSteps, repair } = Object.assign({ }, defaults, options)
 
-  options = { offset: [0, 0, height], twistAngle, twistSteps, repair }
+  options = { height, twistAngle, twistSteps, repair, offset: [0, 0, height] }
 
   const results = objects.map((object) => {
     if (path2.isA(object)) return extrudeLinearPath2(options, object)

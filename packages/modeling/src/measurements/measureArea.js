@@ -3,6 +3,7 @@ import { flatten } from '../utils/flatten.js'
 import * as geom2 from '../geometries/geom2/index.js'
 import * as geom3 from '../geometries/geom3/index.js'
 import * as path2 from '../geometries/path2/index.js'
+import * as path3 from '../geometries/path3/index.js'
 import * as poly3 from '../geometries/poly3/index.js'
 import * as slice from '../geometries/slice/index.js'
 
@@ -12,10 +13,10 @@ const cache = new WeakMap()
  * Measure the area of the given geometry.
  * NOTE: paths are infinitely narrow and do not have an area
  *
- * @param {Path2} geometry - geometry to measure
+ * @param {Path2|Path3} geometry - geometry to measure
  * @returns {number} area of the geometry
  */
-const measureAreaOfPath2 = () => 0
+const measureAreaOfPath = () => 0
 
 /*
  * Measure the area of the given geometry.
@@ -87,9 +88,10 @@ export const measureArea = (...geometries) => {
   geometries = flatten(geometries)
 
   const results = geometries.map((geometry) => {
-    if (path2.isA(geometry)) return measureAreaOfPath2(geometry)
-    if (geom2.isA(geometry)) return measureAreaOfGeom2(geometry)
     if (geom3.isA(geometry)) return measureAreaOfGeom3(geometry)
+    if (geom2.isA(geometry)) return measureAreaOfGeom2(geometry)
+    if (path2.isA(geometry)) return measureAreaOfPath(geometry)
+    if (path3.isA(geometry)) return measureAreaOfPath(geometry)
     if (slice.isA(geometry)) return measureAreaOfSlice(geometry)
     return 0
   })

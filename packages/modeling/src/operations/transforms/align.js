@@ -76,12 +76,13 @@ export const align = (options, ...geometries) => {
   options = validateOptions(options)
   let { modes, relativeTo, grouped } = options
 
+  geometries = coalesce(geometries)
+
   if (relativeTo.filter((val) => val == null).length) {
     const bounds = measureAggregateBoundingBox(geometries)
     relativeTo = populateRelativeToFromBounds(relativeTo, modes, bounds)
   }
   if (grouped) {
-    geometries = coalesce(geometries)
     geometries = alignGeometries(geometries, modes, relativeTo)
   } else {
     geometries = geometries.map((geometry) => alignGeometries(geometry, modes, relativeTo))

@@ -95,9 +95,10 @@ export const measureCenterOfMass = (...geometries) => {
   geometries = flatten(geometries)
 
   const results = geometries.map((geometry) => {
-    // NOTE: center of mass for geometry path2 is not possible
-    if (geom2.isA(geometry)) return measureCenterOfMassGeom2(geometry)
     if (geom3.isA(geometry)) return measureCenterOfMassGeom3(geometry)
+    if (geom2.isA(geometry)) return measureCenterOfMassGeom2(geometry)
+    // TODO if (slice.isA(geometry)) return measureCenterOfMassSlice(geometry)
+    // NOTE: center of mass for geometry path2 and path3 is not possible
     return [0, 0, 0]
   })
   return results.length === 1 ? results[0] : results

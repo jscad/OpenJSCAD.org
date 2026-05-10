@@ -4,11 +4,11 @@ import { comparePoints, comparePolygonsAsPoints } from '../../../test/helpers/in
 
 import { mat4 } from '../../maths/index.js'
 
-import { geom2, geom3, path2 } from '../../geometries/index.js'
+import { geom2, geom3, path2, path3 } from '../../geometries/index.js'
 
 import { transform } from './index.js'
 
-test('transform: transforming of a path2 produces expected changes to points', (t) => {
+test('transform: (path2)', (t) => {
   const matrix = mat4.fromTranslation(mat4.create(), [2, 2, 0])
   let geometry = path2.fromPoints({}, [[0, 0], [1, 0]])
 
@@ -19,7 +19,18 @@ test('transform: transforming of a path2 produces expected changes to points', (
   t.true(comparePoints(obs, exp))
 })
 
-test('transform: transforming of a geom2 produces expected changes to sides', (t) => {
+test('transform: (path3)', (t) => {
+  const matrix = mat4.fromTranslation(mat4.create(), [2, 2, 2])
+  let geometry = path3.fromVertices({ closed: true }, [[0, 0, 0], [1, 0, 1], [3, 2, 1]])
+
+  geometry = transform(matrix, geometry)
+  const obs = path3.toVertices(geometry)
+  const exp = [[2, 2, 2], [3, 2, 3], [5, 4, 3]]
+  t.notThrows(() => path3.validate(geometry))
+  t.true(comparePoints(obs, exp))
+})
+
+test('transform: (geom2)', (t) => {
   const matrix = mat4.fromScaling(mat4.create(), [5, 5, 5])
   let geometry = geom2.create([[[0, 0], [1, 0], [0, 1]]])
 
@@ -30,7 +41,7 @@ test('transform: transforming of a geom2 produces expected changes to sides', (t
   t.true(comparePoints(obs, exp))
 })
 
-test('transform: transforming of a geom3 produces expected changes to polygons', (t) => {
+test('transform: (geom3)', (t) => {
   const matrix = mat4.fromTranslation(mat4.create(), [-3, -3, -3])
   const points = [
     [[-2, -7, -12], [-2, -7, 18], [-2, 13, 18], [-2, 13, -12]],
@@ -55,7 +66,7 @@ test('transform: transforming of a geom3 produces expected changes to polygons',
   t.true(comparePolygonsAsPoints(obs, exp))
 })
 
-test('transform: transforming of multiple objects produces expected changes', (t) => {
+test('transform: (multiple objects)', (t) => {
   const junk = 'hello'
   const geometry1 = path2.fromPoints({}, [[-5, 5], [5, 5], [-5, -5], [10, -5]])
   const geometry2 = geom2.create([[[-5, -5], [0, 5], [10, -5]]])

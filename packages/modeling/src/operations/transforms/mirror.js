@@ -4,6 +4,8 @@ import * as plane from '../../maths/plane/index.js'
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as path2 from '../../geometries/path2/index.js'
+import * as path3 from '../../geometries/path3/index.js'
+import * as slice from '../../geometries/slice/index.js'
 
 /**
  * Mirror the given objects using the given options.
@@ -33,9 +35,11 @@ export const mirror = (options, ...objects) => {
   const matrix = mat4.mirrorByPlane(mat4.create(), planeOfMirror)
 
   const results = objects.map((object) => {
-    if (path2.isA(object)) return path2.transform(matrix, object)
-    if (geom2.isA(object)) return geom2.transform(matrix, object)
     if (geom3.isA(object)) return geom3.transform(matrix, object)
+    if (geom2.isA(object)) return geom2.transform(matrix, object)
+    if (path2.isA(object)) return path2.transform(matrix, object)
+    if (path3.isA(object)) return path3.transform(matrix, object)
+    if (slice.isA(object)) return slice.transform(matrix, object)
     // handle recursive arrays
     if (Array.isArray(object)) return mirror(options, ...object)
     return object

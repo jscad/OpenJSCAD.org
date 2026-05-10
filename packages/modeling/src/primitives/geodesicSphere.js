@@ -8,6 +8,7 @@ import { isGTE } from './commonChecks.js'
 
 /**
  * Construct a geodesic sphere based on icosahedron symmetry.
+ *
  * @param {object} [options] - options for construction
  * @param {number} [options.radius=1] - target radius of sphere
  * @param {number} [options.frequency=6] - subdivision frequency per face, multiples of 6
@@ -17,12 +18,11 @@ import { isGTE } from './commonChecks.js'
  * @example
  * let myshape = geodesicSphere({radius: 15, frequency: 18})
  */
-export const geodesicSphere = (options) => {
-  const defaults = {
-    radius: 1,
-    frequency: 6
-  }
-  let { radius, frequency } = Object.assign({}, defaults, options)
+export const geodesicSphere = (options = {}) => {
+  let {
+    radius = 1,
+    frequency = 6
+  } = options
 
   if (!isGTE(radius, 0)) throw new Error('radius must be positive')
   if (!isGTE(frequency, 6)) throw new Error('frequency must be six or more')

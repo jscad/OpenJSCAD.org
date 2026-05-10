@@ -11,10 +11,10 @@
   "module": "dist/jscad-array-utils.es.js",
   "scripts": {
     "build": "rollup --config",
-    "coverage": "c8 --all --reporter=html --reporter=text pnpm test",
+    "coverage": "c8 --all --reporter=html --reporter=text npm test",
     "test": "ava 'src/*.test.js' --verbose --timeout 2m",
     "test:tsd": "tsd",
-    "version": "pnpm run build && git add dist"
+    "version": "npm run build && git add dist"
   },
   "contributors": [
     {

@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { geom2, geom3, path2, slice } from '../geometries/index.js'
+import { geom2, geom3, path2, path3, slice } from '../geometries/index.js'
 
 import { line, rectangle, cuboid } from '../primitives/index.js'
 
@@ -12,6 +12,7 @@ test('measureArea: single objects', (t) => {
   const acube = cuboid()
 
   const apath2 = path2.create()
+  const apath3 = path3.create()
   const ageom2 = geom2.create()
   const ageom3 = geom3.create()
   const aslice = slice.create()
@@ -25,6 +26,7 @@ test('measureArea: single objects', (t) => {
   const carea = measureArea(acube)
 
   const p2area = measureArea(apath2)
+  const p3area = measureArea(apath3)
   const g2area = measureArea(ageom2)
   const g3area = measureArea(ageom3)
   const slarea = measureArea(aslice)
@@ -38,6 +40,7 @@ test('measureArea: single objects', (t) => {
   t.is(carea, 24) // 2x2x6
 
   t.is(p2area, 0)
+  t.is(p3area, 0)
   t.is(g2area, 0)
   t.is(g3area, 0)
   t.is(slarea, 0)

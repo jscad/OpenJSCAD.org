@@ -3,6 +3,8 @@ import { flatten } from '../utils/flatten.js'
 import * as geom2 from '../geometries/geom2/index.js'
 import * as geom3 from '../geometries/geom3/index.js'
 import * as path2 from '../geometries/path2/index.js'
+import * as path3 from '../geometries/path3/index.js'
+import * as slice from '../geometries/slice/index.js'
 
 import { measureAggregateBoundingBox } from './measureAggregateBoundingBox.js'
 import { calculateEpsilonFromBounds } from './calculateEpsilonFromBounds.js'
@@ -23,7 +25,7 @@ export const measureAggregateEpsilon = (...geometries) => {
   let dimensions = 0
   dimensions = geometries.reduce((dimensions, geometry) => {
     if (path2.isA(geometry) || geom2.isA(geometry)) return Math.max(dimensions, 2)
-    if (geom3.isA(geometry)) return Math.max(dimensions, 3)
+    if (geom3.isA(geometry || path3.isA(geometry) || slice.isA(geometry))) return Math.max(dimensions, 3)
     return 0
   }, dimensions)
   return calculateEpsilonFromBounds(bounds, dimensions)

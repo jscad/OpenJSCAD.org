@@ -6,6 +6,7 @@ import { isNumberArray } from './commonChecks.js'
 
 /**
  * Construct an axis-aligned rectangle in two dimensional space with four sides at right angles.
+ *
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0]] - center of rectangle
  * @param {Array} [options.size=[2,2]] - dimension of rectangle, width and length
@@ -15,12 +16,11 @@ import { isNumberArray } from './commonChecks.js'
  * @example
  * let myshape = rectangle({size: [10, 20]})
  */
-export const rectangle = (options) => {
-  const defaults = {
-    center: [0, 0],
-    size: [2, 2]
-  }
-  const { center, size } = Object.assign({}, defaults, options)
+export const rectangle = (options = {}) => {
+  const {
+    center = [0, 0],
+    size = [2, 2]
+  } = options
 
   if (!isNumberArray(center, 2)) throw new Error('center must be an array of X and Y values')
   if (!isNumberArray(size, 2)) throw new Error('size must be an array of X and Y values')

@@ -1,22 +1,38 @@
 import * as vec2 from '../../maths/vec2/index.js'
+import * as vec3 from '../../maths/vec2/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
 import * as path2 from '../../geometries/path2/index.js'
+import * as path3 from '../../geometries/path3/index.js'
 import * as poly2 from '../../geometries/poly2/index.js'
 
 import { measureEpsilon } from '../../measurements/measureEpsilon.js'
 
 import { snapPolygons } from './snapPolygons.js'
 
+/*
+ */
 const snapPath2 = (geometry) => {
   const epsilon = measureEpsilon(geometry)
   const points = path2.toPoints(geometry)
   const newPoints = points.map((point) => vec2.snap(vec2.create(), point, epsilon))
   // snap can produce duplicate points, remove those
-  return path2.create(newPoints)
+  return path2.fromPoints({}, newPoints)
 }
 
+/*
+ */
+const snapPath3 = (geometry) => {
+  const epsilon = measureEpsilon(geometry)
+  const vertices = path3.toVertices(geometry)
+  const newVertices = vertices.map((vertice) => vec3.snap(vec3.create(), vertice, epsilon))
+  // snap can produce duplicate points, remove those
+  return path3.fromVertices({}, newVertices)
+}
+
+/*
+ */
 const snapGeom2 = (geometry) => {
   const epsilon = measureEpsilon(geometry)
   const outlines = geom2.toOutlines(geometry)
@@ -38,6 +54,8 @@ const snapGeom2 = (geometry) => {
   return geom2.create(newOutlines)
 }
 
+/*
+ */
 const snapGeom3 = (geometry) => {
   const epsilon = measureEpsilon(geometry)
   const polygons = geom3.toPolygons(geometry)
@@ -54,9 +72,10 @@ const snapGeom3 = (geometry) => {
  */
 export const snap = (...geometries) => {
   const results = geometries.map((geometry) => {
-    if (path2.isA(geometry)) return snapPath2(geometry)
-    if (geom2.isA(geometry)) return snapGeom2(geometry)
     if (geom3.isA(geometry)) return snapGeom3(geometry)
+    if (geom2.isA(geometry)) return snapGeom2(geometry)
+    if (path2.isA(geometry)) return snapPath2(geometry)
+    if (path3.isA(geometry)) return snapPath3(geometry)
     if (Array.isArray(geometry)) return snap(...geometry)
     return geometry
   })

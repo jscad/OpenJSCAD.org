@@ -26,6 +26,7 @@
  */
 export { clone } from './clone.js'
 export { create } from './create.js'
+export { fromPoints } from './fromPoints.js'
 export { fromSides } from './fromSides.js'
 export { isA } from './isA.js'
 export { reverse } from './reverse.js'

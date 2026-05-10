@@ -49,10 +49,10 @@ Install the following packages manually.
 NOTE: There are issues with continous integration testing, so 'gl' is not installed initially.
 
 ```
-pnpm install gl
+npm install gl
 ```
 
-Try the demo by running ```pnpm run demo-cli```.
+Try the demo by running ```npm run demo-cli```.
 
 If all goes well you should end up with an image (test.png) that renders the demo design.
 
@@ -67,7 +67,7 @@ NOTE: 'demo.es.html' cannot be opened from the local file system. This is due to
 
 ### Developers
 
-Run the development web server using ```pnpm run dev```, then open the URL shown using any browser.
+Run the development web server using ```npm run dev```, then open the URL shown using any browser.
 From the index of files, select 'demo.es.html'.
 
 If all goes well you should end up with a web page that displays the demo design (a few solids).
@@ -75,7 +75,7 @@ The standard mouse controls are also available for rotation, etc.
 
 After making changes, just reload the web page.
 
-If making changes, please make sure that all tests must pass. Run ```pnpm test```
+If making changes, please make sure that all tests must pass. Run ```npm test```
 
 ## License
 

@@ -1,6 +1,6 @@
 import test from 'ava'
 
-import { geom2, geom3, path2, slice } from '../geometries/index.js'
+import { geom2, geom3, path2, path3, slice } from '../geometries/index.js'
 
 import { line, rectangle, cuboid } from '../primitives/index.js'
 
@@ -14,6 +14,7 @@ test('measureBoundingBox (single objects)', (t) => {
   const acube = cuboid()
 
   const apath2 = path2.create()
+  const apath3 = path3.create()
   const ageom2 = geom2.create()
   const ageom3 = geom3.create()
   const aslice = slice.create()
@@ -27,6 +28,7 @@ test('measureBoundingBox (single objects)', (t) => {
   const cbounds = measureBoundingBox(acube)
 
   const p2bounds = measureBoundingBox(apath2)
+  const p3bounds = measureBoundingBox(apath3)
   const g2bounds = measureBoundingBox(ageom2)
   const g3bounds = measureBoundingBox(ageom3)
   const slbounds = measureBoundingBox(aslice)
@@ -40,6 +42,7 @@ test('measureBoundingBox (single objects)', (t) => {
   t.deepEqual(cbounds, [[-1, -1, -1], [1, 1, 1]])
 
   t.deepEqual(p2bounds, [[0, 0, 0], [0, 0, 0]])
+  t.deepEqual(p3bounds, [[0, 0, 0], [0, 0, 0]])
   t.deepEqual(g2bounds, [[0, 0, 0], [0, 0, 0]])
   t.deepEqual(g3bounds, [[0, 0, 0], [0, 0, 0]])
   t.deepEqual(slbounds, [[0, 0, 0], [0, 0, 0]])

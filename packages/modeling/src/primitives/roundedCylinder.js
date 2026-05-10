@@ -12,6 +12,7 @@ import { cylinder } from './cylinder.js'
 
 /**
  * Construct a Z axis-aligned solid cylinder in three dimensional space with rounded ends.
+ *
  * @param {object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of cylinder
  * @param {number} [options.height=2] - height of cylinder
@@ -24,15 +25,14 @@ import { cylinder } from './cylinder.js'
  * @example
  * let myshape = roundedCylinder({ height: 10, radius: 2, roundRadius: 0.5 })
  */
-export const roundedCylinder = (options) => {
-  const defaults = {
-    center: [0, 0, 0],
-    height: 2,
-    radius: 1,
-    roundRadius: 0.2,
-    segments: 32
-  }
-  const { center, height, radius, roundRadius, segments } = Object.assign({}, defaults, options)
+export const roundedCylinder = (options = {}) => {
+  const {
+    center = [0, 0, 0],
+    height = 2,
+    radius = 1,
+    roundRadius = 0.2,
+    segments = 32
+  } = options
 
   if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
   if (!isGTE(height, 0)) throw new Error('height must be positive')
