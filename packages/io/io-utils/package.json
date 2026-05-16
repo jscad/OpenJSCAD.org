@@ -1,6 +1,6 @@
 {
   "name": "@jscad/io-utils",
-  "version": "3.0.4-alpha.0",
+  "version": "3.0.5-alpha.0",
   "description": "Utilities for JSCAD IO Packages",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
@@ -34,7 +34,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@jscad/modeling": "3.0.4-alpha.0",
+    "@jscad/modeling": "3.0.5-alpha.0",
     "ava": "^6.3.0",
     "c8": "^10.1.0"
   },

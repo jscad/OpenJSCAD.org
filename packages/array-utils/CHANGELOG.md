@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3-alpha.0](/compare/@jscad/array-utils@3.0.2-alpha.0...@jscad/array-utils@3.0.3-alpha.0) (2026-05-15)
+
+### Bug Fixes
+
+* **modeling:** various fixes, improvements, and style changes 283087e
+
 ## [3.0.2-alpha.0](/compare/@jscad/array-utils@3.0.1-alpha.0...@jscad/array-utils@3.0.2-alpha.0) (2026-04-12)
 
 ### Bug Fixes
