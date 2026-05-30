@@ -1,5 +1,7 @@
-import { concat } from './concat.js'
-import { create } from './create.js'
+import { equals } from '../../maths/vec2/equals.js'
+
+import { fromPoints } from './fromPoints.js'
+import { toPoints } from './toPoints.js'
 
 /**
  * Append the given list of points to the end of the given geometry.
@@ -12,4 +14,19 @@ import { create } from './create.js'
  * @example
  * let newPath = path2.appendPoints([[3, 4], [4, 5]], oldPath)
  */
-export const appendPoints = (points, geometry) => concat(geometry, create(points))
+export const appendPoints = (points, geometry) => {
+  let newPoints = toPoints(geometry)
+
+  if (geometry.isClosed && newPoints.length > 1) {
+    // add the closing point to the newPoints
+    newPoints = newPoints.slice()
+    newPoints.push(newPoints[0])
+  }
+
+  if (newPoints.length > 0) {
+    const endpoint = newPoints[newPoints.length - 1]
+    while (points.length > 0 && equals(points[0], endpoint)) points.shift()
+  }
+
+  return fromPoints({}, newPoints.concat(points))
+}

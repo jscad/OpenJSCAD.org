@@ -1,6 +1,6 @@
 import { TAU } from '../../maths/constants.js'
 import * as vec2 from '../../maths/vec2/index.js'
-import * as vec3 from '../../maths/vec3/index.js' // FIXME why vec3?
+import * as vec3 from '../../maths/vec3/index.js' // required due to vex2.cross()
 
 import { appendPoints } from './appendPoints.js'
 import { toPoints } from './toPoints.js'
@@ -27,10 +27,10 @@ import { toPoints } from './toPoints.js'
  * myShape = path2.appendBezier({controlPoints: [null, [25,-30],[40,-30],[40,-20]]}, myShape)
  */
 export const appendBezier = (options, geometry) => {
-  const defaults = {
-    segments: 16
-  }
-  let { controlPoints, segments } = Object.assign({}, defaults, options)
+  let {
+    controlPoints = null,
+    segments = 16
+  } = options
 
   // validate the given options
   if (!Array.isArray(controlPoints)) throw new Error('controlPoints must be an array of one or more points')
@@ -39,10 +39,6 @@ export const appendBezier = (options, geometry) => {
   if (segments < 4) throw new Error('segments must be four or more')
 
   // validate the given geometry
-  if (geometry.isClosed) {
-    throw new Error('the given geometry cannot be closed')
-  }
-
   const points = toPoints(geometry)
   if (points.length < 1) {
     throw new Error('the given path must contain one or more points (as the starting point for the bezier curve)')
@@ -148,9 +144,10 @@ export const appendBezier = (options, geometry) => {
   }
 
   // append to the new points to the given path
-  // but skip the first new point because it is identical to the last point in the given path
-  newPoints.shift()
   const result = appendPoints(newPoints, geometry)
+
+  // add a hint for the next bezier
   result.lastBezierControlPoint = controlPoints[controlPoints.length - 2]
+
   return result
 }

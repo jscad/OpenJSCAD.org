@@ -1,6 +1,6 @@
 import { EPS } from '../../maths/constants.js'
 
-import * as vec2 from '../../maths/vec2/index.js'
+import { distance } from '../../maths/vec2/distance.js'
 
 import { clone } from './clone.js'
 
@@ -25,7 +25,7 @@ export const close = (geometry) => {
     const points = cloned.points
     const p0 = points[0]
     let pn = points[points.length - 1]
-    while (vec2.distance(p0, pn) < (EPS * EPS)) {
+    while (distance(p0, pn) < EPS) {
       points.pop()
       if (points.length === 1) break
       pn = points[points.length - 1]
