@@ -15,9 +15,10 @@ test('snap: snap of a path2 produces an expected path2', (t) => {
   const geometry2 = arc({ radius: 1 / 2, segments: 8 })
   const geometry3 = arc({ radius: 1.3333333333333333 / 2, segments: 8 })
   const geometry4 = arc({ radius: TAU / 4 * 1000, segments: 8 })
+  const geometry5 = path2.fromPoints({ closed: true }, [[0, 0], [2, 2], [4, 0]])
 
-  const results = snap(geometry1, geometry2, geometry3, geometry4)
-  t.is(results.length, 4)
+  const results = snap(geometry1, geometry2, geometry3, geometry4, geometry5)
+  t.is(results.length, 5)
 
   let pts = path2.toPoints(results[0])
   let exp = []
@@ -59,6 +60,15 @@ test('snap: snap of a path2 produces an expected path2', (t) => {
     [-1110.7100826766714, -1110.7100826766714],
     [0, -1570.7963267948967],
     [1110.7100826766714, -1110.7100826766714]
+  ]
+  t.true(comparePoints(pts, exp))
+
+  t.true(results[4].isClosed)
+  pts = path2.toPoints(results[4])
+  exp = [
+    [0, 0],
+    [2.00001, 2.00001],
+    [3.9999900000000004, 0]
   ]
   t.true(comparePoints(pts, exp))
 })
