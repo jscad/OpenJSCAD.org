@@ -12,7 +12,7 @@ import { toPoints } from './toPoints.js'
  *
  * @param {object} options - options for construction
  * @param {Vec2} options.endpoint - end point of arc (REQUIRED)
- * @param {Vec2} [options.radius=[1,1]] - radius of arc (X and Y)
+ * @param {Vec2} [options.radius=[0,0]] - radius of arc (X and Y)
  * @param {number} [options.xaxisRotation=0] - rotation (RADIANS) of the X axis of the arc with respect to the X axis of the coordinate system
  * @param {boolean} [options.clockwise=false] - draw an arc clockwise with respect to the center point
  * @param {boolean} [options.large=false] - draw an arc longer than TAU / 2 radians

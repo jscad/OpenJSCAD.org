@@ -1,6 +1,6 @@
 import { TAU } from '../../maths/constants.js'
 import * as vec2 from '../../maths/vec2/index.js'
-import * as vec3 from '../../maths/vec3/index.js' // required due to vex2.cross()
+import * as vec3 from '../../maths/vec3/index.js' // required due to vec2.cross()
 
 import { appendPoints } from './appendPoints.js'
 import { toPoints } from './toPoints.js'

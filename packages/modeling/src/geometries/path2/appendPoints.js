@@ -15,18 +15,19 @@ import { toPoints } from './toPoints.js'
  * let newPath = path2.appendPoints([[3, 4], [4, 5]], oldPath)
  */
 export const appendPoints = (points, geometry) => {
-  let newPoints = toPoints(geometry)
+  let originalPoints = toPoints(geometry)
 
-  if (geometry.isClosed && newPoints.length > 1) {
-    // add the closing point to the newPoints
-    newPoints = newPoints.slice()
-    newPoints.push(newPoints[0])
+  if (geometry.isClosed && originalPoints.length > 1) {
+    // add the closing point to the originalPoints
+    originalPoints = originalPoints.slice()
+    originalPoints.push(originalPoints[0])
   }
 
-  if (newPoints.length > 0) {
-    const endpoint = newPoints[newPoints.length - 1]
-    while (points.length > 0 && equals(points[0], endpoint)) points.shift()
+  if (originalPoints.length > 0) {
+    // remove redundant points
+    const lastPoint = originalPoints[originalPoints.length - 1]
+    while (points.length > 0 && equals(points[0], lastPoint)) points.shift()
   }
 
-  return fromPoints({}, newPoints.concat(points))
+  return fromPoints({}, originalPoints.concat(points))
 }
