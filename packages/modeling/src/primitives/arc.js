@@ -51,14 +51,13 @@ export const arc = (options = {}) => {
 
   const minAngle = Math.acos(((radius * radius) + (radius * radius) - (EPS * EPS)) / (2 * radius * radius))
 
-  const centerV = vec2.clone(center)
   let point
   const pointArray = []
   if (rotation < minAngle) {
     // there is no rotation, just a single point
     point = vec2.fromAngleRadians(vec2.create(), startAngle)
     vec2.scale(point, point, radius)
-    vec2.add(point, point, centerV)
+    vec2.add(point, point, center)
     pointArray.push(point)
   } else {
     const numSteps = Math.floor(segments * (Math.abs(rotation) / TAU))
@@ -77,7 +76,7 @@ export const arc = (options = {}) => {
       const angle = startAngle + (step * (rotation / numSteps))
       point = vec2.fromAngleRadians(vec2.create(), angle)
       vec2.scale(point, point, radius)
-      vec2.add(point, point, centerV)
+      vec2.add(point, point, center)
       pointArray.push(point)
     }
   }
