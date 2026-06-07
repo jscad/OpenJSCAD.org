@@ -4,6 +4,8 @@ import * as vec3 from '../../maths/vec3/index.js'
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as slice from '../../geometries/slice/index.js'
 
+import { isNumberArray } from '../../primitives/commonChecks.js'
+
 import { extrudeFromSlices } from './extrudeFromSlices.js'
 
 /*
@@ -26,6 +28,7 @@ export const extrudeLinearGeom2 = (options, geometry) => {
   }
   let { offset, twistAngle, twistSteps, repair } = Object.assign({ }, defaults, options)
 
+  if (!isNumberArray(offset, 3)) throw new Error('offset must be an array of three numbers')
   if (twistSteps < 1) throw new Error('twistSteps must be 1 or more')
 
   if (twistAngle === 0) {
@@ -33,18 +36,18 @@ export const extrudeLinearGeom2 = (options, geometry) => {
   }
 
   // convert to vector in order to perform transforms
-  const offsetV = vec3.clone(offset)
-
   let baseSlice = slice.fromOutlines(geom2.toOutlines(geometry))
-  if (offsetV[2] < 0) baseSlice = slice.reverse(baseSlice)
+  if (offset[2] < 0) baseSlice = slice.reverse(baseSlice)
 
-  const matrix = mat4.create()
+  const matrix1 = mat4.create()
+  const matrix2 = mat4.create()
+  const offset1 = vec3.create()
   const createTwist = (progress, index, base) => {
     const Zrotation = index / twistSteps * twistAngle
-    const Zoffset = vec3.scale(vec3.create(), offsetV, index / twistSteps)
-    mat4.multiply(matrix, mat4.fromZRotation(matrix, Zrotation), mat4.fromTranslation(mat4.create(), Zoffset))
+    const Zoffset = vec3.scale(offset1, offset, index / twistSteps)
+    mat4.multiply(matrix1, mat4.fromZRotation(matrix1, Zrotation), mat4.fromTranslation(matrix2, Zoffset))
 
-    return slice.transform(matrix, base)
+    return slice.transform(matrix1, base)
   }
 
   options = {
