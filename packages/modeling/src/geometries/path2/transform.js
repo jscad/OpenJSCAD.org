@@ -16,5 +16,6 @@ import * as mat4 from '../../maths/mat4/index.js'
  */
 export const transform = (matrix, geometry) => {
   const transforms = mat4.multiply(mat4.create(), matrix, geometry.transforms)
-  return { points: geometry.points, isClosed: geometry.isClosed, transforms }
+  // use Object.assign in order to assign EXTRA attributes like color, name, etc
+  return Object.assign({}, geometry, { transforms })
 }
