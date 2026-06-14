@@ -215,6 +215,9 @@ export class PolygonTreeNode {
           backNodes.push(backNode)
         }
         break
+
+      default:
+        throw new Error('PolygonTreeNode05')
     }
   }
 

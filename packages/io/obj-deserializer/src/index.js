@@ -114,6 +114,9 @@ const getGroups = (data, options) => {
           case 'usemtl':
             handleMtl(command, values)
             break
+          default:
+            // FIXME should this throw?
+            break
         }
       }
     }

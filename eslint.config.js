@@ -25,6 +25,8 @@ export default defineConfig([
         "always"
       ],
       "consistent-return": ["error"],
+      // "curly": ["error"],
+      "default-case": ["error"],
       "arrow-spacing": "error",
       "prefer-arrow-callback": "error",
       "no-var": "error"

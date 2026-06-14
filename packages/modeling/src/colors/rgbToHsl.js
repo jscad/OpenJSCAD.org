@@ -36,6 +36,7 @@ export const rgbToHsl = (...values) => {
         h = (b - r) / d + 2
         break
       case b:
+      default:
         h = (r - g) / d + 4
         break
     }

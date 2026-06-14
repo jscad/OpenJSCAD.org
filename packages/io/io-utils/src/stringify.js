@@ -71,6 +71,8 @@ export const stringify = (a, indentation) => {
         case 'undefined':
           body += e + cr
           return false
+        default:
+          break
       }
 
       isFlat = false
