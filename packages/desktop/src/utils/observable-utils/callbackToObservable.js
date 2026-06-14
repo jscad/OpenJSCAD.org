@@ -3,7 +3,7 @@ const { create } = require('@most/create')
 const callBackToStream = () => {
   let addWrap = function () {}
 
-  function callbackTest (externalData) {
+  const callbackTest = (externalData) => {
     addWrap(externalData)
   }
   const callback = callbackTest

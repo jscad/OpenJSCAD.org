@@ -4,11 +4,11 @@ import { arc, ellipse } from '@jscad/modeling'
 
 import { createPart } from './part.js'
 
-export const getParameterDefinitions = () => {
-  return flatten([
-    { name: 'segments', caption: 'Segments:', type: 'int', initial: 10, min: 5, max: 20, step: 1 }
-  ])
-}
+export const getParameterDefinitions = () => flatten(
+    [
+      { name: 'segments', caption: 'Segments:', type: 'int', initial: 10, min: 5, max: 20, step: 1 }
+    ]
+  )
 
 export const main = (params) => {
   // parameters

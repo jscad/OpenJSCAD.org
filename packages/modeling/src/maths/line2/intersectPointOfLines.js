@@ -14,6 +14,4 @@ import { solve2Linear } from '../utils/solve2Linear.js'
  * @return {Vec2} the point of intersection
  * @alias module:modeling/maths/line2.intersectPointOfLines
  */
-export const intersectPointOfLines = (line1, line2) => {
-  return solve2Linear(line1[0], line1[1], line2[0], line2[1], line1[2], line2[2])
-}
+export const intersectPointOfLines = (line1, line2) => solve2Linear(line1[0], line1[1], line2[0], line2[1], line1[2], line2[2])
