@@ -227,7 +227,8 @@ const instantiateEllipse = (obj, layers, options) => {
     mat4.multiply(matrix, matrix, mat4.fromTranslation(mat4.create(), [pptx, ppty, 0]))
     return geom2.transform(matrix, cag)
   }
-  // convert to 3D object
+  // FIXME convert to 3D object
+  return geom3.create()
 }
 
 const instantiateFaces = (fvals) => {

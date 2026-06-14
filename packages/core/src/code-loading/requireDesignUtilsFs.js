@@ -39,7 +39,7 @@ const assertPath = (path) => {
  */
 export const getDesignEntryPoint = (fs, paths) => {
   if (!paths) {
-    return
+    return undefined
   }
   const mainPath = toArray(paths)[0]
   let filePath
@@ -93,16 +93,16 @@ const packageNameFromDir = (fs, dirName, filePath) => {
  * @param  {Array} paths an array of paths (strings) or a single path
  */
 export const getDesignName = (fs, paths) => {
-  if (!paths) {
-    return 'undefined'
+  if (paths) {
+    const mainPath = toArray(paths)[0]
+    const stats = fs.statSync(mainPath)
+    if (stats.isFile()) { // if main path is a file, find its folder
+      const dirName = path.dirname(mainPath)
+      return packageNameFromDir(fs, dirName, mainPath)
+    } else if (stats.isDirectory()) { // if main path is a folder , try to find name from package.json
+      // try to use package.json & co to find main
+      return packageNameFromDir(fs, mainPath)
+    }
   }
-  const mainPath = toArray(paths)[0]
-  const stats = fs.statSync(mainPath)
-  if (stats.isFile()) { // if main path is a file, find its folder
-    const dirName = path.dirname(mainPath)
-    return packageNameFromDir(fs, dirName, mainPath)
-  } else if (stats.isDirectory()) { // if main path is a folder , try to find name from package.json
-    // try to use package.json & co to find main
-    return packageNameFromDir(fs, mainPath)
-  }
+  return 'undefined'
 }

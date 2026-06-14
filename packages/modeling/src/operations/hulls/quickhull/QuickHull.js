@@ -118,6 +118,7 @@ export class QuickHull {
       end.next = null
       return face.outside
     }
+    return undefined
   }
 
   /**
@@ -456,6 +457,7 @@ export class QuickHull {
       }
       return eyeVertex
     }
+    return undefined
   }
 
   /**

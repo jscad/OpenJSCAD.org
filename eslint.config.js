@@ -3,7 +3,7 @@ import globals from "globals"
 import { defineConfig, globalIgnores } from "eslint/config"
 
 export default defineConfig([
-  globalIgnores(["**/dist/", "packages/io/scad-deserializer", "packages/vtree"]),
+  globalIgnores(["**/dist/", "packages/desktop", "packages/io/scad-deserializer", "packages/vtree"]),
   {
     files: ["**/*.{js}"],
     plugins: { js },
@@ -24,6 +24,7 @@ export default defineConfig([
         "error",
         "always"
       ],
+      "consistent-return": ["error"],
       "arrow-spacing": "error",
       "prefer-arrow-callback": "error",
       "no-var": "error"

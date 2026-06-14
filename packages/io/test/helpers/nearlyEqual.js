@@ -25,4 +25,5 @@ export const nearlyEqual = (t, a, b, epsilon, failMessage) => {
     failMessage = failMessage === undefined ? 'Numbers outside of epsilon' : failMessage
     t.fail(failMessage + '(' + a + ',' + b + ')')
   }
+  return true
 }

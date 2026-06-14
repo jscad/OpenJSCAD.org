@@ -27,6 +27,12 @@ const designParameters = (state, paramsCallbacktoStream, i18n) => {
     e.stack = undefined // remove unhelpful stacktrace
     state.status.error = e
   }
+
+  // return empty section
+  return html`
+  <section id='params' style='visibility:hidden'>
+  </section>
+`
 }
 
 module.exports = designParameters

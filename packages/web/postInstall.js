@@ -17,10 +17,10 @@ const copyAndProcessExamples = (examplesSrc) => {
     processExamplesInDirectory(examplesDist, examples)
     sortExamples(examples)
     fs.writeFile('examples/examples.json', JSON.stringify(examples), (err) => {
-      if (err) return console.log(err)
+      if (err) console.log(err)
     })
   } else {
-    return console.log('Examples directory does not exist: ' + examplesSrc)
+    console.log('Examples directory does not exist: ' + examplesSrc)
   }
 }
 
