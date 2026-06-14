@@ -11,7 +11,8 @@ export class VertexList {
   }
 
   clear () {
-    this.head = this.tail = null
+    this.head = null
+    this.tail = null
   }
 
   /**

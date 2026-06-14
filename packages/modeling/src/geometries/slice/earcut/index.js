@@ -28,8 +28,10 @@ export const triangulate = (data, holeIndices, dim = 2) => {
 
   // if the shape is not too simple, we'll use z-order curve hash later; calculate polygon bbox
   if (data.length > 80 * dim) {
-    minX = maxX = data[0]
-    minY = maxY = data[1]
+    minX = data[0]
+    maxX = data[0]
+    minY = data[1]
+    maxY = data[1]
 
     for (let i = dim; i < outerLen; i += dim) {
       const x = data[i]

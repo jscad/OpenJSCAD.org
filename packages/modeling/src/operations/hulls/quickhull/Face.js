@@ -308,9 +308,14 @@ export class Face {
     const e2 = new HalfEdge(v2, face)
 
     // join edges
-    e0.next = e2.prev = e1
-    e1.next = e0.prev = e2
-    e2.next = e1.prev = e0
+    e0.next = e1
+    e2.prev = e1
+
+    e1.next = e2
+    e0.prev = e2
+
+    e2.next = e0
+    e1.prev = e0
 
     // main half edge reference
     face.edge = e0

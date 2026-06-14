@@ -39,7 +39,8 @@ export const filterPoints = (start, end) => {
 
     if (!p.steiner && (equals(p, p.next) || area(p.prev, p, p.next) === 0)) {
       removeNode(p)
-      p = end = p.prev
+      p = p.prev
+      end = p.prev
       if (p === p.next) break
       again = true
     } else {
@@ -68,7 +69,8 @@ export const cureLocalIntersections = (start, triangles, dim) => {
       removeNode(p)
       removeNode(p.next)
 
-      p = start = b
+      p = b
+      start = b
     }
 
     p = p.next

@@ -12,6 +12,7 @@ export default defineConfig([
   },
   {
     "rules": {
+      // enforce consistent arrow functions
       "func-style": [
         "error",
         "expression"
@@ -24,11 +25,16 @@ export default defineConfig([
         "error",
         "always"
       ],
+      "arrow-spacing": "error",
+      "prefer-arrow-callback": "error",
+      // enforce consistent code
       "consistent-return": ["error"],
       // "curly": ["error"],
       "default-case": ["error"],
-      "arrow-spacing": "error",
-      "prefer-arrow-callback": "error",
+      "eqeqeq": ["error", "smart"],
+      "no-array-constructor": ["error"],
+      // "no-loop-func": ["error"],
+      "no-multi-assign": ["error"],
       "no-var": "error"
     }
    }

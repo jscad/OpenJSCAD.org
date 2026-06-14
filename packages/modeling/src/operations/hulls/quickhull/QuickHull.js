@@ -216,11 +216,13 @@ export class QuickHull {
 
     // initially assume that the first vertex is the min/max
     for (i = 0; i < 3; i += 1) {
-      minVertices[i] = maxVertices[i] = this.vertices[0]
+      minVertices[i] = this.vertices[0]
+      maxVertices[i] = this.vertices[0]
     }
     // copy the coordinates of the first vertex to min/max
     for (i = 0; i < 3; i += 1) {
-      min[i] = max[i] = this.vertices[0].point[i]
+      min[i] = this.vertices[0].point[i]
+      max[i] = this.vertices[0].point[i]
     }
 
     // compute the min/max vertex on all 6 directions
@@ -479,7 +481,8 @@ export class QuickHull {
 
     let edge
     if (!crossEdge) {
-      edge = crossEdge = face.getEdge(0)
+      crossEdge = face.getEdge(0)
+      edge = crossEdge
     } else {
       // start from the next edge since `crossEdge` was already analyzed
       // (actually `crossEdge.opposite` was the face who called this method

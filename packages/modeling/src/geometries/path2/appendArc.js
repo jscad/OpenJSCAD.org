@@ -38,7 +38,7 @@ export const appendArc = (options, geometry) => {
 
   // validate the given options
   if (!Array.isArray(endpoint)) throw new Error('endpoint must be an array of X and Y values')
-  if (endpoint.length != 2) throw new Error('endpoint must contain X and Y values')
+  if (endpoint.length !== 2) throw new Error('endpoint must contain X and Y values')
   let xendPoint = vec2.clone(endpoint)
 
   if (!Array.isArray(radius)) throw new Error('radius must be an array of X and Y values')
