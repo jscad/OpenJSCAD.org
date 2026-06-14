@@ -27,15 +27,17 @@ export default defineConfig([
       ],
       "arrow-spacing": "error",
       "prefer-arrow-callback": "error",
+
       // enforce consistent code
       "consistent-return": ["error"],
-      // "curly": ["error"],
+      "curly": ["error", "multi-line"],
       "default-case": ["error"],
       "eqeqeq": ["error", "smart"],
       "no-array-constructor": ["error"],
       // "no-loop-func": ["error"],
       "no-multi-assign": ["error"],
-      "no-var": "error"
+      // "no-param-reassign": ["error"],
+      "no-var": ["error"],
     }
    }
 ])

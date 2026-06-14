@@ -20,8 +20,12 @@ export const translate = (offset, ...objects) => {
   if (!Array.isArray(offset)) throw new Error('offset must be an array')
 
   // adjust the offset if necessary
-  offset = offset.slice() // don't modify the original
-  while (offset.length < 3) offset.push(0)
+  if (offset.length < 3) {
+    offset = offset.slice() // don't modify the original
+    while (offset.length < 3) {
+      offset.push(0)
+    }
+  }
 
   const matrix = mat4.fromTranslation(mat4.create(), offset)
 
