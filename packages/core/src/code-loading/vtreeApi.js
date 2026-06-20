@@ -1,1 +1,1 @@
-export api from '@jscad/vtree'
+export { api } from '@jscad/vtree'

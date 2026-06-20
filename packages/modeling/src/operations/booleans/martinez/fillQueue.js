@@ -25,7 +25,9 @@ const processPolygon = (contourOrHole, isSubject, ringId, queue, bbox, isExterio
       continue // skip collapsed edges, or it breaks
     }
 
-    e1.contourId = e2.contourId = ringId
+    e1.contourId = ringId
+    e2.contourId = ringId
+
     if (!isExteriorRing) {
       e1.isExteriorRing = false
       e2.isExteriorRing = false

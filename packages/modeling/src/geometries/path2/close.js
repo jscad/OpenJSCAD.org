@@ -1,8 +1,6 @@
 import { EPS } from '../../maths/constants.js'
 
-import * as vec2 from '../../maths/vec2/index.js'
-
-import { clone } from './clone.js'
+import { distance } from '../../maths/vec2/distance.js'
 
 /**
  * Close the given geometry.
@@ -17,19 +15,18 @@ import { clone } from './clone.js'
 export const close = (geometry) => {
   if (geometry.isClosed) return geometry
 
-  const cloned = clone(geometry)
-  cloned.isClosed = true
-
-  if (cloned.points.length > 1) {
+  const isClosed = true
+  const points = geometry.points.slice()
+  if (points.length > 1) {
     // make sure the paths are formed properly
-    const points = cloned.points
     const p0 = points[0]
     let pn = points[points.length - 1]
-    while (vec2.distance(p0, pn) < (EPS * EPS)) {
+    while (distance(p0, pn) < EPS) {
       points.pop()
       if (points.length === 1) break
       pn = points[points.length - 1]
     }
   }
-  return cloned
+  // use Object.assign in order to assign EXTRA attributes like color, name, etc
+  return Object.assign({}, geometry, { isClosed, points })
 }

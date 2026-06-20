@@ -1,7 +1,7 @@
 import { TAU } from '../../maths/constants.js'
 import * as vec2 from '../../maths/vec2/index.js'
 
-import { fromPoints } from './fromPoints.js'
+import { appendPoints } from './appendPoints.js'
 import { toPoints } from './toPoints.js'
 
 /**
@@ -27,19 +27,19 @@ import { toPoints } from './toPoints.js'
  * myShape = path2.appendArc({endpoint: [12.5, -22.96875], radius: [15, -19.6875]}, myShape);
  */
 export const appendArc = (options, geometry) => {
-  const defaults = {
-    radius: [0, 0], // X and Y radius
-    xaxisRotation: 0,
-    clockwise: false,
-    large: false,
-    segments: 16
-  }
-  let { endpoint, radius, xaxisRotation, clockwise, large, segments } = Object.assign({}, defaults, options)
+  const {
+    endpoint = null,
+    radius = [0, 0], // X and Y radius
+    xaxisRotation = 0,
+    clockwise = false,
+    large = false,
+    segments = 16
+  } = options
 
   // validate the given options
   if (!Array.isArray(endpoint)) throw new Error('endpoint must be an array of X and Y values')
-  if (endpoint.length < 2) throw new Error('endpoint must contain X and Y values')
-  endpoint = vec2.clone(endpoint)
+  if (endpoint.length !== 2) throw new Error('endpoint must contain X and Y values')
+  let xendPoint = vec2.clone(endpoint)
 
   if (!Array.isArray(radius)) throw new Error('radius must be an array of X and Y values')
   if (radius.length < 2) throw new Error('radius must contain X and Y values')
@@ -47,11 +47,6 @@ export const appendArc = (options, geometry) => {
   if (segments < 4) throw new Error('segments must be four or more')
 
   const decimals = 100000
-
-  // validate the given geometry
-  if (geometry.isClosed) {
-    throw new Error('the given path cannot be closed')
-  }
 
   const points = toPoints(geometry)
   if (points.length < 1) {
@@ -65,14 +60,14 @@ export const appendArc = (options, geometry) => {
   // round to precision in order to have determinate calculations
   xRadius = Math.round(xRadius * decimals) / decimals
   yRadius = Math.round(yRadius * decimals) / decimals
-  endpoint = vec2.fromValues(Math.round(endpoint[0] * decimals) / decimals, Math.round(endpoint[1] * decimals) / decimals)
+  xendPoint = vec2.fromValues(Math.round(xendPoint[0] * decimals) / decimals, Math.round(xendPoint[1] * decimals) / decimals)
 
   const sweepFlag = !clockwise
-  let newPoints = []
+  const newPoints = []
   if ((xRadius === 0) || (yRadius === 0)) {
     // http://www.w3.org/TR/SVG/implnote.html#ArcImplementationNotes:
     // If rx = 0 or ry = 0, then treat this as a straight line from (x1, y1) to (x2, y2) and stop
-    newPoints.push(endpoint)
+    newPoints.push(xendPoint)
   } else {
     xRadius = Math.abs(xRadius)
     yRadius = Math.abs(yRadius)
@@ -81,7 +76,7 @@ export const appendArc = (options, geometry) => {
     const phi = xaxisRotation
     const cosPhi = Math.cos(phi)
     const sinPhi = Math.sin(phi)
-    const minusHalfDistance = vec2.subtract(vec2.create(), startpoint, endpoint)
+    const minusHalfDistance = vec2.subtract(vec2.create(), startpoint, xendPoint)
     vec2.scale(minusHalfDistance, minusHalfDistance, 0.5)
     // F.6.5.1:
     // round to precision in order to have determinate calculations
@@ -106,7 +101,7 @@ export const appendArc = (options, geometry) => {
     vec2.scale(centerTranslated, centerTranslated, multiplier1)
     // F.6.5.3:
     let center = vec2.fromValues(cosPhi * centerTranslated[0] - sinPhi * centerTranslated[1], sinPhi * centerTranslated[0] + cosPhi * centerTranslated[1])
-    center = vec2.add(center, center, vec2.scale(vec2.create(), vec2.add(vec2.create(), startpoint, endpoint), 0.5))
+    center = vec2.add(center, center, vec2.scale(vec2.create(), vec2.add(vec2.create(), startpoint, xendPoint), 0.5))
 
     // F.6.5.5:
     const vector1 = vec2.fromValues((startTranslated[0] - centerTranslated[0]) / xRadius, (startTranslated[1] - centerTranslated[1]) / yRadius)
@@ -134,9 +129,8 @@ export const appendArc = (options, geometry) => {
       newPoints.push(point)
     }
     // ensure end point is precisely what user gave as parameter
-    if (numSteps) newPoints.push(options.endpoint)
+    if (numSteps) newPoints.push(endpoint)
   }
-  newPoints = points.concat(newPoints)
-  const result = fromPoints({}, newPoints)
-  return result
+
+  return appendPoints(newPoints, geometry)
 }

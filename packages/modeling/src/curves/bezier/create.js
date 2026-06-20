@@ -51,7 +51,7 @@ const getPointType = function (points) {
       })
       pType = 'float_' + point.length
     } else throw new Error('Bezier points must all be numbers or arrays of number.')
-    if (firstPointType == null) {
+    if (firstPointType === null) {
       firstPointType = pType
     } else {
       if (firstPointType !== pType) {

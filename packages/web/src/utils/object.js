@@ -7,7 +7,6 @@
  */
 const omit = (propertiesToFilter, object) => Object.keys(object).reduce((result, key) => {
   if (!propertiesToFilter.includes(key)) {
-    // eslint-disable-next-line no-param-reassign
     result[key] = object[key]
   }
   return result
@@ -21,7 +20,6 @@ const omit = (propertiesToFilter, object) => Object.keys(object).reduce((result,
  */
 const keep = (propertiesToFilter, object) => Object.keys(object).reduce((result, key) => {
   if (propertiesToFilter.includes(key)) {
-    // eslint-disable-next-line no-param-reassign
     result[key] = object[key]
   }
   return result

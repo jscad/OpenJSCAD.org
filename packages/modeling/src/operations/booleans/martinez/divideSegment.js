@@ -12,7 +12,8 @@ export const divideSegment = (segment, point, queue) => {
   const r = new SweepEvent(point, false, segment, segment.isSubject)
   const l = new SweepEvent(point, true, segment.otherEvent, segment.isSubject)
 
-  r.contourId = l.contourId = segment.contourId
+  r.contourId = segment.contourId
+  l.contourId = segment.contourId
 
   // avoid a rounding error. The left event would be processed after the right event
   if (compareEvents(l, segment.otherEvent) > 0) {

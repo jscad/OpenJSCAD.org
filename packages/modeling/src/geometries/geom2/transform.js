@@ -18,6 +18,7 @@ import { reverse } from './reverse.js'
  */
 export const transform = (matrix, geometry) => {
   const transforms = mat4.multiply(mat4.create(), matrix, geometry.transforms)
+  // use Object.assign in order to assign EXTRA attributes like color, name, etc
   const transformed = Object.assign({}, geometry, { transforms })
   // determine if the transform is mirroring in 2D
   if (matrix[0] * matrix[5] - matrix[4] * matrix[1] < 0) {

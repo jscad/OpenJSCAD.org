@@ -1,4 +1,4 @@
-import * as vec2 from '../../maths/vec2/index.js'
+import { equals } from '../../maths/vec2/equals.js'
 
 import { isA } from './isA.js'
 
@@ -24,7 +24,7 @@ export const validate = (object) => {
   // check for duplicate points
   if (object.points.length > 1) {
     for (let i = 0; i < object.points.length; i++) {
-      if (vec2.equals(object.points[i], object.points[(i + 1) % object.points.length])) {
+      if (equals(object.points[i], object.points[(i + 1) % object.points.length])) {
         throw new Error(`path2 has duplicate point ${object.points[i]}`)
       }
     }

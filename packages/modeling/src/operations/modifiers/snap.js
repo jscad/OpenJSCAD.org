@@ -1,5 +1,5 @@
 import * as vec2 from '../../maths/vec2/index.js'
-import * as vec3 from '../../maths/vec2/index.js'
+import * as vec3 from '../../maths/vec3/index.js'
 
 import * as geom2 from '../../geometries/geom2/index.js'
 import * as geom3 from '../../geometries/geom3/index.js'
@@ -18,7 +18,7 @@ const snapPath2 = (geometry) => {
   const points = path2.toPoints(geometry)
   const newPoints = points.map((point) => vec2.snap(vec2.create(), point, epsilon))
   // snap can produce duplicate points, remove those
-  return path2.fromPoints({}, newPoints)
+  return path2.fromPoints({ closed: geometry.isClosed }, newPoints)
 }
 
 /*
@@ -28,7 +28,7 @@ const snapPath3 = (geometry) => {
   const vertices = path3.toVertices(geometry)
   const newVertices = vertices.map((vertice) => vec3.snap(vec3.create(), vertice, epsilon))
   // snap can produce duplicate points, remove those
-  return path3.fromVertices({}, newVertices)
+  return path3.fromVertices({ closed: geometry.isClosed }, newVertices)
 }
 
 /*

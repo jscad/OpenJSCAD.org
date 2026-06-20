@@ -1,6 +1,6 @@
 import { EPS } from '../../maths/constants.js'
 
-import * as vec2 from '../../maths/vec2/index.js'
+import { distance } from '../../maths/vec2/distance.js'
 
 import { close } from './close.js'
 import { create } from './create.js'
@@ -18,20 +18,20 @@ import { create } from './create.js'
  * @alias module:modeling/path2.fromPoints
  *
  * @example
- * my newPath = path2.fromPoints({closed: true}, [[10, 10], [-10, 10]])
+ * let newPath = path2.fromPoints({closed: true}, [[10, 10], [-10, 10]])
  */
 export const fromPoints = (options, points) => {
-  const defaults = { closed: false }
-  let { closed } = Object.assign({}, defaults, options)
+  let {
+    closed = false
+  } = options
 
-  let created = create()
-  created.points = points.map((point) => vec2.clone(point))
+  let created = create(points.slice())
 
   // check if first and last points are equal
   if (created.points.length > 1) {
     const p0 = created.points[0]
     const pn = created.points[created.points.length - 1]
-    if (vec2.distance(p0, pn) < (EPS * EPS)) {
+    if (distance(p0, pn) < EPS) {
       // and close automatically
       closed = true
     }

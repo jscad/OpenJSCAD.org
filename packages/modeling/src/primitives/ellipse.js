@@ -61,7 +61,6 @@ export const ellipse = (options = {}) => {
 
   segments = Math.floor(segments * (rotation / TAU))
 
-  const centerV = vec2.clone(center)
   const step = rotation / segments // radians per segment
 
   const points = []
@@ -69,9 +68,9 @@ export const ellipse = (options = {}) => {
   for (let i = 0; i < segments; i++) {
     const angle = (step * i) + startAngle
     const point = vec2.fromValues(radius[0] * cos(angle), radius[1] * sin(angle))
-    vec2.add(point, centerV, point)
+    vec2.add(point, center, point)
     points.push(point)
   }
-  if (rotation < TAU) points.push(centerV)
+  if (rotation < TAU) points.push(vec2.clone(center)) // close with a new point
   return geom2.create([points])
 }

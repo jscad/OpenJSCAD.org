@@ -91,20 +91,19 @@ const makeHttpSideEffect = (params) => {
   return { source, sink }
 }
 
-const readFile = (url, onerror, onsucess) => {
+const readFile = (url, onerror, onsuccess) => {
   const ext = getFileExtensionFromString(url)
   const isBinary = (binaryMimetypes[ext] !== undefined)
 
   fetch(url)
     .then((response) => {
-      if (response.ok) {
-        if (isBinary) {
-          return response.arrayBuffer()
-        } else {
-          return response.text()
-        }
-      } else {
+      if (!response.ok) {
         onerror(new Error(`fetch error: ${response.status} ${response.statusText}`))
+      }
+      if (isBinary) {
+        return response.arrayBuffer()
+      } else {
+        return response.text()
       }
     })
     .then((data) => {
@@ -113,26 +112,25 @@ const readFile = (url, onerror, onsucess) => {
       const fullPath = `/${name}`
       const mimetype = formats[ext] ? formats[ext].mimetype : ''
       const fileEntry = { name, ext, mimetype, source: data, fullPath }
-      onsucess(fileEntry)
+      onsuccess(fileEntry)
     })
     .catch((error) => {
       onerror(error)
     })
 }
 
-const readProxy = (url, onerror, onsucess) => {
+const readProxy = (url, onerror, onsuccess) => {
   const proxyurl = proxyUrl + url
 
   fetch(proxyurl)
     .then((response) => {
-      if (response.ok) {
-        return response.json()
-      } else {
+      if (!response.ok) {
         onerror(new Error(`fetch error: ${response.status} ${response.statusText}`))
       }
+      return response.json()
     })
     .then((data) => {
-      onsucess(data)
+      onsuccess(data)
     })
     .catch((error) => {
       onerror(error)

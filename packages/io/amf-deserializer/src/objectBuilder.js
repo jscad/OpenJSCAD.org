@@ -140,7 +140,7 @@ export const createObject = (obj, index, data, options) => {
     }
     let shape = geom3.create(polygons)
     if (ocolor) {
-      shape = shape.color = ocolor
+      shape.color = ocolor
     }
     return shape
   }

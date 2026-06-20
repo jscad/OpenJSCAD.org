@@ -70,6 +70,8 @@ const inResult = (event, operation) => {
                   (!event.isSubject && !event.otherInOut)
         case XOR:
           return true
+        default:
+          throw new Error('computeFields01')
       }
       break
     case SAME_TRANSITION:
@@ -78,6 +80,8 @@ const inResult = (event, operation) => {
       return operation === DIFFERENCE
     case NON_CONTRIBUTING:
       return false
+    default:
+      throw new Error('computeFields02')
   }
   return false
 }
@@ -104,6 +108,8 @@ const determineResultTransition = (event, operation) => {
         isIn = thatIn && !thisIn
       }
       break
+    default:
+      throw new Error('computeFields03')
   }
   return isIn ? +1 : -1
 }

@@ -24,7 +24,8 @@ export const rgbToHsl = (...values) => {
   const l = (max + min) / 2
 
   if (max === min) {
-    h = s = 0 // achromatic
+    h = 0
+    s = 0 // achromatic
   } else {
     const d = max - min
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
@@ -36,6 +37,7 @@ export const rgbToHsl = (...values) => {
         h = (b - r) / d + 2
         break
       case b:
+      default:
         h = (r - g) / d + 4
         break
     }

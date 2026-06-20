@@ -125,7 +125,7 @@ export const makeWebRequire = (filesAndFolders, options) => {
           exports: {},
           _compile: (content, fileName) => {
             try {
-              const moduleMakerFunction = new Function('require', 'module', content) // eslint-disable-line no-new-func
+              const moduleMakerFunction = new Function('require', 'module', content)
               moduleMakerFunction(_require.bind(null, entry.fullPath), matchingModule)
             } catch (e) {
               // catch errors and build a context specific error, with file name and stack trace

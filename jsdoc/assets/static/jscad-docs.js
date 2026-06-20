@@ -1,4 +1,4 @@
-function addOpenClassToOpenNavItems () {
+const addOpenClassToOpenNavItems = () => {
   const file = window.location.pathname.split('/').pop().replace(/\.html/, '')
   document.querySelectorAll('nav > ul > li > a').forEach((parent) => {
     if (parent.parentNode.querySelectorAll('ul li').length) {

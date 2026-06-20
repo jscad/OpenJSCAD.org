@@ -45,8 +45,7 @@ const sculpture = loadStl('./3d_sculpture-VernonBussler.stl')
 const frog = loadStl('./frog-OwenCollins.stl')
 
 export const main = () => {
-  return union(
-    translate([0, 0, 13], rotateZ(-TAU / 6, scale([0.25, 0.25, 0.25], frog))),
-    translate([-5, 6, 0], sculpture)
-  )
+  const modelA = translate([0, 0, 13], rotateZ(-TAU / 6, scale([0.25, 0.25, 0.25], frog)))
+  const modelB = translate([-5, 6, 0], sculpture)
+  return union( modelA, modelB )
 }

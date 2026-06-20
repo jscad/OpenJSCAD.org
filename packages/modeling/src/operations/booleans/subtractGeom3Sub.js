@@ -13,7 +13,7 @@ import { mayOverlap } from './mayOverlap.js'
  */
 export const subtractGeom3Sub = (geometry1, geometry2) => {
   if (!mayOverlap(geometry1, geometry2)) {
-    return geom3.clone(geometry1)
+    return geometry1
   }
 
   const a = new Tree(geom3.toPolygons(geometry1))

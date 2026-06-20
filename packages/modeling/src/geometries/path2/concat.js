@@ -1,4 +1,4 @@
-import { equals } from '../../maths/vec2/index.js'
+import { equals } from '../../maths/vec2/equals.js'
 
 import { fromPoints } from './fromPoints.js'
 import { toPoints } from './toPoints.js'
@@ -6,7 +6,7 @@ import { toPoints } from './toPoints.js'
 /**
  * Concatenate the given paths.
  *
- * If both contain the same point at the junction, merge it into one.
+ * If paths contain the same junction point, merge it into one.
  * A concatenation of zero paths is an empty, open path.
  * A concatenation of one closed path to a series of open paths produces a closed path.
  * A concatenation of a path to a closed path is an error.

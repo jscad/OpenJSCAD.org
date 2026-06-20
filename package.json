@@ -10,7 +10,7 @@
     "coverage": "lerna run --concurrency 1 --stream coverage",
     "test": "lerna run --stream test",
     "test:tsd": "lerna run test:tsd",
-    "lint": "standardx 'packages/**/*.js'",
+    "lint": "npx eslint",
     "changed": "lerna changed",
     "graph": "lerna list --graph",
     "list": "lerna ls",
@@ -43,6 +43,7 @@
     "packages/utils/*"
   ],
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@jscad/sample-files": "github:jscad/sample-files#master",
     "@lerna-lite/changed": "^4.11.0",
     "@lerna-lite/cli": "^4.11.0",
@@ -52,8 +53,9 @@
     "ava": "^6.3.0",
     "c8": "^10.1.0",
     "docdash": "^2.0.2",
+    "eslint": "^10.5.0",
+    "globals": "^17.6.0",
     "jsdoc": "^4.0.5",
-    "standardx": "7.0.0",
     "tsd": "^0.33.0"
   },
   "collective": {
@@ -72,26 +74,6 @@
     "env": {
       "browser": true,
       "node": true
-    }
-  },
-  "eslintConfig": {
-    "rules": {
-      "func-style": [
-        "error",
-        "expression"
-      ],
-      "arrow-body-style": [
-        "error",
-        "as-needed"
-      ],
-      "arrow-parens": [
-        "error",
-        "always"
-      ],
-      "arrow-spacing": "error",
-      "prefer-arrow-callback": "error",
-      "import/no-default-export": "error",
-      "no-var": "error"
     }
   }
 }

@@ -32,13 +32,13 @@ export const subdivideSegments = (eventQueue, subject, clipping, sbbox, cbbox, o
     }
 
     if (event.left) {
-      next = prev = sweepLine.insert(event)
+      prev = sweepLine.insert(event)
       begin = sweepLine.minNode()
+
+      next = sweepLine.next(prev)
 
       if (prev !== begin) prev = sweepLine.prev(prev)
       else prev = null
-
-      next = sweepLine.next(next)
 
       const prevEvent = prev ? prev.key : null
       let prevprevEvent
@@ -62,7 +62,8 @@ export const subdivideSegments = (eventQueue, subject, clipping, sbbox, cbbox, o
         }
       }
     } else {
-      next = prev = sweepLine.find(event.otherEvent)
+      prev = sweepLine.find(event.otherEvent)
+      next = prev
 
       if (prev && next) {
         // FIXME is this correct? begin is assigned if event.left, not every iterration
