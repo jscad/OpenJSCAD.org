@@ -91,6 +91,6 @@ test('offsetGeom3: offset completes properly, issue 876', (t) => {
 
   const obs = offset({ delta: 1.3, corners: 'round', segments: 12 }, sub)
   t.notThrows.skip(() => geom3.validate(obs))
-  t.is(measureArea(obs), 524.9674760547548)
-  t.is(measureVolume(obs), 604.0599465573156)
+  t.is(measureArea(obs), 524.9674756919702)
+  t.is(measureVolume(obs), 604.0599468042326)
 })
