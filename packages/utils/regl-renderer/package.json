@@ -1,6 +1,6 @@
 {
   "name": "@jscad/regl-renderer",
-  "version": "3.0.5-alpha.0",
+  "version": "3.0.6-alpha.0",
   "description": "Renderer for JSCAD Geometries",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "@jscad/img-utils": "2.0.5",
-    "@jscad/modeling": "3.0.5-alpha.0",
+    "@jscad/modeling": "3.0.6-alpha.0",
     "@rollup/plugin-commonjs": "^23.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-terser": "^0.4.0",

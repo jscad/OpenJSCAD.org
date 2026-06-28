@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.6-alpha.0](/compare/@jscad/modeling@3.0.5-alpha.0...@jscad/modeling@3.0.6-alpha.0) (2026-06-28)
+
+### Bug Fixes
+
+* **modeling:** various fixes and performance tweaks to modeling 9443688
+
 ## [3.0.5-alpha.0](/compare/@jscad/modeling@3.0.4-alpha.0...@jscad/modeling@3.0.5-alpha.0) (2026-05-16)
 
 ### Bug Fixes

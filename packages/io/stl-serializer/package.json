@@ -1,6 +1,6 @@
 {
   "name": "@jscad/stl-serializer",
-  "version": "3.0.5-alpha.0",
+  "version": "3.0.6-alpha.0",
   "description": "STL Serializer for JSCAD",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
@@ -38,7 +38,7 @@
   "license": "MIT",
   "dependencies": {
     "@jscad/array-utils": "3.0.3-alpha.0",
-    "@jscad/modeling": "3.0.5-alpha.0"
+    "@jscad/modeling": "3.0.6-alpha.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.0.0",
