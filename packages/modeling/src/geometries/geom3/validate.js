@@ -22,7 +22,17 @@ export const validate = (object) => {
   }
 
   // check polygons
-  object.polygons.forEach(poly3.validate)
+  object.polygons.forEach((p, i) => {
+    if (p.vertices.length < 3) {
+      throw new Error(`invalid polygon ${i}: only ${p.vertices.length} vertices`)
+    }
+
+    try {
+      poly3.validate(p)
+    } catch (e) {
+      throw new Error(`invalid polygon ${i}: ${e}`)
+    }
+  })
   validateManifold(object)
 
   // check transforms

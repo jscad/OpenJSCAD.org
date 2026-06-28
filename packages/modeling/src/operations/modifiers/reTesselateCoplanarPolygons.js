@@ -317,8 +317,8 @@ export const reTesselateCoplanarPolygons = (sourcePolygons) => {
           const vertices3d = points2d.map((point2d) => orthonormalFormula.to3D(point2d))
           const polygon = poly3.fromVerticesAndPlane(vertices3d, plane) // TODO support shared
 
-          // if we let empty polygon out, next retesselate will crash
-          if (polygon.vertices.length) destPolygons.push(polygon)
+          // if we let invalid polygons out, next retesselate will crash
+          if (polygon.vertices.length > 2) destPolygons.push(polygon)
         }
       }
     } // if(yIndex > 0)

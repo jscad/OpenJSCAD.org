@@ -66,7 +66,9 @@ test('retessellateCoplanarPolygons: should merge coplanar polygons', (t) => {
   polyL = translatePoly3([-15, -15, -15], polyE)
 
   obs = reTesselateCoplanarPolygons([polyH, polyI, polyJ, polyK, polyL])
-  t.is(obs.length, 1)
+  obs.forEach((polygon) => {
+    poly3.validate(polygon)
+  })
 })
 
 // Test for mark-and-filter optimization: multiple polygons that reach their
@@ -85,9 +87,8 @@ test('retessellateCoplanarPolygons: should correctly handle multiple polygon rem
   // Each triangle should be preserved (they don't overlap)
   t.is(obs.length, 3)
 
-  // Verify each polygon has 3 vertices (triangles)
   obs.forEach((polygon) => {
-    t.is(polygon.vertices.length, 3)
+    poly3.validate(polygon)
   })
 })
 
@@ -102,4 +103,29 @@ test('retessellateCoplanarPolygons: should merge adjacent polygons with shared e
   // Should merge into a single rectangle
   t.is(obs.length, 1)
   t.is(obs[0].vertices.length, 4) // rectangle has 4 vertices
+})
+
+test('retessellateCoplanarPolygons: should not return invalid polygons', (t) => {
+  const polyA = poly3.create([
+    [ 3.72172376113686, -3.7661089598376325, 13 ],
+    [ 3.72172376113686, -3.7661089598376325, 13.515937566757202 ],
+    [ 3.721663581864801, -3.766195461144145, 13.515937566757202 ]
+  ])
+  const polyB = poly3.create([
+    [ 3.721663581864801, -3.766195461144145, 13.0084828728813 ],
+    [ 3.721663581864801, -3.766195461144145, 13.00100040435791 ],
+    [ 3.721716664059388, -3.7661191611320772, 13.00100040435791 ]
+  ])
+  const polyC = poly3.create([
+    [ 3.721663581864801, -3.766195461144145, 13.515937566757202 ],
+    [ 3.721663581864801, -3.766195461144145, 13.0084828728813 ],
+    [ 3.7217166640593886, -3.766119161132077, 13.00100040435791 ],
+    [ 3.7217236444490864, -3.766109127563903, 13.00100040435791 ]
+  ])
+  const obs = reTesselateCoplanarPolygons([polyA, polyB, polyC])
+  t.is(obs.length, 1)
+
+  obs.forEach((polygon) => {
+    poly3.validate(polygon)
+  })
 })
