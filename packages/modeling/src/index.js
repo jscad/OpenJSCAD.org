@@ -8,7 +8,7 @@ export * from './maths/index.js'
 export * from './measurements/index.js'
 export * from './primitives/index.js'
 export * from './text/index.js'
-export { degToRad, flatten, radiusToSegments, radToDeg } from './utils/index.js'
+export * from './utils/index.js'
 
 export * from './operations/booleans/index.js'
 export * from './operations/extrusions/index.js'
@@ -19,14 +19,15 @@ export * from './operations/offsets/index.js'
 export * from './operations/transforms/index.js'
 
 // V2 API compatibility:
+// - add the old name space
+// - add V2 API if not intrusive to V3 API
 export * as colors from './colors/index.js'
 export * as curves from './curves/index.js'
 import { geom2, geom3, path2, poly2, poly3 } from './geometries/index.js'
 export const geometries = {
   geom2: {
     ...geom2,
-    create: (sides) => geom2.fromSides(sides),
-    fromPoints: (points) => geometries.geom2.create([points])
+    create: (sides) => geom2.fromSides(sides)
   },
   geom3,
   path2,
