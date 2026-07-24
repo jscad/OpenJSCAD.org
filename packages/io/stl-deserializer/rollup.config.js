@@ -7,17 +7,11 @@ import terser from '@rollup/plugin-terser'
 const {name, version, license} = JSON.parse(fs.readFileSync('package.json'))
 
 export default {
-  input: 'src/index.js',
+  input: './src/index.js',
 
   output: [
     {
-      file: 'dist/jscad-stl-deserializer.min.js',
-      format: 'umd',
-      name: 'jscadStlDeserializer',
-      banner: `/*! ${name} V${version} (${license}) */`
-    },
-    {
-      file: 'dist/jscad-stl-deserializer.es.js',
+      file: './dist/jscad-stl-deserializer.js',
       format: 'es',
       banner: `/*! ${name} V${version} (${license}) */`
     }

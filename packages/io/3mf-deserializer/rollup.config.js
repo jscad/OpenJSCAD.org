@@ -12,13 +12,7 @@ export default {
 
   output: [
     {
-      file: 'dist/jscad-3mf-deserializer.min.js',
-      format: 'umd',
-      name: 'jscad3MFDeserializer',
-      banner: `/*! ${name} V${version} (${license}) */`
-    },
-    {
-      file: 'dist/jscad-3mf-deserializer.es.js',
+      file: './dist/jscad-3mf-deserializer.js',
       format: 'es',
       banner: `/*! ${name} V${version} (${license}) */`
     }

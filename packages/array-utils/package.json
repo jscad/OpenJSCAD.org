@@ -6,9 +6,10 @@
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "type": "module",
   "types": "src/index.d.ts",
-  "main": "src/index.js",
-  "unpkg": "dist/jscad-array-utils.min.js",
-  "module": "dist/jscad-array-utils.es.js",
+  "main": "./src/index.js",
+  "exports": {
+    "default": "./dist/jscad-array-utils.js"
+  },
   "scripts": {
     "build": "rollup --config",
     "coverage": "c8 --all --reporter=html --reporter=text npm test",

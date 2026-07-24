@@ -4,10 +4,11 @@
   "description": "Core functionality for JSCAD Applications",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
-  "main": "src/index.js",
+  "main": "./src/index.js",
+  "exports": {
+    "default": "./src/index.js"
+  },
   "type": "module",
-  "unpkg": "dist/jscad-core.min.js",
-  "module": "dist/jscad-core.es.js",
   "scripts": {
     "build": "rollup --config",
     "coverage": "c8 --all --reporter=html --reporter=text npm test",

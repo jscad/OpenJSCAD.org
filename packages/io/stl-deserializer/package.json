@@ -5,9 +5,10 @@
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "type": "module",
-  "main": "src/index.js",
-  "unpkg": "dist/jscad-stl-deserializer.min.js",
-  "module": "dist/jscad-stl-deserializer.es.js",
+  "main": "./src/index.js",
+  "exports": {
+    "default": "./dist/jscad-stl-deserializer.js"
+  },
   "scripts": {
     "build": "rollup --config",
     "coverage": "c8 --all --reporter=html --reporter=text npm test",
