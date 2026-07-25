@@ -16,12 +16,15 @@ const mimeType = 'model/stl'
 
 /**
  * Serialize the give objects to STL mesh.
+ *
  * @see http://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
+ *
  * @param {Object} options - options for serialization
- * @param {String} [options.binary='true'] - target format for data
+ * @param {Boolean} [options.binary='true'] - target STL data format
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
- * @param {...Object} objects - objects to serialize as STL
- * @returns {Array} serialized contents with one STL mesh (either string or binary data)
+ * @param {Object|Array} objects - objects to serialize as STL
+ * @returns {Buffer|String} serialized contents, STL data (either string or binary data)
+ *
  * @example
  * const geometry = cube()
  * const stlData = serializer({binary: false}, geometry)

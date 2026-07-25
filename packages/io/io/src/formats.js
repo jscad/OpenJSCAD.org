@@ -161,6 +161,13 @@ export const supportedInputExtensions = () => {
   return supported
 }
 
+/**
+ * Get the MIME type for the given file extension.
+ *
+ * @param {String} extension - file extension
+ * @returns {String} the MIME type or null if unknown
+ * @alias module:io.getMimeType
+ */
 export const getMimeType = (extension) => {
   for (const format in supportedFormats) {
     const meta = supportedFormats[format]
@@ -170,6 +177,13 @@ export const getMimeType = (extension) => {
   return null
 }
 
+/**
+ * Get the file extension for the given MIME type.
+ *
+ * @param {String} mimeType - MIME type
+ * @returns {String} file extension or null if unknown
+ * @alias module:io.getExtension
+ */
 export const getExtension = (mimeType) => {
   for (const format in supportedFormats) {
     const meta = supportedFormats[format]

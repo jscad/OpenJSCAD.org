@@ -2,10 +2,11 @@
  * Serializer of JSCAD geometries to SVG source (XML).
  *
  * The serialization of the following geometries are possible.
- * - serialization of 2D geometry (geom2) to SVG path (a continous path containing the outlines of the geometry)
- * - serialization of 2D geometry (path2) to SVG path
+ * - serialization of 2D geometry (Geom2) to SVG path (a continous path containing the outlines of the geometry)
+ * - serialization of 2D geometry (Path2) to SVG path
  *
  * Colors are added to SVG shapes when found on the geometry.
+ *
  * Special attributes (id and class) are added to SVG shapes when found on the geometry.
  *
  * @module io/svg-serializer
@@ -24,13 +25,15 @@ const mimeType = 'image/svg+xml'
 /**
  * Serialize the give objects to SVG code (XML).
  * @see https://www.w3.org/TR/SVG/Overview.html
+ *
  * @param {Object} options - options for serialization, REQUIRED
  * @param {String} [options.unit='mm'] - unit of design; em, ex, px, in, cm, mm, pt, pc
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
  * @param {Object|Array} objects - objects to serialize as SVG
- * @returns {Array} serialized contents, SVG code (XML string)
+ * @returns {String} serialized contents, SVG code (XML string)
+ *
  * @example
- * const geometry = primitives.square()
+ * const geometry = square()
  * const svgData = serializer({unit: 'mm'}, geometry)
  */
 const serialize = (options, ...objects) => {

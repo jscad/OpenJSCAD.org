@@ -31,11 +31,13 @@ const version = '[VI]{version}[/VI]' // version is injected by rollup
 
 /**
  * Deserialize the given 3MF source into either a script or an array of geometry.
- * Both 3MF packageing (OPC) and 3MF contents (XML) are supported.
+ *
+ * Both 3MF packaging (OPC) and 3MF contents (XML) are supported.
+ *
  * @see https://3mf.io/specification/
  * @see README for supported conversions
  * @param {Object} options - options used during deserializing
- * @param {String} [options.filename] - filename of original 3MF source, REQUIRED
+ * @param {String} options.filename - filename of original 3MF source, REQUIRED
  * @param {String} [options.output='script'] - either 'script' or 'geometry' to set desired output
  * @param {String} [options.version] - version added to the script metadata, default is package version
  * @param {Boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script

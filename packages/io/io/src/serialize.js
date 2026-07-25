@@ -17,7 +17,7 @@ import { serializers } from './serializers.js'
  * @example
  * import { getMimeType, serialize } from '@jscad/io'
  * const mimetype = getMimeType('svg')
- * const shapes = [primitives.cirlce(), primitives.star()]
+ * const shapes = [circle(), star()]
  * const output = serialize({units: 'inches'}, mimetype, shapes)
  */
 export const serialize = (options, mimeType, ...objects) => {
