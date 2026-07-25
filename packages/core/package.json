@@ -10,7 +10,6 @@
   },
   "type": "module",
   "scripts": {
-    "build": "rollup --config",
     "coverage": "c8 --all --reporter=html --reporter=text npm test",
     "test": "ava './src/**/*.test.js' --verbose --timeout 2m"
   },

@@ -14,6 +14,7 @@
     "changed": "lerna changed",
     "graph": "lerna list --graph",
     "list": "lerna ls",
+    "build": "lerna run --stream build",
     "preversion": "npm run test && npm run test:tsd && npm run docs",
     "publish": "lerna publish prepatch --include-merged-tags --no-private --no-push --conventional-prerelease --dist-tag alpha --pre-dist-tag alpha",
     "publish-dryrun": "lerna version prepatch --include-merged-tags --no-private --no-push --conventional-prerelease"
