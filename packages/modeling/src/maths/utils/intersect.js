@@ -7,7 +7,7 @@
  * @param {Vec2} p2 - second point of first line segment
  * @param {Vec2} p3 - first point of second line segment
  * @param {Vec2} p4 - second point of second line segment
- * @param {boolean} endpointTouch - include intersections at segment endpoints
+ * @param {Boolean} endpointTouch - include intersections at segment endpoints
  * @returns {Vec2} intersection point of the two line segments, or undefined
  * @alias module:modeling/maths/utils.intersect
  */
