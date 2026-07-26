@@ -10,7 +10,7 @@
  *
  * @example
  * const numbers = [1, 5]
- * const result = insertSorted(numbers, 3, fnNumberSort)
+ * const result = insertSorted(numbers, 3, fnNumberSort) // returns [1, 3, 5]
  */
 export const insertSorted = (array, element, compareFunction) => {
   let leftbound = 0

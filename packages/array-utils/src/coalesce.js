@@ -7,7 +7,7 @@
  * @param {Array} arr - list of arguments
  * @returns {Array} a flat list of arguments
  *
- * @alias module:modeling/utils.coalesce
+ * @alias module:array-utils.coalesce
  * @function
  */
 export const coalesce = (arr) => flattenHelper(arr, [])

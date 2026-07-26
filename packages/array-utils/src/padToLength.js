@@ -13,7 +13,7 @@
  *
  * @example
  * const srcArray = [2, 3, 4]
- * const paddedArray = padToLength(srcArray, 0, 5)
+ * const paddedArray = padToLength(srcArray, 0, 5) // returns [2, 3, 4, 0, 0]
  */
 export const padToLength = (anArray, padding, targetLength) => {
   anArray = anArray.slice()
