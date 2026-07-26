@@ -41,16 +41,17 @@ const translateLine = (options, line) => {
 /**
  * Construct an array of character segments from an ascii string whose characters code is between 31 and 127,
  * if one character is not supported it is replaced by a question mark.
- * @param {object} options - options for text construction
- * @param {number} [options.xOffset=0] - x offset
- * @param {number} [options.yOffset=0] - y offset
- * @param {number} [options.height=14] - height of requested characters (uppercase height), i.e. font height in points
- * @param {number} [options.lineSpacing=30/14] - line spacing expressed as a percentage of height
- * @param {number} [options.letterSpacing=0] - extra letter spacing, expressed as a proportion of height, i.e. like CSS em
- * @param {string} [options.align='left'] - multi-line text alignment: left, center, right
- * @param {number} [options.extrudeOffset=0] - width of the extrusion that will be applied (manually) after the creation of the character
- * @param {string} text - ascii string
- * @returns {Array} list of vector line objects, where each line contains a list of vector character objects
+ * @param {Object} options - options for text construction
+ * @param {Number} [options.xOffset=0] - x offset
+ * @param {Number} [options.yOffset=0] - y offset
+ * @param {Number} [options.font=simplex] - single line simplex font definition
+ * @param {Number} [options.height=14] - height of requested characters (uppercase height), i.e. font height in points
+ * @param {Number} [options.lineSpacing=30/14] - line spacing expressed as a percentage of height
+ * @param {Number} [options.letterSpacing=0] - extra letter spacing, expressed as a proportion of height, i.e. like CSS em
+ * @param {String} [options.align='left'] - multi-line text alignment: left, center, right
+ * @param {Number} [options.extrudeOffset=0] - width of the extrusion that will be applied (manually) after the creation of the character
+ * @param {String} text - ascii string
+ * @returns {Array} list of vector line objects, where each line contains a list of VectorChar objects
  * @alias module:modeling/text.vectorText
  *
  * @example

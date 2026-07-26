@@ -1,7 +1,7 @@
 /**
  * Determine if the given object is a path2 geometry.
  *
- * @param {object} object - the object to interrogate
+ * @param {Object} object - the object to interrogate
  * @returns {Boolean} true if the object matches a path2
  * @alias module:modeling/path2.isA
  *

@@ -5,7 +5,7 @@ import * as path2 from '../geometries/path2/index.js'
 import * as path3 from '../geometries/path3/index.js'
 import * as slice from '../geometries/slice/index.js'
 
-/**
+/*
  * @param {Array} shapes - list of shapes to compare
  * @returns {Boolean} true if the given shapes are of the same type
  * @alias module:modeling/utils.areAllShapesTheSameType

@@ -1,7 +1,7 @@
 /**
  * Determine if the given object is a polygon.
  *
- * @param {object} object - the object to interrogate
+ * @param {Object} object - the object to interrogate
  * @returns {Boolean} true if the object matches a poly3
  * @alias module:modeling/poly3.isA
  *

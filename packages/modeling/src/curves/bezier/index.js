@@ -1,6 +1,6 @@
 /**
  * Represents a bezier easing function.
- * @see {@link bezier} for data structure information.
+ * @see {@link Bezier} for data structure information.
  * @module modeling/bezier
  *
  * @example

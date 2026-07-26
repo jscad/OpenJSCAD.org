@@ -3,7 +3,7 @@ import { toOutlines } from './toOutlines.js'
 /**
  * Produces an array of points from the given geometry.
  *
- * The returned array should not be modified as the points are shared with the geometry.
+ * Note: The returned points should not be modified as the points are shared with the geometry.
  *
  * NOTE: The points returned do NOT define an order. Use toOutlines() for ordered points.
  *

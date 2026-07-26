@@ -11,14 +11,14 @@ import { isGT, isGTE } from './commonChecks.js'
 /**
  * Construct a torus by revolving a small circle (inner) about the circumference of a large (outer) circle.
  *
- * @param {object} [options] - options for construction
- * @param {number} [options.innerRadius=1] - radius of small (inner) circle
- * @param {number} [options.outerRadius=4] - radius of large (outer) circle
- * @param {number} [options.innerSegments=32] - number of segments to create per rotation
- * @param {number} [options.outerSegments=32] - number of segments to create per rotation
- * @param {number} [options.innerRotation=0] - rotation of small (inner) circle in radians
- * @param {number} [options.outerRotation=TAU] - rotation (outer) of the torus (RADIANS)
- * @param {number} [options.startAngle=0] - start angle of the torus (RADIANS)
+ * @param {Object} [options] - options for construction
+ * @param {Number} [options.innerRadius=1] - radius of small (inner) circle
+ * @param {Number} [options.outerRadius=4] - radius of large (outer) circle
+ * @param {Number} [options.innerSegments=32] - number of segments to create per rotation
+ * @param {Number} [options.outerSegments=32] - number of segments to create per rotation
+ * @param {Number} [options.innerRotation=0] - rotation of small (inner) circle in radians
+ * @param {Number} [options.outerRotation=TAU] - rotation (outer) of the torus (RADIANS)
+ * @param {Number} [options.startAngle=0] - start angle of the torus (RADIANS)
  * @returns {Geom3} new 3D geometry
  * @alias module:modeling/primitives.torus
  *

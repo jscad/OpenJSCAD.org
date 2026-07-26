@@ -1,7 +1,10 @@
 /**
  * @alias module:modeling/colors.cssColors
  * @see CSS color table from http://www.w3.org/TR/css3-color/
- * @enum {Array}
+ * @constant
+ * @type {Array}
+ * @static
+ *
  * @example
  * let newShape = colorize(cssColors.red, oldShape)
  */

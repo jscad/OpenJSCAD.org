@@ -9,8 +9,9 @@ import { create } from './create.js'
  * as the points can define a convex or a concave polygon.
  *
  * The geometry must not self intersect, i.e. the sides cannot cross.
+ *
  * @param {Array} points - list of points in 2D space
- * @returns {geom2} a new geometry
+ * @returns {Geom2} a new geometry
  * @alias module:modeling/geom2.fromPoints
  */
 export const fromPoints = (points) => {

@@ -4,9 +4,11 @@ import { measureArea } from './measureArea.js'
 
 /**
  * Measure the total (aggregate) area for the given geometries.
+ *
  * Note: This measurement will not account for overlapping geometry
- * @param {...Object} geometries - the geometries to measure.
- * @return {number} the total surface area for the group of geometry.
+ *
+ * @param {...Object} geometries - the geometries to measure
+ * @return {Number} the aggregate surface area for the given geometries.
  * @alias module:modeling/measurements.measureAggregateArea
  *
  * @example

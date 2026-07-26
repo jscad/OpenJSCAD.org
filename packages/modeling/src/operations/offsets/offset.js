@@ -9,10 +9,10 @@ import { offsetPath2 } from './offsetPath2.js'
 /**
  * Create offset geometry from the given geometry using the given options.
  * Offsets from internal and external space are created.
- * @param {object} options - options for offset
- * @param {number} [options.delta=1] - delta of offset (+ to exterior, - from interior)
- * @param {string} [options.corners='edge'] - type of corner to create after offseting; edge, chamfer, round
- * @param {number} [options.segments=16] - number of segments when creating round corners
+ * @param {Object} options - options for offset
+ * @param {Number} [options.delta=1] - delta of offset (+ to exterior, - from interior)
+ * @param {String} [options.corners='edge'] - type of corner to create after offseting; edge, chamfer, round
+ * @param {Number} [options.segments=16] - number of segments when creating round corners
  * @param {...Object} objects - the geometries to offset
  * @return {Object|Array} new geometry, or list of new geometries
  * @alias module:modeling/offsets.offset

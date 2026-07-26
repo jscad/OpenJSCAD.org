@@ -13,7 +13,7 @@
  * @alias module:modeling.geometry
  *
  * @example
- * import { geom2, geom3, path2, poly2, poly3, slice } from '@jscad/modeling'
+ * import { geom2, geom3, path2, path3, poly2, poly3, slice } from '@jscad/modeling'
  */
 export * as geom2 from './geom2/index.js'
 export * as geom3 from './geom3/index.js'

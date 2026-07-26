@@ -6,7 +6,7 @@ import { toPoints } from './toPoints.js'
  * Create a string representing the contents of the given path.
  *
  * @param {Path2} geometry - the path
- * @returns {string} a representative string
+ * @returns {String} a representative string
  * @alias module:modeling/path2.toString
  *
  * @example

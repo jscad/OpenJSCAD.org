@@ -1,5 +1,21 @@
 /**
- * Creates a new slice from the given contours.
+ * Represents a 3D geometry consisting of a list of contours, where each contour consists of a list of planar vertices.
+ *
+ * @typedef Slice
+ * @type {Object}
+ * @property {Array} contours - list of contours, each contour containing a list of 3D vertices
+ *
+ * @example
+ * // data structure
+ * {
+ *   contours: [
+ *     [[0,0,1], [4,0,1], [4,3,1]]
+ *   ]
+ * }
+ */
+
+/**
+ * Creates a new slice from the given contours, or empty.
  *
  * NOTE: The slice (and all vertices) are assumed to be planar from the beginning.
  *

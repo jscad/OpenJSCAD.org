@@ -8,17 +8,6 @@
  * const p1 = poly2.create([[0,0], [4,0], [4,3]])
  */
 
-/**
- * @typedef {Object} Poly2
- * @property {Array} points - list of ordered points (2D)
- *
- * @example
- * // data structure
- * {
- *   points: [[0,0], [4,0], [4,3]],
- * }
- */
-
 export { arePointsInside } from './arePointsInside.js'
 export { clone } from './clone.js'
 export { create } from './create.js'

@@ -4,9 +4,9 @@ import { isGTE } from './commonChecks.js'
 /**
  * Construct an axis-aligned solid cube in three dimensional space with six square faces.
  * @see [cuboid]{@link module:modeling/primitives.cuboid} for more options
- * @param {object} [options] - options for construction
+ * @param {Object} [options] - options for construction
  * @param {Array} [options.center=[0,0,0]] - center of cube
- * @param {number} [options.size=2] - dimension of cube
+ * @param {Number} [options.size=2] - dimension of cube
  * @returns {Geom3} new 3D geometry
  * @alias module:modeling/primitives.cube
  * @example

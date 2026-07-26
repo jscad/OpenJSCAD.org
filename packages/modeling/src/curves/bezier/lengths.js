@@ -2,16 +2,17 @@ import { valueAt } from './valueAt.js'
 
 /**
  * Divides the bezier curve into line segments and returns the cumulative length of those segments as an array.
+ *
  * Utility function used to calculate the curve's approximate length and determine the equivalence between arc length and time.
  *
- * @example
- * const b = bezier.create([[0, 0], [0, 10]]);
- * const totalLength = lengths(100, b).pop(); // the last element of the array is the curve's approximate length
- *
- * @param {number} segments the number of segments to use when approximating the curve length.
- * @param {object} bezier a bezier curve.
- * @returns an array containing the cumulative length of the segments.
+ * @param {Number} segments - the number of segments to use when approximating the curve length
+ * @param {Bezier} bezier - a bezier curve
+ * @returns {Array} an array containing the cumulative length of the segments
  * @alias module:modeling/bezier.lengths
+ *
+ * @example
+ * const b = bezier.create([[0, 0], [0, 10]])
+ * const totalLength = lengths(100, b).pop() // the last element of the array is the curve's approximate length
  */
 export const lengths = (segments, bezier) => {
   let sum = 0

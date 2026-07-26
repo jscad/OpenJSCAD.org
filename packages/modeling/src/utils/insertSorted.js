@@ -1,4 +1,4 @@
-/**
+/*
  * Insert the given element into the given array using the compareFunction.
  * @alias module:modeling/utils.insertSorted
  */

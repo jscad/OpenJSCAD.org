@@ -8,7 +8,7 @@ import * as vec3 from '../../maths/vec3/index.js'
  * @see http://chenlab.ece.cornell.edu/Publication/Cha/icip01_Cha.pdf
  *
  * @param {Poly3} polygon - the polygon to measure
- * @return {number} volume of the polygon
+ * @return {Number} volume of the polygon
  * @alias module:modeling/poly3.measureSignedVolume
  *
  * @example

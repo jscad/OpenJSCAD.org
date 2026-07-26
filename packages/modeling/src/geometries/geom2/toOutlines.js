@@ -3,6 +3,8 @@ import { applyTransforms } from './applyTransforms.js'
 /**
  * Create the outline(s) of the given geometry.
  *
+ * Note: The returned outlines should not be modified as the outlines are shared with the geometry.
+ *
  * @param {Geom2} geometry - geometry to create outlines from
  * @returns {Array} an array of outlines, where each outline is an array of ordered points
  * @alias module:modeling/geom2.toOutlines

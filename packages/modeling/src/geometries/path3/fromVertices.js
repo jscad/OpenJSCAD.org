@@ -12,7 +12,7 @@ import { create } from './create.js'
  * where each vertex is an array of three numbers.
  *
  * @param {Object} options - options for construction
- * @param {boolean} [options.closed=false] - if the path should be open or closed
+ * @param {Boolean} [options.closed=false] - if the path should be open or closed
  * @param {Array} vertices - array of vertices (3D) from which to create the path
  * @returns {Path3} a new path
  * @alias module:modeling/path3.fromVertices

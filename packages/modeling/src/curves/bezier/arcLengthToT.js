@@ -2,25 +2,29 @@ import { lengths } from './lengths.js'
 
 /**
  * Convert a given arc length along a bezier curve to a t value.
- * Useful for generating equally spaced points along a bezier curve.
+ *
+ * The t value can be used to generating equally spaced points along a bezier curve.
+ *
+ * @param {Object} [options] - options for construction
+ * @param {Number} [options.distance=0] - the distance along the bezier curve for which we want to find the corresponding t value
+ * @param {Number} [options.segments=100] - the number of segments to use when approximating the curve length
+ * @param {Bezier} bezier - a bezier curve
+ * @returns {Number} a number between 0 to 1, or NaN if the arcLength is negative or greater than the total length of the curve
+ * @alias module:modeling/bezier.arcLengthToT
  *
  * @example
- * const points = [];
- * const segments = 9; // this will generate 10 equally spaced points
- * const increment = bezier.length(100, bezierCurve) / segments;
- * for(let i = 0; i <= segments; i++) {
- *   const t = bezier.arcLengthToT({distance: i * increment}, bezierCurve);
- *   const point = bezier.valueAt(t, bezierCurve);
- *   points.push(point);
- * }
- * return points;
+ * const b = bezier.create([0,0,0], [0,5,10], [10,0,-5], [10,10,10]])
  *
- * @param {object} [options] options for construction
- * @param {number} [options.distance=0] the distance along the bezier curve for which we want to find the corresponding t value.
- * @param {number} [options.segments=100] the number of segments to use when approximating the curve length.
- * @param {object} bezier a bezier curve.
- * @returns a number in the [0, 1] interval or NaN if the arcLength is negative or greater than the total length of the curve.
- * @alias module:modeling/bezier.arcLengthToT
+ * // generate the arc lengths across the bezier curve, and obtain the value at each t
+ * const segments = 9 // this will generate 10 equally spaced points
+ * const increment = bezier.length(100, bezierCurve) / segments
+ * const points = []
+ * for (let i = 0; i <= segments; i++) {
+ *   const t = bezier.arcLengthToT({distance: i * increment}, b)
+ *   const point = bezier.valueAt(t, b)
+ *   points.push(point)
+ * }
+ * return points
  */
 export const arcLengthToT = (options, bezier) => {
   const defaults = {

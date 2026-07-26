@@ -6,7 +6,7 @@ import { toOutlines } from './toOutlines.js'
  * Create a string representing the contents of the given geometry.
  *
  * @param {Geom2} geometry - the geometry
- * @returns {string} a representative string
+ * @returns {String} a representative string
  * @alias module:modeling/geom2.toString
  *
  * @example

@@ -11,8 +11,9 @@ import { calculateEpsilonFromBounds } from './calculateEpsilonFromBounds.js'
 
 /**
  * Measure the aggregated Epsilon for the given geometries.
+ *
  * @param {...Object} geometries - the geometries to measure
- * @return {number} the aggregated Epsilon for the whole group of geometries
+ * @return {Number} the aggregated Epsilon for the given geometries
  * @alias module:modeling/measurements.measureAggregateEpsilon
  *
  * @example
