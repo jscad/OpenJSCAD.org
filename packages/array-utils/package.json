@@ -8,6 +8,7 @@
   "types": "src/index.d.ts",
   "main": "./src/index.js",
   "exports": {
+    "node": "./src/index.js",
     "default": "./dist/jscad-array-utils.js"
   },
   "scripts": {

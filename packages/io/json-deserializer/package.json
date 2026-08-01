@@ -6,7 +6,8 @@
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "type": "module",
   "main": "./src/index.js",
-  "export": {
+  "exports": {
+    "node": "./src/index.js",
     "default": "./dist/jscad-json-deserializer.js"
   },
   "scripts": {
