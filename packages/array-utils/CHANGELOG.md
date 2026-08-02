@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.4-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/%40jscad%2Farray-utils%403.0.3-alpha.0...%40jscad%2Farray-utils%403.0.4-alpha.0) (2026-08-02)
+
+### Bug Fixes
+
+* **modeling:** corrected exports for math utils, and V2 compatibility ([b36aba3](https://github.com/jscad/OpenJSCAD.org/commit/b36aba3c1dd61e9a0c1e6e2c43136e3dcfb0de34))
+
 ## [3.0.3-alpha.0](/compare/@jscad/array-utils@3.0.2-alpha.0...@jscad/array-utils@3.0.3-alpha.0) (2026-05-15)
 
 ### Bug Fixes
