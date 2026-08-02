@@ -11,7 +11,9 @@ import { hullGeom3 } from './hullGeom3.js'
 
 /**
  * Create a convex hull of the given geometries.
+ *
  * The given geometries should be of the same type, either geom2 or geom3 or path2.
+ *
  * @param {...Object} geometries - list of geometries from which to create a hull
  * @returns {Geom2|Geom3|Path2} new geometry
  * @alias module:modeling/hulls.hull

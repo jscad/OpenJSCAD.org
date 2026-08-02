@@ -10,13 +10,14 @@ import { toPoints } from './toPoints.js'
  *
  * The Bézier curve starts at the last point in the given geometry, and ends at the last control point.
  * The other control points are intermediate control points to transition the curve from start to end points.
+ *
  * The first control point may be null to ensure a smooth transition occurs. In this case,
  * the second to last point of the given geometry is mirrored into the control points of the Bézier curve.
  * In other words, the trailing gradient of the geometry matches the new gradient of the curve.
  *
- * @param {object} options - options for construction
+ * @param {Object} options - options for construction
  * @param {Array} options.controlPoints - list of control points (2D) for the Bézier curve
- * @param {number} [options.segments=16] - number of segments per 360 rotation
+ * @param {Number} [options.segments=16] - number of segments per 360 rotation
  * @param {Path2} geometry - the path of which to append points
  * @returns {Path2} a new path with the appended points
  * @alias module:modeling/path2.appendBezier

@@ -1,9 +1,11 @@
 /**
  * Get the X coordinate of a point with a certain Y coordinate, interpolated between two points.
+ *
  * Interpolation is robust even if the points have the same Y coordinate
+ *
  * @param {Vec2} point1
  * @param {Vec2} point2
- * @param {number} y
+ * @param {Number} y
  * @return {Array} X and Y of interpolated point
  * @alias module:modeling/maths/utils.interpolateBetween2DPointsForY
  */

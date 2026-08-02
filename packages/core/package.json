@@ -4,12 +4,12 @@
   "description": "Core functionality for JSCAD Applications",
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
-  "main": "src/index.js",
+  "main": "./src/index.js",
+  "exports": {
+    "default": "./src/index.js"
+  },
   "type": "module",
-  "unpkg": "dist/jscad-core.min.js",
-  "module": "dist/jscad-core.es.js",
   "scripts": {
-    "build": "rollup --config",
     "coverage": "c8 --all --reporter=html --reporter=text npm test",
     "test": "ava './src/**/*.test.js' --verbose --timeout 2m"
   },
@@ -44,8 +44,8 @@
     "strip-bom": "4.0.0"
   },
   "devDependencies": {
-    "ava": "^6.3.0",
-    "c8": "^10.1.0"
+    "ava": "^8.0.0",
+    "c8": "^12.0.0"
   },
   "collective": {
     "type": "opencollective",

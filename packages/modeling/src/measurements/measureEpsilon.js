@@ -11,9 +11,11 @@ import { measureBoundingBox } from './measureBoundingBox.js'
 
 /**
  * Measure the epsilon of the given geometries.
+ *
  * Epsilon values are used in various functions to determine minimum distances between vertices, planes, etc.
+ *
  * @param {...Object} geometries - the geometries to measure
- * @return {number|Array} the epsilon, or a list of epsilons for each geometry
+ * @return {Number|Array} the epsilon, or a list of epsilons for each geometry
  * @alias module:modeling/measurements.measureEpsilon
  *
  * @example

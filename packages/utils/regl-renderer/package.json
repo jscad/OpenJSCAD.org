@@ -5,10 +5,12 @@
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "type": "module",
-  "main": "src/index.js",
+  "main": "./src/index.js",
+  "exports": {
+    "node": "./src/index.js",
+    "default": "./dist/jscad-regl-renderer.js"
+  },
   "types": "types",
-  "unpkg": "dist/jscad-regl-renderer.min.js",
-  "module": "dist/jscad-regl-renderer.es.js",
   "scripts": {
     "build": "rollup --config",
     "coverage": "c8 --all --reporter=html --reporter=text npm test",
@@ -59,13 +61,13 @@
   "devDependencies": {
     "@jscad/img-utils": "2.0.5",
     "@jscad/modeling": "3.0.6-alpha.0",
-    "@rollup/plugin-commonjs": "^23.0.0",
-    "@rollup/plugin-node-resolve": "^15.0.0",
-    "@rollup/plugin-terser": "^0.4.0",
-    "ava": "^6.3.0",
-    "c8": "^10.1.0",
+    "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-terser": "^1.0.0",
+    "ava": "^8.0.0",
+    "c8": "^12.0.0",
     "http-server": "^14.1.1",
-    "rollup": "^4.52.0"
+    "rollup": "^4.62.0"
   },
   "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"
 }

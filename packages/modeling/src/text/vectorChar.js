@@ -23,12 +23,13 @@ const defaultsVectorParams = {
  * Construct a {@link VectorChar} from an ASCII character whose code is between 31 and 127.
  * If the character is not supported it is replaced by a question mark.
  *
- * @param {object} options - options for text construction
- * @param {number} [options.xOffset=0] - x offset
- * @param {number} [options.yOffset=0] - y offset
- * @param {number} [options.height=21] - font size/character height (uppercase height)
- * @param {number} [options.extrudeOffset=0] - width of the extrusion that will be applied (manually) after the creation of the character
- * @param {string} text - ascii character
+ * @param {Object} options - options for text construction
+ * @param {Number} [options.xOffset=0] - x offset
+ * @param {Number} [options.yOffset=0] - y offset
+ * @param {Number} [options.font=simplex] - single line simplex font definition
+ * @param {Number} [options.height=14] - font size/character height (uppercase height)
+ * @param {Number} [options.extrudeOffset=0] - width of the extrusion that will be applied (manually) after the creation of the character
+ * @param {String} text - ascii character
  * @returns {VectorChar} a new vertor char object
  * @alias module:modeling/text.vectorChar
  *

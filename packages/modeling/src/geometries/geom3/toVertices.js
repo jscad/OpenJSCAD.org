@@ -5,7 +5,7 @@ import { toPolygons } from './toPolygons.js'
 /**
  * Return the given geometry as a list of vertices, after applying transforms.
  *
- * The returned array should not be modified as the vertices are shared with the geometry.
+ * Note: The returned array should not be modified as the vertices are shared with the geometry.
  *
  * @param {Geom3} geometry - the geometry
  * @return {Array} list of vertices, where each sub-array represents a polygon

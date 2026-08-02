@@ -10,6 +10,6 @@
  *
  * @example
  * const numbers = [2, 1, 4, 3, 6, 5, 8, 7, 9, 0]
- * const sorted = numbers.sort(fnNumberSort)
+ * const sorted = numbers.sort(fnNumberSort) // returns [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
  */
 export const fnNumberSort = (a, b) => a - b

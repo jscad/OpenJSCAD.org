@@ -8,20 +8,6 @@
  * const slice = slice.create([[[0,0,0], [4,0,0], [4,3,12]]])
  */
 
-/**
- * @typedef Slice
- * @type {Object}
- * @property {Array} contours - list of contours, each contour containing a list of 3D vertices
- *
- * @example
- * // data structure
- * {
- *   contours: [
- *     [[0,0,1], [4,0,1], [4,3,1]]
- *   ]
- * }
- */
-
 export { calculatePlane } from './calculatePlane.js'
 export { clone } from './clone.js'
 export { create } from './create.js'

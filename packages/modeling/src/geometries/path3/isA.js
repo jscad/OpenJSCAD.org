@@ -2,7 +2,7 @@
  * Determine if the given object is a path3 geometry.
  *
  * @param {Object} object - the object to interrogate
- * @returns {boolean} true if the object matches a path3
+ * @returns {Boolean} true if the object matches a path3
  * @alias module:modeling/path3.isA
  *
  * @example

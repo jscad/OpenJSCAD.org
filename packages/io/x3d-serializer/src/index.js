@@ -8,9 +8,9 @@ import { stringify } from '@jscad/io-utils'
  * Serializer of JSCAD geometries to X3D source data (XML).
  *
  * The serialization of the following geometries are possible.
- * - serialization of 3D geometries (geom3) to X3D IndexedTriangleSet (a unique mesh containing coordinates)
- * - serialization of 2D geometries (geom2) to X3D Polyline2D
- * - serialization of 2D paths (path2) to X3D Polyline2D
+ * - serialization of 3D geometries (Geom3) to X3D IndexedTriangleSet (a unique mesh containing coordinates)
+ * - serialization of 2D geometries (Geom2) to X3D Polyline2D
+ * - serialization of 2D paths (Path2) to X3D Polyline2D
  *
  * Material (color) is added to X3D shapes when found on the geometry.
  *
@@ -34,9 +34,10 @@ const defNames = new Map()
  * @param {String} [options.unit='millimeter'] - unit of design; millimeter, inch, feet, meter or micrometer
  * @param {Function} [options.statusCallback] - call back function for progress ({ progress: 0-100 })
  * @param {Object|Array} objects - objects to serialize as X3D
- * @returns {Array} serialized contents, X3D format (XML)
+ * @returns {String} serialized contents, X3D format (XML string)
+ *
  * @example
- * const geometry = primitives.cube()
+ * const geometry = cube()
  * const x3dData = serializer({unit: 'meter'}, geometry)
  */
 const serialize = (options, ...objects) => {

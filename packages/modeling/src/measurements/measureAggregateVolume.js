@@ -4,9 +4,11 @@ import { measureVolume } from './measureVolume.js'
 
 /**
  * Measure the total (aggregate) volume for the given geometries.
+ *
  * Note: This measurement will not account for overlapping geometry
- * @param {...Object} geometries - the geometries to measure.
- * @return {number} the volume for the group of geometry.
+ *
+ * @param {...Object} geometries - the geometries to measure
+ * @return {Number} the aggregate volume of the given geometries.
  * @alias module:modeling/measurements.measureAggregateVolume
  *
  * @example

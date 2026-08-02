@@ -9,8 +9,8 @@
  * @function
  *
  * @example
- * let value = nth([1], 2) // undefined
- * let value = nth([1, 2, 3, 4, 5], 3) // 4
+ * let value = nth([1], 2) // returns undefined
+ * let value = nth([1, 2, 3, 4, 5], 3) // returns 4
  */
 export const nth = (array, index) => {
   if (!Array.isArray(array) || array.length < index) {

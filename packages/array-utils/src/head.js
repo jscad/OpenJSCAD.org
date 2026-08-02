@@ -8,7 +8,7 @@
  * @function
  *
  * @example
- * let element = head([1, 2])
+ * let element = head([1, 2]) // return 1
  */
 export const head = (array) => {
   if (!Array.isArray(array) || array.length === 0) {

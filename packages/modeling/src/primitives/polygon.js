@@ -5,7 +5,7 @@ import * as geom2 from '../geometries/geom2/index.js'
  *
  * NOTE: The ordering of points is important, and must define a counter clockwise rotation of points.
  *
- * @param {object} options - options for construction
+ * @param {Object} options - options for construction
  * @param {Array} options.points - points of the polygon : either flat or nested array of 2D points
  * @param {Array} [options.paths] - paths of the polygon : either flat or nested array of point indexes
  * @param {String} [options.orientation='counterclockwise'] - orientation of points

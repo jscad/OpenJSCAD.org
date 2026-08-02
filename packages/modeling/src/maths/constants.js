@@ -9,7 +9,7 @@
 export const EPS = 1e-5
 
 /**
- * Smaller epsilon used for measuring near zero distances.
+ * Smaller epsilon used for comparing zero distances between normals.
  *
  * @constant
  * @static

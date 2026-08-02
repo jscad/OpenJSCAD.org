@@ -1,9 +1,10 @@
 /**
  * Convert hue values to a color component (ie one of r, g, b)
+ *
  * @param  {Number} p
  * @param  {Number} q
  * @param  {Number} t
- * @return {number} color component
+ * @return {Number} color component
  * @alias module:modeling/colors.hueToColorComponent
  */
 export const hueToColorComponent = (p, q, t) => {

@@ -16,25 +16,6 @@
  * ])
  */
 
-/**
- * @typedef Geom3
- * @type {Object}
- * @property {Array} polygons - list of polygons, each polygon containing three or more vertices
- * @property {Mat4} transforms - transforms to apply to the polygons, see transform()
- *
- * @example
- * {
- *   "polygons": [
- *     {"vertices": [[-1,-1,-1], [-1,-1,1], [-1,1,1], [-1,1,-1]]},
- *     {"vertices": [[1,-1,-1], [1,1,-1], [1,1,1], [1,-1,1]]},
- *     {"vertices": [[-1,-1,-1], [1,-1,-1], [1,-1,1], [-1,-1,1]]},
- *     {"vertices": [[-1,1,-1], [-1,1,1], [1,1,1], [1,1,-1]]},
- *     {"vertices": [[-1,-1,-1], [-1,1,-1], [1,1,-1], [1,-1,-1]]},
- *     {"vertices": [[-1,-1,1], [1,-1,1], [1,1,1], [-1,1,1]]}
- *   ],
- *   "transforms": [1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
- * }
- */
 export { clone } from './clone.js'
 export { create } from './create.js'
 export { fromVertices } from './fromVertices.js'

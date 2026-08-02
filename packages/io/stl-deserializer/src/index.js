@@ -4,14 +4,6 @@ import { BinaryReader } from '@jscad/io-utils'
 
 const pkgversion = '[VI]{version}[/VI]' // version is injected by rollup
 
-// STL function from http://jsfiddle.net/Riham/yzvGD/35/
-// CC BY-SA by Riham
-// changes by Rene K. Mueller <spiritdude@gmail.com>
-// changes by Mark 'kaosat-dev' Moissette
-// 2017/10/14: refactoring, added support for object output etc
-// 2013/03/28: lot of rework and debugging included, and error handling
-// 2013/03/18: renamed functions, creating .jscad source direct via polyhedron()
-
 /**
  * Deserializer of STL data to JSCAD geometries.
  * @module io/stl-deserializer
@@ -23,12 +15,12 @@ const pkgversion = '[VI]{version}[/VI]' // version is injected by rollup
  * Parse the given STL data and return either a JSCAD script or a list of geometries
  *
  * @param {Object} options - options used during deserializing, REQUIRED
- * @param {string} [options.filename='stl'] - filename of original STL source
- * @param {string} [options.version='0.0.0'] - version number to add to the metadata
- * @param {boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script
- * @param {string} [options.output='script'] - either 'script' or 'geometry' to set desired output
- * @param {string} input - stl data
- * @return {(Array|string)} a list of objects (geometry) or a string (script)
+ * @param {String} [options.filename='stl'] - filename of original STL source
+ * @param {String} [options.version='0.0.0'] - version number to add to the metadata
+ * @param {Boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script
+ * @param {String} [options.output='script'] - either 'script' or 'geometry' to set desired output
+ * @param {String} input - stl data
+ * @return {(Array|String)} a list of objects (geometry) or a string (script)
  */
 const deserialize = (options, stl) => {
   const defaults = {

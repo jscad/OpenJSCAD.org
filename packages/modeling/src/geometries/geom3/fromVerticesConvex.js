@@ -3,10 +3,12 @@ import { create } from './create.js'
 import * as poly3 from '../poly3/index.js'
 
 /**
- * Construct a new convex 3D geometry from a list of unique vertices.
+ * Construct a new 3D geometry from a list of unique vertices.
+ *
+ * The unique vertices are used to create a hull of the vertices.
  *
  * @param {Array} uniqueVertices - list of vertices to construct convex 3D geometry
- * @returns {geom3} a new geometry
+ * @returns {Geom3} a new geometry
  * @alias module:modeling/geom3.fromVerticesConvex
  */
 export const fromVerticesConvex = (uniqueVertices) => {

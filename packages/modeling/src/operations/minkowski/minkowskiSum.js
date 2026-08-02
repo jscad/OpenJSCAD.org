@@ -16,11 +16,13 @@ import { unionGeom3 } from '../booleans/unionGeom3.js'
  * - Offset a solid by a cube to create chamfered edges
  * - Collision detection (if Minkowski sum contains origin, shapes overlap)
  *
- * For best performance, use convex geometries. Non-convex geometries are supported
- * when the second operand is convex, but require decomposition and are slower.
+ * For best performance, use convex geometries.
  *
- * @param {...Object} geometries - two geom3 geometries (second should be convex for non-convex first)
- * @returns {geom3} new 3D geometry representing the Minkowski sum
+ * Non-convex geometries are supported
+ * when the second operand is convex, but this requires decomposition and much slower.
+ *
+ * @param {...Object} geometries - list of geometries
+ * @returns {Geom3} new 3D geometry representing the Minkowski sum
  * @alias module:modeling/minkowski.minkowskiSum
  *
  * @example

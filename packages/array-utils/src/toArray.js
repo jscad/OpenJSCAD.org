@@ -8,7 +8,7 @@
  * @function
  *
  * @example
- * const array = toArray(1) // [1]
+ * const array = toArray(1) // returns [1]
  */
 export const toArray = (array) => {
   if (Array.isArray(array)) return array

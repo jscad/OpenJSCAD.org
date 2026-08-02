@@ -14,7 +14,7 @@ import { plane } from './plane.js'
  *
  * **NOTE: If the geometry is not valid, an exception will be thrown with details of the geometry error.**
  *
- * @param {object} object - the object to interrogate
+ * @param {Object} object - the object to interrogate
  * @throws {Error} error if the geometry is not valid
  * @alias module:modeling/poly3.validate
  *

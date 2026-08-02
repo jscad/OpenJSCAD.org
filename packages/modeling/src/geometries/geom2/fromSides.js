@@ -42,6 +42,7 @@ const toPointMap = (sides) => {
 /**
  * Create a new 2D geometry from a list of sides.
  *
+ * @deprecated 3.0
  * @param {Array} sides - list of sides to create outlines from
  * @returns {Geom2} a new geometry
  * @alias module:modeling/geom2.fromSides

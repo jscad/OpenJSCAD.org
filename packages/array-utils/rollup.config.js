@@ -5,16 +5,10 @@ import terser from '@rollup/plugin-terser'
 const {name, version, license} = JSON.parse(fs.readFileSync('package.json'))
 
 export default {
-  input: 'src/index.js',
+  input: './src/index.js',
   output: [
     {
-      file: 'dist/jscad-array-utils.min.js',
-      format: 'umd',
-      name: 'jscadArrayUtils',
-      banner: `/*! ${name} V${version} (${license}) */`
-    },
-    {
-      file: 'dist/jscad-array-utils.es.js',
+      file: './dist/jscad-array-utils.js',
       format: 'es',
       banner: `/*! ${name} V${version} (${license}) */`
     }

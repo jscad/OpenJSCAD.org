@@ -5,7 +5,7 @@
   "homepage": "https://openjscad.xyz/",
   "repository": "https://github.com/jscad/OpenJSCAD.org",
   "type": "module",
-  "main": "src/index.js",
+  "main": "./src/index.js",
   "scripts": {
     "coverage": "c8 --all --reporter=html --reporter=text npm test",
     "test": "ava './tests/*.test.js' --verbose --timeout 2m"
@@ -35,8 +35,8 @@
   "license": "MIT",
   "devDependencies": {
     "@jscad/modeling": "3.0.6-alpha.0",
-    "ava": "^6.3.0",
-    "c8": "^10.1.0"
+    "ava": "^8.0.0",
+    "c8": "^12.0.0"
   },
   "gitHead": "a90b9bad95a417661c619dc733e62c587dc71a4a"
 }

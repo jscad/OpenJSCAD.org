@@ -5,6 +5,7 @@
  * - serialization of 3D geometry (geom3) to 3MF object (a unique mesh containing both vertices and triangles)
  *
  * Colors are added to base materials when found on the 3D geometry, i.e. attribute color.
+ *
  * Names are added to meshs when found on the 3D geometry, i.e. attribute name.
  *
  * @module io/3mf-serializer
@@ -22,7 +23,7 @@ import { flatten, toArray } from '@jscad/array-utils'
 const mimeType = 'model/3mf'
 
 /**
- * Serialize the give objects to 3MF contents (XML) or 3MF packaging (OPC).
+ * Serialize the give objects to 3MF packaging (OPC) or 3MF contents (XML).
  * @see https://3mf.io/specification/
  *
  * @param {Object} [options] - options for serialization
@@ -31,7 +32,8 @@ const mimeType = 'model/3mf'
  * @param {Array} [options.defaultcolor=[0,0,0,1]] - default color for objects
  * @param {Boolean} [options.compress=true] - package and compress the contents
  * @param {Object|Array} objects - objects to serialize into 3D manufacturing format
- * @returns {Array} serialized contents, 3MF contents (XML) or 3MF packaging (ZIP)
+ * @returns {Buffer|String} serialized contents, 3MF packaging (OPC) or 3MF contents (XML)
+ *
  * @example
  * const geometry = cube()
  * const package = serializer({unit: 'meter'}, geometry) // 3MF package, ZIP format

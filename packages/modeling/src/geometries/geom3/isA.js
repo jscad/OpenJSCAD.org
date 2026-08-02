@@ -1,7 +1,7 @@
 /**
  * Determine if the given object is a 3D geometry.
  *
- * @param {object} object - the object to interrogate
+ * @param {Object} object - the object to interrogate
  * @returns {Boolean} true if the object matches a geom3
  * @alias module:modeling/geom3.isA
  *

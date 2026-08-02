@@ -8,13 +8,13 @@ import * as vec2 from '../../maths/vec2/index.js'
 
 /**
  * Create a set of offset points from the given points using the given options (if any).
- * @param {object} options - options for offset
- * @param {number} [options.delta=1] - delta of offset (+ to exterior, - from interior)
- * @param {string} [options.corners='edge'] - type corner to create during of expansion; edge, chamfer, round
- * @param {number} [options.segments=16] - number of segments when creating round corners
- * @param {number} [options.closed=false] - is the last point connected back to the first point?
+ * @param {Object} options - options for offset
+ * @param {Number} [options.delta=1] - delta of offset (+ to exterior, - from interior)
+ * @param {String} [options.corners='edge'] - type corner to create during of expansion; edge, chamfer, round
+ * @param {Number} [options.segments=16] - number of segments when creating round corners
+ * @param {Number} [options.closed=false] - is the last point connected back to the first point?
  * @param {Array} points - array of 2D points
- * @returns {Array} new set of offset points, plus points for each rounded corner
+ * @returns {Array} new set of offset points, plus points for each corner
  * @alias module:modeling/offsets.offsetFromPoints
  */
 export const offsetFromPoints = (options, points) => {

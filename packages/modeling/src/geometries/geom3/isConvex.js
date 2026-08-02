@@ -6,13 +6,13 @@ import { isA } from './isA.js'
 import { toPolygons } from './toPolygons.js'
 
 /**
- * Test if a 3D geometry is convex.
+ * Determine if the given 3D geometry is convex.
  *
  * A polyhedron is convex if every vertex lies on or behind every face plane
  * (i.e., on the interior side of the plane).
  *
- * @param {geom3} geometry - the geometry to test
- * @returns {boolean} true if the geometry is convex
+ * @param {Geom3} geometry - the geometry to test
+ * @returns {Boolean} true if the geometry is convex
  * @alias module:modeling/geom3.isConvex
  *
  * @example

@@ -77,8 +77,9 @@ const measureAreaOfSlice = (geometry) => {
 
 /**
  * Measure the area of the given geometries.
+ *
  * @param {...Object} geometries - the geometries to measure
- * @return {number|Array} the area, or a list of areas for each geometry
+ * @return {Number|Array} the area, or a list of areas for each geometry
  * @alias module:modeling/measurements.measureArea
  *
  * @example

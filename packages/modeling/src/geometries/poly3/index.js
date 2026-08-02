@@ -11,17 +11,6 @@
  * const polygon = poly3.create([[0,0,0], [4,0,0], [4,3,12]])
  */
 
-/**
- * @typedef {Object} Poly3
- * @property {Array} vertices - list of ordered vertices (3D)
- *
- * @example
- * // data structure
- * {
- *   vertices: [[0,0,0], [4,0,0], [4,3,12]]
- * }
- */
-
 export { clone } from './clone.js'
 export { create } from './create.js'
 export { fromVerticesAndPlane } from './fromVerticesAndPlane.js'

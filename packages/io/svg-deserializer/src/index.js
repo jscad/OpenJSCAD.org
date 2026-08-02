@@ -22,18 +22,20 @@ const version = '[VI]{version}[/VI]' // version is injected by rollup
 
 /**
  * Deserialize the given SVG source into either a script or an array of geometries
+ *
  * @see {@link https://www.w3.org/TR/SVG/intro.html|SVG Specification}
+ *
  * @param {Object} options - options used during deserializing, REQUIRED
- * @param {boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script
- * @param {string} [options.filename='svg'] - filename of original SVG source
- * @param {string} [options.output='script'] - either 'script' or 'geometry' to set desired output
- * @param {float} [options.pxPmm] - custom pixels per mm unit
- * @param {integer} [options.segments] - number of segments for rounded shapes
- * @param {string} [options.target] - target 2D geometry; 'geom2' or 'path2'
- * @param {string} [options.version='0.0.0'] - version number to add to the metadata
- * @param {string} [options.pathSelfClosed='error'] - [error||trim||split] if path self-closes with one of commands without stop command right after
- * @param {string} input - SVG source data
- * @returns {(Array|String)} either an array of objects (geometry) or a string (script)
+ * @param {Boolean} [options.addMetadata=true] - toggle injection of metadata at the start of the script
+ * @param {String} [options.filename='svg'] - filename of original SVG source
+ * @param {String} [options.output='script'] - either 'script' or 'geometry' to set desired output
+ * @param {Number} [options.pxPmm] - custom pixels per mm unit, SVG default is 1/0.2822222
+ * @param {integer} [options.segments=32] - number of segments for rounded shapes
+ * @param {String} [options.target='path'] - target 2D geometry; 'geom2' or 'path2'
+ * @param {String} [options.version='0.0.0'] - version number to add to the metadata
+ * @param {String} [options.pathSelfClosed='error'] - [error||trim||split] if path self-closes with one of commands without stop command right after
+ * @param {String} input - SVG source data
+ * @returns {Array|String} either an array of objects (geometry) or a string (script)
  */
 const deserialize = (options, input) => {
   const defaults = {

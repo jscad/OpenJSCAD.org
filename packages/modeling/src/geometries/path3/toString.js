@@ -5,8 +5,8 @@ import { toVertices } from './toVertices.js'
 /**
  * Create a string representing the contents of the given path.
  *
- * @param {path} geometry - the path
- * @returns {string} a representative string
+ * @param {Path3} geometry - the path
+ * @returns {String} a representative string
  * @alias module:modeling/path3.toString
  *
  * @example

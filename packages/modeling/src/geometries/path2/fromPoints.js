@@ -11,8 +11,8 @@ import { create } from './create.js'
  * The points must be provided an array of points,
  * where each point is an array of two numbers.
  *
- * @param {object} options - options for construction
- * @param {boolean} [options.closed=false] - if the path should be open or closed
+ * @param {Object} options - options for construction
+ * @param {Boolean} [options.closed=false] - if the path should be open or closed
  * @param {Array} points - array of points (2D) from which to create the path
  * @returns {Path2} a new path
  * @alias module:modeling/path2.fromPoints
