@@ -29,7 +29,7 @@
   "dependencies": {
     "@jscad/array-utils": "2.1.4",
     "@jscad/modeling": "2.13.0",
-    "fflate": "0.7.3",
+    "fflate": "0.7.5",
     "onml": "1.2.0"
   },
   "devDependencies": {
