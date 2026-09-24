@@ -16,7 +16,7 @@ const reverse = (geometry) => {
 
   const newsides = oldsides.map((side) => [side[1], side[0]])
   newsides.reverse() // is this required?
-  return create(newsides)
+  return Object.assign({}, geometry, create(newsides))
 }
 
 module.exports = reverse
