@@ -111,7 +111,9 @@ const extrudeRotate = (options, geometry) => {
   const rotationPerSlice = totalRotation / segments
   const isCapped = Math.abs(totalRotation) < TAU
   const baseSlice = slice.fromSides(geom2.toSides(geometry))
-  slice.reverse(baseSlice, baseSlice)
+  // a profile entirely at negative X sweeps in the opposite sense, which already turns its faces outward
+  const isNegativeX = pointsWithPositiveX.length === 0
+  if (!isNegativeX) slice.reverse(baseSlice, baseSlice)
 
   const matrix = mat4.create()
   const xRotationMatrix = mat4.fromXRotation(mat4.create(), TAU / 4) // compute once, reuse
