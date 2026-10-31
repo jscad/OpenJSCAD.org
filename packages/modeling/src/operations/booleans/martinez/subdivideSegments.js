@@ -4,10 +4,13 @@
  * https://github.com/w8r/martinez
  */
 
+import { equals } from '../../../maths/vec2/index.js'
+
 import { Tree } from './splaytree.js'
 import { computeFields } from './computeFields.js'
 import { possibleIntersection } from './possibleIntersection.js'
 import { compareSegments } from './compareSegments.js'
+import { compareEvents } from "./compareEvents.js"
 import {
   INTERSECTION,
   DIFFERENCE
@@ -41,6 +44,7 @@ export const subdivideSegments = (eventQueue, subject, clipping, sbbox, cbbox, o
       else prev = null
 
       const prevEvent = prev ? prev.key : null
+      const queueLength = eventQueue.length
       let prevprevEvent
       computeFields(event, prevEvent, operation)
       if (next) {
@@ -59,6 +63,22 @@ export const subdivideSegments = (eventQueue, subject, clipping, sbbox, cbbox, o
           prevprevEvent = prevprev ? prevprev.key : null
           computeFields(prevEvent, prevprevEvent, operation)
           computeFields(event, prevEvent, operation)
+        }
+      }
+
+      // Splitting a neighbour at this event's point can queue events that
+      // precede this one (e.g. the left half of a segment divided exactly at
+      // our left endpoint). Our fields were computed without them, so take
+      // this event out and process it again after them (#155).
+      if (eventQueue.length > queueLength) {
+        const top = eventQueue.peek()
+        if (equals(top.point, event.point) &&
+          compareEvents(top, event) === -1 &&
+          compareEvents(event, top) === 1
+        ) {
+          sweepLine.remove(event)
+          sortedEvents.pop()
+          eventQueue.push(event)
         }
       }
     } else {

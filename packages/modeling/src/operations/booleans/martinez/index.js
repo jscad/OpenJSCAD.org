@@ -108,6 +108,9 @@ export const boolean = (subjectGeom, clippingGeom, operation) => {
   const subject = toMartinez(subjectGeom)
   const clipping = toMartinez(clippingGeom)
 
+  // TBD removed degenerate rings from subject and clipping geometry
+  // TBD https://github.com/w8r/martinez/pull/174
+
   let trivial = trivialOperation(subject, clipping, operation)
   if (trivial) {
     return trivial
