@@ -12,7 +12,7 @@
  */
 export const reverse = (geometry) => {
   // NOTE: this only updates the order of the vertices
-  const cloned = Object.assign({}, geometry)
-  cloned.vertices = geometry.vertices.slice().reverse()
-  return cloned
+  const vertices = geometry.vertices.slice().reverse()
+  // use Object.assign in order to assign EXTRA attributes like color, name, etc
+  return Object.assign({}, geometry, { vertices })
 }
