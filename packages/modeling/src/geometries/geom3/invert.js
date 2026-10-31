@@ -1,6 +1,5 @@
 import * as poly3 from '../poly3/index.js'
 
-import { create } from './create.js'
 import { toPolygons } from './toPolygons.js'
 
 /**
@@ -14,7 +13,8 @@ import { toPolygons } from './toPolygons.js'
  * let inverted = geom3.invert(geometry)
  */
 export const invert = (geometry) => {
-  const polygons = toPolygons(geometry)
-  const newPolygons = polygons.map((polygon) => poly3.invert(polygon))
-  return create(newPolygons)
+  let polygons = toPolygons(geometry)
+  polygons = polygons.map((polygon) => poly3.invert(polygon))
+  // use Object.assign in order to assign EXTRA attributes like color, name, etc
+  return Object.assign({}, geometry, { polygons })
 }
