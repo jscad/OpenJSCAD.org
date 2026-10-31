@@ -8,6 +8,6 @@
  * @returns {number} the maximum distance from the true circle to the flat facet chord
  */
 export const sagitta = (radius, segments) => {
-  if (segments <= 0) return 0;
-  return radius * (1 - Math.cos(Math.PI / segments));
+  if (segments <= 0) return 0
+  return radius * (1 - Math.cos(Math.PI / segments))
 }

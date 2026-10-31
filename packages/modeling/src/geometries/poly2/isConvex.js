@@ -13,7 +13,7 @@ export const isConvex = (polygon) => {
   if (numPoints > 2) {
     const points = polygon.points
     let prev = 0
-    let curr = 0
+    let curr
     for (let i = 0; i < numPoints; i++) {
       curr = crossBetweenSegments(points[i], points[(i + 1) % numPoints], points[(i + 2) % numPoints])
       if (curr !== 0) {

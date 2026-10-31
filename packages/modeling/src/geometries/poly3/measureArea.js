@@ -34,15 +34,14 @@ export const measureArea = (polygon) => {
   let coord = 3 // ignore Z coordinates
   if ((ax > ay) && (ax > az)) {
     coord = 1 // ignore X coordinates
-  } else
-  if (ay > az) {
+  } else if (ay > az) {
     coord = 2 // ignore Y coordinates
   }
 
   let area = 0
-  let h = 0
-  let i = 1
-  let j = 2
+  let h
+  let i
+  let j
   switch (coord) {
     case 1: // ignore X coordinates
       // compute area of 2D projection

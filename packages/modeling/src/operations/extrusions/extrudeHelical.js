@@ -60,7 +60,7 @@ export const extrudeHelical = (options = {}, geometry) => {
   const temp1 = mat4.create()
   const temp2 = mat4.create()
 
-  const sliceCallback = (progress, index, base) => {
+  const sliceCallback = (progress, index) => {
     const zRotation = startAngle + angle / segments * index
     const xOffset = endOffset / segments * index
     const zOffset = (zRotation - startAngle) / TAU * pitch

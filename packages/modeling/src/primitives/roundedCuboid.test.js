@@ -40,7 +40,7 @@ test('roundedCuboid (options)', (t) => {
   // test segments
   let obs = roundedCuboid({ segments: 8 })
   let pts = geom3.toVertices(obs)
-  let exp = []
+  let exp
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 21.65472758198208)
@@ -50,8 +50,6 @@ test('roundedCuboid (options)', (t) => {
   // test center
   obs = roundedCuboid({ center: [4, 5, 6], segments: 8 })
   pts = geom3.toVertices(obs)
-  exp = [
-  ]
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 21.65472758198207)

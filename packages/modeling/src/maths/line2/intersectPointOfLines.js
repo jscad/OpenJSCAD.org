@@ -1,5 +1,3 @@
-import * as vec2 from '../vec2/index.js'
-
 import { solve2Linear } from '../utils/solve2Linear.js'
 
 /**

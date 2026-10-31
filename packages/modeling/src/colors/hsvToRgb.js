@@ -19,9 +19,9 @@ export const hsvToRgb = (...values) => {
   const s = values[1]
   const v = values[2]
 
-  let r = 0
-  let g = 0
-  let b = 0
+  let r
+  let g
+  let b
 
   const i = Math.floor(h * 6)
   const f = h * 6 - i

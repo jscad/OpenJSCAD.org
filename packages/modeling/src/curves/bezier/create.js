@@ -41,7 +41,7 @@ export const create = (points) => {
 const getPointType = function (points) {
   let firstPointType = null
   points.forEach((point) => {
-    let pType = ''
+    let pType
     if (Number.isFinite(point)) {
       pType = 'float_single'
     } else if (Array.isArray(point)) {

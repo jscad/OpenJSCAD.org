@@ -103,10 +103,9 @@ export class Node {
         continue
       }
       if (node.plane === null) {
-        let index = 0 // default
-        index = Math.floor(len / 2)
-        // index = len >> 1
-        // index = Math.floor(Math.random() * len)
+        let index = Math.floor(len / 2)
+        // let index = len >> 1
+        // let index = Math.floor(Math.random() * len)
         const bestPoly = polygonTreeNodes[index].getPolygon()
         node.plane = poly3.plane(bestPoly)
       }

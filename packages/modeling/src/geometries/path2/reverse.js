@@ -1,5 +1,3 @@
-import { clone } from './clone.js'
-
 /**
  * Reverses the path so that the points are in the opposite order.
  *

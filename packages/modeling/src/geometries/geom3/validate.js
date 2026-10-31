@@ -30,7 +30,7 @@ export const validate = (object) => {
     try {
       poly3.validate(p)
     } catch (e) {
-      throw new Error(`invalid polygon ${i}: ${e}`)
+      throw new Error(`invalid polygon ${i}`, { cause: e })
     }
   })
   validateManifold(object)
