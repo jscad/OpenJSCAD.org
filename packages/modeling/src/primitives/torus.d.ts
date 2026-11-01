@@ -1,8 +1,10 @@
+import Vec3 from '../maths/vec3/type'
 import Geom3 from '../geometries/geom3/type'
 
 export default torus
 
 export interface TorusOptions {
+  center?: Vec3
   innerRadius?: number
   outerRadius?: number
   innerSegments?: number

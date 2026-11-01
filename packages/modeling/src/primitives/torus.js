@@ -6,11 +6,12 @@ const { translate } = require('../operations/transforms/translate')
 
 const circle = require('./circle')
 
-const { isGT, isGTE } = require('./commonChecks')
+const { isGT, isGTE, isNumberArray } = require('./commonChecks')
 
 /**
  * Construct a torus by revolving a small circle (inner) about the circumference of a large (outer) circle.
  * @param {Object} [options] - options for construction
+ * @param {Array} [options.center=[0,0,0]] - center of the torus
  * @param {Number} [options.innerRadius=1] - radius of small (inner) circle
  * @param {Number} [options.outerRadius=4] - radius of large (outer) circle
  * @param {Integer} [options.innerSegments=32] - number of segments to create per rotation
@@ -26,6 +27,7 @@ const { isGT, isGTE } = require('./commonChecks')
  */
 const torus = (options) => {
   const defaults = {
+    center: [0, 0, 0],
     innerRadius: 1,
     innerSegments: 32,
     outerRadius: 4,
@@ -34,8 +36,9 @@ const torus = (options) => {
     startAngle: 0,
     outerRotation: TAU
   }
-  const { innerRadius, innerSegments, outerRadius, outerSegments, innerRotation, startAngle, outerRotation } = Object.assign({}, defaults, options)
+  const { center, innerRadius, innerSegments, outerRadius, outerSegments, innerRotation, startAngle, outerRotation } = Object.assign({}, defaults, options)
 
+  if (!isNumberArray(center, 3)) throw new Error('center must be an array of X, Y and Z values')
   if (!isGT(innerRadius, 0)) throw new Error('innerRadius must be greater than zero')
   if (!isGTE(innerSegments, 3)) throw new Error('innerSegments must be three or more')
   if (!isGT(outerRadius, 0)) throw new Error('outerRadius must be greater than zero')
@@ -58,7 +61,11 @@ const torus = (options) => {
     angle: outerRotation,
     segments: outerSegments
   }
-  return extrudeRotate(extrudeOptions, innerCircle)
+  let result = extrudeRotate(extrudeOptions, innerCircle);
+  if ((center[0] !== 0) || (center[1] !== 0) || (center[2] !== 0)) {
+    result = translate(center, result)
+  }
+  return result;
 }
 
 module.exports = torus
