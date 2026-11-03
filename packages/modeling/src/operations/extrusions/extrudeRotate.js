@@ -110,7 +110,10 @@ const extrudeRotate = (options, geometry) => {
 
   const rotationPerSlice = totalRotation / segments
   const isCapped = Math.abs(totalRotation) < TAU
-  const baseSlice = slice.transform(mat4.fromXRotation(mat4.create(), TAU / 4), slice.fromSides(geom2.toSides(geometry)))
+
+  // rotate the slice from the xy plane to xz plane
+  const xRotationMatrix = mat4.fromXRotation(mat4.create(), TAU / 4)
+  const baseSlice = slice.transform(xRotationMatrix, slice.fromSides(geom2.toSides(geometry)))
   slice.reverse(baseSlice, baseSlice)
 
   const zRotationMatrix = mat4.create() // reuse for Z rotation
