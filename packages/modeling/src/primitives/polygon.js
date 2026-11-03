@@ -54,7 +54,7 @@ export const polygon = (options = {}) => {
   if (paths.length === 0) {
     // create a list of paths based on the points
     let count = 0
-    listOfPaths = listOfPolys.map((list) => list.map((point) => count++))
+    listOfPaths = listOfPolys.map((list) => list.map(() => count++))
   }
 
   // flatten the listOfPoints for indexed access

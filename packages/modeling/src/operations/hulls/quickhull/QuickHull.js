@@ -727,7 +727,9 @@ export class QuickHull {
     for (let i = 0; i < this.newFaces.length; i += 1) {
       const face = this.newFaces[i]
       if (face.mark === VISIBLE) {
-        while (this.doAdjacentMerge(face, MERGE_NON_CONVEX_WRT_LARGER_FACE)) {}
+        while (this.doAdjacentMerge(face, MERGE_NON_CONVEX_WRT_LARGER_FACE)) {
+          // empty
+        }
       }
     }
 
@@ -738,7 +740,9 @@ export class QuickHull {
       const face = this.newFaces[i]
       if (face.mark === NON_CONVEX) {
         face.mark = VISIBLE
-        while (this.doAdjacentMerge(face, MERGE_NON_CONVEX)) {}
+        while (this.doAdjacentMerge(face, MERGE_NON_CONVEX)) {
+          // empty
+        }
       }
     }
 

@@ -1,12 +1,16 @@
 import js from "@eslint/js"
+import stylistic from '@stylistic/eslint-plugin'
 import globals from "globals"
 import { defineConfig, globalIgnores } from "eslint/config"
 
 export default defineConfig([
   globalIgnores(["**/dist/", "packages/desktop", "packages/io/scad-deserializer", "packages/vtree"]),
   {
-    files: ["**/*.{js}"],
-    plugins: { js },
+    files: ["**/*.js"],
+    plugins: {
+      js,
+      '@stylistic': stylistic
+    },
     extends: ["js/recommended"],
     languageOptions: { globals: {...globals.browser, ...globals.node} }
   },
@@ -38,6 +42,11 @@ export default defineConfig([
       "no-multi-assign": ["error"],
       // "no-param-reassign": ["error"],
       "no-var": ["error"],
+
+      // enforce specific styles
+      '@stylistic/indent': ['error', 2],
+      '@stylistic/semi': ['error', 'never'],
+      '@stylistic/object-curly-spacing': ['error', 'always'],
     }
-   }
+  }
 ])

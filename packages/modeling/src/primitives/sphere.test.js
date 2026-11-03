@@ -22,7 +22,7 @@ test('sphere (options)', (t) => {
   // test radius
   let obs = sphere({ radius: 5, segments: 12 })
   let pts = geom3.toVertices(obs)
-  let exp = []
+  let exp
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 296.5322084069296)
   t.is(measureVolume(obs), 466.5063509461097)

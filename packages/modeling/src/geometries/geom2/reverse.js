@@ -1,4 +1,3 @@
-import { create } from './create.js'
 import { toOutlines } from './toOutlines.js'
 
 /**
@@ -14,9 +13,8 @@ import { toOutlines } from './toOutlines.js'
  * let newGeometry = geom2.reverse(geometry)
  */
 export const reverse = (geometry) => {
-  const outlines = toOutlines(geometry)
-    .map((outline) => outline.slice().reverse())
-  const reversed = create(outlines)
-  if (geometry.color) reversed.color = geometry.color
+  const outlines = toOutlines(geometry).map((outline) => outline.slice().reverse())
+  // use Object.assign in order to assign EXTRA attributes like color, name, etc
+  const reversed = Object.assign({}, geometry, { outlines })
   return reversed
 }

@@ -6,7 +6,7 @@ export interface ExtrudeHelicalOptions {
   pitch?: number
   height?: number
   endOffset?: number
-  segmentsPerRotation?: number
+  segments?: number
 }
 
 export function extrudeHelical(options: ExtrudeHelicalOptions, geometry: Geom2): Geom3

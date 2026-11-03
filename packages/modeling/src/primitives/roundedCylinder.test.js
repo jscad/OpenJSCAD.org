@@ -49,8 +49,7 @@ test('roundedCylinder (options)', (t) => {
   // test segments
   let obs = roundedCylinder({ segments: 5 })
   let pts = geom3.toVertices(obs)
-  let exp = [
-  ]
+  let exp
 
   t.notThrows(() => geom3.validate(obs))
   t.is(measureArea(obs), 14.303000362787825)

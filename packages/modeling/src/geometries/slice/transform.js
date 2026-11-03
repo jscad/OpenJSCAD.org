@@ -1,7 +1,5 @@
 import * as vec3 from '../../maths/vec3/index.js'
 
-import { create } from './create.js'
-
 /**
  * Transform the given slice using the given matrix.
  *

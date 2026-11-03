@@ -1,5 +1,3 @@
-import { create } from './create.js'
-
 /**
  * Reverse the contours of the given slice.
  *
@@ -10,8 +8,9 @@ import { create } from './create.js'
  * @example
  * const newSlice = slice.reverse(oldSlice)
  */
-export const reverse = (slice) => {
+export const reverse = (geometry) => {
   // reverse each contour
-  const contours = slice.contours.map((contour) => contour.slice().reverse())
-  return create(contours)
+  const contours = geometry.contours.map((contour) => contour.slice().reverse())
+  // use Object.assign in order to assign EXTRA attributes like color, name, etc
+  return Object.assign({}, geometry, { contours })
 }

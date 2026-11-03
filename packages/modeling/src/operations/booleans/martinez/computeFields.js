@@ -64,8 +64,6 @@ const inResult = (event, operation) => {
         case UNION:
           return event.otherInOut
         case DIFFERENCE:
-          // return (event.isSubject && !event.otherInOut) ||
-          //         (!event.isSubject && event.otherInOut)
           return (event.isSubject && event.otherInOut) ||
                   (!event.isSubject && !event.otherInOut)
         case XOR:
@@ -73,7 +71,6 @@ const inResult = (event, operation) => {
         default:
           throw new Error('computeFields01')
       }
-      break
     case SAME_TRANSITION:
       return operation === INTERSECTION || operation === UNION
     case DIFFERENT_TRANSITION:

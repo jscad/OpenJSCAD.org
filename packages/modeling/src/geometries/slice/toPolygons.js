@@ -21,7 +21,7 @@ export const toPolygons = (slice) => {
     // hole indices
     let index = solid.length
     const holesIndex = []
-    holes.forEach((hole, i) => {
+    holes.forEach((hole) => {
       holesIndex.push(index)
       index += hole.length
     })
