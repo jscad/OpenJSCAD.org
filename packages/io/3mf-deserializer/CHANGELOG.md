@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.8-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/%40jscad%2F3mf-deserializer%403.0.7-alpha.0...%40jscad%2F3mf-deserializer%403.0.8-alpha.0) (2026-11-07)
+
+**Note:** Version bump only for package @jscad/3mf-deserializer
+
 ## [3.0.7-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/%40jscad%2F3mf-deserializer%403.0.6-alpha.0...%40jscad%2F3mf-deserializer%403.0.7-alpha.0) (2026-08-02)
 
 ### Bug Fixes
