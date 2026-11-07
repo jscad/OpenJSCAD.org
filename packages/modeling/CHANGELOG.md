@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.8-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/%40jscad%2Fmodeling%403.0.7-alpha.0...%40jscad%2Fmodeling%403.0.8-alpha.0) (2026-11-07)
+
+### Bug Fixes
+
+* **modeling:** added sagitta calculation ([d7a1d0d](https://github.com/jscad/OpenJSCAD.org/commit/d7a1d0d29d47ad92a47dccbaa63a0b17b84cb953))
+* **modeling:** corrected extrudeHelical options to use segments ([082a50e](https://github.com/jscad/OpenJSCAD.org/commit/082a50e0b789ece4e5e6d9650ecde65d0ed4555d))
+* **modeling:** corrected geom2 reverse to retain color ([6408579](https://github.com/jscad/OpenJSCAD.org/commit/6408579ac67076c77a20fa33c482016894f23ef0))
+* **modeling:** corrected geom3 invert to retain color ([d507373](https://github.com/jscad/OpenJSCAD.org/commit/d5073731c98c1cc2b70324ded0c451d267cc7a2b))
+* **modeling:** corrected path3 reverse to retain color ([56b2337](https://github.com/jscad/OpenJSCAD.org/commit/56b233735ffc06e21e8551c47fbddbc51c4a2408))
+* **modeling:** corrected slice reverse to retain color ([4e800e6](https://github.com/jscad/OpenJSCAD.org/commit/4e800e6bd81badc07faf9a8f8604dbac25ecba4b))
+* **modeling:** sync fixes from martinez ([6418f56](https://github.com/jscad/OpenJSCAD.org/commit/6418f56fae70c13b034de01618fb170f0fbdb58e))
+
 ## [3.0.7-alpha.0](https://github.com/jscad/OpenJSCAD.org/compare/%40jscad%2Fmodeling%403.0.6-alpha.0...%40jscad%2Fmodeling%403.0.7-alpha.0) (2026-08-02)
 
 ### Bug Fixes
