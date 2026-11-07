@@ -1,9 +1,13 @@
 import { flatten } from '../../utils/flatten.js'
 
+import { hash } from '../../maths/vec3/hash.js'
+
 import { geom3, poly3 } from '../../geometries/index.js'
 
 import { hullPoints3 } from '../hulls/hullPoints3.js'
 import { unionGeom3 } from '../booleans/unionGeom3.js'
+
+import { measureMetrics } from '../../measurements/measureMetrics.js'
 
 /**
  * Compute the Minkowski sum of two 3D geometries.
@@ -80,7 +84,10 @@ const minkowskiSumNonConvexConvex = (geomA, geomB) => {
   }
 
   // Compute Minkowski sum for each tetrahedron
-  const parts = tetrahedra.map((tet) => minkowskiSumConvex(tet, geomB))
+  const verticesB = extractUniqueVertices(geomB)
+  const parts = tetrahedra.map((tet) => {
+    return minkowskiSumVertices(tet, verticesB)
+  })
 
   // Union all parts using internal unionGeom3
   if (parts.length === 1) {
@@ -88,6 +95,16 @@ const minkowskiSumNonConvexConvex = (geomA, geomB) => {
   }
 
   return unionGeom3(parts)
+}
+
+/*
+ * Compute Minkowski sum of convex A with convex B.
+ */
+const minkowskiSumConvex = (geomA, geomB) => {
+  const verticesA = extractUniqueVertices(geomA)
+  const verticesB = extractUniqueVertices(geomB)
+
+  return minkowskiSumVertices(verticesA, verticesB)
 }
 
 /*
@@ -149,8 +166,7 @@ const decomposeIntoTetrahedra = (geometry) => {
       const v2 = vertices[j + 1]
 
       // Create tetrahedron from apex and triangle
-      const tetPolygons = createTetrahedronPolygons(apex, v0, v1, v2)
-      tetrahedra.push(geom3.create(tetPolygons))
+      tetrahedra.push([apex, v0, v1, v2])
     }
   }
 
@@ -158,44 +174,29 @@ const decomposeIntoTetrahedra = (geometry) => {
 }
 
 /*
- * Create the 4 triangular faces of a tetrahedron.
- *
- * Tetrahedron has 4 faces, each a triangle
- */
-const createTetrahedronPolygons = (p0, p1, p2, p3) => [
-  poly3.create([p0, p2, p1]), // base seen from p3
-  poly3.create([p0, p1, p3]), // face opposite p2
-  poly3.create([p1, p2, p3]), // face opposite p0
-  poly3.create([p2, p0, p3]) // face opposite p1
-]
-
-/*
- * Compute Minkowski sum of two convex polyhedra.
+ * Compute Minkowski sum of two convex polyhedra with unique vertices.
  *
  * For convex polyhedra, the Minkowski sum equals the convex hull of
  * all pairwise vertex sums. This is O(n*m) for n and m vertices,
  * plus the cost of the convex hull algorithm.
  */
-const minkowskiSumConvex = (geomA, geomB) => {
-  const pointsA = extractUniqueVertices(geomA)
-  const pointsB = extractUniqueVertices(geomB)
-
-  if (pointsA.length === 0 || pointsB.length === 0) {
+const minkowskiSumVertices = (verticesA, verticesB) => {
+  if (verticesA.length === 0 || verticesB.length === 0) {
     return geom3.create()
   }
 
   // Compute all pairwise sums
-  const summedPoints = []
-  for (let i = 0; i < pointsA.length; i++) {
-    const a = pointsA[i]
-    for (let j = 0; j < pointsB.length; j++) {
-      const b = pointsB[j]
-      summedPoints.push([a[0] + b[0], a[1] + b[1], a[2] + b[2]])
+  const summedVertices = []
+  for (let i = 0; i < verticesA.length; i++) {
+    const a = verticesA[i]
+    for (let j = 0; j < verticesB.length; j++) {
+      const b = verticesB[j]
+      summedVertices.push([a[0] + b[0], a[1] + b[1], a[2] + b[2]])
     }
   }
 
   // Compute convex hull of the summed points
-  const hullPolygons = hullPoints3(summedPoints)
+  const hullPolygons = hullPoints3(summedVertices)
 
   return geom3.create(hullPolygons)
 }
@@ -205,6 +206,8 @@ const minkowskiSumConvex = (geomA, geomB) => {
  * Uses a Set with string keys for deduplication.
  */
 const extractUniqueVertices = (geometry) => {
+  const metrics = measureMetrics(geometry)
+
   const found = new Set()
   const unique = []
 
@@ -213,7 +216,7 @@ const extractUniqueVertices = (geometry) => {
     const vertices = polygons[i].vertices
     for (let j = 0; j < vertices.length; j++) {
       const v = vertices[j]
-      const key = `${v[0]},${v[1]},${v[2]}`
+      const key = hash(v, metrics)
       if (!found.has(key)) {
         found.add(key)
         unique.push(v)
