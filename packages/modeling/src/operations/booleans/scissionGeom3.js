@@ -1,31 +1,16 @@
 import * as vec3 from '../../maths/vec3/index.js'
 
-import { measureEpsilon } from '../../measurements/measureEpsilon.js'
-
 import * as geom3 from '../../geometries/geom3/index.js'
+
+import { measureMetrics } from './../../measurements/MeasureMetrics.js'
 
 // returns array numerically sorted and duplicates removed
 const sortNb = (array) => array.sort((a, b) => a - b).filter((item, pos, ary) => !pos || item !== ary[pos - 1])
 
-const insertMapping = (map, vertex, index) => {
-  const key = `${vertex}`
-  const mapping = map.get(key)
-  if (mapping === undefined) {
-    map.set(key, [index])
-  } else {
-    mapping.push(index)
-  }
-}
-
-const findMapping = (map, vertex) => {
-  const key = `${vertex}`
-  return map.get(key)
-}
-
 export const scissionGeom3 = (geometry) => {
   // construit table de correspondance entre polygones
   // build polygons lookup table
-  const eps = measureEpsilon(geometry)
+  const metrics = measureMetrics(geometry)
   const polygons = geom3.toPolygons(geometry)
   const pl = polygons.length
 
@@ -33,14 +18,24 @@ export const scissionGeom3 = (geometry) => {
   const temp = vec3.create()
   polygons.forEach((polygon, index) => {
     polygon.vertices.forEach((vertex) => {
-      insertMapping(indexesPerVertex, vec3.snap(temp, vertex, eps), index)
+      const key = vec3.hash(vertex, metrics)
+
+      const mapping = indexesPerVertex.get(key)
+      if (mapping === undefined) {
+        indexesPerVertex.set(key, [index])
+      } else {
+        mapping.push(index)
+      }
     })
   })
 
   const indexesPerPolygon = polygons.map((polygon) => {
     let indexes = []
     polygon.vertices.forEach((vertex) => {
-      indexes = indexes.concat(findMapping(indexesPerVertex, vec3.snap(temp, vertex, eps)))
+      const key = vec3.hash(vertex, metrics)
+
+      const mapping = indexesPerVertex.get(key)
+      indexes = indexes.concat(mapping)
     })
     return { e: 1, d: sortNb(indexes) } // for each polygon, push the list of indexes
   })
