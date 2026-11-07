@@ -84,17 +84,18 @@ export const offsetShell = (options, geometry) => {
   // - add the plane to the unique edge map
   const polygons = geom3.toPolygons(geometry)
   polygons.forEach((polygon) => {
-    const extrudeVector = vec3.scale(vec3.create(), poly3.plane(polygon), 2 * delta)
+    const plane = poly3.plane(polygon)
+    const extrudeVector = vec3.scale(vec3.create(), plane, 2 * delta)
     const translatedPolygon = poly3.transform(mat4.fromTranslation(mat4.create(), vec3.scale(vec3.create(), extrudeVector, -0.5)), polygon)
     const extrudedFace = extrudePolygon(extrudeVector, translatedPolygon)
     result = unionGeom3Sub(result, extrudedFace)
 
     const vertices = polygon.vertices
     for (let i = 0; i < vertices.length; i++) {
-      mapPlaneToVertex(vertices2planes, vertices[i], poly3.plane(polygon))
+      mapPlaneToVertex(vertices2planes, vertices[i], plane)
       const j = (i + 1) % vertices.length
       const edge = [vertices[i], vertices[j]]
-      mapPlaneToEdge(edges2planes, edge, poly3.plane(polygon))
+      mapPlaneToEdge(edges2planes, edge, plane)
     }
   })
 
