@@ -191,4 +191,95 @@ test('extrudeRotate: (mat4 reuse) partial rotation produces correct caps', (t) =
   t.true(pts.length > 0)
 })
 
-// TEST HOLES
+const { measureVolume, measureBoundingBox } = require('../../measurements')
+const { rectangle } = require('../../primitives')
+const { subtract } = require('../booleans')
+const { mirrorX } = require('../transforms')
+
+// consistent winding (each directed edge matched by exactly one reversed edge) plus positive volume means outward normals
+const edgeKey = (a, b) => `${a.map((v) => v.toFixed(5)).join(',')}|${b.map((v) => v.toFixed(5)).join(',')}`
+const isClosedAndConsistent = (geometry) => {
+  const edges = new Map()
+  geom3.toPoints(geometry).forEach((points) => {
+    points.forEach((point, i) => {
+      const key = edgeKey(point, points[(i + 1) % points.length])
+      edges.set(key, (edges.get(key) || 0) + 1)
+    })
+  })
+  for (const [key, count] of edges) {
+    const [a, b] = key.split('|')
+    if (count !== 1 || edges.get(`${b}|${a}`) !== 1) return false
+  }
+  return true
+}
+
+const assertOutward = (t, geometry, expectedVolume) => {
+  t.notThrows(() => geom3.validate(geometry))
+  const volume = measureVolume(geometry)
+  t.true(volume > 0, `volume ${volume} should be positive`)
+  if (expectedVolume !== undefined) t.true(Math.abs(volume - expectedVolume) < 1e-6 * Math.abs(expectedVolume), `volume ${volume} should equal ${expectedVolume}`)
+  t.true(isClosedAndConsistent(geometry))
+}
+
+const negateXY = ([[minx, miny, minz], [maxx, maxy, maxz]]) => [[-maxx, -maxy, minz], [-minx, -miny, maxz]]
+const compareBounds = (t, a, b) => {
+  a.flat().forEach((v, i) => t.true(Math.abs(v - b.flat()[i]) < 1e-9, `bounds ${JSON.stringify(a)} vs ${JSON.stringify(b)}`))
+}
+
+const negativeAndPositiveCases = [
+  { segments: 12 },
+  { segments: 30 },
+  { segments: 5 },
+  { segments: 8, angle: TAU / 4 },
+  { segments: 16, angle: TAU * 0.6 },
+  { segments: 12, startAngle: TAU / 8 },
+  { segments: 12, startAngle: TAU / 8, angle: TAU / 3 },
+  { segments: 7, angle: -TAU / 5 }
+]
+
+test('extrudeRotate: (negative X) profiles on either side of the axis produce outward solids of equal volume', (t) => {
+  const positive = rectangle({ size: [4, 4], center: [10, 0] })
+  const negative = rectangle({ size: [4, 4], center: [-10, 0] })
+  const mirrored = mirrorX(positive)
+
+  negativeAndPositiveCases.forEach((options) => {
+    const pos = extrudeRotate(options, positive)
+    assertOutward(t, pos)
+    const expected = measureVolume(pos)
+
+    const neg = extrudeRotate(options, negative)
+    assertOutward(t, neg, expected)
+    // the negative profile sweeps the half-turn opposite the positive one
+    compareBounds(t, measureBoundingBox(neg), negateXY(measureBoundingBox(pos)))
+
+    assertOutward(t, extrudeRotate(options, mirrored), expected)
+  })
+})
+
+test('extrudeRotate: (negative X) profiles with holes produce outward solids of equal volume', (t) => {
+  const positive = subtract(rectangle({ size: [8, 8], center: [10, 0] }), rectangle({ size: [4, 4], center: [10, 0] }))
+  const negative = mirrorX(positive)
+
+  negativeAndPositiveCases.forEach((options) => {
+    const pos = extrudeRotate(options, positive)
+    assertOutward(t, pos)
+    const neg = extrudeRotate(options, negative)
+    assertOutward(t, neg, measureVolume(pos))
+    compareBounds(t, measureBoundingBox(neg), negateXY(measureBoundingBox(pos)))
+  })
+})
+
+test('extrudeRotate: (overlap +/-) profiles straddling the axis are capped at X=0 and produce outward solids', (t) => {
+  // equal counts: capped to the positive side, same as the rectangle from X=0 to X=7
+  const straddle = geom2.fromPoints([[-1, 8], [-1, -8], [7, -8], [7, 8]])
+  const capped = geom2.fromPoints([[0, 8], [0, -8], [7, -8], [7, 8]])
+  // more negative sides: capped to the negative side, same volume as the mirrored equivalent
+  const negativeMajority = geom2.fromPoints([[1, 8], [-7, 8], [-7, -8], [1, -8], [-2, 0]])
+  const negativeCapped = geom2.fromPoints([[0, 8], [-7, 8], [-7, -8], [0, -8], [-2, 0]])
+
+  ;[{ segments: 12 }, { segments: 8, angle: TAU / 4 }].forEach((options) => {
+    const expected = measureVolume(extrudeRotate(options, capped))
+    assertOutward(t, extrudeRotate(options, straddle), expected)
+    assertOutward(t, extrudeRotate(options, negativeMajority), measureVolume(extrudeRotate(options, mirrorX(negativeCapped))))
+  })
+})
