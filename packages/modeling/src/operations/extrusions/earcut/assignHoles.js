@@ -37,11 +37,24 @@ const assignHoles = (geometry) => {
   const parents = [] // parent solids of hole[i]
   solids.forEach((s, i) => {
     const solid = outlines[s]
+    let bounds
+    if (solids.length > 1 && holes.length > 0) {
+      bounds = [Infinity, Infinity, -Infinity]
+      solid.forEach(([x, y]) => {
+        bounds[0] = Math.min(bounds[0], x)
+        bounds[1] = Math.min(bounds[1], y)
+        bounds[2] = Math.max(bounds[2], y)
+      })
+    }
     children[i] = []
     holes.forEach((h, j) => {
       const hole = outlines[h]
+      // These three bounds are exact rejections for the crossings test.
+      // Its intersection arithmetic can round past the right bound, so retain that test.
+      const point = hole[0]
+      if (bounds && (point[0] < bounds[0] || point[1] < bounds[1] || point[1] > bounds[2])) return
       // check if a point of hole j is inside solid i
-      if (arePointsInside([hole[0]], { vertices: solid })) {
+      if (arePointsInside([point], { vertices: solid })) {
         children[i].push(h)
         if (!parents[j]) parents[j] = []
         parents[j].push(i)
