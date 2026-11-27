@@ -16,7 +16,9 @@ const transform = (matrix, polygon) => {
     // reverse the order to preserve the orientation
     vertices.reverse()
   }
-  return create(vertices)
+  const transformed = create(vertices)
+  if (polygon.color) transformed.color = polygon.color
+  return transformed
 }
 
 module.exports = transform
