@@ -3,6 +3,7 @@ const test = require('ava')
 const { comparePoints, comparePolygonsAsPoints } = require('../../../test/helpers')
 
 const { geom2, geom3, path2 } = require('../../geometries')
+const { polyhedron } = require('../../primitives')
 
 const { translate, translateX, translateY, translateZ } = require('./index')
 
@@ -148,4 +149,17 @@ test('translate: translating of multiple objects produces expected changes', (t)
   exp = [[-2, -2], [3, 8], [13, -2]]
   t.notThrows(() => geom2.validate(translated[2]))
   t.true(comparePoints(obs, exp))
+})
+
+test('translate: preserves the colors of individual polyhedron faces', (t) => {
+  const colors = [[1, 0, 0, 1], [0, 1, 0, 0.5], [0, 0, 1, 1], [1, 1, 0, 1]]
+  const shape = polyhedron({
+    points: [[0, 0, 0], [2, 0, 0], [0, 2, 0], [0, 0, 2]],
+    faces: [[0, 2, 1], [0, 1, 3], [1, 2, 3], [2, 0, 3]],
+    colors
+  })
+
+  const polygons = geom3.toPolygons(translate([10, 20, 30], shape))
+  t.deepEqual(polygons[0].vertices[0], [10, 20, 30])
+  t.deepEqual(polygons.map((polygon) => polygon.color), colors)
 })
